@@ -31,12 +31,13 @@ if (isset($_GET['token'])) {
 		$view = new \OC\Files\View(\OC\Files\Filesystem::getView()->getAbsolutePath($path));
 		$images = $view->searchByMime('image');
 
-		foreach ($images as &$image) {
-			$image['path'] = $token . $image['path'];
+		$result = array();
+		foreach ($images as $image) {
+			$result[] = $token . $image['path'];
 		}
 
 		OCP\JSON::setContentTypeHeader();
-		echo json_encode(array('images' => $images, 'users' => array(), 'displayNames' => array()));
+		echo json_encode(array('images' => $result, 'users' => array(), 'displayNames' => array()));
 
 		exit;
 	}
