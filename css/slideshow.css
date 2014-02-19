@@ -26,7 +26,7 @@
 }
 
 #slideshow > input {
-	background: none;
+	background-color: transparent;
 	border: 0 transparent;
 	outline: 0;
 	box-shadow: none;
@@ -61,18 +61,15 @@
 
 #slideshow > .next {
 	right: 0;
-	background-image: url("%webroot%/core/img/actions/view-next.svg");
 }
 
 #slideshow > .previous {
 	left: 0;
-	background-image: url("%webroot%/core/img/actions/view-previous.svg");
 }
 
 #slideshow > .exit {
 	right: 0;
 	top: 0;
-	background-image: url("%webroot%/core/img/actions/view-close.svg");
 }
 
 #slideshow > .pause, #slideshow > .play {
@@ -83,11 +80,9 @@
 
 #slideshow > .play {
 	display: none;
-	background-image: url("%webroot%/core/img/actions/view-play.svg");
 }
 
 #slideshow > .pause {
-	background-image: url("%webroot%/core/img/actions/view-pause.svg");
 }
 
 #slideshow > .progress {
@@ -97,7 +92,6 @@
 	background-position: 0 100%;
 	width: 32px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-	background-image: url("%webroot%/core/img/actions/view-pause.svg");
 	filter: alpha(opacity=30);
 	opacity: .3;
 	height: 0;
