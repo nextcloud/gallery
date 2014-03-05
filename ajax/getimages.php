@@ -52,43 +52,14 @@ $user = \OCP\User::getUser();
 foreach ($images as &$image) {
 	// we show shared images another way
 	if (substr($image['path'], 0, 8) === '/Shared/') {
-		continue;
+		$owner = \OC\Files\Filesystem::getOwner($image['path']);
+		$users[$owner] = $owner;
 	}
 	$path = $user . $image['path'];
 	if (strpos($path, DIRECTORY_SEPARATOR . ".")) {
 		continue;
 	}
 	$image['path'] = $user . $image['path'];
-}
-
-$shared = array();
-$sharedSources = OCP\Share::getItemsSharedWith('file');
-$users = array();
-foreach ($sharedSources as $sharedSource) {
-	$owner = $sharedSource['uid_owner'];
-	if (array_search($owner, $users) === false) {
-		$users[] = $owner;
-	}
-	\OC\Files\Filesystem::initMountPoints($owner);
-	$ownerView = new \OC\Files\View('/' . $owner . '/files');
-	$path = $ownerView->getPath($sharedSource['item_source']);
-	if ($path) {
-		$shareName = basename($path);
-		$shareView = new \OC\Files\View('/' . $owner . '/files' . $path);
-		if ($shareView->is_dir('')) {
-			$sharedImages = $shareView->searchByMime('image');
-			foreach ($sharedImages as $sharedImage) {
-				// set the file_source in the path so we can get the original shared folder later
-				$sharedImage['path'] = $owner . '/' . $sharedSource['file_source'] . '/' . $shareName . $sharedImage['path'];
-				$images[] = $sharedImage;
-			}
-		} else {
-			$sharedImage = $shareView->getFileInfo('');
-			$sharedImage['path'] = $owner . '/' . $sharedSource['file_source'] . '/' . $shareName;
-			$images[] = $sharedImage;
-		}
-
-	}
 }
 
 $displayNames = array();
