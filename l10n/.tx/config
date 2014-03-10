@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.net
 
-[owncloud.gallery]
+[owncloud.Gallery]
 file_filter = <lang>/gallery.po
 source_file = templates/gallery.pot
 source_lang = en
