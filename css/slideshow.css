@@ -8,8 +8,6 @@
 	z-index: 1000;
 	display: none;
 	background-color: black;
-	background-repeat: no-repeat;
-	background-image: url("%webroot%/core/img/loading-dark.gif");
 	background-position: center center;
 }
 
