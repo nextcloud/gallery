@@ -3,7 +3,7 @@
 /*}*/
 
 #header {
-	background: #1d2d44 url('%webroot%/core/img/noise.png') repeat;
+	background-color: #1d2d44;
 	height:32px;
 	left:0;
 	line-height:32px;
@@ -46,7 +46,7 @@ body {
 	height: 100%;
 	width: 100%;
 	text-align: center;
-	background: #404040 url('%webroot%/core/img/noise.png') repeat;
+	background-color: #404040;
 }
 
 /* toggle for opening shared picture view as file list */

@@ -1,7 +1,7 @@
 <div class="wrapper"><!-- for sticky footer -->
 
 <header>
-	<div id="header">
+	<div id="header" class="icon-noise">
 		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>" title="" id="owncloud">
 			<img class="svg" src="<?php print_unescaped(image_path('', 'logo-wide.svg')); ?>" alt="<?php p($theme->getName()); ?>" /></a>
 		<div id="logo-claim" style="display:none;"><?php p($theme->getLogoClaim()); ?></div>
@@ -21,13 +21,13 @@
 		</div>
 	</div>
 
-	<div id='gallery' class="hascontrols" data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>"></div>
+	<div id='gallery' class="hascontrols icon-noise" data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>"></div>
 </div>
 
 	<div class="push"></div><!-- for sticky footer -->
 </div>
 
-<footer>
+<footer class="icon-noise">
 	<p class="info">
 		<?php print_unescaped($theme->getLongFooter()); ?>
 	</p>
