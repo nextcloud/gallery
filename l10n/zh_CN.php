@@ -1,7 +1,9 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "图片",
 "Shared by" => "共享人",
+"Picture view" => "图片查看",
 "Error loading slideshow template" => "加载幻灯片模板错误",
 "Share" => "共享",
-"The \"Image Viewer\" application also need to be enabled to use this application." => "使用此应用也需要启用“图片预览”应用。"
+"shared by %s" => "由 %s 共享",
+"File list" => "文件列表"
 );

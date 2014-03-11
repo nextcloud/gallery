@@ -1,7 +1,9 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "Bilder",
 "Shared by" => "Delt av",
+"Picture view" => "Bildevisning",
+"Error loading slideshow template" => "Feil ved lasting av mal for lysbildevisning",
 "Share" => "Del",
-"The \"Image Viewer\" application also need to be enabled to use this application." => "\"Image Viewer\"-applikasjonen må være aktivert for å bruke denne applikasjonen.",
-"shared by %s" => "delt av %s"
+"shared by %s" => "delt av %s",
+"File list" => "Filliste"
 );

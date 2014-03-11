@@ -4,6 +4,6 @@
 "Picture view" => "Billedvisning",
 "Error loading slideshow template" => "Fejl ved indlæsning af diasshow skabelon",
 "Share" => "Del",
-"The \"Image Viewer\" application also need to be enabled to use this application." => "Applikationen \"Image Viewer\" skal også aktiveres for at bruge denne applikation.",
+"shared by %s" => "delt af %s",
 "File list" => "Filoversigt"
 );
