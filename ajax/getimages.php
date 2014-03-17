@@ -54,12 +54,15 @@ foreach ($images as &$image) {
 	if (substr($image['path'], 0, 8) === '/Shared/') {
 		$owner = \OC\Files\Filesystem::getOwner($image['path']);
 		$users[$owner] = $owner;
+		$path = substr($image['path'], 7);
+	} else {
+		$owner = $user;
+		$path = $image['path'];
 	}
-	$path = $user . $image['path'];
 	if (strpos($path, DIRECTORY_SEPARATOR . ".")) {
 		continue;
 	}
-	$image['path'] = $user . $image['path'];
+	$image['path'] = $owner . $path;
 }
 
 $displayNames = array();
@@ -77,4 +80,4 @@ foreach ($images as $image) {
 }
 
 OCP\JSON::setContentTypeHeader();
-echo json_encode(array('images' => $result, 'users' => $users, 'displayNames' => $displayNames));
+echo json_encode(array('images' => $result, 'users' => array_values($users), 'displayNames' => $displayNames));

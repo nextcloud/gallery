@@ -8,59 +8,27 @@
 
 OCP\JSON::checkAppEnabled('gallery');
 
-list($token, $img) = explode('/', $_GET['file'], 2);
-$linkItem = \OCP\Share::getShareByToken($token);
+list($owner, $img) = explode('/', $_GET['file'], 2);
+$linkItem = \OCP\Share::getShareByToken($owner);
 if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
 	// seems to be a valid share
 	$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
-	$owner = $rootLinkItem['uid_owner'];
-	OCP\JSON::checkUserExists($owner);
+	$user = $rootLinkItem['uid_owner'];
+	$img = trim($rootLinkItem['file_target'] . '/' . $img);
+	OCP\JSON::checkUserExists($user);
 	OC_Util::tearDownFS();
-	OC_Util::setupFS($owner);
+	OC_Util::setupFS($user);
 } else {
 	OCP\JSON::checkLoggedIn();
-
-	list($owner, $img) = explode('/', $_GET['file'], 2);
-	if ($owner !== OCP\User::getUser()) {
-		OC_Util::tearDownFS();
-		OCP\JSON::checkUserExists($owner);
-		OC_Util::setupFS($owner);
-		$view = new \OC\Files\View('/' . $owner . '/files');
-		//images have 1 slashes, albums at least 2
-		if (substr_count($img, '/') === 1) {
-			list($folderId, $img) = explode('/', $img, 2);
-		} else {
-			// second part is the (duplicated) share name
-			list($folderId, , $img) = explode('/', $img, 3);
-		}
-		$shareInfo = \OCP\Share::getItemSharedWithBySource('file', $folderId);
-		if ($shareInfo) {
-			$sharedFolder = $view->getPath($folderId);
-			if ($sharedFolder and $view->is_dir($sharedFolder)) {
-				$img = $sharedFolder . '/' . $img;
-			} elseif ($sharedFolder) {
-				$img = $sharedFolder;
-			} else {
-				\OC_Response::setStatus(404);
-				exit;
-			}
-		} else {
-			\OC_Response::setStatus(403);
-			exit;
-		}
+	$user = OCP\User::getUser();
+	if ($owner !== $user) {
+		$img = 'Shared/' . $img;
 	}
 }
 
 session_write_close();
 
-if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
-	// prepend path to share
-	$ownerView = new \OC\Files\View('/' . $owner . '/files');
-	$path = $ownerView->getPath($linkItem['file_source']);
-	$img = $path . '/' . $img;
-}
-
 $square = isset($_GET['square']) ? (bool)$_GET['square'] : false;
 
-$image = new \OCA\Gallery\Thumbnail('/' . $img, $owner, $square);
+$image = new \OCA\Gallery\Thumbnail('/' . $img, $user, $square);
 $image->show();
