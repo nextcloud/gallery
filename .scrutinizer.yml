@@ -1,0 +1,14 @@
+imports:
+    - php
+    - javascript
+
+filter:
+    excluded_paths:
+        - 'l10n/*'
+        - 'js/jquery*'
+
+tools:
+    php_analyzer:
+        config:
+            doc_comment_fixes:
+                enabled:              true
