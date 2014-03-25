@@ -333,7 +333,6 @@ Gallery.view.showUsers = function () {
 				$('#gallery').append(head);
 				for (j = 0; j < subAlbums.length; j++) {
 					album = subAlbums[j];
-					album = Gallery.subAlbums[album][0];//first level sub albums is share source id
 					Gallery.view.addAlbum(album);
 					Gallery.view.element.append(' '); //add a space for justify
 				}
