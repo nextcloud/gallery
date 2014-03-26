@@ -293,10 +293,6 @@ Gallery.view.viewAlbum = function (albumPath) {
 	crumbs = albumPath.split('/');
 	//first entry is username
 	path = crumbs.splice(0, 1);
-	//remove shareid
-	if (path[0] !== OC.currentUser && path[0] !== $('#gallery').data('token')) {
-		path += '/' + crumbs.splice(0, 1);
-	}
 	for (i = 0; i < crumbs.length; i++) {
 		if (crumbs[i]) {
 			path += '/' + crumbs[i];
