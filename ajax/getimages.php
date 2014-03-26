@@ -48,6 +48,7 @@ OCP\JSON::checkAppEnabled('gallery');
 
 $images = \OCP\Files::searchByMime('image');
 $user = \OCP\User::getUser();
+$result = array();
 
 foreach ($images as &$image) {
 	// we show shared images another way
@@ -62,7 +63,7 @@ foreach ($images as &$image) {
 	if (strpos($path, DIRECTORY_SEPARATOR . ".")) {
 		continue;
 	}
-	$image['path'] = $owner . $path;
+	$result[] = $owner . $path;
 }
 
 $displayNames = array();
@@ -72,11 +73,6 @@ foreach ($users as $user) {
 
 function startsWith($haystack, $needle) {
 	return !strncmp($haystack, $needle, strlen($needle));
-}
-
-$result = array();
-foreach ($images as $image) {
-	$result[] = $image['path'];
 }
 
 OCP\JSON::setContentTypeHeader();
