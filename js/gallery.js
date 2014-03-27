@@ -15,10 +15,9 @@ Gallery.fillAlbums = function () {
 	var def = new $.Deferred();
 	var token = $('#gallery').data('token');
 	$.getJSON(OC.filePath('gallery', 'ajax', 'getimages.php'), {token: token}).then(function (data) {
-		var albumPath, i, imagePath, parent, path;
 		Gallery.users = data.users;
 		Gallery.displayNames = data.displayNames;
-		for (i = 0; i < data.images.length; i++) {
+		for (var i = 0; i < data.images.length; i++) {
 			Gallery.images.push(data.images[i]);
 		}
 		Gallery.fillAlbums.fill(Gallery.albums, Gallery.images);
@@ -37,7 +36,7 @@ Gallery.fillAlbums.fill = function (albums, images) {
 		albumPath = OC.dirname(imagePath);
 		albumPathParts = albumPath.split('/');
 		//group single share images in a single album
-		if (OC.currentUser && albumPathParts.length === 2 && albumPathParts[0] !== OC.currentUser) {
+		if (OC.currentUser && albumPathParts.length === 1 && albumPathParts[0] !== OC.currentUser) {
 			albumPath = albumPathParts[0];
 		}
 		if (!albums[albumPath]) {
@@ -162,7 +161,7 @@ Gallery.view.addImage = function (image) {
 };
 
 Gallery.view.addAlbum = function (path, name) {
-	var link, image, label, thumbs, thumb;
+	var link, label, thumbs, thumb;
 	name = name || OC.basename(path);
 	if (Gallery.view.cache[path]) {
 		thumbs = Gallery.view.addAlbum.thumbs[path];
@@ -294,10 +293,6 @@ Gallery.view.viewAlbum = function (albumPath) {
 	crumbs = albumPath.split('/');
 	//first entry is username
 	path = crumbs.splice(0, 1);
-	//remove shareid
-	if (path[0] !== OC.currentUser && path[0] !== $('#gallery').data('token')) {
-		path += '/' + crumbs.splice(0, 1);
-	}
 	for (i = 0; i < crumbs.length; i++) {
 		if (crumbs[i]) {
 			path += '/' + crumbs[i];
@@ -319,10 +314,13 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 };
 
 Gallery.view.showUsers = function () {
-	var i, j, k, user, head, subAlbums, album, singleImages;
+	var i, j, user, head, subAlbums, album, singleImages;
+	console.log('asdasdasd');
 	for (i = 0; i < Gallery.users.length; i++) {
 		singleImages = [];
 		user = Gallery.users[i];
+		console.log('asd');
+		console.log(user);
 		subAlbums = Gallery.subAlbums[user];
 		if (subAlbums) {
 			if (subAlbums.length > 0) {
@@ -331,7 +329,6 @@ Gallery.view.showUsers = function () {
 				$('#gallery').append(head);
 				for (j = 0; j < subAlbums.length; j++) {
 					album = subAlbums[j];
-					album = Gallery.subAlbums[album][0];//first level sub albums is share source id
 					Gallery.view.addAlbum(album);
 					Gallery.view.element.append(' '); //add a space for justify
 				}
@@ -378,7 +375,7 @@ $(document).ready(function () {
 		$(window).scrollTop(Gallery.scrollLocation);
 		var albumParts = Gallery.currentAlbum.split('/');
 		//not an album bit a single shared image, go back to the root
-		if (OC.currentUser && albumParts.length === 2 && albumParts[0] !== OC.currentUser) {
+		if (OC.currentUser && albumParts.length === 1 && albumParts[0] !== OC.currentUser) {
 			Gallery.currentAlbum = OC.currentUser;
 		}
 		location.hash = Gallery.currentAlbum;
