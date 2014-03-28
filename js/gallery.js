@@ -358,8 +358,8 @@ $(document).ready(function () {
 		var i = images.index(this),
 			image = $this.data('path');
 		event.preventDefault();
-		if (location.hash !== image) {
-			location.hash = image;
+		if (location.hash !== encodeURI(image)) {
+			location.hash = encodeURI(image);
 			Thumbnail.paused = true;
 			Slideshow.start(images, i);
 		}
@@ -378,13 +378,13 @@ $(document).ready(function () {
 		if (OC.currentUser && albumParts.length === 1 && albumParts[0] !== OC.currentUser) {
 			Gallery.currentAlbum = OC.currentUser;
 		}
-		location.hash = Gallery.currentAlbum;
+		location.hash = encodeURI(Gallery.currentAlbum);
 		Thumbnail.concurrent = 3;
 	};
 });
 
 window.onhashchange = function () {
-	var album = location.hash.substr(1);
+	var album = decodeURI(location.hash).substr(1);
 	if (!album) {
 		album = OC.currentUser;
 	}
