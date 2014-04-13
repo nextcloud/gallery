@@ -43,6 +43,9 @@ if ($mimePart === 'image') {
 			$rotate = ($exif['Orientation'] > 1);
 		}
 	}
+	
+	OCP\Response::setContentDispositionHeader(basename($img), 'attachment');
+	
 	if ($rotate) {
 		$image = new OCP\Image($local);
 		$image->fixOrientation();
