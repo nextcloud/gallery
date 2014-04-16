@@ -4,6 +4,7 @@
 #header,
 #controls {
 	position: absolute !important;
+	top: 0;
 }
 
 /* adjust share dropdown */
