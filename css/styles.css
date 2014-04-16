@@ -122,8 +122,7 @@ button.share {
 }
 
 #dropdown {
-	top: 6.4em;
-	position: fixed;
+	top: 43px;
 	right: 0;
 	margin-right: 0;
 	border-bottom-right-radius: 0;
