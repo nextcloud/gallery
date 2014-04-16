@@ -36,6 +36,7 @@ Thumbnail.prototype.load = function () {
 		};
 		this.image.onerror = function () {
 			Thumbnail.loadingCount--;
+			that.loadingDeferred.reject(that.image);
 			Thumbnail.processQueue();
 		};
 		Thumbnail.loadingCount++;

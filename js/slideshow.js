@@ -8,20 +8,23 @@ jQuery.fn.slideShow = function (container, start, options) {
 		'play'    : false,
 		'maxScale': 2
 	}, options);
-	if (settings.play){
+	if (settings.play) {
 		$('#slideshow').children('.play').hide();
 		$('#slideshow').children('.pause').show();
-	}
-	else{
+	} else {
 		$('#slideshow').children('.play').show();
 		$('#slideshow').children('.pause').hide();
 	}
 	jQuery.fn.slideShow.container = container;
 	jQuery.fn.slideShow.settings = settings;
 	jQuery.fn.slideShow.current = start;
-	for (i = 0; i < this.length; i++) {
-		var imageLink = this[i];
-		images.push(imageLink.imageUrl || imageLink.href);
+	if (settings.images) {
+		images = settings.images;
+	} else {
+		for (i = 0; i < this.length; i++) {
+			var imageLink = this[i];
+			images.push(imageLink.imageUrl || imageLink.href);
+		}
 	}
 	container.children('img').remove();
 	container.show();
@@ -206,15 +209,16 @@ jQuery.fn.slideShow.onstop = null;
 
 Slideshow = {};
 Slideshow.start = function (images, start, options) {
-
+	options = options || {};
 	var content = $('#content');
 	start = start || 0;
 	Thumbnail.concurrent = 1; //make sure we can load the image and doesn't get blocked by loading thumbnail
-	if (content.is(":visible") && typeof Gallery !== 'undefined') {
-		Gallery.scrollLocation = $(window).scrollTop();
+	if (images.slideShow) {
+		images.slideShow($('#slideshow'), start, options);
+	} else {
+		options.images = images;
+		jQuery.fn.slideShow($('#slideshow'), start, options);
 	}
-	images.slideShow($('#slideshow'), start, options);
-	content.hide();
 };
 
 Slideshow.end = function () {
