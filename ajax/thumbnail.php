@@ -21,9 +21,6 @@ if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
 } else {
 	OCP\JSON::checkLoggedIn();
 	$user = OCP\User::getUser();
-	if ($owner !== $user) {
-		$img = 'Shared/' . $img;
-	}
 }
 
 session_write_close();
