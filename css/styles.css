@@ -2,95 +2,72 @@ button.share {
 	display: none;
 }
 
+body {
+	background-color: #404040;
+}
+
 #gallery {
-	overflow: auto;
-	overflow-x: hidden;
+	overflow: hidden;
 	text-align: justify;
 }
 
-#gallery a.album {
-	max-width: 200px;
-	position: relative;
+#gallery img {
+	outline: 2px solid rgba(0, 0, 0, 0.5);
+	outline-offset: -2px;
 }
 
-#gallery a.album > .stack {
-	height: 98%;
-	position: absolute;
+#gallery .row {
+	line-height: 0;
 	width: 100%;
-	z-index: -1;
+	white-space: nowrap;
 }
 
-#gallery a.album > .stack0 {
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-	-webkit-transform: rotate(0.5deg);
-	-moz-transform: rotate(0.5deg);
-	transform: rotate(0.5deg);
-	z-index: 10;
+#gallery .row a {
+	display: inline-block;
+	height: auto;
+	padding: 0;
 }
 
-#gallery a.album > .stack1 {
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-	left: -5px;
-	top: 4px;
-	-webkit-transform: rotate(-2.5deg);
-	-moz-transform: rotate(-2.5deg);
-	transform: rotate(-2.5deg);
-}
-
-#gallery a.album > .stack2 {
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-	right: -3px;
-	top: -2px;
-	-webkit-transform: rotate(2.1deg);
-	-moz-transform: rotate(2.1deg);
-	transform: rotate(2.1deg);
-}
-
-#gallery a.album > .stack3 {
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-	right: 3px;
-	top: 1px;
-	-webkit-transform: rotate(-1.5deg);
-	-moz-transform: rotate(-1.5deg);
-	transform: rotate(-1.5deg);
+#gallery a.album label, #gallery a.image label {
+	color: rgb(255, 255, 255);
+	text-shadow: 0 0 7px rgb(0, 0, 0);
+	position: relative;
+	bottom: 15px;
+	left: 10px;
 }
 
 #gallery a.album > img {
 	max-width: 200px;
 	max-height: 200px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
 }
 
 #gallery a.album > label {
 	color: white;
 	text-shadow: 0 0 10px #000;
 	position: absolute;
-	bottom: 0;
 	width: 100%;
 	text-align: center;
 	font-size: 18px;
 	padding-bottom: 5px;
-	overflow: hidden;
 	text-overflow: ellipsis;
 	z-index: 11;
 }
 
 #gallery a {
 	display: inline-block;
-	margin: 2px;
+	margin: 0;
 	position: relative;
 	vertical-align: top;
 	*display: inline;
 	zoom: 1;
 }
 
-#gallery a.image >img {
+#gallery a.image > img {
 	max-height: 200px;
 }
 
 #gallery a.album,
-#gallery a.image{
+#gallery a.image {
 	opacity: 1;
 	transition: opacity 500ms;
 	-moz-transition: opacity 500ms;
@@ -98,8 +75,9 @@ button.share {
 	-ms-transition: opacity 500ms;
 	-webkit-transition: opacity 500ms;
 }
+
 #gallery a.album.loading,
-#gallery a.image.loading{
+#gallery a.image.loading {
 	opacity: 0;
 }
 
@@ -107,7 +85,7 @@ button.share {
 	float: right;
 }
 
-#gallery>h2 {
+#gallery > h2 {
 	background: #f7f7f7;
 	height: 2.8em;
 	border-top: 1px solid #eee;
@@ -116,8 +94,6 @@ button.share {
 	font-weight: bold;
 	padding: 0.5em;
 	padding-left: 2em;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
 }
 
 #dropdown {

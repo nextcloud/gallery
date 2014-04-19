@@ -72,9 +72,8 @@ Album.prototype.getNextRow = function (width) {
 function Row(targetWidth) {
 	this.targetWidth = targetWidth;
 	this.items = [];
-	this.width = 50;
+	this.width = 0;
 }
-Row.margin = 2;
 
 /**
  * @param {GalleryImage} image
@@ -85,7 +84,7 @@ Row.prototype.addImage = function (image) {
 	var def = new $.Deferred();
 	image.getThumbnailWidth().then(function (width) {
 		row.items.push(image);
-		row.width += width + Row.margin * 2;
+		row.width += width;
 		def.resolve(!row.isFull());
 	}, function () {
 		def.resolve(true);
