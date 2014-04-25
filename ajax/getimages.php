@@ -52,14 +52,13 @@ $result = array();
 
 foreach ($images as &$image) {
 	// we show shared images another way
-	if (substr($image['path'], 0, 8) === '/Shared/') {
-		$owner = \OC\Files\Filesystem::getOwner($image['path']);
+	if ($image->getStorage() instanceof \OC\Files\Storage\Shared) {
+		$owner = $image['uid_owner'];
 		$users[$owner] = $owner;
-		$path = substr($image['path'], 7);
 	} else {
 		$owner = $user;
-		$path = $image['path'];
 	}
+	$path = $image['path'];
 	if (strpos($path, DIRECTORY_SEPARATOR . ".")) {
 		continue;
 	}
