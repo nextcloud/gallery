@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-03-11 02:18-0400\n"
-"PO-Revision-Date: 2014-03-11 06:18+0000\n"
+"POT-Creation-Date: 2014-04-30 02:18-0400\n"
+"PO-Revision-Date: 2014-04-29 10:01+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/owncloud/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appinfo/app.php:36 js/gallery.js:289
+#: appinfo/app.php:36 js/gallery.js:288
 msgid "Pictures"
 msgstr "تصاویر"
 
-#: js/gallery.js:330
+#: js/gallery.js:328
 msgid "Shared by"
 msgstr "اشتراک گذاشته شده به وسیله"
 
-#: js/public.js:13
+#: js/public.js:23
 msgid "Picture view"
 msgstr ""
 

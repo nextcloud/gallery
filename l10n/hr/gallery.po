@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-03-11 02:18-0400\n"
-"PO-Revision-Date: 2014-03-11 06:18+0000\n"
+"POT-Creation-Date: 2014-04-30 02:18-0400\n"
+"PO-Revision-Date: 2014-04-29 10:01+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Croatian (http://www.transifex.com/projects/p/owncloud/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: appinfo/app.php:36 js/gallery.js:289
+#: appinfo/app.php:36 js/gallery.js:288
 msgid "Pictures"
 msgstr "Slike"
 
-#: js/gallery.js:330
+#: js/gallery.js:328
 msgid "Shared by"
 msgstr ""
 
-#: js/public.js:13
+#: js/public.js:23
 msgid "Picture view"
 msgstr ""
 

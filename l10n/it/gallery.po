@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-03-11 02:18-0400\n"
-"PO-Revision-Date: 2014-03-11 06:18+0000\n"
+"POT-Creation-Date: 2014-04-30 02:18-0400\n"
+"PO-Revision-Date: 2014-04-29 10:01+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/owncloud/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -22,15 +22,15 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:289
+#: appinfo/app.php:36 js/gallery.js:288
 msgid "Pictures"
 msgstr "Immagini"
 
-#: js/gallery.js:330
+#: js/gallery.js:328
 msgid "Shared by"
 msgstr "Condiviso da"
 
-#: js/public.js:13
+#: js/public.js:23
 msgid "Picture view"
 msgstr "Vista immagini"
 
