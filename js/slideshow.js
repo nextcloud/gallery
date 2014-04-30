@@ -1,3 +1,5 @@
+/* global OC, t, FileList, FileActions */
+
 jQuery.fn.slideShow = function (container, start, options) {
 	var i, images = [], settings;
 	start = start || 0;
@@ -332,24 +334,31 @@ $(document).ready(function () {
 
 	if (typeof FileActions !== 'undefined' && typeof Slideshow !== 'undefined' && $('#filesApp').val()) {
 		FileActions.register('image', 'View', OC.PERMISSION_READ, '', function (filename) {
-			var images = $('#fileList tr[data-mime^="image"] a.name');
+			var files = FileList.files;
+			var start = 0;
+			var images = [];
 			var dir = FileList.getCurrentDirectory() + '/';
 			var user = OC.currentUser;
 			if (!user) {
 				user = $('#sharingToken').val();
 			}
-			var start = 0;
-			$.each(images, function (i, e) {
-				var tr = $(e).closest('tr');
-				var imageFile = tr.data('file');
-				if (imageFile === filename) {
+			for (var i = 0; i < files.length; i++) {
+				var file = files[i];
+				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
+					images.push({
+						name: file.name,
+						// use gallery URL instead of download URL
+						imageUrl: OC.linkTo('gallery', 'ajax/image.php') +
+							'?file=' + encodeURIComponent(user + dir + file.name)
+					});
+				}
+			}
+			for (i = 0; i < images.length; i++) {
+				if (images[i].name === filename) {
 					start = i;
 				}
-				// use gallery URL instead of download URL
-				e.imageUrl = OC.linkTo('gallery', 'ajax/image.php') +
-					'?file=' + encodeURIComponent(user + dir + imageFile);
-			});
-			images.slideShow($('#slideshow'), start);
+			}
+			jQuery.fn.slideShow.call(images, $('#slideshow'), start);
 		});
 		FileActions.setDefault('image', 'View');
 	}
