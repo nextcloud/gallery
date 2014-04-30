@@ -345,15 +345,17 @@ $(document).ready(function () {
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
-					if (file.name === filename) {
-						start = i;
-					}
 					images.push({
 						name: file.name,
 						// use gallery URL instead of download URL
 						imageUrl: OC.linkTo('gallery', 'ajax/image.php') +
 							'?file=' + encodeURIComponent(user + dir + file.name)
 					});
+				}
+			}
+			for (i = 0; i < images.length; i++) {
+				if (images[i].name === filename) {
+					start = i;
 				}
 			}
 			jQuery.fn.slideShow.call(images, $('#slideshow'), start);
