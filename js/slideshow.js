@@ -1,4 +1,5 @@
 /* global OC, t, FileList, FileActions */
+/* global Gallery, Thumbnail */
 
 jQuery.fn.slideShow = function (container, start, options) {
 	var i, images = [], settings;
@@ -8,13 +9,14 @@ jQuery.fn.slideShow = function (container, start, options) {
 		'play'    : false,
 		'maxScale': 2
 	}, options);
+	var slideShow = $('#slideshow');
 	if (settings.play){
-		$('#slideshow').children('.play').hide();
-		$('#slideshow').children('.pause').show();
+		slideShow.children('.play').hide();
+		slideShow.children('.pause').show();
 	}
 	else{
-		$('#slideshow').children('.play').show();
-		$('#slideshow').children('.pause').hide();
+		slideShow.children('.play').show();
+		slideShow.children('.pause').hide();
 	}
 	jQuery.fn.slideShow.container = container;
 	jQuery.fn.slideShow.settings = settings;
@@ -31,7 +33,7 @@ jQuery.fn.slideShow = function (container, start, options) {
 	jQuery.fn.slideShow.progressBar = container.find('.progress');
 
 	// hide arrows and play/pause when only one pic
-	$('#slideshow').find('.next, .previous').toggle(images.length > 1);
+	slideShow.find('.next, .previous').toggle(images.length > 1);
 	if (images.length === 1) {
 		// note: only handling hide case here as we don't want to
 		// re-show the buttons that might have been hidden by
@@ -53,7 +55,7 @@ jQuery.fn.slideShow.loadImage = function (url) {
 	if (!jQuery.fn.slideShow.cache[url]) {
 		jQuery.fn.slideShow.cache[url] = new jQuery.Deferred();
 		var image = new Image();
-		jQuery.fn.slideShow.cache[url].fail(function (u) {
+		jQuery.fn.slideShow.cache[url].fail(function () {
 			image = false;
 			jQuery.fn.slideShow.cache[url] = false;
 		});
@@ -339,17 +341,23 @@ $(document).ready(function () {
 			var images = [];
 			var dir = FileList.getCurrentDirectory() + '/';
 			var user = OC.currentUser;
-			if (!user) {
-				user = $('#sharingToken').val();
-			}
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
+					var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x=1000&a=true', {
+						file: encodeURIComponent(dir +file.name)
+					});
+					if (!user) {
+						imageUrl = OC.generateUrl('/apps/files_sharing/publicpreview?file={file}&x=1000&a=true&t={t}', {
+							file: encodeURIComponent(dir +file.name),
+							t: $('#sharingToken').val()
+						});
+					}
+
 					images.push({
 						name: file.name,
 						// use gallery URL instead of download URL
-						imageUrl: OC.linkTo('gallery', 'ajax/image.php') +
-							'?file=' + encodeURIComponent(user + dir + file.name)
+						imageUrl: imageUrl
 					});
 				}
 			}
