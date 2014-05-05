@@ -344,12 +344,14 @@ $(document).ready(function () {
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
-					var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x=1000&a=true', {
+					var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&a=true', {
+						x: $(document).width() * window.devicePixelRatio,
 						file: encodeURIComponent(dir +file.name)
 					});
 					if (!user) {
-						imageUrl = OC.generateUrl('/apps/files_sharing/publicpreview?file={file}&x=1000&a=true&t={t}', {
+						imageUrl = OC.generateUrl('/apps/files_sharing/publicpreview?file={file}&x={x}&a=true&t={t}', {
 							file: encodeURIComponent(dir +file.name),
+							x: $(document).width() * window.devicePixelRatio,
 							t: $('#sharingToken').val()
 						});
 					}
