@@ -123,10 +123,12 @@ Row.prototype.isFull = function () {
 	return this.width > this.targetWidth;
 };
 
-function GalleryImage(src) {
+function GalleryImage(src, path) {
 	this.src = src;
+	this.path = path;
 	this.thumbnail = null;
 	this.domDef = null;
+	this.domHeigth = null;
 }
 
 GalleryImage.prototype.getThumbnail = function (square) {
@@ -141,9 +143,10 @@ GalleryImage.prototype.getThumbnailWidth = function () {
 
 GalleryImage.prototype.getDom = function (targetHeigth) {
 	var image = this;
-	if (this.domDef === null) {
+	if (this.domDef === null || this.domHeigth !== targetHeigth) {
+		this.domHeigth = targetHeigth;
 		this.domDef = this.getThumbnail().then(function (img) {
-			var a = $('<a/>').addClass('image').attr('href', '#' + image.src).attr('data-path', image.src);
+			var a = $('<a/>').addClass('image').attr('href', '#' + image.src).attr('data-path', image.path);
 			img.height = targetHeigth;
 			a.append(img);
 			return a;

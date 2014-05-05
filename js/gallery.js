@@ -8,8 +8,11 @@ Gallery.imageMap = {};
 Gallery.getAlbum = function (path) {
 	if (!Gallery.albumMap[path]) {
 		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
-		var parent = OC.dirname(path);
-		if (parent && parent !== path) {
+		if (path !== '') {
+			var parent = OC.dirname(path);
+			if (parent === path) {
+				parent = '';
+			}
 			Gallery.getAlbum(parent).subAlbums.push(Gallery.albumMap[path]);
 		}
 	}
@@ -30,10 +33,17 @@ Gallery.fillAlbums = function () {
 		Gallery.images = data.images;
 
 		for (var i = 0; i < Gallery.images.length; i++) {
-			image = new GalleryImage(Gallery.images[i], false);
-			album = Gallery.getAlbum(OC.dirname(Gallery.images[i]));
+			var parts = Gallery.images[i].split('/');
+			parts.shift();
+			var path = parts.join('/');
+			image = new GalleryImage(Gallery.images[i], path);
+			var dir = OC.dirname(Gallery.images[i]);
+			parts = dir.split('/');
+			parts.shift();
+			dir = parts.join('/');
+			album = Gallery.getAlbum(dir);
 			album.images.push(image);
-			Gallery.imageMap[Gallery.images[i]] = image;
+			Gallery.imageMap[image.path] = image;
 		}
 		def.resolve();
 	});
@@ -91,21 +101,18 @@ Gallery.view.cache = {};
 
 Gallery.view.viewAlbum = function (albumPath) {
 	var i, crumbs, path;
-//	if (!albumPath) {
-//		albumPath = $('#gallery').data('token');
-//	}
-	if (!albumPath || albumPath === '') {
-		albumPath = OC.currentUser;
+	if (!albumPath) {
+		albumPath = $('#gallery').data('token');
 	}
+	albumPath = albumPath || '';
 	if (!Gallery.albumMap[albumPath]) {
 		return;
 	}
-	console.log(albumPath);
 
 	Gallery.view.clear();
 	Gallery.currentAlbum = albumPath;
 
-	if (albumPath === OC.currentUser) {
+	if (albumPath === '' || $('#gallery').data('token')) {
 		$('button.share').hide();
 	} else {
 		$('button.share').show();
@@ -117,58 +124,60 @@ Gallery.view.viewAlbum = function (albumPath) {
 		albumName = t('gallery', 'Pictures');
 	}
 	OC.Breadcrumb.push(albumName, '#').click(function () {
-		Gallery.view.viewAlbum(OC.currentUser);
+		Gallery.view.viewAlbum('');
 	});
+	path = '';
 	crumbs = albumPath.split('/');
-	//first entry is username
-	path = crumbs.splice(0, 1);
 	for (i = 0; i < crumbs.length; i++) {
 		if (crumbs[i]) {
-			path += '/' + crumbs[i];
+			if (path) {
+				path += '/' + crumbs[i];
+			} else {
+				path += crumbs[i];
+			}
 			Gallery.view.pushBreadCrumb(crumbs[i], path);
 		}
 	}
-//
-//	if (albumPath === OC.currentUser) {
-//		Gallery.view.showUsers();
-//	}
-
 
 	Gallery.getAlbumInfo(Gallery.currentAlbum); //preload album info
 
 	Gallery.view.loadVisibleRows.loading = false;
 	Gallery.albumMap[albumPath].viewedItems = 0;
-	setTimeout(Gallery.view.loadVisibleRows, 0);
+	setTimeout(function () {
+		Gallery.view.loadVisibleRows.activeIndex = 0;
+		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+	}, 0);
 };
 
-Gallery.view.loadVisibleRows = function () {
+Gallery.view.loadVisibleRows = function (album, path) {
 	if (Gallery.view.loadVisibleRows.loading) {
-		return;
+		return Gallery.view.loadVisibleRows.loading;
 	}
-	var currentAlbum = Gallery.currentAlbum;
 	// load 2 windows worth of rows
 	var targetHeight = ($(window).height() * 2) + $(window).scrollTop();
 	var showRows = function (album) {
-		album.getNextRow(Gallery.view.element.width()).then(function (row) {
-			console.log(row);
+		if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
+			return;
+		}
+		return album.getNextRow(Gallery.view.element.width()).then(function (row) {
 			return row.getDom().then(function (dom) {
-				if (Gallery.currentAlbum !== currentAlbum) {
+				if (Gallery.currentAlbum !== path) {
 					return; //throw away the row if the user has navigated away in the meantime
 				}
 				Gallery.view.element.append(dom);
 				if (album.viewedItems < album.subAlbums.length + album.images.length && Gallery.view.element.height() < targetHeight) {
-					showRows(album);
+					return showRows(album);
 				} else {
-					Gallery.view.loadVisibleRows.loading = false;
+					Gallery.view.loadVisibleRows.loading = null;
 				}
 			}, function () {
-				Gallery.view.loadVisibleRows.loading = false;
+				Gallery.view.loadVisibleRows.loading = null;
 			});
 		});
 	};
 	if (Gallery.view.element.height() < targetHeight) {
-		Gallery.view.loadVisibleRows.loading = true;
-		showRows(Gallery.albumMap[Gallery.currentAlbum]);
+		Gallery.view.loadVisibleRows.loading = showRows(album);
+		return Gallery.view.loadVisibleRows.loading;
 	}
 };
 Gallery.view.loadVisibleRows.loading = false;
@@ -177,30 +186,6 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 	OC.Breadcrumb.push(text, '#' + path).click(function () {
 		Gallery.view.viewAlbum(path);
 	});
-};
-
-Gallery.view.showUsers = function () {
-	var i, j, user, head, subAlbums, album, singleImages;
-	for (i = 0; i < Gallery.users.length; i++) {
-		singleImages = [];
-		user = Gallery.users[i];
-		subAlbums = Gallery.subAlbums[user];
-		if (subAlbums) {
-			if (subAlbums.length > 0) {
-				head = $('<h2/>');
-				head.text(t('gallery', 'Shared by') + ' ' + Gallery.displayNames[user]);
-				$('#gallery').append(head);
-				for (j = 0; j < subAlbums.length; j++) {
-					album = subAlbums[j];
-					Gallery.view.addAlbum(album);
-					Gallery.view.element.append(' '); //add a space for justify
-				}
-			}
-		}
-		for (j = 0; j < Gallery.albums[user].length; j++) {
-			Gallery.view.addImage(Gallery.albums[user][j]);
-		}
-	}
 };
 
 $(document).ready(function () {
@@ -214,14 +199,15 @@ $(document).ready(function () {
 	Gallery.view.element.on('click', 'a.image', function (event) {
 		event.preventDefault();
 		var path = $(this).data('path');
-		var album = Gallery.albumMap[OC.dirname(path)];
+		var album = Gallery.albumMap[Gallery.currentAlbum];
 		if (location.hash !== encodeURI(path)) {
 			location.hash = encodeURI(path);
 			Thumbnail.paused = true;
 			var images = album.images.map(function (image) {
 				return Gallery.getImage(image.src);
 			});
-			var i = images.indexOf(Gallery.getImage(path));
+			var clickedImage = Gallery.imageMap[path];
+			var i = images.indexOf(Gallery.getImage(clickedImage.src));
 			Slideshow.start(images, i);
 		}
 	});
@@ -233,32 +219,28 @@ $(document).ready(function () {
 	jQuery.fn.slideShow.onstop = function () {
 		$('#content').show();
 		Thumbnail.paused = false;
-		var albumParts = Gallery.currentAlbum.split('/');
-		//not an album bit a single shared image, go back to the root
-		if (OC.currentUser && albumParts.length === 1 && albumParts[0] !== OC.currentUser) {
-			Gallery.currentAlbum = OC.currentUser;
-		}
 		location.hash = encodeURI(Gallery.currentAlbum);
 		Thumbnail.concurrent = 3;
 	};
 
 	$(window).scroll(function () {
-		Gallery.view.loadVisibleRows();
+		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
 	});
+
+	$(window).resize(_.throttle(function () {
+		Gallery.view.viewAlbum(Gallery.currentAlbum);
+	}, 500));
 });
 
 window.onhashchange = function () {
 	var album = decodeURI(location.hash).substr(1);
 	if (!album) {
-		album = OC.currentUser;
-	}
-	if (!album) {
-		album = $('#gallery').data('token');
+		album = $('#gallery').data('token') || '';
 	}
 	if (!Gallery.imageMap[album]) {
 		Slideshow.end();
 		album = decodeURIComponent(album);
-		if (Gallery.currentAlbum !== album) {
+		if (Gallery.currentAlbum !== album || album == '') {
 			Gallery.view.viewAlbum(album);
 		}
 	} else {
