@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Iñigo Varela <ivarela@softastur.org>, 2014
 # Tornes Llume <l.lumex03.tornes@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-04-30 02:18-0400\n"
-"PO-Revision-Date: 2014-04-29 10:01+0000\n"
+"POT-Creation-Date: 2014-05-11 02:19-0400\n"
+"PO-Revision-Date: 2014-05-10 14:20+0000\n"
 "Last-Translator: Iñigo Varela <ivarela@softastur.org>\n"
 "Language-Team: Asturian (http://www.transifex.com/projects/p/owncloud/language/ast/)\n"
 "MIME-Version: 1.0\n"
@@ -28,11 +29,11 @@ msgstr "Compartíu por"
 
 #: js/public.js:23
 msgid "Picture view"
-msgstr ""
+msgstr "Vista d'imáxenes"
 
-#: js/slideshow.js:329
+#: js/slideshow.js:333
 msgid "Error loading slideshow template"
-msgstr ""
+msgstr "Fallu al cargar la plantía de diapositives"
 
 #: templates/index.php:4 templates/index.php:5
 msgid "Share"
@@ -41,8 +42,8 @@ msgstr "Compartir"
 #: templates/public.php:9
 #, php-format
 msgid "shared by %s"
-msgstr ""
+msgstr "compartíu por %s"
 
 #: templates/public.php:20
 msgid "File list"
-msgstr ""
+msgstr "Llista de ficheros"
