@@ -58,14 +58,22 @@ class Thumbnail {
 	private function create($imagePath, $square) {
 		$galleryDir = \OC_User::getHome($this->user) . '/gallery/' . $this->user . '/';
 		$dir = dirname($imagePath);
-		if (!$this->view->file_exists($imagePath)) {
-			return;
+		$fileInfo = $this->view->getFileInfo($imagePath);
+		if(!$fileInfo) {
+			return false;
 		}
 		if (!is_dir($galleryDir . $dir)) {
 			mkdir($galleryDir . $dir, 0755, true);
 		}
-		$absolutePath = $this->view->getAbsolutePath($imagePath);
-		$this->image = new \OCP\Image(fopen('oc://' . $absolutePath, 'r'));
+
+		$this->image = new \OCP\Image();
+		// check if file is encrypted
+		if($fileInfo['encrypted'] === true) {
+			$fileName = $this->view->toTmpFile($imagePath);
+		} else {
+			$fileName = $this->view->getLocalFile($imagePath);
+		}
+		$this->image->loadFromFile($fileName);
 		if ($this->image->valid()) {
 			$this->image->fixOrientation();
 			if ($square) {

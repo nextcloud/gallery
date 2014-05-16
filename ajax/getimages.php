@@ -48,6 +48,7 @@ OCP\JSON::checkAppEnabled('gallery');
 
 $images = \OCP\Files::searchByMime('image');
 $user = \OCP\User::getUser();
+$users = array();
 $result = array();
 
 foreach ($images as &$image) {

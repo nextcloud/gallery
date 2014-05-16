@@ -1,4 +1,3 @@
-
 #slideshow {
 	position: fixed;
 	left: 0;
@@ -9,6 +8,12 @@
 	display: none;
 	background-color: black;
 	background-position: center center;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #slideshow>img {
