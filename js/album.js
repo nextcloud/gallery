@@ -54,6 +54,12 @@ Album.prototype.getNextRow = function (width) {
 	 * @returns {$.Deferred<Row>}
 	 */
 	var addImages = function (album, row, images) {
+		// pre-load thumbnails in paralel
+		for (var i = 0; i < 3 ;i++){
+			if (images[album.viewedItems + i]) {
+				images[album.viewedItems + i].getThumbnail();
+			}
+		}
 		return row.addImage(images[album.viewedItems]).then(function (more) {
 			album.viewedItems++;
 			if (more && album.viewedItems < images.length) {
