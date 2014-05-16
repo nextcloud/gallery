@@ -21,15 +21,14 @@ Gallery.getAlbum = function (path) {
 
 // fill the albums from Gallery.images
 Gallery.fillAlbums = function () {
-	var def = new $.Deferred();
+	var sortFunction = function (a, b) {
+		return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
+	};
 	var token = $('#gallery').data('token');
 	var album, image;
-	$.getJSON(OC.filePath('gallery', 'ajax', 'getimages.php'), {token: token}).then(function (data) {
+	return $.getJSON(OC.filePath('gallery', 'ajax', 'getimages.php'), {token: token}).then(function (data) {
 		Gallery.users = data.users;
 		Gallery.displayNames = data.displayNames;
-		data.images.sort(function (a, b) {
-			return a.toLowerCase().localeCompare(b.toLowerCase());
-		});
 		Gallery.images = data.images;
 
 		for (var i = 0; i < Gallery.images.length; i++) {
@@ -45,9 +44,12 @@ Gallery.fillAlbums = function () {
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
 		}
-		def.resolve();
+
+		for (path in Gallery.albumMap) {
+			Gallery.albumMap[path].images.sort(sortFunction);
+			Gallery.albumMap[path].subAlbums.sort(sortFunction);
+		}
 	});
-	return def;
 };
 
 Gallery.getAlbumInfo = function (album) {
