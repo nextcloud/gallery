@@ -7,10 +7,6 @@ function Album(path, subAlbums, images, name) {
 	this.domDef = null;
 }
 
-Album.prototype.setWidth = function () {
-	this.width = width;
-};
-
 Album.prototype.getThumbnail = function () {
 	if (this.images.length) {
 		return this.images[0].getThumbnail(true);
@@ -25,16 +21,17 @@ Album.prototype.getThumbnailWidth = function () {
 	});
 };
 
-Album.prototype.getDom = function (targetHeigth) {
+Album.prototype.getDom = function (targetHeight) {
 	var album = this;
-	if (this.domDef === null) {
+	if (this.domDef === null || this.domDef.height !== targetHeight) {
 		this.domDef = this.getThumbnail().then(function (img) {
 			var a = $('<a/>').addClass('album').attr('href', '#' + album.path);
 			a.append($('<label/>').text(album.name));
 			a.append(img);
-			img.height = targetHeigth;
+			img.height = targetHeight;
 			return a;
 		});
+		this.domDef.height = targetHeight;
 	}
 	return this.domDef;
 };
@@ -54,20 +51,20 @@ Album.prototype.getNextRow = function (width) {
 	 * @returns {$.Deferred<Row>}
 	 */
 	var addImages = function (album, row, images) {
-		// pre-load thumbnails in paralel
+		// pre-load thumbnails in parallel
 		for (var i = 0; i < 3 ;i++){
 			if (images[album.viewedItems + i]) {
 				images[album.viewedItems + i].getThumbnail();
 			}
 		}
-		return row.addImage(images[album.viewedItems]).then(function (more) {
+		var image = images[album.viewedItems];
+		return row.addImage(image).then(function (more) {
 			album.viewedItems++;
 			if (more && album.viewedItems < images.length) {
 				return addImages(album, row, images);
+			} else {
+				return row;
 			}
-			return row;
-		}, function () {
-			console.log('err');
 		});
 	};
 	var items = this.subAlbums.concat(this.images);
@@ -93,6 +90,7 @@ Row.prototype.addImage = function (image) {
 		row.width += width;
 		def.resolve(!row.isFull());
 	}, function () {
+		console.log('Error getting thumbnail for ' + image);
 		def.resolve(true);
 	});
 	return def;

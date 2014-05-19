@@ -112,6 +112,9 @@ Gallery.view.viewAlbum = function (albumPath) {
 	}
 
 	Gallery.view.clear();
+	if (albumPath !== Gallery.currentAlbum) {
+		Gallery.view.loadVisibleRows.loading = false;
+	}
 	Gallery.currentAlbum = albumPath;
 
 	if (albumPath === '' || $('#gallery').data('token')) {
@@ -143,7 +146,6 @@ Gallery.view.viewAlbum = function (albumPath) {
 
 	Gallery.getAlbumInfo(Gallery.currentAlbum); //preload album info
 
-	Gallery.view.loadVisibleRows.loading = false;
 	Gallery.albumMap[albumPath].viewedItems = 0;
 	setTimeout(function () {
 		Gallery.view.loadVisibleRows.activeIndex = 0;
@@ -152,18 +154,20 @@ Gallery.view.viewAlbum = function (albumPath) {
 };
 
 Gallery.view.loadVisibleRows = function (album, path) {
-	if (Gallery.view.loadVisibleRows.loading) {
+	if (Gallery.view.loadVisibleRows.loading && Gallery.view.loadVisibleRows.loading.state() !== 'resolved') {
 		return Gallery.view.loadVisibleRows.loading;
 	}
 	// load 2 windows worth of rows
 	var targetHeight = ($(window).height() * 2) + $(window).scrollTop();
 	var showRows = function (album) {
 		if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
+			Gallery.view.loadVisibleRows.loading = null;
 			return;
 		}
 		return album.getNextRow(Gallery.view.element.width()).then(function (row) {
 			return row.getDom().then(function (dom) {
 				if (Gallery.currentAlbum !== path) {
+					Gallery.view.loadVisibleRows.loading = null;
 					return; //throw away the row if the user has navigated away in the meantime
 				}
 				Gallery.view.element.append(dom);
@@ -178,6 +182,7 @@ Gallery.view.loadVisibleRows = function (album, path) {
 		});
 	};
 	if (Gallery.view.element.height() < targetHeight) {
+		Gallery.view.loadVisibleRows.loading = true;
 		Gallery.view.loadVisibleRows.loading = showRows(album);
 		return Gallery.view.loadVisibleRows.loading;
 	}
