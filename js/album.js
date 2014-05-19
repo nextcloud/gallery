@@ -23,17 +23,13 @@ Album.prototype.getThumbnailWidth = function () {
 
 Album.prototype.getDom = function (targetHeight) {
 	var album = this;
-	if (this.domDef === null || this.domDef.height !== targetHeight) {
-		this.domDef = this.getThumbnail().then(function (img) {
-			var a = $('<a/>').addClass('album').attr('href', '#' + album.path);
-			a.append($('<label/>').text(album.name));
-			a.append(img);
-			img.height = targetHeight;
-			return a;
-		});
-		this.domDef.height = targetHeight;
-	}
-	return this.domDef;
+	return this.getThumbnail().then(function (img) {
+		var a = $('<a/>').addClass('album').attr('href', '#' + album.path);
+		a.append($('<label/>').text(album.name));
+		a.append(img);
+		img.height = targetHeight;
+		return a;
+	});
 };
 
 /**
