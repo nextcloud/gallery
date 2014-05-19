@@ -49,7 +49,10 @@ body {
 	width: 100%;
 	text-align: center;
 	font-size: 18px;
-	padding-bottom: 5px;
+	line-height: normal;
+	box-sizing: border-box;
+	padding: 5px;
+	overflow-x: hidden;
 	text-overflow: ellipsis;
 	z-index: 11;
 }
