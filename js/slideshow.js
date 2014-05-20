@@ -1,4 +1,3 @@
-/* global OC, t, FileList, FileActions */
 /* global Gallery, Thumbnail */
 
 jQuery.fn.slideShow = function (container, start, options) {
@@ -339,12 +338,12 @@ $(document).ready(function () {
 		});
 
 
-	if (typeof FileActions !== 'undefined' && typeof Slideshow !== 'undefined' && $('#filesApp').val()) {
-		FileActions.register('image', 'View', OC.PERMISSION_READ, '', function (filename) {
-			var files = FileList.files;
+	if (OCA.Files && typeof Slideshow !== 'undefined') {
+		OCA.Files.fileActions.register('image', 'View', OC.PERMISSION_READ, '', function (filename, context) {
+			var files = context.fileList.files;
 			var start = 0;
 			var images = [];
-			var dir = FileList.getCurrentDirectory() + '/';
+			var dir = context.dir + '/';
 			var user = OC.currentUser;
 			var width = $(document).width() * window.devicePixelRatio;
 			for (var i = 0; i < files.length; i++) {
@@ -377,6 +376,6 @@ $(document).ready(function () {
 			}
 			jQuery.fn.slideShow.call(images, $('#slideshow'), start);
 		});
-		FileActions.setDefault('image', 'View');
+		OCA.Files.fileActions.setDefault('image', 'View');
 	}
 });
