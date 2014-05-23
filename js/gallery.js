@@ -103,9 +103,6 @@ Gallery.view.cache = {};
 
 Gallery.view.viewAlbum = function (albumPath) {
 	var i, crumbs, path;
-	if (!albumPath) {
-		albumPath = $('#gallery').data('token');
-	}
 	albumPath = albumPath || '';
 	if (!Gallery.albumMap[albumPath]) {
 		return;
@@ -241,9 +238,6 @@ $(document).ready(function () {
 
 window.onhashchange = function () {
 	var album = decodeURI(location.hash).substr(1);
-	if (!album) {
-		album = $('#gallery').data('token') || '';
-	}
 	if (!Gallery.imageMap[album]) {
 		Slideshow.end();
 		album = decodeURIComponent(album);
