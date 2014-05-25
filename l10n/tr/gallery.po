@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-04-30 02:18-0400\n"
-"PO-Revision-Date: 2014-04-29 10:01+0000\n"
+"POT-Creation-Date: 2014-05-25 02:18-0400\n"
+"PO-Revision-Date: 2014-05-24 13:12+0000\n"
 "Last-Translator: volkangezer <volkangezer@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/owncloud/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Paylaşan"
 msgid "Picture view"
 msgstr "Resim görünümü"
 
-#: js/slideshow.js:329
+#: js/slideshow.js:333
 msgid "Error loading slideshow template"
 msgstr "Slayt gösteri şablonu yüklenirken hata"
 
