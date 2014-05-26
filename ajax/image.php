@@ -13,12 +13,16 @@ $linkItem = \OCP\Share::getShareByToken($owner);
 if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
 	// seems to be a valid share
 	$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
-	$img = trim($rootLinkItem['file_target'] . '/' . $img);
 	$user = $rootLinkItem['uid_owner'];
+
+	// Setup filesystem
 	OCP\JSON::checkUserExists($user);
 	OC_Util::tearDownFS();
 	OC_Util::setupFS($user);
-	\OC_User::setIncognitoMode(true);
+	OC_User::setIncognitoMode(true);
+
+	$fullPath = \OC\Files\Filesystem::getPath($linkItem['file_source']);
+	$img = trim($fullPath . '/' . $img);
 } else {
 	OCP\JSON::checkLoggedIn();
 	$user = OCP\User::getUser();
