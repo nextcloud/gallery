@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-04-30 02:18-0400\n"
-"PO-Revision-Date: 2014-04-29 10:01+0000\n"
+"POT-Creation-Date: 2014-05-31 02:18-0400\n"
+"PO-Revision-Date: 2014-05-31 06:11+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Albanian (http://www.transifex.com/projects/p/owncloud/language/sq/)\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "Ndarë nga"
 msgid "Picture view"
 msgstr "Vezhgo fotografine"
 
-#: js/slideshow.js:329
+#: js/slideshow.js:333
 msgid "Error loading slideshow template"
 msgstr "Veprim i gabuar gjatë ngarkimit të modelit të shfaqjes së diapozitivave"
 
