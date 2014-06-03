@@ -12,17 +12,4 @@
 	margin-right: 0 !important;
 }
 
-/* smaller images for smaller screens, fit 2 to width */
-#gallery > a > img,
-#gallery > a.image > img {
-	max-height: 100%;
-	max-width: 100%;
-}
-#gallery > a,
-#gallery > a.album {
-	max-height: 100px;
-	max-width: 100px;
-}
-
-
 }

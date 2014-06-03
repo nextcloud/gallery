@@ -95,6 +95,7 @@ if (isset($_GET['t'])) {
 
 		// render template
 		$tmpl = new \OCP\Template('gallery', 'public', 'base');
+		OCP\Util::addScript('gallery', 'album');
 		OCP\Util::addScript('gallery', 'gallery');
 		OCP\Util::addScript('gallery', 'thumbnail');
 		OCP\Util::addStyle('gallery', 'public');

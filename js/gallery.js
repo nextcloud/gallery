@@ -1,78 +1,55 @@
 var Gallery = {};
-Gallery.albums = {};
 Gallery.images = [];
 Gallery.currentAlbum = '';
-Gallery.subAlbums = {};
 Gallery.users = [];
-Gallery.displayNames = [];
+Gallery.albumMap = {};
+Gallery.imageMap = {};
 
-Gallery.sortFunction = function (a, b) {
-	return a.toLowerCase().localeCompare(b.toLowerCase());
+Gallery.getAlbum = function (path) {
+	if (!Gallery.albumMap[path]) {
+		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
+		if (path !== '') {
+			var parent = OC.dirname(path);
+			if (parent === path) {
+				parent = '';
+			}
+			Gallery.getAlbum(parent).subAlbums.push(Gallery.albumMap[path]);
+		}
+	}
+	return Gallery.albumMap[path];
 };
 
 // fill the albums from Gallery.images
 Gallery.fillAlbums = function () {
-	var def = new $.Deferred();
+	var sortFunction = function (a, b) {
+		return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
+	};
 	var token = $('#gallery').data('token');
-	$.getJSON(OC.filePath('gallery', 'ajax', 'getimages.php'), {token: token}).then(function (data) {
+	var album, image;
+	return $.getJSON(OC.filePath('gallery', 'ajax', 'getimages.php'), {token: token}).then(function (data) {
 		Gallery.users = data.users;
 		Gallery.displayNames = data.displayNames;
-		for (var i = 0; i < data.images.length; i++) {
-			Gallery.images.push(data.images[i]);
-		}
-		Gallery.fillAlbums.fill(Gallery.albums, Gallery.images);
-		Gallery.fillAlbums.fillSubAlbums(Gallery.subAlbums, Gallery.albums);
+		Gallery.images = data.images;
 
-		Gallery.fillAlbums.sortAlbums(Gallery.subAlbums);
-		def.resolve();
+		for (var i = 0; i < Gallery.images.length; i++) {
+			var parts = Gallery.images[i].split('/');
+			parts.shift();
+			var path = parts.join('/');
+			image = new GalleryImage(Gallery.images[i], path);
+			var dir = OC.dirname(Gallery.images[i]);
+			parts = dir.split('/');
+			parts.shift();
+			dir = parts.join('/');
+			album = Gallery.getAlbum(dir);
+			album.images.push(image);
+			Gallery.imageMap[image.path] = image;
+		}
+
+		for (path in Gallery.albumMap) {
+			Gallery.albumMap[path].images.sort(sortFunction);
+			Gallery.albumMap[path].subAlbums.sort(sortFunction);
+		}
 	});
-	return def;
-};
-Gallery.fillAlbums.fill = function (albums, images) {
-	var i, imagePath, albumPath, parent, albumPathParts;
-	images.sort();
-	for (i = 0; i < images.length; i++) {
-		imagePath = images[i];
-		albumPath = OC.dirname(imagePath);
-		albumPathParts = albumPath.split('/');
-		//group single share images in a single album
-		if (OC.currentUser && albumPathParts.length === 1 && albumPathParts[0] !== OC.currentUser) {
-			albumPath = albumPathParts[0];
-		}
-		if (!albums[albumPath]) {
-			albums[albumPath] = [];
-		}
-		parent = OC.dirname(albumPath);
-		while (parent && !albums[parent] && parent !== albumPath) {
-			albums[parent] = [];
-			parent = OC.dirname(parent);
-		}
-		albums[albumPath].push(imagePath);
-	}
-};
-Gallery.fillAlbums.fillSubAlbums = function (subAlbums, albums) {
-	var albumPath, parent;
-	for (albumPath in albums) {
-		if (albums.hasOwnProperty(albumPath)) {
-			if (albumPath !== '') {
-				parent = OC.dirname(albumPath);
-				if (albumPath !== parent) {
-					if (!subAlbums[parent]) {
-						subAlbums[parent] = [];
-					}
-					subAlbums[parent].push(albumPath);
-				}
-			}
-		}
-	}
-};
-Gallery.fillAlbums.sortAlbums = function (albums) {
-	var path;
-	for (path in albums) {
-		if (albums.hasOwnProperty(path)) {
-			albums[path].sort(Gallery.sortFunction);
-		}
-	}
 };
 
 Gallery.getAlbumInfo = function (album) {
@@ -91,20 +68,6 @@ Gallery.getAlbumInfo = function (album) {
 Gallery.getAlbumInfo.cache = {};
 Gallery.getImage = function (image) {
 	return OC.filePath('gallery', 'ajax', 'image.php') + '?file=' + encodeURIComponent(image);
-};
-Gallery.getAlbumThumbnailPaths = function (album) {
-	var paths = [];
-	if (Gallery.albums[album].length) {
-		paths = Gallery.albums[album].slice(0, 10);
-	}
-	if (Gallery.subAlbums[album]) {
-		for (var i = 0; i < Gallery.subAlbums[album].length; i++) {
-			if (paths.length < 10) {
-				paths = paths.concat(Gallery.getAlbumThumbnailPaths(Gallery.subAlbums[album][i]));
-			}
-		}
-	}
-	return paths;
 };
 Gallery.share = function (event) {
 	if (!OC.Share.droppedDown) {
@@ -137,146 +100,21 @@ Gallery.view.clear = function () {
 };
 Gallery.view.cache = {};
 
-Gallery.view.addImage = function (image) {
-	var link , thumb;
-	if (Gallery.view.cache[image]) {
-		Gallery.view.element.append(Gallery.view.cache[image]);
-		thumb = Thumbnail.get(image);
-		thumb.queue();
-	} else {
-		link = $('<a/>');
-		link.addClass('image loading');
-		link.attr('data-path', image);
-		link.attr('href', Gallery.getImage(image)).attr('rel', 'album').attr('alt', OC.basename(image)).attr('title', OC.basename(image));
-
-		thumb = Thumbnail.get(image);
-		thumb.queue().then(function (thumb) {
-			link.removeClass('loading');
-			link.append(thumb);
-		});
-
-		Gallery.view.element.append(link);
-		Gallery.view.cache[image] = link;
-	}
-};
-
-Gallery.view.addAlbum = function (path, name) {
-	var link, label, thumbs, thumb;
-	name = name || OC.basename(path);
-	if (Gallery.view.cache[path]) {
-		thumbs = Gallery.view.addAlbum.thumbs[path];
-		Gallery.view.element.append(Gallery.view.cache[path]);
-		//event handlers are removed when using clear()
-		Gallery.view.cache[path].click(function () {
-			Gallery.view.viewAlbum(path);
-		});
-		Gallery.view.cache[path].mousemove(function (event) {
-			Gallery.view.addAlbum.mouseEvent.call(Gallery.view.cache[path], thumbs, event);
-		});
-		thumb = Thumbnail.get(thumbs[0], true);
-		thumb.queue();
-	} else {
-		thumbs = Gallery.getAlbumThumbnailPaths(path);
-		Gallery.view.addAlbum.thumbs[path] = thumbs;
-		link = $('<a/>');
-		label = $('<label/>');
-		link.attr('href', '#' + path);
-		link.addClass('album loading');
-		link.click(function () {
-			Gallery.view.viewAlbum(path);
-		});
-		link.data('path', path);
-		link.data('offset', 0);
-		link.attr('title', OC.basename(path));
-		label.text(name);
-		link.append(label);
-		thumb = Thumbnail.get(thumbs[0], true);
-		thumb.queue().then(function (image) {
-			link.removeClass('loading');
-			link.append(image);
-			image.className = 'stack stack0';
-			//delay adding additional images until the front ones are loaded
-			for (var i = 1; i <= 3; i++) {
-				if (thumbs[i]) {
-					thumb = Thumbnail.get(thumbs[i], true);
-					thumb.queue().then(function (i, image) {
-						link.removeClass('loading');
-						link.append(image);
-						image.className = 'stack stack' + i;
-					}.bind(null, i));
-				}
-			}
-		});
-
-		link.mousemove(function (event) {
-			Gallery.view.addAlbum.mouseEvent.call(link, thumbs, event);
-		});
-
-		Gallery.view.element.append(link);
-		Gallery.view.cache[path] = link;
-	}
-};
-Gallery.view.addAlbum.thumbs = {};
-
-Gallery.view.addAlbum.mouseEvent = function (thumbs, event) {
-	var mousePos = event.pageX - $(this).offset().left,
-		offset = ((Math.floor((mousePos / 200) * thumbs.length - 1) % thumbs.length) + thumbs.length) % thumbs.length, //workaround js modulo "feature" with negative numbers
-		link = this,
-		oldOffset = $(this).data('offset');
-	if (offset !== oldOffset && !link.data('loading')) {
-		if (!thumbs[offset]) {
-			console.log(offset);
-		}
-		var thumb = Thumbnail.get(thumbs[offset], true);
-		link.data('loading', true);
-		thumb.load().then(function (image) {
-			link.data('loading', false);
-			$('img', link).remove();
-			link.append(image);
-			image.className = 'stack stack0';
-			for (var i = 1; i <= 3; i++) {
-				var y = (((i + offset) % thumbs.length) + thumbs.length) % thumbs.length;
-				if (thumbs[y]) {
-					thumb = Thumbnail.get(thumbs[y], true);
-					thumb.queue().then(function (i, image) {
-						link.removeClass('loading');
-						link.append(image);
-						image.className = 'stack stack' + i;
-					}.bind(null, i));
-				}
-			}
-		});
-		$(this).data('offset', offset);
-	}
-};
-Gallery.view.addAlbum.thumbs = {};
 
 Gallery.view.viewAlbum = function (albumPath) {
-	if (!albumPath) {
-		albumPath = $('#gallery').data('token');
+	var i, crumbs, path;
+	albumPath = albumPath || '';
+	if (!Gallery.albumMap[albumPath]) {
+		return;
 	}
-	Thumbnail.queue = [];
+
 	Gallery.view.clear();
+	if (albumPath !== Gallery.currentAlbum) {
+		Gallery.view.loadVisibleRows.loading = false;
+	}
 	Gallery.currentAlbum = albumPath;
 
-	var i, album, subAlbums, crumbs, path;
-	subAlbums = Gallery.subAlbums[albumPath];
-	if (subAlbums) {
-		for (i = 0; i < subAlbums.length; i++) {
-			Gallery.view.addAlbum(subAlbums[i]);
-			Gallery.view.element.append(' '); //add a space for justify
-		}
-	}
-
-	album = Gallery.albums[albumPath];
-	if (album) {
-		for (i = 0; i < album.length; i++) {
-			Gallery.view.addImage(album[i]);
-			Gallery.view.element.append(' '); //add a space for justify
-		}
-	}
-
-	if (albumPath === OC.currentUser) {
+	if (albumPath === '' || $('#gallery').data('token')) {
 		$('button.share').hide();
 	} else {
 		$('button.share').show();
@@ -288,24 +126,65 @@ Gallery.view.viewAlbum = function (albumPath) {
 		albumName = t('gallery', 'Pictures');
 	}
 	OC.Breadcrumb.push(albumName, '#').click(function () {
-		Gallery.view.viewAlbum(OC.currentUser);
+		Gallery.view.viewAlbum('');
 	});
+	path = '';
 	crumbs = albumPath.split('/');
-	//first entry is username
-	path = crumbs.splice(0, 1);
 	for (i = 0; i < crumbs.length; i++) {
 		if (crumbs[i]) {
-			path += '/' + crumbs[i];
+			if (path) {
+				path += '/' + crumbs[i];
+			} else {
+				path += crumbs[i];
+			}
 			Gallery.view.pushBreadCrumb(crumbs[i], path);
 		}
 	}
 
-	if (albumPath === OC.currentUser) {
-		Gallery.view.showUsers();
-	}
-
 	Gallery.getAlbumInfo(Gallery.currentAlbum); //preload album info
+
+	Gallery.albumMap[albumPath].viewedItems = 0;
+	setTimeout(function () {
+		Gallery.view.loadVisibleRows.activeIndex = 0;
+		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+	}, 0);
 };
+
+Gallery.view.loadVisibleRows = function (album, path) {
+	if (Gallery.view.loadVisibleRows.loading && Gallery.view.loadVisibleRows.loading.state() !== 'resolved') {
+		return Gallery.view.loadVisibleRows.loading;
+	}
+	// load 2 windows worth of rows
+	var targetHeight = ($(window).height() * 2) + $(window).scrollTop();
+	var showRows = function (album) {
+		if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
+			Gallery.view.loadVisibleRows.loading = null;
+			return;
+		}
+		return album.getNextRow(Gallery.view.element.width()).then(function (row) {
+			return row.getDom().then(function (dom) {
+				if (Gallery.currentAlbum !== path) {
+					Gallery.view.loadVisibleRows.loading = null;
+					return; //throw away the row if the user has navigated away in the meantime
+				}
+				Gallery.view.element.append(dom);
+				if (album.viewedItems < album.subAlbums.length + album.images.length && Gallery.view.element.height() < targetHeight) {
+					return showRows(album);
+				} else {
+					Gallery.view.loadVisibleRows.loading = null;
+				}
+			}, function () {
+				Gallery.view.loadVisibleRows.loading = null;
+			});
+		});
+	};
+	if (Gallery.view.element.height() < targetHeight) {
+		Gallery.view.loadVisibleRows.loading = true;
+		Gallery.view.loadVisibleRows.loading = showRows(album);
+		return Gallery.view.loadVisibleRows.loading;
+	}
+};
+Gallery.view.loadVisibleRows.loading = false;
 
 Gallery.view.pushBreadCrumb = function (text, path) {
 	OC.Breadcrumb.push(text, '#' + path).click(function () {
@@ -313,54 +192,26 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 	});
 };
 
-Gallery.view.showUsers = function () {
-	var i, j, user, head, subAlbums, album, singleImages;
-	console.log('asdasdasd');
-	for (i = 0; i < Gallery.users.length; i++) {
-		singleImages = [];
-		user = Gallery.users[i];
-		console.log('asd');
-		console.log(user);
-		subAlbums = Gallery.subAlbums[user];
-		if (subAlbums) {
-			if (subAlbums.length > 0) {
-				head = $('<h2/>');
-				head.text(t('gallery', 'Shared by') + ' ' + Gallery.displayNames[user]);
-				$('#gallery').append(head);
-				for (j = 0; j < subAlbums.length; j++) {
-					album = subAlbums[j];
-					Gallery.view.addAlbum(album);
-					Gallery.view.element.append(' '); //add a space for justify
-				}
-			}
-		}
-		for (j = 0; j < Gallery.albums[user].length; j++) {
-			Gallery.view.addImage(Gallery.albums[user][j]);
-		}
-	}
-};
-
 $(document).ready(function () {
+	Gallery.view.element = $('#gallery');
 	Gallery.fillAlbums().then(function () {
-		Gallery.view.element = $('#gallery');
 		OC.Breadcrumb.container = $('#breadcrumbs');
 		window.onhashchange();
 		$('button.share').click(Gallery.share);
 	});
 
-	$('#gallery').on('click', 'a.image', function (event) {
-		var $this = $(this);
-		var user = $this.data('path').split('/').shift();
-		var images = $(this).parent().children('a.image').filter(function(i){
-			// only show images from the same user in the slideshow
-			return $(this).data('path').split('/').shift() === user;
-		});
-		var i = images.index(this),
-			image = $this.data('path');
+	Gallery.view.element.on('click', 'a.image', function (event) {
 		event.preventDefault();
-		if (location.hash !== encodeURI(image)) {
-			location.hash = encodeURI(image);
+		var path = $(this).data('path');
+		var album = Gallery.albumMap[Gallery.currentAlbum];
+		if (location.hash !== encodeURI(path)) {
+			location.hash = encodeURI(path);
 			Thumbnail.paused = true;
+			var images = album.images.map(function (image) {
+				return Gallery.getImage(image.src);
+			});
+			var clickedImage = Gallery.imageMap[path];
+			var i = images.indexOf(Gallery.getImage(clickedImage.src));
 			Slideshow.start(images, i);
 		}
 	});
@@ -372,28 +223,27 @@ $(document).ready(function () {
 	jQuery.fn.slideShow.onstop = function () {
 		$('#content').show();
 		Thumbnail.paused = false;
-		$(window).scrollTop(Gallery.scrollLocation);
-		var albumParts = Gallery.currentAlbum.split('/');
-		//not an album bit a single shared image, go back to the root
-		if (OC.currentUser && albumParts.length === 1 && albumParts[0] !== OC.currentUser) {
-			Gallery.currentAlbum = OC.currentUser;
-		}
 		location.hash = encodeURI(Gallery.currentAlbum);
 		Thumbnail.concurrent = 3;
 	};
+
+	$(window).scroll(function () {
+		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+	});
+
+	$(window).resize(_.throttle(function () {
+		Gallery.view.viewAlbum(Gallery.currentAlbum);
+	}, 500));
 });
 
 window.onhashchange = function () {
 	var album = decodeURI(location.hash).substr(1);
-	if (!album) {
-		album = OC.currentUser;
-	}
-	if (!album) {
-		album = $('#gallery').data('token');
-	}
-	if (Gallery.images.indexOf(album) === -1) {
+	if (!Gallery.imageMap[album]) {
 		Slideshow.end();
-		Gallery.view.viewAlbum(decodeURIComponent(album));
+		album = decodeURIComponent(album);
+		if (Gallery.currentAlbum !== album || album == '') {
+			Gallery.view.viewAlbum(album);
+		}
 	} else {
 		Gallery.view.viewAlbum(OC.dirname(album));
 		$('#gallery').find('a.image[data-path="' + album + '"]').click();

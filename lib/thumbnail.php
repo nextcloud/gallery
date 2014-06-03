@@ -59,7 +59,7 @@ class Thumbnail {
 		$galleryDir = \OC_User::getHome($this->user) . '/gallery/' . $this->user . '/';
 		$dir = dirname($imagePath);
 		$fileInfo = $this->view->getFileInfo($imagePath);
-		if(!$fileInfo) {
+		if (!$fileInfo) {
 			return false;
 		}
 		if (!is_dir($galleryDir . $dir)) {
@@ -68,7 +68,7 @@ class Thumbnail {
 
 		$this->image = new \OCP\Image();
 		// check if file is encrypted
-		if($fileInfo['encrypted'] === true) {
+		if ($fileInfo['encrypted'] === true) {
 			$fileName = $this->view->toTmpFile($imagePath);
 		} else {
 			$fileName = $this->view->getLocalFile($imagePath);
@@ -79,7 +79,10 @@ class Thumbnail {
 			if ($square) {
 				$this->image->centerCrop(200);
 			} else {
-				$this->image->fitIn(400, 200);
+				$this->image->fitIn($this->image->width(), 200);
+				if ($this->image->width() > 600) { // max aspect ratio of 3
+					$this->image->crop(($this->image->width() - 600) / 2, 0, 600, 200);
+				}
 			}
 			$this->image->save($this->path);
 		}

@@ -10,14 +10,19 @@ OCP\JSON::checkAppEnabled('gallery');
 
 list($owner, $img) = explode('/', $_GET['file'], 2);
 $linkItem = \OCP\Share::getShareByToken($owner);
+
 if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
 	// seems to be a valid share
 	$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
 	$user = $rootLinkItem['uid_owner'];
-	$img = trim($rootLinkItem['file_target'] . '/' . $img);
+
+	// Setup filesystem
 	OCP\JSON::checkUserExists($user);
 	OC_Util::tearDownFS();
 	OC_Util::setupFS($user);
+
+	$fullPath = \OC\Files\Filesystem::getPath($linkItem['file_source']);
+	$img = trim($fullPath . '/' . $img);
 } else {
 	OCP\JSON::checkLoggedIn();
 	$user = OCP\User::getUser();
