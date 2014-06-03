@@ -31,7 +31,12 @@ $ownerView = new \OC\Files\View('/' . $user . '/files');
 $mime = $ownerView->getMimeType($img);
 list($mimePart,) = explode('/', $mime);
 if ($mimePart === 'image') {
-	$local = $ownerView->getLocalFile($img);
+	$fileInfo = $ownerView->getFileInfo($img);
+	if($fileInfo['encrypted'] === true) {
+		$local = $ownerView->toTmpFile($img);
+	} else {
+		$local = $ownerView->getLocalFile($img);
+	}
 	$rotate = false;
 	if (is_callable('exif_read_data')) { //don't use OCP\Image here, using OCP\Image will always cause parsing the image file
 		$exif = @exif_read_data($local, 'IFD0');
