@@ -6,14 +6,11 @@ body {
 	background-color: #404040;
 }
 
-#gallery {
+#gallery.hascontrols {
 	overflow: hidden;
 	text-align: justify;
-}
-
-#gallery img {
-	outline: 2px solid rgba(0, 0, 0, 0.5);
-	outline-offset: -2px;
+	top: 44px;
+	padding-bottom: 100px;
 }
 
 #gallery .row {
@@ -22,10 +19,23 @@ body {
 	white-space: nowrap;
 }
 
+#gallery .row:first-child {
+	margin-top: 2px;
+}
+
+#gallery .row a:first-child {
+	margin-left: 4px;
+}
+
+#gallery .row a:last-child {
+	margin-right: 4px;
+}
+
 #gallery .row a {
 	display: inline-block;
 	height: auto;
 	padding: 0;
+	margin: 2px;
 }
 
 #gallery a.album label, #gallery a.image label {

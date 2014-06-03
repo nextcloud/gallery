@@ -71,7 +71,7 @@ Album.prototype.getNextRow = function (width) {
 function Row(targetWidth) {
 	this.targetWidth = targetWidth;
 	this.items = [];
-	this.width = 0;
+	this.width = 8; // 4px margin to start with
 }
 
 /**
@@ -83,7 +83,7 @@ Row.prototype.addImage = function (image) {
 	var def = new $.Deferred();
 	image.getThumbnailWidth().then(function (width) {
 		row.items.push(image);
-		row.width += width;
+		row.width += width + 4; // add 4px for the margin
 		def.resolve(!row.isFull());
 	}, function () {
 		console.log('Error getting thumbnail for ' + image);
@@ -141,13 +141,13 @@ GalleryImage.prototype.getThumbnailWidth = function () {
 	});
 };
 
-GalleryImage.prototype.getDom = function (targetHeigth) {
+GalleryImage.prototype.getDom = function (targetHeight) {
 	var image = this;
-	if (this.domDef === null || this.domHeigth !== targetHeigth) {
-		this.domHeigth = targetHeigth;
+	if (this.domDef === null || this.domHeigth !== targetHeight) {
+		this.domHeigth = targetHeight;
 		this.domDef = this.getThumbnail().then(function (img) {
 			var a = $('<a/>').addClass('image').attr('href', '#' + image.src).attr('data-path', image.path);
-			img.height = targetHeigth;
+			img.height = targetHeight;
 			a.append(img);
 			return a;
 		});
