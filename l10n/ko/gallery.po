@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-05-31 02:18-0400\n"
-"PO-Revision-Date: 2014-05-31 06:11+0000\n"
+"POT-Creation-Date: 2014-06-04 02:18-0400\n"
+"PO-Revision-Date: 2014-06-04 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/owncloud/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -24,19 +24,15 @@ msgstr ""
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appinfo/app.php:36 js/gallery.js:288
+#: appinfo/app.php:36 js/gallery.js:126
 msgid "Pictures"
 msgstr "사진"
-
-#: js/gallery.js:328
-msgid "Shared by"
-msgstr "공유한 사용자:"
 
 #: js/public.js:23
 msgid "Picture view"
 msgstr "사진 보기"
 
-#: js/slideshow.js:333
+#: js/slideshow.js:338
 msgid "Error loading slideshow template"
 msgstr "슬라이드 쇼 템플릿을 불러오는 중 오류 발생"
 

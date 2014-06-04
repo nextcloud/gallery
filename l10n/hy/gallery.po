@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-03-11 02:18-0400\n"
-"PO-Revision-Date: 2014-03-11 06:18+0000\n"
+"POT-Creation-Date: 2014-06-04 02:18-0400\n"
+"PO-Revision-Date: 2014-06-04 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Armenian (http://www.transifex.com/projects/p/owncloud/language/hy/)\n"
 "MIME-Version: 1.0\n"
@@ -17,19 +17,15 @@ msgstr ""
 "Language: hy\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:289
+#: appinfo/app.php:36 js/gallery.js:126
 msgid "Pictures"
 msgstr ""
 
-#: js/gallery.js:330
-msgid "Shared by"
-msgstr ""
-
-#: js/public.js:13
+#: js/public.js:23
 msgid "Picture view"
 msgstr ""
 
-#: js/slideshow.js:329
+#: js/slideshow.js:338
 msgid "Error loading slideshow template"
 msgstr ""
 

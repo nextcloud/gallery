@@ -1,6 +1,5 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "Bilder",
-"Shared by" => "Delad av",
 "Picture view" => "Bild vy",
 "Error loading slideshow template" => "Fel vid laddning av mallen för bildspelet",
 "Share" => "Dela",

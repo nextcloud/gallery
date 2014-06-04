@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-05-31 02:18-0400\n"
-"PO-Revision-Date: 2014-05-31 06:11+0000\n"
+"POT-Creation-Date: 2014-06-04 02:18-0400\n"
+"PO-Revision-Date: 2014-06-04 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Galician (http://www.transifex.com/projects/p/owncloud/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -20,19 +20,15 @@ msgstr ""
 "Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:288
+#: appinfo/app.php:36 js/gallery.js:126
 msgid "Pictures"
 msgstr "Imaxes"
-
-#: js/gallery.js:328
-msgid "Shared by"
-msgstr "Compartido por"
 
 #: js/public.js:23
 msgid "Picture view"
 msgstr "Ver imaxes"
 
-#: js/slideshow.js:333
+#: js/slideshow.js:338
 msgid "Error loading slideshow template"
 msgstr "Produciuse un erro ao cargar o modelo do diaporama"
 

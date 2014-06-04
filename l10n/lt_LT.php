@@ -1,6 +1,5 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "Nuotraukos",
-"Shared by" => "Dalinasi",
 "Picture view" => "Paveikslėlio rodymas",
 "Error loading slideshow template" => "Klaida pakraunant pristatymą",
 "Share" => "Dalintis",

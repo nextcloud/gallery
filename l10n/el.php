@@ -1,6 +1,5 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "Εικόνες",
-"Shared by" => "Διαμοιράστηκε από",
 "Picture view" => "Προβολή εικονιδίων",
 "Error loading slideshow template" => "Σφάλμα φόρτωσης προτύπου προβολής διαφανειών",
 "Share" => "Διαμοιρασμός",

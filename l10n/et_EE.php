@@ -1,6 +1,5 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "Pildid",
-"Shared by" => "Jagas",
 "Picture view" => "Pildi vaade",
 "Error loading slideshow template" => "Viga slaidiseansi kujunduse valimisel",
 "Share" => "Jaga",

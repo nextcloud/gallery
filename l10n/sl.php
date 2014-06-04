@@ -1,6 +1,5 @@
 <?php $TRANSLATIONS = array(
 "Pictures" => "Slike",
-"Shared by" => "V souporabi z",
 "Picture view" => "Slikovni pogled",
 "Error loading slideshow template" => "Napaka nalaganja predloge za slikovno predstavitev",
 "Share" => "Souporaba",
