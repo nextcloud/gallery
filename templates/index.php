@@ -1,4 +1,4 @@
-<div id="controls">
+<div id="controls" class="gallery-controls">
 	<div id='breadcrumbs'></div>
 	<span class="right">
 		<button class="share"><?php p($l->t("Share")); ?></button>
@@ -6,5 +6,5 @@
 		   data-possible-permissions="31"></a>
 	</span>
 </div>
-<div id='gallery' class="hascontrols"></div>
+<div id="gallery" class="hascontrols"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes" />
