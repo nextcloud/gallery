@@ -2,10 +2,6 @@ button.share {
 	display: none;
 }
 
-body {
-	background-color: #404040;
-}
-
 #gallery.hascontrols {
 	overflow: hidden;
 	text-align: justify;

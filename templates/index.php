@@ -6,5 +6,8 @@
 		   data-possible-permissions="31"></a>
 	</span>
 </div>
-<div id='gallery' class="hascontrols"></div>
+<div id="gallery" class="hascontrols"></div>
+
+<div id="emptycontent" class="hidden"><?php p($l->t("No pictures found! If you upload pictures in the files app, they will be displayed here.")); ?></div>
+
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes" />
