@@ -97,6 +97,7 @@ Gallery.view = {};
 Gallery.view.element = null;
 Gallery.view.clear = function () {
 	Gallery.view.element.empty();
+	Gallery.toggleControls(false);
 };
 Gallery.view.cache = {};
 
@@ -167,6 +168,9 @@ Gallery.view.loadVisibleRows = function (album, path) {
 					Gallery.view.loadVisibleRows.loading = null;
 					return; //throw away the row if the user has navigated away in the meantime
 				}
+				if (Gallery.view.element.length == 1) {
+					Gallery.toggleControls(true);
+				}
 				Gallery.view.element.append(dom);
 				if (album.viewedItems < album.subAlbums.length + album.images.length && Gallery.view.element.height() < targetHeight) {
 					return showRows(album);
@@ -192,7 +196,19 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 	});
 };
 
+Gallery.toggleControls = function(toggle) {
+	if (toggle) {
+		$('#emptycontent').addClass('hidden');
+		$('#controls').removeClass('hidden');
+	} else {
+		$('#controls').addClass('hidden');
+		$('#emptycontent').removeClass('hidden');
+	}
+};
+
 $(document).ready(function () {
+	Gallery.toggleControls(false);
+
 	Gallery.view.element = $('#gallery');
 	Gallery.fillAlbums().then(function () {
 		OC.Breadcrumb.container = $('#breadcrumbs');
