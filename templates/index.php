@@ -1,4 +1,4 @@
-<div id="controls" class="gallery-controls">
+<div id="controls">
 	<div id='breadcrumbs'></div>
 	<span class="right">
 		<button class="share"><?php p($l->t("Share")); ?></button>
