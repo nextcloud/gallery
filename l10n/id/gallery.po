@@ -4,8 +4,8 @@
 # 
 # Translators:
 # Arif Budiman <arifpedia@gmail.com>, 2014
-# minion, 2013
-# elmakong <mr.pige_ina@yahoo.co.id>, 2012
+# Dimas Ahmad Eka Putra, 2013
+# Albert Abimanyu <mr.pige_ina@yahoo.co.id>, 2012
 # Muhammad Fauzan <yosanpro@gmail.com>, 2012
 # Muhammad Panji <sumodirjo@gmail.com>, 2012
 # rodin <romihardiyanto@gmail.com>, 2013
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-04 02:18-0400\n"
-"PO-Revision-Date: 2014-06-04 06:18+0000\n"
+"POT-Creation-Date: 2014-06-12 02:18-0400\n"
+"PO-Revision-Date: 2014-06-12 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Indonesian (http://www.transifex.com/projects/p/owncloud/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appinfo/app.php:36 js/gallery.js:126
+#: appinfo/app.php:36 js/gallery.js:127
 msgid "Pictures"
 msgstr "Gambar"
 
@@ -38,6 +38,12 @@ msgstr "Kesalahan saat memuat templat slideshow"
 #: templates/index.php:4 templates/index.php:5
 msgid "Share"
 msgstr "Bagikan"
+
+#: templates/index.php:11
+msgid ""
+"No pictures found! If you upload pictures in the files app, they will be "
+"displayed here."
+msgstr ""
 
 #: templates/public.php:9
 #, php-format

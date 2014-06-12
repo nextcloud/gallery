@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-04 02:18-0400\n"
-"PO-Revision-Date: 2014-06-04 06:18+0000\n"
+"POT-Creation-Date: 2014-06-12 02:18-0400\n"
+"PO-Revision-Date: 2014-06-12 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Malayalam (India) (http://www.transifex.com/projects/p/owncloud/language/ml_IN/)\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: ml_IN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:126
+#: appinfo/app.php:36 js/gallery.js:127
 msgid "Pictures"
 msgstr ""
 
@@ -31,6 +31,12 @@ msgstr ""
 
 #: templates/index.php:4 templates/index.php:5
 msgid "Share"
+msgstr ""
+
+#: templates/index.php:11
+msgid ""
+"No pictures found! If you upload pictures in the files app, they will be "
+"displayed here."
 msgstr ""
 
 #: templates/public.php:9
