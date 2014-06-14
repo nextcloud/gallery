@@ -112,6 +112,7 @@ class Thumbnail {
 			\OCP\Response::setLastModifiedHeader($mtime);
 			header('Content-Length: ' . $size);
 			header('Content-Type: ' . $mime);
+			\OCP\Response::setContentDispositionHeader(basename($this->path), 'attachment');
 
 			fpassthru($fp);
 		} else {
