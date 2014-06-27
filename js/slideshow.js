@@ -334,7 +334,7 @@ $(document).ready(function () {
 		}
 	})
 		.fail(function () {
-			alert(t('core', 'Error loading slideshow template'));
+			OC.Notification.show(t('core', 'Error loading slideshow template'));
 		});
 
 
