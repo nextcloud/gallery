@@ -2,8 +2,10 @@
 
 <header>
 	<div id="header">
-		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>" title="" id="owncloud">
-			<img class="svg" src="<?php print_unescaped(image_path('', 'logo-wide.svg')); ?>" alt="<?php p($theme->getName()); ?>" /></a>
+		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>"
+			title="" id="owncloud">
+			<div class="logo-wide svg"></div>
+		</a>
 		<div id="logo-claim" style="display:none;"><?php p($theme->getLogoClaim()); ?></div>
 		<div class="header-right">
 			<span id="details"><?php p($l->t('shared by %s', $_['displayName'])) ?></span>
