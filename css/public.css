@@ -17,7 +17,6 @@ body {
 	height: 100%;
 	width: 100%;
 	text-align: center;
-	background-color: #404040;
 }
 
 /* toggle for opening shared picture view as file list */
@@ -39,14 +38,11 @@ body {
 
 footer {
 	text-align: center;
-	color: #ccc;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	filter: alpha(opacity=60);
-	opacity: .6;
+	color: #777;
 }
 footer p.info a {
 	font-weight: bold;
-	color: #ccc;
+	color: #777;
 	padding: 13px;
 	margin: -13px;
 }
