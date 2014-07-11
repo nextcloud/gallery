@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-27 02:18-0400\n"
-"PO-Revision-Date: 2014-06-26 21:01+0000\n"
+"POT-Creation-Date: 2014-07-11 05:05-0400\n"
+"PO-Revision-Date: 2014-07-10 19:30+0000\n"
 "Last-Translator: Manuela Silva <manuela.silva@sky.com>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/projects/p/owncloud/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -49,11 +49,11 @@ msgid ""
 "displayed here."
 msgstr "Não foi encontrada nenhuma foto! Se enviar fotografias nos ficheiros da \"app\", estes serão visualizados aqui."
 
-#: templates/public.php:9
+#: templates/public.php:11
 #, php-format
 msgid "shared by %s"
 msgstr "compartilhada por %s"
 
-#: templates/public.php:20
+#: templates/public.php:22
 msgid "File list"
 msgstr "Lista de Ficheiros"
