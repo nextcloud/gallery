@@ -66,7 +66,7 @@ if (isset($_GET['t'])) {
 						exit();
 					} else {
 						// Save item id in session for future requests
-						\OC::$session->set('public_link_authenticated', $linkItem['id']);
+						\OC::$server->getSession()->set('public_link_authenticated', $linkItem['id']);
 					}
 				} else {
 					OCP\Util::writeLog('share', 'Unknown share type '.$linkItem['share_type']
@@ -79,8 +79,8 @@ if (isset($_GET['t'])) {
 
 			} else {
 				// Check if item id is set in session
-				if ( ! \OC::$session->exists('public_link_authenticated')
-					|| \OC::$session->get('public_link_authenticated') !== $linkItem['id']
+				if ( ! \OC::$server->getSession()->exists('public_link_authenticated')
+					|| \OC::$server->getSession()->get('public_link_authenticated') !== $linkItem['id']
 				) {
 					// Prompt for password
 					OCP\Util::addStyle('files_sharing', 'authenticate');
