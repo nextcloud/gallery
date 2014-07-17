@@ -9,5 +9,6 @@
 <div id="gallery" class="hascontrols"></div>
 
 <div id="emptycontent" class="hidden"><?php p($l->t("No pictures found! If you upload pictures in the files app, they will be displayed here.")); ?></div>
+<div id="loading" class="hidden"><?php p($l->t("Loading...")); ?></div>
 
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes" />

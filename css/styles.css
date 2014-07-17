@@ -112,3 +112,12 @@ button.share {
 	margin-right: 0;
 	border-bottom-right-radius: 0;
 }
+
+#loading {
+	font-size: 16px;
+	color: #888;
+	position: absolute;
+	text-align: center;
+	top: 30%;
+	width: 100%;
+}

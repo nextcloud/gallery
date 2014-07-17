@@ -97,7 +97,7 @@ Gallery.view = {};
 Gallery.view.element = null;
 Gallery.view.clear = function () {
 	Gallery.view.element.empty();
-	Gallery.toggleControls(false);
+	Gallery.showLoading();
 };
 Gallery.view.cache = {};
 
@@ -169,7 +169,7 @@ Gallery.view.loadVisibleRows = function (album, path) {
 					return; //throw away the row if the user has navigated away in the meantime
 				}
 				if (Gallery.view.element.length == 1) {
-					Gallery.toggleControls(true);
+					Gallery.showNormal();
 				}
 				Gallery.view.element.append(dom);
 				if (album.viewedItems < album.subAlbums.length + album.images.length && Gallery.view.element.height() < targetHeight) {
@@ -196,21 +196,32 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 	});
 };
 
-Gallery.toggleControls = function(toggle) {
-	if (toggle) {
-		$('#emptycontent').addClass('hidden');
-		$('#controls').removeClass('hidden');
-	} else {
-		$('#controls').addClass('hidden');
-		$('#emptycontent').removeClass('hidden');
-	}
+Gallery.showEmpty = function () {
+	$('#controls').addClass('hidden');
+	$('#emptycontent').removeClass('hidden');
+	$('#loading').addClass('hidden');
+};
+
+Gallery.showLoading = function () {
+	$('#emptycontent').addClass('hidden');
+	$('#controls').removeClass('hidden');
+	$('#loading').removeClass('hidden');
+};
+
+Gallery.showNormal = function () {
+	$('#emptycontent').addClass('hidden');
+	$('#controls').removeClass('hidden');
+	$('#loading').addClass('hidden');
 };
 
 $(document).ready(function () {
-	Gallery.toggleControls(false);
+	Gallery.showLoading();
 
 	Gallery.view.element = $('#gallery');
 	Gallery.fillAlbums().then(function () {
+		if(Gallery.images.length === 0) {
+			Gallery.showEmpty();
+		}
 		OC.Breadcrumb.container = $('#breadcrumbs');
 		window.onhashchange();
 		$('button.share').click(Gallery.share);
