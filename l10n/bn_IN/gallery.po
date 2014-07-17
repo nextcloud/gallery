@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# ishita mukherjee <ishitamukh91@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-12 02:18-0400\n"
-"PO-Revision-Date: 2014-06-12 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-07-17 02:18-0400\n"
+"PO-Revision-Date: 2014-07-16 15:11+0000\n"
+"Last-Translator: ishita mukherjee <ishitamukh91@gmail.com>\n"
 "Language-Team: Bengali (India) (http://www.transifex.com/projects/p/owncloud/language/bn_IN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,31 +20,31 @@ msgstr ""
 
 #: appinfo/app.php:36 js/gallery.js:127
 msgid "Pictures"
-msgstr ""
+msgstr "ছবি"
 
 #: js/public.js:23
 msgid "Picture view"
-msgstr ""
+msgstr "ছবির ভিউ"
 
-#: js/slideshow.js:338
+#: js/slideshow.js:337
 msgid "Error loading slideshow template"
-msgstr ""
+msgstr "স্লাইডশো টেমপ্লেট লোড করতে ত্রুটি "
 
 #: templates/index.php:4 templates/index.php:5
 msgid "Share"
-msgstr ""
+msgstr "শেয়ার"
 
 #: templates/index.php:11
 msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
-msgstr ""
+msgstr "কোন ছবি পাওয়া যায় নি!আপনি ফাইল অ্যাপসে ছবি আপলোড করলে, তাদের এখানে প্রদর্শিত করা হবে।"
 
-#: templates/public.php:9
+#: templates/public.php:11
 #, php-format
 msgid "shared by %s"
-msgstr ""
+msgstr "%s দ্বারা শেয়ার"
 
-#: templates/public.php:20
+#: templates/public.php:22
 msgid "File list"
-msgstr ""
+msgstr "ফাইল লিস্ট"
