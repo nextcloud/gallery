@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-12 02:18-0400\n"
-"PO-Revision-Date: 2014-06-12 06:18+0000\n"
+"POT-Creation-Date: 2014-07-18 02:18-0400\n"
+"PO-Revision-Date: 2014-07-18 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Lithuanian (Lithuania) (http://www.transifex.com/projects/p/owncloud/language/lt_LT/)\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Nuotraukos"
 msgid "Picture view"
 msgstr "Paveikslėlio rodymas"
 
-#: js/slideshow.js:338
+#: js/slideshow.js:337
 msgid "Error loading slideshow template"
 msgstr "Klaida pakraunant pristatymą"
 
@@ -43,11 +43,15 @@ msgid ""
 "displayed here."
 msgstr ""
 
-#: templates/public.php:9
+#: templates/index.php:12
+msgid "Loading..."
+msgstr ""
+
+#: templates/public.php:11
 #, php-format
 msgid "shared by %s"
 msgstr "pasidalino %s"
 
-#: templates/public.php:20
+#: templates/public.php:22
 msgid "File list"
 msgstr "Failų sąrašas"

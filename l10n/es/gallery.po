@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Abel Diaz <abeldiazolmo@gmail.com>, 2013
-# Art O. Pal <artopal@fastmail.fm>, 2013
+# Artopal <artopal@fastmail.fm>, 2013
 # Javier Llorente <javier@opensuse.org>, 2012
 # joses <jose_mari_s@hotmail.com>, 2014
 # juanman <juanma@kde.org.ar>, 2012
@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-13 02:18-0400\n"
-"PO-Revision-Date: 2014-06-12 07:30+0000\n"
-"Last-Translator: joses <jose_mari_s@hotmail.com>\n"
+"POT-Creation-Date: 2014-07-18 02:18-0400\n"
+"PO-Revision-Date: 2014-07-18 06:18+0000\n"
+"Last-Translator: I Robot\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/owncloud/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +35,7 @@ msgstr "Imágenes"
 msgid "Picture view"
 msgstr "Vista de imágenes"
 
-#: js/slideshow.js:338
+#: js/slideshow.js:337
 msgid "Error loading slideshow template"
 msgstr "Error cargando la plantilla de presentación"
 
@@ -49,11 +49,15 @@ msgid ""
 "displayed here."
 msgstr "No se encontraron imagines! Si usted carga imagenes en el app de archivos, se mostrarán aqui."
 
-#: templates/public.php:9
+#: templates/index.php:12
+msgid "Loading..."
+msgstr ""
+
+#: templates/public.php:11
 #, php-format
 msgid "shared by %s"
 msgstr "Compartido por %s"
 
-#: templates/public.php:20
+#: templates/public.php:22
 msgid "File list"
 msgstr "Lista de archivos"

@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-06-17 02:18-0400\n"
-"PO-Revision-Date: 2014-06-16 10:20+0000\n"
-"Last-Translator: Stefan Gagner <stefan@mei-ya.se>\n"
+"POT-Creation-Date: 2014-07-18 02:18-0400\n"
+"PO-Revision-Date: 2014-07-18 06:18+0000\n"
+"Last-Translator: I Robot\n"
 "Language-Team: Swedish (http://www.transifex.com/projects/p/owncloud/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +34,7 @@ msgstr "Bilder"
 msgid "Picture view"
 msgstr "Bild vy"
 
-#: js/slideshow.js:338
+#: js/slideshow.js:337
 msgid "Error loading slideshow template"
 msgstr "Fel vid laddning av mallen för bildspelet"
 
@@ -48,11 +48,15 @@ msgid ""
 "displayed here."
 msgstr "Kan inte hitta några bilder! Om du har laddat upp bilderna med fil-appen, kan de visas här senare."
 
-#: templates/public.php:9
+#: templates/index.php:12
+msgid "Loading..."
+msgstr ""
+
+#: templates/public.php:11
 #, php-format
 msgid "shared by %s"
 msgstr "delad av %s"
 
-#: templates/public.php:20
+#: templates/public.php:22
 msgid "File list"
 msgstr "Fil lista"
