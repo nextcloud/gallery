@@ -156,7 +156,8 @@ Gallery.view.loadVisibleRows = function (album, path) {
 		return Gallery.view.loadVisibleRows.loading;
 	}
 	// load 2 windows worth of rows
-	var targetHeight = ($(window).height() * 2) + $(window).scrollTop();
+	var scroll = $('#content-wrapper').scrollTop() + $(window).scrollTop();
+	var targetHeight = ($(window).height() * 2) + scroll;
 	var showRows = function (album) {
 		if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 			Gallery.view.loadVisibleRows.loading = null;
@@ -255,6 +256,9 @@ $(document).ready(function () {
 	};
 
 	$(window).scroll(function () {
+		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+	});
+	$('#content-wrapper').scroll(function () {
 		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
 	});
 
