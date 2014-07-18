@@ -4,6 +4,7 @@ function Thumbnail (path, square) {
 	this.url = Thumbnail.getUrl(path, square);
 	this.image = null;
 	this.loadingDeferred = new $.Deferred();
+	this.ratio = null;
 }
 
 Thumbnail.map = {};
@@ -31,6 +32,7 @@ Thumbnail.prototype.load = function () {
 		this.image = new Image();
 		this.image.onload = function () {
 			Thumbnail.loadingCount--;
+			that.image.ratio = that.image.width / that.image.height;
 			that.loadingDeferred.resolve(that.image);
 			Thumbnail.processQueue();
 		};

@@ -28,6 +28,7 @@ Album.prototype.getDom = function (targetHeight) {
 		a.append($('<label/>').text(album.name));
 		a.append(img);
 		img.height = targetHeight;
+		img.width = targetHeight * img.ratio;
 		return a;
 	});
 };
@@ -148,6 +149,9 @@ GalleryImage.prototype.getDom = function (targetHeight) {
 		this.domDef = this.getThumbnail().then(function (img) {
 			var a = $('<a/>').addClass('image').attr('href', '#' + image.src).attr('data-path', image.path);
 			img.height = targetHeight;
+			img.width = targetHeight * img.ratio;
+			console.log(targetHeight * img.ratio);
+			img.setAttribute('width', 'auto');
 			a.append(img);
 			return a;
 		});
