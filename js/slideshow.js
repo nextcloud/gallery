@@ -349,17 +349,21 @@ $(document).ready(function () {
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
-					var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&a=true&scalingup=0', {
-						x: width,
-						file: encodeURIComponent(dir +file.name)
-					});
-					if (!user) {
-						imageUrl = OC.generateUrl(
-							'/apps/files_sharing/publicpreview?file={file}&x={x}&a=true&t={t}&scalingup=0', {
-							file: encodeURIComponent(dir +file.name),
+					if (file.mimetype === 'image/svg+xml') {
+						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
+					} else {
+						var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&a=true&scalingup=0', {
 							x: width,
-							t: $('#sharingToken').val()
+							file: encodeURIComponent(dir + file.name)
 						});
+						if (!user) {
+							imageUrl = OC.generateUrl(
+								'/apps/files_sharing/publicpreview?file={file}&x={x}&a=true&t={t}&scalingup=0', {
+									file: encodeURIComponent(dir + file.name),
+									x: width,
+									t: $('#sharingToken').val()
+								});
+						}
 					}
 
 					images.push({
