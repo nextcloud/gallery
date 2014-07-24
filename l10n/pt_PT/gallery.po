@@ -10,6 +10,7 @@
 # rlameiro <geral@ricardolameiro.pt>, 2012
 # Helder Meneses <helder.meneses@gmail.com>, 2012
 # Helder Meneses <helder.meneses@gmail.com>, 2012
+# Luis Jorge Simões das Neves <luisjneves@gmail.com>, 2014
 # Manuela Silva <manuela.silva@sky.com>, 2014
 # Miguel Sousa <migueljorgesousa@sapo.pt>, 2013
 # rjgpp1994 <rjgpp.1994@gmail.com>, 2012
@@ -17,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-07-24 02:18-0400\n"
+"PO-Revision-Date: 2014-07-24 00:01+0000\n"
+"Last-Translator: Luis Jorge Simões das Neves <luisjneves@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/projects/p/owncloud/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,7 +52,7 @@ msgstr "Não foi encontrada nenhuma foto! Se enviar fotografias nos ficheiros da
 
 #: templates/index.php:12
 msgid "Loading..."
-msgstr ""
+msgstr "A carregar..."
 
 #: templates/public.php:11
 #, php-format
