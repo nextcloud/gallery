@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Amir Keshavarz <pnetsale@gmail.com>, 2014
 # Hossein Raysehman <rayeshman@gmail.com>, 2012
 # mahdi Kereshteh <miki_mika1362@yahoo.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-07-26 02:18-0400\n"
+"PO-Revision-Date: 2014-07-25 22:40+0000\n"
+"Last-Translator: Amir Keshavarz <pnetsale@gmail.com>\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/owncloud/language/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr "تصاویر"
 
 #: js/public.js:23
 msgid "Picture view"
-msgstr ""
+msgstr "نمایش تصویر"
 
 #: js/slideshow.js:337
 msgid "Error loading slideshow template"
@@ -39,17 +40,17 @@ msgstr "اشتراک‌گذاری"
 msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
-msgstr ""
+msgstr "تصویری یافت نشد ! تصاویر در اینجا به نمایش در خواهند آمد در صورتی که شما آن ها را در اپ files آپلود کنید ."
 
 #: templates/index.php:12
 msgid "Loading..."
-msgstr ""
+msgstr "درحال بارگذاری..."
 
 #: templates/public.php:11
 #, php-format
 msgid "shared by %s"
-msgstr ""
+msgstr "به اشتراک گذاشته شده توسط %s"
 
 #: templates/public.php:22
 msgid "File list"
-msgstr ""
+msgstr "لیست فایل ها"
