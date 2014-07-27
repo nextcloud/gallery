@@ -5,6 +5,7 @@
 # Translators:
 # Adam Radovits <adamradovits12@hotmail.com>, 2013
 # Adam Toth <adazlord@gmail.com>, 2012
+# ebela <bela@dandre.hu>, 2014
 # Gyönki Bendegúz <gyonkibendeguz@gmail.com>, 2013
 # Laszlo Tornoci <torlasz@gmail.com>, 2013
 # Szládovics Péter <peti@szladovics.hu>, 2014
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-07-27 02:18-0400\n"
+"PO-Revision-Date: 2014-07-26 20:51+0000\n"
+"Last-Translator: ebela <bela@dandre.hu>\n"
 "Language-Team: Hungarian (Hungary) (http://www.transifex.com/projects/p/owncloud/language/hu_HU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,7 +47,7 @@ msgstr ""
 
 #: templates/index.php:12
 msgid "Loading..."
-msgstr ""
+msgstr "Betöltés..."
 
 #: templates/public.php:11
 #, php-format
