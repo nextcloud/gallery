@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Playerthe12 <a7652246@drdrb.net>, 2014
 # Dimitris M. <monopatis@gmail.com>, 2012-2013
 # Efstathios Iosifidis <iefstathios@gmail.com>, 2012
 # Efstathios Iosifidis <iosifidis@opensuse.org>, 2012-2013
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-07-28 02:18-0400\n"
+"PO-Revision-Date: 2014-07-27 21:00+0000\n"
+"Last-Translator: Playerthe12 <a7652246@drdrb.net>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/owncloud/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +48,7 @@ msgstr "Δεν βρέθηκαν εικόνες! Εάν μεταφορτώσετ�
 
 #: templates/index.php:12
 msgid "Loading..."
-msgstr ""
+msgstr "Φόρτωση ..."
 
 #: templates/public.php:11
 #, php-format
