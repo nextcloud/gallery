@@ -33,6 +33,7 @@ Thumbnail.prototype.load = function () {
 		this.image.onload = function () {
 			Thumbnail.loadingCount--;
 			that.image.ratio = that.image.width / that.image.height;
+			that.image.originalWidth = that.image.width;
 			that.loadingDeferred.resolve(that.image);
 			Thumbnail.processQueue();
 		};

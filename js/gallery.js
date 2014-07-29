@@ -163,7 +163,7 @@ Gallery.view.loadVisibleRows = function (album, path) {
 			Gallery.view.loadVisibleRows.loading = null;
 			return;
 		}
-		return album.getNextRow(Gallery.view.element.width()).then(function (row) {
+		return album.getNextRow($(window).width()).then(function (row) {
 			return row.getDom().then(function (dom) {
 				if (Gallery.currentAlbum !== path) {
 					Gallery.view.loadVisibleRows.loading = null;

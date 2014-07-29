@@ -17,7 +17,7 @@ Album.prototype.getThumbnail = function () {
 
 Album.prototype.getThumbnailWidth = function () {
 	return this.getThumbnail().then(function (img) {
-		return img.width;
+		return img.originalWidth;
 	});
 };
 
@@ -138,7 +138,7 @@ GalleryImage.prototype.getThumbnail = function (square) {
 
 GalleryImage.prototype.getThumbnailWidth = function () {
 	return this.getThumbnail().then(function (img) {
-		return img.width;
+		return img.originalWidth;
 	});
 };
 
@@ -150,7 +150,6 @@ GalleryImage.prototype.getDom = function (targetHeight) {
 			var a = $('<a/>').addClass('image').attr('href', '#' + image.src).attr('data-path', image.path);
 			img.height = targetHeight;
 			img.width = targetHeight * img.ratio;
-			console.log(targetHeight * img.ratio);
 			img.setAttribute('width', 'auto');
 			a.append(img);
 			return a;
