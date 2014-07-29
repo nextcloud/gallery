@@ -32,5 +32,10 @@ session_write_close();
 
 $square = isset($_GET['square']) ? (bool)$_GET['square'] : false;
 
-$image = new \OCA\Gallery\Thumbnail('/' . $img, $user, $square);
-$image->show();
+if ($square) {
+	$preview = new \OC\Preview($user, 'files', '/' . $img, 200, 200);
+} else {
+	$preview = new \OC\Preview($user, 'files', '/' . $img, 400, 200);
+	$preview->setKeepAspect(true);
+}
+$preview->showPreview();
