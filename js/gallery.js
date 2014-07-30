@@ -215,12 +215,39 @@ Gallery.showNormal = function () {
 	$('#loading').addClass('hidden');
 };
 
+Gallery.slideShow = function (images, startImage, autoPlay) {
+	var start = images.indexOf(startImage);
+
+	images = images.map(function (image) {
+		return {
+			name: OC.basename(image.path),
+			url: Gallery.getImage(image.src),
+			path: image.path
+		}
+	});
+
+	var slideShow = new SlideShow($('#slideshow'), images);
+	Thumbnail.concurrent = 1;
+	slideShow.onStop = function () {
+		Gallery.activeSlideShow = null;
+		$('#content').show();
+		location.hash = encodeURI(Gallery.currentAlbum);
+		Thumbnail.concurrent = 3;
+	};
+	Gallery.activeSlideShow = slideShow;
+
+	slideShow.init(autoPlay);
+	slideShow.show(start);
+};
+
+Gallery.activeSlideShow = null;
+
 $(document).ready(function () {
 	Gallery.showLoading();
 
 	Gallery.view.element = $('#gallery');
 	Gallery.fillAlbums().then(function () {
-		if(Gallery.images.length === 0) {
+		if (Gallery.images.length === 0) {
 			Gallery.showEmpty();
 		}
 		OC.Breadcrumb.container = $('#breadcrumbs');
@@ -231,29 +258,14 @@ $(document).ready(function () {
 	Gallery.view.element.on('click', 'a.image', function (event) {
 		event.preventDefault();
 		var path = $(this).data('path');
-		var album = Gallery.albumMap[Gallery.currentAlbum];
 		if (location.hash !== encodeURI(path)) {
 			location.hash = encodeURI(path);
-			Thumbnail.paused = true;
-			var images = album.images.map(function (image) {
-				return Gallery.getImage(image.src);
-			});
-			var clickedImage = Gallery.imageMap[path];
-			var i = images.indexOf(Gallery.getImage(clickedImage.src));
-			Slideshow.start(images, i);
 		}
 	});
 
 	$('#openAsFileListButton').click(function (event) {
 		window.location.href = window.location.href.replace('service=gallery', 'service=files');
 	});
-
-	jQuery.fn.slideShow.onstop = function () {
-		$('#content').show();
-		Thumbnail.paused = false;
-		location.hash = encodeURI(Gallery.currentAlbum);
-		Thumbnail.concurrent = 3;
-	};
 
 	$(window).scroll(function () {
 		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
@@ -268,15 +280,26 @@ $(document).ready(function () {
 });
 
 window.onhashchange = function () {
-	var album = decodeURI(location.hash).substr(1);
-	if (!Gallery.imageMap[album]) {
-		Slideshow.end();
-		album = decodeURIComponent(album);
-		if (Gallery.currentAlbum !== album || album == '') {
-			Gallery.view.viewAlbum(album);
+	var path = decodeURI(location.hash).substr(1);
+	if (Gallery.albumMap[path]) {
+		if (Gallery.activeSlideShow) {
+			Gallery.activeSlideShow.stop();
 		}
-	} else {
-		Gallery.view.viewAlbum(OC.dirname(album));
-		$('#gallery').find('a.image[data-path="' + album + '"]').click();
+		path = decodeURIComponent(path);
+		if (Gallery.currentAlbum !== path || path === '') {
+			Gallery.view.viewAlbum(path);
+		}
+	} else if (!Gallery.activeSlideShow) {
+		var albumPath = OC.dirname(path);
+		if (albumPath === path) {
+			albumPath = '';
+		}
+		if (Gallery.currentAlbum !== albumPath || albumPath === '') {
+//			Gallery.view.viewAlbum(albumPath);
+		}
+		var album = Gallery.albumMap[albumPath];
+		var images = album.images;
+		var startImage = Gallery.imageMap[path];
+		Gallery.slideShow(images, startImage);
 	}
 };
