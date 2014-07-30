@@ -44,6 +44,17 @@
 	background-repeat: no-repeat;
 }
 
+#slideshow.inactive > input {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	/* slow fadeout, fadein will be 300ms again*/
+	-webkit-transition: opacity 3s;
+	-moz-transition: opacity 3s;
+	-o-transition: opacity 3s;
+	transition: opacity 3s;
+}
+
 #slideshow > * {
 	-webkit-transition: opacity 300ms;
 	-moz-transition: opacity 300ms;
@@ -98,4 +109,15 @@
 	filter: alpha(opacity=30);
 	opacity: .3;
 	height: 0;
+}
+
+#slideshow.inactive > .progress {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	/* slow fadeout, fadein will be 300ms again*/
+	-webkit-transition: opacity 3s;
+	-moz-transition: opacity 3s;
+	-o-transition: opacity 3s;
+	transition: opacity 3s;
 }

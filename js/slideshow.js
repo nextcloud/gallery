@@ -270,6 +270,17 @@ $(document).ready(function () {
 	$.when(SlideShow._getSlideshowTemplate()).then(function ($tmpl) {
 		$('body').append($tmpl); //move the slideshow outside the content so we can hide the content
 
+		var inactiveCallback = function () {
+			$('#slideshow').addClass('inactive');
+		};
+		var inactiveTimeout = setTimeout(inactiveCallback, 3000);
+
+		$('#slideshow').mousemove(function () {
+			$('#slideshow').removeClass('inactive');
+			clearTimeout(inactiveTimeout);
+			inactiveTimeout = setTimeout(inactiveCallback, 3000);
+		});
+
 		if (!SVGSupport()) { //replace all svg images with png images for browser that dont support svg
 			OC.Util.replaceSVG();
 		}
