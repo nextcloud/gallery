@@ -287,7 +287,7 @@ window.onhashchange = function () {
 			albumPath = '';
 		}
 		if (Gallery.currentAlbum !== albumPath || albumPath === '') {
-//			Gallery.view.viewAlbum(albumPath);
+			Gallery.view.viewAlbum(albumPath);
 		}
 		var album = Gallery.albumMap[albumPath];
 		var images = album.images;
