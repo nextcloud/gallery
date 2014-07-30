@@ -255,14 +255,6 @@ $(document).ready(function () {
 		$('button.share').click(Gallery.share);
 	});
 
-	Gallery.view.element.on('click', 'a.image', function (event) {
-		event.preventDefault();
-		var path = $(this).data('path');
-		if (location.hash !== encodeURI(path)) {
-			location.hash = encodeURI(path);
-		}
-	});
-
 	$('#openAsFileListButton').click(function (event) {
 		window.location.href = window.location.href.replace('service=gallery', 'service=files');
 	});
