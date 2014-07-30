@@ -19,6 +19,9 @@ Thumbnail.get = function (path, square) {
 };
 
 Thumbnail.getUrl = function (path, square) {
+	if (path.substr(path.length - 4) === '.svg' || path.substr(path.length - 5) === '.svgz') {
+		return Gallery.getImage(path);
+	}
 	if (square) {
 		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path) + '&square=1';
 	} else {
