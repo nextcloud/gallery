@@ -21,10 +21,7 @@
  *
  */
 
-OC::$CLASSPATH['OCA\Gallery\Thumbnail'] = 'gallery/lib/thumbnail.php';
-OC::$CLASSPATH['OCA\Gallery\AlbumThumbnail'] = 'gallery/lib/albumthumbnail.php';
-OC::$CLASSPATH['OCA\Gallery\Share\Picture'] = 'gallery/lib/share.php';
-OC::$CLASSPATH['OCA\Gallery\Share\Gallery'] = 'gallery/lib/share.php';
+
 
 $l = OCP\Util::getL10N('gallery');
 
