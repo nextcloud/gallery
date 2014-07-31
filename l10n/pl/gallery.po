@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-26 02:18-0400\n"
-"PO-Revision-Date: 2014-07-26 00:00+0000\n"
+"POT-Creation-Date: 2014-07-31 02:18-0400\n"
+"PO-Revision-Date: 2014-07-31 05:30+0000\n"
 "Last-Translator: JurijPietrowicz <aleksander_cichon@fastmail.fm>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/owncloud/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Zdjęcia"
 msgid "Picture view"
 msgstr "Widok zdjęć"
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "Błąd podczas ładowania szablonu pokazu slajdów"
 

@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-26 02:18-0400\n"
-"PO-Revision-Date: 2014-07-26 00:10+0000\n"
+"POT-Creation-Date: 2014-07-31 02:18-0400\n"
+"PO-Revision-Date: 2014-07-31 05:30+0000\n"
 "Last-Translator: Hassen Houssein <hassen.houssein@smce.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/owncloud/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "الصور"
 msgid "Picture view"
 msgstr "عرض الصورة"
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "خطأ في تحميل قالب عرض الشرائح."
 

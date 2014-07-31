@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-29 02:35-0400\n"
-"PO-Revision-Date: 2014-07-29 04:50+0000\n"
+"POT-Creation-Date: 2014-07-31 02:18-0400\n"
+"PO-Revision-Date: 2014-07-31 05:30+0000\n"
 "Last-Translator: Romain DEP. <rom1dep@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/owncloud/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "Images"
 msgid "Picture view"
 msgstr "Visualisation de l'image"
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "Erreur lors du téléchargement du gabarit de diaporama "
 

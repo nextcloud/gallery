@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-26 02:18-0400\n"
-"PO-Revision-Date: 2014-07-25 21:20+0000\n"
+"POT-Creation-Date: 2014-07-31 02:18-0400\n"
+"PO-Revision-Date: 2014-07-31 05:30+0000\n"
 "Last-Translator: Ivo\n"
 "Language-Team: Bulgarian (Bulgaria) (http://www.transifex.com/projects/p/owncloud/language/bg_BG/)\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Снимки"
 msgid "Picture view"
 msgstr "Албум със снимки"
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "Грешка при зареждане на шаблон за слайдшоу."
 
