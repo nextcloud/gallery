@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Iñigo Varela <ivarela@softastur.org>, 2014
-# Ḷḷumex03 <l.lumex03.tornes@gmail.com>, 2014
-# Ḷḷumex03 <l.lumex03.tornes@gmail.com>, 2014
+# Ḷḷumex03 <tornes@opmbx.org>, 2014
+# Ḷḷumex03 <tornes@opmbx.org>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-08-02 02:18-0400\n"
+"PO-Revision-Date: 2014-08-01 08:30+0000\n"
+"Last-Translator: Iñigo Varela <ivarela@softastur.org>\n"
 "Language-Team: Asturian (http://www.transifex.com/projects/p/owncloud/language/ast/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: ast\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:127
 msgid "Pictures"
 msgstr "Semeyes"
 
@@ -28,7 +28,7 @@ msgstr "Semeyes"
 msgid "Picture view"
 msgstr "Vista d'imáxenes"
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "Fallu al cargar la plantía de diapositives"
 
@@ -44,7 +44,7 @@ msgstr "¡Nun s'alcontraron semeyes! Si xubes les semeyes na app de ficheros, va
 
 #: templates/index.php:12
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando..."
 
 #: templates/public.php:11
 #, php-format
