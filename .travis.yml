@@ -12,6 +12,11 @@ php:
   # aliased to a recent 5.5.x version
   - 5.5
 
+branches:
+  only:
+    - master
+    - stable7
+
 # optionally specify a list of environments, for example to test different RDBMS
 #env:
 #  - DB=mysql
