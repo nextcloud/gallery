@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
+"POT-Creation-Date: 2014-08-04 02:18-0400\n"
+"PO-Revision-Date: 2014-08-04 00:30+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Romanian (http://www.transifex.com/projects/p/owncloud/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
-#: appinfo/app.php:36 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:127
 msgid "Pictures"
 msgstr "Imagini"
 
@@ -30,7 +30,7 @@ msgstr "Imagini"
 msgid "Picture view"
 msgstr ""
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "eroare la incarcarea modelului "
 
@@ -46,7 +46,7 @@ msgstr ""
 
 #: templates/index.php:12
 msgid "Loading..."
-msgstr ""
+msgstr "Se incarca"
 
 #: templates/public.php:11
 #, php-format
