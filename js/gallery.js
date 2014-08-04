@@ -206,13 +206,13 @@ Gallery.showEmpty = function () {
 Gallery.showLoading = function () {
 	$('#emptycontent').addClass('hidden');
 	$('#controls').removeClass('hidden');
-	$('#loading').removeClass('hidden');
+	$('#content').addClass('icon-loading');
 };
 
 Gallery.showNormal = function () {
 	$('#emptycontent').addClass('hidden');
 	$('#controls').removeClass('hidden');
-	$('#loading').addClass('hidden');
+	$('#content').removeClass('icon-loading');
 };
 
 $(document).ready(function () {
