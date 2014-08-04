@@ -1,4 +1,4 @@
-function Thumbnail (path, square) {
+function Thumbnail (path, square, scaleRatio) {
 	this.square = square;
 	this.path = path;
 	this.url = Thumbnail.getUrl(path, square);
@@ -23,9 +23,9 @@ Thumbnail.getUrl = function (path, square) {
 		return Gallery.getImage(path);
 	}
 	if (square) {
-		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path) + '&square=1';
+		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path) + '&square=1&scale=' + window.devicePixelRatio;
 	} else {
-		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path);
+		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path) + '&scale=' + window.devicePixelRatio;
 	}
 };
 
@@ -36,7 +36,7 @@ Thumbnail.prototype.load = function () {
 		this.image.onload = function () {
 			Thumbnail.loadingCount--;
 			that.image.ratio = that.image.width / that.image.height;
-			that.image.originalWidth = that.image.width;
+			that.image.originalWidth = that.image.width / window.devicePixelRatio;
 			that.loadingDeferred.resolve(that.image);
 			Thumbnail.processQueue();
 		};

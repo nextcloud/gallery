@@ -8,6 +8,7 @@
 
 OCP\JSON::checkAppEnabled('gallery');
 
+$scale = isset($_GET['scale']) ? $_GET['scale'] : 1;
 list($owner, $img) = explode('/', $_GET['file'], 2);
 $linkItem = \OCP\Share::getShareByToken($owner);
 
@@ -33,9 +34,9 @@ session_write_close();
 $square = isset($_GET['square']) ? (bool)$_GET['square'] : false;
 
 if ($square) {
-	$preview = new \OC\Preview($user, 'files', '/' . $img, 200, 200);
+	$preview = new \OC\Preview($user, 'files', '/' . $img, 200 * $scale, 200 * $scale);
 } else {
-	$preview = new \OC\Preview($user, 'files', '/' . $img, 400, 200);
+	$preview = new \OC\Preview($user, 'files', '/' . $img, 400 * $scale, 200 * $scale);
 	$preview->setKeepAspect(true);
 }
 $preview->showPreview();
