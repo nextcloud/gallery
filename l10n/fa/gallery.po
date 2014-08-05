@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-31 02:18-0400\n"
-"PO-Revision-Date: 2014-07-31 05:30+0000\n"
-"Last-Translator: Amir Keshavarz <pnetsale@gmail.com>\n"
+"POT-Creation-Date: 2014-08-05 02:18-0400\n"
+"PO-Revision-Date: 2014-08-05 06:18+0000\n"
+"Last-Translator: I Robot\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/owncloud/language/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appinfo/app.php:36 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:127
 msgid "Pictures"
 msgstr "تصاویر"
 
@@ -41,10 +41,6 @@ msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
 msgstr "تصویری یافت نشد ! تصاویر در اینجا به نمایش در خواهند آمد در صورتی که شما آن ها را در اپ files آپلود کنید ."
-
-#: templates/index.php:12
-msgid "Loading..."
-msgstr "درحال بارگذاری..."
 
 #: templates/public.php:11
 #, php-format

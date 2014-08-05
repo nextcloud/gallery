@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-18 02:18-0400\n"
-"PO-Revision-Date: 2014-07-18 06:18+0000\n"
+"POT-Creation-Date: 2014-08-05 02:18-0400\n"
+"PO-Revision-Date: 2014-08-05 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/owncloud/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:127
 msgid "Pictures"
 msgstr "Fotos"
 
@@ -29,7 +29,7 @@ msgstr "Fotos"
 msgid "Picture view"
 msgstr "Mostra fotos"
 
-#: js/slideshow.js:337
+#: js/slideshow.js:289
 msgid "Error loading slideshow template"
 msgstr "Error en carregar la plantilla de presentació amb diapositives"
 
@@ -42,10 +42,6 @@ msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
 msgstr "No s'han trobat imatges! Si pugeu imatges a l'aplicació de fitxers, es mostraran aquí."
-
-#: templates/index.php:12
-msgid "Loading..."
-msgstr ""
 
 #: templates/public.php:11
 #, php-format

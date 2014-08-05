@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-31 02:18-0400\n"
-"PO-Revision-Date: 2014-07-31 05:30+0000\n"
-"Last-Translator: Kaijia Feng <fengkaijia@gmail.com>\n"
+"POT-Creation-Date: 2014-08-05 02:18-0400\n"
+"PO-Revision-Date: 2014-08-05 06:18+0000\n"
+"Last-Translator: I Robot\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/owncloud/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appinfo/app.php:36 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:127
 msgid "Pictures"
 msgstr "图片"
 
@@ -46,10 +46,6 @@ msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
 msgstr "没有图片！您在文件应用中上传的图片将会在这里显示。"
-
-#: templates/index.php:12
-msgid "Loading..."
-msgstr "载入中...."
 
 #: templates/public.php:11
 #, php-format

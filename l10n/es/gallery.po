@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-07-31 02:18-0400\n"
-"PO-Revision-Date: 2014-07-31 05:30+0000\n"
-"Last-Translator: juanman <juanma@kde.org.ar>\n"
+"POT-Creation-Date: 2014-08-05 02:18-0400\n"
+"PO-Revision-Date: 2014-08-05 06:18+0000\n"
+"Last-Translator: I Robot\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/owncloud/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:36 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:127
 msgid "Pictures"
 msgstr "Imágenes"
 
@@ -49,10 +49,6 @@ msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
 msgstr "¡No se encontraron imágenes! Si carga imágenes en la aplicación de archivos, se mostrarán aquí."
-
-#: templates/index.php:12
-msgid "Loading..."
-msgstr "Cargando..."
 
 #: templates/public.php:11
 #, php-format

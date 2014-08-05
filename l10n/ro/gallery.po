@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-08-04 02:18-0400\n"
-"PO-Revision-Date: 2014-08-04 00:30+0000\n"
+"POT-Creation-Date: 2014-08-05 02:18-0400\n"
+"PO-Revision-Date: 2014-08-05 06:18+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Romanian (http://www.transifex.com/projects/p/owncloud/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -43,10 +43,6 @@ msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
 msgstr ""
-
-#: templates/index.php:12
-msgid "Loading..."
-msgstr "Se incarca"
 
 #: templates/public.php:11
 #, php-format
