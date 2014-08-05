@@ -85,6 +85,11 @@ button.share {
 	-webkit-transition: opacity 500ms;
 }
 
+#gallery a.album img{
+	position: relative;
+	float:left;
+}
+
 #gallery a.album.loading,
 #gallery a.image.loading {
 	opacity: 0;

@@ -21,17 +21,80 @@ Album.prototype.getThumbnailWidth = function () {
 	});
 };
 
-Album.prototype.getDom = function (targetHeight) {
-	var album = this;
-	return this.getThumbnail().then(function (img) {
-		var a = $('<a/>').addClass('album').attr('href', '#' + album.path);
-		a.append($('<label/>').text(album.name));
+/**
+ *@param {array} image
+ * @param {number} targetHeight
+ * @param {number} calcWidth
+ * @param {object} a
+ * @returns {a}
+ */
+Album.prototype.getOneImage = function(image, targetHeight, calcWidth, a) {
+	var gm = new GalleryImage(image.src, 1);
+	gm.getThumbnail(1).then(function(img) {
+		img= img;
 		a.append(img);
-		img.height = targetHeight;
-		img.width = targetHeight * img.ratio;
+		img.height = targetHeight / 2;
+		img.width = calcWidth;
+	});
+
+	return;
+};
+
+/**
+ *@param {array} images
+ * @param {number} targetHeight
+ * @param {number} ratio
+ * @param {object} a
+ * @returns {a}
+ */
+Album.prototype.getFourImages = function(images, targetHeight, ratio, a) {
+
+	var calcWidth = (targetHeight * ratio) / 2;
+	var iImagesCount = images.length;
+	if (iImagesCount > 4) {
+		iImagesCount = 4;
+	}
+
+	a.width(calcWidth * 2);
+	a.height(targetHeight - 1);
+
+	for (var i = 0; i < iImagesCount; i++) {
+		this.getOneImage(images[i], targetHeight, calcWidth, a);
+	}
+
+	return;
+};
+
+Album.prototype.getDom = function(targetHeight) {
+	var album = this;
+
+	return this.getThumbnail().then(function(img) {
+		var a = $('<a/>').addClass('album').attr('href', '#' + album.path);
+
+		a.append($('<label/>').text(album.name));
+		var ratio = Math.round(img.ratio * 100) / 100;
+		var calcWidth = (targetHeight * ratio) / 2;
+
+		a.width(calcWidth * 2);
+		a.height(targetHeight - 1);
+
+		if (album.images.length > 1) {
+			album.getFourImages(album.images, targetHeight, ratio, a);
+		} else {
+			if (album.images.length === 0 && album.subAlbums[0].images.length > 1) {
+				album.getFourImages(album.subAlbums[0].images, targetHeight, ratio, a);
+			} else {
+				a.append(img);
+				img.height = targetHeight;
+				img.width = targetHeight * ratio;
+			}
+
+		}
+
 		return a;
 	});
 };
+
 
 /**
  *
