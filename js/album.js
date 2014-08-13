@@ -69,7 +69,7 @@ Album.prototype.getDom = function(targetHeight) {
 	var album = this;
 
 	return this.getThumbnail().then(function(img) {
-		var a = $('<a/>').addClass('album').attr('href', '#' + album.path);
+		var a = $('<a/>').addClass('album').attr('href', '#' + encodeURI(album.path));
 
 		a.append($('<label/>').text(album.name));
 		var ratio = Math.round(img.ratio * 100) / 100;
@@ -210,7 +210,7 @@ GalleryImage.prototype.getDom = function (targetHeight) {
 	if (this.domDef === null || this.domHeigth !== targetHeight) {
 		this.domHeigth = targetHeight;
 		this.domDef = this.getThumbnail().then(function (img) {
-			var a = $('<a/>').addClass('image').attr('href', '#' + image.path).attr('data-path', image.path);
+			var a = $('<a/>').addClass('image').attr('href', '#' + encodeURI(image.path)).attr('data-path', image.path);
 			img.height = targetHeight;
 			img.width = targetHeight * img.ratio;
 			img.setAttribute('width', 'auto');

@@ -112,7 +112,7 @@ SlideShow.prototype.show = function (index) {
 
 SlideShow.prototype.setUrl = function (path) {
 	if (history && history.replaceState) {
-		history.replaceState('', '', '#' + path);
+		history.replaceState('', '', '#' + encodeURI(path));
 	}
 };
 
