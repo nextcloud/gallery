@@ -1,10 +1,11 @@
-function Album(path, subAlbums, images, name) {
+function Album (path, subAlbums, images, name) {
 	this.path = path;
 	this.subAlbums = subAlbums;
 	this.images = images;
 	this.viewedItems = 0;
 	this.name = name;
 	this.domDef = null;
+	this.preloadOffset = 0;
 }
 
 Album.prototype.getThumbnail = function () {
@@ -22,22 +23,18 @@ Album.prototype.getThumbnailWidth = function () {
 };
 
 /**
- *@param {array} image
+ *@param {GalleryImage} image
  * @param {number} targetHeight
  * @param {number} calcWidth
  * @param {object} a
  * @returns {a}
  */
-Album.prototype.getOneImage = function(image, targetHeight, calcWidth, a) {
-	var gm = new GalleryImage(image.src, 1);
-	gm.getThumbnail(1).then(function(img) {
-		img= img;
+Album.prototype.getOneImage = function (image, targetHeight, calcWidth, a) {
+	image.getThumbnail(true).then(function (img) {
 		a.append(img);
 		img.height = targetHeight / 2;
 		img.width = calcWidth;
 	});
-
-	return;
 };
 
 /**
@@ -47,7 +44,7 @@ Album.prototype.getOneImage = function(image, targetHeight, calcWidth, a) {
  * @param {object} a
  * @returns {a}
  */
-Album.prototype.getFourImages = function(images, targetHeight, ratio, a) {
+Album.prototype.getFourImages = function (images, targetHeight, ratio, a) {
 
 	var calcWidth = (targetHeight * ratio) / 2;
 	var iImagesCount = images.length;
@@ -61,14 +58,12 @@ Album.prototype.getFourImages = function(images, targetHeight, ratio, a) {
 	for (var i = 0; i < iImagesCount; i++) {
 		this.getOneImage(images[i], targetHeight, calcWidth, a);
 	}
-
-	return;
 };
 
-Album.prototype.getDom = function(targetHeight) {
+Album.prototype.getDom = function (targetHeight) {
 	var album = this;
 
-	return this.getThumbnail().then(function(img) {
+	return this.getThumbnail().then(function (img) {
 		var a = $('<a/>').addClass('album').attr('href', '#' + encodeURI(album.path));
 
 		a.append($('<label/>').text(album.name));
@@ -111,12 +106,10 @@ Album.prototype.getNextRow = function (width) {
 	 * @returns {$.Deferred<Row>}
 	 */
 	var addImages = function (album, row, images) {
-		// pre-load thumbnails in parallel
-		for (var i = 0; i < 3 ;i++){
-			if (images[album.viewedItems + i]) {
-				images[album.viewedItems + i].getThumbnail();
-			}
+		if ((album.viewedItems + 5) > album.preloadOffset) {
+			album.preload(20); // preload another 20 thumbnails
 		}
+
 		var image = images[album.viewedItems];
 		return row.addImage(image).then(function (more) {
 			album.viewedItems++;
@@ -132,7 +125,39 @@ Album.prototype.getNextRow = function (width) {
 	return addImages(this, row, items);
 };
 
-function Row(targetWidth) {
+Album.prototype.getThumbnailPaths = function (count) {
+	var paths = [];
+	var items = this.images.concat(this.subAlbums);
+	for (var i = 0; i < items.length && i < count; i++) {
+		paths = paths.concat(items[i].getThumbnailPaths(count));
+	}
+
+	return paths;
+};
+
+/**
+ * preload the first $count thumbnails
+ * @param count
+ */
+Album.prototype.preload = function (count) {
+	var items = this.subAlbums.concat(this.images);
+
+	var paths = [];
+	var squarePaths = [];
+	for (var i = this.preloadOffset; i < this.preloadOffset + count && i < items.length; i++) {
+		if (items[i].subAlbums) {
+			squarePaths = squarePaths.concat(items[i].getThumbnailPaths(4));
+		} else {
+			paths = paths.concat(items[i].getThumbnailPaths());
+		}
+	}
+
+	this.preloadOffset = i;
+	Thumbnail.loadBatch(paths);
+	Thumbnail.loadBatch(squarePaths, true);
+};
+
+function Row (targetWidth) {
 	this.targetWidth = targetWidth;
 	this.items = [];
 	this.width = 8; // 4px margin to start with
@@ -187,13 +212,17 @@ Row.prototype.isFull = function () {
 	return this.width > this.targetWidth;
 };
 
-function GalleryImage(src, path) {
+function GalleryImage (src, path) {
 	this.src = src;
 	this.path = path;
 	this.thumbnail = null;
 	this.domDef = null;
 	this.domHeigth = null;
 }
+
+GalleryImage.prototype.getThumbnailPaths = function () {
+	return [this.src];
+};
 
 GalleryImage.prototype.getThumbnail = function (square) {
 	return Thumbnail.get(this.src, square).queue();

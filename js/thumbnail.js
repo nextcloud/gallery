@@ -1,4 +1,4 @@
-function Thumbnail (path, square, scaleRatio) {
+function Thumbnail (path, square) {
 	this.square = square;
 	this.path = path;
 	this.url = Thumbnail.getUrl(path, square);
@@ -9,6 +9,8 @@ function Thumbnail (path, square, scaleRatio) {
 
 Thumbnail.map = {};
 Thumbnail.squareMap = {};
+Thumbnail.height = 200;
+Thumbnail.width = 400;
 
 Thumbnail.get = function (path, square) {
 	var map = (square) ? Thumbnail.squareMap : Thumbnail.map;
@@ -27,6 +29,47 @@ Thumbnail.getUrl = function (path, square) {
 		scale: window.devicePixelRatio,
 		square: (square) ? 1 : 0
 	});
+};
+
+Thumbnail.loadBatch = function (paths, square) {
+	var map = (square) ? Thumbnail.squareMap : Thumbnail.map;
+	paths = paths.filter(function (path) {
+		return !map[path];
+	});
+	var thumbnails = {};
+	if (paths.length) {
+		var parts = paths[0].split('/');
+		var user = parts[0];
+
+		paths = paths.map(function (path) {
+			var thumb = new Thumbnail(path, square);
+			thumb.image = new Image();
+			map[path] = thumbnails[path] = thumb;
+			return path.substr(user.length + 1); //strip /$user
+		});
+
+		var url = OC.generateUrl('apps/gallery/ajax/thumbnail/batch?user={user}&image={images}&scale={scale}&square={square}', {
+			user: user,
+			images: paths.map(encodeURIComponent).join(';'),
+			scale: window.devicePixelRatio,
+			square: (square) ? 1 : 0
+		});
+
+		var eventSource = new OC.EventSource(url);
+		eventSource.listen('preview', function (data) {
+			var path = user + '/' + data.image;
+			var extension = path.substr(path.length - 3);
+			var thumb = thumbnails[path];
+			thumb.image.onload = function () {
+				Thumbnail.loadingCount--;
+				thumb.image.ratio = thumb.image.width / thumb.image.height;
+				thumb.image.originalWidth = thumb.image.width / window.devicePixelRatio;
+				thumb.loadingDeferred.resolve(thumb.image);
+			};
+			thumb.image.src = 'data:image/' + extension + ';base64,' + data.preview;
+		});
+	}
+	return thumbnails;
 };
 
 Thumbnail.prototype.load = function () {
