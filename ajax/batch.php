@@ -44,12 +44,24 @@ foreach ($images as $image) {
 		$width = 400 * $scale;
 	}
 
+	$userView = new \OC\Files\View('/' . $user);
+
 	$preview = new \OC\Preview($user, 'files', '/' . $image, $width, $height);
 	$preview->setKeepAspect(!$square);
 
-	$eventSource->send('preview', array(
-		'image' => $image,
-		'preview' => (string)$preview->getPreview()
-	));
+	$fileInfo = $userView->getFileInfo('/files/' . $image);
+
+	// if the thumbnails is already cached, get it directly from the filesystem to avoid decoding and re-encoding the image
+	if ($path = $preview->isCached($fileInfo->getId())) {
+		$eventSource->send('preview', array(
+			'image' => $image,
+			'preview' => base64_encode($userView->file_get_contents('/' . $path))
+		));
+	} else {
+		$eventSource->send('preview', array(
+			'image' => $image,
+			'preview' => (string)$preview->getPreview()
+		));
+	}
 }
 $eventSource->close();

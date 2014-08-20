@@ -63,7 +63,7 @@ Thumbnail.loadBatch = function (paths, square) {
 			thumb.image.onload = function () {
 				Thumbnail.loadingCount--;
 				thumb.image.ratio = thumb.image.width / thumb.image.height;
-				thumb.image.originalWidth = thumb.image.width / window.devicePixelRatio;
+				thumb.image.originalWidth = 200 * thumb.image.ratio;
 				thumb.loadingDeferred.resolve(thumb.image);
 			};
 			thumb.image.src = 'data:image/' + extension + ';base64,' + data.preview;

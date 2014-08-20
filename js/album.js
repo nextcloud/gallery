@@ -107,7 +107,7 @@ Album.prototype.getNextRow = function (width) {
 	 */
 	var addImages = function (album, row, images) {
 		if ((album.viewedItems + 5) > album.preloadOffset) {
-			album.preload(20); // preload another 20 thumbnails
+			album.preload(20);
 		}
 
 		var image = images[album.viewedItems];
