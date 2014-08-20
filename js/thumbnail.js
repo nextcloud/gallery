@@ -22,11 +22,11 @@ Thumbnail.getUrl = function (path, square) {
 	if (path.substr(path.length - 4) === '.svg' || path.substr(path.length - 5) === '.svgz') {
 		return Gallery.getImage(path);
 	}
-	if (square) {
-		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path) + '&square=1&scale=' + window.devicePixelRatio;
-	} else {
-		return OC.filePath('gallery', 'ajax', 'thumbnail.php') + '?file=' + encodeURIComponent(path) + '&scale=' + window.devicePixelRatio;
-	}
+	return OC.generateUrl('apps/gallery/ajax/thumbnail?file={file}&scale={scale}&square={square}', {
+		file: encodeURIComponent(path),
+		scale: window.devicePixelRatio,
+		square: (square) ? 1 : 0
+	});
 };
 
 Thumbnail.prototype.load = function () {

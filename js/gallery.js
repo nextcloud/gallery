@@ -26,7 +26,7 @@ Gallery.fillAlbums = function () {
 	};
 	var token = $('#gallery').data('token');
 	var album, image;
-	return $.getJSON(OC.filePath('gallery', 'ajax', 'getimages.php'), {token: token}).then(function (data) {
+	return $.getJSON(OC.generateUrl('apps/gallery/ajax/images'), {token: token}).then(function (data) {
 		Gallery.users = data.users;
 		Gallery.displayNames = data.displayNames;
 		Gallery.images = data.images;
@@ -59,7 +59,7 @@ Gallery.getAlbumInfo = function (album) {
 	if (!Gallery.getAlbumInfo.cache[album]) {
 		var def = new $.Deferred();
 		Gallery.getAlbumInfo.cache[album] = def;
-		$.getJSON(OC.filePath('gallery', 'ajax', 'gallery.php'), {gallery: album}, function (data) {
+		$.getJSON(OC.generateUrl('apps/gallery/ajax/gallery?gallery={gallery}', {gallery: album}), function (data) {
 			def.resolve(data);
 		});
 	}
@@ -67,7 +67,9 @@ Gallery.getAlbumInfo = function (album) {
 };
 Gallery.getAlbumInfo.cache = {};
 Gallery.getImage = function (image) {
-	return OC.filePath('gallery', 'ajax', 'image.php') + '?file=' + encodeURIComponent(image);
+	return OC.generateUrl('apps/gallery/ajax/image?file={file}', {
+		file: encodeURIComponent(image)
+	});
 };
 Gallery.share = function (event) {
 	if (!OC.Share.droppedDown) {
