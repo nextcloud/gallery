@@ -159,7 +159,7 @@ Row.prototype.addImage = function (image) {
 Row.prototype.getDom = function () {
 	var scaleRation = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
 	var targetHeight = 200 * scaleRation;
-	var row = $('<div/>').addClass('row');
+	var row = $('<div/>').addClass('row loading');
 	/**
 	 * @param row
 	 * @param {GalleryImage[]} items
