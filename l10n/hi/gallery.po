@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# kverma_salucro <kverma@salucro.com>, 2014
 # Pratik <kpratik217@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-08-05 02:18-0400\n"
-"PO-Revision-Date: 2014-08-05 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-08-21 02:23-0400\n"
+"PO-Revision-Date: 2014-08-20 10:01+0000\n"
+"Last-Translator: kverma_salucro <kverma@salucro.com>\n"
 "Language-Team: Hindi (http://www.transifex.com/projects/p/owncloud/language/hi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,13 +19,13 @@ msgstr ""
 "Language: hi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:33 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:129
 msgid "Pictures"
 msgstr "तस्वीरें"
 
 #: js/public.js:23
 msgid "Picture view"
-msgstr ""
+msgstr "तस्वीर देखें"
 
 #: js/slideshow.js:289
 msgid "Error loading slideshow template"
@@ -47,4 +48,4 @@ msgstr ""
 
 #: templates/public.php:22
 msgid "File list"
-msgstr ""
+msgstr "फाइल सूची"
