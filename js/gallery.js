@@ -167,6 +167,10 @@ Gallery.view.loadVisibleRows = function (album, path) {
 		}
 		return album.getNextRow($(window).width()).then(function (row) {
 			return row.getDom().then(function (dom) {
+				// defer removal of loading class to trigger CSS3 animation
+				_.defer(function() {
+					dom.removeClass('loading');
+				});
 				if (Gallery.currentAlbum !== path) {
 					Gallery.view.loadVisibleRows.loading = null;
 					return; //throw away the row if the user has navigated away in the meantime

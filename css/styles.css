@@ -76,7 +76,7 @@ button.share {
 }
 
 #gallery a.album,
-#gallery a.image {
+#gallery .row {
 	opacity: 1;
 	transition: opacity 500ms;
 	-moz-transition: opacity 500ms;
@@ -91,7 +91,7 @@ button.share {
 }
 
 #gallery a.album.loading,
-#gallery a.image.loading {
+#gallery .row.loading {
 	opacity: 0;
 }
 
