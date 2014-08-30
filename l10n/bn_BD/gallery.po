@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# azizul <aziz.murad3@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-08-05 02:18-0400\n"
-"PO-Revision-Date: 2014-08-05 06:18+0000\n"
-"Last-Translator: I Robot\n"
+"POT-Creation-Date: 2014-08-30 02:18-0400\n"
+"PO-Revision-Date: 2014-08-29 18:01+0000\n"
+"Last-Translator: azizul <aziz.murad3@gmail.com>\n"
 "Language-Team: Bengali (Bangladesh) (http://www.transifex.com/projects/p/owncloud/language/bn_BD/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,17 +18,17 @@ msgstr ""
 "Language: bn_BD\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appinfo/app.php:33 js/gallery.js:127
+#: appinfo/app.php:33 js/gallery.js:129
 msgid "Pictures"
 msgstr "চিত্রসমূহ"
 
 #: js/public.js:23
 msgid "Picture view"
-msgstr ""
+msgstr "চিত্র দর্শন"
 
 #: js/slideshow.js:289
 msgid "Error loading slideshow template"
-msgstr ""
+msgstr "স্লাইডশো টেমপ্লেট লোড করতে সমস্যা হচ্ছে"
 
 #: templates/index.php:4 templates/index.php:5
 msgid "Share"
@@ -37,13 +38,13 @@ msgstr "ভাগাভাগি কর"
 msgid ""
 "No pictures found! If you upload pictures in the files app, they will be "
 "displayed here."
-msgstr ""
+msgstr "কোন চিত্র পাওয়া গেলনা! ফাইল অ্যাপে চিত্র আপলোড করলে তা এখানে প্রদর্শিত হবে।"
 
 #: templates/public.php:11
 #, php-format
 msgid "shared by %s"
-msgstr ""
+msgstr "%s দ্বারা ভাগাভাগিকৃত"
 
 #: templates/public.php:22
 msgid "File list"
-msgstr ""
+msgstr "ফাইল তালিকা"
