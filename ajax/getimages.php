@@ -33,11 +33,11 @@ if (isset($_GET['token'])) {
 
 		$result = array();
 		foreach ($images as $image) {
-			$result[] = $token . $image['path'];
+			$result[] = trim($image['path'], '/');
 		}
 
 		OCP\JSON::setContentTypeHeader();
-		echo json_encode(array('images' => $result, 'users' => array(), 'displayNames' => array()));
+		echo json_encode($result);
 
 		exit;
 	}

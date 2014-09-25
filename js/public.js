@@ -27,7 +27,9 @@ $(document).ready(function () {
 			+'</div>');
 
 		button.click( function (event) {
-			window.location.href = window.location.href.replace('service=files', 'service=gallery').replace('dir=', 'path=');
+			window.location.href = OC.generateUrl('apps/gallery/public/{token}', {
+				token: $('#sharingToken').val()
+			});
 		});
 
 		$('#controls').append(button);

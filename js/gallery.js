@@ -5,15 +5,15 @@ Gallery.users = [];
 Gallery.albumMap = {};
 Gallery.imageMap = {};
 
-Gallery.getAlbum = function (path) {
+Gallery.getAlbum = function (path, token) {
 	if (!Gallery.albumMap[path]) {
-		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
+		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path), token);
 		if (path !== '') {
 			var parent = OC.dirname(path);
 			if (parent === path) {
 				parent = '';
 			}
-			Gallery.getAlbum(parent).subAlbums.push(Gallery.albumMap[path]);
+			Gallery.getAlbum(parent, token).subAlbums.push(Gallery.albumMap[path]);
 		}
 	}
 	return Gallery.albumMap[path];
@@ -31,12 +31,12 @@ Gallery.fillAlbums = function () {
 
 		for (var i = 0; i < Gallery.images.length; i++) {
 			var path = Gallery.images[i];
-			image = new GalleryImage(Gallery.images[i], path);
+			image = new GalleryImage(Gallery.images[i], path, token);
 			var dir = OC.dirname(path);
 			if (dir === path) {
 				dir = '';
 			}
-			album = Gallery.getAlbum(dir);
+			album = Gallery.getAlbum(dir, token);
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
 		}
@@ -63,8 +63,9 @@ Gallery.getAlbumInfo = function (album) {
 };
 Gallery.getAlbumInfo.cache = {};
 Gallery.getImage = function (image) {
-	return OC.generateUrl('apps/gallery/ajax/image?file={file}', {
-		file: encodeURIComponent(image)
+	return OC.generateUrl('apps/gallery/ajax/image?file={file}&token={token}', {
+		file: encodeURIComponent(image),
+		token: $('#gallery').data('token')
 	});
 };
 Gallery.share = function (event) {
@@ -258,7 +259,9 @@ $(document).ready(function () {
 	});
 
 	$('#openAsFileListButton').click(function (event) {
-		window.location.href = window.location.href.replace('service=gallery', 'service=files');
+		window.location.href = OC.generateUrl('s/{token}', {
+			token: $('#gallery').data('token')
+		});
 	});
 
 	$(window).scroll(function () {

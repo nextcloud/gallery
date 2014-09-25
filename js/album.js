@@ -1,4 +1,5 @@
-function Album (path, subAlbums, images, name) {
+function Album (path, subAlbums, images, name, token) {
+	this.token = token;
 	this.path = path;
 	this.subAlbums = subAlbums;
 	this.images = images;
@@ -153,8 +154,8 @@ Album.prototype.preload = function (count) {
 	}
 
 	this.preloadOffset = i;
-	Thumbnail.loadBatch(paths);
-	Thumbnail.loadBatch(squarePaths, true);
+	Thumbnail.loadBatch(paths, false, this.token);
+	Thumbnail.loadBatch(squarePaths, true, this.token);
 };
 
 function Row (targetWidth) {
@@ -212,7 +213,8 @@ Row.prototype.isFull = function () {
 	return this.width > this.targetWidth;
 };
 
-function GalleryImage (src, path) {
+function GalleryImage (src, path, token) {
+	this.token = token;
 	this.src = src;
 	this.path = path;
 	this.thumbnail = null;
@@ -225,7 +227,7 @@ GalleryImage.prototype.getThumbnailPaths = function () {
 };
 
 GalleryImage.prototype.getThumbnail = function (square) {
-	return Thumbnail.get(this.src, square).queue();
+	return Thumbnail.get(this.src, square, this.token).queue();
 };
 
 GalleryImage.prototype.getThumbnailWidth = function () {

@@ -1,7 +1,8 @@
-function Thumbnail (path, square) {
+function Thumbnail (path, square, token) {
+	this.token = token;
 	this.square = square;
 	this.path = path;
-	this.url = Thumbnail.getUrl(path, square);
+	this.url = Thumbnail.getUrl(path, square, token);
 	this.image = null;
 	this.loadingDeferred = new $.Deferred();
 	this.ratio = null;
@@ -12,26 +13,27 @@ Thumbnail.squareMap = {};
 Thumbnail.height = 200;
 Thumbnail.width = 400;
 
-Thumbnail.get = function (path, square) {
+Thumbnail.get = function (path, square, token) {
 	var map = (square) ? Thumbnail.squareMap : Thumbnail.map;
 	if (!map[path]) {
-		map[path] = new Thumbnail(path, square);
+		map[path] = new Thumbnail(path, square, token);
 	}
 	return map[path];
 };
 
-Thumbnail.getUrl = function (path, square) {
+Thumbnail.getUrl = function (path, square, token) {
 	if (path.substr(path.length - 4) === '.svg' || path.substr(path.length - 5) === '.svgz') {
 		return Gallery.getImage(path);
 	}
-	return OC.generateUrl('apps/gallery/ajax/thumbnail?file={file}&scale={scale}&square={square}', {
+	return OC.generateUrl('apps/gallery/ajax/thumbnail?file={file}&scale={scale}&square={square}&token={token}', {
 		file: encodeURIComponent(path),
 		scale: window.devicePixelRatio,
-		square: (square) ? 1 : 0
+		square: (square) ? 1 : 0,
+		token: (token) ? token : ''
 	});
 };
 
-Thumbnail.loadBatch = function (paths, square) {
+Thumbnail.loadBatch = function (paths, square, token) {
 	var map = (square) ? Thumbnail.squareMap : Thumbnail.map;
 	paths = paths.filter(function (path) {
 		return !map[path];
@@ -39,15 +41,16 @@ Thumbnail.loadBatch = function (paths, square) {
 	var thumbnails = {};
 	if (paths.length) {
 		paths.forEach(function (path) {
-			var thumb = new Thumbnail(path, square);
+			var thumb = new Thumbnail(path, square, token);
 			thumb.image = new Image();
 			map[path] = thumbnails[path] = thumb;
 		});
 
-		var url = OC.generateUrl('apps/gallery/ajax/thumbnail/batch?image={images}&scale={scale}&square={square}', {
+		var url = OC.generateUrl('apps/gallery/ajax/thumbnail/batch?token={token}&image={images}&scale={scale}&square={square}', {
 			images: paths.map(encodeURIComponent).join(';'),
 			scale: window.devicePixelRatio,
-			square: (square) ? 1 : 0
+			square: (square) ? 1 : 0,
+			token: (token) ? token : ''
 		});
 
 		var eventSource = new OC.EventSource(url);

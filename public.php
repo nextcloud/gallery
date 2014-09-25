@@ -25,8 +25,9 @@
 OCP\Util::addStyle('gallery', 'styles');
 OCP\Util::addStyle('gallery', 'mobile');
 
-if (isset($_GET['t'])) {
-	$token = $_GET['t'];
+$token = \OC::$server->getRequest()->getParam('token');
+
+if ($token) {
 	$linkItem = \OCP\Share::getShareByToken($token, false);
 	if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
 		// seems to be a valid share

@@ -20,3 +20,6 @@ $this->create('gallery_ajax_thumbnail', 'ajax/thumbnail')
 	->actionInclude('gallery/ajax/thumbnail.php');
 $this->create('gallery_ajax_batch', 'ajax/thumbnail/batch')
 	->actionInclude('gallery/ajax/batch.php');
+
+$this->create('gallery_public', '/public/{token}')
+	->actionInclude('gallery/public.php');
