@@ -63,9 +63,10 @@ Gallery.getAlbumInfo = function (album) {
 };
 Gallery.getAlbumInfo.cache = {};
 Gallery.getImage = function (image) {
+	var token = ($('#gallery').data('token')) ? $('#gallery').data('token') : '';
 	return OC.generateUrl('apps/gallery/ajax/image?file={file}&token={token}', {
 		file: encodeURIComponent(image),
-		token: $('#gallery').data('token')
+		token: token
 	});
 };
 Gallery.share = function (event) {
