@@ -23,7 +23,7 @@
 		</div>
 	</div>
 
-	<div id='gallery' class="hascontrols" data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>"></div>
+	<div id='gallery' class="hascontrols" data-requesttoken="<?php p($_['requesttoken'])?>" data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>"></div>
 </div>
 
 	<div class="push"></div><!-- for sticky footer -->

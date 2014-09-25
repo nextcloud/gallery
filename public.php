@@ -101,6 +101,7 @@ if ($token) {
 		OCP\Util::addScript('gallery', 'thumbnail');
 		OCP\Util::addStyle('gallery', 'public');
 		$tmpl->assign('token', $token);
+		$tmpl->assign('requesttoken', \OCP\Util::callRegister());
 		$tmpl->assign('displayName', $ownerDisplayName);
 		$tmpl->assign('albumName', $albumName);
 

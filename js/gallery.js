@@ -165,7 +165,7 @@ Gallery.view.loadVisibleRows = function (album, path) {
 		return album.getNextRow($(window).width()).then(function (row) {
 			return row.getDom().then(function (dom) {
 				// defer removal of loading class to trigger CSS3 animation
-				_.defer(function() {
+				_.defer(function () {
 					dom.removeClass('loading');
 				});
 				if (Gallery.currentAlbum !== path) {
@@ -274,6 +274,10 @@ $(document).ready(function () {
 	$(window).resize(_.throttle(function () {
 		Gallery.view.viewAlbum(Gallery.currentAlbum);
 	}, 500));
+
+	if ($('#gallery').data('requesttoken')) {
+		oc_requesttoken = $('#gallery').data('requesttoken');
+	}
 });
 
 window.onhashchange = function () {
