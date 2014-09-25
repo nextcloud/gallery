@@ -9,10 +9,14 @@
 OCP\JSON::checkAppEnabled('gallery');
 
 $scale = isset($_GET['scale']) ? $_GET['scale'] : 1;
-list($owner, $img) = explode('/', $_GET['file'], 2);
+$img = $_GET['file'];
 $linkItem = \OCP\Share::getShareByToken($owner);
 
-if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
+if (!empty($_GET['token'])) {
+	$linkItem = \OCP\Share::getShareByToken($_GET['token']);
+	if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
+		exit;
+	}
 	// seems to be a valid share
 	$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
 	$user = $rootLinkItem['uid_owner'];

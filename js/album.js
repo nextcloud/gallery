@@ -221,7 +221,7 @@ function GalleryImage (src, path) {
 }
 
 GalleryImage.prototype.getThumbnailPaths = function () {
-	return [this.src];
+	return [this.path];
 };
 
 GalleryImage.prototype.getThumbnail = function (square) {

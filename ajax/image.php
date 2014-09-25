@@ -8,9 +8,13 @@
 
 OCP\JSON::checkAppEnabled('gallery');
 
-list($owner, $img) = explode('/', $_GET['file'], 2);
-$linkItem = \OCP\Share::getShareByToken($owner);
-if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
+$img = $_GET['file'];
+$token = $_GET['token'];
+if (!empty($_GET['token'])) {
+	$linkItem = \OCP\Share::getShareByToken($_GET['token']);
+	if (!(is_array($linkItem) && isset($linkItem['uid_owner']))) {
+		exit;
+	}
 	// seems to be a valid share
 	$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
 	$user = $rootLinkItem['uid_owner'];
@@ -36,7 +40,7 @@ $mime = $ownerView->getMimeType($img);
 list($mimePart,) = explode('/', $mime);
 if ($mimePart === 'image') {
 	$fileInfo = $ownerView->getFileInfo($img);
-	if($fileInfo['encrypted'] === true) {
+	if ($fileInfo['encrypted'] === true) {
 		$local = $ownerView->toTmpFile($img);
 	} else {
 		$local = $ownerView->getLocalFile($img);
@@ -48,9 +52,9 @@ if ($mimePart === 'image') {
 			$rotate = ($exif['Orientation'] > 1);
 		}
 	}
-	
+
 	OCP\Response::setContentDispositionHeader(basename($img), 'attachment');
-	
+
 	if ($rotate) {
 		$image = new OCP\Image($local);
 		$image->fixOrientation();

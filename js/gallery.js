@@ -27,19 +27,15 @@ Gallery.fillAlbums = function () {
 	var token = $('#gallery').data('token');
 	var album, image;
 	return $.getJSON(OC.generateUrl('apps/gallery/ajax/images'), {token: token}).then(function (data) {
-		Gallery.users = data.users;
-		Gallery.displayNames = data.displayNames;
-		Gallery.images = data.images;
+		Gallery.images = data;
 
 		for (var i = 0; i < Gallery.images.length; i++) {
-			var parts = Gallery.images[i].split('/');
-			parts.shift();
-			var path = parts.join('/');
+			var path = Gallery.images[i];
 			image = new GalleryImage(Gallery.images[i], path);
-			var dir = OC.dirname(Gallery.images[i]);
-			parts = dir.split('/');
-			parts.shift();
-			dir = parts.join('/');
+			var dir = OC.dirname(path);
+			if (dir === path) {
+				dir = '';
+			}
 			album = Gallery.getAlbum(dir);
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;

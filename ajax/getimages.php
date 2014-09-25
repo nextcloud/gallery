@@ -51,24 +51,11 @@ $user = \OCP\User::getUser();
 $users = array();
 $result = array();
 
-foreach ($images as &$image) {
-	// we show shared images another way
-	if ($image->getStorage() instanceof \OC\Files\Storage\Shared) {
-		$owner = $image['uid_owner'];
-		$users[$owner] = $owner;
-	} else {
-		$owner = $user;
-	}
-	$path = $image['path'];
+foreach ($images as $image) {
 	if (strpos($path, DIRECTORY_SEPARATOR . ".")) {
 		continue;
 	}
-	$result[] = $owner . $path;
-}
-
-$displayNames = array();
-foreach ($users as $user) {
-	$displayNames[$user] = \OCP\User::getDisplayName($user);
+	$result[] = trim($image['path'], '/');
 }
 
 function startsWith($haystack, $needle) {
@@ -76,4 +63,4 @@ function startsWith($haystack, $needle) {
 }
 
 OCP\JSON::setContentTypeHeader();
-echo json_encode(array('images' => $result, 'users' => array_values($users), 'displayNames' => $displayNames));
+echo json_encode($result);

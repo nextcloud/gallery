@@ -38,18 +38,13 @@ Thumbnail.loadBatch = function (paths, square) {
 	});
 	var thumbnails = {};
 	if (paths.length) {
-		var parts = paths[0].split('/');
-		var user = parts[0];
-
-		paths = paths.map(function (path) {
+		paths.forEach(function (path) {
 			var thumb = new Thumbnail(path, square);
 			thumb.image = new Image();
 			map[path] = thumbnails[path] = thumb;
-			return path.substr(user.length + 1); //strip /$user
 		});
 
-		var url = OC.generateUrl('apps/gallery/ajax/thumbnail/batch?user={user}&image={images}&scale={scale}&square={square}', {
-			user: user,
+		var url = OC.generateUrl('apps/gallery/ajax/thumbnail/batch?image={images}&scale={scale}&square={square}', {
 			images: paths.map(encodeURIComponent).join(';'),
 			scale: window.devicePixelRatio,
 			square: (square) ? 1 : 0
@@ -57,7 +52,7 @@ Thumbnail.loadBatch = function (paths, square) {
 
 		var eventSource = new OC.EventSource(url);
 		eventSource.listen('preview', function (data) {
-			var path = user + '/' + data.image;
+			var path = data.image;
 			var extension = path.substr(path.length - 3);
 			var thumb = thumbnails[path];
 			thumb.image.onload = function () {
