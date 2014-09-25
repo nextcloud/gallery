@@ -10,7 +10,7 @@ OCP\JSON::checkAppEnabled('gallery');
 
 $scale = isset($_GET['scale']) ? $_GET['scale'] : 1;
 $img = $_GET['file'];
-$linkItem = \OCP\Share::getShareByToken($owner);
+
 
 if (!empty($_GET['token'])) {
 	$linkItem = \OCP\Share::getShareByToken($_GET['token']);
