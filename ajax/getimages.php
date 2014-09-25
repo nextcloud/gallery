@@ -7,6 +7,7 @@
  */
 
 OCP\JSON::checkAppEnabled('gallery');
+$path = null;
 
 if (isset($_GET['token'])) {
 	$token = $_GET['token'];
@@ -16,7 +17,7 @@ if (isset($_GET['token'])) {
 		$type = $linkItem['item_type'];
 		$fileSource = $linkItem['file_source'];
 		$shareOwner = $linkItem['uid_owner'];
-		$path = null;
+		
 		$rootLinkItem = \OCP\Share::resolveReShare($linkItem);
 		$fileOwner = $rootLinkItem['uid_owner'];
 
@@ -50,6 +51,11 @@ $images = \OCP\Files::searchByMime('image');
 $user = \OCP\User::getUser();
 $users = array();
 $result = array();
+
+if($path == null){
+	
+	$path='/';
+}
 
 foreach ($images as $image) {
 	if (strpos($path, DIRECTORY_SEPARATOR . ".")) {
