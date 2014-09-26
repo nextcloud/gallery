@@ -1,3 +1,4 @@
+/* global Gallery */
 function Thumbnail (path, square, token) {
 	this.token = token;
 	this.square = square;
@@ -46,7 +47,8 @@ Thumbnail.loadBatch = function (paths, square, token) {
 			map[path] = thumbnails[path] = thumb;
 		});
 
-		var url = OC.generateUrl('apps/gallery/ajax/thumbnail/batch?token={token}&image={images}&scale={scale}&square={square}', {
+		var url = OC.generateUrl(
+			'apps/gallery/ajax/thumbnail/batch?token={token}&image={images}&scale={scale}&square={square}', {
 			images: paths.map(encodeURIComponent).join(';'),
 			scale: window.devicePixelRatio,
 			square: (square) ? 1 : 0,

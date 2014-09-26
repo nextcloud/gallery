@@ -1,3 +1,4 @@
+/* global Album, GalleryImage, SlideShow, Thumbnail, oc_requesttoken */
 var Gallery = {};
 Gallery.images = [];
 Gallery.currentAlbum = '';
@@ -29,8 +30,9 @@ Gallery.fillAlbums = function () {
 	return $.getJSON(OC.generateUrl('apps/gallery/ajax/images'), {token: token}).then(function (data) {
 		Gallery.images = data;
 
+		var path = null;
 		for (var i = 0; i < Gallery.images.length; i++) {
-			var path = Gallery.images[i];
+			path = Gallery.images[i];
 			image = new GalleryImage(Gallery.images[i], path, token);
 			var dir = OC.dirname(path);
 			if (dir === path) {
@@ -173,11 +175,12 @@ Gallery.view.loadVisibleRows = function (album, path) {
 					Gallery.view.loadVisibleRows.loading = null;
 					return; //throw away the row if the user has navigated away in the meantime
 				}
-				if (Gallery.view.element.length == 1) {
+				if (Gallery.view.element.length === 1) {
 					Gallery.showNormal();
 				}
 				Gallery.view.element.append(dom);
-				if (album.viewedItems < album.subAlbums.length + album.images.length && Gallery.view.element.height() < targetHeight) {
+				if (album.viewedItems < album.subAlbums.length + album.images.length &&
+					Gallery.view.element.height() < targetHeight) {
 					return showRows(album);
 				} else {
 					Gallery.view.loadVisibleRows.loading = null;
@@ -227,7 +230,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 			name: OC.basename(image.path),
 			url: Gallery.getImage(image.src),
 			path: image.path
-		}
+		};
 	});
 
 	var slideShow = new SlideShow($('#slideshow'), images);
@@ -259,7 +262,7 @@ $(document).ready(function () {
 		$('button.share').click(Gallery.share);
 	});
 
-	$('#openAsFileListButton').click(function (event) {
+	$('#openAsFileListButton').click(function () {
 		window.location.href = OC.generateUrl('s/{token}', {
 			token: $('#gallery').data('token')
 		});
