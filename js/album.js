@@ -1,3 +1,4 @@
+/* global Thumbnail */
 function Album (path, subAlbums, images, name, token) {
 	this.token = token;
 	this.path = path;

@@ -1,5 +1,3 @@
-/* global Gallery, Thumbnail */
-
 /**
  *
  * @param {jQuery} container
@@ -64,7 +62,8 @@ SlideShow.prototype.init = function (play) {
 	if ($.fn.mousewheel) {
 		this.container.bind('mousewheel.fb', function (e, delta) {
 			e.preventDefault();
-			if ($(e.target).get(0).clientHeight === 0 || $(e.target).get(0).scrollHeight === $(e.target).get(0).clientHeight) {
+			if ($(e.target).get(0).clientHeight === 0 ||
+				$(e.target).get(0).scrollHeight === $(e.target).get(0).clientHeight) {
 				if (delta > 0) {
 					this.previous();
 				} else {
@@ -85,7 +84,7 @@ SlideShow.prototype.init = function (play) {
 	}
 };
 
-SlideShow.prototype.onKeyUp = function (e) {
+SlideShow.prototype.onKeyUp = function () {
 
 };
 
@@ -281,8 +280,9 @@ $(document).ready(function () {
 			inactiveTimeout = setTimeout(inactiveCallback, 3000);
 		});
 
-		if (!SVGSupport()) { //replace all svg images with png images for browser that dont support svg
-			OC.Util.replaceSVG();
+		//replace all svg images with png images for browser that dont support svg
+		if (!OC.Util.hasSVGSupport()) {
+			OC.Util.replaceSVG(this.$el);
 		}
 	})
 		.fail(function () {
