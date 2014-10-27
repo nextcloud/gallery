@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "Bilder",
 "Picture view" => "Bildansicht",
 "Error loading slideshow template" => "Fehler beim Laden der Slideshow-Vorlage",
@@ -7,3 +8,4 @@
 "shared by %s" => "Geteilt von %s",
 "File list" => "Dateiliste"
 );
+$PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

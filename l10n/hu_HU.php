@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "Képek",
 "Picture view" => "Képnézet",
 "Error loading slideshow template" => "Hiba történt a diasor sablonjának betöltésekor",
@@ -7,3 +8,4 @@
 "shared by %s" => "Megosztotta: %s",
 "File list" => "Fájllista"
 );
+$PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

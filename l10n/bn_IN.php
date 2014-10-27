@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "ছবি",
 "Picture view" => "ছবির ভিউ",
 "Error loading slideshow template" => "স্লাইডশো টেমপ্লেট লোড করতে ত্রুটি ",
@@ -7,3 +8,4 @@
 "shared by %s" => "%s দ্বারা শেয়ার",
 "File list" => "ফাইল লিস্ট"
 );
+$PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

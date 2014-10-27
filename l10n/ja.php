@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "ピクチャ",
 "Picture view" => "ピクチャビュー",
 "Error loading slideshow template" => "スライドショーのテンプレートの読み込みエラー",
@@ -7,3 +8,4 @@
 "shared by %s" => "%s で共有中",
 "File list" => "ファイルリスト"
 );
+$PLURAL_FORMS = "nplurals=1; plural=0;";

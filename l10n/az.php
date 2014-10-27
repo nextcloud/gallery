@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "Şəkillər",
 "Picture view" => "Şəkilə baxış",
 "Error loading slideshow template" => "Slideshow şablonun yüklənməsində səhv baş verdi",
@@ -7,3 +8,4 @@
 "shared by %s" => "%s tərəfindən yayımlanıb",
 "File list" => "Fayl siyahısı"
 );
+$PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

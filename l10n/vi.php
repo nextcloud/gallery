@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "Hình ảnh",
 "Picture view" => "Xem h",
 "Error loading slideshow template" => "Lỗi khi tải mẫu Slidesh",
@@ -6,3 +7,4 @@
 "shared by %s" => " Được chia sẻ bởi %s",
 "File list" => "Danh sách tập t"
 );
+$PLURAL_FORMS = "nplurals=1; plural=0;";

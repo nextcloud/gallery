@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "圖片",
 "Picture view" => "檢視圖片",
 "Error loading slideshow template" => "載入投影片檢視樣板時發生錯誤",
@@ -7,3 +8,4 @@
 "shared by %s" => "由 %s 分享",
 "File list" => "檔案列表"
 );
+$PLURAL_FORMS = "nplurals=1; plural=0;";

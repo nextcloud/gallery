@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "Obrázky",
 "Picture view" => "Zobrazenie obrázka",
 "Error loading slideshow template" => "Chyba pri načítaní šablóny prezentácie",
@@ -7,3 +8,4 @@
 "shared by %s" => "Zdieľané od %s",
 "File list" => "Zoznam súborov"
 );
+$PLURAL_FORMS = "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;";

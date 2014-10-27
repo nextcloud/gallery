@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "រូបភាព",
 "Picture view" => "ទិដ្ឋភាពរូបភាព",
 "Error loading slideshow template" => "មាន​កំហុស​ផ្ទុក​ពុម្ព​បញ្ចាំងស្លាយ",
@@ -6,3 +7,4 @@
 "shared by %s" => "បាន​ចែក​រំលែក​ដោយ %s",
 "File list" => "បញ្ជី​ឯកសារ"
 );
+$PLURAL_FORMS = "nplurals=1; plural=0;";

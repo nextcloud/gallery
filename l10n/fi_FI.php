@@ -1,4 +1,5 @@
-<?php $TRANSLATIONS = array(
+<?php
+$TRANSLATIONS = array(
 "Pictures" => "Kuvat",
 "Picture view" => "Kuvanäkymä",
 "Error loading slideshow template" => "Virhe ladatessa diaesityksen mallipohjaa",
@@ -7,3 +8,4 @@
 "shared by %s" => "jakanut %s",
 "File list" => "Tiedostoluettelo"
 );
+$PLURAL_FORMS = "nplurals=2; plural=(n != 1);";
