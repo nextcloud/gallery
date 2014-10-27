@@ -1,7 +1,7 @@
 /**
  *
  * @param {jQuery} container
- * @param {{name:string, url: string, path: string}[]} images
+ * @param {{name:string, url: string, path: string, fallBack: string}[]} images
  * @param {int} interval
  * @param {int} maxScale
  * @constructor
@@ -24,6 +24,7 @@ var SlideShow = function (container, images, interval, maxScale) {
 SlideShow.prototype.init = function (play) {
 	this.active = true;
 	this.container.children('img').remove();
+
 	// hide arrows and play/pause when only one pic
 	this.container.find('.next, .previous').toggle(this.images.length > 1);
 	if (this.images.length === 1) {
@@ -46,6 +47,7 @@ SlideShow.prototype.init = function (play) {
 	this.container.children('.pause').click(makeCallBack(this.pause));
 	this.container.children('.play').click(makeCallBack(this.play));
 	this.container.click(makeCallBack(this.next));
+
 
 	$(document).keyup(function (evt) {
 		if (evt.keyCode === 27) { // esc
@@ -92,7 +94,7 @@ SlideShow.prototype.show = function (index) {
 	this.container.show();
 	this.current = index;
 	this.container.css('background-position', 'center');
-	return this.loadImage(this.images[index].url).then(function (image) {
+	return this.loadImage(this.images[index].url, this.images[index].fallBack).then(function (image) {
 		this.container.css('background-position', '-10000px 0');
 
 		// check if we moved along while we were loading
@@ -115,7 +117,7 @@ SlideShow.prototype.setUrl = function (path) {
 	}
 };
 
-SlideShow.prototype.loadImage = function (url) {
+SlideShow.prototype.loadImage = function (url, fallBack) {
 	if (!this.imageCache[url]) {
 		this.imageCache[url] = new jQuery.Deferred();
 		var image = new Image();
@@ -130,8 +132,14 @@ SlideShow.prototype.loadImage = function (url) {
 			}
 		}.bind(this);
 		image.onerror = function () {
-			if (this.imageCache.cache[url]) {
-				this.imageCache.cache[url].reject(url);
+			if (fallBack) {
+				this.loadImage(fallBack).then(function (image) {
+					this.imageCache[url].resolve(image);
+				}.bind(this), function (url) {
+					this.imageCache[url].reject(url);
+				}.bind(this));
+			} else if (this.imageCache[url]) {
+				this.imageCache[url].reject(url);
 			}
 		}.bind(this);
 		image.src = url;
@@ -210,7 +218,7 @@ SlideShow.prototype.next = function () {
 	var next = (this.current + 1) % this.images.length;
 	this.show(this.current).then(function () {
 		// preload the next image
-		this.loadImage(this.images[next].url);
+		this.loadImage(this.images[next].url, this.images[next].fallBack);
 	}.bind(this));
 };
 
@@ -219,7 +227,7 @@ SlideShow.prototype.previous = function () {
 	var previous = (this.current - 1 + this.images.length) % this.images.length;
 	this.show(this.current).then(function () {
 		// preload the next image
-		this.loadImage(this.images[previous].url);
+		this.loadImage(this.images[previous].url, this.images[previous].fallBack);
 	}.bind(this));
 };
 
@@ -324,7 +332,8 @@ $(document).ready(function () {
 					images.push({
 						name: file.name,
 						path: dir + file.name,
-						url: imageUrl
+						url: imageUrl,
+						fallBack: OCA.Files.Files.getDownloadUrl(file.name, dir)
 					});
 				}
 			}
