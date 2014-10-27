@@ -374,14 +374,14 @@ $(document).ready(function () {
 					if (file.mimetype === 'image/svg+xml') {
 						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
 					} else {
-						var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&y={y}&a=true&scalingup=0', {
+						var imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&y={y}&a=true&scalingup=0&forceIcon=0', {
 							x: width,
 							y: height,
 							file: encodeURIComponent(dir + file.name)
 						});
 						if (!user) {
 							imageUrl = OC.generateUrl(
-								'/apps/files_sharing/publicpreview?file={file}&x={x}&y={y}&a=true&t={t}&scalingup=0', {
+								'/apps/files_sharing/publicpreview?file={file}&x={x}&y={y}&a=true&t={t}&scalingup=0&forceIcon=0', {
 									file: encodeURIComponent(dir + file.name),
 									x: width,
 									y: height,
