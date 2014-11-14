@@ -141,7 +141,7 @@ jQuery.fn.slideShow.showImage = function (url, preloadUrl, fallBack, preloadFall
 			}
 			if (preloadUrl) {
 				jQuery.fn.slideShow.loadImage(
-					fallBack,
+					preloadUrl,
 					preloadFallBack
 				);
 			}
