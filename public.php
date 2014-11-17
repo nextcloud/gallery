@@ -55,19 +55,32 @@ if ($token) {
 				$password = $_POST['password'];
 				if ($linkItem['share_type'] == OCP\Share::SHARE_TYPE_LINK) {
 					// Check Password
-					$forcePortable = (CRYPT_BLOWFISH != 1);
-					$hasher = new PasswordHash(8, $forcePortable);
-					if (!($hasher->CheckPassword($password.OC_Config::getValue('passwordsalt', ''),
-						$linkItem['share_with']))) {
+					$newHash = '';
+					if(\OC::$server->getHasher()->verify($password, $linkItem['share_with'], $newHash)) {
+						\OC::$server->getSession()->set('public_link_authenticated', $linkItem['id']);
+
+						/**
+						 * FIXME: Migrate old hashes to new hash format
+						 * Due to the fact that there is no reasonable functionality to update the password
+						 * of an existing share no migration is yet performed there.
+						 * The only possibility is to update the existing share which will result in a new
+						 * share ID and is a major hack.
+						 *
+						 * In the future the migration should be performed once there is a proper method
+						 * to update the share's password. (for example `$share->updatePassword($password)`
+						 *
+						 * @link https://github.com/owncloud/core/issues/10671
+						 */
+						if(!empty($newHash)) {
+
+						}
+					} else {
 						OCP\Util::addStyle('files_sharing', 'authenticate');
 						$tmpl = new OCP\Template('files_sharing', 'authenticate', 'guest');
 						$tmpl->assign('URL', $url);
 						$tmpl->assign('wrongpw', true);
 						$tmpl->printPage();
 						exit();
-					} else {
-						// Save item id in session for future requests
-						\OC::$server->getSession()->set('public_link_authenticated', $linkItem['id']);
 					}
 				} else {
 					OCP\Util::writeLog('share', 'Unknown share type '.$linkItem['share_type']
