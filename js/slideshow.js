@@ -312,6 +312,8 @@ $(document).ready(function () {
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
 					if (file.mimetype === 'image/svg+xml') {
 						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
+					} elseif (file.mimetype === 'image/gif') {
+						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
 					} else {
 						imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&y={y}&a=true&scalingup=0&forceIcon=0', {
 							x: width,
