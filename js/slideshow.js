@@ -310,9 +310,7 @@ $(document).ready(function () {
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
-					if (file.mimetype === 'image/svg+xml') {
-						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
-					} elseif (file.mimetype === 'image/gif') {
+					if (file.mimetype === 'image/svg+xml' || file.mimetype === 'image/gif') {
 						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
 					} else {
 						imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&y={y}&a=true&scalingup=0&forceIcon=0', {
