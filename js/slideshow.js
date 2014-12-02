@@ -371,6 +371,9 @@ $(document).ready(function () {
 			for (var i = 0; i < files.length; i++) {
 				var file = files[i];
 				if (file.mimetype && file.mimetype.indexOf('image') >= 0) {
+					if (file.mimetype === 'image/tiff') {
+						continue;
+					}
 					if (file.mimetype === 'image/svg+xml') {
 						imageUrl = OCA.Files.Files.getDownloadUrl(file.name, dir);
 					} else {
@@ -406,5 +409,6 @@ $(document).ready(function () {
 			jQuery.fn.slideShow.call(images, $('#slideshow'), start, {fallBacks: fallBacks});
 		});
 		OCA.Files.fileActions.setDefault('image', 'View');
+		OCA.Files.fileActions.setDefault('image/tiff', 'Download');
 	}
 });
