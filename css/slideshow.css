@@ -109,6 +109,7 @@
 	filter: alpha(opacity=30);
 	opacity: .3;
 	height: 0;
+	min-height: 0;
 }
 
 #slideshow.inactive > .progress {
