@@ -102,6 +102,7 @@ SlideShow.prototype.show = function (index) {
 			this.currentImage = image;
 			this.container.children('img').remove();
 			this.container.append(image);
+			image.setAttribute('alt', this.images[index].name);
 			this.fitImage(image);
 			this.setUrl(this.images[index].path);
 			if (this.playing) {
