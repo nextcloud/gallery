@@ -38,7 +38,8 @@ button.share {
 	margin: 2px;
 }
 
-#gallery a.album label, #gallery a.image label {
+#gallery a.album .album-label,
+#gallery a.image .album-label {
 	color: #fff;
 	text-shadow: none;
 	position: absolute;
