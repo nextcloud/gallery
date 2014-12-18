@@ -29,7 +29,7 @@ OCP\App::addNavigationEntry(array(
 		'id' => 'gallery_index',
 		'order' => 3,
 		'href' => OCP\Util::linkToRoute('gallery_index'),
-		'icon' => OCP\Util::imagePath('core', 'places/picture.svg'),
+		'icon' => OCP\Util::imagePath('gallery', 'gallery.svg'),
 		'name' => $l->t('Pictures'))
 );
 
