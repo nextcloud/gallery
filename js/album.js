@@ -33,6 +33,7 @@ Album.prototype.getThumbnailWidth = function () {
  */
 Album.prototype.getOneImage = function (image, targetHeight, calcWidth, a) {
 	image.getThumbnail(true).then(function (img) {
+		img.alt = '';
 		a.append(img);
 		img.height = targetHeight / 2;
 		img.width = calcWidth;
@@ -246,6 +247,7 @@ GalleryImage.prototype.getDom = function (targetHeight) {
 			img.height = targetHeight;
 			img.width = targetHeight * img.ratio;
 			img.setAttribute('width', 'auto');
+			img.alt = encodeURI(image.path);
 			a.append(img);
 			return a;
 		});
