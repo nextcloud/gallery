@@ -71,6 +71,12 @@ button.share {
 	zoom: 1;
 }
 
+/* make focus visible for keyboard users */
+#gallery a:focus,
+#gallery a.album:focus {
+	opacity: .5;
+}
+
 #gallery a.image > img {
 	max-height: 200px;
 	width: auto;
