@@ -102,6 +102,7 @@ SlideShow.prototype.show = function (index) {
 			this.currentImage = image;
 			this.container.children('img').remove();
 			this.container.append(image);
+			image.setAttribute('alt', this.images[index].name);
 			this.fitImage(image);
 			this.setUrl(this.images[index].path);
 			if (this.playing) {
@@ -257,7 +258,13 @@ SlideShow._getSlideshowTemplate = function () {
 	if (!this.$slideshowTemplate) {
 		var self = this;
 		$.get(OC.filePath('gallery', 'templates', 'slideshow.html'), function (tmpl) {
-			self.$slideshowTemplate = $(tmpl);
+			var template = $(tmpl);
+			template.find('.next').val(t('gallery', 'Next'));
+			template.find('.play').val(t('gallery', 'Play'));
+			template.find('.pause').val(t('gallery', 'Pause'));
+			template.find('.previous').val(t('gallery', 'Previous'));
+			template.find('.exit').val(t('gallery', 'Close'));
+			self.$slideshowTemplate = template;
 			defer.resolve(self.$slideshowTemplate);
 		})
 			.fail(function () {

@@ -33,6 +33,7 @@ Album.prototype.getThumbnailWidth = function () {
  */
 Album.prototype.getOneImage = function (image, targetHeight, calcWidth, a) {
 	image.getThumbnail(true).then(function (img) {
+		img.alt = '';
 		a.append(img);
 		img.height = targetHeight / 2;
 		img.width = calcWidth;
@@ -68,7 +69,7 @@ Album.prototype.getDom = function (targetHeight) {
 	return this.getThumbnail().then(function (img) {
 		var a = $('<a/>').addClass('album').attr('href', '#' + encodeURI(album.path));
 
-		a.append($('<label/>').text(album.name));
+		a.append($('<span/>').addClass('album-label').text(album.name));
 		var ratio = Math.round(img.ratio * 100) / 100;
 		var calcWidth = (targetHeight * ratio) / 2;
 
@@ -246,6 +247,7 @@ GalleryImage.prototype.getDom = function (targetHeight) {
 			img.height = targetHeight;
 			img.width = targetHeight * img.ratio;
 			img.setAttribute('width', 'auto');
+			img.alt = encodeURI(image.path);
 			a.append(img);
 			return a;
 		});
