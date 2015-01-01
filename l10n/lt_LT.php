@@ -2,6 +2,11 @@
 $TRANSLATIONS = array(
 "Pictures" => "Nuotraukos",
 "Picture view" => "Paveikslėlio rodymas",
+"Next" => "Kitas",
+"Play" => "Groti",
+"Pause" => "Pristabdyti",
+"Previous" => "Ankstesnis",
+"Close" => "Užverti",
 "Error loading slideshow template" => "Klaida pakraunant pristatymą",
 "Share" => "Dalintis",
 "shared by %s" => "pasidalino %s",

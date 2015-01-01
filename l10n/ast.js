@@ -3,6 +3,11 @@ OC.L10N.register(
     {
     "Pictures" : "Semeyes",
     "Picture view" : "Vista d'imáxenes",
+    "Next" : "Siguiente",
+    "Play" : "Reproducir",
+    "Pause" : "Posar",
+    "Previous" : "Anterior",
+    "Close" : "Zarrar",
     "Error loading slideshow template" : "Fallu al cargar la plantía de diapositives",
     "Share" : "Compartir",
     "No pictures found! If you upload pictures in the files app, they will be displayed here." : "¡Nun s'alcontraron semeyes! Si xubes les semeyes na app de ficheros, van amosase equí.",
