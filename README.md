@@ -11,9 +11,13 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 * Native SVG support
 * Download image straight from the slideshow
 
+## Browser compatibility
+* Firefox, Chrome, IE 10+, Opera, Safari
+* iOS, Opera Mobile
+
 ## Installation
 1. Place this app in your apps folder
 2. Activate it in the apps menu
 
 **Note**
-It is strongly advised to install ImageMagick and it's PECL extension in order to be able to visualise previews of more media types.
+It is strongly advised to install ImageMagick and its PECL extension in order to be able to visualise previews of more media types.
