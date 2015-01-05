@@ -1,4 +1,4 @@
-# Gallery Plus [BETA]
+# Gallery Plus [BETA] [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=stable7)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=stable7)
 Media gallery for ownCloud which includes preview for all media types supported by your ownCloud installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
