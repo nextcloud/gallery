@@ -90,11 +90,9 @@ SlideShow.prototype.init = function (play) {
 	}.bind(this));
 
 	jQuery(window).resize(function () {
-		if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-			this.zoomToOriginal();
-		} else {
-			this.zoomToFit();
-		}
+
+		this.zoomDecider();
+
 	}.bind(this));
 
 	if (play) {
@@ -104,19 +102,33 @@ SlideShow.prototype.init = function (play) {
 	}
 };
 
+SlideShow.prototype.zoomDecider = function () {
+	if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
+		this.zoomToOriginal();
+	} else {
+		this.zoomToFit();
+	}
+};
+
 SlideShow.prototype.zoomToFit = function () {
 	if (this.zoomable !== null) {
 		this.zoomable.flyZoomToFit();
 	}
 };
+
 SlideShow.prototype.zoomToOriginal = function () {
-	if (this.zoomable !== null) {
-		// original size = - maxZoom
-		if (this.zoomable.width < this.smallImageDimension || this.zoomable.height < this.smallImageDimension) {
-			this.zoomable.flyTo(0, 0, this.smallImageScale, true);
-		} else {
-			this.zoomable.flyTo(0, 0, -this.zoomable.getMaxZoom(), true);
-		}
+	if (this.zoomable !== null && this.currentImage.isSmallImage) {
+		this.zoomable.flyTo(0, 0, this.smallImageScale, true);
+	} else {
+		this.zoomable.flyTo(0, 0, 0, true);
+	}
+};
+
+SlideShow.prototype.resetZoom = function () {
+	if (this.zoomable !== null && this.currentImage.isSmallImage) {
+		this.zoomable.setZoom(this.smallImageScale, true);
+	} else {
+		this.zoomable.setZoom(0, true);
 	}
 };
 
@@ -137,6 +149,7 @@ SlideShow.prototype.fullScreenExit = function () {
 	}
 	this.fullScreen.close();
 	this.fullScreen = null;
+	this.zoomDecider();
 
 };
 
@@ -172,10 +185,9 @@ SlideShow.prototype.show = function (index) {
 				this.zoomable = null;
 			}
 			var maxZoom = this.maxZoom;
-			var smallImage = false;
 			if (image.width < this.smallImageDimension || image.height < this.smallImageDimension) {
 				maxZoom += 3;
-				smallImage = true;
+				this.currentImage.isSmallImage = true;
 			}
 			this.container.append(image);
 			image.setAttribute('alt', this.images[index].name);
@@ -186,16 +198,12 @@ SlideShow.prototype.show = function (index) {
 				maxZoom: maxZoom,
 				minZoom: 0,
 				touchUI: false,
-				width: image.width,
-				height: image.height
+				width: image.naturalWidth,
+				height: image.naturalHeight
 			}), image);
 			//this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
 			if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-				if (smallImage) {
-					this.zoomable.setZoom(this.smallImageScale, image);
-				} else {
-					this.zoomable.setZoom(-this.maxZoom, image);
-				}
+				this.resetZoom();
 			}
 
 			// prevent zoom-on-doubleClick
@@ -293,6 +301,7 @@ SlideShow.prototype.pause = function () {
 SlideShow.prototype.next = function () {
 	if (this.zoomable !== null) {
 		this.zoomable.stopFlying();
+		this.resetZoom();
 	}
 	this.current = (this.current + 1) % this.images.length;
 	var next = (this.current + 1) % this.images.length;
@@ -305,6 +314,7 @@ SlideShow.prototype.next = function () {
 SlideShow.prototype.previous = function () {
 	if (this.zoomable !== null) {
 		this.zoomable.stopFlying();
+		this.resetZoom();
 	}
 	this.current = (this.current - 1 + this.images.length) % this.images.length;
 	var previous = (this.current - 1 + this.images.length) % this.images.length;
@@ -391,7 +401,7 @@ SlideShow._getSlideshowTemplate = function () {
 					el: '.downloadImage',
 					trans: 'Download',
 					toolTip: true
-				},
+				}
 			];
 			for (var i = 0; i < buttonsArray.length; i++) {
 				var button = buttonsArray[i];
