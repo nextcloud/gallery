@@ -202,10 +202,12 @@ class InfoService extends Service {
 		$imagesFolder = $this->getResource($folder, $pathRelativeToFolder);
 		$fromRootToFolder = $folderPath . $pathRelativeToFolder;
 
-		return $folderData = array(
+		$folderData = array(
 			'imagesFolder'     => $imagesFolder,
 			'fromRootToFolder' => $fromRootToFolder,
 		);
+
+		return $folderData;
 	}
 
 	/**
