@@ -1,0 +1,184 @@
+From 0e29d7a0580bd23a0bb13ae389f6bc5a78aca411 Mon Sep 17 00:00:00 2001
+From: Olivier Paroz <github@oparoz.com>
+Date: Mon, 8 Dec 2014 04:13:23 +0100
+Subject: [PATCH 1/2] Dump Arrays, Objects and Exceptions to the log
+
+This is a first draft. It has only been tested with the ownlcloud
+logger.
+Some internal fields are JSON encoded several times which makes it
+harder to read.
+
+Most of the normalizer is borrowed from Monolog
+
+https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/NormalizerFormatter.php
+---
+ lib/private/log.php | 85 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 82 insertions(+), 3 deletions(-)
+
+diff --git a/lib/private/log.php b/lib/private/log.php
+index 021cc15..f441187 100644
+--- a/lib/private/log.php
++++ b/lib/private/log.php
+@@ -1,6 +1,8 @@
+ <?php
+ /**
+  * Copyright (c) 2013 Bart Visscher <bartv@thisnet.nl>
++ * Copyright (c) 2014 Jordi Boggiano <j.boggiano@seld.be>
++ * Copyright (c) 2014 Olivier Paroz <owncloud@oparoz.com>
+  * This file is licensed under the Affero General Public License version 3 or
+  * later.
+  * See the COPYING-README file.
+@@ -27,10 +29,10 @@ class Log implements ILogger {
+ 	/**
+ 	 * @param string $logger The logger that should be used
+ 	 */
+-	public function __construct($logger=null) {
++	public function __construct($logger = null) {
+ 		// FIXME: Add this for backwards compatibility, should be fixed at some point probably
+-		if($logger === null) {
+-			$this->logger = 'OC_Log_'.ucfirst(\OC_Config::getValue('log_type', 'owncloud'));
++		if ($logger === null) {
++			$this->logger = 'OC_Log_' . ucfirst(\OC_Config::getValue('log_type', 'owncloud'));
+ 			call_user_func(array($this->logger, 'init'));
+ 		} else {
+ 			$this->logger = $logger;
+@@ -147,6 +149,8 @@ public function log($level, $message, array $context = array()) {
+ 		// interpolate $message as defined in PSR-3
+ 		$replace = array();
+ 		foreach ($context as $key => $val) {
++			// Allows us to dump arrays, objects and exceptions to the log
++			$val = $this->normalize($val);
+ 			$replace['{' . $key . '}'] = $val;
+ 		}
+ 
+@@ -156,4 +160,79 @@ public function log($level, $message, array $context = array()) {
+ 		$logger = $this->logger;
+ 		call_user_func(array($logger, 'write'), $app, $message, $level);
+ 	}
++
++	private function normalize($data) {
++		if (null === $data || is_scalar($data)) {
++			return $data;
++		}
++
++		if (is_array($data) || $data instanceof \Traversable) {
++			$normalized = array();
++			$count = 1;
++			foreach ($data as $key => $value) {
++				if ($count++ >= 1000) {
++					$normalized['...'] = 'Over 1000 items, aborting normalization';
++					break;
++				}
++				$normalized[$key] = $this->normalize($value);
++			}
++
++			//return $normalized;
++			return $this->toJson($normalized, true);
++		}
++
++		if (is_object($data)) {
++			if ($data instanceof \Exception) {
++				return $this->normalizeException($data);
++			}
++
++			$arrayObject = new \ArrayObject($data);
++			$serializedObject = $arrayObject->getArrayCopy();
++
++			return sprintf("[object] (%s: %s)", get_class($data), $this->toJson($serializedObject, true));
++		}
++
++		if (is_resource($data)) {
++			return '[resource]';
++		}
++
++		return '[unknown(' . gettype($data) . ')]';
++	}
++
++	private function normalizeException(\Exception $e) {
++		$data = array(
++			'class'   => get_class($e),
++			'message' => $e->getMessage(),
++			'file'    => $e->getFile() . ':' . $e->getLine(),
++		);
++		$trace = $e->getTrace();
++		foreach ($trace as $frame) {
++			if (isset($frame['file'])) {
++				$data['trace'][] = $frame['file'] . ':' . $frame['line'];
++			} else {
++				$data['trace'][] = $this->toJson($frame, true);
++			}
++		}
++		if ($previous = $e->getPrevious()) {
++			$data['previous'] = $this->normalizeException($previous);
++		}
++
++		return $this->toJson($data, true);
++	}
++
++	private function toJson($data, $ignoreErrors = false) {
++		// suppress json_encode errors since it's twitchy with some inputs
++		if ($ignoreErrors) {
++			if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
++				return @json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
++			}
++
++			return @json_encode($data);
++		}
++		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
++			return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
++		}
++
++		return json_encode($data);
++	}
+ }
+
+From 6044bcb149211e8fe8b60998c6b1f9f9e4563490 Mon Sep 17 00:00:00 2001
+From: Olivier Paroz <github@oparoz.com>
+Date: Mon, 8 Dec 2014 15:48:39 +0100
+Subject: [PATCH 2/2] Simpler Exception trace and PHP5.4+ only
+
+---
+ lib/private/log.php | 22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
+
+diff --git a/lib/private/log.php b/lib/private/log.php
+index f441187..d7c9301 100644
+--- a/lib/private/log.php
++++ b/lib/private/log.php
+@@ -205,14 +205,9 @@ private function normalizeException(\Exception $e) {
+ 			'message' => $e->getMessage(),
+ 			'file'    => $e->getFile() . ':' . $e->getLine(),
+ 		);
+-		$trace = $e->getTrace();
+-		foreach ($trace as $frame) {
+-			if (isset($frame['file'])) {
+-				$data['trace'][] = $frame['file'] . ':' . $frame['line'];
+-			} else {
+-				$data['trace'][] = $this->toJson($frame, true);
+-			}
+-		}
++		$trace = $e->getTraceAsString();
++		$data['trace'][] = $trace;
++
+ 		if ($previous = $e->getPrevious()) {
+ 			$data['previous'] = $this->normalizeException($previous);
+ 		}
+@@ -223,16 +218,9 @@ private function normalizeException(\Exception $e) {
+ 	private function toJson($data, $ignoreErrors = false) {
+ 		// suppress json_encode errors since it's twitchy with some inputs
+ 		if ($ignoreErrors) {
+-			if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+-				return @json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+-			}
+-
+-			return @json_encode($data);
+-		}
+-		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+-			return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
++			return @json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+ 		}
+ 
+-		return json_encode($data);
++		return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+ 	}
+ }
