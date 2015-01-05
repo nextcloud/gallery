@@ -60,6 +60,11 @@ Thumbnail.loadBatch = function (paths, square, token) {
 			var thumb = thumbnails[path];
 			thumb.image.onload = function () {
 				Thumbnail.loadingCount--;
+				// Fix for SVG files which can come in all sizes
+				if (square) {
+					thumb.image.width = 200;
+					thumb.image.height = 200;
+				}
 				thumb.image.ratio = thumb.image.width / thumb.image.height;
 				thumb.image.originalWidth = 200 * thumb.image.ratio;
 				thumb.loadingDeferred.resolve(thumb.image);

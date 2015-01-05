@@ -256,6 +256,8 @@ class PreviewService extends Service {
 	 * @param \OC\Preview $preview
 	 * @param int $maxX
 	 * @param int $maxY
+	 *
+	 * @return array
 	 */
 	private function preparePreview($owner, $file, $preview, $maxX, $maxY) {
 		$appName = $this->appName;

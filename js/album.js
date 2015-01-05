@@ -40,18 +40,20 @@ Album.prototype.getOneImage = function (image, targetHeight, calcWidth, a, squar
 	//var albumpath = this.path;
 	var gm = new GalleryImage(image.src, path);
 	gm.getThumbnail(square).then(function (img) {
+		var backgroundHeight, backgroundWidth;
 		img.alt = '';
 		if (square === 2) {
-			var croppedDiv = $('<div class="cropped">');
-			croppedDiv.css("background-image", "url('" + img.src + "')");
-			croppedDiv.css("height", (targetHeight / 2) - 3);
-			croppedDiv.css("width", calcWidth - 4);
-			a.append(croppedDiv);
+			backgroundHeight = (targetHeight / 2) - 3;
+			backgroundWidth = calcWidth - 4;
 		} else {
-			a.append(img);
-			img.height = (targetHeight / 2) - 2;
-			img.width = calcWidth - 2;
+			backgroundHeight = (targetHeight / 2) - 2;
+			backgroundWidth = calcWidth - 2;
 		}
+		var croppedDiv = $('<div class="cropped">');
+		croppedDiv.css("background-image", "url('" + img.src + "')");
+		croppedDiv.css("height", backgroundHeight);
+		croppedDiv.css("width", backgroundWidth);
+		a.append(croppedDiv);
 	});
 };
 
@@ -64,7 +66,6 @@ Album.prototype.getOneImage = function (image, targetHeight, calcWidth, a, squar
  * @returns {a}
  */
 Album.prototype.getFourImages = function (images, targetHeight, ratio, a) {
-
 	var calcWidth = (targetHeight / ratio) / 2;
 	var iImagesCount = images.length;
 	var square = 1;
