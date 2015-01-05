@@ -19,17 +19,21 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 * iOS, Opera Mobile
 
 ## Installation
-1. Place this app in your apps folder or get the stable7 branch via the shell
+Place this app in your apps folder or get the stable7 branch via the shell
+
 ```
 $ git clone -b stable7 https://github.com/interfasys/galleryplus.git`
 ```
-2. Activate it in the apps menu
-3. Needed while in beta. Install the smarter-logger.patch. You'll find it in the patches folder
+
+Now you can activate it in the apps menu. It's called Gallery+
+
+While in beta, you need to install the smarter-logger.patch. You'll find it in the patches folder
+
 ```
 $ patch -p1 < apps/galleryplus/patches/bitmap_preview.patch
 ```
 
-4. Add support for more media types by following the instructions below
+And finally, in order to be able to visualise previews of more media types, follow the instructions below
 
 ## Supporting more media types
 First, make sure you have installed ImageMagick and its PECL extension
@@ -63,5 +67,5 @@ That's it. you should be able to see more media types in your slideshows and gal
 
 ## List of patches
 1. smarter-logger.patch - Logger patch to be able to easily have access to objects, arrays, etc.
-2. The bitmap_preview.patch - Adds support for Photoshop, Illustrator, TIFF, Postscript
+2. bitmap_preview.patch - Adds support for Photoshop, Illustrator, TIFF, Postscript
 
