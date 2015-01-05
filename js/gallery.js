@@ -63,7 +63,7 @@ Gallery.getAlbumInfo = function (album) {
 		var def = new $.Deferred();
 		Gallery.getAlbumInfo.cache[album] = def;
 
-		var url = OC.generateUrl('apps/' + Gallery.appName + '/albums?albumpath={albumpath}', {albumpath: album});
+		var url = OC.generateUrl('apps/' + Gallery.appName + '/albums?albumpath={albumpath}', {albumpath: encodeURIComponent(album)});
 		$.getJSON(url, function (data) {
 			def.resolve(data);
 		});
