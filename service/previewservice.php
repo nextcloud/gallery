@@ -268,6 +268,7 @@ class PreviewService extends Service {
 		$preview->setKeepAspect(
 			$keepAspect
 		); // FIXME: Missing from public interface. https://github.com/owncloud/core/issues/12772
+		$perfectPreview = array();
 
 		// Returns an \OC_Image instance
 		$previewData = $preview->getPreview();

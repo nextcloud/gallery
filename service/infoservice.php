@@ -41,6 +41,33 @@ class InfoService extends Service {
 	 * @type mixed
 	 */
 	private $previewManager;
+	/**
+	 * @todo This hard-coded array could be replaced by admin settings
+	 *
+	 * @type string[]
+	 */
+	private $baseMimeTypes = array(
+		'image/png',
+		'image/jpeg',
+		'image/gif',
+		'image/x-xbitmap',
+		'image/bmp',
+		'image/tiff',
+		'image/x-dcraw',
+		'application/x-photoshop',
+		'application/illustrator',
+		'application/postscript',
+	);
+	/**
+	 * These types are useful for files preview in the files app, but
+	 * not for the gallery side
+	 *
+	 * @type string[]
+	 */
+	private $slideshowMimeTypes = array(
+		'application/font-sfnt',
+		'application/x-font',
+	);
 
 	/**
 	 * Constructor
@@ -100,31 +127,11 @@ class InfoService extends Service {
 	 */
 	public function getSupportedMimes($slideshow = true) {
 		$supportedMimes = array();
-		// TODO: This hard-coded array could be replaced by admin settings
-		$wantedMimes = array(
-			'image/png',
-			'image/jpeg',
-			'image/gif',
-			'image/x-xbitmap',
-			'image/bmp',
-			'image/tiff',
-			'image/x-dcraw',
-			'application/x-photoshop',
-			'application/illustrator',
-			'application/postscript',
-		);
+		$wantedMimes = $this->baseMimeTypes;
 
 		if ($slideshow) {
-			/**
-			 * These types are useful for files preview in the files app, but
-			 * not for the gallery side
-			 */
-			$wantedMimes = array_merge(
-				$wantedMimes, array(
-								'application/font-sfnt',
-								'application/x-font',
-							)
-			);
+			$wantedMimes =
+				array_merge($wantedMimes, $this->slideshowMimeTypes);
 		}
 
 		foreach ($wantedMimes as $wantedMime) {
@@ -160,9 +167,32 @@ class InfoService extends Service {
 	 * @return array all the images we could find
 	 */
 	public function getImages() {
-		$images = array();
-		$result = array();
+		$folderData = $this->getImagesFolder();
 
+		$imagesFolder = $folderData['imagesFolder'];
+		$images = $this->searchByMime($imagesFolder);
+
+		$fromRootToFolder = $folderData['fromRootToFolder'];
+		$result = $this->fixImagePath($images, $fromRootToFolder);
+
+		/*$this->logger->debug(
+			"Images array: {images}",
+			array(
+				'app'    => $this->appName,
+				'images' => $result
+			)
+		);*/
+
+		return $result;
+	}
+
+	/**
+	 * Returns the folder where we need to look for files, as well as the path
+	 * starting from it and going up to the user's root folder
+	 *
+	 * @return array
+	 */
+	private function getImagesFolder() {
 		$env = $this->environmentService->getEnv();
 		$pathRelativeToFolder = $env['relativePath'];
 		/** @type Folder $folder */
@@ -170,6 +200,23 @@ class InfoService extends Service {
 		$folderPath = $folder->getPath();
 		/** @type Folder $imagesFolder */
 		$imagesFolder = $this->getResource($folder, $pathRelativeToFolder);
+		$fromRootToFolder = $folderPath . $pathRelativeToFolder;
+
+		return $folderData = array(
+			'imagesFolder'     => $imagesFolder,
+			'fromRootToFolder' => $fromRootToFolder,
+		);
+	}
+
+	/**
+	 * Returns all the images of which we can generate a preview
+	 *
+	 * @param Folder $imagesFolder
+	 *
+	 * @return array
+	 */
+	private function searchByMime($imagesFolder) {
+		$images = array();
 		$mimes = $this->getSupportedMimes(false);
 
 		foreach ($mimes as $mime) {
@@ -183,6 +230,20 @@ class InfoService extends Service {
 
 			$images = array_merge($images, $mimeImages);
 		}
+
+		return $images;
+	}
+
+	/**
+	 * Fixes the path of each image we've found
+	 *
+	 * @param array $images
+	 * @param string $fromRootToFolder
+	 *
+	 * @return array
+	 */
+	private function fixImagePath($images, $fromRootToFolder) {
+		$result = array();
 
 		/** @type File $image */
 		foreach ($images as $image) {
@@ -199,16 +260,19 @@ class InfoService extends Service {
 				)
 			);*/
 
-			// We remove the part which goes from the user's root to the current
-			// folder and we also remove the current folder for public galleries
+			/**
+			 * We remove the part which goes from the user's root to the current
+			 * folder and we also remove the current folder for public galleries
+			 */
 			$fixedPath = str_replace(
-				$folderPath . $pathRelativeToFolder, '', $imagePath
+				$fromRootToFolder, '', $imagePath
 			);
 
-			// On OC7, searchByMime returns images from the rubbish bin...
-			// https://github.com/owncloud/core/issues/4903
+			/**
+			 * On OC7, searchByMime returns images from the rubbish bin...
+			 * https://github.com/owncloud/core/issues/4903
+			 */
 			if (substr($fixedPath, 0, 9) === "_trashbin") {
-				//unset($images[$key]);
 				continue;
 			}
 
@@ -217,16 +281,7 @@ class InfoService extends Service {
 				'mimetype' => $mimeType
 			);
 			$result[] = $imageData;
-
 		}
-
-		/*$this->logger->debug(
-			"Images array: {images}",
-			array(
-				'app'    => $this->appName,
-				'images' => $result
-			)
-		);*/
 
 		return $result;
 	}
