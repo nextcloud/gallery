@@ -97,42 +97,82 @@ class TokenCheckMiddleware extends CheckMiddleware {
 
 		if ($isPublicPage && !$isGuest) {
 			if (!$token) {
-				throw new CheckException(
-					"Can't access a public resource without a token",
-					Http::STATUS_NOT_FOUND
-				);
+				$this->noTokenFound();
 			} else { // We have a token
 
 				// Let's see if it's linked to a valid resource
-				try {
-					$this->environmentService->checkToken($token);
-				} catch (ServiceException $exception) {
-					throw new CheckException(
-						$exception->getMessage(),
-						$exception->getCode()
-					);
-				}
+				$this->checkToken($token);
 
 				// Let's see if the user needs to provide a password
-				try {
-					$this->environmentService->checkAuthorisation($password);
-				} catch (ServiceException $exception) {
-					throw new CheckException(
-						$exception->getMessage(),
-						$exception->getCode()
-					);
-				}
+				$this->checkAuthorisation($password);
 
 				// Let's see if we can set up the environment for the controller
-				try {
-					$this->environmentService->setupTokenBasedEnv();
-				} catch (ServiceException $exception) {
-					throw new CheckException(
-						$exception->getMessage(),
-						$exception->getCode()
-					);
-				}
+				$this->setupTokenBasedEnv();
 			}
+		}
+	}
+
+	/**
+	 * Throws an exception because no token was provided
+	 *
+	 * @throws CheckException
+	 */
+	private function noTokenFound() {
+		throw new CheckException(
+			"Can't access a public resource without a token",
+			Http::STATUS_NOT_FOUND
+		);
+	}
+
+	/**
+	 * Makes sure we have a valid token, linked to a valid resource
+	 *
+	 * @param string $token
+	 *
+	 * @throws CheckException
+	 */
+	private function checkToken($token) {
+		try {
+			$this->environmentService->checkToken($token);
+		} catch (ServiceException $exception) {
+			throw new CheckException(
+				$exception->getMessage(),
+				$exception->getCode()
+			);
+		}
+	}
+
+	/**
+	 * Checks if a password is required or if the one supplied is working
+	 *
+	 * @param $password
+	 *
+	 * @throws CheckException
+	 */
+	private function checkAuthorisation($password) {
+		try {
+			$this->environmentService->checkAuthorisation($password);
+		} catch (ServiceException $exception) {
+			throw new CheckException(
+				$exception->getMessage(),
+				$exception->getCode()
+			);
+		}
+	}
+
+	/**
+	 * Sets up the environment based on the received token
+	 *
+	 * @throws CheckException
+	 */
+	private function setupTokenBasedEnv() {
+		try {
+			$this->environmentService->setupTokenBasedEnv();
+		} catch (ServiceException $exception) {
+			throw new CheckException(
+				$exception->getMessage(),
+				$exception->getCode()
+			);
 		}
 	}
 

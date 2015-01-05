@@ -18,7 +18,6 @@ use OCP\IURLGenerator;
 use OCP\ILogger;
 use OCP\IRequest;
 
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;

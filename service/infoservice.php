@@ -75,16 +75,13 @@ class InfoService extends Service {
 	 * @return array information about the given path
 	 */
 	public function getAlbumInfo($albumpath) {
-		$data = false;
+		$data = array();
 		try {
 			$node = $this->userFolder->get($albumpath);
 			$nodeId = $node->getId();
 			$nodePermission = $node->getPermissions();
-			$data = array();
 			$data['fileid'] = $nodeId;
 			$data['permissions'] = $nodePermission;
-
-
 		} catch (NotFoundException $exception) {
 			$message = $exception->getMessage();
 			$code = Http::STATUS_NOT_FOUND;
@@ -160,7 +157,7 @@ class InfoService extends Service {
 	 * For private galleries, it returns all images
 	 * For public galleries, it starts from the folder the link gives access to
 	 *
-	 * @return array[string[]] all the images we could find
+	 * @return array all the images we could find
 	 */
 	public function getImages() {
 		$images = array();

@@ -153,6 +153,7 @@ class PreviewService extends Service {
 		$statusCode = Http::STATUS_OK;
 		$keepAspect = $this->keepAspect;
 		$scalingUp = false; // TODO: Need to read from settings
+		$response = array();
 
 		$env = $this->environmentService->getEnv();
 		$owner = $env['owner'];

@@ -17,8 +17,6 @@ namespace OCA\GalleryPlus\Service;
 use OCP\Util;
 use OCP\ILogger;
 
-use OCP\AppFramework\Http;
-
 /**
  * Collects and returns thumbnails for the list of images which is submitted to
  * the service
@@ -30,6 +28,10 @@ use OCP\AppFramework\Http;
 class ThumbnailService {
 
 	/**
+	 * @type string
+	 */
+	private $appName;
+	/**
 	 * @type ILogger
 	 */
 	private $logger;
@@ -37,6 +39,7 @@ class ThumbnailService {
 	 * @type PreviewService
 	 */
 	private $previewService;
+
 
 	/**
 	 * Constructor

@@ -121,7 +121,7 @@ class ServiceController extends Controller {
 	 *
 	 * Returns a list of all images available to the logged-in user
 	 *
-	 * @return array[string[]]|Http\JSONResponse
+	 * @return array|Http\JSONResponse
 	 */
 	public function getImages() {
 		try {

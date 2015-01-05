@@ -20,7 +20,6 @@ use OCP\IRequest;
 
 use OCP\AppFramework\IApi;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 
 use OCA\GalleryPlus\Service\EnvironmentService;

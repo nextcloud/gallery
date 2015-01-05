@@ -249,8 +249,6 @@ class EnvironmentService extends Service {
 	 * @return string the path, relative to the folder
 	 */
 	private function getPath($origShareOwner, $fileSource) {
-		$origSharePath = null;
-
 		$folder = $this->serverContainer->getUserFolder($origShareOwner);
 		$resourcesArray = $folder->getById($fileSource);
 		$resource = $resourcesArray[0];
