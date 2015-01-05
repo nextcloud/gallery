@@ -150,9 +150,6 @@ class PreviewService extends Service {
 	 */
 	private function createPreview($image, $maxX = 0, $maxY = 0) {
 		$appName = $this->appName;
-		$statusCode = Http::STATUS_OK;
-		$keepAspect = $this->keepAspect;
-		$scalingUp = false; // TODO: Need to read from settings
 		$response = array();
 
 		$env = $this->environmentService->getEnv();
@@ -178,43 +175,12 @@ class PreviewService extends Service {
 				)
 			);
 
-			$preview->setMaxX($maxX);
-			$preview->setMaxY($maxY);
-			$preview->setScalingUp($scalingUp);
-			// Crop and center for square pictures. Resize for large thumbnails
-			$preview->setKeepAspect(
-				$keepAspect
-			); // FIXME: Missing from public interface. https://github.com/owncloud/core/issues/12772
+			$perfectPreview =
+				$this->preparePreview($owner, $file, $preview, $maxX, $maxY);
 
-			// Returns an \OC_Image instance
-			$previewData = $preview->getPreview();
-			if ($previewData->valid()) {
-				/**
-				 * We make sure we return a preview which matches the asked
-				 * dimensions and repair the cache if needed
-				 */
-				$previewData = $this->previewValidator(
-					$owner, $file, $preview, $maxX, $maxY
-				);
-			} else {
-				$this->logger->debug(
-					"[PreviewService] ERROR! Did not get a preview",
-					array(
-						'app' => $appName
-					)
-				);
-
-				/**
-				 * We don't throw an exception when the preview generator fails,
-				 * instead, until the Preview classe is fixed, we send the mime
-				 * icon along with a 415 error code.
-				 */
-				$previewData = $this->getMimeIcon($file);
-				$statusCode = Http::STATUS_UNSUPPORTED_MEDIA_TYPE;
-			}
-
-			// Previews are always sent as PNG
-			$previewMime = 'image/png';
+			$previewData = $perfectPreview['previewData'];
+			$previewMime = $perfectPreview['previewMime'];
+			$statusCode = $perfectPreview['statusCode'];
 		} else {
 			$this->logger->debug(
 				"[PreviewService] Downloading file {file} as-is",
@@ -226,6 +192,7 @@ class PreviewService extends Service {
 
 			$previewData = $file->getContent();
 			$previewMime = $file->getMimeType();
+			$statusCode = Http::STATUS_OK;
 		}
 
 		$previewData = $this->base64EncodeIfNecessary($previewData);
@@ -282,6 +249,65 @@ class PreviewService extends Service {
 	}
 
 	/**
+	 * Returns a preview based on OC's preview class and our custom methods
+	 *
+	 * @param string $owner
+	 * @param File $file
+	 * @param \OC\Preview $preview
+	 * @param int $maxX
+	 * @param int $maxY
+	 */
+	private function preparePreview($owner, $file, $preview, $maxX, $maxY) {
+		$appName = $this->appName;
+		$keepAspect = $this->keepAspect;
+		$scalingUp = false; // TODO: Need to read from settings
+		$preview->setMaxX($maxX);
+		$preview->setMaxY($maxY);
+		$preview->setScalingUp($scalingUp);
+		// Crop and center for square pictures. Resize for large thumbnails
+		$preview->setKeepAspect(
+			$keepAspect
+		); // FIXME: Missing from public interface. https://github.com/owncloud/core/issues/12772
+
+		// Returns an \OC_Image instance
+		$previewData = $preview->getPreview();
+		if ($previewData->valid()) {
+			/**
+			 * We make sure we return a preview which matches the asked
+			 * dimensions and repair the cache if needed
+			 */
+			$previewData = $this->previewValidator(
+				$owner, $file, $preview, $maxX, $maxY
+			);
+			$statusCode = Http::STATUS_OK;
+		} else {
+			$this->logger->debug(
+				"[PreviewService] ERROR! Did not get a preview",
+				array(
+					'app' => $appName
+				)
+			);
+
+			/**
+			 * We don't throw an exception when the preview generator fails,
+			 * instead, until the Preview classe is fixed, we send the mime
+			 * icon along with a 415 error code.
+			 */
+			$previewData = $this->getMimeIcon($file);
+			$statusCode = Http::STATUS_UNSUPPORTED_MEDIA_TYPE;
+		}
+
+		// Previews are always sent as PNG
+		$previewMime = 'image/png';
+
+		$perfectPreview['previewData'] = $previewData;
+		$perfectPreview['previewMime'] = $previewMime;
+		$perfectPreview['statusCode'] = $statusCode;
+
+		return $perfectPreview;
+	}
+
+	/**
 	 * Tests if a GIF is animated
 	 *
 	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
@@ -316,7 +342,7 @@ class PreviewService extends Service {
 	}
 
 	/**
-	 * Returns previews of the asked dimensions
+	 * Make sure we return previews of the asked dimensions
 	 *
 	 * The Preview class of OC7 sometimes return previews which are either
 	 * wider or smaller than the asked dimensions. This happens when one of the
@@ -342,36 +368,7 @@ class PreviewService extends Service {
 			 || ($previewX < $maxX || $previewY < $maxY)
 				&& $maxX === $minWidth)
 		) {
-			$previewWidth = $previewData->width();
-			$previewHeight = $previewData->height();
-			$fixedPreview = imagecreatetruecolor($maxX, $maxY);
-
-			// Transparent background
-			imagealphablending($fixedPreview, false);
-			$transparency =
-				imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
-			imagefill($fixedPreview, 0, 0, $transparency);
-			imagesavealpha($fixedPreview, true);
-
-			/** @link https://stackoverflow.com/questions/3050952/resize-an-image-and-fill-gaps-of-proportions-with-a-color */
-			if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
-				$newWidth = $maxX;
-				$newHeight = $previewHeight * ($maxX / $previewWidth);
-				$newX = 0;
-				$newY = round(abs($maxY - $newHeight) / 2);
-			} else {
-				$newWidth = $previewWidth * ($maxY / $previewHeight);
-				$newHeight = $maxY;
-				$newX = round(abs($maxX - $newWidth) / 2);
-				$newY = 0;
-			}
-
-			imagecopyresampled(
-				$fixedPreview, $previewData->resource(), $newX, $newY, 0, 0,
-				$newWidth,
-				$newHeight, $previewWidth, $previewHeight
-			);
-
+			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
 			$fixedPreviewObject =
 				new \OC_Image($fixedPreview); // FIXME: Private API
 
@@ -387,6 +384,50 @@ class PreviewService extends Service {
 		}
 
 		return $previewData;
+	}
+
+	/**
+	 * Makes a preview fit in the asked dimension and fills the empty space
+	 *
+	 * @param \OC_Image $previewData
+	 * @param int $maxX
+	 * @param int $maxY
+	 *
+	 * @return resource
+	 */
+	private function fixPreview($previewData, $maxX, $maxY) {
+		$previewWidth = $previewData->width();
+		$previewHeight = $previewData->height();
+
+		// Creates the canvas
+		$fixedPreview = imagecreatetruecolor($maxX, $maxY);
+		// We make the background transparent
+		imagealphablending($fixedPreview, false);
+		$transparency =
+			imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
+		imagefill($fixedPreview, 0, 0, $transparency);
+		imagesavealpha($fixedPreview, true);
+
+		/** @link https://stackoverflow.com/questions/3050952/resize-an-image-and-fill-gaps-of-proportions-with-a-color */
+		if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
+			$newWidth = $maxX;
+			$newHeight = $previewHeight * ($maxX / $previewWidth);
+			$newX = 0;
+			$newY = round(abs($maxY - $newHeight) / 2);
+		} else {
+			$newWidth = $previewWidth * ($maxY / $previewHeight);
+			$newHeight = $maxY;
+			$newX = round(abs($maxX - $newWidth) / 2);
+			$newY = 0;
+		}
+
+		imagecopyresampled(
+			$fixedPreview, $previewData->resource(), $newX, $newY, 0, 0,
+			$newWidth,
+			$newHeight, $previewWidth, $previewHeight
+		);
+
+		return $fixedPreview;
 	}
 
 	/**
