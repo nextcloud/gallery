@@ -44,7 +44,7 @@ Then, we can patch ownCloud
 $ patch -p1 < apps/galleryplus/patches/bitmap_preview.patch
 ```
 
-Next add a few new entries to your configuration file, Look at the sample configuration in your config folder if you need more information.
+Next add a few new entries to your configuration file. Look at the sample configuration in your config folder if you need more information.
 
 ```
 $ nano config/config.php

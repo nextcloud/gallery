@@ -117,7 +117,10 @@ SlideShow.prototype.zoomToFit = function () {
 };
 
 SlideShow.prototype.zoomToOriginal = function () {
-	if (this.zoomable !== null && this.currentImage.isSmallImage) {
+	if (this.zoomable === null) {
+			return;
+		}
+	if (this.currentImage.isSmallImage) {
 		this.zoomable.flyTo(0, 0, this.smallImageScale, true);
 	} else {
 		this.zoomable.flyTo(0, 0, 0, true);
@@ -125,7 +128,10 @@ SlideShow.prototype.zoomToOriginal = function () {
 };
 
 SlideShow.prototype.resetZoom = function () {
-	if (this.zoomable !== null && this.currentImage.isSmallImage) {
+	if (this.zoomable === null) {
+			return;
+		}
+	if (this.currentImage.isSmallImage) {
 		this.zoomable.setZoom(this.smallImageScale, true);
 	} else {
 		this.zoomable.setZoom(0, true);
