@@ -69,8 +69,9 @@ abstract class CheckMiddleware extends Middleware {
 	}
 
 	/**
-	 * If a CheckException is being caught, ajax requests return a JSON
-	 * error response and non ajax requests redirect an error page
+	 * If a CheckException is being caught, clients who sent an ajax requests
+	 * get a JSON error response while the others are redirected to an error
+	 * page
 	 *
 	 * @inheritDoc
 	 */
@@ -91,69 +92,98 @@ abstract class CheckMiddleware extends Middleware {
 				)
 			);
 
-			if (stripos($this->request->getHeader('Accept'), 'html') === false
-			) {
-				$response = new JSONResponse(
-					array(
-						'message' => $message,
-						'success' => false
-					),
-					$code
-				);
-
-				$this->logger->debug(
-					"[TokenCheckException] JSON response",
-					array(
-						'app' => $appName
-					)
-				);
-
+			$acceptHtml = stripos($this->request->getHeader('Accept'), 'html');
+			if ($acceptHtml === false) {
+				$response = $this->sendJsonResponse($acceptHtml, $code);
 			} else {
-				$this->logger->debug(
-					"[CheckException] HTML response",
-					array(
-						'app' => $appName
-					)
-				);
-
-				if ($code === 401) {
-					$params = $this->request->getParams();
-
-					$this->logger->debug(
-						'[CheckException] Unauthorised Request params: {params}',
-						array(
-							'app'    => $appName,
-							'params' => $params
-						)
-					);
-
-					/**
-					 * We need to render a template or we'll have an endless
-					 * loop as this is called before the controller can render
-					 * a template
-					 */
-					return new TemplateResponse(
-						$appName, 'authenticate', $params,
-						'guest'
-					);
-
-				} else {
-					$url = $this->urlGenerator->linkToRoute(
-						$this->appName . '.page.error_page',
-						array(
-							'message' => $message,
-							'code'    => $code
-						)
-					);
-				}
-
-				$response = new RedirectResponse($url);
+				$response = $this->sendHtmlResponse($message, $code);
 			}
 
 			return $response;
 		}
 
 		throw $exception;
+	}
+
+	/**
+	 * Redirects the client to an error page or shows an authentication form
+	 *
+	 * @param string $message
+	 * @param int $code
+	 *
+	 * @return RedirectResponse|TemplateResponse
+	 */
+	private function sendHtmlResponse($message, $code) {
+		$appName = $this->appName;
+
+		$this->logger->debug(
+			"[CheckException] HTML response",
+			array(
+				'app' => $appName
+			)
+		);
+
+		if ($code === 401) {
+			$params = $this->request->getParams();
+
+			$this->logger->debug(
+				'[CheckException] Unauthorised Request params: {params}',
+				array(
+					'app'    => $appName,
+					'params' => $params
+				)
+			);
+
+			/**
+			 * We need to render a template or we'll have an endless
+			 * loop as this is called before the controller can render
+			 * a template
+			 */
+
+			return new TemplateResponse(
+				$appName, 'authenticate', $params,
+				'guest'
+			);
+
+		} else {
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page',
+				array(
+					'message' => $message,
+					'code'    => $code
+				)
+			);
+		}
+
+		return new RedirectResponse($url);
+	}
+
+	/**
+	 * Returns a JSON response to the client
+	 *
+	 * @param string $message
+	 * @param int $code
+	 *
+	 * @return JSONResponse
+	 */
+	private function sendJsonResponse($message, $code) {
+		$appName = $this->appName;
+		$response = new JSONResponse(
+			array(
+				'message' => $message,
+				'success' => false
+			),
+			$code
+		);
+
+		$this->logger->debug(
+			"[TokenCheckException] JSON response",
+			array(
+				'app' => $appName
+			)
+		);
+
+		return $response;
 	}
 
 }
