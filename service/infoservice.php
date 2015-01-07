@@ -103,7 +103,7 @@ class InfoService extends Service {
 	 */
 	public function getAlbumInfo($albumpath) {
 		$userFolder = $this->userFolder;
-		$albumInfo = false;
+		$albumInfo = array();
 
 		if ($userFolder !== null) {
 			$node = $this->getNode($userFolder, $albumpath);
