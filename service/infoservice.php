@@ -20,6 +20,7 @@ use OCP\IPreview;
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
+
 /**
  * Contains various methods which provide initial information about the
  * supported media types, the folder permissions and the images contained in
@@ -102,20 +103,13 @@ class InfoService extends Service {
 	 * @return array information about the given path
 	 */
 	public function getAlbumInfo($albumpath) {
-		$data = array();
-		try {
-			$node = $this->userFolder->get($albumpath);
-			$nodeId = $node->getId();
-			$nodePermission = $node->getPermissions();
-			$data['fileid'] = $nodeId;
-			$data['permissions'] = $nodePermission;
-		} catch (NotFoundException $exception) {
-			$message = $exception->getMessage();
-			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
-		}
+		$node = $this->getNode($this->userFolder, $albumpath);
 
-		return $data;
+		return array(
+			'fileid'      => $node->getId(),
+			'permissions' => $node->getPermissions()
+		);
+
 	}
 
 	/**

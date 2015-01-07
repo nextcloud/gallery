@@ -48,7 +48,10 @@ abstract class Service {
 	}
 
 	/**
-	 * Returns the Node based on the current user's folder and a given path
+	 * Returns the resource located at the given path
+	 *
+	 * The path starts from the user's files folder
+	 * The resource is either a File or a Folder
 	 *
 	 * @param Folder $folder
 	 * @param string $path
@@ -56,20 +59,34 @@ abstract class Service {
 	 * @return Node
 	 */
 	protected function getResource($folder, $path) {
-		$resource = false;
+
+		$node = $this->getNode($folder, $path);
+		$resourceId = $node->getId();
+		$resourcesArray = $folder->getById($resourceId);
+
+		return $resourcesArray[0];
+	}
+
+	/**
+	 * Returns the Node based on the current user's files folder and a given
+	 * path
+	 *
+	 * @param Folder $folder
+	 * @param string $path
+	 *
+	 * @return Node
+	 */
+	protected function getNode($folder, $path) {
+		$node = false;
 		try {
 			$node = $folder->get($path);
-			$resourceId = $node->getId();
-			$resourcesArray = $folder->getById($resourceId);
-
-			$resource = $resourcesArray[0];
 		} catch (NotFoundException $exception) {
 			$message = $exception->getMessage();
 			$code = Http::STATUS_NOT_FOUND;
 			$this->kaBoom($message, $code);
 		}
 
-		return $resource;
+		return $node;
 	}
 
 	/**
