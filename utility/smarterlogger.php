@@ -185,19 +185,7 @@ class SmarterLogger implements ILogger {
 		}
 
 		if (is_array($data) || $data instanceof \Traversable) {
-			$normalized = array();
-			$count = 1;
-			foreach ($data as $key => $value) {
-				if ($count >= 1000) {
-					$normalized['...'] =
-						'Over 1000 items, aborting normalization';
-					break;
-				}
-				$normalized[$key] = $this->normalize($value);
-			}
-
-			//return $normalized;
-			return $this->toJson($normalized);
+			return $this->normalizeTraversable($data);
 		}
 
 		if (is_object($data)) {
@@ -205,13 +193,7 @@ class SmarterLogger implements ILogger {
 				return $this->normalizeException($data);
 			}
 
-			$arrayObject = new \ArrayObject($data);
-			$serializedObject = $arrayObject->getArrayCopy();
-
-			return sprintf(
-				"[object] (%s: %s)", get_class($data),
-				$this->toJson($serializedObject)
-			);
+			return $this->normalizeObject($data);
 		}
 
 		if (is_resource($data)) {
@@ -222,7 +204,47 @@ class SmarterLogger implements ILogger {
 	}
 
 	/**
-	 * Normalises exceptions
+	 * Converts a traversable variable to String
+	 *
+	 * @param $data
+	 *
+	 * @return string
+	 */
+	private function normalizeTraversable($data) {
+		$normalized = array();
+		$count = 1;
+		foreach ($data as $key => $value) {
+			if ($count >= 1000) {
+				$normalized['...'] =
+					'Over 1000 items, aborting normalization';
+				break;
+			}
+			$normalized[$key] = $this->normalize($value);
+		}
+
+		//return $normalized;
+		return $this->toJson($normalized);
+	}
+
+	/**
+	 * Converts an Object to String
+	 *
+	 * @param $data
+	 *
+	 * @return string
+	 */
+	private function normalizeObject($data) {
+		$arrayObject = new \ArrayObject($data);
+		$serializedObject = $arrayObject->getArrayCopy();
+
+		return sprintf(
+			"[object] (%s: %s)", get_class($data),
+			$this->toJson($serializedObject)
+		);
+	}
+
+	/**
+	 * Converts an Exception to String
 	 *
 	 * @param \Exception $exception
 	 *
