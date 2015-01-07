@@ -114,46 +114,65 @@ abstract class CheckMiddleware extends Middleware {
 	 * @return RedirectResponse|TemplateResponse
 	 */
 	private function sendHtmlResponse($message, $code) {
-		$appName = $this->appName;
-
 		$this->logger->debug(
 			"[CheckException] HTML response",
 			array(
-				'app' => $appName
+				'app' => $this->appName
 			)
 		);
 
+		/**
+		 * We need to render a template for 401 or we'll have an endless loop as
+		 * this is called before the controller gets a chance to render anything
+		 */
 		if ($code === 401) {
-			$params = $this->request->getParams();
-
-			$this->logger->debug(
-				'[CheckException] Unauthorised Request params: {params}',
-				array(
-					'app'    => $appName,
-					'params' => $params
-				)
-			);
-
-			/**
-			 * We need to render a template or we'll have an endless
-			 * loop as this is called before the controller can render
-			 * a template
-			 */
-
-			return new TemplateResponse(
-				$appName, 'authenticate', $params,
-				'guest'
-			);
-
+			$response = $this->sendHtml401();
 		} else {
-			$url = $this->urlGenerator->linkToRoute(
-				$this->appName . '.page.error_page',
-				array(
-					'message' => $message,
-					'code'    => $code
-				)
-			);
+			$response = $this->redirectToErrorPage($message, $code);
 		}
+
+		return $response;
+	}
+
+	/**
+	 * Shows an authentication form
+	 *
+	 * @return TemplateResponse
+	 */
+	private function sendHtml401() {
+		$appName = $this->appName;
+		$params = $this->request->getParams();
+
+		$this->logger->debug(
+			'[CheckException] Unauthorised Request params: {params}',
+			array(
+				'app'    => $appName,
+				'params' => $params
+			)
+		);
+
+		return new TemplateResponse(
+			$appName, 'authenticate', $params,
+			'guest'
+		);
+	}
+
+	/**
+	 * Redirects the client to an error page
+	 *
+	 * @param string $message
+	 * @param int $code
+	 *
+	 * @return RedirectResponse|TemplateResponse
+	 */
+	private function redirectToErrorPage($message, $code) {
+		$url = $this->urlGenerator->linkToRoute(
+			$this->appName . '.page.error_page',
+			array(
+				'message' => $message,
+				'code'    => $code
+			)
+		);
 
 		return new RedirectResponse($url);
 	}
@@ -167,23 +186,19 @@ abstract class CheckMiddleware extends Middleware {
 	 * @return JSONResponse
 	 */
 	private function sendJsonResponse($message, $code) {
-		$appName = $this->appName;
-		$response = new JSONResponse(
-			array(
-				'message' => $message,
-				'success' => false
-			),
-			$code
-		);
-
 		$this->logger->debug(
 			"[TokenCheckException] JSON response",
 			array(
-				'app' => $appName
+				'app' => $this->appName
 			)
 		);
 
-		return $response;
+		$jsonData = array(
+			'message' => $message,
+			'success' => false
+		);
+
+		return new JSONResponse($jsonData, $code);
 	}
 
 }
