@@ -27,6 +27,7 @@ use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Middleware\SharingCheckMiddleware;
 use OCA\GalleryPlus\Middleware\TokenCheckMiddleware;
 use OCA\GalleryPlus\Middleware\SessionMiddleware;
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 
 /**
@@ -56,7 +57,6 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('Environment'),
 				$c->query('URLGenerator'),
-				$c->query('Logger'),
 				$c->query('API')
 			);
 		}
@@ -70,8 +70,7 @@ class Application extends App {
 				$c->query('InfoService'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
-				$c->query('URLGenerator'),
-				$c->query('Logger')
+				$c->query('URLGenerator')
 			);
 		}
 		);
@@ -84,8 +83,7 @@ class Application extends App {
 				$c->query('InfoService'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
-				$c->query('URLGenerator'),
-				$c->query('Logger')
+				$c->query('URLGenerator')
 			);
 		}
 		);
@@ -144,6 +142,14 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
+			'SmarterLogger', function (IAppContainer $c) {
+			return new SmarterLogger(
+				$c->query('AppName'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
 			'RootFolder', function (IAppContainer $c) {
 			return $c
 				->getServer()
@@ -191,7 +197,7 @@ class Application extends App {
 				$c->query('UserFolder'),
 				$c->query('UserManager'),
 				$c->getServer(),
-				$c->query('Logger')
+				$c->query('SmarterLogger')
 			);
 		}
 		);
@@ -211,7 +217,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('UserFolder'),
 				$c->query('Environment'),
-				$c->query('Logger'),
+				$c->query('SmarterLogger'),
 				$c->query('PreviewManager')
 			);
 		}
@@ -220,7 +226,7 @@ class Application extends App {
 			'ThumbnailService', function (IContainer $c) {
 			return new ThumbnailService(
 				$c->query('AppName'),
-				$c->query('Logger'),
+				$c->query('SmarterLogger'),
 				$c->query('PreviewService')
 			);
 		}
@@ -230,7 +236,7 @@ class Application extends App {
 			return new PreviewService(
 				$c->query('AppName'),
 				$c->query('Environment'),
-				$c->query('Logger'),
+				$c->query('SmarterLogger'),
 				$c->query('PreviewManager')
 			);
 		}
@@ -251,7 +257,7 @@ class Application extends App {
 					//$c->query('ControllerMethodReflector'), // Available in OC8. https://github.com/owncloud/core/pull/12839
 					$c->query('Reflector'),
 					$c->query('URLGenerator'),
-					$c->query('Logger')
+					$c->query('SmarterLogger')
 				);
 			}
 		);
@@ -272,7 +278,7 @@ class Application extends App {
 					//$c->query('ControllerMethodReflector'), // Available in OC8. https://github.com/owncloud/core/pull/12839
 					$c->query('Reflector'),
 					$c->query('URLGenerator'),
-					$c->query('Logger')
+					$c->query('SmarterLogger')
 				);
 			}
 		);
@@ -283,8 +289,7 @@ class Application extends App {
 					$c->query('Request'),
 					//$c->query('ControllerMethodReflector'), // Available in OC8. https://github.com/owncloud/core/pull/12839
 					$c->query('Reflector'),
-					$c->query('UserSession'),
-					$c->query('Logger')
+					$c->query('UserSession')
 				);
 			}
 		);

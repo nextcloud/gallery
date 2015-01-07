@@ -12,7 +12,6 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 
@@ -38,8 +37,7 @@ class PublicServiceController extends ServiceController {
 		InfoService $infoService,
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
-		IURLGenerator $urlGenerator,
-		ILogger $logger
+		IURLGenerator $urlGenerator
 	) {
 		parent::__construct(
 			$appName,
@@ -47,8 +45,7 @@ class PublicServiceController extends ServiceController {
 			$infoService,
 			$thumbnailService,
 			$previewService,
-			$urlGenerator,
-			$logger
+			$urlGenerator
 		);
 	}
 

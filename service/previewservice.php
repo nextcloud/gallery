@@ -17,11 +17,11 @@ namespace OCA\GalleryPlus\Service;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\IPreview;
-use OCP\ILogger;
 
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Http\ImageResponse;
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Generates previews
@@ -62,13 +62,13 @@ class PreviewService extends Service {
 	 *
 	 * @param string $appName
 	 * @param EnvironmentService $environmentService
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 * @param IPreview $previewManager
 	 */
 	public function __construct(
 		$appName,
 		EnvironmentService $environmentService,
-		ILogger $logger,
+		SmarterLogger $logger,
 		IPreview $previewManager
 	) {
 		parent::__construct($appName, $logger);
@@ -149,7 +149,6 @@ class PreviewService extends Service {
 	 * @return array preview data
 	 */
 	private function createPreview($image, $maxX = 0, $maxY = 0) {
-		$appName = $this->appName;
 		$response = array();
 
 		$env = $this->environmentService->getEnv();
@@ -168,12 +167,7 @@ class PreviewService extends Service {
 			$this->previewRequired($file, $preview);
 
 		if ($previewRequired) {
-			$this->logger->debug(
-				"[PreviewService] Generating a new preview",
-				array(
-					'app' => $appName
-				)
-			);
+			$this->logger->debug("[PreviewService] Generating a new preview");
 
 			$perfectPreview =
 				$this->preparePreview($owner, $file, $preview, $maxX, $maxY);
@@ -185,7 +179,6 @@ class PreviewService extends Service {
 			$this->logger->debug(
 				"[PreviewService] Downloading file {file} as-is",
 				array(
-					'app'  => $appName,
 					'file' => $image
 				)
 			);
@@ -208,7 +201,6 @@ class PreviewService extends Service {
 		/*$this->logger->debug(
 			"[PreviewService] PREVIEW Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
 			array(
-				'app'      => $appName,
 				'path'     => $response['data']['path'],
 				'mimetype' => $response['data']['mimetype'],
 				'status'   => $response['status']
@@ -260,7 +252,6 @@ class PreviewService extends Service {
 	 * @return array
 	 */
 	private function preparePreview($owner, $file, $preview, $maxX, $maxY) {
-		$appName = $this->appName;
 		$keepAspect = $this->keepAspect;
 		$scalingUp = false; // TODO: Need to read from settings
 		$preview->setMaxX($maxX);
@@ -285,10 +276,7 @@ class PreviewService extends Service {
 			$statusCode = Http::STATUS_OK;
 		} else {
 			$this->logger->debug(
-				"[PreviewService] ERROR! Did not get a preview",
-				array(
-					'app' => $appName
-				)
+				"[PreviewService] ERROR! Did not get a preview"
 			);
 
 			/**

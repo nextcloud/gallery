@@ -19,12 +19,12 @@ use \OC\AppFramework\Utility\ControllerMethodReflector;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\ILogger;
 
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Service\EnvironmentService;
 use OCA\GalleryPlus\Service\ServiceException;
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 
 /**
@@ -52,7 +52,7 @@ class TokenCheckMiddleware extends CheckMiddleware {
 	 * @param EnvironmentService $environmentService
 	 * @param ControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -60,7 +60,7 @@ class TokenCheckMiddleware extends CheckMiddleware {
 		EnvironmentService $environmentService,
 		ControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		ILogger $logger
+		SmarterLogger $logger
 	) {
 		parent::__construct(
 			$appName,

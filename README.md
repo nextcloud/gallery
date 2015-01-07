@@ -29,13 +29,6 @@ The AppFramework has a problem with sessions, but it can be fixed via this patch
 $ patch -p1 < apps/galleryplus/patches/session-template-fix.patch
 ```
 
-### Smarter logger (mandatory)
-While in beta, you'll need to be able to dump objects to the log in order to be able to quickly find the information you need.
-
-```
-$ patch -p1 < apps/galleryplus/patches/smarter-logger.patch
-```
-
 ### Supporting more media types
 First, make sure you have installed ImageMagick and its PECL extension.
 Then, we can patch ownCloud
@@ -76,7 +69,6 @@ $ git clone -b stable7 https://github.com/interfasys/galleryplus.git`
 Now you can activate it in the apps menu. It's called Gallery+
 
 ## List of patches
-1. smarter-logger.patch - Logger patch to be able to easily have access to objects, arrays, etc.
-2. bitmap_preview.patch - Adds support for Photoshop, Illustrator, TIFF, Postscript
-3. session-template-fix.patch - Fixes AppFramework sessions for public shares
+1. bitmap_preview.patch - Adds support for Photoshop, Illustrator, TIFF, Postscript
+2. session-template-fix.patch - Fixes AppFramework sessions for public shares
 

@@ -15,13 +15,14 @@
 namespace OCA\GalleryPlus\Middleware;
 
 use OCP\IURLGenerator;
-use OCP\ILogger;
 use OCP\IRequest;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Middleware;
+
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Checks that we have a valid token linked to a valid resource and that the
@@ -44,7 +45,7 @@ abstract class CheckMiddleware extends Middleware {
 	 */
 	private $urlGenerator;
 	/**
-	 * @type ILogger
+	 * @type SmarterLogger
 	 */
 	private $logger;
 
@@ -54,13 +55,13 @@ abstract class CheckMiddleware extends Middleware {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		IURLGenerator $urlGenerator,
-		ILogger $logger
+		SmarterLogger $logger
 	) {
 		$this->appName = $appName;
 		$this->request = $request;
@@ -79,14 +80,12 @@ abstract class CheckMiddleware extends Middleware {
 		$controller, $methodName, \Exception $exception
 	) {
 		if ($exception instanceof CheckException) {
-			$appName = $this->appName;
 			$message = $exception->getMessage();
 			$code = $exception->getCode();
 
 			$this->logger->debug(
 				"[TokenCheckException] {message} ({code})",
 				array(
-					'app'     => $appName,
 					'message' => $message,
 					'code'    => $code
 				)
@@ -114,12 +113,7 @@ abstract class CheckMiddleware extends Middleware {
 	 * @return RedirectResponse|TemplateResponse
 	 */
 	private function sendHtmlResponse($message, $code) {
-		$this->logger->debug(
-			"[CheckException] HTML response",
-			array(
-				'app' => $this->appName
-			)
-		);
+		$this->logger->debug("[CheckException] HTML response");
 
 		/**
 		 * We need to render a template for 401 or we'll have an endless loop as
@@ -140,19 +134,17 @@ abstract class CheckMiddleware extends Middleware {
 	 * @return TemplateResponse
 	 */
 	private function sendHtml401() {
-		$appName = $this->appName;
 		$params = $this->request->getParams();
 
 		$this->logger->debug(
 			'[CheckException] Unauthorised Request params: {params}',
 			array(
-				'app'    => $appName,
 				'params' => $params
 			)
 		);
 
 		return new TemplateResponse(
-			$appName, 'authenticate', $params,
+			$this->appName, 'authenticate', $params,
 			'guest'
 		);
 	}
@@ -186,12 +178,7 @@ abstract class CheckMiddleware extends Middleware {
 	 * @return JSONResponse
 	 */
 	private function sendJsonResponse($message, $code) {
-		$this->logger->debug(
-			"[TokenCheckException] JSON response",
-			array(
-				'app' => $this->appName
-			)
-		);
+		$this->logger->debug("[TokenCheckException] JSON response");
 
 		$jsonData = array(
 			'message' => $message,

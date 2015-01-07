@@ -15,11 +15,11 @@ namespace OCA\GalleryPlus\Service;
 use OCP\Files\Folder;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
-use OCP\ILogger;
 use OCP\IPreview;
 
 use OCP\AppFramework\Http;
 
+use OCA\GalleryPlus\Utility\SmarterLogger;
 /**
  * Contains various methods which provide initial information about the
  * supported media types, the folder permissions and the images contained in
@@ -75,14 +75,14 @@ class InfoService extends Service {
 	 * @param string $appName
 	 * @param Folder|null $userFolder
 	 * @param EnvironmentService $environmentService
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 * @param IPreview $previewManager
 	 */
 	public function __construct(
 		$appName,
 		$userFolder,
 		EnvironmentService $environmentService,
-		ILogger $logger,
+		SmarterLogger $logger,
 		IPreview $previewManager
 	) {
 		parent::__construct($appName, $logger);
@@ -150,7 +150,6 @@ class InfoService extends Service {
 		$this->logger->debug(
 			"Supported Mimes: {mimes}",
 			array(
-				'app'   => $this->appName,
 				'mimes' => $supportedMimes
 			)
 		);
@@ -178,7 +177,6 @@ class InfoService extends Service {
 		/*$this->logger->debug(
 			"Images array: {images}",
 			array(
-				'app'    => $this->appName,
 				'images' => $result
 			)
 		);*/
@@ -254,7 +252,6 @@ class InfoService extends Service {
 			/*$this->logger->debug(
 				"folderPath: {folderPath} pathRelativeToFolder: {pathRelativeToFolder} imagePath: {imagePath} mime: {mime}",
 				array(
-					'app'                  => $this->appName,
 					'folderPath'           => $folderPath,
 					'pathRelativeToFolder' => $pathRelativeToFolder,
 					'imagePath'            => $imagePath,

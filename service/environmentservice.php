@@ -18,10 +18,11 @@ use OCP\Files\Folder;
 use OCP\IServerContainer;
 use OCP\IUser;
 use OCP\Share;
-use OCP\ILogger;
 use OCP\IUserManager;
 
 use OCP\AppFramework\Http;
+
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Builds the environment so that the services have access to the proper user,
@@ -62,7 +63,7 @@ class EnvironmentService extends Service {
 	 * @param Folder|null $userFolder
 	 * @param IUserManager $userManager
 	 * @param IServerContainer $serverContainer
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -70,7 +71,7 @@ class EnvironmentService extends Service {
 		$userFolder,
 		IUserManager $userManager,
 		IServerContainer $serverContainer,
-		ILogger $logger
+		SmarterLogger $logger
 	) {
 		parent::__construct($appName, $logger);
 
@@ -267,7 +268,6 @@ class EnvironmentService extends Service {
 		/*$this->logger->debug(
 			'Full Path {origSharePath}, relative path {origShareRelPath}',
 			array(
-				'app'              => $this->$appName,
 				'origSharePath'    => $origSharePath,
 				'origShareRelPath' => $origShareRelPath
 			)

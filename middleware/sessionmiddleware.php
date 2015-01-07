@@ -19,7 +19,6 @@ use \OC\AppFramework\Utility\ControllerMethodReflector;
 
 use OCP\IRequest;
 use OCP\ISession;
-use OCP\ILogger;
 
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
@@ -46,27 +45,20 @@ class SessionMiddleware extends Middleware {
 	 * @type ISession
 	 */
 	private $session;
-	/**
-	 * @type ILogger
-	 */
-	private $logger;
 
 	/**
 	 * @param IRequest $request
 	 * @param ControllerMethodReflector $reflector
 	 * @param ISession $session
-	 * @param ILogger $logger
 	 */
 	public function __construct(
 		IRequest $request,
 		ControllerMethodReflector $reflector,
-		ISession $session,
-		ILogger $logger
+		ISession $session
 	) {
 		$this->request = $request;
 		$this->reflector = $reflector;
 		$this->session = $session;
-		$this->logger = $logger;
 	}
 
 	/**

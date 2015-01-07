@@ -20,9 +20,10 @@ use \OC\AppFramework\Utility\ControllerMethodReflector;
 use OCP\IAppConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\ILogger;
 
 use OCP\AppFramework\Http;
+
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Checks whether the "sharing check" is enabled
@@ -48,7 +49,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	 * @param IAppConfig $appConfig
 	 * @param ControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -56,7 +57,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 		IAppConfig $appConfig,
 		ControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		ILogger $logger
+		SmarterLogger $logger
 	) {
 		parent::__construct(
 			$appName,

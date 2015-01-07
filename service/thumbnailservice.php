@@ -15,7 +15,8 @@
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Util;
-use OCP\ILogger;
+
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Collects and returns thumbnails for the list of images which is submitted to
@@ -32,7 +33,7 @@ class ThumbnailService {
 	 */
 	private $appName;
 	/**
-	 * @type ILogger
+	 * @type SmarterLogger
 	 */
 	private $logger;
 	/**
@@ -45,12 +46,12 @@ class ThumbnailService {
 	 * Constructor
 	 *
 	 * @param string $appName
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 * @param PreviewService $previewService
 	 */
 	public function __construct(
 		$appName,
-		ILogger $logger,
+		SmarterLogger $logger,
 		PreviewService $previewService
 	) {
 
@@ -109,7 +110,6 @@ class ThumbnailService {
 //			$this->logger->debug(
 //				"[Batch] THUMBNAIL NAME : {image} / PATH : {path} / MIME : {mimetype} / DATA : {preview}",
 //				array(
-//					'app'      => $this->appName,
 //					'image'    => $preview['data']['image'],
 //					'path'     => $preview['data']['path'],
 //					'mimetype' => $preview['data']['mimetype'],

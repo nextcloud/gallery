@@ -14,7 +14,6 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 
@@ -41,10 +40,6 @@ class PageController extends Controller {
 	 */
 	private $urlGenerator;
 	/**
-	 * @type ILogger
-	 */
-	private $logger;
-	/**
 	 * @type IApi
 	 */
 	private $api;
@@ -56,7 +51,6 @@ class PageController extends Controller {
 	 * @param IRequest $request
 	 * @param EnvironmentService $environmentService
 	 * @param IURLGenerator $urlGenerator
-	 * @param ILogger $logger
 	 * @param IApi $api
 	 */
 	public function __construct(
@@ -64,14 +58,12 @@ class PageController extends Controller {
 		IRequest $request,
 		EnvironmentService $environmentService,
 		IURLGenerator $urlGenerator,
-		ILogger $logger,
 		IApi $api
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environmentService = $environmentService;
 		$this->urlGenerator = $urlGenerator;
-		$this->logger = $logger;
 		$this->api = $api;
 	}
 
@@ -115,13 +107,6 @@ class PageController extends Controller {
 		$token = $this->request->getParam('token');
 		$appName = $this->appName;
 		$env = $this->environmentService->getEnv();
-		/*$this->logger->debug(
-			'This is the env : {env}',
-			array(
-				'app' => $appName,
-				'env' => $env
-			)
-		);*/
 		$displayName = $env['originalOwnerDisplayName'];
 		$albumName = $env['albumName'];
 

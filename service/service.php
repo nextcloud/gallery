@@ -12,12 +12,13 @@
 
 namespace OCA\GalleryPlus\Service;
 
-use OCP\ILogger;
 use OCP\Files\Folder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 
 use OCP\AppFramework\Http;
+
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Contains methods which all services will need
@@ -31,7 +32,7 @@ abstract class Service {
 	 */
 	protected $appName;
 	/**
-	 * @type ILogger
+	 * @type SmarterLogger
 	 */
 	protected $logger;
 
@@ -39,9 +40,9 @@ abstract class Service {
 	 * Constructor
 	 *
 	 * @param string $appName
-	 * @param ILogger $logger
+	 * @param SmarterLogger $logger
 	 */
-	public function __construct($appName, ILogger $logger) {
+	public function __construct($appName, SmarterLogger $logger) {
 		$this->appName = $appName;
 		$this->logger = $logger;
 	}
@@ -80,13 +81,8 @@ abstract class Service {
 	 * @throws ServiceException
 	 */
 	protected function kaBoom($message, $code) {
-		$appName = $this->appName;
-		$this->logger->error(
-			$message . ' (' . $code . ')',
-			array(
-				'app' => $appName
-			)
-		);
+		$this->logger->error($message . ' (' . $code . ')');
+
 		throw new ServiceException(
 			$message,
 			$code
