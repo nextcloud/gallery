@@ -252,24 +252,16 @@ class PreviewService extends Service {
 	 * @return array
 	 */
 	private function preparePreview($owner, $file, $preview, $maxX, $maxY) {
-		$keepAspect = $this->keepAspect;
-		$scalingUp = false; // TODO: Need to read from settings
 		$preview->setMaxX($maxX);
 		$preview->setMaxY($maxY);
-		$preview->setScalingUp($scalingUp);
-		// Crop and center for square pictures. Resize for large thumbnails
+		$preview->setScalingUp(false); // TODO: Need to read from settings
 		$preview->setKeepAspect(
-			$keepAspect
+			$this->keepAspect
 		); // FIXME: Missing from public interface. https://github.com/owncloud/core/issues/12772
-		$perfectPreview = array();
 
-		// Returns an \OC_Image instance
+		/** @type \OC_Image $previewData */
 		$previewData = $preview->getPreview();
 		if ($previewData->valid()) {
-			/**
-			 * We make sure we return a preview which matches the asked
-			 * dimensions and repair the cache if needed
-			 */
 			$previewData = $this->previewValidator(
 				$owner, $file, $preview, $maxX, $maxY
 			);
@@ -281,7 +273,7 @@ class PreviewService extends Service {
 
 			/**
 			 * We don't throw an exception when the preview generator fails,
-			 * instead, until the Preview classe is fixed, we send the mime
+			 * instead, until the Preview class is fixed, we send the mime
 			 * icon along with a 415 error code.
 			 */
 			$previewData = $this->getMimeIcon($file);
@@ -291,9 +283,11 @@ class PreviewService extends Service {
 		// Previews are always sent as PNG
 		$previewMime = 'image/png';
 
-		$perfectPreview['previewData'] = $previewData;
-		$perfectPreview['previewMime'] = $previewMime;
-		$perfectPreview['statusCode'] = $statusCode;
+		$perfectPreview = array(
+			'previewData' => $previewData,
+			'previewMime' => $previewMime,
+			'statusCode'  => $statusCode
+		);
 
 		return $perfectPreview;
 	}
@@ -333,7 +327,8 @@ class PreviewService extends Service {
 	}
 
 	/**
-	 * Make sure we return previews of the asked dimensions
+	 * Makes sure we return previews of the asked dimensions and fix the cache
+	 * if necessary
 	 *
 	 * The Preview class of OC7 sometimes return previews which are either
 	 * wider or smaller than the asked dimensions. This happens when one of the
