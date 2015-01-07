@@ -14,7 +14,6 @@ namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\File;
-use OCP\Files\NotFoundException;
 use OCP\IPreview;
 
 use OCP\AppFramework\Http;
@@ -47,7 +46,7 @@ class InfoService extends Service {
 	 *
 	 * @type string[]
 	 */
-	private $baseMimeTypes = array(
+	private static $baseMimeTypes = array(
 		'image/png',
 		'image/jpeg',
 		'image/gif',
@@ -65,7 +64,7 @@ class InfoService extends Service {
 	 *
 	 * @type string[]
 	 */
-	private $slideshowMimeTypes = array(
+	private static $slideshowMimeTypes = array(
 		'application/font-sfnt',
 		'application/x-font',
 	);
@@ -103,12 +102,22 @@ class InfoService extends Service {
 	 * @return array information about the given path
 	 */
 	public function getAlbumInfo($albumpath) {
-		$node = $this->getNode($this->userFolder, $albumpath);
+		$userFolder = $this->userFolder;
+		$albumInfo = false;
 
-		return array(
-			'fileid'      => $node->getId(),
-			'permissions' => $node->getPermissions()
-		);
+		if ($userFolder !== null) {
+			$node = $this->getNode($userFolder, $albumpath);
+			$albumInfo = array(
+				'fileid'      => $node->getId(),
+				'permissions' => $node->getPermissions()
+			);
+		} else {
+			$message = "Could not access the user's folder";
+			$code = Http::STATUS_NOT_FOUND;
+			$this->kaBoom($message, $code);
+		}
+
+		return $albumInfo;
 
 	}
 
@@ -121,11 +130,11 @@ class InfoService extends Service {
 	 */
 	public function getSupportedMimes($slideshow = true) {
 		$supportedMimes = array();
-		$wantedMimes = $this->baseMimeTypes;
+		$wantedMimes = self::$baseMimeTypes;
 
 		if ($slideshow) {
 			$wantedMimes =
-				array_merge($wantedMimes, $this->slideshowMimeTypes);
+				array_merge($wantedMimes, self::$slideshowMimeTypes);
 		}
 
 		foreach ($wantedMimes as $wantedMime) {
