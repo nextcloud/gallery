@@ -89,6 +89,7 @@ class EnvironmentService extends Service {
 	 * @param string $token
 	 */
 	public function checkToken($token) {
+		$message = $code = null;
 		// The user wants to access a resource anonymously since he's opened a public link
 		\OC_User::setIncognitoMode(true); // FIXME: Private API
 
@@ -100,7 +101,6 @@ class EnvironmentService extends Service {
 		) {
 			$message = 'Passed token parameter is not valid';
 			$code = Http::STATUS_BAD_REQUEST;
-			$this->kaBoom($message, $code);
 		}
 
 		if (!isset($linkItem['uid_owner'])
@@ -110,13 +110,15 @@ class EnvironmentService extends Service {
 				'Passed token seems to be valid, but it does not contain all necessary information . ("'
 				. $token . '")';
 			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
 		}
 
 		if (!isset($linkItem['item_type'])) {
 			$message =
 				'No item type set for share id: ' . $linkItem['id'];
 			$code = Http::STATUS_NOT_FOUND;
+		}
+
+		if ($message !== null) {
 			$this->kaBoom($message, $code);
 		}
 
