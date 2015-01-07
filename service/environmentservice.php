@@ -118,9 +118,7 @@ class EnvironmentService extends Service {
 			); // FIXME: Private API, but Hasher is not available in OC7
 
 			if (!$authenticated) {
-				$message = "Missing password";
-				$code = Http::STATUS_UNAUTHORIZED;
-				$this->kaBoom($message, $code);
+				$this->kaBoom("Missing password", Http::STATUS_UNAUTHORIZED);
 			}
 		}
 	}
@@ -208,8 +206,7 @@ class EnvironmentService extends Service {
 				&& $linkItem['item_type'] !== 'folder')
 		) {
 			$message = 'Passed token parameter is not valid';
-			$code = Http::STATUS_BAD_REQUEST;
-			$this->kaBoom($message, $code);
+			$this->kaBoom($message, Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -226,8 +223,7 @@ class EnvironmentService extends Service {
 			$message =
 				'Passed token seems to be valid, but it does not contain all necessary information . ("'
 				. $token . '")';
-			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
+			$this->kaBoom($message, Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -240,8 +236,7 @@ class EnvironmentService extends Service {
 		if (!isset($linkItem['item_type'])) {
 			$message =
 				'No item type set for share id: ' . $linkItem['id'];
-			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
+			$this->kaBoom($message, Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -259,9 +254,7 @@ class EnvironmentService extends Service {
 			$user = $this->userManager->get($origShareOwner);
 		}
 		if ($user === null) {
-			$message = 'Could not find user';
-			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
+			$this->kaBoom('Could not find user', Http::STATUS_NOT_FOUND);
 		}
 
 		return $user;
@@ -280,9 +273,7 @@ class EnvironmentService extends Service {
 		$resourcesArray = $folder->getById($fileSource);
 		$resource = $resourcesArray[0];
 		if ($resource === null) {
-			$message = 'Could not resolve linkItem';
-			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
+			$this->kaBoom('Could not resolve linkItem', Http::STATUS_NOT_FOUND);
 		}
 		// This produces a path like /owner/files/my_folder/my_sub_folder
 		$origSharePath = $resource->getPath();
