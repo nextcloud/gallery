@@ -188,11 +188,11 @@ class SmarterLogger implements ILogger {
 			return $this->normalizeTraversable($data);
 		}
 
-		if (is_object($data)) {
-			if ($data instanceof \Exception) {
-				return $this->normalizeException($data);
-			}
+		if (is_object($data) && $data instanceof \Exception) {
+			return $this->normalizeException($data);
+		}
 
+		if (is_object($data)) {
 			return $this->normalizeObject($data);
 		}
 
