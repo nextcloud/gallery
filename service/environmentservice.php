@@ -89,38 +89,14 @@ class EnvironmentService extends Service {
 	 * @param string $token
 	 */
 	public function checkToken($token) {
-		$message = $code = null;
 		// The user wants to access a resource anonymously since he's opened a public link
 		\OC_User::setIncognitoMode(true); // FIXME: Private API
 
 		$linkItem = Share::getShareByToken($token, false);
 
-		if ($linkItem === false
-			|| ($linkItem['item_type'] !== 'file'
-				&& $linkItem['item_type'] !== 'folder')
-		) {
-			$message = 'Passed token parameter is not valid';
-			$code = Http::STATUS_BAD_REQUEST;
-		}
-
-		if (!isset($linkItem['uid_owner'])
-			|| !isset($linkItem['file_source'])
-		) {
-			$message =
-				'Passed token seems to be valid, but it does not contain all necessary information . ("'
-				. $token . '")';
-			$code = Http::STATUS_NOT_FOUND;
-		}
-
-		if (!isset($linkItem['item_type'])) {
-			$message =
-				'No item type set for share id: ' . $linkItem['id'];
-			$code = Http::STATUS_NOT_FOUND;
-		}
-
-		if ($message !== null) {
-			$this->kaBoom($message, $code);
-		}
+		$this->checkLinkItemExists($linkItem);
+		$this->checkLinkItemIsValid($linkItem, $token);
+		$this->checkItemType($linkItem);
 
 		// Checks passed, let's store the linkItem
 		$this->linkItem = $linkItem;
@@ -219,6 +195,54 @@ class EnvironmentService extends Service {
 		}
 
 		return $env;
+	}
+
+	/**
+	 * Makes sure that the token exists
+	 *
+	 * @param bool|array $linkItem
+	 */
+	private function checkLinkItemExists($linkItem) {
+		if ($linkItem === false
+			|| ($linkItem['item_type'] !== 'file'
+				&& $linkItem['item_type'] !== 'folder')
+		) {
+			$message = 'Passed token parameter is not valid';
+			$code = Http::STATUS_BAD_REQUEST;
+			$this->kaBoom($message, $code);
+		}
+	}
+
+	/**
+	 * Makes sure that the token contains all the information that we need
+	 *
+	 * @param array $linkItem
+	 * @param string $token
+	 */
+	private function checkLinkItemIsValid($linkItem, $token) {
+		if (!isset($linkItem['uid_owner'])
+			|| !isset($linkItem['file_source'])
+		) {
+			$message =
+				'Passed token seems to be valid, but it does not contain all necessary information . ("'
+				. $token . '")';
+			$code = Http::STATUS_NOT_FOUND;
+			$this->kaBoom($message, $code);
+		}
+	}
+
+	/**
+	 * Makes sure an item type was set for that token
+	 *
+	 * @param array $linkItem
+	 */
+	private function checkItemType($linkItem) {
+		if (!isset($linkItem['item_type'])) {
+			$message =
+				'No item type set for share id: ' . $linkItem['id'];
+			$code = Http::STATUS_NOT_FOUND;
+			$this->kaBoom($message, $code);
+		}
 	}
 
 	/**
