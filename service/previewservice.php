@@ -219,25 +219,89 @@ class PreviewService extends Service {
 	 * @return bool
 	 */
 	private function previewRequired($file, $preview) {
+		$svgPreviewRequired = $this->isSvgPreviewRequired($file, $preview);
+		$gifPreviewRequired = $this->isGifPreviewRequired($file);
+
+		return $svgPreviewRequired && $gifPreviewRequired && !$this->download;
+	}
+
+	/**
+	 * Decides if we should download the SVG or generate a preview
+	 *
+	 * @param File $file
+	 * @param \OC\Preview $preview
+	 *
+	 * @return bool
+	 */
+	private function isSvgPreviewRequired($file, $preview) {
+		$mime = $file->getMimeType();
+
+		/**
+		 * SVGs are downloaded if the SVG converter is disabled
+		 * Files of any media type are downloaded if requested by the client
+		 */
+		if ($mime === 'image/svg+xml' && !$preview->isMimeSupported($mime)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Decides if we should download the GIF or generate a preview
+	 *
+	 * @param File $file
+	 *
+	 * @return bool
+	 */
+	private function isGifPreviewRequired($file) {
 		$animatedPreview = $this->animatedPreview;
-		$download = $this->download;
 		$mime = $file->getMimeType();
 		$animatedGif = $this->isGifAnimated($file);
 
 		/**
 		 * GIFs are downloaded if they're animated and we want to show
 		 * animations
-		 * SVGs are downloaded if the SVG converter is disabled
-		 * Files of any media type are downloaded if requested by the client
 		 */
-		if (($mime === 'image/gif' && $animatedPreview && $animatedGif)
-			|| ($mime === 'image/svg+xml' && !$preview->isMimeSupported($mime)
-				|| $download === true)
-		) {
+		if ($mime === 'image/gif' && $animatedPreview && $animatedGif) {
 			return false;
 		}
 
 		return true;
+	}
+
+	/**
+	 * Tests if a GIF is animated
+	 *
+	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
+	 *
+	 * @param File $file
+	 *
+	 * @return bool
+	 */
+	private function isGifAnimated($file) {
+		$fileHandle = $file->fopen('rb');
+		$count = 0;
+		/**
+		 * An animated gif contains multiple "frames", with each frame having a
+		 * header made up of:
+		 *    * a static 4-byte sequence (\x00\x21\xF9\x04)
+		 *    * 4 variable bytes
+		 *    * a static 2-byte sequence (\x00\x2C) (Photoshop uses \x00\x21)
+		 *
+		 * We read through the file until we reach the end of the file, or we've
+		 * found at least 2 frame headers
+		 */
+		while (!feof($fileHandle) && $count < 2) {
+			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+			$count += preg_match_all(
+				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
+			);
+		}
+
+		fclose($fileHandle);
+
+		return $count > 1;
 	}
 
 	/**
@@ -290,40 +354,6 @@ class PreviewService extends Service {
 		);
 
 		return $perfectPreview;
-	}
-
-	/**
-	 * Tests if a GIF is animated
-	 *
-	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
-	 *
-	 * @param File $file
-	 *
-	 * @return bool
-	 */
-	private function isGifAnimated($file) {
-		$fileHandle = $file->fopen('rb');
-		$count = 0;
-		/**
-		 * An animated gif contains multiple "frames", with each frame having a
-		 * header made up of:
-		 *    * a static 4-byte sequence (\x00\x21\xF9\x04)
-		 *    * 4 variable bytes
-		 *    * a static 2-byte sequence (\x00\x2C) (Photoshop uses \x00\x21)
-		 *
-		 * We read through the file until we reach the end of the file, or we've
-		 * found at least 2 frame headers
-		 */
-		while (!feof($fileHandle) && $count < 2) {
-			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-			$count += preg_match_all(
-				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-			);
-		}
-
-		fclose($fileHandle);
-
-		return $count > 1;
 	}
 
 	/**

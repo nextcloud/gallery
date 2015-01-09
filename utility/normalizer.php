@@ -31,23 +31,20 @@ class Normalizer {
 	 * @return string|array
 	 */
 	public function normalize($data, $depth = 0) {
-
 		$scalar = $this->normalizeScalar($data);
+		$traversable = $this->normalizeTraversable($data, $depth);
+		$object = $this->normalizeObject($data, $depth);
+		$resource = $this->normalizeResource($data);
+
 		if (!is_array($scalar)) {
 			return $scalar;
 		}
-
-		$traversable = $this->normalizeTraversable($data, $depth);
 		if ($traversable !== null) {
 			return $traversable;
 		}
-
-		$object = $this->normalizeObject($data, $depth);
 		if ($object !== null) {
 			return $object;
 		}
-
-		$resource = $this->normalizeResource($data);
 		if ($resource !== null) {
 			return $resource;
 		}
