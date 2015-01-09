@@ -85,16 +85,13 @@ class Normalizer {
 	 */
 	private function normalizeTraversable($data, $depth = 0) {
 		if (is_array($data) || $data instanceof \Traversable) {
-			$maxArrayRecursion = 20; //
+			$maxArrayRecursion = 20;
 			$normalized = array();
 			$count = 1;
-
 			foreach ($data as $key => $value) {
 				if ($count++ >= $maxArrayRecursion) {
-					$normalized['...'] =
-						'Over '
-						. $maxArrayRecursion
-						. ' items, aborting normalization';
+					$normalized['...'] = 'Over ' . $maxArrayRecursion
+										 . ' items, aborting normalization';
 					break;
 				}
 				$normalized[$key] = $this->normalize($value, $depth);
@@ -119,23 +116,18 @@ class Normalizer {
 			if ($data instanceof \Exception) {
 				return $this->normalizeException($data);
 			}
-
 			// We don't need to go too deep in the recursion
 			$maxObjectRecursion = 2;
 			$response = $data;
 			$arrayObject = new \ArrayObject($data);
 			$serializedObject = $arrayObject->getArrayCopy();
-
 			if ($depth < $maxObjectRecursion) {
 				$depth++;
 				$response = $this->normalize($serializedObject, $depth);
 			}
 
 			// Don't convert to json here as we would double encode
-			return array(
-				sprintf("[object] (%s)", get_class($data)),
-				$response
-			);
+			return array(sprintf("[object] (%s)", get_class($data)), $response);
 		}
 
 		return null;
