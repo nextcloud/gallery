@@ -35,7 +35,6 @@ class Normalizer {
 		$traversable = $this->normalizeTraversable($data, $depth);
 		$object = $this->normalizeObject($data, $depth);
 		$resource = $this->normalizeResource($data);
-
 		if (!is_array($scalar)) {
 			return $scalar;
 		}

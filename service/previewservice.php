@@ -191,9 +191,9 @@ class PreviewService extends Service {
 		$previewData = $this->base64EncodeIfNecessary($previewData);
 
 		$response['data'] = array(
-			'path'     => $image,
+			'path' => $image,
 			'mimetype' => $previewMime,
-			'preview'  => $previewData,
+			'preview' => $previewData,
 		);
 
 		$response['status'] = $statusCode;
@@ -273,6 +273,15 @@ class PreviewService extends Service {
 	/**
 	 * Tests if a GIF is animated
 	 *
+	 * An animated gif contains multiple "frames", with each frame having a
+	 * header made up of:
+	 *    * a static 4-byte sequence (\x00\x21\xF9\x04)
+	 *    * 4 variable bytes
+	 *    * a static 2-byte sequence (\x00\x2C) (Photoshop uses \x00\x21)
+	 *
+	 * We read through the file until we reach the end of the file, or we've
+	 * found at least 2 frame headers
+	 *
 	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
 	 *
 	 * @param File $file
@@ -282,16 +291,6 @@ class PreviewService extends Service {
 	private function isGifAnimated($file) {
 		$fileHandle = $file->fopen('rb');
 		$count = 0;
-		/**
-		 * An animated gif contains multiple "frames", with each frame having a
-		 * header made up of:
-		 *    * a static 4-byte sequence (\x00\x21\xF9\x04)
-		 *    * 4 variable bytes
-		 *    * a static 2-byte sequence (\x00\x2C) (Photoshop uses \x00\x21)
-		 *
-		 * We read through the file until we reach the end of the file, or we've
-		 * found at least 2 frame headers
-		 */
 		while (!feof($fileHandle) && $count < 2) {
 			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
 			$count += preg_match_all(
@@ -306,6 +305,10 @@ class PreviewService extends Service {
 
 	/**
 	 * Returns a preview based on OC's preview class and our custom methods
+	 *
+	 * We don't throw an exception when the preview generator fails,
+	 * instead, until the Preview class is fixed, we send the mime
+	 * icon along with a 415 error code.
 	 *
 	 * @param string $owner
 	 * @param File $file
@@ -326,32 +329,22 @@ class PreviewService extends Service {
 		/** @type \OC_Image $previewData */
 		$previewData = $preview->getPreview();
 		if ($previewData->valid()) {
-			$previewData = $this->previewValidator(
+			$perfectPreview = $this->previewValidator(
 				$owner, $file, $preview, $maxX, $maxY
 			);
-			$statusCode = Http::STATUS_OK;
 		} else {
 			$this->logger->debug(
 				"[PreviewService] ERROR! Did not get a preview"
 			);
 
-			/**
-			 * We don't throw an exception when the preview generator fails,
-			 * instead, until the Preview class is fixed, we send the mime
-			 * icon along with a 415 error code.
-			 */
-			$previewData = $this->getMimeIcon($file);
-			$statusCode = Http::STATUS_UNSUPPORTED_MEDIA_TYPE;
+			$perfectPreview = array(
+				'previewData' => $this->getMimeIcon($file),
+				'statusCode'  => Http::STATUS_UNSUPPORTED_MEDIA_TYPE
+			);
 		}
 
 		// Previews are always sent as PNG
-		$previewMime = 'image/png';
-
-		$perfectPreview = array(
-			'previewData' => $previewData,
-			'previewMime' => $previewMime,
-			'statusCode'  => $statusCode
-		);
+		$perfectPreview['previewMime'] = 'image/png';
 
 		return $perfectPreview;
 	}
@@ -379,28 +372,21 @@ class PreviewService extends Service {
 		$previewX = $previewData->width();
 		$previewY = $previewData->height();
 		$minWidth = 200; // Only fixing the square thumbnails
-
 		if (($previewX > $maxX
 			 || ($previewX < $maxX || $previewY < $maxY)
 				&& $maxX === $minWidth)
 		) {
 			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
-			$fixedPreviewObject =
-				new \OC_Image($fixedPreview); // FIXME: Private API
-
-			// Get the location where the broken thumbnail is stored
-			// FIXME: Private API
-			$thumbPath = \OC::$SERVERROOT . '/data/' . $owner . '/'
-						 . $preview->isCached($file->getId());
-
-			// Caching it for next time
-			if ($fixedPreviewObject->save($thumbPath)) {
-				$previewData = $fixedPreviewObject->data();
-			}
+			$previewData = $this->fixPreviewCache(
+				$owner, $file, $preview, $fixedPreview
+			);
 		}
 
-		return $previewData;
+		return array(
+			'previewData' => $previewData, 'statusCode' => Http::STATUS_OK
+		);
 	}
+
 
 	/**
 	 * Makes a preview fit in the asked dimension and fills the empty space
@@ -444,6 +430,35 @@ class PreviewService extends Service {
 		);
 
 		return $fixedPreview;
+	}
+
+	/**
+	 * Fixes the preview cache by replacing the broken thumbnail with ours
+	 *
+	 * @param string $owner
+	 * @param File $file
+	 * @param \OC\Preview $preview
+	 * @param resource $fixedPreview
+	 *
+	 * @return mixed
+	 */
+	private function fixPreviewCache(
+		$owner, $file, $preview, $fixedPreview
+	) {
+		$fixedPreviewObject =
+			new \OC_Image($fixedPreview); // FIXME: Private API
+		$previewData = $preview->getPreview();
+		// Get the location where the broken thumbnail is stored
+		// FIXME: Private API
+		$thumbPath = \OC::$SERVERROOT . '/data/' . $owner . '/'
+					 . $preview->isCached($file->getId());
+
+		// Caching it for next time
+		if ($fixedPreviewObject->save($thumbPath)) {
+			$previewData = $fixedPreviewObject->data();
+		}
+
+		return $previewData;
 	}
 
 	/**

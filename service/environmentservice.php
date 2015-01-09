@@ -263,6 +263,12 @@ class EnvironmentService extends Service {
 	/**
 	 * Returns the path the token gives access to
 	 *
+	 * getPath() on the file produces a path like:
+	 * '/owner/files/my_folder/my_sub_folder'
+	 *
+	 * So we substract the path to the folder, giving us a relative path
+	 * '/my_folder/my_sub_folder'
+	 *
 	 * @param string $origShareOwner
 	 * @param int $fileSource
 	 *
@@ -275,10 +281,7 @@ class EnvironmentService extends Service {
 		if ($resource === null) {
 			$this->kaBoom('Could not resolve linkItem', Http::STATUS_NOT_FOUND);
 		}
-		// This produces a path like /owner/files/my_folder/my_sub_folder
 		$origSharePath = $resource->getPath();
-
-		// This creates /my_folder/my_sub_folder
 		$folderPath = $folder->getPath();
 		$origShareRelPath = str_replace($folderPath, '', $origSharePath);
 

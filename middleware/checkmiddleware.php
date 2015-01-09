@@ -90,17 +90,30 @@ abstract class CheckMiddleware extends Middleware {
 				)
 			);
 
-			$acceptHtml = stripos($this->request->getHeader('Accept'), 'html');
-			if ($acceptHtml === false) {
-				$response = $this->sendJsonResponse($acceptHtml, $code);
-			} else {
-				$response = $this->sendHtmlResponse($message, $code);
-			}
-
-			return $response;
+			return $this->computeResponse($message, $code);
 		}
 
 		throw $exception;
+	}
+
+	/**
+	 * Decides which type of response to send
+	 *
+	 * @param string $message
+	 * @param int $code
+	 *
+	 * @return JSONResponse|RedirectResponse|TemplateResponse
+	 */
+	private function computeResponse($message, $code) {
+		$acceptHtml = stripos($this->request->getHeader('Accept'), 'html');
+		if ($acceptHtml === false) {
+			$response = $this->sendJsonResponse($acceptHtml, $code);
+		} else {
+			$response = $this->sendHtmlResponse($message, $code);
+		}
+
+		return $response;
+
 	}
 
 	/**

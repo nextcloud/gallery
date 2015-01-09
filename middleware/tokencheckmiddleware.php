@@ -88,10 +88,8 @@ class TokenCheckMiddleware extends CheckMiddleware {
 	public function beforeController($controller, $methodName) {
 		$token = $this->request->getParam('token');
 		$password = $this->request->getParam('password');
-
 		// This needs to be done here as the Dispatcher does not call our reflector
 		$this->reflector->reflect($controller, $methodName);
-
 		$isPublicPage = $this->reflector->hasAnnotation('PublicPage');
 		$isGuest = $this->reflector->hasAnnotation('Guest');
 
@@ -99,13 +97,10 @@ class TokenCheckMiddleware extends CheckMiddleware {
 			if (!$token) {
 				$this->noTokenFound();
 			} else { // We have a token
-
 				// Let's see if it's linked to a valid resource
 				$this->checkToken($token);
-
 				// Let's see if the user needs to provide a password
 				$this->checkAuthorisation($password);
-
 				// Let's see if we can set up the environment for the controller
 				$this->setupTokenBasedEnv();
 			}
