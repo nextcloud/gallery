@@ -240,6 +240,23 @@ class InfoService extends Service {
 	/**
 	 * Fixes the path of each image we've found
 	 *
+	 * We remove the part which goes from the user's root to the current
+	 * folder and we also remove the current folder for public galleries
+	 *
+	 * On OC7, we fix searchByMime which returns images from the rubbish bin...
+	 * https://github.com/owncloud/core/issues/4903
+	 *
+	 * Example logger
+	 * $this->logger->debug(
+	 * "folderPath: {folderPath} pathRelativeToFolder: {pathRelativeToFolder}
+	 * imagePath: {imagePath} mime: {mime}", array(
+	 * 'folderPath'           => $folderPath,
+	 * 'pathRelativeToFolder' => $pathRelativeToFolder,
+	 * 'imagePath'            => $imagePath,
+	 * 'mime'                 => $mimeType
+	 * )
+	 * );
+	 *
 	 * @param array $images
 	 * @param string $fromRootToFolder
 	 *
@@ -247,37 +264,16 @@ class InfoService extends Service {
 	 */
 	private function fixImagePath($images, $fromRootToFolder) {
 		$result = array();
-
 		/** @type File $image */
 		foreach ($images as $image) {
 			$imagePath = $image->getPath();
 			$mimeType = $image->getMimetype();
-			/*$this->logger->debug(
-				"folderPath: {folderPath} pathRelativeToFolder: {pathRelativeToFolder} imagePath: {imagePath} mime: {mime}",
-				array(
-					'folderPath'           => $folderPath,
-					'pathRelativeToFolder' => $pathRelativeToFolder,
-					'imagePath'            => $imagePath,
-					'mime'                 => $mimeType
-				)
-			);*/
-
-			/**
-			 * We remove the part which goes from the user's root to the current
-			 * folder and we also remove the current folder for public galleries
-			 */
 			$fixedPath = str_replace(
 				$fromRootToFolder, '', $imagePath
 			);
-
-			/**
-			 * On OC7, searchByMime returns images from the rubbish bin...
-			 * https://github.com/owncloud/core/issues/4903
-			 */
 			if (substr($fixedPath, 0, 9) === "_trashbin") {
 				continue;
 			}
-
 			$imageData = array(
 				'path'     => $fixedPath,
 				'mimetype' => $mimeType

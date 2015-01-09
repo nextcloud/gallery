@@ -131,19 +131,15 @@ class EnvironmentService extends Service {
 	 */
 	public function setupTokenBasedEnv() {
 		$linkItem = $this->linkItem;
-
 		$rootLinkItem = Share::resolveReShare(
 			$linkItem
 		); // Resolves reshares down to the last real share
-
 		$origShareOwner = $rootLinkItem['uid_owner'];
 		$user = $this->getUser($origShareOwner);
 		$origOwnerDisplayName = $user->getDisplayName();
-
 		// Setup FS for user
 		\OC_Util::tearDownFS(); // FIXME: Private API
 		\OC_Util::setupFS($origShareOwner); // FIXME: Private API
-
 		$fileSource = $linkItem['file_source'];
 		$origShareRelPath = $this->getPath($origShareOwner, $fileSource);
 
@@ -164,26 +160,7 @@ class EnvironmentService extends Service {
 		$linkItem = $this->linkItem;
 
 		if (isset($linkItem)) {
-			$origShareOwner = $this->origShareData['origShareOwner'];
-			$origShareRelPath = $this->origShareData['origShareRelPath'];
-			// Displayed in the top right corner of the gallery
-			$origOwnerDisplayName =
-				$this->origShareData['origOwnerDisplayName'];
-
-			$shareOwner = $linkItem['uid_owner'];
-			$folder = $this->serverContainer->getUserFolder($shareOwner);
-
-			$albumName = trim($linkItem['file_target'], '//');
-
-			$env = array(
-				'owner'                    => $shareOwner,
-				'relativePath'             => $origShareRelPath . '/',
-				'folder'                   => $folder,
-				'albumName'                => $albumName,
-				'originalShareOwner'       => $origShareOwner,
-				'originalOwnerDisplayName' => $origOwnerDisplayName,
-			);
-
+			$env = $this->getTokenBasedEnv($linkItem);
 		} else {
 			$env = array(
 				'owner'        => $this->userId,
@@ -193,6 +170,35 @@ class EnvironmentService extends Service {
 		}
 
 		return $env;
+	}
+
+	/**
+	 * Returns the environment for a token
+	 *
+	 * @param $linkItem
+	 *
+	 * @return array
+	 */
+	private function getTokenBasedEnv($linkItem) {
+		$origShareOwner = $this->origShareData['origShareOwner'];
+		$origShareRelPath = $this->origShareData['origShareRelPath'];
+		// Displayed in the top right corner of the gallery
+		$origOwnerDisplayName =
+			$this->origShareData['origOwnerDisplayName'];
+
+		$shareOwner = $linkItem['uid_owner'];
+		$folder = $this->serverContainer->getUserFolder($shareOwner);
+
+		$albumName = trim($linkItem['file_target'], '//');
+
+		return array(
+			'owner'                    => $shareOwner,
+			'relativePath'             => $origShareRelPath . '/',
+			'folder'                   => $folder,
+			'albumName'                => $albumName,
+			'originalShareOwner'       => $origShareOwner,
+			'originalOwnerDisplayName' => $origOwnerDisplayName,
+		);
 	}
 
 	/**
