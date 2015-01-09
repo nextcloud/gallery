@@ -28,6 +28,7 @@ use OCA\GalleryPlus\Middleware\SharingCheckMiddleware;
 use OCA\GalleryPlus\Middleware\TokenCheckMiddleware;
 use OCA\GalleryPlus\Middleware\SessionMiddleware;
 use OCA\GalleryPlus\Utility\SmarterLogger;
+use OCA\GalleryPlus\Utility\Normalizer;
 
 
 /**
@@ -142,10 +143,16 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
+			'Normalizer', function (IAppContainer $c) {
+			return new Normalizer();
+		}
+		);
+		$container->registerService(
 			'SmarterLogger', function (IAppContainer $c) {
 			return new SmarterLogger(
 				$c->query('AppName'),
-				$c->query('Logger')
+				$c->query('Logger'),
+				$c->query('Normalizer')
 			);
 		}
 		);

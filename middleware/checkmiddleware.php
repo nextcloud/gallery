@@ -84,10 +84,9 @@ abstract class CheckMiddleware extends Middleware {
 			$code = $exception->getCode();
 
 			$this->logger->debug(
-				"[TokenCheckException] {message} ({code})",
+				"[TokenCheckException] {exception}",
 				array(
-					'message' => $message,
-					'code'    => $code
+					'exception' => $exception,
 				)
 			);
 

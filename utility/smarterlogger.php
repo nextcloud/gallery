@@ -6,12 +6,8 @@
  * later. See the COPYING file.
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
- * @author Bart Visscher <bartv@thisnet.nl>
- * @author Jordi Boggiano <j.boggiano@seld.be>
  *
  * @copyright Olivier Paroz 2015
- * @copyright Bart Visscher 2013-2015
- * @copyright Jordi Boggiano 2014-2015
  */
 
 namespace OCA\GalleryPlus\Utility;
@@ -22,7 +18,7 @@ use OCP\ILogger;
  * Lets us call the main logger without having to add the context at every
  * request
  *
- * @package OCA\GalleryPlus\Middleware
+ * @package OCA\GalleryPlus\Utility
  */
 class SmarterLogger implements ILogger {
 
@@ -30,19 +26,26 @@ class SmarterLogger implements ILogger {
 	 * @type ILogger
 	 */
 	private $logger;
+	/**
+	 * @type Normalizer
+	 */
+	private $normalizer;
 
 	/***
 	 * Constructor
 	 *
 	 * @param string $appName
 	 * @param ILogger $logger
+	 * @param Normalizer $normalizer
 	 */
 	public function __construct(
 		$appName,
-		ILogger $logger
+		ILogger $logger,
+		Normalizer $normalizer
 	) {
 		$this->appName = $appName;
 		$this->logger = $logger;
+		$this->normalizer = $normalizer;
 	}
 
 	/**
@@ -143,7 +146,8 @@ class SmarterLogger implements ILogger {
 	}
 
 	/**
-	 * Normalises a message and logs it with an arbitrary level.
+	 * Converts the received log message to string before sending it to the
+	 * ownCloud logger
 	 *
 	 * @param mixed $level
 	 * @param string $message
@@ -152,140 +156,34 @@ class SmarterLogger implements ILogger {
 	 * @return mixed
 	 */
 	public function log($level, $message, array $context = array()) {
-		// interpolate $message as defined in PSR-3
-		$replace = array();
-		foreach ($context as $key => $val) {
-			// Allows us to dump arrays, objects and exceptions to the log
-			$val = $this->normalize($val);
-			$replace['{' . $key . '}'] = $val;
+		array_walk($context, [$this, 'contextNormalizer']);
+
+		if (!isset($context['app'])) {
+			$context['app'] = $this->appName;
 		}
 
-		// interpolate replacement values into the message and return
-		$message = strtr($message, $replace);
-
-		$this->logger->log(
-			$level, $message,
-			array(
-				'app' => $this->appName
-			)
-		);
-
+		$this->logger->log($level, $message, $context);
 	}
 
 	/**
-	 * Converts Objects, Arrays and Exceptions to String
+	 * Normalises the context parameters and JSON encodes and cleans up the
+	 * result
 	 *
-	 * @param $data
+	 * @todo: could maybe do a better job removing slashes
 	 *
-	 * @return string
-	 */
-	private function normalize($data) {
-		if (null === $data || is_scalar($data)) {
-			return $data;
-		}
-
-		if ($this->normalizeTraversable($data)) {
-			return $this->normalizeTraversable($data);
-		}
-
-		if ($this->normalizeObject($data)) {
-			return $this->normalizeObject($data);
-		}
-
-		if (is_resource($data)) {
-			return '[resource]';
-		}
-
-		return '[unknown(' . gettype($data) . ')]';
-	}
-
-	/**
-	 * Converts a traversable variable to String
-	 *
-	 * @param $data
+	 * @param array $data
 	 *
 	 * @return string
 	 */
-	private function normalizeTraversable($data) {
-		if (is_array($data) || $data instanceof \Traversable) {
-			$normalized = array();
-			$count = 1;
-			foreach ($data as $key => $value) {
-				if ($count >= 1000) {
-					$normalized['...'] =
-						'Over 1000 items, aborting normalization';
-					break;
-				}
-				$normalized[$key] = $this->normalize($value);
-			}
-
-			//return $normalized;
-			return $this->toJson($normalized);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Converts an Object to String
-	 *
-	 * @param $data
-	 *
-	 * @return string
-	 */
-	private function normalizeObject($data) {
-		if (is_object($data)) {
-			if ($data instanceof \Exception) {
-				return $this->normalizeException($data);
-			}
-
-			$arrayObject = new \ArrayObject($data);
-			$serializedObject = $arrayObject->getArrayCopy();
-
-			return sprintf(
-				"[object] (%s: %s)", get_class($data),
-				$this->toJson($serializedObject)
+	private function contextNormalizer(&$data) {
+		$data = $this->normalizer->normalize($data);
+		if (!is_string($data)) {
+			$data = @json_encode(
+				$data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
 			);
+			// Removing null byte and double slashes from object properties
+			$data = str_replace(['\\u0000', '\\\\'], ["", "\\"], $data);
 		}
-
-		return null;
 	}
 
-	/**
-	 * Converts an Exception to String
-	 *
-	 * @param \Exception $exception
-	 *
-	 * @return string
-	 */
-	private function normalizeException(\Exception $exception) {
-		$data = array(
-			'class'   => get_class($exception),
-			'message' => $exception->getMessage(),
-			'file'    => $exception->getFile() . ':' . $exception->getLine(),
-		);
-		$trace = $exception->getTraceAsString();
-		$data['trace'][] = $trace;
-
-		$previous = $exception->getPrevious();
-		if ($previous) {
-			$data['previous'] = $this->normalizeException($previous);
-		}
-
-		return $this->toJson($data);
-	}
-
-	/**
-	 * JSON encodes data
-	 *
-	 * @param $data
-	 *
-	 * @return string
-	 */
-	private function toJson($data) {
-		// suppress json_encode errors since it's twitchy with some inputs
-		return @json_encode(
-			$data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-		);
-	}
 }
