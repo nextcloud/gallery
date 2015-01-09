@@ -31,8 +31,40 @@ class Normalizer {
 	 * @return string|array
 	 */
 	public function normalize($data, $depth = 0) {
+
+		$scalar = $this->normalizeScalar($data);
+		if (!is_array($scalar)) {
+			return $scalar;
+		}
+
+		$traversable = $this->normalizeTraversable($data, $depth);
+		if ($traversable !== null) {
+			return $traversable;
+		}
+
+		$object = $this->normalizeObject($data, $depth);
+		if ($object !== null) {
+			return $object;
+		}
+
+		$resource = $this->normalizeResource($data);
+		if ($resource !== null) {
+			return $resource;
+		}
+
+		return '[unknown(' . gettype($data) . ')]';
+	}
+
+	/**
+	 * Returns various, filtered, scalar elements
+	 *
+	 * @param $data
+	 *
+	 * @return mixed
+	 */
+	private function normalizeScalar($data) {
 		if (null === $data || is_scalar($data)) {
-			/*// utf8_encode only works for Latin1, we may have ANSI strings
+			/*// utf8_encode only works for Latin1 so we rely on mbstring
 			if (is_string($data)) {
 				$data = mb_convert_encoding($data, "UTF-8");
 			}*/
@@ -40,22 +72,7 @@ class Normalizer {
 			return $data;
 		}
 
-		$traversable = $this->normalizeTraversable($data, $depth);
-		if ($traversable) {
-			return $traversable;
-		}
-
-		$object = $this->normalizeObject($data, $depth);
-		if ($object) {
-			return $object;
-		}
-
-		$resource = $this->normalizeResource($data);
-		if ($resource) {
-			return $resource;
-		}
-
-		return '[unknown(' . gettype($data) . ')]';
+		return array();
 	}
 
 	/**

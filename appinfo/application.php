@@ -143,7 +143,7 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'Normalizer', function (IAppContainer $c) {
+			'Normalizer', function () {
 			return new Normalizer();
 		}
 		);
