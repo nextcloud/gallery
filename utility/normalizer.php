@@ -135,7 +135,7 @@ class Normalizer {
 	 *
 	 * @param \Exception $exception
 	 *
-	 * @return string
+	 * @return string[]
 	 */
 	private function normalizeException(\Exception $exception) {
 		$data = array(

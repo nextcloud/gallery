@@ -154,7 +154,7 @@ abstract class CheckMiddleware extends Middleware {
 	 * @param string $message
 	 * @param int $code
 	 *
-	 * @return RedirectResponse|TemplateResponse
+	 * @return RedirectResponse
 	 */
 	private function redirectToErrorPage($message, $code) {
 		$url = $this->urlGenerator->linkToRoute(

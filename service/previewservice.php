@@ -477,7 +477,7 @@ class PreviewService extends Service {
 	 *
 	 * @param \OC_Image|string $previewData
 	 *
-	 * @return string
+	 * @return \OC_Image|string
 	 */
 	private function base64EncodeIfNecessary($previewData) {
 		$base64Encode = $this->base64Encode;

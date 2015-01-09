@@ -191,7 +191,7 @@ class InfoService extends Service {
 	 * Returns the folder where we need to look for files, as well as the path
 	 * starting from it and going up to the user's root folder
 	 *
-	 * @return array
+	 * @return array<string,Folder|string>
 	 */
 	private function getImagesFolder() {
 		$env = $this->environmentService->getEnv();

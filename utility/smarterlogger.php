@@ -173,7 +173,7 @@ class SmarterLogger implements ILogger {
 	 *
 	 * @param array $data
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	private function contextNormalizer(&$data) {
 		$data = $this->normalizer->normalize($data);

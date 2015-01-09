@@ -134,7 +134,7 @@ class ServiceController extends Controller {
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return Http\JSONResponse
+	 * @return Http\JSONResponse|null
 	 */
 	public function getThumbnails($images, $square, $scale) {
 		try {
