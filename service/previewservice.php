@@ -157,10 +157,12 @@ class PreviewService extends Service {
 
 		$this->previewManager->setupView($owner, $file, $imagePathFromFolder);
 
-		$previewRequired = $this->previewManager->previewRequired($this->animatedPreview, $this->download);
+		$previewRequired =
+			$this->previewManager->previewRequired($this->animatedPreview, $this->download);
 
 		if ($previewRequired) {
-			$perfectPreview = $this->previewManager->preparePreview($maxX, $maxY, $this->keepAspect);
+			$perfectPreview =
+				$this->previewManager->preparePreview($maxX, $maxY, $this->keepAspect);
 		} else {
 			$perfectPreview = $this->prepareDownload($file, $image);
 		}

@@ -44,13 +44,9 @@ class Preview {
 	 */
 	private $file;
 	/**
-	 * @type int
+	 * @type int[]
 	 */
-	private $maxX;
-	/**
-	 * @type int
-	 */
-	private $maxY;
+	private $dims;
 
 
 	/**
@@ -184,15 +180,13 @@ class Preview {
 	 * @return array
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
-		$this->preview->setMaxX($this->maxX = $maxX);
-		$this->preview->setMaxY($this->maxY = $maxY);
-		$this->preview->setScalingUp(false); // TODO: Need to read from settings
-		$this->preview->setKeepAspect($keepAspect);
-		$this->logger->debug("[PreviewService] Generating a new preview");
-		/** @type \OC_Image $previewData */
-		$previewData = $this->preview->getPreview();
+		$this->dims = ['x' => $maxX, 'y' => $maxY];
+		$previewData = $this->getPreviewFromCore($keepAspect);
 		if ($previewData->valid()) {
-			$perfectPreview = $this->previewValidator($maxX, $maxY);
+			if ($maxX === 200) { // Only fixing the square thumbnails
+				$previewData = $this->previewValidator();
+			}
+			$perfectPreview = ['preview' => $previewData, 'status' => Http::STATUS_OK];
 		} else {
 			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
 			$perfectPreview = array(
@@ -206,6 +200,26 @@ class Preview {
 	}
 
 	/**
+	 * Asks core for a preview based on our criteria
+	 *
+	 * @param $keepAspect
+	 *
+	 * @return \OC_Image
+	 *
+	 * @throws \Exception
+	 */
+	private function getPreviewFromCore($keepAspect) {
+		$this->logger->debug("[PreviewService] Generating a new preview");
+
+		$this->preview->setMaxX($this->dims['x']);
+		$this->preview->setMaxY($this->dims['y']);
+		$this->preview->setScalingUp(false); // TODO: Need to read from settings
+		$this->preview->setKeepAspect($keepAspect);
+
+		return $this->preview->getPreview();
+	}
+
+	/**
 	 * Makes sure we return previews of the asked dimensions and fix the cache
 	 * if necessary
 	 *
@@ -213,28 +227,22 @@ class Preview {
 	 * wider or smaller than the asked dimensions. This happens when one of the
 	 * original dimension is smaller than what is asked for
 	 *
-	 * @return array<resource,int>
+	 * @return resource
 	 */
 	private function previewValidator() {
-		$maxX = $this->maxX;
-		$maxY = $this->maxY;
+		$dims = $this->dims;
 		$previewData = $this->preview->getPreview();
 		$previewX = $previewData->width();
 		$previewY = $previewData->height();
-		$minWidth = 200; // Only fixing the square thumbnails
 
-		if (($previewX > $maxX
-			 || ($previewX < $maxX || $previewY < $maxY)
-				&& $maxX === $minWidth)
+		if (($previewX > $dims['x']
+			 || ($previewX < $dims['x'] || $previewY < $dims['y']))
 		) {
-			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
+			$fixedPreview = $this->fixPreview($previewData, $dims['x'], $dims['y']);
 			$previewData = $this->fixPreviewCache($fixedPreview);
 		}
 
-		return array(
-			'preview' => $previewData,
-			'status'  => Http::STATUS_OK
-		);
+		return $previewData;
 	}
 
 	/**
@@ -245,18 +253,18 @@ class Preview {
 	 * @return resource
 	 */
 	private function fixPreview($previewData) {
+		$dims = $this->dims;
 		$previewWidth = $previewData->width();
 		$previewHeight = $previewData->height();
-		$fixedPreview = imagecreatetruecolor($this->maxX, $this->$maxY); // Creates the canvas
+		$fixedPreview = imagecreatetruecolor($dims['x'], $dims['y']); // Creates the canvas
 
 		// We make the background transparent
 		imagealphablending($fixedPreview, false);
 		$transparency = imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
 		imagefill($fixedPreview, 0, 0, $transparency);
 		imagesavealpha($fixedPreview, true);
-
 		$newDimensions =
-			$this->calculateNewDimensions($previewWidth, $previewHeight, $this->maxX, $this->$maxY);
+			$this->calculateNewDimensions($previewWidth, $previewHeight, $dims['x'], $dims['y']);
 
 		imagecopyresampled(
 			$fixedPreview, $previewData->resource(), $newDimensions['newX'], $newDimensions['newY'],
@@ -278,15 +286,16 @@ class Preview {
 	 * @return array
 	 */
 	private function calculateNewDimensions($previewWidth, $previewHeight) {
-		if (($previewWidth / $previewHeight) >= ($maxX = $this->maxX / $maxY = $this->$maxY)) {
-			$newWidth = $maxX;
-			$newHeight = $previewHeight * ($maxX / $previewWidth);
+		$dims = $this->dims;
+		if (($previewWidth / $previewHeight) >= ($dims['x'] / $dims['y'])) {
+			$newWidth = $dims['x'];
+			$newHeight = $previewHeight * ($dims['x'] / $previewWidth);
 			$newX = 0;
-			$newY = round(abs($maxY - $newHeight) / 2);
+			$newY = round(abs($dims['y'] - $newHeight) / 2);
 		} else {
-			$newWidth = $previewWidth * ($maxY / $previewHeight);
-			$newHeight = $maxY;
-			$newX = round(abs($maxX - $newWidth) / 2);
+			$newWidth = $previewWidth * ($dims['y'] / $previewHeight);
+			$newHeight = $dims['y'];
+			$newX = round(abs($dims['x'] - $newWidth) / 2);
 			$newY = 0;
 		}
 
