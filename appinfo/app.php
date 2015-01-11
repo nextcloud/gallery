@@ -51,9 +51,7 @@ $c->query('ServerContainer')
  * Scripts for the Files app
  */
 $c->query('API')
-  ->addScript('jquery.mousewheel-3.1.1', $appName);
-$c->query('API')
-  ->addScript('bigshot', $appName);
+  ->addScript('vendor/bigshot/bigshot', $appName);
 $c->query('API')
   ->addScript('slideshow', $appName);
 $c->query('API')

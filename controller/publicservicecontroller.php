@@ -27,29 +27,6 @@ use OCA\GalleryPlus\Service\PreviewService;
 class PublicServiceController extends ServiceController {
 
 	/**
-	 * Constructor
-	 *
-	 * @inheritDoc
-	 */
-	public function __construct(
-		$appName,
-		IRequest $request,
-		InfoService $infoService,
-		ThumbnailService $thumbnailService,
-		PreviewService $previewService,
-		IURLGenerator $urlGenerator
-	) {
-		parent::__construct(
-			$appName,
-			$request,
-			$infoService,
-			$thumbnailService,
-			$previewService,
-			$urlGenerator
-		);
-	}
-
-	/**
 	 * @PublicPage
 	 *
 	 * @inheritDoc

@@ -34,10 +34,10 @@ SlideShow.prototype.init = function (play) {
 
 	// detect fullscreen capability (mobile)
 	var e = this.container.get(0);
-	this.canFullScreen = e.requestFullscreen !== undefined
-	|| e.mozRequestFullScreen !== undefined
-	|| e.webkitRequestFullscreen !== undefined
-	|| e.msRequestFullscreen !== undefined;
+	this.canFullScreen = e.requestFullscreen !== undefined ||
+	e.mozRequestFullScreen !== undefined ||
+	e.webkitRequestFullscreen !== undefined ||
+	e.msRequestFullscreen !== undefined;
 	// makes UI controls work in mobile version
 	var browser = new bigshot.Browser();
 	this.container.children('input').each(function (i, e) {

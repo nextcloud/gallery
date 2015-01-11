@@ -86,7 +86,6 @@ checks:
 
 coding_style:
     php:
-        indentation:
-            general:
-                use_tabs: true
-                size: 4
+        braces:
+          classes_functions:
+              class: end-of-line

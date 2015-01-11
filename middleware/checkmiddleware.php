@@ -47,7 +47,7 @@ abstract class CheckMiddleware extends Middleware {
 	/**
 	 * @type SmarterLogger
 	 */
-	private $logger;
+	protected $logger;
 
 	/***
 	 * Constructor

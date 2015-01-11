@@ -363,7 +363,7 @@ class PreviewService extends Service {
 	 * @param int $maxX
 	 * @param int $maxY
 	 *
-	 * @return array
+	 * @return array<resource,int>
 	 */
 	private function previewValidator(
 		$owner, $file, $preview, $maxX, $maxY
