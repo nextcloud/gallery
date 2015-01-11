@@ -54,7 +54,7 @@ Thumbnail.loadBatch = function (paths, square, token) {
 
 		var eventSource = new OC.EventSource(url);
 		eventSource.listen('preview', function (preview) {
-			var status = preview.status;
+			//var status = preview.status;
 			var data = preview.data;
 			var path = data.image;
 			var thumb = thumbnails[path];

@@ -118,8 +118,8 @@ SlideShow.prototype.zoomToFit = function () {
 
 SlideShow.prototype.zoomToOriginal = function () {
 	if (this.zoomable === null) {
-			return;
-		}
+		return;
+	}
 	if (this.currentImage.isSmallImage) {
 		this.zoomable.flyTo(0, 0, this.smallImageScale, true);
 	} else {
@@ -129,8 +129,8 @@ SlideShow.prototype.zoomToOriginal = function () {
 
 SlideShow.prototype.resetZoom = function () {
 	if (this.zoomable === null) {
-			return;
-		}
+		return;
+	}
 	if (this.currentImage.isSmallImage) {
 		this.zoomable.setZoom(this.smallImageScale, true);
 	} else {

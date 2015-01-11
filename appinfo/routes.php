@@ -54,7 +54,7 @@ $application->registerRoutes(
 					 'url'  => '/error',
 					 'verb' => 'GET'
 				 ),
-				  // The same page, but for POST
+				 // The same page, but for POST
 				 array(
 					 'name' => 'page#error_page_post',
 					 'url'  => '/error',
