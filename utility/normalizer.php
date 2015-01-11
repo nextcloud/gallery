@@ -32,20 +32,19 @@ class Normalizer {
 	 */
 	public function normalize($data, $depth = 0) {
 		$scalar = $this->normalizeScalar($data);
-		$traversable = $this->normalizeTraversable($data, $depth);
-		$object = $this->normalizeObject($data, $depth);
-		$resource = $this->normalizeResource($data);
 		if (!is_array($scalar)) {
 			return $scalar;
 		}
-		if ($traversable !== null) {
-			return $traversable;
-		}
-		if ($object !== null) {
-			return $object;
-		}
-		if ($resource !== null) {
-			return $resource;
+		$decisionArray = array(
+			$this->normalizeTraversable($data, $depth),
+			$this->normalizeObject($data, $depth),
+			$this->normalizeResource($data),
+		);
+
+		foreach ($decisionArray as $dataType) {
+			if ($dataType !== null) {
+				return $dataType;
+			}
 		}
 
 		return '[unknown(' . gettype($data) . ')]';
@@ -53,6 +52,8 @@ class Normalizer {
 
 	/**
 	 * Returns various, filtered, scalar elements
+	 *
+	 * We're returning an array here to detect failure because null is a scalar and so is false
 	 *
 	 * @param $data
 	 *
@@ -72,7 +73,7 @@ class Normalizer {
 	}
 
 	/**
-	 * Converts each element of a traversable variable to String
+	 * Returns an array containing normalized elements
 	 *
 	 * @param $data
 	 * @param int $depth
@@ -81,23 +82,34 @@ class Normalizer {
 	 */
 	private function normalizeTraversable($data, $depth = 0) {
 		if (is_array($data) || $data instanceof \Traversable) {
-			$maxArrayRecursion = 20;
-			$normalized = array();
-			$count = 1;
-
-			foreach ($data as $key => $value) {
-				if ($count++ >= $maxArrayRecursion) {
-					$normalized['...'] =
-						'Over ' . $maxArrayRecursion . ' items, aborting normalization';
-					break;
-				}
-				$normalized[$key] = $this->normalize($value, $depth);
-			}
-
-			return $normalized;
+			return $this->normalizeTraversableElement($data, $depth);
 		}
 
 		return null;
+	}
+
+	/**
+	 * Converts each element of a traversable variable to String
+	 *
+	 * @param $data
+	 * @param int $depth
+	 *
+	 * @return array
+	 */
+	private function normalizeTraversableElement($data, $depth) {
+		$maxArrayRecursion = 20;
+		$count = 1;
+		$normalized = array();
+		foreach ($data as $key => $value) {
+			if ($count++ >= $maxArrayRecursion) {
+				$normalized['...'] =
+					'Over ' . $maxArrayRecursion . ' items, aborting normalization';
+				break;
+			}
+			$normalized[$key] = $this->normalize($value, $depth);
+		}
+
+		return $normalized;
 	}
 
 	/**
