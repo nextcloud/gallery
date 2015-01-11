@@ -12,6 +12,7 @@
 
 namespace OCA\GalleryPlus\AppInfo;
 
+
 use OCP\IContainer;
 
 use OCP\AppFramework\App;
@@ -20,6 +21,7 @@ use OCP\AppFramework\IAppContainer;
 use OCA\GalleryPlus\Controller\PageController;
 use OCA\GalleryPlus\Controller\ServiceController;
 use OCA\GalleryPlus\Controller\PublicServiceController;
+use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Service\EnvironmentService;
 use OCA\GalleryPlus\Service\InfoService;
 use OCA\GalleryPlus\Service\ThumbnailService;
@@ -148,7 +150,7 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'SmarterLogger', function (IAppContainer $c) {
+			'SmarterLogger', function (IContainer $c) {
 			return new SmarterLogger(
 				$c->query('AppName'),
 				$c->query('Logger'),
@@ -175,6 +177,11 @@ class Application extends App {
 			return $c
 				->getServer()
 				->getPreviewManager();
+		}
+		);
+		$container->registerService(
+			'CustomPreviewManager', function (IContainer $c) {
+			return new Preview($c->query('SmarterLogger'));
 		}
 		);
 		$container->registerService(
@@ -244,7 +251,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('SmarterLogger'),
-				$c->query('PreviewManager')
+				$c->query('CustomPreviewManager')
 			);
 		}
 		);

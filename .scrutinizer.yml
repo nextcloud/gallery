@@ -23,7 +23,7 @@ tools:
 checks:
     php:
         line_length:
-            max_length: '80'
+            max_length: '100'
         verify_access_scope_valid: true
         require_scope_for_methods: true
         no_underscore_prefix_in_methods: true

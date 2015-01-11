@@ -55,8 +55,7 @@ Thumbnail.loadBatch = function (paths, square, token) {
 		var eventSource = new OC.EventSource(url);
 		eventSource.listen('preview', function (preview) {
 			//var status = preview.status;
-			var data = preview.data;
-			var path = data.image;
+			var path = preview.path;
 			var thumb = thumbnails[path];
 			thumb.image.onload = function () {
 				Thumbnail.loadingCount--;
@@ -69,7 +68,7 @@ Thumbnail.loadBatch = function (paths, square, token) {
 				thumb.image.originalWidth = 200 * thumb.image.ratio;
 				thumb.loadingDeferred.resolve(thumb.image);
 			};
-			thumb.image.src = 'data:' + data.mimetype + ';base64,' + data.preview;
+			thumb.image.src = 'data:' + preview.mimetype + ';base64,' + preview.preview;
 		});
 	}
 
