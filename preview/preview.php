@@ -43,6 +43,15 @@ class Preview {
 	 * @type File
 	 */
 	private $file;
+	/**
+	 * @type int
+	 */
+	private $maxX;
+	/**
+	 * @type int
+	 */
+	private $maxY;
+
 
 	/**
 	 * Constructor
@@ -79,27 +88,28 @@ class Preview {
 	 * @return bool
 	 */
 	public function previewRequired($animatedPreview, $download) {
-		$svgPreviewRequired = $this->isSvgPreviewRequired($this->preview);
-		$gifPreviewRequired = $this->isGifPreviewRequired($animatedPreview);
+		$mime = $this->file->getMimeType();
 
-		return $svgPreviewRequired && $gifPreviewRequired && !$download;
+		if ($mime === 'image/svg+xml') {
+			return $this->isSvgPreviewRequired();
+		}
+		if ($mime === 'image/gif') {
+			return $this->isGifPreviewRequired($animatedPreview);
+		}
+
+		return !$download;
 	}
 
 	/**
 	 * Decides if we should download the SVG or generate a preview
 	 *
-	 * @param \OC\Preview $preview
+	 * SVGs are downloaded if the SVG converter is disabled
+	 * Files of any media type are downloaded if requested by the client
 	 *
 	 * @return bool
 	 */
-	private function isSvgPreviewRequired($preview) {
-		$mime = $this->file->getMimeType();
-
-		/**
-		 * SVGs are downloaded if the SVG converter is disabled
-		 * Files of any media type are downloaded if requested by the client
-		 */
-		if ($mime === 'image/svg+xml' && !$preview->isMimeSupported($mime)) {
+	private function isSvgPreviewRequired() {
+		if (!$this->preview->isMimeSupported($this->file->getMimeType())) {
 			return false;
 		}
 
@@ -109,19 +119,17 @@ class Preview {
 	/**
 	 * Decides if we should download the GIF or generate a preview
 	 *
+	 * GIFs are downloaded if they're animated and we want to show
+	 * animations
+	 *
 	 * @param bool $animatedPreview
 	 *
 	 * @return bool
 	 */
 	private function isGifPreviewRequired($animatedPreview) {
-		$mime = $this->file->getMimeType();
-		$animatedGif = $this->isGifAnimated($this->file);
+		$animatedGif = $this->isGifAnimated();
 
-		/**
-		 * GIFs are downloaded if they're animated and we want to show
-		 * animations
-		 */
-		if ($mime === 'image/gif' && $animatedPreview && $animatedGif) {
+		if ($animatedPreview && $animatedGif) {
 			return false;
 		}
 
@@ -142,12 +150,10 @@ class Preview {
 	 *
 	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
 	 *
-	 * @param File $file
-	 *
 	 * @return bool
 	 */
-	private function isGifAnimated($file) {
-		$fileHandle = $file->fopen('rb');
+	private function isGifAnimated() {
+		$fileHandle = $this->file->fopen('rb');
 		$count = 0;
 		while (!feof($fileHandle) && $count < 2) {
 			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
@@ -178,14 +184,13 @@ class Preview {
 	 * @return array
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
-		$this->preview->setMaxX($maxX);
-		$this->preview->setMaxY($maxY);
+		$this->preview->setMaxX($this->maxX = $maxX);
+		$this->preview->setMaxY($this->maxY = $maxY);
 		$this->preview->setScalingUp(false); // TODO: Need to read from settings
 		$this->preview->setKeepAspect($keepAspect);
 		$this->logger->debug("[PreviewService] Generating a new preview");
 		/** @type \OC_Image $previewData */
 		$previewData = $this->preview->getPreview();
-
 		if ($previewData->valid()) {
 			$perfectPreview = $this->previewValidator($maxX, $maxY);
 		} else {
@@ -208,12 +213,11 @@ class Preview {
 	 * wider or smaller than the asked dimensions. This happens when one of the
 	 * original dimension is smaller than what is asked for
 	 *
-	 * @param int $maxX
-	 * @param int $maxY
-	 *
 	 * @return array<resource,int>
 	 */
-	private function previewValidator($maxX, $maxY) {
+	private function previewValidator() {
+		$maxX = $this->maxX;
+		$maxY = $this->maxY;
 		$previewData = $this->preview->getPreview();
 		$previewX = $previewData->width();
 		$previewY = $previewData->height();
@@ -237,15 +241,13 @@ class Preview {
 	 * Makes a preview fit in the asked dimension and fills the empty space
 	 *
 	 * @param \OC_Image $previewData
-	 * @param int $maxX
-	 * @param int $maxY
 	 *
 	 * @return resource
 	 */
-	private function fixPreview($previewData, $maxX, $maxY) {
+	private function fixPreview($previewData) {
 		$previewWidth = $previewData->width();
 		$previewHeight = $previewData->height();
-		$fixedPreview = imagecreatetruecolor($maxX, $maxY); // Creates the canvas
+		$fixedPreview = imagecreatetruecolor($this->maxX, $this->$maxY); // Creates the canvas
 
 		// We make the background transparent
 		imagealphablending($fixedPreview, false);
@@ -253,7 +255,8 @@ class Preview {
 		imagefill($fixedPreview, 0, 0, $transparency);
 		imagesavealpha($fixedPreview, true);
 
-		$newDimensions = $this->calculateNewDimensions($previewWidth, $previewHeight, $maxX, $maxY);
+		$newDimensions =
+			$this->calculateNewDimensions($previewWidth, $previewHeight, $this->maxX, $this->$maxY);
 
 		imagecopyresampled(
 			$fixedPreview, $previewData->resource(), $newDimensions['newX'], $newDimensions['newY'],
@@ -271,13 +274,11 @@ class Preview {
 	 *
 	 * @param int $previewWidth
 	 * @param int $previewHeight
-	 * @param int $maxX
-	 * @param int $maxY
 	 *
 	 * @return array
 	 */
-	private function calculateNewDimensions($previewWidth, $previewHeight, $maxX, $maxY) {
-		if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
+	private function calculateNewDimensions($previewWidth, $previewHeight) {
+		if (($previewWidth / $previewHeight) >= ($maxX = $this->maxX / $maxY = $this->$maxY)) {
 			$newWidth = $maxX;
 			$newHeight = $previewHeight * ($maxX / $previewWidth);
 			$newX = 0;

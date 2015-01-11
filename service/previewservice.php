@@ -168,12 +168,12 @@ class PreviewService extends Service {
 		$perfectPreview['path'] = $image;
 
 		/*$this->logger->debug(
-					"[PreviewService] PREVIEW Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
-					array(
-						'path'     => $perfectPreview['data']['path'],
-						'mimetype' => $perfectPreview['data']['mimetype'],
-						'status'   => $perfectPreview['status']
-					)
+			"[PreviewService] Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
+			array(
+				'path'     => $perfectPreview['data']['path'],
+				'mimetype' => $perfectPreview['data']['mimetype'],
+				'status'   => $perfectPreview['status']
+			)
 				);*/
 
 		return $perfectPreview;
