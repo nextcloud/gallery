@@ -138,6 +138,16 @@ class PreviewService extends Service {
 	 * the browser. If not, we send the mime icon and change the status code so
 	 * that the client knows that the process failed
 	 *
+	 * Example logger
+	 * $this->logger->debug(
+	 * "[PreviewService] Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
+	 * array(
+	 * 'path'     => $perfectPreview['data']['path'],
+	 * 'mimetype' => $perfectPreview['data']['mimetype'],
+	 * 'status'   => $perfectPreview['status']
+	 * )
+	 * );
+	 *
 	 * @todo Get the max size from the settings
 	 *
 	 * @param string $image path to the image, relative to the user folder
@@ -149,14 +159,11 @@ class PreviewService extends Service {
 	private function createPreview($image, $maxX = 0, $maxY = 0) {
 		$env = $this->environmentService->getEnv();
 		$owner = $env['owner'];
-		/** @type Folder $folder */
 		$folder = $env['folder'];
 		$imagePathFromFolder = $env['relativePath'] . $image;
 		/** @type File $file */
 		$file = $this->getResource($folder, $imagePathFromFolder);
-
 		$this->previewManager->setupView($owner, $file, $imagePathFromFolder);
-
 		$previewRequired =
 			$this->previewManager->previewRequired($this->animatedPreview, $this->download);
 
@@ -168,15 +175,6 @@ class PreviewService extends Service {
 		}
 		$perfectPreview['preview'] = $this->base64EncodeCheck($perfectPreview['preview']);
 		$perfectPreview['path'] = $image;
-
-		/*$this->logger->debug(
-			"[PreviewService] Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
-			array(
-				'path'     => $perfectPreview['data']['path'],
-				'mimetype' => $perfectPreview['data']['mimetype'],
-				'status'   => $perfectPreview['status']
-			)
-				);*/
 
 		return $perfectPreview;
 	}

@@ -202,7 +202,7 @@ class Preview {
 	/**
 	 * Asks core for a preview based on our criteria
 	 *
-	 * @param $keepAspect
+	 * @param bool $keepAspect
 	 *
 	 * @return \OC_Image
 	 *
