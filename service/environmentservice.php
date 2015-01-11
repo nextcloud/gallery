@@ -106,6 +106,8 @@ class EnvironmentService extends Service {
 	 * Checks if a password is required and validates it if it is provided in
 	 * the request
 	 *
+	 * @fixme Helper::authenticate is a private API, but Hasher is not available in OC7
+	 *
 	 * @param string $password
 	 */
 	public function checkAuthorisation($password) {
@@ -113,9 +115,7 @@ class EnvironmentService extends Service {
 		$passwordRequired = isset($linkItem['share_with']);
 
 		if ($passwordRequired) {
-			$authenticated = \OCA\Files_Sharing\Helper::authenticate(
-				$linkItem, $password
-			); // FIXME: Private API, but Hasher is not available in OC7
+			$authenticated = \OCA\Files_Sharing\Helper::authenticate($linkItem, $password);
 
 			if (!$authenticated) {
 				$this->kaBoom("Missing password", Http::STATUS_UNAUTHORIZED);
@@ -131,9 +131,8 @@ class EnvironmentService extends Service {
 	 */
 	public function setupTokenBasedEnv() {
 		$linkItem = $this->linkItem;
-		$rootLinkItem = Share::resolveReShare(
-			$linkItem
-		); // Resolves reshares down to the last real share
+		// Resolves reshares down to the last real share
+		$rootLinkItem = Share::resolveReShare($linkItem);
 		$origShareOwner = $rootLinkItem['uid_owner'];
 		$user = $this->getUser($origShareOwner);
 		$origOwnerDisplayName = $user->getDisplayName();
@@ -183,8 +182,7 @@ class EnvironmentService extends Service {
 		$origShareOwner = $this->origShareData['origShareOwner'];
 		$origShareRelPath = $this->origShareData['origShareRelPath'];
 		// Displayed in the top right corner of the gallery
-		$origOwnerDisplayName =
-			$this->origShareData['origOwnerDisplayName'];
+		$origOwnerDisplayName = $this->origShareData['origOwnerDisplayName'];
 
 		$shareOwner = $linkItem['uid_owner'];
 		$folder = $this->serverContainer->getUserFolder($shareOwner);
@@ -240,8 +238,7 @@ class EnvironmentService extends Service {
 	 */
 	private function checkItemType($linkItem) {
 		if (!isset($linkItem['item_type'])) {
-			$message =
-				'No item type set for share id: ' . $linkItem['id'];
+			$message = 'No item type set for share id: ' . $linkItem['id'];
 			$this->kaBoom($message, Http::STATUS_NOT_FOUND);
 		}
 	}

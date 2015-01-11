@@ -90,9 +90,7 @@ class PageController extends Controller {
 		);
 
 		// Will render the page using the template found in templates/index.php
-		return new TemplateResponse(
-			$appName, 'index', $params
-		);
+		return new TemplateResponse($appName, 'index', $params);
 	}
 
 	/**
@@ -104,18 +102,19 @@ class PageController extends Controller {
 	 * @return TemplateResponse
 	 */
 	public function publicIndex() {
-		$token = $this->request->getParam('token');
 		$appName = $this->appName;
+		$token = $this->request->getParam('token');
+
 		$env = $this->environmentService->getEnv();
 		$displayName = $env['originalOwnerDisplayName'];
 		$albumName = $env['albumName'];
 
 		// Parameters sent to the template
 		$params = array(
-			'appName'            => $appName,
-			'token'              => $token,
-			'displayName'        => $displayName,
-			'albumName'          => $albumName
+			'appName'     => $appName,
+			'token'       => $token,
+			'displayName' => $displayName,
+			'albumName'   => $albumName
 		);
 
 		// Will render the page using the template found in templates/public.php
@@ -155,10 +154,7 @@ class PageController extends Controller {
 			'code'    => $code,
 		);
 
-		$errorTemplate = new TemplateResponse(
-			$appName, 'index', $params, 'guest'
-		);
-
+		$errorTemplate = new TemplateResponse($appName, 'index', $params, 'guest');
 		$errorTemplate->setStatus($code);
 
 		return $errorTemplate;

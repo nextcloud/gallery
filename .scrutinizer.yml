@@ -67,7 +67,6 @@ checks:
         require_braces_around_control_structures: true
         psr2_switch_declaration: true
         psr2_control_structure_declaration: true
-        psr2_class_declaration: true
         properties_in_camelcaps: true
         parameters_in_camelcaps: true
         optional_parameters_at_the_end: true

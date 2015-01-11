@@ -119,9 +119,7 @@ class ThumbnailService {
 	 * @param bool $square
 	 * @param bool $scale
 	 */
-	private function createThumbnails(
-		$eventSource, $imagesArray, $square, $scale
-	) {
+	private function createThumbnails($eventSource, $imagesArray, $square, $scale) {
 		foreach ($imagesArray as $image) {
 			$height = 200 * $scale;
 			if ($square) {
@@ -130,9 +128,7 @@ class ThumbnailService {
 				$width = 2 * $height;
 			}
 
-			$preview = $this->previewService->createThumbnails(
-				$image, $width, $height, !$square
-			);
+			$preview = $this->previewService->createThumbnails($image, $width, $height, !$square);
 
 			$preview['data']['image'] = $image;
 

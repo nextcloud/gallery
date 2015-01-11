@@ -25,8 +25,8 @@ use OCP\AppFramework\Http\JSONResponse;
 trait JsonHttpError {
 
 	/**
-	 * @param \Exception $exception the message that is returned taken from the
-	 * exception
+	 * @param \Exception $exception the message that is returned taken from the exception
+	 *
 	 * @param int $code the http error code
 	 *
 	 * @return JSONResponse

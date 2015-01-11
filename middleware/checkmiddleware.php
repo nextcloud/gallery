@@ -76,9 +76,7 @@ abstract class CheckMiddleware extends Middleware {
 	 *
 	 * @inheritDoc
 	 */
-	public function afterException(
-		$controller, $methodName, \Exception $exception
-	) {
+	public function afterException($controller, $methodName, \Exception $exception) {
 		if ($exception instanceof CheckException) {
 			$message = $exception->getMessage();
 			$code = $exception->getCode();

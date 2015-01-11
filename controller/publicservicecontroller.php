@@ -12,13 +12,6 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-use OCP\IURLGenerator;
-use OCP\IRequest;
-
-use OCA\GalleryPlus\Service\InfoService;
-use OCA\GalleryPlus\Service\ThumbnailService;
-use OCA\GalleryPlus\Service\PreviewService;
-
 /**
  * Class PublicServiceController
  *

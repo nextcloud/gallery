@@ -99,15 +99,13 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	}
 
 	/**
-	 * Checks whether sharing is enabled in the OC config
+	 * Checks whether public sharing (via links) is enabled
 	 *
 	 * @return bool
 	 */
 	private function isSharingEnabled() {
-		// Check whether public sharing (via links) is enabled
-		if ($this->appConfig->getValue('core', 'shareapi_allow_links', 'yes')
-			!== 'yes'
-		) {
+		$shareApiAllowLinks = $this->appConfig->getValue('core', 'shareapi_allow_links', 'yes');
+		if ($shareApiAllowLinks !== 'yes') {
 			return false;
 		}
 

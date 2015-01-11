@@ -149,11 +149,8 @@ class PreviewService extends Service {
 	 * @return array preview data
 	 */
 	private function createPreview($image, $maxX = 0, $maxY = 0) {
-		$response = array();
-
 		$env = $this->environmentService->getEnv();
 		$owner = $env['owner'];
-
 		/** @type Folder $folder */
 		$folder = $env['folder'];
 		$imagePathFromFolder = $env['relativePath'] . $image;
@@ -162,41 +159,33 @@ class PreviewService extends Service {
 
 		// FIXME: Private API, but can't use the PreviewManager yet as it's incomplete
 		$preview = new \OC\Preview($owner, 'files', $imagePathFromFolder);
-
-		$previewRequired =
-			$this->previewRequired($file, $preview);
-
+		$previewRequired = $this->previewRequired($file, $preview);
 		if ($previewRequired) {
-			$this->logger->debug("[PreviewService] Generating a new preview");
-
-			$perfectPreview =
-				$this->preparePreview($owner, $file, $preview, $maxX, $maxY);
-
-			$previewData = $perfectPreview['previewData'];
-			$previewMime = $perfectPreview['previewMime'];
-			$statusCode = $perfectPreview['statusCode'];
+			$perfectPreview = $this->preparePreview($owner, $file, $preview, $maxX, $maxY);
 		} else {
-			$this->logger->debug(
-				"[PreviewService] Downloading file {file} as-is",
-				array(
-					'file' => $image
-				)
-			);
-
-			$previewData = $file->getContent();
-			$previewMime = $file->getMimeType();
-			$statusCode = Http::STATUS_OK;
+			$perfectPreview = $this->prepareDownload($file, $image);
 		}
+		$perfectPreview['preview'] = $this->base64EncodeCheck($perfectPreview['preview']);
 
-		$previewData = $this->base64EncodeIfNecessary($previewData);
+		return $this->packagePreview($perfectPreview, $image);
+	}
 
-		$response['data'] = array(
-			'path' => $image,
-			'mimetype' => $previewMime,
-			'preview' => $previewData,
+	/**
+	 * Prepares the response to send back to the client
+	 *
+	 * We're creating the array first so that we can log the elements before sending the response
+	 *
+	 * @param array $perfectPreview
+	 * @param string $image
+	 *
+	 * @return array
+	 */
+	private function packagePreview($perfectPreview, $image) {
+		$perfectPreview['path'] = $image;
+		$response = array(
+			'data'   => $perfectPreview,
+			'status' => $perfectPreview['status']
 		);
-
-		$response['status'] = $statusCode;
 
 		/*$this->logger->debug(
 			"[PreviewService] PREVIEW Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
@@ -310,6 +299,9 @@ class PreviewService extends Service {
 	 * instead, until the Preview class is fixed, we send the mime
 	 * icon along with a 415 error code.
 	 *
+	 * @fixme setKeepAspect is missing from public interface.
+	 *     https://github.com/owncloud/core/issues/12772
+	 *
 	 * @param string $owner
 	 * @param File $file
 	 * @param \OC\Preview $preview
@@ -322,31 +314,40 @@ class PreviewService extends Service {
 		$preview->setMaxX($maxX);
 		$preview->setMaxY($maxY);
 		$preview->setScalingUp(false); // TODO: Need to read from settings
-		$preview->setKeepAspect(
-			$this->keepAspect
-		); // FIXME: Missing from public interface. https://github.com/owncloud/core/issues/12772
-
+		$preview->setKeepAspect($this->keepAspect);
+		$this->logger->debug("[PreviewService] Generating a new preview");
 		/** @type \OC_Image $previewData */
 		$previewData = $preview->getPreview();
 		if ($previewData->valid()) {
-			$perfectPreview = $this->previewValidator(
-				$owner, $file, $preview, $maxX, $maxY
-			);
+			$perfectPreview = $this->previewValidator($owner, $file, $preview, $maxX, $maxY);
 		} else {
-			$this->logger->debug(
-				"[PreviewService] ERROR! Did not get a preview"
-			);
-
+			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
 			$perfectPreview = array(
-				'previewData' => $this->getMimeIcon($file),
-				'statusCode'  => Http::STATUS_UNSUPPORTED_MEDIA_TYPE
+				'preview' => $this->getMimeIcon($file),
+				'status'  => Http::STATUS_UNSUPPORTED_MEDIA_TYPE
 			);
 		}
-
-		// Previews are always sent as PNG
-		$perfectPreview['previewMime'] = 'image/png';
+		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
 		return $perfectPreview;
+	}
+
+	/**
+	 * Returns the data needed to make a file available for download
+	 *
+	 * @param File $file
+	 * @param string $image
+	 *
+	 * @return array
+	 */
+	private function prepareDownload($file, $image) {
+		$this->logger->debug("[PreviewService] Downloading file {file} as-is", ['file' => $image]);
+
+		return array(
+			'preview' => $file->getContent(),
+			'mimetype' => $file->getMimeType(),
+			'status'  => Http::STATUS_OK
+		);
 	}
 
 	/**
@@ -365,9 +366,7 @@ class PreviewService extends Service {
 	 *
 	 * @return array<resource,int>
 	 */
-	private function previewValidator(
-		$owner, $file, $preview, $maxX, $maxY
-	) {
+	private function previewValidator($owner, $file, $preview, $maxX, $maxY) {
 		$previewData = $preview->getPreview();
 		$previewX = $previewData->width();
 		$previewY = $previewData->height();
@@ -377,13 +376,12 @@ class PreviewService extends Service {
 				&& $maxX === $minWidth)
 		) {
 			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
-			$previewData = $this->fixPreviewCache(
-				$owner, $file, $preview, $fixedPreview
-			);
+			$previewData = $this->fixPreviewCache($owner, $file, $preview, $fixedPreview);
 		}
 
 		return array(
-			'previewData' => $previewData, 'statusCode' => Http::STATUS_OK
+			'preview' => $previewData,
+			'status' => Http::STATUS_OK
 		);
 	}
 
@@ -401,16 +399,36 @@ class PreviewService extends Service {
 		$previewWidth = $previewData->width();
 		$previewHeight = $previewData->height();
 
-		// Creates the canvas
-		$fixedPreview = imagecreatetruecolor($maxX, $maxY);
-		// We make the background transparent
-		imagealphablending($fixedPreview, false);
-		$transparency =
-			imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
+		$fixedPreview = imagecreatetruecolor($maxX, $maxY); // Creates the canvas
+		imagealphablending($fixedPreview, false); // We make the background transparent
+		$transparency = imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
 		imagefill($fixedPreview, 0, 0, $transparency);
 		imagesavealpha($fixedPreview, true);
 
-		/** @link https://stackoverflow.com/questions/3050952/resize-an-image-and-fill-gaps-of-proportions-with-a-color */
+		$newDimensions = $this->calculateNewDimensions($previewWidth, $previewHeight, $maxX, $maxY);
+
+		imagecopyresampled(
+			$fixedPreview, $previewData->resource(), $newDimensions['newX'], $newDimensions['newY'],
+			0, 0, $newDimensions['newWidth'], $newDimensions['newHeight'],
+			$previewWidth, $previewHeight
+		);
+
+		return $fixedPreview;
+	}
+
+	/**
+	 * Calculates the new dimensions so that it fits in the dimensions requested by the client
+	 *
+	 * @link https://stackoverflow.com/questions/3050952/resize-an-image-and-fill-gaps-of-proportions-with-a-color
+	 *
+	 * @param int $previewWidth
+	 * @param int $previewHeight
+	 * @param int $maxX
+	 * @param int $maxY
+	 *
+	 * @return array
+	 */
+	private function calculateNewDimensions($previewWidth, $previewHeight, $maxX, $maxY) {
 		if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
 			$newWidth = $maxX;
 			$newHeight = $previewHeight * ($maxX / $previewWidth);
@@ -423,13 +441,12 @@ class PreviewService extends Service {
 			$newY = 0;
 		}
 
-		imagecopyresampled(
-			$fixedPreview, $previewData->resource(), $newX, $newY, 0, 0,
-			$newWidth,
-			$newHeight, $previewWidth, $previewHeight
+		return array(
+			'newX'      => $newX,
+			'newY'      => $newY,
+			'newWidth'  => $newWidth,
+			'newHeight' => $newHeight,
 		);
-
-		return $fixedPreview;
 	}
 
 	/**
@@ -442,16 +459,14 @@ class PreviewService extends Service {
 	 *
 	 * @return mixed
 	 */
-	private function fixPreviewCache(
-		$owner, $file, $preview, $fixedPreview
-	) {
-		$fixedPreviewObject =
-			new \OC_Image($fixedPreview); // FIXME: Private API
+	private function fixPreviewCache($owner, $file, $preview, $fixedPreview) {
+		$fixedPreviewObject = new \OC_Image($fixedPreview); // FIXME: Private API
 		$previewData = $preview->getPreview();
+
 		// Get the location where the broken thumbnail is stored
 		// FIXME: Private API
-		$thumbPath = \OC::$SERVERROOT . '/data/' . $owner . '/'
-					 . $preview->isCached($file->getId());
+		$thumbPath =
+			\OC::$SERVERROOT . '/data/' . $owner . '/' . $preview->isCached($file->getId());
 
 		// Caching it for next time
 		if ($fixedPreviewObject->save($thumbPath)) {
@@ -494,7 +509,7 @@ class PreviewService extends Service {
 	 *
 	 * @return \OC_Image|string
 	 */
-	private function base64EncodeIfNecessary($previewData) {
+	private function base64EncodeCheck($previewData) {
 		$base64Encode = $this->base64Encode;
 
 		if ($base64Encode === true) {

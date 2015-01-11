@@ -138,9 +138,7 @@ class ServiceController extends Controller {
 	 */
 	public function getThumbnails($images, $square, $scale) {
 		try {
-			$this->thumbnailService->getAlbumThumbnails(
-				$images, $square, $scale
-			);
+			$this->thumbnailService->getAlbumThumbnails($images, $square, $scale);
 		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
@@ -159,9 +157,7 @@ class ServiceController extends Controller {
 	 */
 	public function showPreview($file, $x, $y) {
 		try {
-			return $this->previewService->showPreview(
-				$file, $x, $y
-			);
+			return $this->previewService->showPreview($file, $x, $y);
 		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}

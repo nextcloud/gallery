@@ -42,23 +42,9 @@ class ImageResponse extends Response {
 		$this->preview = $image['preview'];
 
 		$this->setStatus($statusCode);
-		$this->addHeader(
-			'Content-type', $image['mimetype'] . '; charset=utf-8'
-		);
+		$this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
 
-		\OCP\Response::setContentDispositionHeader(
-			basename($this->path), 'attachment'
-		);
-
-		/*\OC::$server
-			->getLogger()
-			->debug(
-			"[ImageResponse] Here is the content: " . substr(
-				(string)$this->previewData, 0, 20
-			), array(
-					'app' => 'galleryplus'
-			   )
-		);*/
+		\OCP\Response::setContentDispositionHeader(basename($this->path), 'attachment');
 	}
 
 	/**

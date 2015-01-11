@@ -124,6 +124,8 @@ class InfoService extends Service {
 	/**
 	 * This builds and returns a list of all supported media types
 	 *
+	 * @todo Native SVG could be disabled via admin settings
+	 *
 	 * @param bool $slideshow
 	 *
 	 * @return string[] all supported media types
@@ -133,29 +135,19 @@ class InfoService extends Service {
 		$wantedMimes = self::$baseMimeTypes;
 
 		if ($slideshow) {
-			$wantedMimes =
-				array_merge($wantedMimes, self::$slideshowMimeTypes);
+			$wantedMimes = array_merge($wantedMimes, self::$slideshowMimeTypes);
 		}
 
 		foreach ($wantedMimes as $wantedMime) {
 			// Let's see if a preview of files of that media type can be generated
 			$preview = $this->previewManager;
 			if ($preview->isMimeSupported($wantedMime)) {
-				// We add it to the list of supported media types
-				$supportedMimes[] = $wantedMime;
+				$supportedMimes[] = $wantedMime; // We add it to the list of supported media types
 			}
 		}
+		$supportedMimes[] = 'image/svg+xml'; // SVG is always supported
 
-		// SVG is always supported
-		// TODO: Native SVG could be disabled via admin settings
-		$supportedMimes[] = 'image/svg+xml';
-
-		$this->logger->debug(
-			"Supported Mimes: {mimes}",
-			array(
-				'mimes' => $supportedMimes
-			)
-		);
+		$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
 
 		return $supportedMimes;
 	}

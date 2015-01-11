@@ -84,10 +84,11 @@ class Normalizer {
 			$maxArrayRecursion = 20;
 			$normalized = array();
 			$count = 1;
+
 			foreach ($data as $key => $value) {
 				if ($count++ >= $maxArrayRecursion) {
-					$normalized['...'] = 'Over ' . $maxArrayRecursion
-										 . ' items, aborting normalization';
+					$normalized['...'] =
+						'Over ' . $maxArrayRecursion . ' items, aborting normalization';
 					break;
 				}
 				$normalized[$key] = $this->normalize($value, $depth);

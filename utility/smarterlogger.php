@@ -178,9 +178,7 @@ class SmarterLogger implements ILogger {
 	private function contextNormalizer(&$data) {
 		$data = $this->normalizer->normalize($data);
 		if (!is_string($data)) {
-			$data = @json_encode(
-				$data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-			);
+			$data = @json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 			// Removing null byte and double slashes from object properties
 			$data = str_replace(['\\u0000', '\\\\'], ["", "\\"], $data);
 		}

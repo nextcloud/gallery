@@ -14,9 +14,7 @@ style(
 ?>
 <ul>
 	<li class="error error-broken-link">
-		<p><?php p(
-				$l->t("Sorry, this link doesn't seem to work anymore.")
-			) ?></p>
+		<p><?php p($l->t("Sorry, this link doesn't seem to work anymore.")) ?></p>
 
 		<p><?php p($l->t('Reasons might be:')); ?></p>
 		<ul>
@@ -25,18 +23,10 @@ style(
 			<li><?php p($l->t('sharing is disabled')); ?></li>
 		</ul>
 		</br>
-		<p><?php p(
-				$l->t('Here is the error message returned by the server: ')
-			); ?>
-			<strong><?php p(
-					$_['message'] . ' (' . $_['code'] . ')'
-				); ?></strong></p>
+		<p><?php p($l->t('Here is the error message returned by the server: ')); ?>
+			<strong><?php p($_['message'] . ' (' . $_['code'] . ')'); ?></strong></p>
 		</br>
-		<p><?php p(
-				$l->t(
-					'For more info, please ask the person who sent this link.'
-				)
-			); ?></p>
+		<p><?php p($l->t('For more info, please ask the person who sent this link.')); ?></p>
 	</li>
 </ul>
 
