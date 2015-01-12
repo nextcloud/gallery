@@ -105,7 +105,7 @@ class Preview {
 	 * @return bool
 	 */
 	private function isSvgPreviewRequired() {
-		if (!$this->preview->isMimeSupported($this->file->getMimeType())) {
+		if (!$this->preview->isMimeSupported('image/svg+xml')) {
 			return false;
 		}
 

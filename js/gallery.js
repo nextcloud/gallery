@@ -63,7 +63,8 @@ Gallery.getAlbumInfo = function (album) {
 		var def = new $.Deferred();
 		Gallery.getAlbumInfo.cache[album] = def;
 
-		var url = OC.generateUrl('apps/' + Gallery.appName + '/albums?albumpath={albumpath}', {albumpath: encodeURIComponent(album)});
+		var url = OC.generateUrl('apps/' + Gallery.appName +
+		'/albums?albumpath={albumpath}', {albumpath: encodeURIComponent(album)});
 		$.getJSON(url, function (data) {
 			def.resolve(data);
 		});
@@ -94,7 +95,8 @@ Gallery.share = function (event) {
 			var target = OC.Share.showLink;
 			OC.Share.showLink = function () {
 				var r = target.apply(this, arguments);
-				$('#linkText').val($('#linkText').val().replace('public.php?service=files&t=', 'index.php/apps/' + Gallery.appName + '/public?token='));
+				$('#linkText').val($('#linkText').val().replace('public.php?service=files&t=', 'index.php/apps/' +
+				Gallery.appName + '/public?token='));
 				return r;
 			};
 		})();
@@ -117,7 +119,8 @@ Gallery.buildUrl = function (endPoint, params) {
 		extension = '.public';
 	}
 	var query = OC.buildQueryString(params);
-	return OC.generateUrl('apps/' + Gallery.appName + '/' + endPoint + extension, null) + '?' + query;
+	return OC.generateUrl('apps/' + Gallery.appName + '/' + endPoint + extension, null) + '?' +
+		query;
 };
 
 Gallery.view = {};
@@ -130,7 +133,6 @@ Gallery.view.clear = function () {
 };
 
 Gallery.view.viewAlbum = function (albumPath) {
-	var i, crumbs, path;
 	albumPath = albumPath || '';
 	if (!Gallery.albumMap[albumPath]) {
 		return;
@@ -141,33 +143,9 @@ Gallery.view.viewAlbum = function (albumPath) {
 		Gallery.view.loadVisibleRows.loading = false;
 	}
 	Gallery.currentAlbum = albumPath;
+	Gallery.view.shareButton(albumPath);
+	Gallery.view.buildBreadCrumb(albumPath);
 
-	if (albumPath === '' || Gallery.token) {
-		$('button.share').hide();
-	} else {
-		$('button.share').show();
-	}
-
-	OC.Breadcrumb.clear();
-	var albumName = $('#content').data('albumname');
-	if (!albumName) {
-		albumName = t('gallery', 'Pictures');
-	}
-	OC.Breadcrumb.push(albumName, '#').click(function () {
-		Gallery.view.viewAlbum('');
-	});
-	path = '';
-	crumbs = albumPath.split('/');
-	for (i = 0; i < crumbs.length; i++) {
-		if (crumbs[i]) {
-			if (path) {
-				path += '/' + crumbs[i];
-			} else {
-				path += crumbs[i];
-			}
-			Gallery.view.pushBreadCrumb(crumbs[i], path);
-		}
-	}
 	Gallery.getAlbumInfo(Gallery.currentAlbum); //preload album info
 	Gallery.albumMap[albumPath].viewedItems = 0;
 	setTimeout(function () {
@@ -176,8 +154,17 @@ Gallery.view.viewAlbum = function (albumPath) {
 	}, 0);
 };
 
+Gallery.view.shareButton = function (albumPath) {
+	if (albumPath === '' || Gallery.token) {
+		$('button.share').hide();
+	} else {
+		$('button.share').show();
+	}
+};
+
 Gallery.view.loadVisibleRows = function (album, path) {
-	if (Gallery.view.loadVisibleRows.loading && Gallery.view.loadVisibleRows.loading.state() !== 'resolved') {
+	if (Gallery.view.loadVisibleRows.loading &&
+		Gallery.view.loadVisibleRows.loading.state() !== 'resolved') {
 		return Gallery.view.loadVisibleRows.loading;
 	}
 	// load 2 windows worth of rows
@@ -220,6 +207,29 @@ Gallery.view.loadVisibleRows = function (album, path) {
 	}
 };
 Gallery.view.loadVisibleRows.loading = false;
+
+Gallery.view.buildBreadCrumb = function (albumPath) {
+	var i, crumbs, path;
+	OC.Breadcrumb.clear();
+	var albumName = $('#content').data('albumname');
+	if (!albumName) {
+		albumName = t('gallery', 'Pictures');
+	}
+	Gallery.view.pushBreadCrumb(albumName, '');
+
+	path = '';
+	crumbs = albumPath.split('/');
+	for (i = 0; i < crumbs.length; i++) {
+		if (crumbs[i]) {
+			if (path) {
+				path += '/' + crumbs[i];
+			} else {
+				path += crumbs[i];
+			}
+			Gallery.view.pushBreadCrumb(crumbs[i], path);
+		}
+	}
+};
 
 Gallery.view.pushBreadCrumb = function (text, path) {
 	OC.Breadcrumb.push(text, '#' + path).click(function () {
@@ -304,10 +314,11 @@ $(document).ready(function () {
 	});
 
 	$('#openAsFileListButton').click(function () {
-		window.location.href = OC.filePath('files_sharing', '', 'public.php') + '?' + OC.buildQueryString({
-			path: '/' + Gallery.currentAlbum,
-			t: Gallery.token
-		});
+		window.location.href =
+			OC.filePath('files_sharing', '', 'public.php') + '?' + OC.buildQueryString({
+				path: '/' + Gallery.currentAlbum,
+				t: Gallery.token
+			});
 		// OC8 only
 		// window.location.href = OC.generateUrl('s/{token}', {
 		// token: $('#gallery').data('token')
