@@ -31,20 +31,7 @@ var SlideShow = function (container, images, interval, maxScale) {
 SlideShow.prototype.init = function (play) {
 	this.active = true;
 	this.hideImage();
-
-	// detect fullscreen capability (mobile)
-	var e = this.container.get(0);
-	this.canFullScreen = e.requestFullscreen !== undefined ||
-	e.mozRequestFullScreen !== undefined ||
-	e.webkitRequestFullscreen !== undefined ||
-	e.msRequestFullscreen !== undefined;
-	// makes UI controls work in mobile version
-	var browser = new bigshot.Browser();
-	this.container.children('input').each(function (i, e) {
-		browser.registerListener(e, 'click', browser.stopEventBubblingHandler(), false);
-		browser.registerListener(e, 'touchstart', browser.stopEventBubblingHandler(), false);
-		browser.registerListener(e, 'touchend', browser.stopEventBubblingHandler(), false);
-	});
+	this.bigShotSetup();
 
 	// hide arrows and play/pause when only one pic
 	this.container.find('.next, .previous').toggle(this.images.length > 1);
@@ -62,6 +49,38 @@ SlideShow.prototype.init = function (play) {
 		}.bind(this);
 	}.bind(this);
 
+	this.buttonSetup(makeCallBack);
+	this.keyCodeSetup(makeCallBack);
+
+	$(window).resize(function () {
+		this.zoomDecider();
+	}.bind(this));
+
+	if (play) {
+		this.play();
+	} else {
+		this.pause();
+	}
+};
+
+SlideShow.prototype.bigShotSetup = function () {
+	// Detect fullscreen capability (mobile)
+	var e = this.container.get(0);
+	this.canFullScreen = e.requestFullscreen !== undefined ||
+	e.mozRequestFullScreen !== undefined ||
+	e.webkitRequestFullscreen !== undefined ||
+	e.msRequestFullscreen !== undefined;
+
+	// makes UI controls work in mobile version. Pinch only works on iOS
+	var browser = new bigshot.Browser();
+	this.container.children('input').each(function (i, e) {
+		browser.registerListener(e, 'click', browser.stopEventBubblingHandler(), false);
+		browser.registerListener(e, 'touchstart', browser.stopEventBubblingHandler(), false);
+		browser.registerListener(e, 'touchend', browser.stopEventBubblingHandler(), false);
+	});
+};
+
+SlideShow.prototype.buttonSetup = function (makeCallBack) {
 	this.container.children('.next').click(makeCallBack(this.next));
 	this.container.children('.previous').click(makeCallBack(this.previous));
 	this.container.children('.exit').click(makeCallBack(this.stop));
@@ -69,8 +88,9 @@ SlideShow.prototype.init = function (play) {
 	this.container.children('.play').click(makeCallBack(this.play));
 	this.container.children('.downloadImage').click(makeCallBack(this.getImageDownload));
 	//this.container.click(makeCallBack(this.next));
+};
 
-
+SlideShow.prototype.keyCodeSetup = function (makeCallBack, that) {
 	$(document).keyup(function (evt) {
 		if (evt.keyCode === 27) { // esc
 			makeCallBack(this.stop)(evt);
@@ -82,24 +102,12 @@ SlideShow.prototype.init = function (play) {
 			makeCallBack(this.play)(evt);
 		} else if (evt.keyCode === 70) { // f (fullscreen)
 			makeCallBack(this.fullScreenToggle)(evt);
-		} else if (evt.keyCode === 48 || evt.keyCode === 96) { // zero (original size)
+		} else if (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79) { // zero or o
 			makeCallBack(this.zoomToOriginal)(evt);
-		} else if (evt.keyCode === 57 || evt.keyCode === 105) { // 9 (fill screen)
+		} else if (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73) { // 9 or i
 			makeCallBack(this.zoomToFit)(evt);
 		}
 	}.bind(this));
-
-	jQuery(window).resize(function () {
-
-		this.zoomDecider();
-
-	}.bind(this));
-
-	if (play) {
-		this.play();
-	} else {
-		this.pause();
-	}
 };
 
 SlideShow.prototype.zoomDecider = function () {
@@ -144,7 +152,7 @@ SlideShow.prototype.fullScreenStart = function () {
 	}
 	this.fullScreen = new bigshot.FullScreen(this.container.get(0));
 	this.fullScreen.open();
-	this.fullScreen.addOnClose(function (evt) {
+	this.fullScreen.addOnClose(function () {
 		this.fullScreenExit();
 	}.bind(this));
 };
@@ -170,10 +178,6 @@ SlideShow.prototype.fullScreenToggle = function () {
 	}
 };
 
-SlideShow.prototype.onKeyUp = function (e) {
-
-};
-
 SlideShow.prototype.show = function (index) {
 	this.container.show();
 	this.current = index;
@@ -186,41 +190,47 @@ SlideShow.prototype.show = function (index) {
 		if (this.current === index) {
 			this.currentImage = image;
 			this.currentImage.mimeType = this.images[index].mimeType;
-			if (this.zoomable !== null) {
-				this.zoomable.dispose();
-				this.zoomable = null;
-			}
-			var maxZoom = this.maxZoom;
-			if (image.width < this.smallImageDimension || image.height < this.smallImageDimension) {
-				maxZoom += 3;
-				this.currentImage.isSmallImage = true;
-			}
 			this.container.append(image);
+
 			image.setAttribute('alt', this.images[index].name);
-			jQuery(image).css('position', 'absolute');
+			$(image).css('position', 'absolute');
 
-			this.zoomable = new bigshot.SimpleImage(new bigshot.ImageParameters({
-				container: this.container.get(0),
-				maxZoom: maxZoom,
-				minZoom: 0,
-				touchUI: false,
-				width: image.naturalWidth,
-				height: image.naturalHeight
-			}), image);
-			//this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
-			if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-				this.resetZoom();
-			}
+			this.startBigshot(image);
 
-			// prevent zoom-on-doubleClick
-			this.zoomable.addEventListener('dblclick', function (ie) {
-				ie.preventDefault();
-			}.bind(this));
 			this.setUrl(this.images[index].path);
 			if (this.playing) {
 				this.setTimeout();
 			}
 		}
+	}.bind(this));
+};
+
+SlideShow.prototype.startBigshot = function (image) {
+	if (this.zoomable !== null) {
+		this.zoomable.dispose();
+		this.zoomable = null;
+	}
+	var maxZoom = this.maxZoom;
+	if (image.width < this.smallImageDimension || image.height < this.smallImageDimension) {
+		maxZoom += 3;
+		this.currentImage.isSmallImage = true;
+	}
+	this.zoomable = new bigshot.SimpleImage(new bigshot.ImageParameters({
+		container: this.container.get(0),
+		maxZoom: maxZoom,
+		minZoom: 0,
+		touchUI: false,
+		width: image.naturalWidth,
+		height: image.naturalHeight
+	}), image);
+	//this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
+	if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
+		this.resetZoom();
+	}
+
+	// prevent zoom-on-doubleClick
+	this.zoomable.addEventListener('dblclick', function (ie) {
+		ie.preventDefault();
 	}.bind(this));
 };
 
