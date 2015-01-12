@@ -102,12 +102,24 @@ SlideShow.prototype.keyCodeSetup = function (makeCallBack) {
 			makeCallBack(this.play)(evt);
 		} else if (evt.keyCode === 70) { // f (fullscreen)
 			makeCallBack(this.fullScreenToggle)(evt);
-		} else if (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79) { // zero or o
+		} else if (this.zoomOutKey(evt)) {
 			makeCallBack(this.zoomToOriginal)(evt);
-		} else if (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73) { // 9 or i
+		} else if (this.zoomInKey(evt)) {
 			makeCallBack(this.zoomToFit)(evt);
 		}
 	}.bind(this));
+};
+
+SlideShow.prototype.zoomOutKey = function (evt) {
+	// zero, o or down key
+	console.log(evt);
+	return (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79 || evt.keyCode === 40);
+};
+
+SlideShow.prototype.zoomInKey = function (evt) {
+	// 9, i or up key
+	console.log(evt);
+	return (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73 || evt.keyCode === 38);
 };
 
 SlideShow.prototype.zoomDecider = function () {

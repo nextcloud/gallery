@@ -1187,7 +1187,7 @@ bigshot.FullScreen.prototype = {
                 that.onClose ();
             }
         };
-        this.container[this.requestFullScreen]();
+        this.container[this.requestFullScreen](Element.ALLOW_KEYBOARD_INPUT);
     },
     
     /**
