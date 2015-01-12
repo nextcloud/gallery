@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Pictures" => "Изображения",
-"Picture view" => "Просмотр картинки",
+"Picture view" => "Просмотр изображения",
 "Next" => "Следующий",
 "Play" => "Проиграть",
 "Pause" => "Пауза",

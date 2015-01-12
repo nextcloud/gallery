@@ -2,7 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Pictures" : "Изображения",
-    "Picture view" : "Просмотр картинки",
+    "Picture view" : "Просмотр изображения",
     "Next" : "Следующий",
     "Play" : "Проиграть",
     "Pause" : "Пауза",
