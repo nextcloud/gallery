@@ -3,14 +3,19 @@ php:
   - 5.4
   - 5.5
 
-before_install:
-  - cd ..
-  - git clone -b stable7 https://github.com/owncloud/core.git
-  - mv galleryplus core/apps/
-  - cd core
-  - git submodule init
-  - git submodule update
-  - cd apps/galleryplus
+branches:
+  only:
+#    - master
+    - stable7
 
-script:
-  - phpunit tests
+#before_install:
+#  - cd ..
+#  - git clone -b stable7 https://github.com/owncloud/core.git
+#  - mv galleryplus core/apps/
+#  - cd core
+#  - git submodule init
+#  - git submodule update
+#  - cd apps/galleryplus
+
+script: ant test
+#  - phpunit tests
