@@ -90,7 +90,7 @@ SlideShow.prototype.buttonSetup = function (makeCallBack) {
 	//this.container.click(makeCallBack(this.next));
 };
 
-SlideShow.prototype.keyCodeSetup = function (makeCallBack, that) {
+SlideShow.prototype.keyCodeSetup = function (makeCallBack) {
 	$(document).keyup(function (evt) {
 		if (evt.keyCode === 27) { // esc
 			makeCallBack(this.stop)(evt);
