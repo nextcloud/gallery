@@ -112,13 +112,11 @@ SlideShow.prototype.keyCodeSetup = function (makeCallBack) {
 
 SlideShow.prototype.zoomOutKey = function (evt) {
 	// zero, o or down key
-	console.log(evt);
 	return (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79 || evt.keyCode === 40);
 };
 
 SlideShow.prototype.zoomInKey = function (evt) {
 	// 9, i or up key
-	console.log(evt);
 	return (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73 || evt.keyCode === 38);
 };
 
