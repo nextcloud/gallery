@@ -5,7 +5,7 @@ php:
 
 branches:
   only:
-#    - master
+    - master
     - stable7
 
 #before_install:
