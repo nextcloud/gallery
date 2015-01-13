@@ -15,7 +15,6 @@
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\File;
-use OCP\Files\Folder;
 
 use OCP\AppFramework\Http;
 
@@ -131,8 +130,7 @@ class PreviewService extends Service {
 	 *
 	 * Some files are base64 encoded. Explicitly for files which are downloaded
 	 * (cached Thumbnails, SVG, GIFs) and via __toStrings for the previews
-	 * which
-	 * are instances of \OC_Image
+	 * which are instances of \OC_Image
 	 *
 	 * We check that the preview returned by the Preview class can be used by
 	 * the browser. If not, we send the mime icon and change the status code so

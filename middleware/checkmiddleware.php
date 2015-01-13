@@ -81,12 +81,7 @@ abstract class CheckMiddleware extends Middleware {
 			$message = $exception->getMessage();
 			$code = $exception->getCode();
 
-			$this->logger->debug(
-				"[TokenCheckException] {exception}",
-				array(
-					'exception' => $exception,
-				)
-			);
+			$this->logger->debug("[TokenCheckException] {exception}", ['exception' => $exception]);
 
 			return $this->computeResponse($message, $code);
 		}
@@ -111,7 +106,6 @@ abstract class CheckMiddleware extends Middleware {
 		}
 
 		return $response;
-
 	}
 
 	/**
@@ -153,10 +147,7 @@ abstract class CheckMiddleware extends Middleware {
 			)
 		);
 
-		return new TemplateResponse(
-			$this->appName, 'authenticate', $params,
-			'guest'
-		);
+		return new TemplateResponse($this->appName, 'authenticate', $params, 'guest');
 	}
 
 	/**

@@ -14,7 +14,7 @@
 
 namespace OCA\GalleryPlus\Service;
 
-use OCP\Util;
+use OCP\IEventSource;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
@@ -37,6 +37,10 @@ class ThumbnailService {
 	 */
 	private $logger;
 	/**
+	 * @type IEventSource
+	 */
+	private $eventSource;
+	/**
 	 * @type PreviewService
 	 */
 	private $previewService;
@@ -47,17 +51,19 @@ class ThumbnailService {
 	 *
 	 * @param string $appName
 	 * @param SmarterLogger $logger
+	 * @param IEventSource $eventSource
 	 * @param PreviewService $previewService
 	 */
 	public function __construct(
 		$appName,
 		SmarterLogger $logger,
+		IEventSource $eventSource,
 		PreviewService $previewService
 	) {
-
 		$this->appName = $appName;
 		$this->logger = $logger;
 		$this->previewService = $previewService;
+		$this->eventSource = $eventSource;
 	}
 
 	/**
@@ -82,16 +88,9 @@ class ThumbnailService {
 	public function getAlbumThumbnails($images, $square, $scale) {
 		$imagesArray = explode(';', $images);
 
-		// That's one way of making a version of an app backward compatible
-		if (version_compare(implode('.', Util::getVersion()), '7.8', '<=')) {
-			$eventSource = new \OC_EventSource(); // Using a private API in OC7
-		} else {
-			$eventSource = \OC::$server->createEventSource();
-		}
+		$this->createThumbnails($imagesArray, $square, $scale);
 
-		$this->createThumbnails($eventSource, $imagesArray, $square, $scale);
-
-		$eventSource->close();
+		$this->eventSource->close();
 
 		exit();
 	}
@@ -114,12 +113,11 @@ class ThumbnailService {
 	 *              )
 	 *            );
 	 *
-	 * @param \OC_EventSource $eventSource
 	 * @param string[] $imagesArray
 	 * @param bool $square
 	 * @param bool $scale
 	 */
-	private function createThumbnails($eventSource, $imagesArray, $square, $scale) {
+	private function createThumbnails($imagesArray, $square, $scale) {
 		foreach ($imagesArray as $image) {
 			$height = 200 * $scale;
 			if ($square) {
@@ -132,7 +130,7 @@ class ThumbnailService {
 
 			//$preview['data']['image'] = $image;
 
-			$eventSource->send('preview', $preview);
+			$this->eventSource->send('preview', $preview);
 		}
 	}
 }

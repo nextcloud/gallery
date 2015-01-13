@@ -14,14 +14,12 @@
 
 namespace OCA\GalleryPlus\Middleware;
 
-// FIXME: Private API. Fix only available in OC8
-use \OC\AppFramework\Utility\ControllerMethodReflector;
-
-use OCP\IAppConfig;
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Utility\IControllerMethodReflector;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
@@ -33,11 +31,11 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class SharingCheckMiddleware extends CheckMiddleware {
 
 	/**
-	 * @type IAppConfig
+	 * @type IConfig
 	 * */
-	private $appConfig;
+	private $config;
 	/**
-	 * @type ControllerMethodReflector
+	 * @type IControllerMethodReflector
 	 */
 	protected $reflector;
 
@@ -46,16 +44,16 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
-	 * @param IAppConfig $appConfig
-	 * @param ControllerMethodReflector $reflector
+	 * @param IConfig $appConfig
+	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
 	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
-		IAppConfig $appConfig,
-		ControllerMethodReflector $reflector,
+		IConfig $appConfig,
+		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
 		SmarterLogger $logger
 	) {
@@ -66,7 +64,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 			$logger
 		);
 
-		$this->appConfig = $appConfig;
+		$this->config = $appConfig;
 		$this->reflector = $reflector;
 	}
 
@@ -85,7 +83,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 		$sharingEnabled = $this->isSharingEnabled();
 
 		// This needs to be done here as the Dispatcher does not call our reflector
-		$this->reflector->reflect($controller, $methodName);
+		//$this->reflector->reflect($controller, $methodName);
 
 		$isPublicPage = $this->reflector->hasAnnotation('PublicPage');
 		$isGuest = $this->reflector->hasAnnotation('Guest');
@@ -104,7 +102,8 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	 * @return bool
 	 */
 	private function isSharingEnabled() {
-		$shareApiAllowLinks = $this->appConfig->getValue('core', 'shareapi_allow_links', 'yes');
+		$shareApiAllowLinks = $this->config->getAppValue('core', 'shareapi_allow_links', 'yes');
+
 		if ($shareApiAllowLinks !== 'yes') {
 			return false;
 		}

@@ -17,7 +17,6 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 
-use OCP\AppFramework\IApi;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 
@@ -39,10 +38,6 @@ class PageController extends Controller {
 	 * @type IURLGenerator
 	 */
 	private $urlGenerator;
-	/**
-	 * @type IApi
-	 */
-	private $api;
 
 	/**
 	 * Constructor
@@ -51,20 +46,17 @@ class PageController extends Controller {
 	 * @param IRequest $request
 	 * @param EnvironmentService $environmentService
 	 * @param IURLGenerator $urlGenerator
-	 * @param IApi $api
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		EnvironmentService $environmentService,
-		IURLGenerator $urlGenerator,
-		IApi $api
+		IURLGenerator $urlGenerator
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environmentService = $environmentService;
 		$this->urlGenerator = $urlGenerator;
-		$this->api = $api;
 	}
 
 	/**

@@ -3,7 +3,7 @@ Media gallery for ownCloud which includes preview for all media types supported 
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**Note**: You need to have shell access to your ownCloud installation in order to be able to fully benefit from this version for ownCloud 7.
+**Important** Do not enable encryption when using master (13.01.2015). It's currently broken in core.
 
 ![Screenshot](http://i.imgur.com/fxIai8t.jpg)
 ## Featuring
@@ -11,6 +11,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 * Large, zoomable previews
 * Native SVG support
 * Image download straight from the slideshow or the gallery
+* Seamlessly jump between the gallery and the files app
 
 Checkout the [full changelog](CHANGELOG.md) for more.
 
@@ -23,31 +24,11 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 * Recommended: a recent version ImageMagick
 
 ## Preparation
-You'll need to patch your ownCloud installation before you'll be able to use this app.
-You'll find all you need in the patches folder
-
-### Session fix (mandatory)
-The AppFramework has a problem with sessions, but it can be fixed via this patch.
-
-```
-$ patch -p1 < apps/galleryplus/patches/session-template-fix.patch
-```
+Here is a list of steps you might wnt to take before using the app
 
 ### Supporting more media types
 First, make sure you have installed ImageMagick and its PECL extension.
-Then, we can patch ownCloud
-
-```
-$ patch -p1 < apps/galleryplus/patches/bitmap_preview.patch
-```
-
-Next add a few new entries to your configuration file. Look at the sample configuration in your config folder if you need more information.
-
-```
-$ nano config/config.php
-```
-
-And add the following
+Next add a few new entries to your configuration file.
 
 ```
   'preview_max_scale_factor' => 1,
@@ -60,19 +41,18 @@ And add the following
     4 => 'OC\\Preview\\TIFF',
   ),
 ```
-
+Look at the sample configuration in your config folder if you need more information.
 That's it. you should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
 ## Installation
-Place this app in your apps folder or get the stable7 branch via the shell
+Place this app in your apps folder or get the stable8 branch via the shell
 
 ```
-$ git clone -b stable7 https://github.com/interfasys/galleryplus.git`
+$ git clone -b stable8 https://github.com/interfasys/galleryplus.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery+
 
 ## List of patches
-1. bitmap_preview.patch - Adds support for Photoshop, Illustrator, TIFF, Postscript
-2. session-template-fix.patch - Fixes AppFramework sessions for public shares
+1. session-template-fix.patch - Fixes AppFramework sessions for public shares
 

@@ -7,10 +7,11 @@ branches:
   only:
     - master
     - stable7
+#    - stable8
 
 #before_install:
 #  - cd ..
-#  - git clone -b stable7 https://github.com/owncloud/core.git
+#  - git clone https://github.com/owncloud/core.git
 #  - mv galleryplus core/apps/
 #  - cd core
 #  - git submodule init

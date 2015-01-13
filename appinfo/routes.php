@@ -39,13 +39,13 @@ $application->registerRoutes(
 				 // Landing page for public galleries
 				 array(
 					 'name' => 'page#public_index',
-					 'url'  => '/public',
+					 'url'  => '/s/{token}',
 					 'verb' => 'GET'
 				 ),
 				 // Landing page after password entry, for public galleries
 				 array(
 					 'name' => 'page#public_index_post',
-					 'url'  => '/public',
+					 'url'  => '/s/{token}',
 					 'verb' => 'POST'
 				 ),
 				 // An error page which can handle different error codes

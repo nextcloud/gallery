@@ -29,14 +29,14 @@ $(document).ready(function () {
 			// TODO find a way to not need to use inline CSS
 			button = $('<div class="button hidden"' +
 			'style="position: absolute; right: 0; top: 0; font-weight: normal;">' +
-			'<img class="svg" src="' + OC.filePath('core', 'img/actions', 'toggle-pictures.svg') + '"' +
+			'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') + '"' +
 			'alt="' + t('gallery', 'Picture view') + '"' +
 			'style="vertical-align: text-top; ' +
 			'-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); ' +
 			'filter: alpha(opacity=50); opacity: .5;" />' +
 			'</div>');
 			button.click(function () {
-				window.location.href = OC.generateUrl('apps/galleryplus/public?token={token}', {
+				window.location.href = OC.generateUrl('apps/galleryplus/s/{token}', {
 					token: $('#sharingToken').val()
 				}) + '#' + OCA.Sharing.PublicApp.fileList.getCurrentDirectory().replace(/^\//, '');
 			});

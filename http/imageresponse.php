@@ -27,7 +27,7 @@ class ImageResponse extends Response {
 	 */
 	private $path;
 	/**
-	 * @type \OC_Image
+	 * @type \OC_Image|string
 	 */
 	private $preview;
 

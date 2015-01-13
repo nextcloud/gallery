@@ -233,7 +233,6 @@ SlideShow.prototype.startBigshot = function (image) {
 		width: image.naturalWidth,
 		height: image.naturalHeight
 	}), image);
-	//this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
 	if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
 		this.resetZoom();
 	}
@@ -398,7 +397,9 @@ SlideShow._getSlideshowTemplate = function () {
 	var defer = $.Deferred();
 	if (!this.$slideshowTemplate) {
 		var self = this;
-		$.get(OC.filePath('galleryplus', 'templates', 'slideshow.html'), function (tmpl) {
+		var url = OC.generateUrl('apps/galleryplus/templates/slideshow.html', null);
+		url = url.replace('/index.php', '');
+		$.get(url, function (tmpl) {
 			var template = $(tmpl);
 			var tmplButton;
 			var tmplTrans;
@@ -480,7 +481,7 @@ $(document).ready(function () {
 		});
 
 	if (OCA.Files && OCA.Files.fileActions) {
-		// OC7 is missing the requesttoken in the public template
+		// This is still required in OC8
 		var requestToken;
 		if ($('#filesApp').val() && $('#isPublic').val()) {
 			// That's the only way to get one with the broken template

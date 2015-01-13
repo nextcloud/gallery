@@ -14,13 +14,11 @@
 
 namespace OCA\GalleryPlus\Middleware;
 
-// FIXME: Private API. Fix only available in OC8
-use \OC\AppFramework\Utility\ControllerMethodReflector;
-
 use OCP\IRequest;
 use OCP\IURLGenerator;
 
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Utility\IControllerMethodReflector;
 
 use OCA\GalleryPlus\Service\EnvironmentService;
 use OCA\GalleryPlus\Service\ServiceException;
@@ -40,7 +38,7 @@ class TokenCheckMiddleware extends CheckMiddleware {
 	 */
 	private $environmentService;
 	/**
-	 * @type ControllerMethodReflector
+	 * @type IControllerMethodReflector
 	 */
 	protected $reflector;
 
@@ -50,7 +48,7 @@ class TokenCheckMiddleware extends CheckMiddleware {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param EnvironmentService $environmentService
-	 * @param ControllerMethodReflector $reflector
+	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
 	 * @param SmarterLogger $logger
 	 */
@@ -58,7 +56,7 @@ class TokenCheckMiddleware extends CheckMiddleware {
 		$appName,
 		IRequest $request,
 		EnvironmentService $environmentService,
-		ControllerMethodReflector $reflector,
+		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
 		SmarterLogger $logger
 	) {
@@ -88,8 +86,8 @@ class TokenCheckMiddleware extends CheckMiddleware {
 	public function beforeController($controller, $methodName) {
 		$token = $this->request->getParam('token');
 		$password = $this->request->getParam('password');
-		// This needs to be done here as the Dispatcher does not call our reflector
-		$this->reflector->reflect($controller, $methodName);
+		/*// This needs to be done here as the Dispatcher does not call our reflector
+		$this->reflector->reflect($controller, $methodName);*/
 		$isPublicPage = $this->reflector->hasAnnotation('PublicPage');
 		$isGuest = $this->reflector->hasAnnotation('Guest');
 

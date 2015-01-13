@@ -95,8 +95,9 @@ Gallery.share = function (event) {
 			var target = OC.Share.showLink;
 			OC.Share.showLink = function () {
 				var r = target.apply(this, arguments);
-				$('#linkText').val($('#linkText').val().replace('public.php?service=files&t=', 'index.php/apps/' +
-				Gallery.appName + '/public?token='));
+				$('#linkText').val($('#linkText').val().replace('index.php/s/', 'index.php/apps/' +
+				Gallery.appName + '/s/'));
+
 				return r;
 			};
 		})();
@@ -314,23 +315,16 @@ $(document).ready(function () {
 	});
 
 	$('#openAsFileListButton').click(function () {
-		window.location.href =
-			OC.filePath('files_sharing', '', 'public.php') + '?' + OC.buildQueryString({
-				path: '/' + Gallery.currentAlbum,
-				t: Gallery.token
-			});
-		// OC8 only
-		// window.location.href = OC.generateUrl('s/{token}', {
-		// token: $('#gallery').data('token')
-		// });
+		window.location.href = OC.generateUrl('s/{token}?path={path}', {
+			token: Gallery.token,
+			path: '/' + Gallery.currentAlbum
+		});
 	});
 	$('#download').click(function () {
-		window.location.href = OC.filePath('', '', 'public.php') + '?' + OC.buildQueryString({
-			service: 'files',
+		window.location.href = OC.generateUrl('s/{token}/download?path={path}&files={files}', {
+			token: Gallery.token,
 			path: $('#content').data('albumname'),
-			files: Gallery.currentAlbum,
-			download: null,
-			t: Gallery.token
+			files: Gallery.currentAlbum
 		});
 	});
 

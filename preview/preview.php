@@ -12,7 +12,10 @@
 
 namespace OCA\GalleryPlus\Preview;
 
+use OCP\IConfig;
+use OCP\Image;
 use OCP\Files\File;
+use OCP\Template;
 
 use OCP\AppFramework\Http;
 
@@ -27,6 +30,10 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
  */
 class Preview {
 
+	/**
+	 * @type string
+	 */
+	private $dataDir;
 	/**
 	 * @type SmarterLogger
 	 */
@@ -52,11 +59,14 @@ class Preview {
 	/**
 	 * Constructor
 	 *
+	 * @param IConfig $config
 	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
+		IConfig $config,
 		SmarterLogger $logger
 	) {
+		$this->dataDir = $config->getSystemValue('datadirectory');
 		$this->logger = $logger;
 	}
 
@@ -202,6 +212,8 @@ class Preview {
 	/**
 	 * Asks core for a preview based on our criteria
 	 *
+	 * @todo Need to read scaling setting from settings
+	 *
 	 * @param bool $keepAspect
 	 *
 	 * @return \OC_Image
@@ -213,7 +225,7 @@ class Preview {
 
 		$this->preview->setMaxX($this->dims['x']);
 		$this->preview->setMaxY($this->dims['y']);
-		$this->preview->setScalingUp(false); // TODO: Need to read from settings
+		$this->preview->setScalingUp(false);
 		$this->preview->setKeepAspect($keepAspect);
 
 		return $this->preview->getPreview();
@@ -318,12 +330,11 @@ class Preview {
 		$owner = $this->owner;
 		$file = $this->file;
 		$preview = $this->preview;
-		$fixedPreviewObject = new \OC_Image($fixedPreview); // FIXME: Private API
+		$fixedPreviewObject = new Image($fixedPreview);
 		$previewData = $preview->getPreview();
 
 		// Get the location where the broken thumbnail is stored
-		// FIXME: Private API
-		$thumbnailFolder = \OC::$SERVERROOT . '/data/' . $owner . '/';
+		$thumbnailFolder = $this->dataDir . '/' . $owner . '/';
 		$thumbnail = $thumbnailFolder . $preview->isCached($file->getId());
 
 		// Caching it for next time
@@ -342,16 +353,15 @@ class Preview {
 	 * icon when it can't generate a proper preview
 	 * https://github.com/owncloud/core/pull/12546
 	 *
-	 * @return \OC_Image
+	 * @return Image
 	 */
 	private function getMimeIcon() {
 		$mime = $this->file->getMimeType();
-		$iconData = new \OC_Image(); // FIXME: Private API
+		$iconData = new Image();
 
-		// FIXME: private API
-		$image = \OC::$SERVERROOT . mimetype_icon($mime);
-		// OC8 version
-		//$image = $this->serverRoot() . \OCP\Template::mimetype_icon($mime);
+		$image = $this->dataDir . '/../' . Template::mimetype_icon($mime);
+		// Alternative
+		//$image = $this->serverRoot() . Template::mimetype_icon($mime);
 
 		$iconData->loadFromFile($image);
 
