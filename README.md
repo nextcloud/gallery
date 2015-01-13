@@ -54,5 +54,5 @@ $ git clone -b stable8 https://github.com/interfasys/galleryplus.git
 Now you can activate it in the apps menu. It's called Gallery+
 
 ## List of patches
-1. session-template-fix.patch - Fixes AppFramework sessions for public shares
+None so far
 

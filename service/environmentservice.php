@@ -125,19 +125,13 @@ class EnvironmentService extends Service {
 	 * @param string $password
 	 */
 	public function checkAuthorisation($password) {
-		$linkItem = $this->linkItem;
-		$passwordRequired = isset($linkItem['share_with']);
+		$passwordRequired = isset($this->linkItem['share_with']);
 
 		if ($passwordRequired) {
 			if ($password !== null) {
-				$this->authenticate($linkItem, $password);
+				$this->authenticate($password);
 			} else {
-				// not authenticated ?
-				if (!$this->session->exists('public_link_authenticated')
-					|| $this->session->get('public_link_authenticated') !== $linkItem['id']
-				) {
-					$this->kaBoom("Missing password", Http::STATUS_UNAUTHORIZED);
-				}
+				$this->checkSession();
 			}
 		}
 	}
@@ -167,51 +161,6 @@ class EnvironmentService extends Service {
 			'origOwnerDisplayName' => $origOwnerDisplayName,
 			'origShareRelPath'     => $origShareRelPath
 		];
-	}
-
-	/**
-	 * Authenticate link item with the given password
-	 * or with the session if no password was given.
-	 *
-	 * @param array $linkItem link item array
-	 * @param string $password optional password
-	 *
-	 * @return bool true if authorized, false otherwise
-	 */
-	private function authenticate($linkItem, $password = null) {
-		if ($linkItem['share_type'] == Share::SHARE_TYPE_LINK) {
-			// Check Password
-			$newHash = '';
-			if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
-				// Save item id in session for future requests
-				$this->session->set('public_link_authenticated', $linkItem['id']);
-
-				/**
-				 * FIXME: Migrate old hashes to new hash format
-				 * Due to the fact that there is no reasonable functionality to update the password
-				 * of an existing share no migration is yet performed there.
-				 * The only possibility is to update the existing share which will result in a new
-				 * share ID and is a major hack.
-				 *
-				 * In the future the migration should be performed once there is a proper method
-				 * to update the share's password. (for example `$share->updatePassword($password)`
-				 *
-				 * @link https://github.com/owncloud/core/issues/10671
-				 */
-				if (!empty($newHash)) {
-					// This is empty
-				}
-			} else {
-				$this->kaBoom("Wrong password", Http::STATUS_UNAUTHORIZED);
-			}
-		} else {
-			$this->kaBoom(
-				'Unknown share type ' . $linkItem['share_type']
-				. ' for share id ' . $linkItem['id'], Http::STATUS_NOT_FOUND
-			);
-		}
-
-		return true;
 	}
 
 	/**
@@ -304,6 +253,63 @@ class EnvironmentService extends Service {
 		if (!isset($linkItem['item_type'])) {
 			$message = 'No item type set for share id: ' . $linkItem['id'];
 			$this->kaBoom($message, Http::STATUS_NOT_FOUND);
+		}
+	}
+
+	/**
+	 * Authenticate link item with the given password
+	 * or with the session if no password was given.
+	 *
+	 * @fixme Migrate old hashes to new hash format
+	 * Due to the fact that there is no reasonable functionality to update the password
+	 * of an existing share no migration is yet performed there.
+	 * The only possibility is to update the existing share which will result in a new
+	 * share ID and is a major hack.
+	 *
+	 * In the future the migration should be performed once there is a proper method
+	 * to update the share's password. (for example `$share->updatePassword($password)`
+	 * @link https://github.com/owncloud/core/issues/10671
+	 *
+	 * @param string $password optional password
+	 *
+	 * @return bool true if authorized, false otherwise
+	 */
+	private function authenticate($password = null) {
+		$linkItem = $this->linkItem;
+		if ($linkItem['share_type'] == Share::SHARE_TYPE_LINK) {
+			// Check Password
+			$newHash = '';
+			if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
+				// Save item id in session for future requests
+				$this->session->set('public_link_authenticated', $linkItem['id']);
+				if (!empty($newHash)) {
+					// This is empty
+				}
+			} else {
+				$this->kaBoom("Wrong password", Http::STATUS_UNAUTHORIZED);
+			}
+		} else {
+			$this->kaBoom(
+				'Unknown share type ' . $linkItem['share_type']
+				. ' for share id ' . $linkItem['id'], Http::STATUS_NOT_FOUND
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Makes sure the user is already properly authenticated when a password is required and none
+	 * was provided
+	 *
+	 * @throws ServiceException
+	 */
+	private function checkSession() {
+		// not authenticated ?
+		if (!$this->session->exists('public_link_authenticated')
+			|| $this->session->get('public_link_authenticated') !== $this->linkItem['id']
+		) {
+			$this->kaBoom("Missing password", Http::STATUS_UNAUTHORIZED);
 		}
 	}
 
