@@ -122,7 +122,7 @@ class EnvironmentService extends Service {
 	 * Checks if a password is required and validates it if it is provided in
 	 * the request
 	 *
-	 * @param string $password
+	 * @param string $password optional password
 	 */
 	public function checkAuthorisation($password) {
 		$passwordRequired = isset($this->linkItem['share_with']);
@@ -270,32 +270,47 @@ class EnvironmentService extends Service {
 	 * to update the share's password. (for example `$share->updatePassword($password)`
 	 * @link https://github.com/owncloud/core/issues/10671
 	 *
-	 * @param string $password optional password
+	 * @param string $password
 	 *
-	 * @return bool true if authorized, false otherwise
+	 * @return bool true if authorized, an exception is raised otherwise
+	 *
+	 * @throws ServiceException
 	 */
 	private function authenticate($password = null) {
 		$linkItem = $this->linkItem;
+
 		if ($linkItem['share_type'] == Share::SHARE_TYPE_LINK) {
-			// Check Password
-			$newHash = '';
-			if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
-				// Save item id in session for future requests
-				$this->session->set('public_link_authenticated', $linkItem['id']);
-				if (!empty($newHash)) {
-					// This is empty
-				}
-			} else {
-				$this->kaBoom("Wrong password", Http::STATUS_UNAUTHORIZED);
-			}
+			$this->checkPassword($password);
 		} else {
 			$this->kaBoom(
-				'Unknown share type ' . $linkItem['share_type']
-				. ' for share id ' . $linkItem['id'], Http::STATUS_NOT_FOUND
+				'Unknown share type ' . $linkItem['share_type'] . ' for share id '
+				. $linkItem['id'], Http::STATUS_NOT_FOUND
 			);
 		}
 
 		return true;
+	}
+
+	/**
+	 * Validates the given password
+	 *
+	 * @param string $password
+	 *
+	 * @throws ServiceException
+	 */
+	private function checkPassword($password) {
+		$linkItem = $this->linkItem;
+		$newHash = '';
+		if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
+
+			// Save item id in session for future requests
+			$this->session->set('public_link_authenticated', $linkItem['id']);
+			if (!empty($newHash)) {
+				// For future use
+			}
+		} else {
+			$this->kaBoom("Wrong password", Http::STATUS_UNAUTHORIZED);
+		}
 	}
 
 	/**
