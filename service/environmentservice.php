@@ -65,7 +65,7 @@ class EnvironmentService extends Service {
 	/**
 	 * @type array
 	 */
-	private $origShareData = array();
+	private $origShareData = [];
 
 	/**
 	 * @param string $appName
@@ -175,11 +175,11 @@ class EnvironmentService extends Service {
 		if (isset($linkItem)) {
 			$env = $this->getTokenBasedEnv($linkItem);
 		} else {
-			$env = array(
+			$env = [
 				'owner'        => $this->userId,
 				'relativePath' => '/',
 				'folder'       => $this->userFolder,
-			);
+			];
 		}
 
 		return $env;
@@ -203,14 +203,14 @@ class EnvironmentService extends Service {
 
 		$albumName = trim($linkItem['file_target'], '//');
 
-		return array(
+		return [
 			'owner'                    => $shareOwner,
 			'relativePath'             => $origShareRelPath . '/',
 			'folder'                   => $folder,
 			'albumName'                => $albumName,
 			'originalShareOwner'       => $origShareOwner,
 			'originalOwnerDisplayName' => $origOwnerDisplayName,
-		);
+		];
 	}
 
 	/**
@@ -373,10 +373,10 @@ class EnvironmentService extends Service {
 
 		/*$this->logger->debug(
 			'Full Path {origSharePath}, relative path {origShareRelPath}',
-			array(
+			[
 				'origSharePath'    => $origSharePath,
 				'origShareRelPath' => $origShareRelPath
-			)
+			]
 		);*/
 
 		return $origShareRelPath;

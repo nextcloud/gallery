@@ -199,10 +199,10 @@ class Preview {
 			$perfectPreview = ['preview' => $previewData, 'status' => Http::STATUS_OK];
 		} else {
 			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
-			$perfectPreview = array(
+			$perfectPreview = [
 				'preview' => $this->getMimeIcon(),
 				'status'  => Http::STATUS_UNSUPPORTED_MEDIA_TYPE
-			);
+			];
 		}
 		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
@@ -311,12 +311,12 @@ class Preview {
 			$newY = 0;
 		}
 
-		return array(
+		return [
 			'newX'      => $newX,
 			'newY'      => $newY,
 			'newWidth'  => $newWidth,
 			'newHeight' => $newHeight,
-		);
+		];
 	}
 
 	/**

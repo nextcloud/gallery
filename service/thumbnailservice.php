@@ -105,12 +105,12 @@ class ThumbnailService {
 	 * Sample logger
 	 * We can't just send previewData as it can be quite a large stream
 	 * $this->logger->debug("[Batch] THUMBNAIL NAME : {image} / PATH : {path} /
-	 * MIME : {mimetype} / DATA : {preview}", array(
+	 * MIME : {mimetype} / DATA : {preview}", [
 	 *                'image'    => $preview['data']['image'],
 	 *                'path'     => $preview['data']['path'],
 	 *                'mimetype' => $preview['data']['mimetype'],
 	 *                'preview'  => substr($preview['data']['preview'], 0, 20),
-	 *              )
+	 *              ]
 	 *            );
 	 *
 	 * @param string[] $imagesArray

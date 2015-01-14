@@ -23,7 +23,7 @@ $appName = $c->query('AppName');
 /**
  * Menu entry in ownCloud
  */
-$navConfig = array(
+$navConfig = [
 	'id'    => $appName,
 
 	// Sorting weight for the navigation. The higher the number, the higher
@@ -44,7 +44,7 @@ $navConfig = array(
 	// navigation or on the settings page
 	'name'  => $c->query('L10N')
 				 ->t('Gallery+')
-);
+];
 $c->query('ServerContainer')
   ->getNavigationManager()
   ->add($navConfig);

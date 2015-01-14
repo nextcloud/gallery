@@ -7,18 +7,18 @@
  */
 script(
 	$_['appName'],
-	array(
+	[
 		'album',
 		'gallery',
 		'thumbnail',
-	)
+	]
 );
 style(
 	$_['appName'],
-	array(
+	[
 		'styles',
 		'mobile',
-	)
+	]
 );
 ?>
 <div id="controls">

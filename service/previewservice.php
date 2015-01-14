@@ -139,11 +139,11 @@ class PreviewService extends Service {
 	 * Example logger
 	 * $this->logger->debug(
 	 * "[PreviewService] Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
-	 * array(
+	 * [
 	 * 'path'     => $perfectPreview['data']['path'],
 	 * 'mimetype' => $perfectPreview['data']['mimetype'],
 	 * 'status'   => $perfectPreview['status']
-	 * )
+	 * ]
 	 * );
 	 *
 	 * @todo Get the max size from the settings
@@ -188,11 +188,11 @@ class PreviewService extends Service {
 	private function prepareDownload($file, $image) {
 		$this->logger->debug("[PreviewService] Downloading file {file} as-is", ['file' => $image]);
 
-		return array(
+		return [
 			'preview'  => $file->getContent(),
 			'mimetype' => $file->getMimeType(),
 			'status'   => Http::STATUS_OK
-		);
+		];
 	}
 
 	/**

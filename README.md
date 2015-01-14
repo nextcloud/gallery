@@ -22,7 +22,7 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 * Recommended: a recent version ImageMagick
 
 ## Preparation
-Here is a list of steps you might wnt to take before using the app
+Here is a list of steps you might want to take before using the app
 
 ### Supporting more media types
 First, make sure you have installed ImageMagick and its PECL extension.
@@ -39,11 +39,12 @@ Next add a few new entries to your configuration file.
     4 => 'OC\\Preview\\TIFF',
   ),
 ```
-Look at the sample configuration in your config folder if you need more information.
+Look at the sample configuration in your config folder if you need more information about how the config file works.
 That's it. you should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
 ## Installation
-Place this app in your apps folder or get the stable8 branch via the shell
+Download and unpack this app into your apps folder or get it straight from GitHub via the shell.
+**It's important to make sure that the folder is called galleryplus.**
 
 ```
 $ git clone -b stable8 https://github.com/interfasys/galleryplus.git

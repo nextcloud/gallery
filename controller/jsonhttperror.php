@@ -38,10 +38,10 @@ trait JsonHttpError {
 		}
 
 		return new JSONResponse(
-			array(
+			[
 				'message' => $message,
 				'success' => false
-			),
+			],
 			$code
 		);
 	}

@@ -77,9 +77,7 @@ class PageController extends Controller {
 		$appName = $this->appName;
 
 		// Parameters sent to the template
-		$params = array(
-			'appName' => $appName
-		);
+		$params = ['appName' => $appName];
 
 		// Will render the page using the template found in templates/index.php
 		return new TemplateResponse($appName, 'index', $params);
@@ -102,12 +100,12 @@ class PageController extends Controller {
 		$albumName = $env['albumName'];
 
 		// Parameters sent to the template
-		$params = array(
+		$params = [
 			'appName'     => $appName,
 			'token'       => $token,
 			'displayName' => $displayName,
 			'albumName'   => $albumName
-		);
+		];
 
 		// Will render the page using the template found in templates/public.php
 		return new TemplateResponse($appName, 'public', $params, 'public');
@@ -127,11 +125,11 @@ class PageController extends Controller {
 	 */
 	public function errorPage($message, $code) {
 		$appName = $this->appName;
-		$params = array(
+		$params = [
 			'appName' => $appName,
 			'message' => $message,
 			'code'    => $code,
-		);
+		];
 
 		$errorTemplate = new TemplateResponse($appName, 'index', $params, 'guest');
 		$errorTemplate->setStatus($code);

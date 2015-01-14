@@ -1,3 +1,6 @@
+owncloud-galleryplus (2.0.0)
+* ownCloud 8 only
+
 owncloud-galleryplus (1.0.0)
 * First release using the AppFramework (@oparoz)
 * ownCloud 7 compatible (@oparoz)

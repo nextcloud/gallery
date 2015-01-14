@@ -95,10 +95,10 @@ abstract class Service {
 		$nodeInfo = false;
 		try {
 			$node = $folder->get($path);
-			$nodeInfo = array(
+			$nodeInfo = [
 				'fileid'      => $node->getId(),
 				'permissions' => $node->getPermissions()
-			);
+			];
 		} catch (NotFoundException $exception) {
 			$message = $exception->getMessage();
 			$code = Http::STATUS_NOT_FOUND;

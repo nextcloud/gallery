@@ -7,9 +7,9 @@
  */
 style(
 	$_['appName'],
-	array(
+	[
 		'404'
-	)
+	]
 );
 ?>
 <ul>

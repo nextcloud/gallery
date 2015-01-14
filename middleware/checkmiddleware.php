@@ -142,9 +142,7 @@ abstract class CheckMiddleware extends Middleware {
 
 		$this->logger->debug(
 			'[CheckException] Unauthorised Request params: {params}',
-			array(
-				'params' => $params
-			)
+			['params' => $params]
 		);
 
 		return new TemplateResponse($this->appName, 'authenticate', $params, 'guest');
@@ -161,10 +159,10 @@ abstract class CheckMiddleware extends Middleware {
 	private function redirectToErrorPage($message, $code) {
 		$url = $this->urlGenerator->linkToRoute(
 			$this->appName . '.page.error_page',
-			array(
+			[
 				'message' => $message,
 				'code'    => $code
-			)
+			]
 		);
 
 		return new RedirectResponse($url);
@@ -181,10 +179,10 @@ abstract class CheckMiddleware extends Middleware {
 	private function sendJsonResponse($message, $code) {
 		$this->logger->debug("[TokenCheckException] JSON response");
 
-		$jsonData = array(
+		$jsonData = [
 			'message' => $message,
 			'success' => false
-		);
+		];
 
 		return new JSONResponse($jsonData, $code);
 	}

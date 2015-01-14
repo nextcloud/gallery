@@ -35,11 +35,11 @@ class Normalizer {
 		if (!is_array($scalar)) {
 			return $scalar;
 		}
-		$decisionArray = array(
+		$decisionArray = [
 			$this->normalizeTraversable($data, $depth),
 			$this->normalizeObject($data, $depth),
 			$this->normalizeResource($data),
-		);
+		];
 
 		foreach ($decisionArray as $dataType) {
 			if ($dataType !== null) {
@@ -69,7 +69,7 @@ class Normalizer {
 			return $data;
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -99,7 +99,7 @@ class Normalizer {
 	private function normalizeTraversableElement($data, $depth) {
 		$maxArrayRecursion = 20;
 		$count = 1;
-		$normalized = array();
+		$normalized = [];
 		foreach ($data as $key => $value) {
 			if ($count++ >= $maxArrayRecursion) {
 				$normalized['...'] =
@@ -136,7 +136,7 @@ class Normalizer {
 			}
 
 			// Don't convert to json here as we would double encode
-			return array(sprintf("[object] (%s)", get_class($data)), $response);
+			return [sprintf("[object] (%s)", get_class($data)), $response];
 		}
 
 		return null;
@@ -150,12 +150,12 @@ class Normalizer {
 	 * @return string[]
 	 */
 	private function normalizeException(\Exception $exception) {
-		$data = array(
+		$data = [
 			'class'   => get_class($exception),
 			'message' => $exception->getMessage(),
 			'code'    => $exception->getCode(),
 			'file'    => $exception->getFile() . ':' . $exception->getLine(),
-		);
+		];
 		$trace = $exception->getTraceAsString();
 		$data['trace'][] = $trace;
 

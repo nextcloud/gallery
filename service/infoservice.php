@@ -46,7 +46,7 @@ class InfoService extends Service {
 	 *
 	 * @type string[]
 	 */
-	private static $baseMimeTypes = array(
+	private static $baseMimeTypes = [
 		'image/png',
 		'image/jpeg',
 		'image/gif',
@@ -57,17 +57,17 @@ class InfoService extends Service {
 		'application/x-photoshop',
 		'application/illustrator',
 		'application/postscript',
-	);
+	];
 	/**
 	 * These types are useful for files preview in the files app, but
 	 * not for the gallery side
 	 *
 	 * @type string[]
 	 */
-	private static $slideshowMimeTypes = array(
+	private static $slideshowMimeTypes = [
 		'application/font-sfnt',
 		'application/x-font',
-	);
+	];
 
 	/**
 	 * Constructor
@@ -99,7 +99,7 @@ class InfoService extends Service {
 	 *
 	 * @param string $albumpath
 	 *
-	 * @return int[]|false information about the given path
+	 * @return array<string,int>|false information about the given path
 	 */
 	public function getAlbumInfo($albumpath) {
 		$userFolder = $this->userFolder;
@@ -126,7 +126,7 @@ class InfoService extends Service {
 	 * @return string[] all supported media types
 	 */
 	public function getSupportedMimes($slideshow = true) {
-		$supportedMimes = array();
+		$supportedMimes = [];
 		$wantedMimes = self::$baseMimeTypes;
 
 		if ($slideshow) {
@@ -164,12 +164,7 @@ class InfoService extends Service {
 		$fromRootToFolder = $folderData['fromRootToFolder'];
 		$result = $this->fixImagePath($images, $fromRootToFolder);
 
-		/*$this->logger->debug(
-			"Images array: {images}",
-			array(
-				'images' => $result
-			)
-		);*/
+		/*$this->logger->debug("Images array: {images}",['images' => $result]);*/
 
 		return $result;
 	}
@@ -190,10 +185,10 @@ class InfoService extends Service {
 		$imagesFolder = $this->getResourceFromPath($folder, $pathRelativeToFolder);
 		$fromRootToFolder = $folderPath . $pathRelativeToFolder;
 
-		$folderData = array(
+		$folderData = [
 			'imagesFolder'     => $imagesFolder,
 			'fromRootToFolder' => $fromRootToFolder,
-		);
+		];
 
 		return $folderData;
 	}
@@ -206,7 +201,7 @@ class InfoService extends Service {
 	 * @return array
 	 */
 	private function searchByMime($imagesFolder) {
-		$images = array();
+		$images = [];
 		$mimes = $this->getSupportedMimes(false);
 
 		foreach ($mimes as $mime) {
@@ -236,12 +231,12 @@ class InfoService extends Service {
 	 * Example logger
 	 * $this->logger->debug(
 	 * "folderPath: {folderPath} pathRelativeToFolder: {pathRelativeToFolder}
-	 * imagePath: {imagePath} mime: {mime}", array(
+	 * imagePath: {imagePath} mime: {mime}", [
 	 * 'folderPath'           => $folderPath,
 	 * 'pathRelativeToFolder' => $pathRelativeToFolder,
 	 * 'imagePath'            => $imagePath,
 	 * 'mime'                 => $mimeType
-	 * )
+	 * ]
 	 * );
 	 *
 	 * @param array $images
@@ -250,7 +245,7 @@ class InfoService extends Service {
 	 * @return array
 	 */
 	private function fixImagePath($images, $fromRootToFolder) {
-		$result = array();
+		$result = [];
 		/** @type File $image */
 		foreach ($images as $image) {
 			$imagePath = $image->getPath();
@@ -261,10 +256,10 @@ class InfoService extends Service {
 			if (substr($fixedPath, 0, 9) === "_trashbin") {
 				continue;
 			}
-			$imageData = array(
+			$imageData = [
 				'path'     => $fixedPath,
 				'mimetype' => $mimeType
-			);
+			];
 			$result[] = $imageData;
 		}
 
