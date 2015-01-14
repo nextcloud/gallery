@@ -3,8 +3,6 @@ Media gallery for ownCloud which includes preview for all media types supported 
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**Important** Do not enable encryption when using master (13.01.2015). It's currently broken in core.
-
 ![Screenshot](http://i.imgur.com/fxIai8t.jpg)
 ## Featuring
 * Support for large selection of media type (depending on ownCloud setup)

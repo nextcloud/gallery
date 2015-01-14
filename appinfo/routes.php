@@ -44,9 +44,10 @@ $application->registerRoutes(
 				 ),
 				 // Landing page after password entry, for public galleries
 				 array(
-					 'name' => 'page#public_index_post',
+					 'name' => 'page#public_index',
 					 'url'  => '/s/{token}',
-					 'verb' => 'POST'
+					 'verb' => 'POST',
+					 'postfix' => 'post'
 				 ),
 				 // An error page which can handle different error codes
 				 array(
@@ -56,9 +57,10 @@ $application->registerRoutes(
 				 ),
 				 // The same page, but for POST
 				 array(
-					 'name' => 'page#error_page_post',
+					 'name' => 'page#error_page',
 					 'url'  => '/error',
-					 'verb' => 'POST'
+					 'verb' => 'POST',
+					 'postfix' => 'post'
 				 ),
 				 /**
 				  * Services

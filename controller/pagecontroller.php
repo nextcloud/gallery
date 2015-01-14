@@ -115,19 +115,6 @@ class PageController extends Controller {
 
 	/**
 	 * @PublicPage
-	 *
-	 * Redirects to the public gallery after authentication
-	 *
-	 * At this stage te CSRF token must have been defined
-	 *
-	 * @return TemplateResponse
-	 */
-	public function publicIndexPost() {
-		return $this->publicIndex();
-	}
-
-	/**
-	 * @PublicPage
 	 * @NoCSRFRequired
 	 * @Guest
 	 *
@@ -152,18 +139,4 @@ class PageController extends Controller {
 		return $errorTemplate;
 	}
 
-	/**
-	 * @PublicPage
-	 * @Guest
-	 *
-	 * Generates an error page based on the error code for POST requests
-	 *
-	 * @param string $message
-	 * @param int $code
-	 *
-	 * @return TemplateResponse
-	 */
-	public function errorPagePost($message, $code) {
-		return $this->errorPage($message, $code);
-	}
 }
