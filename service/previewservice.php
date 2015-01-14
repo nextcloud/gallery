@@ -160,7 +160,7 @@ class PreviewService extends Service {
 		$folder = $env['folder'];
 		$imagePathFromFolder = $env['relativePath'] . $image;
 		/** @type File $file */
-		$file = $this->getResource($folder, $imagePathFromFolder);
+		$file = $this->getResourceFromPath($folder, $imagePathFromFolder);
 		$this->previewManager->setupView($owner, $file, $imagePathFromFolder);
 		$previewRequired =
 			$this->previewManager->previewRequired($this->animatedPreview, $this->download);

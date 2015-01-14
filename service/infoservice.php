@@ -103,22 +103,17 @@ class InfoService extends Service {
 	 */
 	public function getAlbumInfo($albumpath) {
 		$userFolder = $this->userFolder;
-		$albumInfo = array();
+		$nodeInfo = array();
 
 		if ($userFolder !== null) {
-			$node = $this->getNode($userFolder, $albumpath);
-			$albumInfo = array(
-				'fileid'      => $node->getId(),
-				'permissions' => $node->getPermissions()
-			);
+			$nodeInfo = $this->getNodeInfo($userFolder, $albumpath);
 		} else {
 			$message = "Could not access the user's folder";
 			$code = Http::STATUS_NOT_FOUND;
 			$this->kaBoom($message, $code);
 		}
 
-		return $albumInfo;
-
+		return $nodeInfo;
 	}
 
 	/**
@@ -192,7 +187,7 @@ class InfoService extends Service {
 		$folder = $env['folder'];
 		$folderPath = $folder->getPath();
 		/** @type Folder $imagesFolder */
-		$imagesFolder = $this->getResource($folder, $pathRelativeToFolder);
+		$imagesFolder = $this->getResourceFromPath($folder, $pathRelativeToFolder);
 		$fromRootToFolder = $folderPath . $pathRelativeToFolder;
 
 		$folderData = array(

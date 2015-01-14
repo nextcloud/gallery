@@ -365,11 +365,8 @@ class EnvironmentService extends Service {
 	 */
 	private function getPath($origShareOwner, $fileSource) {
 		$folder = $this->serverContainer->getUserFolder($origShareOwner);
-		$resourcesArray = $folder->getById($fileSource);
-		$resource = $resourcesArray[0];
-		if ($resource === null) {
-			$this->kaBoom('Could not resolve linkItem', Http::STATUS_NOT_FOUND);
-		}
+		$resource = $this->getResourceFromId($folder, $fileSource);
+
 		$origSharePath = $resource->getPath();
 		$folderPath = $folder->getPath();
 		$origShareRelPath = str_replace($folderPath, '', $origSharePath);

@@ -127,9 +127,6 @@ class ThumbnailService {
 			}
 
 			$preview = $this->previewService->createThumbnails($image, $width, $height, !$square);
-
-			//$preview['data']['image'] = $image;
-
 			$this->eventSource->send('preview', $preview);
 		}
 	}

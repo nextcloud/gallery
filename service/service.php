@@ -48,6 +48,25 @@ abstract class Service {
 	}
 
 	/**
+	 * Returns the resource identified by the given ID
+	 *
+	 * @param Folder $folder
+	 * @param int $resourceId
+	 *
+	 * @return Node
+	 * @throws ServiceException
+	 */
+	protected function getResourceFromId($folder, $resourceId) {
+		$resourcesArray = $folder->getById($resourceId);
+		$resource = $resourcesArray[0];
+		if ($resource === null) {
+			$this->kaBoom('Could not resolve linkItem', Http::STATUS_NOT_FOUND);
+		}
+
+		return $resource;
+	}
+
+	/**
 	 * Returns the resource located at the given path
 	 *
 	 * The path starts from the user's files folder
@@ -58,13 +77,10 @@ abstract class Service {
 	 *
 	 * @return Node
 	 */
-	protected function getResource($folder, $path) {
+	protected function getResourceFromPath($folder, $path) {
+		$nodeInfo = $this->getNodeInfo($folder, $path);
 
-		$node = $this->getNode($folder, $path);
-		$resourceId = $node->getId();
-		$resourcesArray = $folder->getById($resourceId);
-
-		return $resourcesArray[0];
+		return $this->getResourceFromId($folder, $nodeInfo['fileid']);
 	}
 
 	/**
@@ -76,17 +92,21 @@ abstract class Service {
 	 *
 	 * @return Node
 	 */
-	protected function getNode($folder, $path) {
-		$node = false;
+	protected function getNodeInfo($folder, $path) {
+		$nodeInfo = false;
 		try {
 			$node = $folder->get($path);
+			$nodeInfo = array(
+				'fileid'      => $node->getId(),
+				'permissions' => $node->getPermissions()
+			);
 		} catch (NotFoundException $exception) {
 			$message = $exception->getMessage();
 			$code = Http::STATUS_NOT_FOUND;
 			$this->kaBoom($message, $code);
 		}
 
-		return $node;
+		return $nodeInfo;
 	}
 
 	/**
