@@ -125,7 +125,7 @@ class EnvironmentService extends Service {
 	 *
 	 * @param string $password optional password
 	 */
-	public function checkAuthorisation($password) {
+	public function checkAuthorisation($password = null) {
 		$passwordRequired = isset($this->linkItem['share_with']);
 
 		if ($passwordRequired) {
@@ -277,7 +277,7 @@ class EnvironmentService extends Service {
 	 *
 	 * @throws ServiceException
 	 */
-	private function authenticate($password = null) {
+	private function authenticate($password) {
 		$linkItem = $this->linkItem;
 
 		if ($linkItem['share_type'] == Share::SHARE_TYPE_LINK) {

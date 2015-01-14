@@ -80,7 +80,7 @@ class PreviewService extends Service {
 	 * @param int $maxY
 	 * @param bool $keepAspect
 	 *
-	 * @return string[] preview data
+	 * @return array<string,\OC_Image|string> preview data
 	 */
 	public function createThumbnails($image, $maxX, $maxY, $keepAspect) {
 		$this->animatedPreview = false;
@@ -152,7 +152,7 @@ class PreviewService extends Service {
 	 * @param int $maxX asked width for the preview
 	 * @param int $maxY asked height for the preview
 	 *
-	 * @return array preview data
+	 * @return array<string,\OC_Image|string> preview data
 	 */
 	private function createPreview($image, $maxX = 0, $maxY = 0) {
 		$env = $this->environmentService->getEnv();
