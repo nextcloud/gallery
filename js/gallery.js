@@ -320,12 +320,13 @@ $(document).ready(function () {
 			path: '/' + Gallery.currentAlbum
 		});
 	});
-	$('#download').click(function () {
-		window.location.href = OC.generateUrl('s/{token}/download?path={path}&files={files}', {
+	$('#download').click(function (e) {
+		e.preventDefault();
+		OC.redirect(OC.generateUrl('s/{token}/download?path={path}&files={files}', {
 			token: Gallery.token,
 			path: $('#content').data('albumname'),
 			files: Gallery.currentAlbum
-		});
+		}));
 	});
 
 	$(window).scroll(function () {
