@@ -1,13 +1,19 @@
 <?xml version="1.0"?>
 <info>
-    <id>galleryplus</id>
-    <name>Gallery+</name>
-    <description>Picture gallery for ownCloud which includes preview for all media types supported by the system
+	<id>galleryplus</id>
+	<name>Gallery+</name>
+	<description>Picture gallery for ownCloud which includes preview for all media types supported
+		by the system
 
-Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
+		Provides a dedicated view of all images in a grid, adds image viewing capabilities to the
+		files app and adds a gallery view to public links.
 	</description>
-    <licence>AGPL</licence>
-    <author>Olivier Paroz, Robin Appelman,</author>
-    <version>1.0.0</version>
-    <requiremin>7</requiremin>
+	<licence>AGPL</licence>
+	<author>Olivier Paroz, Robin Appelman,</author>
+	<version>1.1.0</version>
+	<namespace>Gallery</namespace>
+	<category>other</category>
+	<dependencies>
+		<owncloud min-version="8"/>
+	</dependencies>
 </info>

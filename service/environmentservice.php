@@ -101,12 +101,13 @@ class EnvironmentService extends Service {
 	 * Validates a token to make sure its linked to a valid resource
 	 *
 	 * Logic mostly duplicated from @see \OCA\Files_Sharing\Helper
+	 * @fixme setIncognitoMode in 8.1 https://github.com/owncloud/core/pull/12912
 	 *
 	 * @param string $token
 	 */
 	public function checkToken($token) {
-		// The user wants to access a resource anonymously since he's opened a public link
-		\OC_User::setIncognitoMode(true); // FIXME: Private API
+		// Allows a logged in user to access public links
+		\OC_User::setIncognitoMode(true);
 
 		$linkItem = Share::getShareByToken($token, false);
 

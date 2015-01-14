@@ -14,6 +14,8 @@
 
 namespace OCA\GalleryPlus\AppInfo;
 
+use OCP\Util;
+
 $app = new Application();
 $c = $app->getContainer();
 $appName = $c->query('AppName');
@@ -46,6 +48,11 @@ $navConfig = array(
 $c->query('ServerContainer')
   ->getNavigationManager()
   ->add($navConfig);
+
+/**
+ * Loading translations
+ */
+Util::addTranslations('galleryplus');
 
 /**
  * Scripts for the Files app
