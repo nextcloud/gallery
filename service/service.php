@@ -58,12 +58,11 @@ abstract class Service {
 	 */
 	protected function getResourceFromId($folder, $resourceId) {
 		$resourcesArray = $folder->getById($resourceId);
-		$resource = $resourcesArray[0];
-		if ($resource === null) {
+		if ($resourcesArray[0] === null) {
 			$this->kaBoom('Could not resolve linkItem', Http::STATUS_NOT_FOUND);
 		}
 
-		return $resource;
+		return $resourcesArray[0];
 	}
 
 	/**
@@ -90,7 +89,7 @@ abstract class Service {
 	 * @param Folder $folder
 	 * @param string $path
 	 *
-	 * @return Node
+	 * @return int[]|false
 	 */
 	protected function getNodeInfo($folder, $path) {
 		$nodeInfo = false;
