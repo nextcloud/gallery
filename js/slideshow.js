@@ -378,7 +378,7 @@ SlideShow.prototype.togglePlay = function () {
 };
 
 SlideShow.prototype.getImageDownload = function () {
-	window.location = this.images[this.current].downloadUrl;
+	OC.redirect(this.images[this.current].downloadUrl);
 	return false;
 };
 
