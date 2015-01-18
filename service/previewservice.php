@@ -125,7 +125,9 @@ class PreviewService extends Service {
 	 * @return array <string,\OC_Image|string> preview data
 	 * @throws NotFoundServiceException
 	 */
-	public function createPreview($image, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false) {
+	public function createPreview(
+		$image, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
+	) {
 		$file = null;
 		try {
 			/** @type File $file */
