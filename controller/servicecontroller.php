@@ -188,7 +188,11 @@ class ServiceController extends Controller {
 		$imagesArray = explode(';', $images);
 
 		foreach ($imagesArray as $image) {
-			$thumbnail = $this->getThumbnail($image, $square, $scale);
+			try {
+				$thumbnail = $this->getThumbnail($image, $square, $scale);
+			} catch (ServiceException $exception) {
+				return $this->error($exception);
+			}
 			$this->eventSource->send('preview', $thumbnail);
 		}
 		$this->eventSource->close();
@@ -257,19 +261,16 @@ class ServiceController extends Controller {
 	 * @return array|Http\JSONResponse
 	 */
 	private function getThumbnail($image, $square, $scale) {
-		try {
-			$previewRequired =
-				$this->previewService->isPreviewRequired($image, $animatedPreview = false);
-			if ($previewRequired) {
-				$thumbnail = $this->thumbnailService->createThumbnail($image, $square, $scale);
-			} else {
-				$thumbnail = $this->downloadService->downloadFile($image, $base64Encode = true);
-			}
-
-			return $thumbnail;
-		} catch (ServiceException $exception) {
-			return $this->error($exception);
+		$previewRequired =
+			$this->previewService->isPreviewRequired($image, $animatedPreview = false);
+		if ($previewRequired) {
+			$thumbnail = $this->thumbnailService->createThumbnail($image, $square, $scale);
+		} else {
+			$thumbnail = $this->downloadService->downloadFile($image, $base64Encode = true);
 		}
+
+		return $thumbnail;
+
 	}
 
 }
