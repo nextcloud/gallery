@@ -27,28 +27,6 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class ThumbnailService extends PreviewService {
 
 	/**
-	 * Constructor
-	 *
-	 * @param string $appName
-	 * @param Environment $environment
-	 * @param Preview $previewManager
-	 * @param SmarterLogger $logger
-	 */
-	public function __construct(
-		$appName,
-		Environment $environment,
-		Preview $previewManager,
-		SmarterLogger $logger
-	) {
-		parent::__construct(
-			$appName,
-			$environment,
-			$previewManager,
-			$logger
-		);
-	}
-
-	/**
 	 * Creates thumbnails of asked dimensions and aspect
 	 *
 	 *    * Album thumbnails need to be 200x200 and some will be resized by the
@@ -70,7 +48,7 @@ class ThumbnailService extends PreviewService {
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return array
+	 * @return array<string,string>
 	 */
 	public function createThumbnail($image, $square, $scale) {
 		$height = 200 * $scale;

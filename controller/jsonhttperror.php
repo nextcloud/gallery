@@ -39,7 +39,9 @@ trait JsonHttpError {
 		$message = $exception->getMessage();
 		$code = Http::STATUS_INTERNAL_SERVER_ERROR;
 
-		if ($exception instanceof NotFoundServiceException || $exception instanceof NotFoundEnvException) {
+		if ($exception instanceof NotFoundServiceException
+			|| $exception instanceof NotFoundEnvException
+		) {
 			$code = Http::STATUS_NOT_FOUND;
 		}
 

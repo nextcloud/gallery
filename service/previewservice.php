@@ -131,7 +131,7 @@ class PreviewService extends Service {
 		} catch (NotFoundEnvException $exception) {
 			$this->logAndThrowNotFound($exception->getMessage());
 		}
-		$userId = $this->environment->getUserID();
+		$userId = $this->environment->getUserId();
 		$imagePathFromFolder = $this->environment->getImagePathFromFolder($image);
 		$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
 

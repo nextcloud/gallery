@@ -157,7 +157,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @param string $token
 	 *
-	 * @return array|bool
+	 * @return array
 	 *
 	 * @throws CheckException
 	 */

@@ -189,7 +189,7 @@ class Environment {
 	 *
 	 * @return string
 	 */
-	public function getUserID() {
+	public function getUserId() {
 		return $this->userId;
 	}
 

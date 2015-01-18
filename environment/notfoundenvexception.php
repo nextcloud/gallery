@@ -15,12 +15,4 @@ namespace OCA\GalleryPlus\Environment;
 /**
  * Thrown when the service cannot reply to a request
  */
-class NotFoundEnvException extends EnvironmentException {
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $msg the message contained in the exception
-	 */
-	public function __construct($msg) {}
-}
+class NotFoundEnvException extends EnvironmentException {}

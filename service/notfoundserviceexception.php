@@ -15,14 +15,4 @@ namespace OCA\GalleryPlus\Service;
 /**
  * Thrown when the service cannot reply to a request
  */
-class NotFoundServiceException extends ServiceException {
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $msg the message contained in the exception
-	 */
-	public function __construct($msg) {
-		parent::__construct($msg);
-	}
-}
+class NotFoundServiceException extends ServiceException {}

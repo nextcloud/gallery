@@ -112,7 +112,7 @@ class ServiceController extends Controller {
 	 *
 	 * @param string $albumpath
 	 *
-	 * @return array<string,int>|Http\JSONResponse
+	 * @return false|array<string,int>|Http\JSONResponse
 	 */
 	public function getAlbumInfo($albumpath) {
 		try {
@@ -254,7 +254,7 @@ class ServiceController extends Controller {
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return array
+	 * @return array|Http\JSONResponse
 	 */
 	private function getThumbnail($image, $square, $scale) {
 		try {
