@@ -120,10 +120,12 @@ class PreviewService extends Service {
 	 * @param int $maxX asked width for the preview
 	 * @param int $maxY asked height for the preview
 	 * @param bool $keepAspect
+	 * @param bool $base64Encode
 	 *
 	 * @return array <string,\OC_Image|string> preview data
+	 * @throws NotFoundServiceException
 	 */
-	public function createPreview($image, $maxX = 0, $maxY = 0, $keepAspect = true) {
+	public function createPreview($image, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode) {
 		$file = null;
 		try {
 			/** @type File $file */
@@ -136,13 +138,21 @@ class PreviewService extends Service {
 		$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
 
 		$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
-		$preview['path'] = $image;
-		$preview['status'] = Service::STATUS_OK;
-		if (!$this->previewManager->isPreviewValid()) {
-			$preview['status'] = Service::STATUS_UNSUPPORTED_MEDIA_TYPE;
+		if ($base64Encode) {
+			$preview['preview'] = $this->encode($preview['preview']);
 		}
+		$preview['path'] = $image;
 
 		return $preview;
+	}
+
+	/**
+	 * Returns true if the preview was successfully generated
+	 *
+	 * @return bool
+	 */
+	public function isPreviewValid() {
+		return $this->previewManager->isPreviewValid();
 	}
 
 	/**

@@ -21,12 +21,6 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
  */
 abstract class Service {
 
-	const STATUS_OK = 200;
-	const STATUS_NOT_FOUND = 404;
-	const STATUS_UNSUPPORTED_MEDIA_TYPE = 415;
-	const STATUS_UNPROCESSABLE_ENTITY = 422;
-	const STATUS_INTERNAL_SERVER_ERROR = 500;
-
 	/**
 	 * @type string
 	 */

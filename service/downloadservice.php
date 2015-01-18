@@ -69,8 +69,7 @@ class DownloadService extends Service {
 		$download = [
 			'path'     => $image,
 			'preview'  => $file->getContent(),
-			'mimetype' => $file->getMimeType(),
-			'status'   => Service::STATUS_OK
+			'mimetype' => $file->getMimeType()
 		];
 
 		if ($base64Encode) {

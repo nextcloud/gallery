@@ -188,11 +188,7 @@ class ServiceController extends Controller {
 		$imagesArray = explode(';', $images);
 
 		foreach ($imagesArray as $image) {
-			try {
-				$thumbnail = $this->getThumbnail($image, $square, $scale);
-			} catch (ServiceException $exception) {
-				return $this->error($exception);
-			}
+			$thumbnail = $this->getThumbnail($image, $square, $scale);
 			$this->eventSource->send('preview', $thumbnail);
 		}
 		$this->eventSource->close();
@@ -216,15 +212,9 @@ class ServiceController extends Controller {
 	 */
 	public function showPreview($file, $x, $y) {
 		try {
-			$animatedPreview = true;
-			$previewRequired = $this->previewService->isPreviewRequired($file, $animatedPreview);
-			if ($previewRequired) {
-				$preview = $this->previewService->createPreview($file, $x, $y);
-			} else {
-				$preview = $this->downloadService->downloadFile($file);
-			}
+			$preview = $this->getPreview($file, $x, $y);
 
-			return new ImageResponse($preview, $preview['status']);
+			return new ImageResponse($preview['data'], $preview['status']);
 		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
@@ -243,7 +233,7 @@ class ServiceController extends Controller {
 		try {
 			$download = $this->downloadService->downloadFile($file);
 
-			return new ImageResponse($download, $download['status']);
+			return new ImageResponse($download);
 		} catch (EnvironmentException $exception) {
 			return $this->error($exception);
 		}
@@ -253,6 +243,7 @@ class ServiceController extends Controller {
 	 * Retrieves the thumbnail to send back to the browser
 	 *
 	 * The thumbnail is either a resized preview of the file or the original file
+	 * Thumbnails are base64encoded before getting sent back
 	 *
 	 * @param string $image
 	 * @param bool $square
@@ -261,16 +252,65 @@ class ServiceController extends Controller {
 	 * @return array|Http\JSONResponse
 	 */
 	private function getThumbnail($image, $square, $scale) {
-		$previewRequired =
-			$this->previewService->isPreviewRequired($image, $animatedPreview = false);
-		if ($previewRequired) {
-			$thumbnail = $this->thumbnailService->createThumbnail($image, $square, $scale);
-		} else {
-			$thumbnail = $this->downloadService->downloadFile($image, $base64Encode = true);
+		$thumbSpecs = $this->thumbnailService->getThumbnailSpecs($square, $scale);
+		try {
+			$preview = $this->getPreview(
+				$image, $thumbSpecs['width'], $thumbSpecs['height'],
+				$thumbSpecs['aspect'], $thumbSpecs['animatedPreview'], $thumbSpecs['base64Encode']
+			);
+		} catch (ServiceException $exception) {
+			return $this->error($exception);
 		}
+		$thumbnail = $preview['data'];
+		$thumbnail['status'] = $preview['status'];
 
 		return $thumbnail;
+	}
 
+	/**
+	 * Returns either a generated preview (or the mime-icon when the preview generation fails)
+	 * or the file as-is
+	 *
+	 * Sample logger
+	 * We can't just send the preview array as it can contain quite a large data stream
+	 * $this->logger->debug("[Batch] THUMBNAIL NAME : {image} / PATH : {path} /
+	 * MIME : {mimetype} / DATA : {preview}", [
+	 *                'image'    => $preview['data']['image'],
+	 *                'path'     => $preview['data']['path'],
+	 *                'mimetype' => $preview['data']['mimetype'],
+	 *                'preview'  => substr($preview['data']['preview'], 0, 20),
+	 *              ]
+	 *            );
+	 *
+	 * @param string $image
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $keepAspect
+	 * @param bool $animatedPreview
+	 * @param bool $base64Encode
+	 *
+	 * @return mixed
+	 */
+	private function getPreview(
+		$image, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
+	) {
+		$status = Http::STATUS_OK;
+		$previewRequired = $this->previewService->isPreviewRequired($image, $animatedPreview);
+		if ($previewRequired) {
+			$preview = $this->previewService->createPreview(
+				$image, $width, $height, $keepAspect, $base64Encode
+			);
+			if (!$this->previewService->isPreviewValid()) {
+				$status = Http::STATUS_UNSUPPORTED_MEDIA_TYPE;
+			}
+		} else {
+			$preview = $this->downloadService->downloadFile($image, $base64Encode);
+		}
+
+		return [
+			'data'   => $preview,
+			'status' => $status
+		];
 	}
 
 }

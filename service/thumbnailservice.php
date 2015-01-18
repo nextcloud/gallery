@@ -24,43 +24,44 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
  *
  * @package OCA\GalleryPlus\Service
  */
-class ThumbnailService extends PreviewService {
+class ThumbnailService {
 
 	/**
-	 * Creates thumbnails of asked dimensions and aspect
+	 * @type bool
+	 */
+	private $animatedPreview = false;
+	/**
+	 * @type bool
+	 */
+	private $base64Encode = true;
+
+	/**
+	 * Returns thumbnail specs
 	 *
 	 *    * Album thumbnails need to be 200x200 and some will be resized by the
 	 *      browser to 200x100 or 100x100.
 	 *    * Standard thumbnails are 400x200.
 	 *
-	 * Sample logger
-	 * We can't just send previewData as it can be quite a large stream
-	 * $this->logger->debug("[Batch] THUMBNAIL NAME : {image} / PATH : {path} /
-	 * MIME : {mimetype} / DATA : {preview}", [
-	 *                'image'    => $preview['data']['image'],
-	 *                'path'     => $preview['data']['path'],
-	 *                'mimetype' => $preview['data']['mimetype'],
-	 *                'preview'  => substr($preview['data']['preview'], 0, 20),
-	 *              ]
-	 *            );
-	 *
-	 * @param string $image
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return array<string,string>
+	 * @return array
 	 */
-	public function createThumbnail($image, $square, $scale) {
+	public function getThumbnailSpecs($square, $scale) {
 		$height = 200 * $scale;
 		if ($square) {
 			$width = $height;
 		} else {
 			$width = 2 * $height;
 		}
-		$preview = $this->createPreview($image, $width, $height, !$square);
-		$preview['preview'] = $this->encode($preview['preview']);
 
-		return $preview;
+		$thumbnail['width'] = $width;
+		$thumbnail['height'] = $height;
+		$thumbnail['aspect'] = !$square;
+		$thumbnail['animatedPreview'] = $this->animatedPreview;
+		$thumbnail['base64Encode'] = $this->base64Encode;
+
+		return $thumbnail;
 	}
 
 }
