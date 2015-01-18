@@ -90,6 +90,19 @@ abstract class CheckMiddleware extends Middleware {
 	}
 
 	/**
+	 * Logs the error and raises an exception
+	 *
+	 * @param string $message
+	 * @param int $code
+	 *
+	 * @throws CheckException
+	 */
+	protected function logAndThrow($message, $code) {
+		$this->logger->error($message . ' (' . $code . ')');
+		throw new CheckException($message, $code);
+	}
+
+	/**
 	 * Decides which type of response to send
 	 *
 	 * @param string $message

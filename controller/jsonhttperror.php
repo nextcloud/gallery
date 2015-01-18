@@ -14,7 +14,13 @@
 
 namespace OCA\GalleryPlus\Controller;
 
+use Exception;
+
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
+
+use OCA\GalleryPlus\Environment\NotFoundEnvException;
+use OCA\GalleryPlus\Service\NotFoundServiceException;
 
 /**
  * Our classes extend both Controller and ApiController, so we need to use
@@ -27,14 +33,14 @@ trait JsonHttpError {
 	/**
 	 * @param \Exception $exception the message that is returned taken from the exception
 	 *
-	 * @param int $code the http error code
-	 *
 	 * @return JSONResponse
 	 */
-	public function error(\Exception $exception, $code = 0) {
+	public function error(Exception $exception) {
 		$message = $exception->getMessage();
-		if ($code === 0) {
-			$code = $exception->getCode();
+		$code = Http::STATUS_INTERNAL_SERVER_ERROR;
+
+		if ($exception instanceof NotFoundServiceException || $exception instanceof NotFoundEnvException) {
+			$code = Http::STATUS_NOT_FOUND;
 		}
 
 		return new JSONResponse(

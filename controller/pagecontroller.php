@@ -20,7 +20,7 @@ use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 
-use OCA\GalleryPlus\Service\EnvironmentService;
+use OCA\GalleryPlus\Environment\Environment;
 
 /**
  * Generates templates for the landing page from within ownCloud, the public
@@ -31,9 +31,9 @@ use OCA\GalleryPlus\Service\EnvironmentService;
 class PageController extends Controller {
 
 	/**
-	 * @type EnvironmentService
+	 * @type Environment
 	 */
-	private $environmentService;
+	private $environment;
 	/**
 	 * @type IURLGenerator
 	 */
@@ -44,18 +44,18 @@ class PageController extends Controller {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
-	 * @param EnvironmentService $environmentService
+	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
-		EnvironmentService $environmentService,
+		Environment $environment,
 		IURLGenerator $urlGenerator
 	) {
 		parent::__construct($appName, $request);
 
-		$this->environmentService = $environmentService;
+		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
 	}
 
@@ -94,10 +94,8 @@ class PageController extends Controller {
 	public function publicIndex() {
 		$appName = $this->appName;
 		$token = $this->request->getParam('token');
-
-		$env = $this->environmentService->getEnv();
-		$displayName = $env['originalOwnerDisplayName'];
-		$albumName = $env['albumName'];
+		$displayName = $this->environment->getDisplayName();
+		$albumName = $this->environment->getSharedFolderName();
 
 		// Parameters sent to the template
 		$params = [

@@ -15,16 +15,15 @@ namespace OCA\GalleryPlus\Preview;
 use OCP\IConfig;
 use OCP\Image;
 use OCP\Files\File;
+use OCP\IPreview;
 use OCP\Template;
-
-use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Generates previews
  *
- * @todo On OC8.1, replace \OC\Preview with OC::$server->getPreviewManager()
+ * @todo On OC8.1, replace \OC\Preview with IPreview
  *
  * @package OCA\GalleryPlus\Preview
  */
@@ -35,13 +34,17 @@ class Preview {
 	 */
 	private $dataDir;
 	/**
+	 * @type mixed
+	 */
+	private $previewManager;
+	/**
 	 * @type SmarterLogger
 	 */
 	private $logger;
 	/**
 	 * @type string
 	 */
-	private $owner;
+	private $userId;
 	/**
 	 * @type \OC\Preview
 	 */
@@ -54,131 +57,60 @@ class Preview {
 	 * @type int[]
 	 */
 	private $dims;
-
+	/**
+	 * @type bool
+	 */
+	private $success = true;
 
 	/**
 	 * Constructor
 	 *
 	 * @param IConfig $config
+	 * @param IPreview $previewManager
 	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		IConfig $config,
+		IPreview $previewManager,
 		SmarterLogger $logger
 	) {
 		$this->dataDir = $config->getSystemValue('datadirectory');
+		$this->previewManager = $previewManager;
 		$this->logger = $logger;
 	}
 
 	/**
-	 * Initialises the object
+	 * Returns true if the passed mime type is supported
+	 *
+	 * @param string $mimeType
+	 *
+	 * @return boolean
+	 */
+	public function isMimeSupported($mimeType = '*') {
+		return $this->previewManager->isMimeSupported($mimeType);
+	}
+
+	/**
+	 * Initialises the view which will be used to access files and generate previews
 	 *
 	 * @fixme Private API, but can't use the PreviewManager yet as it's incomplete
 	 *
-	 * @param string $owner
+	 * @param string $userId
 	 * @param File $file
 	 * @param string $imagePathFromFolder
 	 */
-	public function setupView($owner, $file, $imagePathFromFolder) {
-		$this->owner = $owner;
+	public function setupView($userId, $file, $imagePathFromFolder) {
+		$this->userId = $userId;
 		$this->file = $file;
-		$this->preview = new \OC\Preview($owner, 'files', $imagePathFromFolder);
-	}
-
-	/**
-	 * Decides if we should download the file instead of generating a preview
-	 *
-	 * @param bool $animatedPreview
-	 * @param bool $download
-	 *
-	 * @return bool
-	 */
-	public function previewRequired($animatedPreview, $download) {
-		$mime = $this->file->getMimeType();
-
-		if ($mime === 'image/svg+xml') {
-			return $this->isSvgPreviewRequired();
-		}
-		if ($mime === 'image/gif') {
-			return $this->isGifPreviewRequired($animatedPreview);
-		}
-
-		return !$download;
-	}
-
-	/**
-	 * Decides if we should download the SVG or generate a preview
-	 *
-	 * SVGs are downloaded if the SVG converter is disabled
-	 * Files of any media type are downloaded if requested by the client
-	 *
-	 * @return bool
-	 */
-	private function isSvgPreviewRequired() {
-		if (!$this->preview->isMimeSupported('image/svg+xml')) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Decides if we should download the GIF or generate a preview
-	 *
-	 * GIFs are downloaded if they're animated and we want to show
-	 * animations
-	 *
-	 * @param bool $animatedPreview
-	 *
-	 * @return bool
-	 */
-	private function isGifPreviewRequired($animatedPreview) {
-		$animatedGif = $this->isGifAnimated();
-
-		if ($animatedPreview && $animatedGif) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Tests if a GIF is animated
-	 *
-	 * An animated gif contains multiple "frames", with each frame having a
-	 * header made up of:
-	 *    * a static 4-byte sequence (\x00\x21\xF9\x04)
-	 *    * 4 variable bytes
-	 *    * a static 2-byte sequence (\x00\x2C) (Photoshop uses \x00\x21)
-	 *
-	 * We read through the file until we reach the end of the file, or we've
-	 * found at least 2 frame headers
-	 *
-	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
-	 *
-	 * @return bool
-	 */
-	private function isGifAnimated() {
-		$fileHandle = $this->file->fopen('rb');
-		$count = 0;
-		while (!feof($fileHandle) && $count < 2) {
-			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-			$count += preg_match_all(
-				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-			);
-		}
-
-		fclose($fileHandle);
-
-		return $count > 1;
+		$this->preview = new \OC\Preview($userId, 'files', $imagePathFromFolder);
 	}
 
 	/**
 	 * Returns a preview based on OC's preview class and our custom methods
 	 *
-	 * We don't throw an exception when the preview generator fails,
-	 * instead, until the Preview class is fixed, we send the mime
-	 * icon along with a 415 error code.
+	 * We check that the preview returned by the Preview class can be used by
+	 * the browser. If not, we send the mime icon and change the status code so
+	 * that the client knows that the process has failed.
 	 *
 	 * @fixme setKeepAspect is missing from public interface.
 	 *     https://github.com/owncloud/core/issues/12772
@@ -196,17 +128,24 @@ class Preview {
 			if ($maxX === 200) { // Only fixing the square thumbnails
 				$previewData = $this->previewValidator();
 			}
-			$perfectPreview = ['preview' => $previewData, 'status' => Http::STATUS_OK];
+			$perfectPreview = ['preview' => $previewData];
 		} else {
 			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
-			$perfectPreview = [
-				'preview' => $this->getMimeIcon(),
-				'status'  => Http::STATUS_UNSUPPORTED_MEDIA_TYPE
-			];
+			$perfectPreview = ['preview' => $this->getMimeIcon()];
+			$this->success = false;
 		}
 		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
 		return $perfectPreview;
+	}
+
+	/**
+	 * Returns true if the preview was successfully generated
+	 *
+	 * @return bool
+	 */
+	public function isPreviewValid() {
+		return $this->success;
 	}
 
 	/**
@@ -217,8 +156,6 @@ class Preview {
 	 * @param bool $keepAspect
 	 *
 	 * @return \OC_Image
-	 *
-	 * @throws \Exception
 	 */
 	private function getPreviewFromCore($keepAspect) {
 		$this->logger->debug("[PreviewService] Generating a new preview");
@@ -228,6 +165,8 @@ class Preview {
 		$this->preview->setScalingUp(false);
 		$this->preview->setKeepAspect($keepAspect);
 
+		//$this->logger->debug("[PreviewService] preview {preview}", ['preview' => $this->preview]);
+
 		return $this->preview->getPreview();
 	}
 
@@ -235,9 +174,9 @@ class Preview {
 	 * Makes sure we return previews of the asked dimensions and fix the cache
 	 * if necessary
 	 *
-	 * The Preview class of OC7 sometimes return previews which are either
-	 * wider or smaller than the asked dimensions. This happens when one of the
-	 * original dimension is smaller than what is asked for
+	 * The Preview class sometimes return previews which are either wider or
+	 * smaller than the asked dimensions. This happens when one of the original
+	 * dimension is smaller than what is asked for
 	 *
 	 * @return resource
 	 */
@@ -327,7 +266,7 @@ class Preview {
 	 * @return mixed
 	 */
 	private function fixPreviewCache($fixedPreview) {
-		$owner = $this->owner;
+		$owner = $this->userId;
 		$file = $this->file;
 		$preview = $this->preview;
 		$fixedPreviewObject = new Image($fixedPreview);
@@ -360,7 +299,7 @@ class Preview {
 		$iconData = new Image();
 
 		$image = $this->dataDir . '/../' . Template::mimetype_icon($mime);
-		// Alternative
+		// Alternative which does not exist yet
 		//$image = $this->serverRoot() . Template::mimetype_icon($mime);
 
 		$iconData->loadFromFile($image);

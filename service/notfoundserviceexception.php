@@ -12,12 +12,10 @@
 
 namespace OCA\GalleryPlus\Service;
 
-use Exception;
-
 /**
  * Thrown when the service cannot reply to a request
  */
-class ServiceException extends Exception {
+class NotFoundServiceException extends ServiceException {
 
 	/**
 	 * Constructor

@@ -6,19 +6,16 @@
  * later. See the COPYING file.
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
- * @author Robin Appelman <icewind@owncloud.com>
  *
  * @copyright Olivier Paroz 2014-2015
- * @copyright Robin Appelman 2012-2015
  */
 
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\File;
 
-use OCP\AppFramework\Http;
-
-use OCA\GalleryPlus\Http\ImageResponse;
+use OCA\GalleryPlus\Environment\Environment;
+use OCA\GalleryPlus\Environment\NotFoundEnvException;
 use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
@@ -29,112 +26,83 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
  */
 class PreviewService extends Service {
 
+	use Base64Encode;
+
 	/**
-	 * @type EnvironmentService
+	 * @type Environment
 	 */
-	private $environmentService;
+	private $environment;
 	/**
 	 * @type Preview
 	 */
 	private $previewManager;
-	/**
-	 * @type bool
-	 */
-	private $animatedPreview = true;
-	/**
-	 * @type bool
-	 */
-	private $keepAspect = true;
-	/**
-	 * @type bool
-	 */
-	private $base64Encode = false;
-	/**
-	 * @type bool
-	 */
-	private $download = false;
 
 	/**
 	 * Constructor
 	 *
 	 * @param string $appName
-	 * @param EnvironmentService $environmentService
-	 * @param SmarterLogger $logger
+	 * @param Environment $environment
 	 * @param Preview $previewManager
+	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
-		EnvironmentService $environmentService,
-		SmarterLogger $logger,
-		Preview $previewManager
+		Environment $environment,
+		Preview $previewManager,
+		SmarterLogger $logger
 	) {
 		parent::__construct($appName, $logger);
 
-		$this->environmentService = $environmentService;
+		$this->environment = $environment;
 		$this->previewManager = $previewManager;
 	}
 
 	/**
-	 * @param string $image
-	 * @param int $maxX
-	 * @param int $maxY
-	 * @param bool $keepAspect
+	 * Returns true if the passed mime type is supported
 	 *
-	 * @return array<string,\OC_Image|string> preview data
+	 * @param string $mimeType
+	 *
+	 * @return boolean
 	 */
-	public function createThumbnails($image, $maxX, $maxY, $keepAspect) {
-		$this->animatedPreview = false;
-		$this->base64Encode = true;
-		$this->keepAspect = $keepAspect;
-
-		return $this->createPreview($image, $maxX, $maxY);
-	}
-
-
-	/**
-	 * Sends either a large preview of the requested file or the original file
-	 * itself
-	 *
-	 * @param string $image
-	 * @param int $maxX
-	 * @param int $maxY
-	 *
-	 * @return ImageResponse
-	 */
-	public function showPreview($image, $maxX, $maxY) {
-		$preview = $this->createPreview($image, $maxX, $maxY);
-
-		return new ImageResponse($preview, $preview['status']);
+	public function isMimeSupported($mimeType = '*') {
+		return $this->previewManager->isMimeSupported($mimeType);
 	}
 
 	/**
-	 * Downloads the requested file
+	 * Decides if we should download the file instead of generating a preview
 	 *
 	 * @param string $image
+	 * @param bool $animatedPreview
 	 *
-	 * @return ImageResponse
+	 * @return bool
 	 */
-	public function downloadPreview($image) {
-		$this->download = true;
+	public function isPreviewRequired($image, $animatedPreview) {
+		$file = null;
+		try {
+			/** @type File $file */
+			$file = $this->environment->getResourceFromPath($image);
 
-		return $this->showPreview($image, null, null);
+		} catch (NotFoundEnvException $exception) {
+			$this->logAndThrowNotFound($exception->getMessage());
+		}
+		$mime = $file->getMimeType();
+		if ($mime === 'image/svg+xml') {
+			return $this->isSvgPreviewRequired();
+		}
+		if ($mime === 'image/gif') {
+			return $this->isGifPreviewRequired($file, $animatedPreview);
+		}
+
+		return true;
 	}
 
 	/**
-	 * Creates an array containing everything needed to render a preview in the
-	 * browser
+	 * Returns an array containing everything needed by the client to be able to display a preview
 	 *
-	 * If the browser can use the file as-is or if we're asked to send it
-	 * as-is, then we simply let the browser download the file, straight from
-	 * Files
-	 *
-	 * Some files are base64 encoded. Explicitly for files which are downloaded
-	 * (cached Thumbnails, SVG, GIFs) and via __toStrings for the previews
-	 * which are instances of \OC_Image
-	 *
-	 * We check that the preview returned by the Preview class can be used by
-	 * the browser. If not, we send the mime icon and change the status code so
-	 * that the client knows that the process failed
+	 *    * path: the given path to the file
+	 *    * mimetype: the file's media type
+	 *    * preview: the preview's content
+	 *    * status: a code indicating whether the conversion process was successful or not
 	 *
 	 * Example logger
 	 * $this->logger->debug(
@@ -151,69 +119,100 @@ class PreviewService extends Service {
 	 * @param string $image path to the image, relative to the user folder
 	 * @param int $maxX asked width for the preview
 	 * @param int $maxY asked height for the preview
+	 * @param bool $keepAspect
 	 *
-	 * @return array<string,\OC_Image|string> preview data
+	 * @return array <string,\OC_Image|string> preview data
 	 */
-	private function createPreview($image, $maxX = 0, $maxY = 0) {
-		$env = $this->environmentService->getEnv();
-		$owner = $env['owner'];
-		$folder = $env['folder'];
-		$imagePathFromFolder = $env['relativePath'] . $image;
-		/** @type File $file */
-		$file = $this->getResourceFromPath($folder, $imagePathFromFolder);
-		$this->previewManager->setupView($owner, $file, $imagePathFromFolder);
-		$previewRequired =
-			$this->previewManager->previewRequired($this->animatedPreview, $this->download);
-
-		if ($previewRequired) {
-			$perfectPreview =
-				$this->previewManager->preparePreview($maxX, $maxY, $this->keepAspect);
-		} else {
-			$perfectPreview = $this->prepareDownload($file, $image);
+	public function createPreview($image, $maxX = 0, $maxY = 0, $keepAspect = true) {
+		$file = null;
+		try {
+			/** @type File $file */
+			$file = $this->environment->getResourceFromPath($image);
+		} catch (NotFoundEnvException $exception) {
+			$this->logAndThrowNotFound($exception->getMessage());
 		}
-		$perfectPreview['preview'] = $this->base64EncodeCheck($perfectPreview['preview']);
-		$perfectPreview['path'] = $image;
+		$userId = $this->environment->getUserID();
+		$imagePathFromFolder = $this->environment->getImagePathFromFolder($image);
+		$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
 
-		return $perfectPreview;
+		$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
+		$preview['path'] = $image;
+		$preview['status'] = Service::STATUS_OK;
+		if (!$this->previewManager->isPreviewValid()) {
+			$preview['status'] = Service::STATUS_UNSUPPORTED_MEDIA_TYPE;
+		}
+
+		return $preview;
 	}
 
 	/**
-	 * Returns the data needed to make a file available for download
+	 * Decides if we should download the SVG or generate a preview
+	 *
+	 * SVGs are downloaded if the SVG converter is disabled
+	 * Files of any media type are downloaded if requested by the client
+	 *
+	 * @return bool
+	 */
+	private function isSvgPreviewRequired() {
+		if (!$this->isMimeSupported('image/svg+xml')) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Decides if we should download the GIF or generate a preview
+	 *
+	 * GIFs are downloaded if they're animated and we want to show
+	 * animations
 	 *
 	 * @param File $file
-	 * @param string $image
+	 * @param bool $animatedPreview
 	 *
-	 * @return array
+	 * @return bool
 	 */
-	private function prepareDownload($file, $image) {
-		$this->logger->debug("[PreviewService] Downloading file {file} as-is", ['file' => $image]);
+	private function isGifPreviewRequired($file, $animatedPreview) {
+		$animatedGif = $this->isGifAnimated($file);
 
-		return [
-			'preview'  => $file->getContent(),
-			'mimetype' => $file->getMimeType(),
-			'status'   => Http::STATUS_OK
-		];
+		if ($animatedPreview && $animatedGif) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
-	 * Returns base64 encoded data of a preview
+	 * Tests if a GIF is animated
 	 *
-	 * @param \OC_Image|string $previewData
+	 * An animated gif contains multiple "frames", with each frame having a
+	 * header made up of:
+	 *    * a static 4-byte sequence (\x00\x21\xF9\x04)
+	 *    * 4 variable bytes
+	 *    * a static 2-byte sequence (\x00\x2C) (Photoshop uses \x00\x21)
 	 *
-	 * @return \OC_Image|string
+	 * We read through the file until we reach the end of the file, or we've
+	 * found at least 2 frame headers
+	 *
+	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
+	 *
+	 * @param File $file
+	 *
+	 * @return bool
 	 */
-	private function base64EncodeCheck($previewData) {
-		$base64Encode = $this->base64Encode;
-
-		if ($base64Encode === true) {
-			if ($previewData instanceof \OC_Image) {
-				$previewData = (string)$previewData;
-			} else {
-				$previewData = base64_encode($previewData);
-			}
+	private function isGifAnimated($file) {
+		$fileHandle = $file->fopen('rb');
+		$count = 0;
+		while (!feof($fileHandle) && $count < 2) {
+			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+			$count += preg_match_all(
+				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
+			);
 		}
 
-		return $previewData;
+		fclose($fileHandle);
+
+		return $count > 1;
 	}
 
 }

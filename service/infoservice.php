@@ -14,9 +14,6 @@ namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\File;
-use OCP\IPreview;
-
-use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
@@ -30,23 +27,15 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class InfoService extends Service {
 
 	/**
-	 * @type Folder|null
-	 */
-	private $userFolder;
-	/**
-	 * @type EnvironmentService
-	 */
-	private $environmentService;
-	/**
 	 * @type mixed
 	 */
-	private $previewManager;
+	private $previewService;
 	/**
 	 * @todo This hard-coded array could be replaced by admin settings
 	 *
 	 * @type string[]
 	 */
-	private static $baseMimeTypes = [
+	private $baseMimeTypes = [
 		'image/png',
 		'image/jpeg',
 		'image/gif',
@@ -64,7 +53,7 @@ class InfoService extends Service {
 	 *
 	 * @type string[]
 	 */
-	private static $slideshowMimeTypes = [
+	private $slideshowMimeTypes = [
 		'application/font-sfnt',
 		'application/x-font',
 	];
@@ -73,47 +62,18 @@ class InfoService extends Service {
 	 * Constructor
 	 *
 	 * @param string $appName
-	 * @param Folder|null $userFolder
-	 * @param EnvironmentService $environmentService
 	 * @param SmarterLogger $logger
-	 * @param IPreview $previewManager
+	 * @param PreviewService $previewManager
 	 */
 	public function __construct(
 		$appName,
-		$userFolder,
-		EnvironmentService $environmentService,
-		SmarterLogger $logger,
-		IPreview $previewManager
+		PreviewService $previewManager,
+		SmarterLogger $logger
+
 	) {
 		parent::__construct($appName, $logger);
 
-		$this->userFolder = $userFolder;
-		$this->environmentService = $environmentService;
-		$this->previewManager = $previewManager;
-	}
-
-	/**
-	 * Returns information about an album, based on its path
-	 *
-	 * Used to see if we have access to the folder or not
-	 *
-	 * @param string $albumpath
-	 *
-	 * @return array<string,int>|false information about the given path
-	 */
-	public function getAlbumInfo($albumpath) {
-		$userFolder = $this->userFolder;
-		$nodeInfo = false;
-
-		if ($userFolder !== null) {
-			$nodeInfo = $this->getNodeInfo($userFolder, $albumpath);
-		} else {
-			$message = "Could not access the user's folder";
-			$code = Http::STATUS_NOT_FOUND;
-			$this->kaBoom($message, $code);
-		}
-
-		return $nodeInfo;
+		$this->previewService = $previewManager;
 	}
 
 	/**
@@ -127,16 +87,15 @@ class InfoService extends Service {
 	 */
 	public function getSupportedMimes($slideshow = true) {
 		$supportedMimes = [];
-		$wantedMimes = self::$baseMimeTypes;
+		$wantedMimes = $this->baseMimeTypes;
 
 		if ($slideshow) {
-			$wantedMimes = array_merge($wantedMimes, self::$slideshowMimeTypes);
+			$wantedMimes = array_merge($wantedMimes, $this->slideshowMimeTypes);
 		}
 
 		foreach ($wantedMimes as $wantedMime) {
 			// Let's see if a preview of files of that media type can be generated
-			$preview = $this->previewManager;
-			if ($preview->isMimeSupported($wantedMime)) {
+			if ($this->previewService->isMimeSupported($wantedMime)) {
 				$supportedMimes[] = $wantedMime; // We add it to the list of supported media types
 			}
 		}
@@ -148,49 +107,21 @@ class InfoService extends Service {
 	}
 
 	/**
-	 * This returns the list of all images which can be shown
+	 * This returns the list of all images which can be shown starting from the given folder
 	 *
-	 * For private galleries, it returns all images
-	 * For public galleries, it starts from the folder the link gives access to
+	 * @param array $folderData
 	 *
 	 * @return array all the images we could find
 	 */
-	public function getImages() {
-		$folderData = $this->getImagesFolder();
-
-		$imagesFolder = $folderData['imagesFolder'];
-		$images = $this->searchByMime($imagesFolder);
-
+	public function getImages($folderData) {
+		$images = $this->searchByMime($folderData['imagesFolder']);
 		$fromRootToFolder = $folderData['fromRootToFolder'];
-		$result = $this->fixImagePath($images, $fromRootToFolder);
 
-		/*$this->logger->debug("Images array: {images}",['images' => $result]);*/
+		$result = $this->prepareImagesArray($images, $fromRootToFolder);
+
+		//$this->logger->debug("Images array: {images}", ['images' => $result]);
 
 		return $result;
-	}
-
-	/**
-	 * Returns the folder where we need to look for files, as well as the path
-	 * starting from it and going up to the user's root folder
-	 *
-	 * @return array<string,Folder|string>
-	 */
-	private function getImagesFolder() {
-		$env = $this->environmentService->getEnv();
-		$pathRelativeToFolder = $env['relativePath'];
-		/** @type Folder $folder */
-		$folder = $env['folder'];
-		$folderPath = $folder->getPath();
-		/** @type Folder $imagesFolder */
-		$imagesFolder = $this->getResourceFromPath($folder, $pathRelativeToFolder);
-		$fromRootToFolder = $folderPath . $pathRelativeToFolder;
-
-		$folderData = [
-			'imagesFolder'     => $imagesFolder,
-			'fromRootToFolder' => $fromRootToFolder,
-		];
-
-		return $folderData;
 	}
 
 	/**
@@ -225,6 +156,7 @@ class InfoService extends Service {
 	 * We remove the part which goes from the user's root to the current
 	 * folder and we also remove the current folder for public galleries
 	 *
+	 * @todo Test this on OC8
 	 * On OC7, we fix searchByMime which returns images from the rubbish bin...
 	 * https://github.com/owncloud/core/issues/4903
 	 *
@@ -244,15 +176,13 @@ class InfoService extends Service {
 	 *
 	 * @return array
 	 */
-	private function fixImagePath($images, $fromRootToFolder) {
+	private function prepareImagesArray($images, $fromRootToFolder) {
 		$result = [];
 		/** @type File $image */
 		foreach ($images as $image) {
 			$imagePath = $image->getPath();
 			$mimeType = $image->getMimetype();
-			$fixedPath = str_replace(
-				$fromRootToFolder, '', $imagePath
-			);
+			$fixedPath = str_replace($fromRootToFolder, '', $imagePath);
 			if (substr($fixedPath, 0, 9) === "_trashbin") {
 				continue;
 			}

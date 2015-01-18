@@ -7,24 +7,20 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Service;
-
-use Exception;
+namespace OCA\GalleryPlus\Environment;
 
 /**
  * Thrown when the service cannot reply to a request
  */
-class ServiceException extends Exception {
+class NotFoundEnvException extends EnvironmentException {
 
 	/**
 	 * Constructor
 	 *
 	 * @param string $msg the message contained in the exception
 	 */
-	public function __construct($msg) {
-		parent::__construct($msg);
-	}
+	public function __construct($msg) {}
 }

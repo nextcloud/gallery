@@ -82,17 +82,11 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	public function beforeController($controller, $methodName) {
 		$sharingEnabled = $this->isSharingEnabled();
 
-		// This needs to be done here as the Dispatcher does not call our reflector
-		//$this->reflector->reflect($controller, $methodName);
-
 		$isPublicPage = $this->reflector->hasAnnotation('PublicPage');
 		$isGuest = $this->reflector->hasAnnotation('Guest');
 
 		if ($isPublicPage && !$isGuest && !$sharingEnabled) {
-			throw new CheckException(
-				'Sharing is disabled',
-				Http::STATUS_SERVICE_UNAVAILABLE
-			);
+			$this->logAndThrow("'Sharing is disabled'", Http::STATUS_SERVICE_UNAVAILABLE);
 		}
 	}
 
