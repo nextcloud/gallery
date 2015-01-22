@@ -65,7 +65,7 @@ class DownloadService extends Service {
 		} catch (NotFoundEnvException $exception) {
 			$this->logAndThrowNotFound($exception->getMessage());
 		}
-		$this->logger->debug("[DownloadService] File to Download: {file}");
+		$this->logger->debug("[DownloadService] File to Download: $image");
 		$download = [
 			'path'     => $image,
 			'preview'  => $file->getContent(),

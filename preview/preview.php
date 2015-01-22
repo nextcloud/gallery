@@ -123,7 +123,18 @@ class Preview {
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
 		$this->dims = ['x' => $maxX, 'y' => $maxY];
-		$previewData = $this->getPreviewFromCore($keepAspect);
+		try {
+			// Can generate encryption Exceptions...
+			$previewData = $this->getPreviewFromCore($keepAspect);
+		} catch (\Exception $exception) {
+			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
+			$perfectPreview = ['preview' => $this->getMimeIcon()];
+			$this->success = false;
+			$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
+
+			return $perfectPreview;
+		}
+
 		if ($previewData->valid()) {
 			if ($maxX === 200) { // Only fixing the square thumbnails
 				$previewData = $this->previewValidator();
@@ -158,7 +169,7 @@ class Preview {
 	 * @return \OC_Image
 	 */
 	private function getPreviewFromCore($keepAspect) {
-		$this->logger->debug("[PreviewService] Generating a new preview");
+		$this->logger->debug("[PreviewService] Fetching the preview");
 
 		$this->preview->setMaxX($this->dims['x']);
 		$this->preview->setMaxY($this->dims['y']);
