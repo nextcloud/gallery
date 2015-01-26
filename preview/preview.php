@@ -122,30 +122,19 @@ class Preview {
 	 * @return array
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
-		$this->dims = ['x' => $maxX, 'y' => $maxY];
-		try {
-			// Can generate encryption Exceptions...
-			$previewData = $this->getPreviewFromCore($keepAspect);
-		} catch (\Exception $exception) {
-			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
-			$perfectPreview = ['preview' => $this->getMimeIcon()];
-			$this->success = false;
-			$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
+		$this->dims = [$maxX, $maxY];
+		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
-			return $perfectPreview;
-		}
+		$previewData = $this->getPreviewFromCore($keepAspect);
 
 		if ($previewData->valid()) {
 			if ($maxX === 200) { // Only fixing the square thumbnails
 				$previewData = $this->previewValidator();
 			}
-			$perfectPreview = ['preview' => $previewData];
+			$perfectPreview['preview'] = $previewData;
 		} else {
-			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
-			$perfectPreview = ['preview' => $this->getMimeIcon()];
-			$this->success = false;
+			$perfectPreview['preview'] = $this->getMimeIcon();
 		}
-		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
 		return $perfectPreview;
 	}
@@ -170,15 +159,24 @@ class Preview {
 	 */
 	private function getPreviewFromCore($keepAspect) {
 		$this->logger->debug("[PreviewService] Fetching the preview");
+		list($maxX, $maxY) = $this->dims;
 
-		$this->preview->setMaxX($this->dims['x']);
-		$this->preview->setMaxY($this->dims['y']);
+		$this->preview->setMaxX($maxX);
+		$this->preview->setMaxY($maxY);
 		$this->preview->setScalingUp(false);
 		$this->preview->setKeepAspect($keepAspect);
 
 		//$this->logger->debug("[PreviewService] preview {preview}", ['preview' => $this->preview]);
+		try {
+			// Can generate encryption Exceptions...
+			$previewData = $this->preview->getPreview();
+		} catch (\Exception $exception) {
+			$previewData = $this->getMimeIcon();
 
-		return $this->preview->getPreview();
+			return $previewData;
+		}
+
+		return $previewData;
 	}
 
 	/**
@@ -192,15 +190,15 @@ class Preview {
 	 * @return resource
 	 */
 	private function previewValidator() {
-		$dims = $this->dims;
+		list($maxX, $maxY) = $this->dims;
 		$previewData = $this->preview->getPreview();
 		$previewX = $previewData->width();
 		$previewY = $previewData->height();
 
-		if (($previewX > $dims['x']
-			 || ($previewX < $dims['x'] || $previewY < $dims['y']))
+		if (($previewX > $maxX
+			 || ($previewX < $maxX || $previewY < $maxY))
 		) {
-			$fixedPreview = $this->fixPreview($previewData, $dims['x'], $dims['y']);
+			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
 			$previewData = $this->fixPreviewCache($fixedPreview);
 		}
 
@@ -215,23 +213,22 @@ class Preview {
 	 * @return resource
 	 */
 	private function fixPreview($previewData) {
-		$dims = $this->dims;
+		list($maxX, $maxY) = $this->dims;
 		$previewWidth = $previewData->width();
 		$previewHeight = $previewData->height();
-		$fixedPreview = imagecreatetruecolor($dims['x'], $dims['y']); // Creates the canvas
+		$fixedPreview = imagecreatetruecolor($maxX, $maxY); // Creates the canvas
 
 		// We make the background transparent
 		imagealphablending($fixedPreview, false);
 		$transparency = imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
 		imagefill($fixedPreview, 0, 0, $transparency);
 		imagesavealpha($fixedPreview, true);
-		$newDimensions =
-			$this->calculateNewDimensions($previewWidth, $previewHeight, $dims['x'], $dims['y']);
+		list($newX, $newY, $newWidth, $newHeight) =
+			$this->calculateNewDimensions($previewWidth, $previewHeight);
 
 		imagecopyresampled(
-			$fixedPreview, $previewData->resource(), $newDimensions['newX'], $newDimensions['newY'],
-			0, 0, $newDimensions['newWidth'], $newDimensions['newHeight'],
-			$previewWidth, $previewHeight
+			$fixedPreview, $previewData->resource(),
+			$newX, $newY, 0, 0, $newWidth, $newHeight, $previewWidth, $previewHeight
 		);
 
 		return $fixedPreview;
@@ -248,25 +245,20 @@ class Preview {
 	 * @return array
 	 */
 	private function calculateNewDimensions($previewWidth, $previewHeight) {
-		$dims = $this->dims;
-		if (($previewWidth / $previewHeight) >= ($dims['x'] / $dims['y'])) {
-			$newWidth = $dims['x'];
-			$newHeight = $previewHeight * ($dims['x'] / $previewWidth);
+		list($maxX, $maxY) = $this->dims;
+		if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
+			$newWidth = $maxX;
+			$newHeight = $previewHeight * ($maxX / $previewWidth);
 			$newX = 0;
-			$newY = round(abs($dims['y'] - $newHeight) / 2);
+			$newY = round(abs($maxY - $newHeight) / 2);
 		} else {
-			$newWidth = $previewWidth * ($dims['y'] / $previewHeight);
-			$newHeight = $dims['y'];
-			$newX = round(abs($dims['x'] - $newWidth) / 2);
+			$newWidth = $previewWidth * ($maxY / $previewHeight);
+			$newHeight = $maxY;
+			$newX = round(abs($maxX - $newWidth) / 2);
 			$newY = 0;
 		}
 
-		return [
-			'newX'      => $newX,
-			'newY'      => $newY,
-			'newWidth'  => $newWidth,
-			'newHeight' => $newHeight,
-		];
+		return [$newX, $newY, $newWidth, $newHeight];
 	}
 
 	/**
@@ -306,6 +298,9 @@ class Preview {
 	 * @return Image
 	 */
 	private function getMimeIcon() {
+		$this->logger->debug("[PreviewService] ERROR! Did not get a preview, sending mime icon");
+		$this->success = false;
+
 		$mime = $this->file->getMimeType();
 		$iconData = new Image();
 
