@@ -207,7 +207,7 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 Gallery.showEmpty = function () {
 	$('#controls').addClass('hidden');
 	$('#emptycontent').removeClass('hidden');
-	$('#loading').addClass('hidden');
+	$('#content').removeClass('icon-loading');
 };
 
 Gallery.showLoading = function () {
