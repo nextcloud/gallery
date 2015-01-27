@@ -29,5 +29,3 @@ style(
 		<p><?php p($l->t('For more info, please ask the person who sent this link.')); ?></p>
 	</li>
 </ul>
-
-
