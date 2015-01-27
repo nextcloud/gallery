@@ -315,10 +315,15 @@ $(document).ready(function () {
 	});
 
 	$('#openAsFileListButton').click(function () {
-		window.location.href = OC.generateUrl('s/{token}?path={path}', {
-			token: Gallery.token,
-			path: '/' + Gallery.currentAlbum
-		});
+		var subUrl = '';
+		var params = {path: '/' + Gallery.currentAlbum};
+		if (Gallery.token) {
+			params.token = Gallery.token;
+			subUrl = 's/{token}?path={path}';
+		} else {
+			subUrl = 'apps/files?dir={path}';
+		}
+		window.location.href = OC.generateUrl(subUrl, params);
 	});
 	$('#download').click(function (e) {
 		e.preventDefault();

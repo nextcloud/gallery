@@ -2,16 +2,6 @@
 	margin-top: 45px;
 }
 
-#public_upload,
-#download {
-	font-weight: 700;
-	margin: 0 0.4em 0 0;
-	padding: 0 5px;
-	height: 32px;
-	float: left;
-
-}
-
 #displayName {
 	margin: 0 0.4em 0 0;
 	padding: 0 5px;
@@ -23,21 +13,6 @@ body {
 	height: 100%;
 	width: 100%;
 	text-align: center;
-}
-
-/* toggle for opening shared picture view as file list */
-#openAsFileListButton {
-	position: absolute;
-	right: 0;
-	top: 0;
-	font-weight: normal;
-}
-
-#openAsFileListButton img {
-	vertical-align: text-top;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=50);
-	opacity: .5;
 }
 
 /* transfer to core after body has the id #body-public / #body-public-dark */
