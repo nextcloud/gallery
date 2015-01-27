@@ -181,18 +181,15 @@ class Preview {
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
 		$this->dims = ['x' => $maxX, 'y' => $maxY];
-		$previewData = $this->getPreviewFromCore($keepAspect);
-		if ($previewData->valid()) {
-			if ($maxX === 200) { // Only fixing the square thumbnails
-				$previewData = $this->previewValidator();
+
+		$perfectPreview = $this->getPreviewFromCore($keepAspect);
+		$previewData = $perfectPreview['preview'];
+		if ($previewData && $previewData->valid()) {
+			if ($maxX === 200) {
+				$perfectPreview['preview'] = $this->previewValidator();
 			}
-			$perfectPreview = ['preview' => $previewData, 'status' => Http::STATUS_OK];
 		} else {
-			$this->logger->debug("[PreviewService] ERROR! Did not get a preview");
-			$perfectPreview = array(
-				'preview' => $this->getMimeIcon(),
-				'status'  => Http::STATUS_UNSUPPORTED_MEDIA_TYPE
-			);
+			$perfectPreview = $this->getMimeIcon();
 		}
 		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
@@ -204,7 +201,7 @@ class Preview {
 	 *
 	 * @param bool $keepAspect
 	 *
-	 * @return \OC_Image
+	 * @return null|array
 	 *
 	 * @throws \Exception
 	 */
@@ -216,7 +213,14 @@ class Preview {
 		$this->preview->setScalingUp(false); // TODO: Need to read from settings
 		$this->preview->setKeepAspect($keepAspect);
 
-		return $this->preview->getPreview();
+		try {
+			// Can generate encryption Exceptions...
+			$previewData = $this->preview->getPreview();
+		} catch (\Exception $exception) {
+			return null;
+		}
+
+		return ['preview' => $previewData, 'status' => Http::STATUS_OK];
 	}
 
 	/**
@@ -345,17 +349,19 @@ class Preview {
 	 * @return \OC_Image
 	 */
 	private function getMimeIcon() {
+		$this->logger->debug("[PreviewService] ERROR! Did not get a preview, sending mime icon");
+
 		$mime = $this->file->getMimeType();
 		$iconData = new \OC_Image(); // FIXME: Private API
 
 		// FIXME: private API
-		$image = \OC::$SERVERROOT . mimetype_icon($mime);
+		$image = \OC::$SERVERROOT . \OC_Helper::mimetypeIcon($mime);
 		// OC8 version
 		//$image = $this->serverRoot() . \OCP\Template::mimetype_icon($mime);
 
 		$iconData->loadFromFile($image);
 
-		return $iconData;
+		return ['preview' => $iconData, 'status' => Http::STATUS_UNSUPPORTED_MEDIA_TYPE];
 	}
 
 }
