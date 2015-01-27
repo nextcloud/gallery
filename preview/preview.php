@@ -123,11 +123,11 @@ class Preview {
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
 		$this->dims = [$maxX, $maxY];
-		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
+		$perfectPreview = [];
 
 		$previewData = $this->getPreviewFromCore($keepAspect);
 
-		if ($previewData->valid()) {
+		if ($previewData && $previewData->valid()) {
 			if ($maxX === 200) { // Only fixing the square thumbnails
 				$previewData = $this->previewValidator();
 			}
@@ -135,6 +135,7 @@ class Preview {
 		} else {
 			$perfectPreview['preview'] = $this->getMimeIcon();
 		}
+		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
 		return $perfectPreview;
 	}
@@ -171,9 +172,7 @@ class Preview {
 			// Can generate encryption Exceptions...
 			$previewData = $this->preview->getPreview();
 		} catch (\Exception $exception) {
-			$previewData = $this->getMimeIcon();
-
-			return $previewData;
+			return null;
 		}
 
 		return $previewData;
