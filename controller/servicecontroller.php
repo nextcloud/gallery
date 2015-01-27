@@ -252,16 +252,20 @@ class ServiceController extends Controller {
 	 * @return array|Http\JSONResponse
 	 */
 	private function getThumbnail($image, $square, $scale) {
-		$thumbSpecs = $this->thumbnailService->getThumbnailSpecs($square, $scale);
+		list($width, $height, $aspect, $animatedPreview, $base64Encode) =
+			$this->thumbnailService->getThumbnailSpecs($square, $scale);
+
 		try {
 			$preview = $this->getPreview(
-				$image, $thumbSpecs['width'], $thumbSpecs['height'],
-				$thumbSpecs['aspect'], $thumbSpecs['animatedPreview'], $thumbSpecs['base64Encode']
+				$image, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
 		$thumbnail = $preview['data'];
+		if ($width === 200) { // Only fixing the square thumbnails
+			$thumbnail['data'] = $this->previewService->previewValidator();
+		}
 		$thumbnail['status'] = $preview['status'];
 
 		return $thumbnail;

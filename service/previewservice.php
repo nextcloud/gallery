@@ -158,6 +158,16 @@ class PreviewService extends Service {
 	}
 
 	/**
+	 * Makes sure we return previews of the asked dimensions and fix the cache
+	 * if necessary
+	 *
+	 * @return resource
+	 */
+	public function previewValidator() {
+		return $this->previewManager->previewValidator();
+	}
+
+	/**
 	 * Decides if we should download the SVG or generate a preview
 	 *
 	 * SVGs are downloaded if the SVG converter is disabled

@@ -128,9 +128,6 @@ class Preview {
 		$previewData = $this->getPreviewFromCore($keepAspect);
 
 		if ($previewData && $previewData->valid()) {
-			if ($maxX === 200) { // Only fixing the square thumbnails
-				$previewData = $this->previewValidator();
-			}
 			$perfectPreview['preview'] = $previewData;
 		} else {
 			$perfectPreview['preview'] = $this->getMimeIcon();
@@ -147,6 +144,32 @@ class Preview {
 	 */
 	public function isPreviewValid() {
 		return $this->success;
+	}
+
+	/**
+	 * Makes sure we return previews of the asked dimensions and fix the cache
+	 * if necessary
+	 *
+	 * The Preview class sometimes return previews which are either wider or
+	 * smaller than the asked dimensions. This happens when one of the original
+	 * dimension is smaller than what is asked for
+	 *
+	 * @return resource
+	 */
+	public function previewValidator() {
+		list($maxX, $maxY) = $this->dims;
+		$previewData = $this->preview->getPreview();
+		$previewX = $previewData->width();
+		$previewY = $previewData->height();
+
+		if (($previewX > $maxX
+			 || ($previewX < $maxX || $previewY < $maxY))
+		) {
+			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
+			$previewData = $this->fixPreviewCache($fixedPreview);
+		}
+
+		return $previewData;
 	}
 
 	/**
@@ -173,32 +196,6 @@ class Preview {
 			$previewData = $this->preview->getPreview();
 		} catch (\Exception $exception) {
 			return null;
-		}
-
-		return $previewData;
-	}
-
-	/**
-	 * Makes sure we return previews of the asked dimensions and fix the cache
-	 * if necessary
-	 *
-	 * The Preview class sometimes return previews which are either wider or
-	 * smaller than the asked dimensions. This happens when one of the original
-	 * dimension is smaller than what is asked for
-	 *
-	 * @return resource
-	 */
-	private function previewValidator() {
-		list($maxX, $maxY) = $this->dims;
-		$previewData = $this->preview->getPreview();
-		$previewX = $previewData->width();
-		$previewY = $previewData->height();
-
-		if (($previewX > $maxX
-			 || ($previewX < $maxX || $previewY < $maxY))
-		) {
-			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
-			$previewData = $this->fixPreviewCache($fixedPreview);
 		}
 
 		return $previewData;

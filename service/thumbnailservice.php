@@ -55,13 +55,7 @@ class ThumbnailService {
 			$width = 2 * $height;
 		}
 
-		$thumbnail = [
-			'width'           => $width,
-			'height'          => $height,
-			'aspect'          => !$square,
-			'animatedPreview' => $this->animatedPreview,
-			'base64Encode'    => $this->base64Encode
-		];
+		$thumbnail = [$width, $height, !$square, $this->animatedPreview, $this->base64Encode];
 
 		return $thumbnail;
 	}
