@@ -1,0 +1,134 @@
+--- a/lib/private/preview/bitmap.php.orig	2015-01-26 12:56:15.023508217 +0000
++++ b/lib/private/preview/bitmap.php	2015-01-26 13:05:14.187943968 +0000
+@@ -1,6 +1,7 @@
+ <?php
+ /**
+  * Copyright (c) 2013-2014 Georg Ehrke georg@ownCloud.com
++ * @copyright 2015 Olivier Paroz <owncloud@interfasys.ch>
+  * This file is licensed under the Affero General Public License version 3 or
+  * later.
+  * See the COPYING-README file.
+@@ -15,33 +16,116 @@
+
+ 	class Bitmap extends Provider {
+
++		/**
++		 * @type array
++		 */
++		private $maxDims;
++
+ 		public function getMimeType() {
+ 			return null;
+ 		}
+
+ 		public function getThumbnail($path, $maxX, $maxY, $scalingup, $fileview) {
++			$this->maxDims = [$maxX, $maxY];
++
+ 			$tmpPath = $fileview->toTmpFile($path);
+
+ 			//create imagick object from bitmap or vector file
+ 			try{
+-				// Layer 0 contains either the bitmap or
+-				// a flat representation of all vector layers
+-				$bp = new Imagick($tmpPath . '[0]');
+-
+-				$bp->setImageFormat('png');
++				$bp = $this->getResizedPreview($tmpPath);
+ 			} catch (\Exception $e) {
+-				\OC_Log::write('core', $e->getmessage(), \OC_Log::ERROR);
++				\OC_Log::write('core', 'ImageMagick says : ' . $e->getmessage(), \OC_Log::ERROR);
+ 				return false;
+ 			}
+
+ 			unlink($tmpPath);
+
+ 			//new bitmap image object
+-			$image = new \OC_Image($bp);
++			$image = new \OC_Image();
++			$image->loadFromData($bp);
+ 			//check if image object is valid
+ 			return $image->valid() ? $image : false;
+ 		}
+
++		/**
++		 * Returns a preview of maxX times maxY dimensions in PNG format
++		 *
++		 * 	* The default resolution is already 72dpi, no need to change it for a bitmap output
++		 * 	* It's possible to have proper colour conversion using profileimage().
++		 * 	ICC profiles are here: http://www.color.org/srgbprofiles.xalter
++		 * 	* It's possible to Gamma-correct an image via gammaImage()
++		 *
++		 * @param string $tmpPath the location of the file to convert
++		 *
++		 * @return \Imagick
++		 */
++		private function getResizedPreview($tmpPath) {
++			$bp = new Imagick();
++
++			// Layer 0 contains either the bitmap or a flat representation of all vector layers
++			$bp->readImage($tmpPath . '[0]');
++
++			$bp = $this->resize($bp);
++
++			$bp->setImageFormat('png');
++
++			return $bp;
++		}
++
++		/**
++		 * Returns a resized \Imagick object
++		 *
++		 * If you want to know more on the various methods available to resize an
++		 * image, check out this link : @link https://stackoverflow.com/questions/8517304/what-the-difference-of-sample-resample-scale-resize-adaptive-resize-thumbnail-im
++		 *
++		 * @param \Imagick $bp
++		 *
++		 * @return \Imagick
++		 */
++		private function resize($bp) {
++			list($maxX, $maxY) = $this->maxDims;
++			list($previewWidth, $previewHeight) = array_values($bp->getImageGeometry());
++
++			// We only need to resize a preview which doesn't fit in the maximum dimensions
++			if ($previewWidth > $maxX || $previewHeight > $maxY) {
++				// TODO: LANCZOS is the default filter, CATROM could bring similar results faster
++				$bp->resizeImage($maxX, $maxY, imagick::FILTER_LANCZOS, 1, true);
++
++				// Fitting preview in max dimensions
++				list($newX, $newY) = $this->calculateNewPosition($previewWidth, $previewHeight);
++				// Transparent background
++				$bp->setImageBackgroundColor('None');
++				$bp->extentImage($maxX, $maxY, -$newX, -$newY);
++			}
++
++			return $bp;
++		}
++
++		/**
++		 * Calculates the new position so that the preview sits in the middle of the area requested by the client
++		 *
++		 * @link https://stackoverflow.com/questions/3050952/resize-an-image-and-fill-gaps-of-proportions-with-a-color
++		 *
++		 * @param int $previewWidth the width of the resized preview
++		 * @param int $previewHeight the height of the resized preview
++		 *
++		 * @return array
++		 */
++		private function calculateNewPosition($previewWidth, $previewHeight) {
++			list($maxX, $maxY) = $this->maxDims;
++			if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
++				$newHeight = $previewHeight * ($maxX / $previewWidth);
++				$newX = 0;
++				$newY = round(abs($maxY - $newHeight) / 2);
++			} else {
++				$newWidth = $previewWidth * ($maxY / $previewHeight);
++				$newX = round(abs($maxX - $newWidth) / 2);
++				$newY = 0;
++			}
++
++			return [$newX, $newY];
++		}
++
+ 	}
+
+ 	if(count($checkImagick->queryFormats('PDF')) === 1) {

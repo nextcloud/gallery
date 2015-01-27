@@ -346,7 +346,7 @@ class Preview {
 	 * icon when it can't generate a proper preview
 	 * https://github.com/owncloud/core/pull/12546
 	 *
-	 * @return \OC_Image
+	 * @return array
 	 */
 	private function getMimeIcon() {
 		$this->logger->debug("[PreviewService] ERROR! Did not get a preview, sending mime icon");
