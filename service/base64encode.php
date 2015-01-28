@@ -28,7 +28,7 @@ trait Base64Encode {
 	 *
 	 * @param \OC_Image|string $previewData
 	 *
-	 * @return \OC_Image|string
+	 * @return string
 	 */
 	protected function encode($previewData) {
 		if ($previewData instanceof \OC_Image) {
