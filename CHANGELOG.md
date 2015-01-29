@@ -1,7 +1,7 @@
 owncloud-galleryplus (2.0.0)
 * ownCloud 8 only
 
-owncloud-galleryplus (1.0.0)
+owncloud-galleryplus (1.0.3)
 * First release using the AppFramework (@oparoz)
 * ownCloud 7 compatible (@oparoz)
 * Supports all the media types ownCloud has been configured to convert to PNG (@oparoz)
@@ -13,3 +13,5 @@ owncloud-galleryplus (1.0.0)
 * Native SVG support, without conversion (@oparoz)
 * Loads the gallery exactly where you were in the Files app (@oparoz)
 * Various fixes to the preview generator (@oparoz)
+* Make the gallery button available in the Files app (non-shared area) (@oparoz)
+* Generate gallery links straight from the share dialogue in the Files app (@oparoz)
