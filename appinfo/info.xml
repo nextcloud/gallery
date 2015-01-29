@@ -8,6 +8,6 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 	</description>
     <licence>AGPL</licence>
     <author>Olivier Paroz, Robin Appelman,</author>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <requiremin>7</requiremin>
 </info>
