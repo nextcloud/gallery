@@ -18,7 +18,8 @@ style(
 	array(
 		'styles',
 		'mobile',
-		'public'
+		'public',
+		'gallerybutton'
 	)
 );
 

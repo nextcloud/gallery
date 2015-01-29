@@ -314,15 +314,16 @@ $(document).ready(function () {
 	});
 
 	$('#openAsFileListButton').click(function () {
-		window.location.href =
-			OC.filePath('files_sharing', '', 'public.php') + '?' + OC.buildQueryString({
-				path: '/' + Gallery.currentAlbum,
-				t: Gallery.token
-			});
-		// OC8 only
-		// window.location.href = OC.generateUrl('s/{token}', {
-		// token: $('#gallery').data('token')
-		// });
+		var url = '';
+		var params = {path: '/' + Gallery.currentAlbum};
+		if (Gallery.token) {
+			params.t = Gallery.token;
+			url =
+				OC.filePath('files_sharing', '', 'public.php') + '?' + OC.buildQueryString(params);
+		} else {
+			url = OC.generateUrl('apps/files?dir={path}', params);
+		}
+		window.location.href = url;
 	});
 	$('#download').click(function () {
 		window.location.href = OC.filePath('', '', 'public.php') + '?' + OC.buildQueryString({

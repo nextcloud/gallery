@@ -25,21 +25,6 @@ body {
 	text-align: center;
 }
 
-/* toggle for opening shared picture view as file list */
-#openAsFileListButton {
-	position: absolute;
-	right: 0;
-	top: 0;
-	font-weight: normal;
-}
-
-#openAsFileListButton img {
-	vertical-align: text-top;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=50);
-	opacity: .5;
-}
-
 /* transfer to core after body has the id #body-public / #body-public-dark */
 
 footer {

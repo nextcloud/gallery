@@ -55,10 +55,12 @@ $c->query('API')
 $c->query('API')
   ->addScript('slideshow', $appName);
 $c->query('API')
-  ->addScript('public', $appName);
+  ->addScript('gallerybutton', $appName);
 
 /**
  * Styles for the Files app
  */
 $c->query('API')
   ->addStyle('slideshow', $appName);
+$c->query('API')
+  ->addStyle('gallerybutton', $appName);
