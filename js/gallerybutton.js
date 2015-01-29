@@ -50,32 +50,33 @@ GalleryButton.hijackShare = function () {
 	var target = OC.Share.showLink;
 	OC.Share.showLink = function () {
 		var r = target.apply(this, arguments);
-
-		if (!$('#linkSwitchButton').length) {
-			var linkSwitchButton = '<a class="button" id="linkSwitchButton">' +
-				t(GalleryButton.appName, 'Show Gallery link') + '</a>';
-			$('#linkCheckbox+label').after(linkSwitchButton);
-		}
-
-		$("#linkSwitchButton").toggle(function () {
-			$(this).text("Show Files link");
-			$('#linkText').val($('#linkText').val().replace('index.php/s/', 'index.php/apps/' +
-			GalleryButton.appName + '/s/'));
-		}, function () {
-			$(this).text("Show Gallery link");
-			$('#linkText').val($('#linkText').val().replace('index.php/apps/' +
-			GalleryButton.appName + '/s/', 'index.php/s/'));
-
-		});
-
-		$('#linkCheckbox').change(function () {
-			if (this.checked) {
-				$('#linkSwitchButton').show();
-			} else {
-				$('#linkSwitchButton').hide();
+		if ($('#dropdown.drop.shareDropDown').data('item-type') === "folder") {
+			
+			if (!$('#linkSwitchButton').length) {
+				var linkSwitchButton = '<a class="button" id="linkSwitchButton">' +
+					t(GalleryButton.appName, 'Show Gallery link') + '</a>';
+				$('#linkCheckbox+label').after(linkSwitchButton);
 			}
-		});
 
+			$("#linkSwitchButton").toggle(function () {
+				$(this).text("Show Files link");
+				$('#linkText').val($('#linkText').val().replace('index.php/s/', 'index.php/apps/' +
+				GalleryButton.appName + '/s/'));
+			}, function () {
+				$(this).text("Show Gallery link");
+				$('#linkText').val($('#linkText').val().replace('index.php/apps/' +
+				GalleryButton.appName + '/s/', 'index.php/s/'));
+
+			});
+
+			$('#linkCheckbox').change(function () {
+				if (this.checked) {
+					$('#linkSwitchButton').show();
+				} else {
+					$('#linkSwitchButton').hide();
+				}
+			});
+		}
 		return r;
 	};
 };
