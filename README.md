@@ -48,6 +48,7 @@ Next add a few new entries to your configuration file.
 
 If you want support for Raw picture files, you'll need to patch your installation of ownCloud 8.0
 ```
+$ patch -p1 -l < apps/galleryplus/patches/tmpfile-extension.pull.13654.patch
 $ patch -p1 -l < apps/galleryplus/patches/raw-preview.pull.13652.patch
 ```
 
@@ -84,6 +85,7 @@ $ git clone -b stable8 https://github.com/interfasys/galleryplus.git
 Now you can activate it in the apps menu. It's called Gallery+
 
 ## List of patches
-1. max-preview.pull.13674.patch
-2. bitmap-max-preview.pull.13635.patch
-3. raw-preview.pull.13652.patch
+1. max-preview.pull.13674.patch : Limits previews to a max size of 2048x2048 by default
+2. bitmap-max-preview.pull.13635.patch : Forces the bitmap converter to respect the max limits of previews
+3. tmpfile-extension.pull.13654.patch : Makes sure temporary files have an extension so that ImageMagick can identify those files properly
+4. raw-preview.pull.13652.patch : Allows ownCloud to visualise Raw files
