@@ -57,7 +57,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('Environment'),
-				$c->query('URLGenerator')
+				$c->query('OCP\IURLGenerator')
 			);
 		}
 		);
@@ -71,9 +71,8 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('URLGenerator'),
-				$c->getServer()
-				  ->createEventSource()
+				$c->query('OCP\IURLGenerator'),
+				$c->query('OCP\IEventSource')
 			);
 		}
 		);
@@ -87,9 +86,8 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('URLGenerator'),
-				$c->getServer()
-				  ->createEventSource()
+				$c->query('OCP\IURLGenerator'),
+				$c->query('OCP\IEventSource')
 			);
 		}
 		);
@@ -98,22 +96,20 @@ class Application extends App {
 		 * Core
 		 */
 		$container->registerService(
-			'UserId', function (IContainer $c) {
-			return $c->query('Session')
-					 ->get('user_id');
+			'OCP\IServerContainer', function ($c) {
+			return $c->getServer();
+		}
+		);
+		$container->registerService(
+			'OCP\IEventSource', function ($c) {
+			return $c->getServer()
+					 ->createEventSource();
 		}
 		);
 		$container->registerService(
 			'Token', function (IContainer $c) {
 			return $c->query('Request')
 					 ->getParam('token');
-		}
-		);
-		$container->registerService(
-			'UserManager', function (IAppContainer $c) {
-			// This can retrieve information about any user, not just the one logged-in
-			return $c->getServer()
-					 ->getUserManager();
 		}
 		);
 		$container->registerService(
@@ -129,17 +125,15 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'URLGenerator', function (IAppContainer $c) {
+			'UserFolder', function (IAppContainer $c) {
 			return $c->getServer()
-					 ->getURLGenerator();
+					 ->getUserFolder($c->query('UserId'));
 		}
 		);
-		$container->registerService(
-			'Logger', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getLogger();
-		}
-		);
+
+		/**
+		 * OCA
+		 */
 		$container->registerService(
 			'Normalizer', function () {
 			return new Normalizer();
@@ -149,54 +143,18 @@ class Application extends App {
 			'SmarterLogger', function (IContainer $c) {
 			return new SmarterLogger(
 				$c->query('AppName'),
-				$c->query('Logger'),
+				$c->query('OCP\ILogger'),
 				$c->query('Normalizer')
 			);
 		}
 		);
 		$container->registerService(
-			'RootFolder', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getRootFolder();
-		}
-		);
-		$container->registerService(
-			'UserFolder', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getUserFolder($c->query('UserId'));
-		}
-		);
-		$container->registerService(
-			'PreviewManager', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getPreviewManager();
-		}
-		);
-		$container->registerService(
 			'CustomPreviewManager', function (IContainer $c) {
 			return new Preview(
-				$c->query('Config'),
-				$c->query('PreviewManager'),
+				$c->query('OCP\IConfig'),
+				$c->query('OCP\IPreview'),
 				$c->query('SmarterLogger')
 			);
-		}
-		);
-		$container->registerService(
-			'WebRoot', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getWebRoot();
-		}
-		);
-		$container->registerService(
-			'Hasher', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getHasher();
-		}
-		);
-		$container->registerService(
-			'Config', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->getConfig();
 		}
 		);
 		$container->registerService(
@@ -205,8 +163,8 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('UserId'),
 				$c->query('UserFolder'),
-				$c->query('UserManager'),
-				$c->getServer(),
+				$c->query('OCP\IUserManager'),
+				$c->query('OCP\IServerContainer'),
 				$c->query('SmarterLogger')
 			);
 		}
@@ -274,11 +232,11 @@ class Application extends App {
 			'SharingCheckMiddleware',
 			function (IAppContainer $c) {
 				return new SharingCheckMiddleware(
-					$c->getAppName(),
+					$c->query('AppName'),
 					$c->query('Request'),
-					$c->query('Config'),
-					$c->query('ControllerMethodReflector'),
-					$c->query('URLGenerator'),
+					$c->query('OCP\IConfig'),
+					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
+					$c->query('OCP\IURLGenerator'),
 					$c->query('SmarterLogger')
 				);
 			}
@@ -289,11 +247,11 @@ class Application extends App {
 				return new EnvCheckMiddleware(
 					$c->query('AppName'),
 					$c->query('Request'),
-					$c->query('Hasher'),
+					$c->query('OCP\Security\IHasher'),
 					$c->query('Session'),
 					$c->query('Environment'),
-					$c->query('ControllerMethodReflector'),
-					$c->query('URLGenerator'),
+					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
+					$c->query('OCP\IURLGenerator'),
 					$c->query('SmarterLogger')
 				);
 			}

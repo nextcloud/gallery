@@ -18,8 +18,14 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 * Mobile: Safari, Chrome, BlackBerry 10, Firefox, Opera
 
 ### Server requirements
-* **PHP 5.4+**
-* Recommended: a recent version ImageMagick
+#### Required
+* PHP 5.4+
+
+#### Recommended
+* PHP 5.5 with caching enabled
+* A recent version ImageMagick
+* MySQL or MariaDB instead of Sqlite
+* A powerful server with lots of RAM
 
 ## Preparation
 Here is a list of steps you might want to take before using the app
@@ -48,23 +54,24 @@ $ patch -p1 -l < apps/galleryplus/patches/raw-preview.pull.13652.patch
 and you'll need to add `OC\\Preview\\Raw` to the configuration file
 
 Look at the sample configuration in your config folder if you need more information about how the config file works.
-That's it. you should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
+That's it. You should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
 ### Improving performance
 Some of ownCloud's internal operations make the gallery app very slow
-* Looking for files which can be shown
-* Generating a preview only when the user needs one and each time a large preview is needed
+* Looking for files which are supported by the Gallery app
+* Generating a preview
 
-The searching part hasn't been addressed yet, but things are in motion to fix preview caching for ownCloud 8.1. In the mean time, you can patch your ownCloud 7 to benefit from these improvements.
+The searching part hasn't been addressed yet, but things are in motion to fix preview caching for ownCloud 8.1.
+
+You can benefit from these improvements right now if you're willing to patch yor ownCloud installation.
 
 ```
 $ patch -p1 -l < apps/galleryplus/patches/max-preview.pull.13674.patch
 $ patch -p1 -l < apps/galleryplus/patches/bitmap-max-preview.pull.13635.patch
 ```
 
-You'll only benefit from the speed improvement the 2nd time you ask for a preview because things will be set up during the first call.
+It will always be relatively slow to get the first preview as this is when the conversion is taking place, but from the 2nd request, it should only take a few seconds, even for pictures weighing several hundred MBs.
 The next step will be to be able to generate these previews by clicking on a button per example, so that things are ready when visiting the gallery app.
-
 
 ## Installation
 Download and unpack this app into your apps folder or get it straight from GitHub via the shell.

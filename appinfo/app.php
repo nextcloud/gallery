@@ -32,12 +32,12 @@ $navConfig = [
 
 	// The route that will be shown on startup when called from within ownCloud
 	// Public links are using another route, see appinfo/routes.php
-	'href'  => $c->query('URLGenerator')
+	'href'  => $c->query('OCP\IURLGenerator')
 				 ->linkToRoute($appName . '.page.index'),
 
 	// The icon that will be shown in the navigation
 	// This file needs to exist in img/
-	'icon'  => $c->query('URLGenerator')
+	'icon'  => $c->query('OCP\IURLGenerator')
 				 ->imagePath($appName, 'picture.svg'),
 
 	// The title of the application. This will be used in the
@@ -45,29 +45,25 @@ $navConfig = [
 	'name'  => $c->query('L10N')
 				 ->t('Gallery+')
 ];
-$c->query('ServerContainer')
-  ->getNavigationManager()
+$c->query('OCP\INavigationManager')
   ->add($navConfig);
 
 /**
  * Loading translations
+ *
+ * The string has to match the app's folder name
  */
 Util::addTranslations('galleryplus');
 
 /**
  * Scripts for the Files app
  */
-$c->query('API')
-  ->addScript('vendor/bigshot/bigshot', $appName);
-$c->query('API')
-  ->addScript('slideshow', $appName);
-$c->query('API')
-  ->addScript('gallerybutton', $appName);
+Util::addScript($appName, 'vendor/bigshot/bigshot');
+Util::addScript($appName, 'slideshow');
+Util::addScript($appName, 'gallerybutton');
 
 /**
  * Styles for the Files app
  */
-$c->query('API')
-  ->addStyle('slideshow', $appName);
-$c->query('API')
-  ->addStyle('gallerybutton', $appName);
+Util::addStyle($appName, 'slideshow');
+Util::addStyle($appName, 'gallerybutton');

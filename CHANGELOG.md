@@ -1,5 +1,6 @@
 owncloud-galleryplus (2.0.0)
 * ownCloud 8 only
+* Includes patch to previsualise Raw files (@oparoz)
 
 owncloud-galleryplus (1.0.3)
 * First release using the AppFramework (@oparoz)
@@ -15,3 +16,4 @@ owncloud-galleryplus (1.0.3)
 * Various fixes to the preview generator (@oparoz)
 * Make the gallery button available in the Files app (non-shared area) (@oparoz)
 * Generate gallery links straight from the share dialogue in the Files app (@oparoz)
+* Includes performance patches to avoid constantly generating new previews (@oparoz)

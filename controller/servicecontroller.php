@@ -305,7 +305,7 @@ class ServiceController extends Controller {
 				$image, $width, $height, $keepAspect, $base64Encode
 			);
 			if (!$this->previewService->isPreviewValid()) {
-				$status = Http::STATUS_UNSUPPORTED_MEDIA_TYPE;
+				$status = Http::STATUS_NOT_FOUND;
 			}
 		} else {
 			$preview = $this->downloadService->downloadFile($image, $base64Encode);
