@@ -25,7 +25,7 @@
 OCP\Util::addStyle('gallery', 'styles');
 OCP\Util::addStyle('gallery', 'mobile');
 
-$token = \OC::$server->getRequest()->getParam('token');
+$token = isset($_GET['t']) ? (string)$_GET['t'] : '';
 
 if ($token) {
 	$linkItem = \OCP\Share::getShareByToken($token, false);
