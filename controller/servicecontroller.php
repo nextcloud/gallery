@@ -150,7 +150,8 @@ class ServiceController extends Controller {
 	 */
 	public function getImages() {
 		try {
-			$imagesFolder = $this->environment->getResourceFromPath('');
+			$currentFolder = $this->request->getParam('currentfolder');
+			$imagesFolder = $this->environment->getResourceFromPath($currentFolder);
 			$fromRootToFolder = $this->environment->getFromRootToFolder();
 
 			$folderData = [

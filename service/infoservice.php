@@ -14,6 +14,7 @@ namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\File;
+use OCP\Files\Node;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
@@ -57,6 +58,18 @@ class InfoService extends Service {
 		'application/font-sfnt',
 		'application/x-font',
 	];
+	/**
+	 * @type Node[]|null
+	 */
+	private $images;
+	/**
+	 * @type string[]
+	 */
+	private $supportedMimes;
+	/**
+	 * @type string
+	 */
+	private $fromRootToFolder;
 
 	/**
 	 * Constructor
@@ -109,91 +122,131 @@ class InfoService extends Service {
 	/**
 	 * This returns the list of all images which can be shown starting from the given folder
 	 *
-	 * @param array $folderData
+	 * If the starting URL is one of a fullscreen preview, we'll return the images of the
+	 * containing folder
+	 *
+	 * @param array <Node, string> $folderData
 	 *
 	 * @return array all the images we could find
 	 */
 	public function getImages($folderData) {
-		$images = $this->searchByMime($folderData['imagesFolder']);
-		$fromRootToFolder = $folderData['fromRootToFolder'];
+		$this->supportedMimes = $this->getSupportedMimes(false);
+		$this->fromRootToFolder = $folderData['fromRootToFolder'];
 
-		$result = $this->prepareImagesArray($images, $fromRootToFolder);
-
-		//$this->logger->debug("Images array: {images}", ['images' => $result]);
-
-		return $result;
-	}
-
-	/**
-	 * Returns all the images of which we can generate a preview
-	 *
-	 * @param Folder $imagesFolder
-	 *
-	 * @return array
-	 */
-	private function searchByMime($imagesFolder) {
-		$images = [];
-		$mimes = $this->getSupportedMimes(false);
-
-		foreach ($mimes as $mime) {
-			/**
-			 * We look for images of this media type in the whole system.
-			 * This can lead to performance issues
-			 *
-			 * @todo Use an internal Class to solve the performance issue
-			 */
-			$mimeImages = $imagesFolder->searchByMime($mime);
-
-			$images = array_merge($images, $mimeImages);
+		/** @type Node $node */
+		$node = $folderData['imagesFolder'];
+		if ($node->getType() === 'dir') {
+			$this->searchFolder($node);
+		} else {
+			$this->searchFolder($node->getParent());
 		}
 
-		return $images;
+		return $this->images;
 	}
 
 	/**
-	 * Fixes the path of each image we've found
+	 * Look for media files and folders in the given folder
+	 *
+	 * @param Folder $folder
+	 * @param int $subDepth
+	 */
+	private function searchFolder($folder, $subDepth = 0) {
+		$albumImageCounter = 0;
+		$subFolders = [];
+		$nodes = $folder->getDirectoryListing();
+
+		foreach ($nodes as $node) {
+			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
+			if ($node->getType() === 'dir') {
+				$subFolders[] = $node;
+			} else {
+				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
+				if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
+					break;
+				}
+			}
+		}
+
+		$this->searchSubFolders($subFolders, $albumImageCounter, $subDepth);
+	}
+
+	/**
+	 * Checks if we've collected enough pictures to give be able to build the view
+	 *
+	 * At level 1, an album is full when we find 4 pictures and at lower levels, we stop looking
+	 * after we've found just one
+	 *
+	 * @param int $albumImageCounter
+	 * @param int $subDepth
+	 *
+	 * @return bool
+	 */
+	private function haveEnoughPictures($albumImageCounter, $subDepth) {
+		if ($subDepth === 0) {
+			return false;
+		} elseif ($subDepth === 1) {
+			$maxAlbumThumbnail = 4;
+		} else {
+			$maxAlbumThumbnail = 1;
+		}
+		if ($albumImageCounter === $maxAlbumThumbnail) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Looks for pictures in sub-folders
+	 *
+	 * If we're at level 0, we need to look for pictures in sub-folders no matter what
+	 * If we're at deeper levels, we only need to go further if we haven't managed to find one
+	 * picture in the current folder
+	 *
+	 * @param array <Folder> $subFolders
+	 * @param int $albumImageCounter
+	 * @param int $subDepth
+	 */
+	private function searchSubFolders($subFolders, $albumImageCounter, $subDepth) {
+		if ($subDepth === 0 || $albumImageCounter === 0) {
+			$subDepth++;
+			foreach ($subFolders as $subFolder) {
+				$this->searchFolder($subFolder, $subDepth);
+			}
+		}
+	}
+
+	/**
+	 * Returns true if the file is of a supported media type and adds it to the array of items to
+	 * return
 	 *
 	 * We remove the part which goes from the user's root to the current
 	 * folder and we also remove the current folder for public galleries
 	 *
-	 * @todo Test this on OC8
-	 * On OC7, we fix searchByMime which returns images from the rubbish bin...
-	 * https://github.com/owncloud/core/issues/4903
+	 * @param File $node
 	 *
-	 * Example logger
-	 * $this->logger->debug(
-	 * "folderPath: {folderPath} pathRelativeToFolder: {pathRelativeToFolder}
-	 * imagePath: {imagePath} mime: {mime}", [
-	 * 'folderPath'           => $folderPath,
-	 * 'pathRelativeToFolder' => $pathRelativeToFolder,
-	 * 'imagePath'            => $imagePath,
-	 * 'mime'                 => $mimeType
-	 * ]
-	 * );
-	 *
-	 * @param array $images
-	 * @param string $fromRootToFolder
-	 *
-	 * @return array
+	 * @return bool
 	 */
-	private function prepareImagesArray($images, $fromRootToFolder) {
-		$result = [];
-		/** @type File $image */
-		foreach ($images as $image) {
-			$imagePath = $image->getPath();
-			$mimeType = $image->getMimetype();
-			$fixedPath = str_replace($fromRootToFolder, '', $imagePath);
-			if (substr($fixedPath, 0, 9) === "_trashbin") {
-				continue;
-			}
+	private function isPreviewAvailable($node) {
+		$mimeType = $node->getMimetype();
+
+		if (in_array($mimeType, $this->supportedMimes)) {
+			$imagePath = $node->getPath();
+			$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
 			$imageData = [
 				'path'     => $fixedPath,
 				'mimetype' => $mimeType
 			];
-			$result[] = $imageData;
+			$this->images[] = $imageData;
+
+			/*$this->logger->debug(
+				"Image path : {path}", ['path' => $node->getPath()]
+			);*/
+
+			return true;
 		}
 
-		return $result;
+		return false;
 	}
 
 }

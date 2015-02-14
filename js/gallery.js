@@ -28,7 +28,12 @@ Gallery.fillAlbums = function () {
 		return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
 	};
 	var album, image;
-	var url = Gallery.buildUrl('images', {});
+	Gallery.images = [];
+	Gallery.currentAlbum = '';
+	Gallery.albumMap = {};
+	Gallery.imageMap = {};
+	var currentFolder = decodeURI(location.hash).substr(1);
+	var url = Gallery.buildUrl('images', {currentfolder: currentFolder});
 	return $.getJSON(url).then(function (data) {
 		//Gallery.images = data;
 		var path = null;
@@ -233,9 +238,7 @@ Gallery.view.buildBreadCrumb = function (albumPath) {
 };
 
 Gallery.view.pushBreadCrumb = function (text, path) {
-	OC.Breadcrumb.push(text, '#' + path).click(function () {
-		Gallery.view.viewAlbum(path);
-	});
+	OC.Breadcrumb.push(text, '#' + path);
 };
 
 Gallery.showEmpty = function () {
@@ -354,7 +357,9 @@ window.onhashchange = function () {
 		}
 		path = decodeURIComponent(path);
 		if (Gallery.currentAlbum !== path || path === '') {
-			Gallery.view.viewAlbum(path);
+			Gallery.fillAlbums().then(function () {
+				Gallery.view.viewAlbum(path);
+			});
 		}
 	} else if (!Gallery.activeSlideShow) {
 		var albumPath = OC.dirname(path);
