@@ -57,7 +57,7 @@ Gallery.getAlbumInfo = function (album) {
 	if (!Gallery.getAlbumInfo.cache[album]) {
 		var def = new $.Deferred();
 		Gallery.getAlbumInfo.cache[album] = def;
-		$.getJSON(OC.generateUrl('apps/gallery/ajax/gallery?gallery={gallery}', {gallery: album}), function (data) {
+		$.getJSON(OC.generateUrl('apps/gallery/ajax/gallery?gallery={gallery}', {gallery: encodeURIComponent(album)}), function (data) {
 			def.resolve(data);
 		});
 	}
@@ -80,7 +80,7 @@ Gallery.share = function (event) {
 			var target = OC.Share.showLink;
 			OC.Share.showLink = function () {
 				var r = target.apply(this, arguments);
-				$('#linkText').val($('#linkText').val().replace('service=files', 'service=gallery'));
+				$('#linkText').val($('#linkText').val().replace('/s/', '/apps/gallery/public/'));
 				return r;
 			};
 		})();
@@ -285,7 +285,7 @@ $(document).ready(function () {
 });
 
 window.onhashchange = function () {
-	var path = decodeURI(location.hash).substr(1);
+	var path = decodeURIComponent(location.hash).substr(1);
 	if (Gallery.albumMap[path]) {
 		if (Gallery.activeSlideShow) {
 			Gallery.activeSlideShow.stop();
