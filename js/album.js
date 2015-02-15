@@ -67,7 +67,7 @@ Album.prototype.getDom = function (targetHeight) {
 	var album = this;
 
 	return this.getThumbnail().then(function (img) {
-		var a = $('<a/>').addClass('album').attr('href', '#' + encodeURI(album.path));
+		var a = $('<a/>').addClass('album').attr('href', '#' + encodeURIComponent(album.path));
 
 		a.append($('<span/>').addClass('album-label').text(album.name));
 		var ratio = Math.round(img.ratio * 100) / 100;
