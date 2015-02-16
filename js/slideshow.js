@@ -323,12 +323,12 @@ $(document).ready(function () {
 						imageUrl = OC.generateUrl('/core/preview.png?file={file}&x={x}&y={y}&a=true&scalingup=0&forceIcon=0', {
 							x: width,
 							y: height,
-							file: encodeURIComponent(dir + file.name)
+							file: dir + file.name
 						});
 						if (!user) {
 							imageUrl = OC.generateUrl(
 								'/apps/files_sharing/publicpreview?file={file}&x={x}&y={y}&a=true&t={t}&scalingup=0&forceIcon=0', {
-									file: encodeURIComponent(dir + file.name),
+									file: dir + file.name,
 									x: width,
 									y: height,
 									t: $('#sharingToken').val()

@@ -53,7 +53,7 @@ Thumbnail.loadBatch = function (paths, square, token) {
 			scale: window.devicePixelRatio,
 			square: (square) ? 1 : 0,
 			token: (token) ? token : ''
-		});
+		}, {escape:false});
 
 		var eventSource = new OC.EventSource(url);
 		eventSource.listen('preview', function (data) {
