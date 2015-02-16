@@ -53,19 +53,21 @@ foreach ($images as $image) {
 	$preview->setKeepAspect(!$square);
 
 	$fileInfo = $userView->getFileInfo('/files/' . $image);
+	if($fileInfo instanceof \OC\Files\FileInfo) {
 
-	// if the thumbnails is already cached, get it directly from the filesystem to avoid decoding and re-encoding the image
-	$imageName = substr($image, strlen($root));
-	if ($path = $preview->isCached($fileInfo->getId())) {
-		$eventSource->send('preview', array(
-			'image' => $imageName,
-			'preview' => base64_encode($userView->file_get_contents('/' . $path))
-		));
-	} else {
-		$eventSource->send('preview', array(
-			'image' => $imageName,
-			'preview' => (string)$preview->getPreview()
-		));
+		// if the thumbnails is already cached, get it directly from the filesystem to avoid decoding and re-encoding the image
+		$imageName = substr($image, strlen($root));
+		if ($path = $preview->isCached($fileInfo->getId())) {
+			$eventSource->send('preview', array(
+				'image' => $imageName,
+				'preview' => base64_encode($userView->file_get_contents('/' . $path))
+			));
+		} else {
+			$eventSource->send('preview', array(
+				'image' => $imageName,
+				'preview' => (string)$preview->getPreview()
+			));
+		}
 	}
 }
 $eventSource->close();
