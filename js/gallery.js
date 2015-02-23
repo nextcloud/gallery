@@ -57,7 +57,7 @@ Gallery.getAlbumInfo = function (album) {
 	if (!Gallery.getAlbumInfo.cache[album]) {
 		var def = new $.Deferred();
 		Gallery.getAlbumInfo.cache[album] = def;
-		$.getJSON(OC.generateUrl('apps/gallery/ajax/gallery?gallery={gallery}', {gallery: encodeURIComponent(album)}), function (data) {
+		$.getJSON(OC.generateUrl('apps/gallery/ajax/gallery?gallery={gallery}', {gallery: album}), function (data) {
 			def.resolve(data);
 		});
 	}
@@ -67,7 +67,7 @@ Gallery.getAlbumInfo.cache = {};
 Gallery.getImage = function (image) {
 	var token = ($('#gallery').data('token')) ? $('#gallery').data('token') : '';
 	return OC.generateUrl('apps/gallery/ajax/image?file={file}&token={token}', {
-		file: encodeURIComponent(image),
+		file: image,
 		token: token
 	});
 };
