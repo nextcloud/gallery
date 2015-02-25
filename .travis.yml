@@ -15,7 +15,7 @@ php:
 branches:
   only:
     - master
-    - stable7
+    - /^stable\d*$/
 
 # optionally specify a list of environments, for example to test different RDBMS
 #env:
