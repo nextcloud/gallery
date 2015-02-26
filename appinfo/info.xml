@@ -14,7 +14,7 @@
 	<namespace>GalleryPlus</namespace>
 	<category>other</category>
 	<dependencies>
-		<php min-version="5.4" max-version="5.5"/>
+		<php min-version="5.4" max-version="5.6"/>
 		<owncloud min-version="8"/>
 	</dependencies>
 </info>
