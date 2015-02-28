@@ -241,6 +241,10 @@ Gallery.view.pushBreadCrumb = function (text, path) {
 	OC.Breadcrumb.push(text, '#' + path);
 };
 
+Gallery.hideSearch = function () {
+	$('form.searchbox').hide();
+};
+
 Gallery.showEmpty = function () {
 	$('#emptycontent').removeClass('hidden');
 	$('#controls').addClass('hidden');
@@ -296,6 +300,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 Gallery.activeSlideShow = null;
 
 $(document).ready(function () {
+	Gallery.hideSearch();
 	Gallery.showLoading();
 
 	Gallery.view.element = $('#gallery');
