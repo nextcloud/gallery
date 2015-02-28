@@ -525,11 +525,11 @@ $(document).ready(function () {
 		};
 		var inactiveTimeout = setTimeout(inactiveCallback, 3000);
 
-		$('#slideshow').mousemove(function () {
+		$('#slideshow').on('mousemove touchstart', (function () {
 			$('#slideshow').removeClass('inactive');
 			clearTimeout(inactiveTimeout);
 			inactiveTimeout = setTimeout(inactiveCallback, 3000);
-		});
+		}));
 
 		// replace all Owncloud svg images with png images for browser that don't support svg
 		if (!OC.Util.hasSVGSupport()) {
