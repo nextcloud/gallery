@@ -596,6 +596,9 @@ $(document).ready(function () {
 					}
 				}
 				var slideShow = new SlideShow($('#slideshow'), images);
+				slideShow.onStop = function () {
+					location.hash = '';
+				};
 				slideShow.init();
 				slideShow.show(start);
 			});
