@@ -252,8 +252,8 @@ SlideShow.prototype.startBigshot = function (image) {
 		minZoom: 0,
 		touchUI: false,
 		// FIXME something should be done here to fix the problems introduced by the border
-		width: image.naturalWidth,
-		height: image.naturalHeight
+		width: image.naturalWidth / window.devicePixelRatio,
+		height: image.naturalHeight / window.devicePixelRatio
 	}), image);
 	if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
 		this.resetZoom();
@@ -280,10 +280,6 @@ SlideShow.prototype.loadImage = function (preview) {
 		var image = new Image();
 
 		image.onload = function () {
-			if (image) {
-				image.natWidth = image.width;
-				image.natHeight = image.height;
-			}
 			if (this.imageCache[url]) {
 				this.imageCache[url].resolve(image);
 			}
@@ -568,8 +564,8 @@ $(document).ready(function () {
 				var start = 0;
 				var images = [];
 				var dir = context.dir + '/';
-				var width = $(document).width();
-				var height = $(document).height();
+				var width = $(window).width() * window.devicePixelRatio;
+				var height = $(window).height() * window.devicePixelRatio;
 
 				for (var i = 0; i < files.length; i++) {
 					var file = files[i];
