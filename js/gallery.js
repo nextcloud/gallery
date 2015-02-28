@@ -80,8 +80,8 @@ Gallery.getAlbumInfo = function (album) {
 Gallery.getAlbumInfo.cache = {};
 
 Gallery.getImage = function (image) {
-	var width = $(document).width() * window.devicePixelRatio;
-	var height = $(document).height() * window.devicePixelRatio;
+	var width = $(window).width() * window.devicePixelRatio;
+	var height = $(window).height() * window.devicePixelRatio;
 	var params = {
 		file: image,
 		x: width,
