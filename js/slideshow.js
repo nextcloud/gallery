@@ -535,6 +535,11 @@ $(document).ready(function () {
 		if (!OC.Util.hasSVGSupport()) {
 			OC.Util.replaceSVG(this.$el);
 		}
+		
+		if (OCA.Files) {
+			// Don't show the download button on the "Files" slideshow
+			$('#slideshow').find('.downloadImage').hide();
+		}
 	})
 		.fail(function () {
 			OC.Notification.show(t('core', 'Error loading slideshow template'));
