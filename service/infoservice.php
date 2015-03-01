@@ -153,7 +153,11 @@ class InfoService extends Service {
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
-		$nodes = $folder->getDirectoryListing();
+		try {
+			$nodes = $folder->getDirectoryListing();
+		} catch (\Exception $exception) {
+			$this->logAndThrowNotFound($exception->getMessage());
+		}
 
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
@@ -228,7 +232,12 @@ class InfoService extends Service {
 	 * @return bool
 	 */
 	private function isPreviewAvailable($node) {
-		$mimeType = $node->getMimetype();
+		// This can break on oC 8. See https://github.com/owncloud/core/issues/14390
+		try {
+			$mimeType = $node->getMimetype();
+		} catch (\Exception $exception) {
+			return false;
+		}
 
 		if (!$file->isMounted() && in_array($mimeType, $this->supportedMimes)) {
 			$imagePath = $node->getPath();
