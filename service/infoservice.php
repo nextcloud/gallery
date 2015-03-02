@@ -239,7 +239,7 @@ class InfoService extends Service {
 			return false;
 		}
 
-		if (!$file->isMounted() && in_array($mimeType, $this->supportedMimes)) {
+		if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
 			$imagePath = $node->getPath();
 			$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
 			$imageData = [
