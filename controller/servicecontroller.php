@@ -265,7 +265,7 @@ class ServiceController extends Controller {
 		}
 		$thumbnail = $preview['data'];
 		if ($width === 200) { // Only fixing the square thumbnails
-			$thumbnail['data'] = $this->previewService->previewValidator();
+			//$thumbnail['data'] = $this->previewService->previewValidator();
 		}
 		$thumbnail['status'] = $preview['status'];
 
