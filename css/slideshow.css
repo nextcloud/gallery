@@ -65,6 +65,15 @@
 	width: 38px;
 }
 
+#slideshow input.icon-view-toggle-background {
+	background-image: url("../img/toggle.svg");
+	background-size: 26px 26px;
+	-webkit-background-size: 26px 26px;
+	background-color: #fff;
+	height: 38px;
+	width: 38px;
+}
+
 #slideshow > * {
 	-webkit-transition: opacity 300ms;
 	-moz-transition: opacity 300ms;
@@ -134,7 +143,12 @@
 }
 
 #slideshow > .downloadImage {
-	right: 165px;
+	right: 75px;
+	top: 6px;
+}
+
+#slideshow > .changeBackground {
+	right: 135px;
 	top: 6px;
 }
 

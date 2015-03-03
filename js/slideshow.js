@@ -40,6 +40,9 @@ SlideShow.prototype.init = function (play) {
 		this.container.find('.play, .pause').hide();
 	}
 
+	// Hide the toggle background button until we have something to show
+	this.container.find('.changeBackground').hide();
+
 	var makeCallBack = function (handler) {
 		return function (evt) {
 			if (!this.active) {
@@ -88,6 +91,7 @@ SlideShow.prototype.buttonSetup = function (makeCallBack) {
 	this.container.children('.pause').click(makeCallBack(this.pause));
 	this.container.children('.play').click(makeCallBack(this.play));
 	this.container.children('.downloadImage').click(makeCallBack(this.getImageDownload));
+	this.container.children('.changeBackground').click(makeCallBack(this.toggleBackground));
 	//this.container.click(makeCallBack(this.next));
 };
 
@@ -207,6 +211,10 @@ SlideShow.prototype.show = function (index) {
 
 			image.setAttribute('alt', this.images[index].name);
 			$(image).css('position', 'absolute');
+			$(image).css('background-color', '#fff');
+			var $border = 50 / window.devicePixelRatio;
+			$(image).css('border', $border + 'px solid #fff');
+			$(image).css('box-sizing', 'border-box');
 
 			this.startBigshot(image);
 
@@ -243,6 +251,7 @@ SlideShow.prototype.startBigshot = function (image) {
 		maxZoom: maxZoom,
 		minZoom: 0,
 		touchUI: false,
+		// FIXME something should be done here to fix the problems introduced by the border
 		width: image.naturalWidth,
 		height: image.naturalHeight
 	}), image);
@@ -400,6 +409,25 @@ SlideShow.prototype.getImageDownload = function () {
 	return false;
 };
 
+SlideShow.prototype.toggleBackground = function () {
+	var toHex = function (x) {
+		return ("0" + parseInt(x).toString(16)).slice(-2);
+	};
+	var container = this.container.children('img');
+	var rgb = container.css('background-color').match(/\d+/g);
+	var hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
+	var $border = 50 / window.devicePixelRatio;
+
+	// Grey #363636
+	if (hex === "#000000") {
+		container.css('background-color', '#FFF');
+		container.css('border', $border + 'px solid #FFF');
+	} else {
+		container.css('background-color', '#000');
+		container.css('border', $border + 'px solid #000');
+	}
+};
+
 SlideShow.prototype.showErrorNotification = function () {
 	this.container.find('.notification').show();
 	this.container.find('.changeBackground').hide();
@@ -454,6 +482,11 @@ SlideShow._getSlideshowTemplate = function () {
 				{
 					el: '.downloadImage',
 					trans: 'Download',
+					toolTip: true
+				},
+				{
+					el: '.changeBackground',
+					trans: 'Toggle background',
 					toolTip: true
 				}
 			];
