@@ -53,9 +53,9 @@ Gallery.fillAlbums = function () {
 			Gallery.imageMap[image.path] = image;
 		}
 
-		for (path in Gallery.albumMap) {
-			Gallery.albumMap[path].images.sort(sortFunction);
-			Gallery.albumMap[path].subAlbums.sort(sortFunction);
+		for (var j = 0, keys = Object.keys(Gallery.albumMap); j < keys.length; j++) {
+			Gallery.albumMap[keys[j]].images.sort(sortFunction);
+			Gallery.albumMap[keys[j]].subAlbums.sort(sortFunction);
 		}
 	});
 };
