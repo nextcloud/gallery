@@ -264,6 +264,10 @@ Gallery.showNormal = function () {
 };
 
 Gallery.slideShow = function (images, startImage, autoPlay) {
+	if (startImage === undefined) {
+		OC.Notification.showTemporary(t('gallery', 'Aborting preview. Could not find the file'));
+		return false;
+	}
 	var start = images.indexOf(startImage);
 	images = images.map(function (image) {
 		var name = OC.basename(image.path);
