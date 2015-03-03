@@ -201,6 +201,7 @@ SlideShow.prototype.show = function (index) {
 	this.hideImage();
 	return this.loadImage(this.images[index]).then(function (image) {
 		this.container.css('background-position', '-10000px 0');
+		this.container.find('.changeBackground').show();
 
 		// check if we moved along while we were loading
 		if (this.current === index) {
