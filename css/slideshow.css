@@ -137,3 +137,20 @@
 	right: 165px;
 	top: 6px;
 }
+
+#slideshow > .notification {
+	margin: 0 auto;
+	max-width: 60%;
+	z-index: 8000;
+	background-color: #fc4;
+	border: 0;
+	padding: 1px 8px;
+	display: none;
+	position: relative;
+	top: 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	filter: alpha(opacity=90);
+	opacity: .9;
+}

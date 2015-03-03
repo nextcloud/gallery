@@ -18,6 +18,7 @@ var SlideShow = function (container, images, interval, maxScale) {
 	this.playing = false;
 	this.progressBar = container.find('.progress');
 	this.currentImage = null;
+	this.errorLoadingImage = false;
 	this.onStop = null;
 	this.active = false;
 	this.zoomable = null;
@@ -189,6 +190,7 @@ SlideShow.prototype.fullScreenToggle = function () {
 };
 
 SlideShow.prototype.show = function (index) {
+	this.hideErrorNotification();
 	this.container.show();
 	this.current = index;
 	this.container.css('background-position', 'center');
@@ -198,6 +200,7 @@ SlideShow.prototype.show = function (index) {
 
 		// check if we moved along while we were loading
 		if (this.current === index) {
+			this.errorLoadingImage = false;
 			this.currentImage = image;
 			this.currentImage.mimeType = this.images[index].mimeType;
 			this.container.append(image);
@@ -212,6 +215,16 @@ SlideShow.prototype.show = function (index) {
 				this.setTimeout();
 			}
 		}
+	}.bind(this), function () {
+		// Don't do anything if the user has moved along while we were loading as it would mess up
+		// the index
+		if (this.current === index) {
+			this.errorLoadingImage = true;
+			this.showErrorNotification();
+			this.setUrl(this.images[index].path);
+			this.images.splice(index, 1);
+		}
+
 	}.bind(this));
 };
 
@@ -328,6 +341,10 @@ SlideShow.prototype.next = function () {
 		this.zoomable.stopFlying();
 		this.resetZoom();
 	}
+	this.hideErrorNotification();
+	if (this.errorLoadingImage) {
+		this.current -= 1;
+	}
 	this.current = (this.current + 1) % this.images.length;
 	var next = (this.current + 1) % this.images.length;
 	this.show(this.current).then(function () {
@@ -341,6 +358,7 @@ SlideShow.prototype.previous = function () {
 		this.zoomable.stopFlying();
 		this.resetZoom();
 	}
+	this.hideErrorNotification();
 	this.current = (this.current - 1 + this.images.length) % this.images.length;
 	var previous = (this.current - 1 + this.images.length) % this.images.length;
 	this.show(this.current).then(function () {
@@ -380,6 +398,15 @@ SlideShow.prototype.togglePlay = function () {
 SlideShow.prototype.getImageDownload = function () {
 	OC.redirect(this.images[this.current].downloadUrl);
 	return false;
+};
+
+SlideShow.prototype.showErrorNotification = function () {
+	this.container.find('.notification').show();
+	this.container.find('.changeBackground').hide();
+};
+
+SlideShow.prototype.hideErrorNotification = function () {
+	this.container.find('.notification').hide();
 };
 
 SlideShow.buildUrl = function (endPoint, params) {
@@ -508,7 +535,8 @@ $(document).ready(function () {
 
 				for (var i = 0; i < files.length; i++) {
 					var file = files[i];
-					// We only add images to the slideshow if we can generate previews for this media type
+					// We only add images to the slideshow if we can generate previews for this
+					// media type
 					if (file.isPreviewAvailable || file.mimetype === 'image/svg+xml') {
 						var params = {
 							file: dir + file.name,
@@ -549,7 +577,8 @@ $(document).ready(function () {
 			// We only want to create slideshows for supported media types
 			for (var m = 0; m < supportedMimes.length; ++m) {
 				var mime = supportedMimes[m];
-				// Each click handler gets the same function and images array and is responsible to load the slideshow
+				// Each click handler gets the same function and images array and is responsible to
+				// load the slideshow
 				prepareFileActions(mime);
 				OCA.Files.fileActions.setDefault(mime, 'View');
 			}
