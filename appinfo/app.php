@@ -38,7 +38,7 @@ $navConfig = [
 	// The icon that will be shown in the navigation
 	// This file needs to exist in img/
 	'icon'  => $c->query('OCP\IURLGenerator')
-				 ->imagePath($appName, 'picture.svg'),
+				 ->imagePath($appName, 'app.svg'),
 
 	// The title of the application. This will be used in the
 	// navigation or on the settings page
