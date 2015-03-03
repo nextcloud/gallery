@@ -161,10 +161,11 @@ Gallery.view.viewAlbum = function (albumPath) {
 };
 
 Gallery.view.shareButton = function (albumPath) {
+	var shareButton = $('button.share');
 	if (albumPath === '' || Gallery.token) {
-		$('button.share').hide();
+		shareButton.hide();
 	} else {
-		$('button.share').show();
+		shareButton.show();
 	}
 };
 
