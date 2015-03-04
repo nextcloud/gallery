@@ -155,7 +155,10 @@ class InfoService extends Service {
 		$nodes = [];
 		$subFolders = [];
 		try {
-			$nodes = $folder->getDirectoryListing();
+			/** @type Folder $node */
+			if (!$folder->nodeExists('.nomedia')) {
+				$nodes = $folder->getDirectoryListing();
+			}
 		} catch (\Exception $exception) {
 			$this->logAndThrowNotFound($exception->getMessage());
 		}
