@@ -152,6 +152,7 @@ class InfoService extends Service {
 	 */
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
+		$nodes = [];
 		$subFolders = [];
 		try {
 			$nodes = $folder->getDirectoryListing();
@@ -162,7 +163,10 @@ class InfoService extends Service {
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			if ($node->getType() === 'dir') {
-				$subFolders[] = $node;
+				/** @type Folder $node */
+				if (!$node->nodeExists('.nomedia')) {
+					$subFolders[] = $node;
+				}
 			} else {
 				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
 				if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
