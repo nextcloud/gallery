@@ -17,9 +17,11 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IEventSource;
 use OCP\IURLGenerator;
 use OCP\IRequest;
+use OCP\Files\Folder;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Environment\EnvironmentException;
@@ -152,6 +154,11 @@ class ServiceController extends Controller {
 		try {
 			$currentFolder = $this->request->getParam('currentfolder');
 			$imagesFolder = $this->environment->getResourceFromPath($currentFolder);
+			
+			if ($this->isFolderPrivate($imagesFolder)) {
+				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], 500);
+			}
+			
 			$fromRootToFolder = $this->environment->getFromRootToFolder();
 
 			$folderData = [
@@ -240,6 +247,28 @@ class ServiceController extends Controller {
 		}
 	}
 
+	/**
+	 * Checks if we're authorised to look for pictures in this folder
+	 *
+	 * @param Folder $folder
+	 *
+	 * @return bool
+	 */
+	private function isFolderPrivate($folder) {
+		if ($folder->nodeExists('.nomedia')) {
+			return true;
+		} else {
+			$path = $folder->getPath();
+			if ($path !== '' && $path !== '/') {
+				$folder = $folder->getParent();
+
+				return $this->isFolderPrivate($folder);
+			}
+		}
+
+		return false;
+	}
+	
 	/**
 	 * Retrieves the thumbnail to send back to the browser
 	 *
