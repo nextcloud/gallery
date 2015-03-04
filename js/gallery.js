@@ -57,6 +57,11 @@ Gallery.fillAlbums = function () {
 			Gallery.albumMap[keys[j]].images.sort(sortFunction);
 			Gallery.albumMap[keys[j]].subAlbums.sort(sortFunction);
 		}
+	}, function () {
+		// Triggered if we couldn't find a working folder
+		Gallery.view.element.empty();
+		Gallery.showEmpty();
+		Gallery.currentAlbum = '';
 	});
 };
 
