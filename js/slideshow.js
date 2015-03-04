@@ -213,9 +213,8 @@ SlideShow.prototype.show = function (index) {
 			image.setAttribute('alt', this.images[index].name);
 			$(image).css('position', 'absolute');
 			$(image).css('background-color', '#fff');
-			var $border = 50 / window.devicePixelRatio;
-			$(image).css('border', $border + 'px solid #fff');
-			$(image).css('box-sizing', 'border-box');
+			var $border = 30 / window.devicePixelRatio;
+			$(image).css('outline', $border + 'px solid #fff');
 
 			this.startBigshot(image);
 
@@ -252,7 +251,6 @@ SlideShow.prototype.startBigshot = function (image) {
 		maxZoom: maxZoom,
 		minZoom: 0,
 		touchUI: false,
-		// FIXME something should be done here to fix the problems introduced by the border
 		width: image.naturalWidth / window.devicePixelRatio,
 		height: image.naturalHeight / window.devicePixelRatio
 	}), image);
@@ -413,15 +411,15 @@ SlideShow.prototype.toggleBackground = function () {
 	var container = this.container.children('img');
 	var rgb = container.css('background-color').match(/\d+/g);
 	var hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
-	var $border = 50 / window.devicePixelRatio;
+	var $border = 30 / window.devicePixelRatio;
 
 	// Grey #363636
 	if (hex === "#000000") {
 		container.css('background-color', '#FFF');
-		container.css('border', $border + 'px solid #FFF');
+		container.css('outline', $border + 'px solid #FFF');
 	} else {
 		container.css('background-color', '#000');
-		container.css('border', $border + 'px solid #000');
+		container.css('outline', $border + 'px solid #000');
 	}
 };
 
