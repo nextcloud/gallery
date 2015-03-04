@@ -300,9 +300,11 @@ class Preview {
 		$mime = $this->file->getMimeType();
 		$iconData = new Image();
 
-		$image = $this->dataDir . '/../' . Template::mimetype_icon($mime);
-		// Alternative which does not exist yet
-		//$image = $this->serverRoot() . Template::mimetype_icon($mime);
+		$mimeIconPath = Template::mimetype_icon($mime);
+		if (!empty(\OC::$WEBROOT)) {
+			$mimeIconPath = str_replace(\OC::$WEBROOT, '', $mimeIconPath);
+		}
+		$image = \OC::$SERVERROOT . $mimeIconPath;
 
 		$iconData->loadFromFile($image);
 
