@@ -5,7 +5,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 
 ![Screenshot](http://i.imgur.com/fxIai8t.jpg)
 ## Featuring
-* Support for large selection of media type (depending on ownCloud setup)
+* Support for large selection of media types (depending on ownCloud setup)
 * Large, zoomable previews
 * Native SVG support
 * Image download straight from the slideshow or the gallery
