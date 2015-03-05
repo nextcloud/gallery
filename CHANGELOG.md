@@ -1,3 +1,15 @@
+owncloud-galleryplus (2.0.5)
+* Fix performance issues related to the initialisation of the view by only loading folders and media files belonging to the current folder #17 (@oparoz)
+* Don't scan folders containing a '.nomedia' file #58 (@oparoz based on @jsalatiel's idea)
+* Don't scan folders stored on external storage (@oparoz)
+* Disable search field (since it's not working) #37 (@oparoz)
+* Display an error message in the slideshow if something went wrong when generating the full screen preview (@oparoz)
+* Change the default background of large previews to white so that dark images with a transparent background can be viewed #40 (@oparoz)
+* Let the user change the background colour of large previews #40 (@oparoz)
+* Fix the path to media type icons so that it works on all configurations (@oparoz)
+* Calculate picture size properly on High DPI devices (@oparoz)
+* Fix controls on mobile devices (@oparoz)
+
 owncloud-galleryplus (2.0.0)
 * ownCloud 8 only
 * Includes patch to previsualise Raw files (@oparoz)

@@ -1,15 +1,17 @@
-# Gallery+ [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=master) [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus) [![Build Status](https://travis-ci.org/interfasys/galleryplus.svg?branch=master)](https://travis-ci.org/interfasys/galleryplus)
-Media gallery for ownCloud which includes preview for all media types supported by your ownCloud installation.
+# Gallery+ [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=master) [![Codacy Badge](https://www.codacy.com/project/badge/bcf7325c616d42fbb730b8aa0e4505d9)](https://www.codacy.com/public/websitegithub/galleryplus) [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus) [![Build Status](https://travis-ci.org/interfasys/galleryplus.svg?branch=master)](https://travis-ci.org/interfasys/galleryplus)
+Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
 ![Screenshot](http://i.imgur.com/fxIai8t.jpg)
 ## Featuring
-* Support for large selection of media type (depending on ownCloud setup)
+* Support for large selection of media types (depending on ownCloud setup)
 * Large, zoomable previews
 * Native SVG support
 * Image download straight from the slideshow or the gallery
-* Seamlessly jump between the gallery and the files app
+* Seamlessly jump between the gallery and the files view
+* Ignore folders containing a '.nomedia' file
+* Mobile support
 
 Checkout the [full changelog](CHANGELOG.md) for more.
 
@@ -19,7 +21,7 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 
 ### Server requirements
 #### Required
-* PHP 5.4+
+* PHP 5.4 or 5.5
 
 #### Recommended
 * PHP 5.5 with caching enabled
@@ -59,12 +61,10 @@ That's it. You should be able to see more media types in your slideshows and gal
 
 ### Improving performance
 Some of ownCloud's internal operations make the gallery app very slow
-* Looking for files which are supported by the Gallery app
-* Generating a preview
+* Generating thumbnails the first time you open the app
+* Generating a full screen preview
 
-The searching part hasn't been addressed yet, but things are in motion to fix preview caching for ownCloud 8.1.
-
-You can benefit from these improvements right now if you're willing to patch yor ownCloud installation.
+Things are in motion to fix preview caching for ownCloud 8.1, but you can benefit from these improvements right now if you're willing to patch yor ownCloud installation.
 
 ```
 $ patch -p1 -l < apps/galleryplus/patches/max-preview.pull.13674.patch
