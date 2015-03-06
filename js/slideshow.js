@@ -242,7 +242,7 @@ SlideShow.prototype.startBigshot = function (image) {
 		this.zoomable = null;
 	}
 	var maxZoom = this.maxZoom;
-	if (image.width < this.smallImageDimension || image.height < this.smallImageDimension) {
+	if (image.width < this.smallImageDimension && image.height < this.smallImageDimension) {
 		maxZoom += 3;
 		this.currentImage.isSmallImage = true;
 	}
@@ -302,10 +302,14 @@ SlideShow.prototype.getSVG = function (source) {
 	xmlHttp.open("GET", source, false);
 	xmlHttp.send(null);
 	if (xmlHttp.status === 200) {
-		// Has to be base64 encoded for Firefox
-		return "data:image/svg+xml;base64," + btoa(xmlHttp.responseText);
+		if (xmlHttp.responseXML) {
+			// Has to be base64 encoded for Firefox
+			return "data:image/svg+xml;base64," + btoa(xmlHttp.responseText);
+		} else {
+			return source;
+		}
 	} else {
-		return source;
+		return null;
 	}
 };
 
