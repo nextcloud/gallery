@@ -242,7 +242,7 @@ SlideShow.prototype.startBigshot = function (image) {
 		this.zoomable = null;
 	}
 	var maxZoom = this.maxZoom;
-	if (image.width < this.smallImageDimension || image.height < this.smallImageDimension) {
+	if (image.width < this.smallImageDimension && image.height < this.smallImageDimension) {
 		maxZoom += 3;
 		this.currentImage.isSmallImage = true;
 	}
