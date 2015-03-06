@@ -1,5 +1,5 @@
---- lib/private/preview/bitmap.php.orig	2015-03-06 15:14:17.770952395 +0000
-+++ lib/private/preview/bitmap.php	2015-03-06 15:02:38.803951481 +0000
+--- a/lib/private/preview/bitmap.php.orig	2015-03-06 15:14:17.770952395 +0000
++++ b/lib/private/preview/bitmap.php	2015-03-06 15:02:38.803951481 +0000
 @@ -1,6 +1,7 @@
  <?php
  /**
