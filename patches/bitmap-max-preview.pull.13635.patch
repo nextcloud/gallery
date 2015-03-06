@@ -1,19 +1,5 @@
-From 3783c3ade4f52b643a70ca44ff6c1abdf81fb4f5 Mon Sep 17 00:00:00 2001
-From: Olivier Paroz <github@oparoz.com>
-Date: Fri, 23 Jan 2015 18:04:52 +0100
-Subject: [PATCH 1/2] The bitmap preview class now takes maxX and maxY into
- consideration when generating previews This is a fix for
- https://github.com/owncloud/core/issues/13607 and is part of the global
- programme: https://github.com/owncloud/core/issues/13609
-
----
- lib/private/preview/bitmap.php | 110 +++++++++++++++++++++++++++++++++++++----
- 1 file changed, 101 insertions(+), 9 deletions(-)
-
-diff --git a/lib/private/preview/bitmap.php b/lib/private/preview/bitmap.php
-index 25f65cf..80c8863 100644
---- a/lib/private/preview/bitmap.php
-+++ b/lib/private/preview/bitmap.php
+--- lib/private/preview/bitmap.php.orig	2015-03-06 15:14:17.770952395 +0000
++++ lib/private/preview/bitmap.php	2015-03-06 15:02:38.803951481 +0000
 @@ -1,6 +1,7 @@
  <?php
  /**
@@ -23,10 +9,10 @@ index 25f65cf..80c8863 100644
   * This file is licensed under the Affero General Public License version 3 or
   * later.
   * See the COPYING-README file.
-@@ -8,30 +9,121 @@
-
+@@ -8,31 +9,93 @@
+ 
  namespace OC\Preview;
-
+ 
 +use Imagick;
 +
 +/**
@@ -48,7 +34,10 @@ index 25f65cf..80c8863 100644
 +		$this->maxDims = [$maxX, $maxY];
 +
  		$tmpPath = $fileview->toTmpFile($path);
-
++		if (!$tmpPath) {
++			return false;
++		}
+ 
 -		//create imagick object from bitmap or vector file
 +		// Creates \Imagick object from bitmap or vector file
  		try {
@@ -63,9 +52,9 @@ index 25f65cf..80c8863 100644
 +			\OC_Log::write('core', 'ImageMagick says : ' . $e->getmessage(), \OC_Log::ERROR);
  			return false;
  		}
-
+ 
  		unlink($tmpPath);
-
+ 
  		//new bitmap image object
 -		$image = new \OC_Image($bp);
 +		$image = new \OC_Image();
@@ -73,7 +62,8 @@ index 25f65cf..80c8863 100644
  		//check if image object is valid
  		return $image->valid() ? $image : false;
  	}
-+
+-}
+ 
 +	/**
 +	 * Returns a preview of maxX times maxY dimensions in PNG format
 +	 *
@@ -117,63 +107,8 @@ index 25f65cf..80c8863 100644
 +		if ($previewWidth > $maxX || $previewHeight > $maxY) {
 +			// TODO: LANCZOS is the default filter, CATROM could bring similar results faster
 +			$bp->resizeImage($maxX, $maxY, imagick::FILTER_LANCZOS, 1, true);
-+
-+			// Fitting preview in max dimensions
-+			list($newX, $newY) = $this->calculateNewPosition($previewWidth, $previewHeight);
-+			// Transparent background
-+			$bp->setImageBackgroundColor('None');
-+			$bp->extentImage($maxX, $maxY, -$newX, -$newY);
 +		}
 +
 +		return $bp;
 +	}
-+
-+	/**
-+	 * Calculates the new position so that the preview sits in the middle of the area requested by the client
-+	 *
-+	 * @link https://stackoverflow.com/questions/3050952/resize-an-image-and-fill-gaps-of-proportions-with-a-color
-+	 *
-+	 * @param int $previewWidth the width of the resized preview
-+	 * @param int $previewHeight the height of the resized preview
-+	 *
-+	 * @return array
-+	 */
-+	private function calculateNewPosition($previewWidth, $previewHeight) {
-+		list($maxX, $maxY) = $this->maxDims;
-+		if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
-+			$newHeight = $previewHeight * ($maxX / $previewWidth);
-+			$newX = 0;
-+			$newY = round(abs($maxY - $newHeight) / 2);
-+		} else {
-+			$newWidth = $previewWidth * ($maxY / $previewHeight);
-+			$newX = round(abs($maxX - $newWidth) / 2);
-+			$newY = 0;
-+		}
-+
-+		return [$newX, $newY];
-+	}
- }
-
-From bf349e3041f631a68da3cbcacde3116a7f98af19 Mon Sep 17 00:00:00 2001
-From: Olivier Paroz <github@oparoz.com>
-Date: Fri, 23 Jan 2015 18:47:23 +0100
-Subject: [PATCH 2/2] Only process a file if we actually have one
-
----
- lib/private/preview/bitmap.php | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/lib/private/preview/bitmap.php b/lib/private/preview/bitmap.php
-index 80c8863..c1dacc5 100644
---- a/lib/private/preview/bitmap.php
-+++ b/lib/private/preview/bitmap.php
-@@ -30,6 +30,9 @@ public function getThumbnail($path, $maxX, $maxY, $scalingup, $fileview) {
- 		$this->maxDims = [$maxX, $maxY];
-
- 		$tmpPath = $fileview->toTmpFile($path);
-+		if (!$tmpPath) {
-+			return false;
-+		}
-
- 		// Creates \Imagick object from bitmap or vector file
- 		try {
++}
