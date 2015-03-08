@@ -136,8 +136,9 @@ Album.prototype.getNextRow = function (width) {
 	 * @returns {$.Deferred<Row>}
 	 */
 	var addImages = function (album, row, images) {
+		var numberOfThumbnailsToPreload = 6;
 		if ((album.viewedItems + 5) > album.preloadOffset) {
-			album.preload(20);
+			album.preload(numberOfThumbnailsToPreload);
 		}
 
 		var image = images[album.viewedItems];
@@ -170,15 +171,27 @@ Album.prototype.getThumbnailPaths = function (count) {
  * @param count
  */
 Album.prototype.preload = function (count) {
-	var items = this.subAlbums.concat(this.images);
-
+	var items = this.subAlbums.concat(this.images);	
+	var realCounter = 0;
+	var maxThumbs = 0;
 	var paths = [];
 	var squarePaths = [];
 	for (var i = this.preloadOffset; i < this.preloadOffset + count && i < items.length; i++) {
 		if (items[i].subAlbums) {
-			squarePaths = squarePaths.concat(items[i].getThumbnailPaths(4));
+			maxThumbs = 4;
+			var imagesLength = items[i].images.length;
+			if (imagesLength > 0 && imagesLength < 4) {
+				maxThumbs = imagesLength;
+			}
+			squarePaths = squarePaths.concat(items[i].getThumbnailPaths(maxThumbs));
+			realCounter = realCounter + maxThumbs;
 		} else {
 			paths = paths.concat(items[i].getThumbnailPaths());
+			realCounter++;
+		}
+		if (realCounter >= count) {
+			i++;
+			break;
 		}
 	}
 
