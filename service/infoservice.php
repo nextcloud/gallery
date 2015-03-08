@@ -287,7 +287,11 @@ class InfoService extends Service {
 		}
 		$mimeType = $node->getMimetype();
 		if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
-			$imagePath = $node->getPath();
+			try {
+				$imagePath = $node->getPath();
+			} catch (\Exception $exception) {
+				return false;
+			}
 			$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
 			$imageData = [
 				'path'     => $fixedPath,
@@ -295,9 +299,9 @@ class InfoService extends Service {
 			];
 			$this->images[] = $imageData;
 
-			/*$this->logger->debug(
+			$this->logger->debug(
 				"Image path : {path}", ['path' => $node->getPath()]
-			);*/
+			);
 
 			return true;
 		}
