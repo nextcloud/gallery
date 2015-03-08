@@ -161,10 +161,18 @@ class PreviewService extends Service {
 	 * Makes sure we return previews of the asked dimensions and fix the cache
 	 * if necessary
 	 *
+	 * @param bool $square
+	 * @param bool $base64Encode
+	 *
 	 * @return resource
 	 */
-	public function previewValidator() {
-		return $this->previewManager->previewValidator();
+	public function previewValidator($square, $base64Encode) {
+		$preview = $this->previewManager->previewValidator($square);
+		if ($base64Encode) {
+			$preview = $this->encode($preview);
+		}
+
+		return $preview;
 	}
 
 	/**
