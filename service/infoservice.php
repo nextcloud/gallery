@@ -152,22 +152,18 @@ class InfoService extends Service {
 	 */
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
-		$nodes = [];
 		$subFolders = [];
-		try {
-			$nodes = $folder->getDirectoryListing();
-		} catch (\Exception $exception) {
-			$this->logAndThrowNotFound($exception->getMessage());
-		}
+		$nodes = $this->getNodes($folder, $subDepth);
 
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
-			if ($node->getType() === 'dir') {
+			$nodeType = $this->getNodeType($node);
+			if ($nodeType === 'dir') {
 				/** @type Folder $node */
 				if (!$node->nodeExists('.nomedia')) {
 					$subFolders[] = $node;
 				}
-			} else {
+			} elseif ($nodeType === 'file') {
 				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
 				if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
 					break;
@@ -176,6 +172,56 @@ class InfoService extends Service {
 		}
 
 		$this->searchSubFolders($subFolders, $albumImageCounter, $subDepth);
+	}
+
+	/**
+	 * Retrieves all files and sub-folders contained in a folder
+	 *
+	 * If we can't find anything in the current folder, we throw an exception as there is no point
+	 * in doing any more work, but if we're looking at a sub-folder, we return an empty array so
+	 * that it can be simply ignored
+	 *
+	 * @param Folder $folder
+	 * @param int $subDepth
+	 *
+	 * @return array
+	 *
+	 * @throws NotFoundServiceException
+	 */
+	private function getNodes($folder, $subDepth) {
+		$nodes = [];
+		try {
+			if ($folder->isReadable() && !$folder->isMounted()) {
+				$nodes = $folder->getDirectoryListing();
+			}
+		} catch (\Exception $exception) {
+			if ($subDepth === 0) {
+				$this->logAndThrowNotFound($exception->getMessage());
+			} else {
+				return $nodes;
+			}
+		}
+
+		return $nodes;
+	}
+
+	/**
+	 * Returns the node type, either 'dir' or 'file'
+	 *
+	 * If there is a problem, we return an empty string so that the node can be ignored
+	 *
+	 * @param Node $node
+	 *
+	 * @return string
+	 */
+	private function getNodeType($node) {
+		try {
+			$nodeType = $node->getType();
+		} catch (\Exception $exception) {
+			return '';
+		}
+
+		return $nodeType;
 	}
 
 	/**
@@ -234,27 +280,24 @@ class InfoService extends Service {
 	 * @return bool
 	 */
 	private function isPreviewAvailable($node) {
-		// This can break on oC 8. See https://github.com/owncloud/core/issues/14390
 		try {
 			$mimeType = $node->getMimetype();
+			if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
+				$imagePath = $node->getPath();
+				$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
+				$imageData = [
+					'path'     => $fixedPath,
+					'mimetype' => $mimeType
+				];
+				$this->images[] = $imageData;
+				/*$this->logger->debug(
+					"Image path : {path}", ['path' => $node->getPath()]
+				);*/
+
+				return true;
+			}
 		} catch (\Exception $exception) {
 			return false;
-		}
-
-		if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
-			$imagePath = $node->getPath();
-			$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
-			$imageData = [
-				'path'     => $fixedPath,
-				'mimetype' => $mimeType
-			];
-			$this->images[] = $imageData;
-
-			/*$this->logger->debug(
-				"Image path : {path}", ['path' => $node->getPath()]
-			);*/
-
-			return true;
 		}
 
 		return false;
