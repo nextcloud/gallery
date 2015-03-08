@@ -281,7 +281,7 @@ class InfoService extends Service {
 	 */
 	private function isPreviewAvailable($node) {
 		try {
-			$file->getFileInfo();
+			$node->getFileInfo();
 		} catch (\Exception $exception) {
 			return false;
 		}
