@@ -154,19 +154,23 @@ class Preview {
 	 * smaller than the asked dimensions. This happens when one of the original
 	 * dimension is smaller than what is asked for
 	 *
+	 * For square previews, we also need to make sure the entire surface is filled in order to make
+	 * it easier to work with when building albums
+	 *
+	 * @param bool $square
+	 *
 	 * @return resource
 	 */
-	public function previewValidator() {
-		list($maxX, $maxY) = $this->dims;
+	public function previewValidator($square) {
+		list($maxWidth, $maxHeight) = $this->dims;
 		$previewData = $this->preview->getPreview();
-		$previewX = $previewData->width();
-		$previewY = $previewData->height();
+		$previewWidth = $previewData->width();
+		$previewHeight = $previewData->height();
 
-		if (($previewX > $maxX
-			 || ($previewX < $maxX || $previewY < $maxY))
-		) {
-			$fixedPreview = $this->fixPreview($previewData, $maxX, $maxY);
-			$previewData = $this->fixPreviewCache($fixedPreview);
+		if ($previewWidth !== $maxWidth || $previewHeight !== $maxHeight) {
+			$previewData = $this->fixPreview(
+				$previewData, $previewWidth, $previewHeight, $maxWidth, $maxHeight, $square
+			);
 		}
 
 		return $previewData;
@@ -202,25 +206,90 @@ class Preview {
 	}
 
 	/**
-	 * Makes a preview fit in the asked dimension and fills the empty space
+	 * Makes a preview fit in the asked dimension and, if required, fills the empty space
 	 *
 	 * @param \OC_Image $previewData
+	 * @param int $previewWidth
+	 * @param int $previewHeight
+	 * @param int $maxWidth
+	 * @param int $maxHeight
+	 * @param bool $square
+	 *
+	 * @return mixed
+	 */
+	private function fixPreview(
+		$previewData, $previewWidth, $previewHeight, $maxWidth, $maxHeight, $square
+	) {
+
+		if ($square || $previewWidth > $maxWidth || $previewHeight > $maxHeight) {
+			$fixedPreview = $this->resize(
+				$previewData, $previewWidth, $previewHeight, $maxWidth, $maxHeight, $square
+			);
+			$previewData = $this->fixPreviewCache($fixedPreview);
+		}
+
+		return $previewData;
+	}
+
+	/**
+	 * Makes a preview fit in the asked dimension and, if required, fills the empty space
+	 *
+	 * @param \OC_Image $previewData
+	 * @param int $previewWidth
+	 * @param int $previewHeight
+	 * @param int $maxWidth
+	 * @param int $maxHeight
+	 * @param bool $fill
 	 *
 	 * @return resource
 	 */
-	private function fixPreview($previewData) {
-		list($maxX, $maxY) = $this->dims;
-		$previewWidth = $previewData->width();
-		$previewHeight = $previewData->height();
-		$fixedPreview = imagecreatetruecolor($maxX, $maxY); // Creates the canvas
+	private function resize(
+		$previewData, $previewWidth, $previewHeight, $maxWidth, $maxHeight, $fill
+	) {
+		list($newX, $newY, $newWidth, $newHeight) =
+			$this->calculateNewDimensions($previewWidth, $previewHeight, $maxWidth, $maxHeight);
+
+		if (!$fill) {
+			$newX = $newY = 0;
+			$maxWidth = $newWidth;
+			$maxHeight = $newHeight;
+		}
+
+		$resizedPreview = $this->processPreview(
+			$previewData, $previewWidth, $previewHeight, $newWidth, $newHeight, $maxWidth,
+			$maxHeight, $newX, $newY
+		);
+
+		return $resizedPreview;
+	}
+
+	/**
+	 * Mixes a transparent background with a resized foreground preview
+	 *
+	 * @param \OC_Image $previewData
+	 * @param int $previewWidth
+	 * @param int $previewHeight
+	 * @param int $newWidth
+	 * @param int $newHeight
+	 * @param int $maxWidth
+	 * @param int $maxHeight
+	 * @param int $newX
+	 * @param int $newY
+	 *
+	 * @return resource
+	 */
+	private function processPreview(
+		$previewData, $previewWidth, $previewHeight, $newWidth, $newHeight, $maxWidth, $maxHeight,
+		$newX, $newY
+	) {
+		$fixedPreview = imagecreatetruecolor($maxWidth, $maxHeight); // Creates the canvas
 
 		// We make the background transparent
 		imagealphablending($fixedPreview, false);
 		$transparency = imagecolorallocatealpha($fixedPreview, 0, 0, 0, 127);
 		imagefill($fixedPreview, 0, 0, $transparency);
 		imagesavealpha($fixedPreview, true);
-		list($newX, $newY, $newWidth, $newHeight) =
-			$this->calculateNewDimensions($previewWidth, $previewHeight);
+
 
 		imagecopyresampled(
 			$fixedPreview, $previewData->resource(),
@@ -237,20 +306,21 @@ class Preview {
 	 *
 	 * @param int $previewWidth
 	 * @param int $previewHeight
+	 * @param int $maxWidth
+	 * @param int $maxHeight
 	 *
 	 * @return array
 	 */
-	private function calculateNewDimensions($previewWidth, $previewHeight) {
-		list($maxX, $maxY) = $this->dims;
-		if (($previewWidth / $previewHeight) >= ($maxX / $maxY)) {
-			$newWidth = $maxX;
-			$newHeight = $previewHeight * ($maxX / $previewWidth);
+	private function calculateNewDimensions($previewWidth, $previewHeight, $maxWidth, $maxHeight) {
+		if (($previewWidth / $previewHeight) >= ($maxWidth / $maxHeight)) {
+			$newWidth = $maxWidth;
+			$newHeight = $previewHeight * ($maxWidth / $previewWidth);
 			$newX = 0;
-			$newY = round(abs($maxY - $newHeight) / 2);
+			$newY = round(abs($maxHeight - $newHeight) / 2);
 		} else {
-			$newWidth = $previewWidth * ($maxY / $previewHeight);
-			$newHeight = $maxY;
-			$newX = round(abs($maxX - $newWidth) / 2);
+			$newWidth = $previewWidth * ($maxHeight / $previewHeight);
+			$newHeight = $maxHeight;
+			$newX = round(abs($maxWidth - $newWidth) / 2);
 			$newY = 0;
 		}
 

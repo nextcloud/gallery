@@ -290,11 +290,11 @@ class ServiceController extends Controller {
 				$image, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		} catch (ServiceException $exception) {
-			return $this->error($exception);
+			$preview = ['data' => null, 'status' => 500, 'type' => 'error'];
 		}
 		$thumbnail = $preview['data'];
-		if ($width === 200) { // Only fixing the square thumbnails
-			//$thumbnail['data'] = $this->previewService->previewValidator();
+		if ($preview['status'] === 200 && $preview['type'] === 'preview') {
+			$thumbnail['preview'] = $this->previewService->previewValidator($square, $base64Encode);
 		}
 		$thumbnail['status'] = $preview['status'];
 
@@ -331,13 +331,16 @@ class ServiceController extends Controller {
 		$status = Http::STATUS_OK;
 		$previewRequired = $this->previewService->isPreviewRequired($image, $animatedPreview);
 		if ($previewRequired) {
+			$type = 'preview';
 			$preview = $this->previewService->createPreview(
 				$image, $width, $height, $keepAspect, $base64Encode
 			);
 			if (!$this->previewService->isPreviewValid()) {
+				$type = 'error';
 				$status = Http::STATUS_NOT_FOUND;
 			}
 		} else {
+			$type = 'download';
 			$preview = $this->downloadService->downloadFile($image, $base64Encode);
 		}
 
