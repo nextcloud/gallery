@@ -59,9 +59,9 @@ class InfoService extends Service {
 		'application/x-font',
 	];
 	/**
-	 * @type Node[]|null
+	 * @type Node[]
 	 */
-	private $images;
+	private $images = [];
 	/**
 	 * @type string[]
 	 */
