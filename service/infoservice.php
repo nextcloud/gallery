@@ -192,10 +192,8 @@ class InfoService extends Service {
 	private function haveEnoughPictures($albumImageCounter, $subDepth) {
 		if ($subDepth === 0) {
 			return false;
-		} elseif ($subDepth === 1) {
-			$maxAlbumThumbnail = 4;
 		} else {
-			$maxAlbumThumbnail = 1;
+			$maxAlbumThumbnail = 4;
 		}
 		if ($albumImageCounter === $maxAlbumThumbnail) {
 			return true;
