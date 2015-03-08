@@ -280,13 +280,12 @@ class InfoService extends Service {
 	 * @return bool
 	 */
 	private function isPreviewAvailable($node) {
-		// This can break on oC 8. See https://github.com/owncloud/core/issues/14390
 		try {
-			$mimeType = $node->getMimetype();
+			$file->getFileInfo();
 		} catch (\Exception $exception) {
 			return false;
 		}
-
+		$mimeType = $node->getMimetype();
 		if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
 			$imagePath = $node->getPath();
 			$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
