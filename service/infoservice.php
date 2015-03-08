@@ -191,7 +191,9 @@ class InfoService extends Service {
 	private function getNodes($folder, $subDepth) {
 		$nodes = [];
 		try {
-			$nodes = $folder->getDirectoryListing();
+			if ($folder->isReadable() && !$folder->isMounted()) {
+				$nodes = $folder->getDirectoryListing();
+			}
 		} catch (\Exception $exception) {
 			if ($subDepth === 0) {
 				$this->logAndThrowNotFound($exception->getMessage());
