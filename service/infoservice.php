@@ -281,29 +281,23 @@ class InfoService extends Service {
 	 */
 	private function isPreviewAvailable($node) {
 		try {
-			$node->getFileInfo();
+			$mimeType = $node->getMimetype();
+			if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
+				$imagePath = $node->getPath();
+				$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
+				$imageData = [
+					'path'     => $fixedPath,
+					'mimetype' => $mimeType
+				];
+				$this->images[] = $imageData;
+				/*$this->logger->debug(
+					"Image path : {path}", ['path' => $node->getPath()]
+				);*/
+
+				return true;
+			}
 		} catch (\Exception $exception) {
 			return false;
-		}
-		$mimeType = $node->getMimetype();
-		if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
-			try {
-				$imagePath = $node->getPath();
-			} catch (\Exception $exception) {
-				return false;
-			}
-			$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
-			$imageData = [
-				'path'     => $fixedPath,
-				'mimetype' => $mimeType
-			];
-			$this->images[] = $imageData;
-
-			$this->logger->debug(
-				"Image path : {path}", ['path' => $node->getPath()]
-			);
-
-			return true;
 		}
 
 		return false;
