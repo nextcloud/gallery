@@ -346,7 +346,8 @@ class ServiceController extends Controller {
 
 		return [
 			'data'   => $preview,
-			'status' => $status
+			'status' => $status,
+			'type'   => $type
 		];
 	}
 
