@@ -171,7 +171,7 @@ Album.prototype.getThumbnailPaths = function (count) {
  * @param count
  */
 Album.prototype.preload = function (count) {
-	var items = this.subAlbums.concat(this.images);	
+	var items = this.subAlbums.concat(this.images);
 	var realCounter = 0;
 	var maxThumbs = 0;
 	var paths = [];
