@@ -22,8 +22,8 @@ Album.prototype = {
 	_getThumbnail: function () {
 		if (this.images.length) {
 			return this.images[0].getThumbnail(1);
-		}else {
-	        	return this.subAlbums[0]._getThumbnail();
+		} else {
+			return this.subAlbums[0]._getThumbnail();
 		}
 	},
 	/**
@@ -228,7 +228,7 @@ Album.prototype = {
 	
 		return paths;
 	}
-}
+};
 
 /**
  * Creates a row
@@ -290,7 +290,7 @@ Row.prototype = {
 		};
 		return addImageToDom(row, this.items, 0);
 	}
-}
+};
 
 /**
  * Creates a new image object to store information about a media file
@@ -360,7 +360,9 @@ GalleryImage.prototype = {
 		if (this.domDef === null || this.domHeigth !== targetHeight) {
 			this.domHeigth = targetHeight;
 			this.domDef = this.getThumbnail().then(function (img) {
-				var a = $('<a/>').addClass('image').attr('href', '#' + encodeURI(image.path)).attr('data-path', image.path);
+				var a = $('<a/>').addClass('image').attr('href', '#' + 
+				encodeURI(image.path)).attr('data-path', image.path);
+				
 				img.height = targetHeight;
 				img.width = targetHeight * img.ratio;
 				img.setAttribute('width', 'auto');
@@ -371,4 +373,4 @@ GalleryImage.prototype = {
 		}
 		return this.domDef;
 	}
-}
+};
