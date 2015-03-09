@@ -89,11 +89,12 @@ class PageController extends Controller {
 	 *
 	 * Shows the albums and pictures the token gives access to
 	 *
+	 * @param string $token
+	 *
 	 * @return TemplateResponse
 	 */
-	public function publicIndex() {
+	public function publicIndex($token) {
 		$appName = $this->appName;
-		$token = $this->request->getParam('token');
 		$displayName = $this->environment->getDisplayName();
 		$albumName = $this->environment->getSharedFolderName();
 

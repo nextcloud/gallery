@@ -1,64 +1,64 @@
 /* global OC, $, Gallery */
-function Thumbnail (path, square, token) {
-	this.token = token;
+function Thumbnail (path, square) {
 	this.square = square;
 	this.path = path;
 	this.image = null;
 	this.loadingDeferred = new $.Deferred();
+	this.height = 200;
+	this.width = 400;
 	this.ratio = null;
+	this.valid = true;
+	this.status = 200;
 }
 
-Thumbnail.map = {};
-Thumbnail.squareMap = {};
-Thumbnail.height = 200;
-Thumbnail.width = 400;
+var Thumbnails = {};
+Thumbnails.map = {};
+Thumbnails.squareMap = {};
 
-Thumbnail.get = function (path, square, token) {
+Thumbnails.get = function (path, square) {
 	var map = {};
 	if (square === 1) {
-		map = Thumbnail.squareMap;
+		map = Thumbnails.squareMap;
 		square = 1;
 	} else if (square === 2) {//needed Album thumbnail preview if 2 or 3 pics
-		map = Thumbnail.squareMap;
+		map = Thumbnails.squareMap;
 		square = 0;
 	} else {
-		map = Thumbnail.map;
+		map = Thumbnails.map;
 		square = 0;
 	}
 	if (!map[path]) {
-		map[path] = new Thumbnail(path, square, token);
+		map[path] = new Thumbnail(path, square);
 	}
 	return map[path];
 };
 
-Thumbnail.loadBatch = function (paths, square, token) {
-	var map = (square) ? Thumbnail.squareMap : Thumbnail.map;
+Thumbnails.loadBatch = function (paths, square) {
+	var map = (square) ? Thumbnails.squareMap : Thumbnails.map;
 	paths = paths.filter(function (path) {
 		return !map[path];
 	});
-	var thumbnails = {};
-	if (paths.length) {
-		paths.forEach(function (path) {
-			var thumb = new Thumbnail(path, square, token);
+	var batch = {};
+	var i, pathsLength = paths.length;
+	if (pathsLength) {
+		for (i = 0; i < pathsLength; i++) {
+			var thumb = new Thumbnail(paths[i], square);
 			thumb.image = new Image();
-			map[path] = thumbnails[path] = thumb;
-		});
-
+			map[paths[i]] = batch[paths[i]] = thumb;
+		}
 		var params = {
 			images: paths.join(';'),
 			scale: window.devicePixelRatio,
-			square: (square) ? 1 : 0,
-			token: (token) ? token : ''
+			square: (square) ? 1 : 0
 		};
 		var url = Gallery.buildUrl('thumbnails', params);
 
 		var eventSource = new OC.EventSource(url);
 		eventSource.listen('preview', function (preview) {
-			//var status = preview.status;
 			var path = preview.path;
-			var thumb = thumbnails[path];
+			var thumb = batch[path];
+			thumb.status = preview.status;
 			thumb.image.onload = function () {
-				Thumbnail.loadingCount--;
 				// Fix for SVG files which can come in all sizes
 				if (square) {
 					thumb.image.width = 200;
@@ -68,9 +68,13 @@ Thumbnail.loadBatch = function (paths, square, token) {
 				thumb.image.originalWidth = 200 * thumb.image.ratio;
 				thumb.loadingDeferred.resolve(thumb.image);
 			};
+			thumb.image.onerror = function () {
+				thumb.valid = false;
+				thumb.loadingDeferred.resolve(thumb.image);
+			};
 			thumb.image.src = 'data:' + preview.mimetype + ';base64,' + preview.preview;
 		});
 	}
 
-	return thumbnails;
+	return batch;
 };

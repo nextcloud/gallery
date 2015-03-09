@@ -1,4 +1,4 @@
-/* global OC, $, _, t, Album, GalleryImage, SlideShow, Thumbnail, oc_requesttoken */
+/* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken */
 var Gallery = {};
 Gallery.images = [];
 Gallery.currentAlbum = '';
@@ -8,15 +8,15 @@ Gallery.imageMap = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
 
-Gallery.getAlbum = function (path, token) {
+Gallery.getAlbum = function (path) {
 	if (!Gallery.albumMap[path]) {
-		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path), token);
+		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
 		if (path !== '') {
 			var parent = OC.dirname(path);
 			if (parent === path) {
 				parent = '';
 			}
-			Gallery.getAlbum(parent, token).subAlbums.push(Gallery.albumMap[path]);
+			Gallery.getAlbum(parent).subAlbums.push(Gallery.albumMap[path]);
 		}
 	}
 	return Gallery.albumMap[path];
@@ -57,6 +57,11 @@ Gallery.fillAlbums = function () {
 			Gallery.albumMap[keys[j]].images.sort(sortFunction);
 			Gallery.albumMap[keys[j]].subAlbums.sort(sortFunction);
 		}
+	}, function () {
+		// Triggered if we couldn't find a working folder
+		Gallery.view.element.empty();
+		Gallery.showEmpty();
+		Gallery.currentAlbum = '';
 	});
 };
 
@@ -289,12 +294,10 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	});
 
 	var slideShow = new SlideShow($('#slideshow'), images);
-	Thumbnail.concurrent = 1;
 	slideShow.onStop = function () {
 		Gallery.activeSlideShow = null;
 		$('#content').show();
 		location.hash = encodeURI(Gallery.currentAlbum);
-		Thumbnail.concurrent = 3;
 	};
 	Gallery.activeSlideShow = slideShow;
 
