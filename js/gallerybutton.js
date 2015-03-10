@@ -12,12 +12,13 @@ GalleryButton.onFileListUpdated = function () {
 
 	if (GalleryButton.isPublic) {
 		fileList = OCA.Sharing.PublicApp.fileList;
-		files = fileList.files;
 	} else {
 		fileList = FileList;
-		files = fileList.files;
 	}
+	files = fileList.files;
 
+	GalleryButton.buildUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
+	
 	for (var i = 0; i < files.length; i++) {
 		var file = files[i];
 		if (file.isPreviewAvailable) {
@@ -27,11 +28,7 @@ GalleryButton.onFileListUpdated = function () {
 	}
 
 	if (hasImages) {
-		GalleryButton.button.toggleClass('hidden', false);
-		GalleryButton.buildUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
 		GalleryButton.hijackShare();
-	} else {
-		GalleryButton.button.toggleClass('hidden', true);
 	}
 };
 
@@ -96,7 +93,7 @@ $(document).ready(function () {
 			$('#fileList').on('updated', GalleryButton.onFileListUpdated);
 
 			// toggle for opening shared file list as picture view
-			GalleryButton.button = $('<div id="openAsFileListButton" class="button hidden">' +
+			GalleryButton.button = $('<div id="openAsFileListButton" class="button">' +
 			'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') + '"' +
 			'alt="' + t('gallery', 'Picture view') + '"/>' +
 			'</div>');
