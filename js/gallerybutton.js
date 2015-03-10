@@ -17,6 +17,8 @@ GalleryButton.onFileListUpdated = function () {
 	}
 	files = fileList.files;
 
+	GalleryButton.buildUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
+	
 	for (var i = 0; i < files.length; i++) {
 		var file = files[i];
 		if (file.isPreviewAvailable) {
@@ -26,13 +28,8 @@ GalleryButton.onFileListUpdated = function () {
 	}
 
 	if (hasImages) {
-		//GalleryButton.button.toggleClass('hidden', false);
-		GalleryButton.buildUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
 		GalleryButton.hijackShare();
 	}
-	/*else {
-		GalleryButton.button.toggleClass('hidden', true);
-	}*/
 };
 
 GalleryButton.buildUrl = function (dir) {
