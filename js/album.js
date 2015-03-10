@@ -244,14 +244,20 @@ function Row (targetWidth) {
 
 Row.prototype = {
 	/**
+	 * Calculates if the row is full
+	 *
 	 * @returns {boolean}
+	 * @private
 	 */
 	_isFull: function () {
 		return this.width > this.targetWidth;
 	},
 	
 	/**
+	 * Adds sub-albums and images to the row until it's full
+	 * 
 	 * @param {GalleryImage} image
+	 * 
 	 * @return {$.Deferred<bool>} true if more images can be added to the row
 	 */
 	addElement: function (image) {
@@ -297,11 +303,15 @@ Row.prototype = {
  *
  * @param src
  * @param path
+ * @param fileId
+ * @param mimeType
  * @constructor
  */
-function GalleryImage (src, path) {
+function GalleryImage (src, path, fileId, mimeType) {
 	this.src = src;
 	this.path = path;
+	this.fileId = fileId;
+	this.mimeType = mimeType;
 	this.thumbnail = null;
 	this.domDef = null;
 	this.domHeigth = null;
