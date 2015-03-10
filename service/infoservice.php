@@ -149,29 +149,29 @@ class InfoService extends Service {
 	 *
 	 * @param Folder $folder
 	 * @param int $subDepth
+	 * 
+	 * @return int
 	 */
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
+		
 		$nodes = $this->getNodes($folder, $subDepth);
-
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
-			if ($nodeType === 'dir') {
-				/** @type Folder $node */
-				if (!$node->nodeExists('.nomedia')) {
-					$subFolders[] = $node;
-				}
-			} elseif ($nodeType === 'file') {
+			$subFolders = array_merge($subFolders, $this->allowedSubFolder($node, $nodeType));
+			
+			if ($nodeType === 'file') {
 				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
 				if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
 					break;
 				}
 			}
 		}
+		$this->searchSubFolders($subFolders, $subDepth, $albumImageCounter);
 
-		$this->searchSubFolders($subFolders, $albumImageCounter, $subDepth);
+		return $albumImageCounter;
 	}
 
 	/**
@@ -195,16 +195,30 @@ class InfoService extends Service {
 				$nodes = $folder->getDirectoryListing();
 			}
 		} catch (\Exception $exception) {
-			if ($subDepth === 0) {
-				$this->logAndThrowNotFound($exception->getMessage());
-			} else {
-				return $nodes;
-			}
+			$nodes = $this->recoverFromGetNodesError($subDepth, $exception);
 		}
 
 		return $nodes;
 	}
 
+	/**
+	 * Throws an exception if this problem occurs in the current folder, otherwise just ignores the
+	 * sub-folder
+	 *
+	 * @param int $subDepth
+	 * @param \Exception $exception
+	 *
+	 * @return array
+	 * @throws NotFoundServiceException
+	 */
+	private function recoverFromGetNodesError($subDepth, $exception) {
+		if ($subDepth === 0) {
+			$this->logAndThrowNotFound($exception->getMessage());
+		}
+
+		return [];
+	}
+	
 	/**
 	 * Returns the node type, either 'dir' or 'file'
 	 *
@@ -223,9 +237,28 @@ class InfoService extends Service {
 
 		return $nodeType;
 	}
+	
+	/**
+	 * Returns the node if it's a folder we have access to
+	 *
+	 * @param Folder $node
+	 * @param string $nodeType
+	 *
+	 * @return array|Folder
+	 */
+	private function allowedSubFolder($node, $nodeType) {
+		if ($nodeType === 'dir') {
+			/** @type Folder $node */
+			if (!$node->nodeExists('.nomedia')) {
+				return [$node];
+			}
+		}
+
+		return [];
+	}
 
 	/**
-	 * Checks if we've collected enough pictures to give be able to build the view
+	 * Checks if we've collected enough pictures to be able to build the view
 	 *
 	 * At level 1, an album is full when we find 4 pictures and at lower levels, we stop looking
 	 * after we've found just one
@@ -255,43 +288,84 @@ class InfoService extends Service {
 	 * If we're at deeper levels, we only need to go further if we haven't managed to find one
 	 * picture in the current folder
 	 *
-	 * @param array <Folder> $subFolders
-	 * @param int $albumImageCounter
+	 * @param array<Folder> $subFolders
 	 * @param int $subDepth
+	 * @param int $albumImageCounter
 	 */
-	private function searchSubFolders($subFolders, $albumImageCounter, $subDepth) {
-		if ($subDepth === 0 || $albumImageCounter === 0) {
+	private function searchSubFolders($subFolders, $subDepth, $albumImageCounter) {
+		if ($this->folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter))
 			$subDepth++;
 			foreach ($subFolders as $subFolder) {
-				$this->searchFolder($subFolder, $subDepth);
+				$count = $this->searchFolder($subFolder, $subDepth);
+				if ($this->abortSearch($subDepth, $count)) {
+					break;
+				}
 			}
 		}
 	}
 
+	/**
+	 * Checks if we need to look for media files in the specified folder
+	 *
+	 * @param array<Folder> $subFolders
+	 * @param int $subDepth
+	 * @param int $albumImageCounter
+	 *
+	 * @return bool
+	 */
+	private function folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter){
+		if (!empty($subFolders) && ($subDepth === 0 || $albumImageCounter === 0)) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Returns true if there is no need to check any other sub-folder at the same depth level
+	 *
+	 * @param int $subDepth
+	 * @param int $count
+	 *
+	 * @return bool
+	 */
+	private function abortSearch($subDepth, $count) {
+		if ($subDepth > 1 && $count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+	
 	/**
 	 * Returns true if the file is of a supported media type and adds it to the array of items to
 	 * return
 	 *
 	 * We remove the part which goes from the user's root to the current
 	 * folder and we also remove the current folder for public galleries
+	 * 
+	 * @todo We could potentially check if the file is readable ($file->stat() maybe) in order to
+	 *     only return valid files, but this may slow down operations
 	 *
-	 * @param File $node
+	 * @param File $file the file to test
 	 *
 	 * @return bool
 	 */
-	private function isPreviewAvailable($node) {
+	private function isPreviewAvailable($file) {
 		try {
-			$mimeType = $node->getMimetype();
-			if (!$node->isMounted() && in_array($mimeType, $this->supportedMimes)) {
-				$imagePath = $node->getPath();
+			$mimeType = $file->getMimetype();
+			if (!$file->isMounted() && in_array($mimeType, $this->supportedMimes)) {
+				$imagePath = $file->getPath();
 				$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
+				$imageId = $file->getId();
 				$imageData = [
 					'path'     => $fixedPath,
+					'fileid'   => $imageId,
 					'mimetype' => $mimeType
 				];
 				$this->images[] = $imageData;
 				/*$this->logger->debug(
-					"Image path : {path}", ['path' => $node->getPath()]
+					"Image path : {path}", ['path' => $imagePath]
 				);*/
 
 				return true;
