@@ -260,8 +260,7 @@ class InfoService extends Service {
 	/**
 	 * Checks if we've collected enough pictures to be able to build the view
 	 *
-	 * At level 1, an album is full when we find 4 pictures and at lower levels, we stop looking
-	 * after we've found just one
+	 * An album is full when we find max 4 pictures at the same level
 	 *
 	 * @param int $albumImageCounter
 	 * @param int $subDepth
@@ -271,10 +270,8 @@ class InfoService extends Service {
 	private function haveEnoughPictures($albumImageCounter, $subDepth) {
 		if ($subDepth === 0) {
 			return false;
-		} else {
-			$maxAlbumThumbnail = 4;
 		}
-		if ($albumImageCounter === $maxAlbumThumbnail) {
+		if ($albumImageCounter === 4) {
 			return true;
 		}
 
