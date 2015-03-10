@@ -321,7 +321,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 			file: image.src,
 			requesttoken: oc_requesttoken
 		};
-		var downloadUrl = Gallery.buildUrl('download', params);
+		var downloadUrl = Gallery.buildUrl('download', '', params);
 
 		return {
 			name: name,
