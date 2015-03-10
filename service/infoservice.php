@@ -293,7 +293,7 @@ class InfoService extends Service {
 	 * @param int $albumImageCounter
 	 */
 	private function searchSubFolders($subFolders, $subDepth, $albumImageCounter) {
-		if ($this->folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter))
+		if ($this->folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter)) {
 			$subDepth++;
 			foreach ($subFolders as $subFolder) {
 				$count = $this->searchFolder($subFolder, $subDepth);
@@ -313,7 +313,7 @@ class InfoService extends Service {
 	 *
 	 * @return bool
 	 */
-	private function folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter){
+	private function folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter) {
 		if (!empty($subFolders) && ($subDepth === 0 || $albumImageCounter === 0)) {
 			return true;
 		}
@@ -376,5 +376,4 @@ class InfoService extends Service {
 
 		return false;
 	}
-
 }
