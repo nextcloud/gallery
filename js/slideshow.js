@@ -277,7 +277,9 @@ SlideShow.prototype = {
 			this.zoomable = null;
 		}
 		var maxZoom = this.maxZoom;
-		if (image.width < this.smallImageDimension && image.height < this.smallImageDimension) {
+		var imgWidth = image.naturalWidth / window.devicePixelRatio;
+		var imgHeight = image.naturalHeight / window.devicePixelRatio;
+		if (imgWidth < this.smallImageDimension && imgHeight < this.smallImageDimension) {
 			maxZoom += 3;
 			this.currentImage.isSmallImage = true;
 		}
@@ -286,8 +288,8 @@ SlideShow.prototype = {
 			maxZoom: maxZoom,
 			minZoom: 0,
 			touchUI: false,
-			width: image.naturalWidth / window.devicePixelRatio,
-			height: image.naturalHeight / window.devicePixelRatio
+			width: imgWidth,
+			height: imgHeight
 		}), image);
 		if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
 			this.resetZoom();
