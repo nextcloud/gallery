@@ -156,6 +156,15 @@ Gallery.buildUrl = function (endPoint, path, params) {
 		query;
 };
 
+Gallery.download = function (event) {
+	event.preventDefault();
+	OC.redirect(OC.generateUrl('s/{token}/download?path={path}&files={files}', {
+		token: Gallery.token,
+		path: $('#content').data('albumname'),
+		files: Gallery.currentAlbum
+	}));
+};
+
 Gallery.view = {};
 Gallery.view.element = null;
 Gallery.view.cache = {};
@@ -172,6 +181,7 @@ Gallery.view.init = function (albumPath) {
 		OC.Breadcrumb.container = $('#breadcrumbs');
 		Gallery.view.viewAlbum(albumPath);
 		$('#download').click(Gallery.download);
+		$('button.share').click(Gallery.share);
 	}
 };
 
@@ -373,14 +383,6 @@ $(document).ready(function () {
 			subUrl = 'apps/files?dir={path}';
 		}
 		window.location.href = OC.generateUrl(subUrl, params);
-	});
-	$('#download').click(function (e) {
-		e.preventDefault();
-		OC.redirect(OC.generateUrl('s/{token}/download?path={path}&files={files}', {
-			token: Gallery.token,
-			path: $('#content').data('albumname'),
-			files: Gallery.currentAlbum
-		}));
 	});
 
 	$(window).scroll(function () {
