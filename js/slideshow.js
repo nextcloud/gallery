@@ -25,7 +25,7 @@ var SlideShow = function (container, images, interval, maxScale) {
 	this.fullScreen = null;
 	this.canFullScreen = false;
 	this.maxZoom = 3;
-	this.smallImageDimension = 200;
+	this.smallImageDimension = 200 / window.devicePixelRatio;
 	this.smallImageScale = 2;
 };
 
