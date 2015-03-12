@@ -21,11 +21,12 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 
 ### Server requirements
 #### Required
-* PHP 5.4 or 5.5
+* [See ownCloud's requirements](https://doc.owncloud.org/server/8.0/admin_manual/installation/source_installation.html#prerequisites)
 
 #### Recommended
 * PHP 5.5 with caching enabled
-* A recent version ImageMagick
+* EXIF PHP module
+* A recent version ImageMagick with SVG and Raw support
 * MySQL or MariaDB instead of Sqlite
 * A powerful server with lots of RAM
 
@@ -60,6 +61,13 @@ Look at the sample configuration in your config folder if you need more informat
 That's it. You should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
 ### Improving performance
+#### Assets pipelining
+Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
+This can divide the loading time of your cloud by 4.
+
+Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
+
+#### Generating thumbnails
 Some of ownCloud's internal operations make the gallery app very slow
 * Generating thumbnails the first time you open the app
 * Generating a full screen preview

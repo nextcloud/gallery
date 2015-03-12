@@ -1,3 +1,12 @@
+owncloud-galleryplus (2.0.6)
+* Fix the logic implemented to limit the number of thumbnails to preload #60 (@oparoz)
+* Fix all thumbnails instead of just the square ones. Preview in core can return previews of the wrong dimensions, so we fix them (@oparoz)
+* Always fill the albums with up to 4 pictures if we find enough at a lower level #65 (@oparoz)
+* Fix converted SVGs #63 (@oparoz)
+* Ignore broken files and folders when building a map of the current folder #69 (@oparoz)
+* Only return pictures of the first 2nd level sub-folder which contains pictures bug #79 (@oparoz)
+* Always show the Gallery button in the files app, making it possible to start the Gallery from any folder #73 (@oparoz)
+
 owncloud-galleryplus (2.0.5)
 * Fix performance issues related to the initialisation of the view by only loading folders and media files belonging to the current folder #17 (@oparoz)
 * Don't scan folders containing a '.nomedia' file #58 (@oparoz based on @jsalatiel's idea)
