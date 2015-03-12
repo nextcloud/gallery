@@ -637,8 +637,8 @@ $(document).ready(function () {
 				var start = 0;
 				var images = [];
 				var dir = context.dir + '/';
-				var width = $(window).width() * window.devicePixelRatio;
-				var height = $(window).height() * window.devicePixelRatio;
+				var width = Math.floor($(window).width() * window.devicePixelRatio);
+				var height = Math.floor($(window).height() * window.devicePixelRatio);
 
 				for (var i = 0; i < files.length; i++) {
 					var file = files[i];
