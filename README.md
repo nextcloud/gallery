@@ -89,3 +89,4 @@ Now you can activate it in the apps menu. It's called Gallery+
 2. bitmap-max-preview.pull.13635.patch : Forces the bitmap converter to respect the max limits of previews
 3. tmpfile-extension.pull.13654.patch : Makes sure temporary files have an extension so that ImageMagick can identify those files properly
 4. raw-preview.pull.13652.patch : Allows ownCloud to visualise Raw files
+5. stop-deleting-thumbnails.pull.14760.patch: Stop deleting all thumbnails when uploading pictures from the Android app
