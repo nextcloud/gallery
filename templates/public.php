@@ -10,7 +10,8 @@ script(
 	[
 		'album',
 		'gallery',
-		'thumbnail'
+		'thumbnail',
+		'vendor/eventsource-polyfill/dist/eventsource.min'
 	]
 );
 style(
