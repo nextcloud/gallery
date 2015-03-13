@@ -1,15 +1,33 @@
---- a/lib/private/preview/bitmap.php.orig	2015-03-06 15:14:17.770952395 +0000
-+++ b/lib/private/preview/bitmap.php	2015-03-06 15:02:38.803951481 +0000
-@@ -1,6 +1,7 @@
+From 4bf9150f5d360953abd28b73d12d079c32cfd51c Mon Sep 17 00:00:00 2001
+From: Olivier Paroz <github@oparoz.com>
+Date: Wed, 11 Mar 2015 17:35:33 +0100
+Subject: [PATCH] The bitmap preview class now takes maxX and maxY into
+ consideration
+
+This is a fix for owncloud#13607
+and is part of the global programme: owncloud#13609
+
+I originally filled the whole area with a transparent background, but
+this creates resizing issues as it doesn't reflect the proper image
+ratio.
+---
+ lib/private/preview/bitmap.php | 82 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 74 insertions(+), 8 deletions(-)
+
+diff --git a/lib/private/preview/bitmap.php b/lib/private/preview/bitmap.php
+index 25f65cf..9171228 100644
+--- a/lib/private/preview/bitmap.php
++++ b/lib/private/preview/bitmap.php
+@@ -1,6 +1,8 @@
  <?php
  /**
-- * Copyright (c) 2013-2014 Georg Ehrke georg@ownCloud.com
-+ * @copyright 2013-2014 Georg Ehrke georg@ownCloud.com
-+ * @copyright 2015 Olivier Paroz <owncloud@interfasys.ch>
+  * Copyright (c) 2013-2014 Georg Ehrke georg@ownCloud.com
++ * Copyright (c) 2014-2015 Olivier Paroz <owncloud@interfasys.ch>
++ * 
   * This file is licensed under the Affero General Public License version 3 or
   * later.
   * See the COPYING-README file.
-@@ -8,31 +9,93 @@
+@@ -8,30 +10,94 @@
  
  namespace OC\Preview;
  
@@ -49,7 +67,7 @@
 +			$bp = $this->getResizedPreview($tmpPath);
  		} catch (\Exception $e) {
 -			\OC_Log::write('core', $e->getmessage(), \OC_Log::ERROR);
-+			\OC_Log::write('core', 'ImageMagick says : ' . $e->getmessage(), \OC_Log::ERROR);
++			\OC_Log::write('core', 'ImageMagick says: ' . $e->getmessage(), \OC_Log::ERROR);
  			return false;
  		}
  
@@ -62,8 +80,7 @@
  		//check if image object is valid
  		return $image->valid() ? $image : false;
  	}
--}
- 
++
 +	/**
 +	 * Returns a preview of maxX times maxY dimensions in PNG format
 +	 *
@@ -111,4 +128,5 @@
 +
 +		return $bp;
 +	}
-+}
++
+ }
