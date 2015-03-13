@@ -11,7 +11,8 @@ script(
 		'album',
 		'gallery',
 		'thumbnail',
-		'vendor/eventsource-polyfill/dist/eventsource.min'
+		'vendor/eventsource-polyfill/dist/eventsource.min',
+		'eventsource'
 	]
 );
 style(

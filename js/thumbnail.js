@@ -53,7 +53,7 @@ Thumbnails.loadBatch = function (paths, square) {
 		};
 		var url = Gallery.buildUrl('thumbnails', '', params);
 
-		var eventSource = new OC.EventSource(url);
+		var eventSource = new Gallery.EventSource(url);
 		eventSource.listen('preview', function (preview) {
 			var path = preview.path;
 			var thumb = batch[path];
