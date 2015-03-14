@@ -16,7 +16,7 @@
  * (http://en.wikipedia.org/wiki/Server-sent_events)
  */
 
-/* global jQuery, $, EventSource, oc_requesttoken, Gallery */
+/* global $, EventSource, oc_requesttoken, Gallery */
 
 /**
  * Create a new event source
@@ -27,13 +27,9 @@
  */
 Gallery.EventSource = function (src, data) {
 	var dataStr = '';
-	//var name;
 	var joinChar;
 	this.typelessListeners = [];
 	if (data) {
-		/*for(name in data){
-		 dataStr+=name+'='+encodeURIComponent(data[name])+'&';
-		 }*/
 		for (var i = 0, keys = Object.keys(data); i < keys.length; i++) {
 			dataStr += keys[i] + '=' + encodeURIComponent(data[keys[i]]) + '&';
 		}
@@ -44,7 +40,12 @@ Gallery.EventSource = function (src, data) {
 		if (src.indexOf('?') === -1) {
 			joinChar = '?';
 		}
-		this.source = new EventSource(src + joinChar + dataStr);
+		var options = {}
+		if (EventSource.isPolyfill !== undefined) {
+			// 10 thumbnails * 200k per thumbnail
+			options['bufferSizeLimit'] = 10 * 200 * 1024;
+		}
+		this.source = new EventSource(src + joinChar + dataStr, options);
 		this.source.onmessage = function (e) {
 			for (var i = 0; i < this.typelessListeners.length; i++) {
 				this.typelessListeners[i](JSON.parse(e.data));
