@@ -57,9 +57,9 @@ Gallery.fillAlbums = function () {
 			path = data[i].path;
 			fileId = data[i].fileid;
 			mimeType = data[i].mimetype;
-			
+
 			Gallery.images.push(path);
-			
+
 			image = new GalleryImage(path, path, fileId, mimeType);
 			image.mimeType = mimeType;
 			var dir = OC.dirname(path);
@@ -111,7 +111,7 @@ Gallery.getImage = function (image) {
 		y: height,
 		requesttoken: oc_requesttoken
 	};
-	return Gallery.buildUrl('preview', '',params);
+	return Gallery.buildUrl('preview', '', params);
 };
 
 Gallery.share = function (event) {
@@ -358,43 +358,61 @@ Gallery.activeSlideShow = null;
 
 $(document).ready(function () {
 	Gallery.hideSearch();
-	Gallery.showLoading();
 
-	Gallery.view.element = $('#gallery');
-	if (Gallery.view.element.data('token')) {
-		Gallery.token = Gallery.view.element.data('token');
-	}
+	Gallery.ie11AndAbove =
+		navigator.userAgent.indexOf('Trident') != -1 && navigator.userAgent.indexOf('MSIE') == -1;
+	Gallery.ie10AndBelow = navigator.userAgent.indexOf('MSIE') != -1;
 
-	if (Gallery.view.element.data('requesttoken')) {
-		oc_requesttoken = Gallery.view.element.data('requesttoken');
-	}
-
-	Gallery.fillAlbums().then(function () {
-		window.onhashchange();
-	});
-
-	$('#openAsFileListButton').click(function () {
-		var subUrl = '';
-		var params = {path: '/' + Gallery.currentAlbum};
-		if (Gallery.token) {
-			params.token = Gallery.token;
-			subUrl = 's/{token}?path={path}';
-		} else {
-			subUrl = 'apps/files?dir={path}';
+	if (Gallery.ie10AndBelow) {
+		OC.Notification.showTemporary(t('gallery',
+			'Your browser is not supported,' +
+			'please use a modern browser such as Firefox or Chrome'));
+		Gallery.showEmpty();
+	} else {
+		if (Gallery.ie11AndAbove) {
+			OC.Notification.showTemporary(t('gallery',
+				'This application does not yet work properly on your browser,' +
+				' please use a modern browser such as Firefox or Chrome'));
 		}
-		window.location.href = OC.generateUrl(subUrl, params);
-	});
 
-	$(window).scroll(function () {
-		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
-	});
-	$('#content-wrapper').scroll(function () {
-		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
-	});
+		Gallery.showLoading();
 
-	$(window).resize(_.throttle(function () {
-		Gallery.view.viewAlbum(Gallery.currentAlbum);
-	}, 500));
+		Gallery.view.element = $('#gallery');
+		if (Gallery.view.element.data('token')) {
+			Gallery.token = Gallery.view.element.data('token');
+		}
+
+		if (Gallery.view.element.data('requesttoken')) {
+			oc_requesttoken = Gallery.view.element.data('requesttoken');
+		}
+
+		Gallery.fillAlbums().then(function () {
+			window.onhashchange();
+		});
+
+		$('#openAsFileListButton').click(function () {
+			var subUrl = '';
+			var params = {path: '/' + Gallery.currentAlbum};
+			if (Gallery.token) {
+				params.token = Gallery.token;
+				subUrl = 's/{token}?path={path}';
+			} else {
+				subUrl = 'apps/files?dir={path}';
+			}
+			window.location.href = OC.generateUrl(subUrl, params);
+		});
+
+		$(window).scroll(function () {
+			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+		});
+		$('#content-wrapper').scroll(function () {
+			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+		});
+
+		$(window).resize(_.throttle(function () {
+			Gallery.view.viewAlbum(Gallery.currentAlbum);
+		}, 500));
+	}
 });
 
 window.onhashchange = function () {

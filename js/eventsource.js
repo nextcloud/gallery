@@ -40,7 +40,7 @@ Gallery.EventSource = function (src, data) {
 		if (src.indexOf('?') === -1) {
 			joinChar = '?';
 		}
-		var options = {}
+		var options = {};
 		if (EventSource.isPolyfill !== undefined) {
 			// 10 thumbnails * 200k per thumbnail
 			options['bufferSizeLimit'] = 10 * 200 * 1024;
