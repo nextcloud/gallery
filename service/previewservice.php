@@ -164,7 +164,7 @@ class PreviewService extends Service {
 	 * @param bool $square
 	 * @param bool $base64Encode
 	 *
-	 * @return resource
+	 * @return \OC_Image|string
 	 */
 	public function previewValidator($square, $base64Encode) {
 		$preview = $this->previewManager->previewValidator($square);

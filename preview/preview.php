@@ -159,7 +159,7 @@ class Preview {
 	 *
 	 * @param bool $square
 	 *
-	 * @return resource
+	 * @return \OC_Image
 	 */
 	public function previewValidator($square) {
 		list($maxWidth, $maxHeight) = $this->dims;
@@ -215,7 +215,7 @@ class Preview {
 	 * @param int $maxHeight
 	 * @param bool $square
 	 *
-	 * @return mixed
+	 * @return \OC_Image
 	 */
 	private function fixPreview(
 		$previewData, $previewWidth, $previewHeight, $maxWidth, $maxHeight, $square
@@ -332,7 +332,7 @@ class Preview {
 	 *
 	 * @param resource $fixedPreview
 	 *
-	 * @return mixed
+	 * @return \OC_Image
 	 */
 	private function fixPreviewCache($fixedPreview) {
 		$owner = $this->userId;

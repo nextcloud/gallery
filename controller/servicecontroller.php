@@ -154,11 +154,11 @@ class ServiceController extends Controller {
 		try {
 			$currentFolder = $this->request->getParam('currentfolder');
 			$imagesFolder = $this->environment->getResourceFromPath($currentFolder);
-			
+
 			if ($this->isFolderPrivate($imagesFolder)) {
 				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], 500);
 			}
-			
+
 			$fromRootToFolder = $this->environment->getFromRootToFolder();
 
 			$folderData = [
@@ -268,7 +268,7 @@ class ServiceController extends Controller {
 
 		return false;
 	}
-	
+
 	/**
 	 * Retrieves the thumbnail to send back to the browser
 	 *
@@ -279,7 +279,7 @@ class ServiceController extends Controller {
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return array|Http\JSONResponse
+	 * @return array<string,array|string>
 	 */
 	private function getThumbnail($image, $square, $scale) {
 		list($width, $height, $aspect, $animatedPreview, $base64Encode) =
@@ -323,7 +323,7 @@ class ServiceController extends Controller {
 	 * @param bool $animatedPreview
 	 * @param bool $base64Encode
 	 *
-	 * @return mixed
+	 * @return array<string,\OC_Image|string>
 	 */
 	private function getPreview(
 		$image, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
