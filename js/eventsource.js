@@ -44,6 +44,7 @@ Gallery.EventSource = function (src, data) {
 		if (EventSource.isPolyfill !== undefined) {
 			// 10 thumbnails * 200k per thumbnail
 			options['bufferSizeLimit'] = 10 * 200 * 1024;
+			options['silentTimeout'] = 1000;
 		}
 		this.source = new EventSource(src + joinChar + dataStr, options);
 		this.source.onmessage = function (e) {
