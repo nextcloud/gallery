@@ -1,4 +1,4 @@
-/* global $, Gallery, EventSource */
+/* global $, Gallery */
 function Thumbnail (path, square) {
 	this.square = square;
 	this.path = path;

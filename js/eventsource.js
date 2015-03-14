@@ -16,7 +16,7 @@
  * (http://en.wikipedia.org/wiki/Server-sent_events)
  */
 
-/* global $, EventSource, oc_requesttoken, Gallery */
+/* global EventSource, oc_requesttoken, Gallery */
 
 /**
  * Create a new event source

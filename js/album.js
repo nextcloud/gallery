@@ -18,6 +18,37 @@ function Album (path, subAlbums, images, name) {
 	this.preloadOffset = 0;
 }
 
+/**
+ * Creates a row
+ *
+ * @param targetWidth
+ * @constructor
+ */
+function Row (targetWidth) {
+	this.targetWidth = targetWidth;
+	this.items = [];
+	this.width = 8; // 4px margin to start with
+}
+
+/**
+ * Creates a new image object to store information about a media file
+ *
+ * @param src
+ * @param path
+ * @param fileId
+ * @param mimeType
+ * @constructor
+ */
+function GalleryImage (src, path, fileId, mimeType) {
+	this.src = src;
+	this.path = path;
+	this.fileId = fileId;
+	this.mimeType = mimeType;
+	this.thumbnail = null;
+	this.domDef = null;
+	this.domHeigth = null;
+}
+
 Album.prototype = {
 	_getThumbnail: function () {
 		if (this.images.length) {
@@ -28,7 +59,7 @@ Album.prototype = {
 	},
 	/**
 	 * Retrieves a thumbnail and adds it to the album representation
-	 * 
+	 *
 	 * @param {GalleryImage} image
 	 * @param {number} targetHeight Each row has a specific height
 	 * @param {number} calcWidth Album width
@@ -64,10 +95,10 @@ Album.prototype = {
 			a.append(croppedDiv);
 		});
 	},
-	
+
 	/**
 	 * Builds the album representation by placing 1 to 4 images on a grid
-	 * 
+	 *
 	 * @param {array<GalleryImage>} images
 	 * @param {number} targetHeight Each row has a specific height
 	 * @param {object} a
@@ -80,7 +111,7 @@ Album.prototype = {
 		var targetWidth;
 		var imagesCount = images.length;
 		var doubleWidth = false;
-	
+
 		for (var i = 0; i < imagesCount; i++) {
 			targetWidth = calcWidth;
 			if (imagesCount === 2 || (imagesCount === 3 && i === 0)) {
@@ -93,7 +124,7 @@ Album.prototype = {
 
 	/**
 	 * preload the first $count thumbnails
-	 * 
+	 *
 	 * @param count
 	 * @private
 	 */
@@ -121,12 +152,12 @@ Album.prototype = {
 				break;
 			}
 		}
-	
+
 		this.preloadOffset = i;
 		Thumbnails.loadBatch(paths, false);
 		Thumbnails.loadBatch(squarePaths, true);
 	},
-	
+
 	/**
 	 * Creates the album, which will include between 1 and 4 images
 	 *
@@ -141,17 +172,17 @@ Album.prototype = {
 	 */
 	getDom: function (targetHeight) {
 		var album = this;
-	
+
 		return this._getThumbnail().then(function (img) {
 			var a = $('<a/>').addClass('album').attr('href', '#' + encodeURI(album.path));
-	
+
 			a.append($('<span/>').addClass('album-label').text(album.name));
 			var ratio = Math.round(img.ratio * 100) / 100;
 			var calcWidth = (targetHeight * ratio) / 2;
-	
+
 			a.width(calcWidth * 2);
 			a.height(targetHeight);
-	
+
 			if (album.images.length > 1) {
 				album._getFourImages(album.images, targetHeight, a);
 			} else {
@@ -163,7 +194,7 @@ Album.prototype = {
 					img.width = (targetHeight * ratio) - 2;
 				}
 			}
-	
+
 			return a;
 		});
 	},
@@ -196,7 +227,7 @@ Album.prototype = {
 			if ((album.viewedItems + 5) > album.preloadOffset) {
 				album._preload(numberOfThumbnailsToPreload);
 			}
-	
+
 			var image = images[album.viewedItems];
 			return row.addElement(image).then(function (more) {
 				album.viewedItems++;
@@ -225,22 +256,10 @@ Album.prototype = {
 		for (var i = 0; i < items.length && i < count; i++) {
 			paths = paths.concat(items[i].getThumbnailPaths(count));
 		}
-	
+
 		return paths;
 	}
 };
-
-/**
- * Creates a row
- *
- * @param targetWidth
- * @constructor
- */
-function Row (targetWidth) {
-	this.targetWidth = targetWidth;
-	this.items = [];
-	this.width = 8; // 4px margin to start with
-}
 
 Row.prototype = {
 	/**
@@ -252,12 +271,12 @@ Row.prototype = {
 	_isFull: function () {
 		return this.width > this.targetWidth;
 	},
-	
+
 	/**
 	 * Adds sub-albums and images to the row until it's full
-	 * 
+	 *
 	 * @param {GalleryImage} image
-	 * 
+	 *
 	 * @return {$.Deferred<bool>} true if more images can be added to the row
 	 */
 	addElement: function (image) {
@@ -298,25 +317,6 @@ Row.prototype = {
 	}
 };
 
-/**
- * Creates a new image object to store information about a media file
- *
- * @param src
- * @param path
- * @param fileId
- * @param mimeType
- * @constructor
- */
-function GalleryImage (src, path, fileId, mimeType) {
-	this.src = src;
-	this.path = path;
-	this.fileId = fileId;
-	this.mimeType = mimeType;
-	this.thumbnail = null;
-	this.domDef = null;
-	this.domHeigth = null;
-}
-
 GalleryImage.prototype = {
 	/**
 	 * Returns the Thumbnail path
@@ -326,7 +326,7 @@ GalleryImage.prototype = {
 	getThumbnailPaths: function () {
 		return [this.path];
 	},
-	
+
 	/**
 	 * Returns a reference to a loading Thumbnail.image
 	 *
@@ -370,9 +370,9 @@ GalleryImage.prototype = {
 		if (this.domDef === null || this.domHeigth !== targetHeight) {
 			this.domHeigth = targetHeight;
 			this.domDef = this.getThumbnail().then(function (img) {
-				var a = $('<a/>').addClass('image').attr('href', '#' + 
+				var a = $('<a/>').addClass('image').attr('href', '#' +
 				encodeURI(image.path)).attr('data-path', image.path);
-				
+
 				img.height = targetHeight;
 				img.width = targetHeight * img.ratio;
 				img.setAttribute('width', 'auto');
