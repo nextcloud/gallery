@@ -59,7 +59,7 @@ class InfoService extends Service {
 		'application/x-font',
 	];
 	/**
-	 * @type Node[]
+	 * @type array<string, string|int>
 	 */
 	private $images = [];
 	/**
@@ -127,7 +127,7 @@ class InfoService extends Service {
 	 *
 	 * @param array <Node, string> $folderData
 	 *
-	 * @return array all the images we could find
+	 * @return array<string, string|int> all the images we could find
 	 */
 	public function getImages($folderData) {
 		$this->supportedMimes = $this->getSupportedMimes(false);
@@ -149,19 +149,19 @@ class InfoService extends Service {
 	 *
 	 * @param Folder $folder
 	 * @param int $subDepth
-	 * 
+	 *
 	 * @return int
 	 */
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
-		
+
 		$nodes = $this->getNodes($folder, $subDepth);
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
 			$subFolders = array_merge($subFolders, $this->allowedSubFolder($node, $nodeType));
-			
+
 			if ($nodeType === 'file') {
 				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
 				if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
@@ -218,7 +218,7 @@ class InfoService extends Service {
 
 		return [];
 	}
-	
+
 	/**
 	 * Returns the node type, either 'dir' or 'file'
 	 *
@@ -237,7 +237,7 @@ class InfoService extends Service {
 
 		return $nodeType;
 	}
-	
+
 	/**
 	 * Returns the node if it's a folder we have access to
 	 *
@@ -285,7 +285,7 @@ class InfoService extends Service {
 	 * If we're at deeper levels, we only need to go further if we haven't managed to find one
 	 * picture in the current folder
 	 *
-	 * @param array<Folder> $subFolders
+	 * @param array <Folder> $subFolders
 	 * @param int $subDepth
 	 * @param int $albumImageCounter
 	 */
@@ -304,7 +304,7 @@ class InfoService extends Service {
 	/**
 	 * Checks if we need to look for media files in the specified folder
 	 *
-	 * @param array<Folder> $subFolders
+	 * @param array <Folder> $subFolders
 	 * @param int $subDepth
 	 * @param int $albumImageCounter
 	 *
@@ -317,7 +317,7 @@ class InfoService extends Service {
 
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if there is no need to check any other sub-folder at the same depth level
 	 *
@@ -333,14 +333,14 @@ class InfoService extends Service {
 
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if the file is of a supported media type and adds it to the array of items to
 	 * return
 	 *
 	 * We remove the part which goes from the user's root to the current
 	 * folder and we also remove the current folder for public galleries
-	 * 
+	 *
 	 * @todo We could potentially check if the file is readable ($file->stat() maybe) in order to
 	 *     only return valid files, but this may slow down operations
 	 *
@@ -361,6 +361,7 @@ class InfoService extends Service {
 					'mimetype' => $mimeType
 				];
 				$this->images[] = $imageData;
+
 				/*$this->logger->debug(
 					"Image path : {path}", ['path' => $imagePath]
 				);*/
