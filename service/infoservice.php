@@ -127,7 +127,7 @@ class InfoService extends Service {
 	 *
 	 * @param array <Node, string> $folderData
 	 *
-	 * @return array<string, string|int> all the images we could find
+	 * @return array<string,string|int> all the images we could find
 	 */
 	public function getImages($folderData) {
 		$this->supportedMimes = $this->getSupportedMimes(false);

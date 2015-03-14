@@ -3,7 +3,7 @@ Media gallery for ownCloud which includes previews for all media types supported
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-![Screenshot](http://i.imgur.com/fxIai8t.jpg)
+![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
 * Large, zoomable previews
@@ -15,20 +15,83 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 
 Checkout the [full changelog](CHANGELOG.md) for more.
 
+## Maintainers
+
+### Current
+* [Olivier Paroz (@oparoz)](https://github.com/oparoz)
+
+### Alumni
+* [Robin Appelman (@icewind1991)](https://github.com/icewind1991)
+* [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
+* All the people who have [provided patches](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) over the years
+
+## Requirements
+
 ### Browser compatibility
-* Desktop: Firefox, Chrome, IE 10+, Opera, Safari
-* Mobile: Safari, Chrome, BlackBerry 10, Firefox, Opera
+This list is based on the current knowledge of the maintainers and the help they can get.
+It will evolve if and when people provide patches to fix all known current issues
+
+#### Fully supported
+* Desktop: Firefox, Chrome
+* Mobile: Safari, Chrome on Android 5+ and iOS 8.x, BlackBerry 10, Firefox
+
+#### Partially supported
+* Desktop: Internet Explorer 11+
+* Mobile: Opera, Chrome on Android 4
+
+#### Not supported
+* Desktop: Internet Explorer prior to 11, Safari, Opera
+* Mobile: Windows Phone
 
 ### Server requirements
+
 #### Required
+* ownCloud >= 8.0.2
 * [See ownCloud's requirements](https://doc.owncloud.org/server/8.0/admin_manual/installation/source_installation.html#prerequisites)
 
 #### Recommended
+* FreeBSD or Linux server
 * PHP 5.5 with caching enabled
 * EXIF PHP module
 * A recent version ImageMagick with SVG and Raw support
 * MySQL or MariaDB instead of Sqlite
 * A powerful server with lots of RAM
+
+## Supporting the development
+
+There are many ways in which you can help make Gallery+ a better product
+
+* Report bugs (see below)
+* Provide patches for both [`owncloud/core`](https://github.com/owncloud/core) and the app
+* Help test new features by checking out new branches on Github
+* Design interface components for when new features must be introduced per example
+* Develop new features
+* Fund a feature, either via [BountySource](https://www.bountysource.com/teams/interfasys/issues?tracker_ids=9328526) or by directly hiring a maintainer or anybody else who is capable of developing and maintaining it
+
+## Bugs
+
+### Before reporting bugs
+
+* Read the section about server and browser requirements
+* Get the latest version of the app from [the releases page](https://github.com/interfasys/galleryplus/releases)
+* [Check if they have already been reported](https://github.com/interfasys/galleryplus/issues)
+
+### When reporting bugs
+
+* Enable debug mode by putting this at the bottom of **config/config.php**
+
+      DEFINE('DEBUG', true);
+
+* Turn on debug level debug by adding **"loglevel" => 0,** to your **config/config.php** and reproduce the problem
+* check **data/owncloud.log**
+
+Please provide the following details so that your problem can be fixed:
+
+* **data/owncloud.log** (important!)
+* ownCloud version
+* App version
+* Browser version
+* PHP version
 
 ## Preparation
 Here is a list of steps you might want to take before using the app
@@ -61,6 +124,7 @@ Look at the sample configuration in your config folder if you need more informat
 That's it. You should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
 ### Improving performance
+
 #### Assets pipelining
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can divide the loading time of your cloud by 4.
@@ -83,14 +147,26 @@ It will always be relatively slow to get the first preview as this is when the c
 The next step will be to be able to generate these previews by clicking on a button per example, so that things are ready when visiting the gallery app.
 
 ## Installation
-Download and unpack this app into your apps folder or get it straight from GitHub via the shell.
-**It's important to make sure that the folder is called galleryplus.**
 
+### Installing from archive
+* Go to the [the releases page](https://github.com/interfasys/galleryplus/releases)
+* Download the latest release/archive to your server's **owncloud/apps/** directory
+* Unpack the app
+* **IMPORTANT**: Rename it to galleryplus
+
+### Installing from Git
+
+* In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
 $ git clone -b stable8 https://github.com/interfasys/galleryplus.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery+
+
+To update the app go inside you **owncloud/apps/galleryplus/** directory and type:
+```
+$ git pull --rebase origin master
+```
 
 ## List of patches
 1. max-preview.pull.13674.patch : Limits previews to a max size of 2048x2048 by default
