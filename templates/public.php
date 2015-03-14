@@ -27,6 +27,9 @@ style(
 
 ?>
 <div class="wrapper"><!-- for sticky footer -->
+	<div id="notification-container">
+		<div id="notification" style="display: none;"></div>
+	</div>
 	<header>
 		<div id="header">
 			<a href="<?php print_unescaped(link_to('', 'index.php')); ?>" title="" id="owncloud">
