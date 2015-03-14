@@ -80,10 +80,12 @@ There are many ways in which you can help make Gallery+ a better product
 
 * Enable debug mode by putting this at the bottom of **config/config.php**
 
-      DEFINE('DEBUG', true);
+```
+DEFINE('DEBUG', true);
+```
 
-* Turn on debug level debug by adding **"loglevel" => 0,** to your **config/config.php** and reproduce the problem
-* check **data/owncloud.log**
+* Turn on debug level debug by adding **`loglevel" => 0,`** to your **config/config.php** and reproduce the problem
+* Check **data/owncloud.log**
 
 Please provide the following details so that your problem can be fixed:
 
@@ -98,7 +100,7 @@ Here is a list of steps you might want to take before using the app
 
 ### Supporting more media types
 First, make sure you have installed ImageMagick and its PECL extension.
-Next add a few new entries to your configuration file.
+Next add a few new entries to your **config/config.php** configuration file.
 
 ```
   'preview_max_scale_factor' => 1,
@@ -113,21 +115,22 @@ Next add a few new entries to your configuration file.
 ```
 
 If you want support for Raw picture files, you'll need to patch your installation of ownCloud 8.0
+
 ```
 $ patch -p1 -l < apps/galleryplus/patches/tmpfile-extension.pull.13654.patch
 $ patch -p1 -l < apps/galleryplus/patches/raw-preview.pull.13652.patch
 ```
 
-and you'll need to add `OC\\Preview\\Raw` to the configuration file
+and you'll need to add `OC\\Preview\\Raw` to the **config/config.php** configuration file
 
-Look at the sample configuration in your config folder if you need more information about how the config file works.
+Look at the sample configuration (config.sample.php) in your config folder if you need more information about how the config file works.
 That's it. You should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
 ### Improving performance
 
 #### Assets pipelining
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
-This can divide the loading time of your cloud by 4.
+This can greatly reduce the loading time of the app.
 
 Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
 
@@ -156,7 +159,7 @@ The next step will be to be able to generate these previews by clicking on a but
 
 ### Installing from Git
 
-* In your terminal go into the **owncloud/apps/** directory and then run the following command:
+In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
 $ git clone -b stable8 https://github.com/interfasys/galleryplus.git
 ```
@@ -165,7 +168,7 @@ Now you can activate it in the apps menu. It's called Gallery+
 
 To update the app go inside you **owncloud/apps/galleryplus/** directory and type:
 ```
-$ git pull --rebase origin master
+$ git pull --rebase origin stable8
 ```
 
 ## List of patches
