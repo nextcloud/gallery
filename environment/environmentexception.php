@@ -24,5 +24,7 @@ class EnvironmentException extends Exception {
 	 *
 	 * @param string $msg the message contained in the exception
 	 */
-	public function __construct($msg) {}
+	public function __construct($msg) {
+		parent::__construct($msg);
+	}
 }
