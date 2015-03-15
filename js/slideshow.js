@@ -38,16 +38,16 @@ SlideShow.prototype = {
 		this.active = true;
 		this.hideImage();
 		this.bigShotSetup();
-	
+
 		// hide arrows and play/pause when only one pic
 		this.container.find('.next, .previous').toggle(this.images.length > 1);
 		if (this.images.length === 1) {
 			this.container.find('.play, .pause').hide();
 		}
-	
+
 		// Hide the toggle background button until we have something to show
 		this.container.find('.changeBackground').hide();
-	
+
 		var makeCallBack = function (handler) {
 			return function (evt) {
 				if (!this.active) {
@@ -57,21 +57,21 @@ SlideShow.prototype = {
 				handler.call(this);
 			}.bind(this);
 		}.bind(this);
-	
+
 		this.buttonSetup(makeCallBack);
 		this.keyCodeSetup(makeCallBack);
-	
+
 		$(window).resize(function () {
 			this.zoomDecider();
 		}.bind(this));
-	
+
 		if (play) {
 			this.play();
 		} else {
 			this.pause();
 		}
 	},
-	
+
 	bigShotSetup: function () {
 		// Detect fullscreen capability (mobile)
 		var e = this.container.get(0);
@@ -79,7 +79,7 @@ SlideShow.prototype = {
 		e.mozRequestFullScreen !== undefined ||
 		e.webkitRequestFullscreen !== undefined ||
 		e.msRequestFullscreen !== undefined;
-	
+
 		// makes UI controls work in mobile version. Pinch only works on iOS
 		var browser = new bigshot.Browser();
 		this.container.children('input').each(function (i, e) {
@@ -88,7 +88,7 @@ SlideShow.prototype = {
 			browser.registerListener(e, 'touchend', browser.stopEventBubblingHandler(), false);
 		});
 	},
-	
+
 	/**
 	 *
 	 * @param makeCallBack
@@ -103,7 +103,7 @@ SlideShow.prototype = {
 		this.container.children('.changeBackground').click(makeCallBack(this.toggleBackground));
 		//this.container.click(makeCallBack(this.next));
 	},
-	
+
 	/**
 	 *
 	 * @param makeCallBack
@@ -127,29 +127,31 @@ SlideShow.prototype = {
 			}
 		}.bind(this));
 	},
-	
+
 	/**
 	 *
 	 * @param evt
-	 * 
+	 *
 	 * @returns {boolean}
 	 */
 	zoomOutKey: function (evt) {
 		// zero, o or down key
-		return (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79 || evt.keyCode === 40);
+		return (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79 ||
+		evt.keyCode === 40);
 	},
-	
+
 	/**
 	 *
 	 * @param evt
-	 * 
+	 *
 	 * @returns {boolean}
 	 */
 	zoomInKey: function (evt) {
 		// 9, i or up key
-		return (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73 || evt.keyCode === 38);
+		return (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73 ||
+		evt.keyCode === 38);
 	},
-	
+
 	zoomDecider: function () {
 		if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
 			this.zoomToOriginal();
@@ -157,13 +159,13 @@ SlideShow.prototype = {
 			this.zoomToFit();
 		}
 	},
-	
+
 	zoomToFit: function () {
 		if (this.zoomable !== null) {
 			this.zoomable.flyZoomToFit();
 		}
 	},
-	
+
 	zoomToOriginal: function () {
 		if (this.zoomable === null) {
 			return;
@@ -174,7 +176,7 @@ SlideShow.prototype = {
 			this.zoomable.flyTo(0, 0, 0, true);
 		}
 	},
-	
+
 	resetZoom: function () {
 		if (this.zoomable === null) {
 			return;
@@ -185,7 +187,7 @@ SlideShow.prototype = {
 			this.zoomable.setZoom(0, true);
 		}
 	},
-	
+
 	fullScreenStart: function () {
 		if (!this.canFullScreen) {
 			return;
@@ -196,7 +198,7 @@ SlideShow.prototype = {
 			this.fullScreenExit();
 		}.bind(this));
 	},
-	
+
 	fullScreenExit: function () {
 		if (this.fullScreen === null) {
 			return;
@@ -204,9 +206,9 @@ SlideShow.prototype = {
 		this.fullScreen.close();
 		this.fullScreen = null;
 		this.zoomDecider();
-	
+
 	},
-	
+
 	fullScreenToggle: function () {
 		if (this.zoomable === null) {
 			return;
@@ -217,11 +219,11 @@ SlideShow.prototype = {
 			this.fullScreenStart();
 		}
 	},
-	
+
 	/**
 	 *
 	 * @param index
-	 * 
+	 *
 	 * @returns {*}
 	 */
 	show: function (index) {
@@ -233,40 +235,40 @@ SlideShow.prototype = {
 		return this.loadImage(this.images[index]).then(function (image) {
 			this.container.css('background-position', '-10000px 0');
 			this.container.find('.changeBackground').show();
-	
+
 			// check if we moved along while we were loading
 			if (this.current === index) {
 				this.errorLoadingImage = false;
 				this.currentImage = image;
 				this.currentImage.mimeType = this.images[index].mimeType;
 				this.container.append(image);
-	
+
 				image.setAttribute('alt', this.images[index].name);
 				$(image).css('position', 'absolute');
 				$(image).css('background-color', '#fff');
 				var $border = 30 / window.devicePixelRatio;
 				$(image).css('outline', $border + 'px solid #fff');
-	
+
 				this.startBigshot(image);
-	
+
 				this.setUrl(this.images[index].path);
 				if (this.playing) {
 					this.setTimeout();
 				}
 			}
 		}.bind(this), function () {
-			// Don't do anything if the user has moved along while we were loading as it would mess up
-			// the index
+			// Don't do anything if the user has moved along while we were loading as it would mess
+			// up the index
 			if (this.current === index) {
 				this.errorLoadingImage = true;
 				this.showErrorNotification();
 				this.setUrl(this.images[index].path);
 				this.images.splice(index, 1);
 			}
-	
+
 		}.bind(this));
 	},
-	
+
 	/**
 	 *
 	 * @param image
@@ -294,13 +296,13 @@ SlideShow.prototype = {
 		if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
 			this.resetZoom();
 		}
-	
+
 		// prevent zoom-on-doubleClick
 		this.zoomable.addEventListener('dblclick', function (ie) {
 			ie.preventDefault();
 		}.bind(this));
 	},
-	
+
 	/**
 	 *
 	 * @param path
@@ -310,21 +312,21 @@ SlideShow.prototype = {
 			history.replaceState('', '', '#' + encodeURI(path));
 		}
 	},
-	
+
 	/**
 	 *
 	 * @param preview
-	 * 
+	 *
 	 * @returns {*}
 	 */
 	loadImage: function (preview) {
 		var url = preview.url;
 		var mimeType = preview.mimeType;
-	
+
 		if (!this.imageCache[url]) {
 			this.imageCache[url] = new jQuery.Deferred();
 			var image = new Image();
-	
+
 			image.onload = function () {
 				if (this.imageCache[url]) {
 					this.imageCache[url].resolve(image);
@@ -343,11 +345,11 @@ SlideShow.prototype = {
 		}
 		return this.imageCache[url];
 	},
-	
+
 	/**
 	 *
 	 * @param source
-	 * 
+	 *
 	 * @returns {*}
 	 */
 	getSVG: function (source) {
@@ -358,14 +360,12 @@ SlideShow.prototype = {
 			if (xmlHttp.responseXML) {
 				// Has to be base64 encoded for Firefox
 				return "data:image/svg+xml;base64," + btoa(xmlHttp.responseText);
-			} else {
-				return source;
 			}
-		} else {
-			return null;
+			return source;
 		}
+		return null;
 	},
-	
+
 	setTimeout: function () {
 		this.clearTimeout();
 		this.playTimeout = setTimeout(this.next.bind(this), this.interval);
@@ -373,7 +373,7 @@ SlideShow.prototype = {
 		this.progressBar.css('height', '6px');
 		this.progressBar.animate({'height': '26px'}, this.interval, 'linear');
 	},
-	
+
 	clearTimeout: function () {
 		if (this.playTimeout) {
 			clearTimeout(this.playTimeout);
@@ -382,21 +382,21 @@ SlideShow.prototype = {
 		this.progressBar.css('height', '6px');
 		this.playTimeout = 0;
 	},
-	
+
 	play: function () {
 		this.playing = true;
 		this.container.find('.pause').show();
 		this.container.find('.play').hide();
 		this.setTimeout();
 	},
-	
+
 	pause: function () {
 		this.playing = false;
 		this.container.find('.pause').hide();
 		this.container.find('.play').show();
 		this.clearTimeout();
 	},
-	
+
 	next: function () {
 		if (this.zoomable !== null) {
 			this.zoomable.stopFlying();
@@ -413,7 +413,7 @@ SlideShow.prototype = {
 			this.loadImage(this.images[next]);
 		}.bind(this));
 	},
-	
+
 	previous: function () {
 		if (this.zoomable !== null) {
 			this.zoomable.stopFlying();
@@ -427,7 +427,7 @@ SlideShow.prototype = {
 			this.loadImage(this.images[previous]);
 		}.bind(this));
 	},
-	
+
 	stop: function () {
 		if (this.fullScreen !== null) {
 			this.fullScreenExit();
@@ -443,11 +443,11 @@ SlideShow.prototype = {
 			this.onStop();
 		}
 	},
-	
+
 	hideImage: function () {
 		this.container.children('img').remove();
 	},
-	
+
 	togglePlay: function () {
 		if (this.playing) {
 			this.pause();
@@ -473,7 +473,7 @@ SlideShow.prototype = {
 		var rgb = container.css('background-color').match(/\d+/g);
 		var hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
 		var $border = 30 / window.devicePixelRatio;
-	
+
 		// Grey #363636
 		if (hex === "#000000") {
 			container.css('background-color', '#FFF');
@@ -499,7 +499,7 @@ SlideShow.prototype = {
  * @param endPoint
  * @param path
  * @param params
- * 
+ *
  * @returns {string}
  */
 SlideShow.buildUrl = function (endPoint, params) {
@@ -605,14 +605,14 @@ $(document).ready(function () {
 		if (!OC.Util.hasSVGSupport()) {
 			OC.Util.replaceSVG(this.$el);
 		}
-		
+
 		if (OCA.Files) {
 			// Don't show the download button on the "Files" slideshow
 			$('#slideshow').find('.downloadImage').hide();
 		}
 	}).fail(function () {
-			OC.Notification.show(t('core', 'Error loading slideshow template'));
-		});
+		OC.Notification.show(t('core', 'Error loading slideshow template'));
+	});
 
 	if (OCA.Files && OCA.Files.fileActions) {
 		// This is still required in OC8

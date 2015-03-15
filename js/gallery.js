@@ -253,9 +253,8 @@ Gallery.view.loadVisibleRows = function (album, path) {
 				if (album.viewedItems < album.subAlbums.length + album.images.length &&
 					Gallery.view.element.height() < targetHeight) {
 					return showRows(album);
-				} else {
-					Gallery.view.loadVisibleRows.loading = null;
 				}
+				Gallery.view.loadVisibleRows.loading = null;
 			}, function () {
 				Gallery.view.loadVisibleRows.loading = null;
 			});

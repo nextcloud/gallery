@@ -148,7 +148,7 @@ class ServiceController extends Controller {
 	 * For private galleries, it returns all images, with the full path from the root folder
 	 * For public galleries, the path starts from the folder the link gives access to
 	 *
-	 * @return array|Http\JSONResponse
+	 * @return array<string,string|int>|Http\JSONResponse
 	 */
 	public function getImages() {
 		try {

@@ -18,7 +18,7 @@ GalleryButton.onFileListUpdated = function () {
 	files = fileList.files;
 
 	GalleryButton.buildUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
-	
+
 	for (var i = 0; i < files.length; i++) {
 		var file = files[i];
 		if (file.isPreviewAvailable) {
@@ -48,7 +48,7 @@ GalleryButton.hijackShare = function () {
 	OC.Share.showLink = function () {
 		var r = target.apply(this, arguments);
 		if ($('#dropdown.drop.shareDropDown').data('item-type') === "folder") {
-			
+
 			if (!$('#linkSwitchButton').length) {
 				var linkSwitchButton = '<a class="button" id="linkSwitchButton">' +
 					t(GalleryButton.appName, 'Show Gallery link') + '</a>';

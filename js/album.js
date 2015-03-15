@@ -53,9 +53,8 @@ Album.prototype = {
 	_getThumbnail: function () {
 		if (this.images.length) {
 			return this.images[0].getThumbnail(1);
-		} else {
-			return this.subAlbums[0]._getThumbnail();
 		}
+		return this.subAlbums[0]._getThumbnail();
 	},
 	/**
 	 * Retrieves a thumbnail and adds it to the album representation
@@ -185,14 +184,12 @@ Album.prototype = {
 
 			if (album.images.length > 1) {
 				album._getFourImages(album.images, targetHeight, a);
+			} else if (album.images.length === 0 && album.subAlbums[0].images.length > 1) {
+				album._getFourImages(album.subAlbums[0].images, targetHeight, a);
 			} else {
-				if (album.images.length === 0 && album.subAlbums[0].images.length > 1) {
-					album._getFourImages(album.subAlbums[0].images, targetHeight, a);
-				} else {
-					a.append(img);
-					img.height = (targetHeight - 2);
-					img.width = (targetHeight * ratio) - 2;
-				}
+				a.append(img);
+				img.height = (targetHeight - 2);
+				img.width = (targetHeight * ratio) - 2;
 			}
 
 			return a;
@@ -233,9 +230,8 @@ Album.prototype = {
 				album.viewedItems++;
 				if (more && album.viewedItems < images.length) {
 					return addRowElements(album, row, images);
-				} else {
-					return row;
 				}
+				return row;
 			});
 		};
 		var items = this.subAlbums.concat(this.images);
@@ -308,9 +304,8 @@ Row.prototype = {
 				row.append(itemDom);
 				if (i < items.length) {
 					return addImageToDom(row, items, i);
-				} else {
-					return row;
 				}
+				return row;
 			});
 		};
 		return addImageToDom(row, this.items, 0);
@@ -352,9 +347,8 @@ GalleryImage.prototype = {
 		return this.getThumbnail().then(function (img) {
 			if (img) {
 				return img.originalWidth;
-			} else {
-				return 0;
 			}
+			return 0;
 		});
 	},
 
