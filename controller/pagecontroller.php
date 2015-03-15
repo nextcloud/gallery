@@ -111,7 +111,9 @@ class PageController extends Controller {
 			$params = ['appName' => $appName];
 
 			// Will render the page using the template found in templates/index.php
-			return new TemplateResponse($appName, 'index', $params);
+			$response = new TemplateResponse($appName, 'index', $params);
+			$this->addContentSecurityToResponse($response);
+			return $response;
 		}
 	}
 
@@ -162,6 +164,18 @@ class PageController extends Controller {
 	}
 
 	/**
+	 * Adds the domain "data:" to the allowed image domains
+	 * this function is called by reference
+	 *
+	 * @param TemplateResponse $response
+	 */
+	private function addContentSecurityToResponse($response) {
+		$csp = new Http\ContentSecurityPolicy();
+		$csp->addAllowedImageDomain("data:");
+		$response->setContentSecurityPolicy($csp);
+	}
+
+	/**
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 * @Guest
@@ -201,7 +215,9 @@ class PageController extends Controller {
 		];
 
 		// Will render the page using the template found in templates/public.php
-		return new TemplateResponse($this->appName, 'public', $params, 'public');
+		$response = new TemplateResponse($this->appName, 'public', $params, 'public');
+		$this->addContentSecurityToResponse($response);
+		return $response;
 	}
 
 	/**
