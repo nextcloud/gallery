@@ -1,3 +1,6 @@
+owncloud-galleryplus (2.0.7)
+* Improved IE11 compatibility
+
 owncloud-galleryplus (2.0.6)
 * Fix the logic implemented to limit the number of thumbnails to preload #60 (@oparoz)
 * Fix all thumbnails instead of just the square ones. Preview in core can return previews of the wrong dimensions, so we fix them (@oparoz)

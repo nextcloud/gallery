@@ -317,6 +317,32 @@ Gallery.showNormal = function () {
 	$('#content').removeClass('icon-loading');
 };
 
+Gallery.showOldIeWarning = function () {
+	var text = '<strong>Your browser is not supported!</strong></br>' +
+		'please install one of the following alternatives</br>' +
+		'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
+		'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
+		'</br>';
+	Gallery.showHtmlNotification(text, 60);
+};
+
+Gallery.showModernIeWarning = function () {
+	var text = '<strong>This application may not work properly on your browser.</strong></br>' +
+		'For an improved experience, please install one of the following alternatives</br>' +
+		'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
+		'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
+		'</br>';
+	Gallery.showHtmlNotification(text, 15);
+};
+
+Gallery.showHtmlNotification = function (text, timeout) {
+	var options = {
+		timeout: timeout,
+		isHTML: true
+	};
+	OC.Notification.showTemporary(t('gallery', text), options);
+};
+
 Gallery.slideShow = function (images, startImage, autoPlay) {
 	if (startImage === undefined) {
 		OC.Notification.showTemporary(t('gallery', 'Aborting preview. Could not find the file'));
@@ -363,15 +389,11 @@ $(document).ready(function () {
 	Gallery.ie10AndBelow = navigator.userAgent.indexOf('MSIE') != -1;
 
 	if (Gallery.ie10AndBelow) {
-		OC.Notification.showTemporary(t('gallery',
-			'Your browser is not supported,' +
-			'please use a modern browser such as Firefox or Chrome'));
+		Gallery.showOldIeWarning();
 		Gallery.showEmpty();
 	} else {
 		if (Gallery.ie11AndAbove) {
-			OC.Notification.showTemporary(t('gallery',
-				'This application does not yet work properly on your browser,' +
-				' please use a modern browser such as Firefox or Chrome'));
+			Gallery.showModernIeWarning();
 		}
 
 		Gallery.showLoading();

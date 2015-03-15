@@ -36,6 +36,8 @@ It will evolve if and when people provide patches to fix all known current issue
 * Mobile: Safari, Chrome on Android 5+ and iOS 8.x, BlackBerry 10, Firefox
 
 #### Partially supported
+May not look as nice, but should work
+
 * Desktop: Internet Explorer 11+
 * Mobile: Opera, Chrome on Android 4
 

@@ -123,18 +123,17 @@ class Preview {
 	 */
 	public function preparePreview($maxX, $maxY, $keepAspect) {
 		$this->dims = [$maxX, $maxY];
-		$perfectPreview = [];
 
 		$previewData = $this->getPreviewFromCore($keepAspect);
 
 		if ($previewData && $previewData->valid()) {
-			$perfectPreview['preview'] = $previewData;
+			$mimeType = $previewData->mimeType();
 		} else {
-			$perfectPreview['preview'] = $this->getMimeIcon();
+			$previewData = $this->getMimeIcon();
+			$mimeType = 'image/png';
 		}
-		$perfectPreview['mimetype'] = 'image/png'; // Previews are always sent as PNG
 
-		return $perfectPreview;
+		return ['preview' => $previewData, 'mimetype' => $mimeType];
 	}
 
 	/**
