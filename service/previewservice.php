@@ -122,7 +122,7 @@ class PreviewService extends Service {
 	 * @param bool $keepAspect
 	 * @param bool $base64Encode
 	 *
-	 * @return array <string,\OC_Image|string> preview data
+	 * @return array<string,\OC_Image|string> preview data
 	 * @throws NotFoundServiceException
 	 */
 	public function createPreview(
