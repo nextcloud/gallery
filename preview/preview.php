@@ -102,6 +102,7 @@ class Preview {
 	public function setupView($userId, $file, $imagePathFromFolder) {
 		$this->userId = $userId;
 		$this->file = $file;
+		$imagePathFromFolder = ltrim($imagePathFromFolder, '/');
 		$this->preview = new \OC\Preview($userId, 'files', $imagePathFromFolder);
 	}
 

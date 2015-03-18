@@ -191,7 +191,7 @@ class InfoService extends Service {
 	private function getNodes($folder, $subDepth) {
 		$nodes = [];
 		try {
-			if ($folder->isReadable() && !$folder->isMounted()) {
+			if ($folder->isReadable() && $folder->getStorage()->isLocal()) {
 				$nodes = $folder->getDirectoryListing();
 			}
 		} catch (\Exception $exception) {
@@ -351,7 +351,7 @@ class InfoService extends Service {
 	private function isPreviewAvailable($file) {
 		try {
 			$mimeType = $file->getMimetype();
-			if (!$file->isMounted() && in_array($mimeType, $this->supportedMimes)) {
+			if ($file->getStorage()->isLocal() && in_array($mimeType, $this->supportedMimes)) {
 				$imagePath = $file->getPath();
 				$fixedPath = str_replace($this->fromRootToFolder, '', $imagePath);
 				$imageId = $file->getId();
