@@ -12,7 +12,9 @@ script(
 		'gallery',
 		'thumbnail',
 		'vendor/eventsource-polyfill/dist/eventsource.min',
-		'eventsource'
+		'eventsource',
+		'vendor/bigshot/bigshot',
+		'slideshow'
 	]
 );
 style(
@@ -21,7 +23,8 @@ style(
 		'styles',
 		'mobile',
 		'public',
-		'gallerybutton'
+		'gallerybutton',
+		'slideshow'
 	]
 );
 

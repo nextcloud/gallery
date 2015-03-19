@@ -56,7 +56,7 @@ Util::addTranslations('galleryplus');
 
 // Hack which only loads the scripts in the Files app
 $url = $c->query('Request')->server['REQUEST_URI'];
-if (preg_match('%index.php/apps/files(/.*)?%', $url)) {
+if (preg_match('%index.php/apps/files(/.*)?%', $url) || preg_match('%index.php/s(/.*)?%', $url)) {
 	/**
 	 * Scripts for the Files app
 	 */
