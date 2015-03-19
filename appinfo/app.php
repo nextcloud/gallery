@@ -19,6 +19,7 @@ use OCP\Util;
 $app = new Application();
 $c = $app->getContainer();
 $appName = $c->query('AppName');
+$urlGenerator = $c->query('OCP\IURLGenerator');
 
 /**
  * Menu entry in ownCloud
@@ -32,13 +33,11 @@ $navConfig = [
 
 	// The route that will be shown on startup when called from within ownCloud
 	// Public links are using another route, see appinfo/routes.php
-	'href'  => $c->query('OCP\IURLGenerator')
-				 ->linkToRoute($appName . '.page.index'),
+	'href'  => $urlGenerator->linkToRoute($appName . '.page.index'),
 
 	// The icon that will be shown in the navigation
 	// This file needs to exist in img/
-	'icon'  => $c->query('OCP\IURLGenerator')
-				 ->imagePath($appName, 'app.svg'),
+	'icon'  => $urlGenerator->imagePath($appName, 'app.svg'),
 
 	// The title of the application. This will be used in the
 	// navigation or on the settings page
@@ -55,15 +54,19 @@ $c->query('OCP\INavigationManager')
  */
 Util::addTranslations('galleryplus');
 
-/**
- * Scripts for the Files app
- */
-Util::addScript($appName, 'vendor/bigshot/bigshot');
-Util::addScript($appName, 'slideshow');
-Util::addScript($appName, 'gallerybutton');
+// Hack which only loads the scripts in the Files app
+$url = $c->query('Request')->server['REQUEST_URI'];
+if (preg_match('%index.php/apps/files(/.*)?%', $url)) {
+	/**
+	 * Scripts for the Files app
+	 */
+	Util::addScript($appName, 'vendor/bigshot/bigshot');
+	Util::addScript($appName, 'slideshow');
+	Util::addScript($appName, 'gallerybutton');
 
-/**
- * Styles for the Files app
- */
-Util::addStyle($appName, 'slideshow');
-Util::addStyle($appName, 'gallerybutton');
+	/**
+	 * Styles for the Files app
+	 */
+	Util::addStyle($appName, 'slideshow');
+	Util::addStyle($appName, 'gallerybutton');
+}
