@@ -420,7 +420,7 @@ $(document).ready(function () {
 			} else {
 				subUrl = 'apps/files?dir={path}';
 			}
-			window.location.href = OC.generateUrl(subUrl, params);
+			OC.redirect(OC.generateUrl(subUrl, params));
 		});
 
 		$(window).scroll(function () {

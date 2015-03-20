@@ -55,18 +55,23 @@ $c->query('OCP\INavigationManager')
 Util::addTranslations('galleryplus');
 
 // Hack which only loads the scripts in the Files app
-$url = $c->query('Request')->server['REQUEST_URI'];
-if (preg_match('%index.php/apps/files(/.*)?%', $url) || preg_match('%index.php/s(/.*)?%', $url)) {
-	/**
-	 * Scripts for the Files app
-	 */
-	Util::addScript($appName, 'vendor/bigshot/bigshot');
-	Util::addScript($appName, 'slideshow');
-	Util::addScript($appName, 'gallerybutton');
+$request = $c->query('Request');
+if (isset($request->server['REQUEST_URI'])) {
+	$url = $request->server['REQUEST_URI'];
+	if (preg_match('%index.php/apps/files(/.*)?%', $url)
+		|| preg_match('%index.php/s(/.*)?%', $url)
+	) {
+		/**
+		 * Scripts for the Files app
+		 */
+		Util::addScript($appName, 'vendor/bigshot/bigshot');
+		Util::addScript($appName, 'slideshow');
+		Util::addScript($appName, 'gallerybutton');
 
-	/**
-	 * Styles for the Files app
-	 */
-	Util::addStyle($appName, 'slideshow');
-	Util::addStyle($appName, 'gallerybutton');
+		/**
+		 * Styles for the Files app
+		 */
+		Util::addStyle($appName, 'slideshow');
+		Util::addStyle($appName, 'gallerybutton');
+	}
 }
