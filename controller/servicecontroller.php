@@ -223,7 +223,7 @@ class ServiceController extends Controller {
 			$download = $this->downloadService->downloadFile($file);
 
 			return new ImageResponse($download);
-		} catch (EnvironmentException $exception) {
+		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
 	}

@@ -247,10 +247,18 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 		}
 
 		if (!$.isEmptyObject(albumInfo.copyrightLink)) {
+			var subUrl = '';
 			var params = {
-				file: Gallery.currentAlbum + '/' + albumInfo.copyrightLink
+				path: '/' + Gallery.currentAlbum,
+				files: albumInfo.copyrightLink
 			};
-			var copyrightUrl = Gallery.buildUrl('download', '', params);
+			if (Gallery.token) {
+				params.token = Gallery.token;
+				subUrl = 's/{token}/download?dir={path}&files={files}';
+			} else {
+				subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
+			}
+			var copyrightUrl = OC.generateUrl(subUrl, params);
 			var copyrightLink = $('<a>', {
 				text: copyright,
 				title: copyright,
