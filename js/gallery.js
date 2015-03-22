@@ -101,25 +101,25 @@ Gallery.fillAlbums = function () {
 
 Gallery.sortBy = function (sortType, sortOrder) {
 	if (sortType === 'name') {
-		if (sortOrder === 'des') {
-			//sortByNameDes
+		if (sortOrder === 'asc') {
+			//sortByNameAsc
 			return function (a, b) {
 				return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
 			};
 		}
-		//sortByNameAsc
+		//sortByNameDes
 		return function (a, b) {
 			return b.path.toLowerCase().localeCompare(a.path.toLowerCase());
 		};
 	}
 	if (sortType === 'date') {
-		if (sortOrder === 'des') {
-			//sortByDateDes
+		if (sortOrder === 'asc') {
+			//sortByDateAsc
 			return function (a, b) {
 				return b.mTime - a.mTime;
 			};
 		}
-		//sortByDateAsc
+		//sortByDateDes
 		return function (a, b) {
 			return a.mTime - b.mTime;
 		};
