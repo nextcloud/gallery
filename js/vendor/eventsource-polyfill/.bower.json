@@ -1,0 +1,43 @@
+{
+  "name": "eventsource-polyfill",
+  "homepage": "https://github.com/amvtek/EventSource",
+  "authors": [
+    "amvtek <devel@amvtek.com>"
+  ],
+  "description": "A polyfill for http://www.w3.org/TR/eventsource/",
+  "main": [
+    "javascript/src/eventsource.js",
+    "eventsource.min.js",
+    "README.rst"
+  ],
+  "keywords": [
+    "sse",
+    "server sent events",
+    "eventsource",
+    "event-source",
+    "polyfill"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "javascript",
+    "test_server",
+    "Gruntfile.js",
+    "package.json",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "docs"
+  ],
+  "version": "0.9.6",
+  "_release": "0.9.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.6",
+    "commit": "030f993d5bc2a9f9aeabfcafcd5ea4e8424ff68a"
+  },
+  "_source": "git://github.com/amvtek/EventSource.git",
+  "_target": "~0.9.4",
+  "_originalSource": "eventsource-polyfill"
+}

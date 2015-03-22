@@ -35,8 +35,8 @@ class PublicServiceController extends ServiceController {
 	 *
 	 * @inheritDoc
 	 */
-	public function getImages() {
-		return parent::getImages();
+	public function getFiles($location) {
+		return parent::getFiles($location);
 	}
 
 	/**

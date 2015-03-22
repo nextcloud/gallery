@@ -59,12 +59,6 @@ return [
 		/**
 		 * Services
 		 */
-		// Album creation. Only called once logged in
-		[
-			'name' => 'service#get_album_info',
-			'url'  => '/albums',
-			'verb' => 'GET'
-		],
 		// Supported media types. Only called by the slideshow
 		[
 			'name' => 'service#get_types',
@@ -73,8 +67,8 @@ return [
 		],
 		// All the images of which a preview can be generated
 		[
-			'name' => 'service#get_images',
-			'url'  => '/images',
+			'name' => 'service#get_files',
+			'url'  => '/files',
 			'verb' => 'GET'
 		],
 		// Batch creation of thumbnails
@@ -104,8 +98,8 @@ return [
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_service#get_images',
-			'url'  => '/images.public',
+			'name' => 'public_service#get_files',
+			'url'  => '/files.public',
 			'verb' => 'GET'
 		],
 		[

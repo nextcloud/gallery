@@ -23,6 +23,8 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
+use Symfony\Component\Yaml\Yaml;
+
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Environment\EnvironmentException;
 use OCA\GalleryPlus\Http\ImageResponse;
@@ -108,28 +110,6 @@ class ServiceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * Returns information about an album, based on its path
-	 *
-	 * Used to see if album thumbnails should be generated for a specific folder
-	 *
-	 * @param string $albumpath
-	 *
-	 * @return false|array<string,int>|Http\JSONResponse
-	 */
-	public function getAlbumInfo($albumpath) {
-		try {
-			$nodeInfo = $this->environment->getNodeInfo($albumpath);
-
-			// Thanks to the AppFramework, Arrays are automatically JSON encoded
-			return $nodeInfo;
-		} catch (EnvironmentException $exception) {
-			return $this->error($exception);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 *
 	 * Sends back a list of all media types supported by the system
 	 *
 	 * @return string[]
@@ -148,25 +128,29 @@ class ServiceController extends Controller {
 	 * For private galleries, it returns all images, with the full path from the root folder
 	 * For public galleries, the path starts from the folder the link gives access to
 	 *
-	 * @return array<string,string|int>|Http\JSONResponse
+	 * @param string $location a path representing the current album in the app
+	 *
+	 * @return array <string,string|int>|Http\JSONResponse
 	 */
-	public function getImages() {
+	public function getFiles($location) {
 		try {
-			$currentFolder = $this->request->getParam('currentfolder');
-			$imagesFolder = $this->environment->getResourceFromPath($currentFolder);
+			$imagesFolder = $this->environment->getResourceFromPath($location);
 
-			if ($this->isFolderPrivate($imagesFolder)) {
+			if (is_null($imagesFolder) || $this->isFolderPrivate($imagesFolder)) {
 				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], 500);
 			}
-
 			$fromRootToFolder = $this->environment->getFromRootToFolder();
-
 			$folderData = [
 				'imagesFolder'     => $imagesFolder,
 				'fromRootToFolder' => $fromRootToFolder,
 			];
+			$files = $this->infoService->getImages($folderData);
+			$albumInfo = $this->getAlbumInfo($imagesFolder, $fromRootToFolder);
 
-			return $this->infoService->getImages($folderData);
+			return [
+				'files'     => $files,
+				'albuminfo' => $albumInfo,
+			];
 		} catch (EnvironmentException $exception) {
 			return $this->error($exception);
 		}
@@ -267,6 +251,48 @@ class ServiceController extends Controller {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns information about the currently selected folders
+	 *
+	 * @param Folder $folderNode
+	 * @param string $folderPathFromRoot
+	 *
+	 * @return array<string,string|int>
+	 */
+	private function getAlbumInfo($folderNode, $folderPathFromRoot) {
+		$path = str_replace($folderPathFromRoot, '', $folderNode->getPath());
+		if (rtrim($folderPathFromRoot, '/') === $folderNode->getPath()) {
+			$path = '';
+		}
+		$albumInfo = [
+			'path'        => $path,
+			'fileid'      => $folderNode->getID(),
+			'permissions' => $folderNode->getPermissions()
+		];
+		$albumInfo = array_merge($albumInfo, $this->hasAlbumConfig($folderNode));
+
+		return $albumInfo;
+	}
+
+	/**
+	 * Returns an album configuration array
+	 *
+	 * @param Folder $folder
+	 *
+	 * @return array<null|string,string>
+	 */
+	private function hasAlbumConfig($folder) {
+		$configName = 'gallery.cnf';
+		$config = [];
+		if ($folder->nodeExists($configName)) {
+			/** @type \OCP\Files\File $configFile */
+			$configFile = $folder->get($configName);
+			$config = Yaml::parse($configFile->getContent());
+		}
+
+		return $config;
 	}
 
 	/**
