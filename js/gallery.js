@@ -234,6 +234,9 @@ Gallery.showInfo = function (event) {
 Gallery.showCopyright = function (albumInfo, infoContentElement) {
 	if (!$.isEmptyObject(albumInfo.copyright) || !$.isEmptyObject(albumInfo.copyrightLink)) {
 		var copyright;
+		var copyrightTitle = $('<h4/>');
+		copyrightTitle.append(t('gallery', 'Copyright'));
+		infoContentElement.append(copyrightTitle);
 		var p = $('<p/>');
 		infoContentElement.append(p);
 
