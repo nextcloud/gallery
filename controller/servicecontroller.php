@@ -130,7 +130,7 @@ class ServiceController extends Controller {
 	 *
 	 * @param string $location a path representing the current album in the app
 	 *
-	 * @return array <string,string|int>|Http\JSONResponse
+	 * @return array<string,array<string,string|int>>|Http\JSONResponse
 	 */
 	public function getFiles($location) {
 		try {
@@ -147,10 +147,7 @@ class ServiceController extends Controller {
 			$files = $this->infoService->getImages($folderData);
 			$albumInfo = $this->getAlbumInfo($imagesFolder, $fromRootToFolder);
 
-			return [
-				'files'     => $files,
-				'albuminfo' => $albumInfo,
-			];
+			return ['files' => $files, 'albuminfo' => $albumInfo];
 		} catch (EnvironmentException $exception) {
 			return $this->error($exception);
 		}
