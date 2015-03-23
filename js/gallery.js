@@ -79,17 +79,21 @@ Gallery.fillAlbums = function () {
 			Gallery.imageMap[image.path] = image;
 		}
 		var sortType = 'name';
-		var sortOrder = 'des';
+		var sortOrder = 'asc';
+		var albumSortOrder = 'asc';
 		if (albumInfo.sorting !== null) {
 			sortType = albumInfo.sorting;
 		}
 		if (albumInfo.sort_order !== null) {
 			sortOrder = albumInfo.sort_order;
+			if (sortType === 'name') {
+				albumSortOrder = sortOrder;
+			}
 		}
 
 		for (var j = 0, keys = Object.keys(Gallery.albumMap); j < keys.length; j++) {
 			Gallery.albumMap[keys[j]].images.sort(Gallery.sortBy(sortType, sortOrder));
-			Gallery.albumMap[keys[j]].subAlbums.sort(Gallery.sortBy('name', 'des'));
+			Gallery.albumMap[keys[j]].subAlbums.sort(Gallery.sortBy('name', albumSortOrder));
 		}
 	}, function () {
 		// Triggered if we couldn't find a working folder
@@ -176,7 +180,6 @@ Gallery.buildUrl = function (endPoint, path, params) {
 		params.token = Gallery.token;
 		extension = '.public';
 	}
-	//params.requesttoken = oc_requesttoken;
 	var query = OC.buildQueryString(params);
 	return OC.generateUrl('apps/' + Gallery.appName + '/' + endPoint + extension + path, null) +
 		'?' +
