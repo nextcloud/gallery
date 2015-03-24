@@ -8,23 +8,22 @@
 	overflow: hidden;
 }
 
-button.share {
-	display: none;
-	margin-top: 4px;
+#controls .button {
+	margin-top: 5px;
 }
 
-#album-info-button {
-	margin-top: 4px;
+button.share {
+	margin-top: 5px;
 }
 
 .album-info-content {
 	background-color: #eee;
 	border-bottom-left-radius: 5px;
 	box-shadow: 0 1px 1px #777;
-	display:none;
+	display: none;
 	z-index: 600;
 	width: 420px;
-	min-height: 60px;
+	min-height: 100px;
 	max-height: 600px;
 	position: absolute;
 	top: 43px;

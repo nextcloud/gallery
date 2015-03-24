@@ -8,6 +8,7 @@ Gallery.albumMap = {};
 Gallery.imageMap = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
+Gallery.currentSort = {};
 
 Gallery.getAlbum = function (path) {
 	if (!Gallery.albumMap[path]) {
@@ -81,15 +82,20 @@ Gallery.fillAlbums = function () {
 		var sortType = 'name';
 		var sortOrder = 'asc';
 		var albumSortOrder = 'asc';
-		if (albumInfo.sorting !== null) {
+		if (!$.isEmptyObject(albumInfo.sorting)) {
 			sortType = albumInfo.sorting;
 		}
-		if (albumInfo.sort_order !== null) {
+		if (!$.isEmptyObject(albumInfo.sort_order)) {
 			sortOrder = albumInfo.sort_order;
 			if (sortType === 'name') {
 				albumSortOrder = sortOrder;
 			}
 		}
+
+		Gallery.currentSort = {
+			type: sortType,
+			order: sortOrder
+		};
 
 		for (var j = 0, keys = Object.keys(Gallery.albumMap); j < keys.length; j++) {
 			Gallery.albumMap[keys[j]].images.sort(Gallery.sortBy(sortType, sortOrder));
@@ -196,19 +202,18 @@ Gallery.download = function (event) {
 };
 
 Gallery.showInfo = function (event) {
-	//event.preventDefault();
 	event.stopPropagation();
 	var infoContentElement = $('.album-info-content');
 
 	if (infoContentElement.is(':visible')) {
 		infoContentElement.slideUp();
 	} else {
+		// Fixme At this stage, the old content is still loaded
 		infoContentElement.slideDown();
-
 		var albumInfo = Gallery.albumsInfo[Gallery.currentAlbum];
 		if (!albumInfo.infoLoaded) {
+			infoContentElement.empty();
 			if (!$.isEmptyObject(albumInfo.description)) {
-				infoContentElement.empty();
 				var params = {
 					file: Gallery.currentAlbum + '/' + albumInfo.description
 				};
@@ -217,14 +222,13 @@ Gallery.showInfo = function (event) {
 				$.get(descriptionUrl).done(function (data) {
 						infoContentElement.append(marked(data));
 						infoContentElement.find('a').attr("target", "_blank");
-
 						Gallery.showCopyright(albumInfo, infoContentElement);
 					}
 				).fail(function () {
 						infoContentElement.append('<p>' +
 						t('gallery', 'Could not load the description') + '</p>');
+						Gallery.showCopyright(albumInfo, infoContentElement);
 					});
-
 				infoContentElement.removeClass('icon-loading');
 			} else {
 				Gallery.showCopyright(albumInfo, infoContentElement);
@@ -240,13 +244,11 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 		var copyrightTitle = $('<h4/>');
 		copyrightTitle.append(t('gallery', 'Copyright'));
 		infoContentElement.append(copyrightTitle);
-		var p = $('<p/>');
-		infoContentElement.append(p);
 
 		if (!$.isEmptyObject(albumInfo.copyright)) {
-			copyright = albumInfo.copyright;
+			copyright = marked(albumInfo.copyright);
 		} else {
-			copyright = t('gallery', 'Copyright notice');
+			copyright = '<p>' + t('gallery', 'Copyright notice') + '</p>';
 		}
 
 		if (!$.isEmptyObject(albumInfo.copyrightLink)) {
@@ -263,14 +265,14 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 			}
 			var copyrightUrl = OC.generateUrl(subUrl, params);
 			var copyrightLink = $('<a>', {
-				text: copyright,
+				html: copyright,
 				title: copyright,
 				href: copyrightUrl,
 				target: "_blank"
 			});
-			p.append(copyrightLink);
+			infoContentElement.append(copyrightLink);
 		} else {
-			p.append(copyright);
+			infoContentElement.append(copyright);
 		}
 	}
 };
@@ -319,11 +321,11 @@ Gallery.view.viewAlbum = function (albumPath) {
 	Gallery.view.clear();
 	if (albumPath !== Gallery.currentAlbum) {
 		Gallery.view.loadVisibleRows.loading = false;
+		Gallery.currentAlbum = albumPath;
+		Gallery.view.shareButtonSetup(albumPath);
+		Gallery.view.infoButtonSetup();
+		Gallery.view.buildBreadCrumb(albumPath);
 	}
-	Gallery.currentAlbum = albumPath;
-	Gallery.view.shareButtonSetup(albumPath);
-	Gallery.view.infoButtonSetup();
-	Gallery.view.buildBreadCrumb(albumPath);
 
 	Gallery.albumMap[albumPath].viewedItems = 0;
 	setTimeout(function () {

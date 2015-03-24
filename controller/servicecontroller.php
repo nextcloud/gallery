@@ -17,13 +17,10 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IEventSource;
 use OCP\IURLGenerator;
 use OCP\IRequest;
-use OCP\Files\Folder;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
-
-use Symfony\Component\Yaml\Yaml;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Environment\EnvironmentException;
@@ -135,17 +132,18 @@ class ServiceController extends Controller {
 	public function getFiles($location) {
 		try {
 			$imagesFolder = $this->environment->getResourceFromPath($location);
-
-			if (is_null($imagesFolder) || $this->isFolderPrivate($imagesFolder)) {
-				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], 500);
-			}
 			$fromRootToFolder = $this->environment->getFromRootToFolder();
+			list($albumInfo, $privateAlbum) =
+				$this->infoService->getAlbumInfo($imagesFolder, $fromRootToFolder);
+
+			if ($privateAlbum) {
+				return new JSONResponse(['message' => 'Album is private', 'success' => false], 403);
+			}
 			$folderData = [
 				'imagesFolder'     => $imagesFolder,
 				'fromRootToFolder' => $fromRootToFolder,
 			];
 			$files = $this->infoService->getImages($folderData);
-			$albumInfo = $this->getAlbumInfo($imagesFolder, $fromRootToFolder);
 
 			return ['files' => $files, 'albuminfo' => $albumInfo];
 		} catch (EnvironmentException $exception) {
@@ -226,70 +224,6 @@ class ServiceController extends Controller {
 		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
-	}
-
-	/**
-	 * Checks if we're authorised to look for pictures in this folder
-	 *
-	 * @param Folder $folder
-	 *
-	 * @return bool
-	 */
-	private function isFolderPrivate($folder) {
-		if ($folder->nodeExists('.nomedia')) {
-			return true;
-		} else {
-			$path = $folder->getPath();
-			if ($path !== '' && $path !== '/') {
-				$folder = $folder->getParent();
-
-				return $this->isFolderPrivate($folder);
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns information about the currently selected folders
-	 *
-	 * @param Folder $folderNode
-	 * @param string $folderPathFromRoot
-	 *
-	 * @return array<string,string|int>
-	 */
-	private function getAlbumInfo($folderNode, $folderPathFromRoot) {
-		$path = str_replace($folderPathFromRoot, '', $folderNode->getPath());
-		if (rtrim($folderPathFromRoot, '/') === $folderNode->getPath()) {
-			$path = '';
-		}
-		$albumInfo = [
-			'path'        => $path,
-			'fileid'      => $folderNode->getID(),
-			'permissions' => $folderNode->getPermissions()
-		];
-		$albumInfo = array_merge($albumInfo, $this->hasAlbumConfig($folderNode));
-
-		return $albumInfo;
-	}
-
-	/**
-	 * Returns an album configuration array
-	 *
-	 * @param Folder $folder
-	 *
-	 * @return array<null|string,string>
-	 */
-	private function hasAlbumConfig($folder) {
-		$configName = 'gallery.cnf';
-		$config = [];
-		if ($folder->nodeExists($configName)) {
-			/** @type \OCP\Files\File $configFile */
-			$configFile = $folder->get($configName);
-			$config = Yaml::parse($configFile->getContent());
-		}
-
-		return $config;
 	}
 
 	/**
