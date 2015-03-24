@@ -244,7 +244,7 @@ class InfoService extends Service {
 				list($configArray, $configComplete) =
 					$this->validateConfig($currentConfigArray, $parsedConfigArray, $level);
 			} catch (\Exception $exception) {
-				$this->logger->debug(
+				$this->logger->error(
 					"Problem while parsing the configuration file : {path}",
 					['path' => $folder->getPath() . '/' . $configFile->getPath()]
 				);
