@@ -227,7 +227,7 @@ class InfoService extends Service {
 	 * @param bool $configComplete
 	 * @param int $level
 	 *
-	 * @return bool
+	 * @return array<array,bool>
 	 */
 	private function parseConfig(
 		$folder, $configName, $currentConfigArray, $configComplete, $level
@@ -279,7 +279,7 @@ class InfoService extends Service {
 	 * @param array $parsedConfigArray
 	 * @param int $level
 	 *
-	 * @return array
+	 * @return array<array,bool>
 	 */
 	private function validateConfig($currentConfigArray, $parsedConfigArray, $level) {
 		$configComplete = false;
