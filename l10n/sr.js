@@ -8,7 +8,7 @@ OC.L10N.register(
     "Pause" : "Паузирај",
     "Previous" : "Претходна",
     "Close" : "Затвори",
-    "Error loading slideshow template" : "Грешка при учитавању шаблона за слајд-шоу",
+    "Error loading slideshow template" : "Грешка при учитавању шаблона за слајдове",
     "Share" : "Подели",
     "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Нема слика! Ако отпремите слике у апликацији фајлова, биће приказане овде.",
     "shared by %s" : "дели %s",
