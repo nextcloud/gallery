@@ -1,0 +1,22 @@
+{
+  "name": "galleryplus",
+  "homepage": "https://github.com/interfasys/galleryplus",
+  "authors": [
+    "Olivier Paroz <owncloud@interfasys.ch>"
+  ],
+  "description": "Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.",
+  "license": "AGPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "eventsource-polyfill": "~0.9.6",
+    "marked": "~0.3.3",
+    "github-markdown-css": "~2.0.7"
+  }
+}

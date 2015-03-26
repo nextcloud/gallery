@@ -13,6 +13,7 @@ script(
 		'thumbnail',
 		'vendor/eventsource-polyfill/dist/eventsource.min',
 		'eventsource',
+		'vendor/marked/marked.min',
 		'vendor/bigshot/bigshot',
 		'slideshow'
 	]
@@ -23,6 +24,7 @@ style(
 		'styles',
 		'mobile',
 		'gallerybutton',
+		'github-markdown',
 		'slideshow'
 	]
 );
@@ -35,6 +37,14 @@ style(
 			image_path('core', 'actions/toggle-filelist.svg')
 		); ?>" alt="<?php p($l->t('File list')); ?>"/>
 	</div>
+	<span class="right">
+		<div id="album-info-button" class="button">
+			<img class="svg" src="<?php print_unescaped(
+				image_path('core', 'actions/info.svg')
+			); ?>" alt="<?php p($l->t('Album information')); ?>"/>
+		</div>
+		<div class="album-info-content markdown-body"></div>
+	</span>
 	<span class="right">
 		<button class="share"><?php p($l->t("Share")); ?></button>
 		<a class="share" data-item-type="folder" data-item=""

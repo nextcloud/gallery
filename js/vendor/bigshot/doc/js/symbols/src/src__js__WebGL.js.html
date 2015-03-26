@@ -1,0 +1,256 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/*
+<span class='line'>  2</span>  * Copyright 2010 - 2012 Leo Sutic &lt;leo.sutic@gmail.com>
+<span class='line'>  3</span>  *  
+<span class='line'>  4</span>  * Licensed under the Apache License, Version 2.0 (the "License"); 
+<span class='line'>  5</span>  * you may not use this file except in compliance with the License. 
+<span class='line'>  6</span>  * You may obtain a copy of the License at 
+<span class='line'>  7</span>  * 
+<span class='line'>  8</span>  *     http://www.apache.org/licenses/LICENSE-2.0 
+<span class='line'>  9</span>  *     
+<span class='line'> 10</span>  * Unless required by applicable law or agreed to in writing, software 
+<span class='line'> 11</span>  * distributed under the License is distributed on an "AS IS" BASIS, 
+<span class='line'> 12</span>  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+<span class='line'> 13</span>  * See the License for the specific language governing permissions and 
+<span class='line'> 14</span>  * limitations under the License. 
+<span class='line'> 15</span>  */</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> </span><span class="COMM">/**
+<span class='line'> 18</span>  * Creates a new WebGL wrapper instance.
+<span class='line'> 19</span>  *
+<span class='line'> 20</span>  * @class WebGL wrapper for common {@link bigshot.VRPanorama} uses.
+<span class='line'> 21</span>  * @param {HTMLCanvasElement} canvas_ the canvas
+<span class='line'> 22</span>  * @see #onresize()
+<span class='line'> 23</span>  */</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="NAME">bigshot.WebGL</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">canvas_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 26</span>      * The html canvas element we'll be rendering in.
+<span class='line'> 27</span>      *
+<span class='line'> 28</span>      * @type HTMLCanvasElement
+<span class='line'> 29</span>      */</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">    </span><span class="NAME">this.canvas</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">canvas_</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 33</span>      * Our WebGL context.
+<span class='line'> 34</span>      *
+<span class='line'> 35</span>      * @type WebGLRenderingContext
+<span class='line'> 36</span>      */</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">    </span><span class="NAME">this.gl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">bigshot.WebGLUtil.createContext</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.canvas</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">            </span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 40</span>      * The current object-to-world transform matrix.
+<span class='line'> 41</span>      *
+<span class='line'> 42</span>      * @type bigshot.TransformStack
+<span class='line'> 43</span>      */</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">    </span><span class="NAME">this.mvMatrix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">bigshot.TransformStack</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 47</span>      * The current perspective transform matrix.
+<span class='line'> 48</span>      *
+<span class='line'> 49</span>      * @type bigshot.TransformStack
+<span class='line'> 50</span>      */</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">    </span><span class="NAME">this.pMatrix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">bigshot.TransformStack</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 54</span>      * The current shader program.
+<span class='line'> 55</span>      */</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">    </span><span class="NAME">this.shaderProgram</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">    </span><span class="NAME">this.onresize</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 60</span> 
+<span class='line'> 61</span> </span><span class="NAME">bigshot.WebGL.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 63</span>      * Must be called when the canvas element is resized.
+<span class='line'> 64</span>      *
+<span class='line'> 65</span>      * @public
+<span class='line'> 66</span>      */</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="NAME">onresize</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.viewportWidth</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.canvas.width</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.viewportHeight</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.canvas.height</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 73</span>      * Fragment shader. Taken from the "Learning WebGL" lessons:
+<span class='line'> 74</span>      *     http://learningwebgl.com/blog/?p=571
+<span class='line'> 75</span>      */</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">    </span><span class="NAME">fragmentShader</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">        </span><span class="STRN">"#ifdef GL_ES\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">        </span><span class="STRN">"    precision highp float;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">        </span><span class="STRN">"#endif\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">        </span><span class="STRN">"\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">        </span><span class="STRN">"varying vec2 vTextureCoord;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">        </span><span class="STRN">"\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">        </span><span class="STRN">"uniform sampler2D uSampler;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">        </span><span class="STRN">"\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">        </span><span class="STRN">"void main(void) {\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">        </span><span class="STRN">"    gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">        </span><span class="STRN">"}\n"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 90</span>      * Vertex shader. Taken from the "Learning WebGL" lessons:
+<span class='line'> 91</span>      *     http://learningwebgl.com/blog/?p=571
+<span class='line'> 92</span>      */</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="NAME">vertexShader</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">        </span><span class="STRN">"attribute vec3 aVertexPosition;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">        </span><span class="STRN">"attribute vec2 aTextureCoord;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">        </span><span class="STRN">"\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">        </span><span class="STRN">"uniform mat4 uMVMatrix;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">        </span><span class="STRN">"uniform mat4 uPMatrix;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">        </span><span class="STRN">"\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">        </span><span class="STRN">"varying vec2 vTextureCoord;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">        </span><span class="STRN">"\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">        </span><span class="STRN">"void main(void) {\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">        </span><span class="STRN">"    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">        </span><span class="STRN">"    vTextureCoord = aTextureCoord;\n"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">        </span><span class="STRN">"}"</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>108</span>      * Creates a new shader.
+<span class='line'>109</span>      *
+<span class='line'>110</span>      * @type WebGLShader
+<span class='line'>111</span>      * @param {String} source the source code
+<span class='line'>112</span>      * @param {int} type the shader type, one of WebGLRenderingContext.FRAGMENT_SHADER or 
+<span class='line'>113</span>      * WebGLRenderingContext.VERTEX_SHADER
+<span class='line'>114</span>      */</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">    </span><span class="NAME">createShader</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">source</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">shader</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.createShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.shaderSource</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">shader</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">source</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.compileShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">shader</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.gl.getShaderParameter</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">shader</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.gl.COMPILE_STATUS</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">            </span><span class="NAME">alert</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.gl.getShaderInfoLog</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">shader</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">shader</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>129</span>      * Creates a new fragment shader.
+<span class='line'>130</span>      *
+<span class='line'>131</span>      * @type WebGLShader
+<span class='line'>132</span>      * @param {String} source the source code
+<span class='line'>133</span>      */</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">    </span><span class="NAME">createFragmentShader</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">source</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.createShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">source</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.gl.FRAGMENT_SHADER</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>139</span>      * Creates a new vertex shader.
+<span class='line'>140</span>      *
+<span class='line'>141</span>      * @type WebGLShader
+<span class='line'>142</span>      * @param {String} source the source code
+<span class='line'>143</span>      */</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">    </span><span class="NAME">createVertexShader</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">source</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.createShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">source</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.gl.VERTEX_SHADER</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>149</span>      * Initializes the shaders.
+<span class='line'>150</span>      */</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">    </span><span class="NAME">initShaders</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">        </span><span class="NAME">this.shaderProgram</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.createProgram</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.attachShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.createVertexShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.vertexShader</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.attachShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.createFragmentShader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.fragmentShader</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.linkProgram</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.gl.getProgramParameter</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.gl.LINK_STATUS</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">            </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">"Could not initialise shaders"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.useProgram</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">        </span><span class="NAME">this.shaderProgram.vertexPositionAttribute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.getAttribLocation</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"aVertexPosition"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.enableVertexAttribArray</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram.vertexPositionAttribute</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">        </span><span class="NAME">this.shaderProgram.textureCoordAttribute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.getAttribLocation</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"aTextureCoord"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.enableVertexAttribArray</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram.textureCoordAttribute</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>169</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>170</span> </span><span class="WHIT">        </span><span class="NAME">this.shaderProgram.pMatrixUniform</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.getUniformLocation</span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"uPMatrix"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>171</span> </span><span class="WHIT">        </span><span class="NAME">this.shaderProgram.mvMatrixUniform</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.getUniformLocation</span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"uMVMatrix"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">        </span><span class="NAME">this.shaderProgram.samplerUniform</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.getUniformLocation</span><span class="PUNC">(</span><span class="NAME">this.shaderProgram</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"uSampler"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>174</span> 
+<span class='line'>175</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>177</span>      * Sets the matrix parameters ("uniforms", since the variables are declared as uniform) in the shaders.
+<span class='line'>178</span>      */</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">    </span><span class="NAME">setMatrixUniforms</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.uniformMatrix4fv</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram.pMatrixUniform</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Float32Array</span><span class="PUNC">(</span><span class="NAME">this.pMatrix.matrix</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">flatten</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.uniformMatrix4fv</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.shaderProgram.mvMatrixUniform</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Float32Array</span><span class="PUNC">(</span><span class="NAME">this.mvMatrix.matrix</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">flatten</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>185</span>      * Creates a texture from an image.
+<span class='line'>186</span>      *
+<span class='line'>187</span>      * @param {HTMLImageElement or HTMLCanvasElement} image the image
+<span class='line'>188</span>      * @type WebGLTexture
+<span class='line'>189</span>      * @return An initialized texture
+<span class='line'>190</span>      */</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">    </span><span class="NAME">createImageTextureFromImage</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">image</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.createTexture</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">        </span><span class="NAME">this.handleImageTextureLoaded</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">image</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>194</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>195</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>198</span>      * Creates a texture from a source url.
+<span class='line'>199</span>      *
+<span class='line'>200</span>      * @param {String} source the URL of the image
+<span class='line'>201</span>      * @return WebGLTexture
+<span class='line'>202</span>      */</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">    </span><span class="NAME">createImageTextureFromSource</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">source</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">image</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Image</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.gl.createTexture</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">that</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">        </span><span class="NAME">image.onload</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>209</span> </span><span class="WHIT">            </span><span class="NAME">that.handleImageTextureLoaded</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">image</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>212</span> </span><span class="WHIT">        </span><span class="NAME">image.src</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">source</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>213</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>218</span>      * Uploads the image data to the texture memory. Called when the texture image
+<span class='line'>219</span>      * has finished loading.
+<span class='line'>220</span>      *
+<span class='line'>221</span>      * @private
+<span class='line'>222</span>      */</span><span class="WHIT">
+<span class='line'>223</span> </span><span class="WHIT">    </span><span class="NAME">handleImageTextureLoaded</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">image</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>224</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.bindTexture</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">texture</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>225</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.texImage2D</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.RGBA</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.RGBA</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.UNSIGNED_BYTE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">image</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.texParameteri</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.TEXTURE_MAG_FILTER</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">magFilter</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">that.gl.NEAREST</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.texParameteri</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.TEXTURE_MIN_FILTER</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">that.gl.NEAREST</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.texParameteri</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.TEXTURE_WRAP_S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.CLAMP_TO_EDGE</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.texParameteri</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.TEXTURE_WRAP_T</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that.gl.CLAMP_TO_EDGE</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">minFilter</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">that.gl.NEAREST_MIPMAP_NEAREST</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">                </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">that.gl.LINEAR_MIPMAP_NEAREST</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="WHIT">                    </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">that.gl.NEAREST_MIPMAP_LINEAR</span><span class="WHIT">
+<span class='line'>233</span> </span><span class="WHIT">                    </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">minFilter</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">that.gl.LINEAR_MIPMAP_LINEAR</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">                        </span><span class="NAME">that.gl.generateMipmap</span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>236</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>237</span> </span><span class="WHIT">        </span><span class="NAME">that.gl.bindTexture</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">that.gl.TEXTURE_2D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>238</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>239</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>240</span> </span><span class="WHIT">    </span><span class="NAME">deleteTexture</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">texture</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>241</span> </span><span class="WHIT">        </span><span class="NAME">this.gl.deleteTexture</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">texture</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>242</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>243</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>244</span> </span><span class="WHIT">    </span><span class="NAME">dispose</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>245</span> </span><span class="WHIT">        </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">this.canvas</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">        </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">this.gl</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>248</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>249</span> </span></pre></body></html>

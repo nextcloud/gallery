@@ -17,7 +17,6 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IEventSource;
 use OCP\IURLGenerator;
 use OCP\IRequest;
-use OCP\Files\Folder;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -108,28 +107,6 @@ class ServiceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * Returns information about an album, based on its path
-	 *
-	 * Used to see if album thumbnails should be generated for a specific folder
-	 *
-	 * @param string $albumpath
-	 *
-	 * @return false|array<string,int>|Http\JSONResponse
-	 */
-	public function getAlbumInfo($albumpath) {
-		try {
-			$nodeInfo = $this->environment->getNodeInfo($albumpath);
-
-			// Thanks to the AppFramework, Arrays are automatically JSON encoded
-			return $nodeInfo;
-		} catch (EnvironmentException $exception) {
-			return $this->error($exception);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 *
 	 * Sends back a list of all media types supported by the system
 	 *
 	 * @return string[]
@@ -148,25 +125,27 @@ class ServiceController extends Controller {
 	 * For private galleries, it returns all images, with the full path from the root folder
 	 * For public galleries, the path starts from the folder the link gives access to
 	 *
-	 * @return array<string,string|int>|Http\JSONResponse
+	 * @param string $location a path representing the current album in the app
+	 *
+	 * @return array<string,array<string,string|int>>|Http\JSONResponse
 	 */
-	public function getImages() {
+	public function getFiles($location) {
 		try {
-			$currentFolder = $this->request->getParam('currentfolder');
-			$imagesFolder = $this->environment->getResourceFromPath($currentFolder);
-
-			if ($this->isFolderPrivate($imagesFolder)) {
-				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], 500);
-			}
-
+			$imagesFolder = $this->environment->getResourceFromPath($location);
 			$fromRootToFolder = $this->environment->getFromRootToFolder();
+			list($albumInfo, $privateAlbum) =
+				$this->infoService->getAlbumInfo($imagesFolder, $fromRootToFolder);
 
+			if ($privateAlbum) {
+				return new JSONResponse(['message' => 'Album is private', 'success' => false], 403);
+			}
 			$folderData = [
 				'imagesFolder'     => $imagesFolder,
 				'fromRootToFolder' => $fromRootToFolder,
 			];
+			$files = $this->infoService->getImages($folderData);
 
-			return $this->infoService->getImages($folderData);
+			return ['files' => $files, 'albuminfo' => $albumInfo];
 		} catch (EnvironmentException $exception) {
 			return $this->error($exception);
 		}
@@ -242,31 +221,9 @@ class ServiceController extends Controller {
 			$download = $this->downloadService->downloadFile($file);
 
 			return new ImageResponse($download);
-		} catch (EnvironmentException $exception) {
+		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
-	}
-
-	/**
-	 * Checks if we're authorised to look for pictures in this folder
-	 *
-	 * @param Folder $folder
-	 *
-	 * @return bool
-	 */
-	private function isFolderPrivate($folder) {
-		if ($folder->nodeExists('.nomedia')) {
-			return true;
-		} else {
-			$path = $folder->getPath();
-			if ($path !== '' && $path !== '/') {
-				$folder = $folder->getParent();
-
-				return $this->isFolderPrivate($folder);
-			}
-		}
-
-		return false;
 	}
 
 	/**

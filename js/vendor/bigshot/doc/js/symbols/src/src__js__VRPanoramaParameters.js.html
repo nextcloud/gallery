@@ -1,0 +1,324 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/*
+<span class='line'>  2</span>  * Copyright 2010 - 2012 Leo Sutic &lt;leo.sutic@gmail.com>
+<span class='line'>  3</span>  *  
+<span class='line'>  4</span>  * Licensed under the Apache License, Version 2.0 (the "License"); 
+<span class='line'>  5</span>  * you may not use this file except in compliance with the License. 
+<span class='line'>  6</span>  * You may obtain a copy of the License at 
+<span class='line'>  7</span>  * 
+<span class='line'>  8</span>  *     http://www.apache.org/licenses/LICENSE-2.0 
+<span class='line'>  9</span>  *     
+<span class='line'> 10</span>  * Unless required by applicable law or agreed to in writing, software 
+<span class='line'> 11</span>  * distributed under the License is distributed on an "AS IS" BASIS, 
+<span class='line'> 12</span>  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+<span class='line'> 13</span>  * See the License for the specific language governing permissions and 
+<span class='line'> 14</span>  * limitations under the License. 
+<span class='line'> 15</span>  */</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> </span><span class="COMM">/**
+<span class='line'> 18</span>  * Creates a new VR panorama parameter object and populates it with default values for
+<span class='line'> 19</span>  * all values not explicitly given.
+<span class='line'> 20</span>  *
+<span class='line'> 21</span>  * @class VRPanoramaParameters parameter object.
+<span class='line'> 22</span>  * You need not set any fields that can be read from the image descriptor that 
+<span class='line'> 23</span>  * MakeImagePyramid creates. See the {@link bigshot.VRPanorama}
+<span class='line'> 24</span>  * documentation for required parameters.
+<span class='line'> 25</span>  *
+<span class='line'> 26</span>  * &lt;p>Usage:
+<span class='line'> 27</span>  *
+<span class='line'> 28</span>  * @example
+<span class='line'> 29</span>  * var bvr = new bigshot.VRPanorama (
+<span class='line'> 30</span>  *     new bigshot.VRPanoramaParameters ({
+<span class='line'> 31</span>  *         basePath : "/bigshot.php?file=myvr.bigshot",
+<span class='line'> 32</span>  *         fileSystemType : "archive",
+<span class='line'> 33</span>  *         container : document.getElementById ("bigshot_canvas")
+<span class='line'> 34</span>  *         }));
+<span class='line'> 35</span>  * @param values named parameter map, see the fields below for parameter names and types.
+<span class='line'> 36</span>  * @see bigshot.VRPanorama
+<span class='line'> 37</span>  */</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="NAME">bigshot.VRPanoramaParameters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">values</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 40</span>      * Size of low resolution preview image along the longest image
+<span class='line'> 41</span>      * dimension. The preview is assumed to have the same aspect
+<span class='line'> 42</span>      * ratio as the full image (specified by width and height).
+<span class='line'> 43</span>      *
+<span class='line'> 44</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'> 45</span>      * @type int
+<span class='line'> 46</span>      * @public
+<span class='line'> 47</span>      */</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">    </span><span class="NAME">this.posterSize</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 51</span>      * Url for the image tile to show while the tile is loading and no 
+<span class='line'> 52</span>      * low-resolution preview is available.
+<span class='line'> 53</span>      *
+<span class='line'> 54</span>      * @default &lt;code>null&lt;/code>, which results in an all-black image
+<span class='line'> 55</span>      * @type String
+<span class='line'> 56</span>      * @public
+<span class='line'> 57</span>      */</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">    </span><span class="NAME">this.emptyImage</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 61</span>      * Suffix to append to the tile filenames. Typically &lt;code>".jpg"&lt;/code> or 
+<span class='line'> 62</span>      * &lt;code>".png"&lt;/code>.
+<span class='line'> 63</span>      *
+<span class='line'> 64</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'> 65</span>      * @type String
+<span class='line'> 66</span>      */</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="NAME">this.suffix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 70</span>      * The width of the full image; in pixels.
+<span class='line'> 71</span>      *
+<span class='line'> 72</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'> 73</span>      * @type int
+<span class='line'> 74</span>      */</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="NAME">this.width</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 78</span>      * The height of the full image; in pixels.
+<span class='line'> 79</span>      *
+<span class='line'> 80</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'> 81</span>      * @type int
+<span class='line'> 82</span>      */</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">    </span><span class="NAME">this.height</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 86</span>      * For {@link bigshot.VRPanorama}, the {@code div} to render into.
+<span class='line'> 87</span>      *
+<span class='line'> 88</span>      * @type HTMLDivElement
+<span class='line'> 89</span>      */</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">    </span><span class="NAME">this.container</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 93</span>      * The maximum number of times to split a cube face into four quads.
+<span class='line'> 94</span>      *
+<span class='line'> 95</span>      * @type int
+<span class='line'> 96</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'> 97</span>      */</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">    </span><span class="NAME">this.maxTesselation</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>101</span>      * Size of one tile in pixels.
+<span class='line'>102</span>      *
+<span class='line'>103</span>      * @type int
+<span class='line'>104</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'>105</span>      */</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">    </span><span class="NAME">this.tileSize</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>109</span>      * Tile overlap. Not implemented.
+<span class='line'>110</span>      *
+<span class='line'>111</span>      * @type int
+<span class='line'>112</span>      * @default &lt;i>Optional&lt;/i> set by MakeImagePyramid and loaded from descriptor
+<span class='line'>113</span>      */</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">    </span><span class="NAME">this.overlap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>117</span>      * Base path for the image. This is filesystem dependent; but for the two most common cases
+<span class='line'>118</span>      * the following should be set
+<span class='line'>119</span>      *
+<span class='line'>120</span>      * &lt;ul>
+<span class='line'>121</span>      * &lt;li>&lt;b>archive&lt;/b>= The basePath is &lt;code>"&lt;path&gt;/bigshot.php?file=&lt;path-to-bigshot-archive-relative-to-bigshot.php&gt;"&lt;/code>;
+<span class='line'>122</span>      *     for example; &lt;code>"/bigshot.php?file=images/bigshot-sample.bigshot"&lt;/code>.
+<span class='line'>123</span>      * &lt;li>&lt;b>folder&lt;/b>= The basePath is &lt;code>"&lt;path-to-image-folder&gt;"&lt;/code>;
+<span class='line'>124</span>      *     for example; &lt;code>"/images/bigshot-sample"&lt;/code>.
+<span class='line'>125</span>      * &lt;/ul>
+<span class='line'>126</span>      *
+<span class='line'>127</span>      * @type String
+<span class='line'>128</span>      */</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">    </span><span class="NAME">this.basePath</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>132</span>      * The file system type. Used to create a filesystem instance unless
+<span class='line'>133</span>      * the fileSystem field is set. Possible values are &lt;code>"archive"&lt;/code>, 
+<span class='line'>134</span>      * &lt;code>"folder"&lt;/code> or &lt;code>"dzi"&lt;/code>.
+<span class='line'>135</span>      *
+<span class='line'>136</span>      * @type String
+<span class='line'>137</span>      * @default "folder"
+<span class='line'>138</span>      */</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">    </span><span class="NAME">this.fileSystemType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"folder"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>142</span>      * A reference to a filesystem implementation. If set; it overrides the
+<span class='line'>143</span>      * fileSystemType field.
+<span class='line'>144</span>      *
+<span class='line'>145</span>      * @default set depending on value of bigshot.VRPanoramaParameters#fileSystemType
+<span class='line'>146</span>      * @type bigshot.FileSystem
+<span class='line'>147</span>      */</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">    </span><span class="NAME">this.fileSystem</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>151</span>      * Object used to load data files.
+<span class='line'>152</span>      *
+<span class='line'>153</span>      * @default bigshot.DefaultDataLoader
+<span class='line'>154</span>      * @type bigshot.DataLoader
+<span class='line'>155</span>      */</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">    </span><span class="NAME">this.dataLoader</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">bigshot.DefaultDataLoader</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>159</span>      * The maximum magnification for the texture tiles making up the VR cube.
+<span class='line'>160</span>      * Used for level-of-detail tesselation.
+<span class='line'>161</span>      * A value of 1.0 means that textures will never be stretched (one texture pixel will
+<span class='line'>162</span>      * always be at most one screen pixel), unless there is no more detailed texture available. 
+<span class='line'>163</span>      * A value of 2.0 means that textures may be stretched at most 2x (one texture pixel 
+<span class='line'>164</span>      * will always be at most 2x2 screen pixels)
+<span class='line'>165</span>      * The bigger the value, the less texture data is required, but quality suffers.
+<span class='line'>166</span>      *
+<span class='line'>167</span>      * @type number
+<span class='line'>168</span>      * @default 1.0
+<span class='line'>169</span>      */</span><span class="WHIT">
+<span class='line'>170</span> </span><span class="WHIT">    </span><span class="NAME">this.maxTextureMagnification</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1.0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>171</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>173</span>      * The WebGL texture filter to use for magnifying textures. 
+<span class='line'>174</span>      * Possible values are all values valid for &lt;code>TEXTURE_MAG_FILTER&lt;/code>.
+<span class='line'>175</span>      * &lt;code>null&lt;/code> means &lt;code>NEAREST&lt;/code>. 
+<span class='line'>176</span>      *
+<span class='line'>177</span>      * @default null / NEAREST.
+<span class='line'>178</span>      */</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">    </span><span class="NAME">this.textureMagFilter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>182</span>      * The WebGL texture filter to use for supersampling (minifying) textures. 
+<span class='line'>183</span>      * Possible values are all values valid for &lt;code>TEXTURE_MIN_FILTER&lt;/code>.
+<span class='line'>184</span>      * &lt;code>null&lt;/code> means &lt;code>NEAREST&lt;/code>. 
+<span class='line'>185</span>      *
+<span class='line'>186</span>      * @default null / NEAREST.
+<span class='line'>187</span>      */</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">    </span><span class="NAME">this.textureMinFilter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>190</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>191</span>      * Minimum vertical field of view in degrees.
+<span class='line'>192</span>      *
+<span class='line'>193</span>      * @default 2.0
+<span class='line'>194</span>      * @type number
+<span class='line'>195</span>      */</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">    </span><span class="NAME">this.minFov</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">2.0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>199</span>      * Maximum vertical field of view in degrees.
+<span class='line'>200</span>      *
+<span class='line'>201</span>      * @default 90.0
+<span class='line'>202</span>      * @type number
+<span class='line'>203</span>      */</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">    </span><span class="NAME">this.maxFov</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">90</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>207</span>      * Minimum pitch in degrees.
+<span class='line'>208</span>      *
+<span class='line'>209</span>      * @default -90
+<span class='line'>210</span>      * @type number
+<span class='line'>211</span>      */</span><span class="WHIT">
+<span class='line'>212</span> </span><span class="WHIT">    </span><span class="NAME">this.minPitch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">90</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>213</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>215</span>      * Maximum pitch in degrees.
+<span class='line'>216</span>      *
+<span class='line'>217</span>      * @default 90.0
+<span class='line'>218</span>      * @type number
+<span class='line'>219</span>      */</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">    </span><span class="NAME">this.maxPitch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">90</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>223</span>      * Minimum yaw in degrees. The number is interpreted modulo 360.
+<span class='line'>224</span>      * The default value, -360, is just to make sure that we won't accidentally
+<span class='line'>225</span>      * trip it. If the number is set to something in the interval 0-360,
+<span class='line'>226</span>      * the autoRotate function will pan back and forth.
+<span class='line'>227</span>      *
+<span class='line'>228</span>      * @default -360
+<span class='line'>229</span>      * @type number
+<span class='line'>230</span>      */</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">    </span><span class="NAME">this.minYaw</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">360</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>233</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>234</span>      * Maximum yaw in degrees. The number is interpreted modulo 360.
+<span class='line'>235</span>      * The default value, 720, is just to make sure that we won't accidentally
+<span class='line'>236</span>      * trip it. If the number is set to something in the interval 0-360,
+<span class='line'>237</span>      * the autoRotate function will pan back and forth.
+<span class='line'>238</span>      *
+<span class='line'>239</span>      * @default 720.0
+<span class='line'>240</span>      * @type number
+<span class='line'>241</span>      */</span><span class="WHIT">
+<span class='line'>242</span> </span><span class="WHIT">    </span><span class="NAME">this.maxYaw</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">720</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>243</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>244</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>245</span>      * Transform offset for yaw.
+<span class='line'>246</span>      * @default 0.0
+<span class='line'>247</span>      * @type number
+<span class='line'>248</span>      */</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">    </span><span class="NAME">this.yawOffset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>252</span>      * Transform offset for pitch.
+<span class='line'>253</span>      * @default 0.0
+<span class='line'>254</span>      * @type number
+<span class='line'>255</span>      */</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="WHIT">    </span><span class="NAME">this.pitchOffset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>257</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>258</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>259</span>      * Transform offset for roll.
+<span class='line'>260</span>      * @default 0.0
+<span class='line'>261</span>      * @type number
+<span class='line'>262</span>      */</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">    </span><span class="NAME">this.rollOffset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>265</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>266</span>      * Function to call when all six cube faces have loaded the base texture level
+<span class='line'>267</span>      * and can be rendered.
+<span class='line'>268</span>      *
+<span class='line'>269</span>      * @type function()
+<span class='line'>270</span>      * @default null
+<span class='line'>271</span>      */</span><span class="WHIT">
+<span class='line'>272</span> </span><span class="WHIT">    </span><span class="NAME">this.onload</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>273</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>274</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>275</span>      * The rendering back end to use.
+<span class='line'>276</span>      * Values are "css" and "webgl".
+<span class='line'>277</span>      * 
+<span class='line'>278</span>      * @type String
+<span class='line'>279</span>      * @default null
+<span class='line'>280</span>      */</span><span class="WHIT">
+<span class='line'>281</span> </span><span class="WHIT">    </span><span class="NAME">this.renderer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>282</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>283</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>284</span>      * Controls whether the panorama can be "flung" by quickly dragging and releasing.
+<span class='line'>285</span>      * 
+<span class='line'>286</span>      * @type boolean 
+<span class='line'>287</span>      * @default true
+<span class='line'>288</span>      */</span><span class="WHIT">
+<span class='line'>289</span> </span><span class="WHIT">    </span><span class="NAME">this.fling</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>290</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>291</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>292</span>      * Controls the decay of the "flinging" animation. The fling animation decays
+<span class='line'>293</span>      * as 2^(-flingScale * t) where t is the time in milliseconds since the animation started.
+<span class='line'>294</span>      * For the animation to decay to half-speed in X seconds,
+<span class='line'>295</span>      * flingScale should then be set to 1 / (X*1000).
+<span class='line'>296</span>      *
+<span class='line'>297</span>      * @type float
+<span class='line'>298</span>      * @default 0.004
+<span class='line'>299</span>      */</span><span class="WHIT">
+<span class='line'>300</span> </span><span class="WHIT">    </span><span class="NAME">this.flingScale</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.004</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>302</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">values</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>303</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">k</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>304</span> </span><span class="WHIT">            </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>305</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>306</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'>308</span> </span><span class="WHIT">    </span><span class="NAME">this.merge</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">values</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">overwrite</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>309</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">k</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">overwrite</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>311</span> </span><span class="WHIT">                </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>312</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>313</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>314</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>315</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'>316</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>317</span> </span></pre></body></html>

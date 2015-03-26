@@ -1,0 +1,100 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/*
+<span class='line'>  2</span>  * Copyright 2010 - 2012 Leo Sutic &lt;leo.sutic@gmail.com>
+<span class='line'>  3</span>  *  
+<span class='line'>  4</span>  * Licensed under the Apache License, Version 2.0 (the "License"); 
+<span class='line'>  5</span>  * you may not use this file except in compliance with the License. 
+<span class='line'>  6</span>  * You may obtain a copy of the License at 
+<span class='line'>  7</span>  * 
+<span class='line'>  8</span>  *     http://www.apache.org/licenses/LICENSE-2.0 
+<span class='line'>  9</span>  *     
+<span class='line'> 10</span>  * Unless required by applicable law or agreed to in writing, software 
+<span class='line'> 11</span>  * distributed under the License is distributed on an "AS IS" BASIS, 
+<span class='line'> 12</span>  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+<span class='line'> 13</span>  * See the License for the specific language governing permissions and 
+<span class='line'> 14</span>  * limitations under the License. 
+<span class='line'> 15</span>  */</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> 
+<span class='line'> 18</span> </span><span class="COMM">/**
+<span class='line'> 19</span>  * Creates a new tiled image viewer. (Note: See {@link bigshot.ImageBase#dispose} for important information.)
+<span class='line'> 20</span>  *
+<span class='line'> 21</span>  * @example
+<span class='line'> 22</span>  * var bsi = new bigshot.Image (
+<span class='line'> 23</span>  *     new bigshot.ImageParameters ({
+<span class='line'> 24</span>  *         basePath : "/bigshot.php?file=myshot.bigshot",
+<span class='line'> 25</span>  *         fileSystemType : "archive",
+<span class='line'> 26</span>  *         container : document.getElementById ("bigshot_div")
+<span class='line'> 27</span>  *     }));
+<span class='line'> 28</span>  *
+<span class='line'> 29</span>  * @param {bigshot.ImageParameters} parameters the image parameters. Required fields are: &lt;code>basePath&lt;/code> and &lt;code>container&lt;/code>.
+<span class='line'> 30</span>  * If you intend to use the archive filesystem, you need to set the &lt;code>fileSystemType&lt;/code> to &lt;code>"archive"&lt;/code>
+<span class='line'> 31</span>  * as well.
+<span class='line'> 32</span>  * @see bigshot.ImageBase#dispose
+<span class='line'> 33</span>  * @class A tiled, zoomable image viewer.
+<span class='line'> 34</span>  *
+<span class='line'> 35</span>  * &lt;h3 id="creating-a-wrapping-image">Creating a Wrapping Image&lt;/h3>
+<span class='line'> 36</span>  *
+<span class='line'> 37</span>  * &lt;p>If you have set the wrapX or wrapY parameters in the {@link bigshot.ImageParameters}, the 
+<span class='line'> 38</span>  * image must be an integer multiple of the tile size at the desired minimum zoom level, otherwise
+<span class='line'> 39</span>  * there will be a gap at the wrap point:
+<span class='line'> 40</span>  *
+<span class='line'> 41</span>  * &lt;p>The way to figure out the proper input size is this:
+<span class='line'> 42</span>  *
+<span class='line'> 43</span>  * &lt;ol>
+<span class='line'> 44</span>  * &lt;li>&lt;p>Decide on a tile size and call this &lt;i>tileSize&lt;/i>.&lt;/p>&lt;/li>
+<span class='line'> 45</span>  * &lt;li>&lt;p>Decide on a minimum integer zoom level, and call this &lt;i>minZoom&lt;/i>.&lt;/p>&lt;/li>
+<span class='line'> 46</span>  * &lt;li>&lt;p>Compute &lt;i>tileSize * 2&lt;sup>-minZoom&lt;/sup>&lt;/i>, call this &lt;i>S&lt;/i>.&lt;/p>&lt;/li>
+<span class='line'> 47</span>  * &lt;li>&lt;p>The source image size along the wrapped axis must be evenly divisible by &lt;i>S&lt;/i>.&lt;/p>&lt;/li>
+<span class='line'> 48</span>  * &lt;/ol>
+<span class='line'> 49</span>  *
+<span class='line'> 50</span>  * &lt;p>An example:&lt;/p>
+<span class='line'> 51</span>  *
+<span class='line'> 52</span>  * &lt;ol>
+<span class='line'> 53</span>  * &lt;li>&lt;p>I have an image that is 23148x3242 pixels.&lt;/p>&lt;/li>
+<span class='line'> 54</span>  * &lt;li>&lt;p>I chose 256x256 pixel tiles: &lt;i>tileSize = 256&lt;/i>.&lt;/p>&lt;/li>
+<span class='line'> 55</span>  * &lt;li>&lt;p>When displaying the image, I want the user to be able to zoom out so that the 
+<span class='line'> 56</span>  * whole image is less than or equal to 600 pixels tall. Since the image is 3242 pixels 
+<span class='line'> 57</span>  * tall originally, I will need a &lt;i>minZoom&lt;/i> of -3. A &lt;i>minZoom&lt;/i> of -2 would only let me
+<span class='line'> 58</span>  * zoom out to 1/4 (2&lt;sup>-2&lt;/sup>), or an image that is 810 pixels tall. A &lt;i>minZoom&lt;/i> of -3, however lets me
+<span class='line'> 59</span>  * zoom out to 1/8 (2&lt;sup>-3&lt;/sup>), or an image that is 405 pixels tall. Thus: &lt;i>minZoom = -3&lt;/i>&lt;/p>&lt;/li>
+<span class='line'> 60</span>  * &lt;li>&lt;p>Computing &lt;i>S&lt;/i> gives: &lt;i>S = 256 * 2&lt;sup>3&lt;/sup> = 256 * 8 = 2048&lt;/i>&lt;/p>&lt;/li>
+<span class='line'> 61</span>  * &lt;li>&lt;p>I want it to wrap along the X axis. Therefore I may have to adjust the width, 
+<span class='line'> 62</span>  * currently 23148 pixels.&lt;/p>&lt;/li>
+<span class='line'> 63</span>  * &lt;li>&lt;p>Rounding 23148 down to the nearest multiple of 2048 gives 22528. (23148 divided by 2048 is 11.3, and 11 times 2048 is 22528.)&lt;/p>&lt;/li>
+<span class='line'> 64</span>  * &lt;li>&lt;p>I will shrink my source image to be 22528 pixels wide before building the image pyramid,
+<span class='line'> 65</span>  * and I will set the &lt;code>minZoom&lt;/code> parameter to -3 in the {@link bigshot.ImageParameters} when creating
+<span class='line'> 66</span>  * the image. (I will also set &lt;code>wrapX&lt;/code> to &lt;code>true&lt;/code>.)&lt;/p>&lt;/li>
+<span class='line'> 67</span>  * &lt;/ol>
+<span class='line'> 68</span>  * 
+<span class='line'> 69</span>  * @augments bigshot.ImageBase
+<span class='line'> 70</span>  */</span><span class="WHIT">     </span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="NAME">bigshot.Image</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parameters</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">    </span><span class="NAME">bigshot.setupFileSystem</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parameters</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">    </span><span class="NAME">parameters.merge</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parameters.fileSystem.getDescriptor</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="NAME">bigshot.ImageBase.call</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">parameters</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="PUNC">}</span><span class="WHIT">    </span><span class="WHIT">
+<span class='line'> 77</span> 
+<span class='line'> 78</span> </span><span class="NAME">bigshot.Image.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">    </span><span class="NAME">setupLayers</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">that</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">        </span><span class="NAME">this.thisTileCache</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">bigshot.ImageTileCache</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">                </span><span class="NAME">that.layout</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">     </span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.parameters</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">        </span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">        </span><span class="NAME">this.addLayer</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">            </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">bigshot.TileLayer</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.parameters</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.thisTileCache</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">        </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> 
+<span class='line'> 91</span> </span><span class="NAME">bigshot.Object.extend</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">bigshot.Image</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">bigshot.ImageBase</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> 
+<span class='line'> 93</span> </span></pre></body></html>

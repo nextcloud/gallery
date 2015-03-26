@@ -37,13 +37,15 @@ function Row (targetWidth) {
  * @param path
  * @param fileId
  * @param mimeType
+ * @param mTime modification time
  * @constructor
  */
-function GalleryImage (src, path, fileId, mimeType) {
+function GalleryImage (src, path, fileId, mimeType, mTime) {
 	this.src = src;
 	this.path = path;
 	this.fileId = fileId;
 	this.mimeType = mimeType;
+	this.mTime = mTime;
 	this.thumbnail = null;
 	this.domDef = null;
 	this.domHeigth = null;

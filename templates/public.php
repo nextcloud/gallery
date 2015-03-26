@@ -13,6 +13,7 @@ script(
 		'thumbnail',
 		'vendor/eventsource-polyfill/dist/eventsource.min',
 		'eventsource',
+		'vendor/marked/marked.min',
 		'vendor/bigshot/bigshot',
 		'slideshow'
 	]
@@ -24,6 +25,7 @@ style(
 		'mobile',
 		'public',
 		'gallerybutton',
+		'github-markdown',
 		'slideshow'
 	]
 );
@@ -67,6 +69,14 @@ style(
 					image_path('core', 'actions/toggle-filelist.svg')
 				); ?>" alt="<?php p($l->t('File list')); ?>"/>
 			</div>
+			<span class="right">
+				<div id="album-info-button" class="button">
+					<img class="svg" src="<?php print_unescaped(
+						image_path('core', 'actions/info.svg')
+					); ?>" alt="<?php p($l->t('Album information')); ?>"/>
+				</div>
+				<div class="album-info-content markdown-body"></div>
+			</span>
 		</div>
 		<div id='gallery' class="hascontrols"
 			 data-requesttoken="<?php p($_['requesttoken']) ?>"

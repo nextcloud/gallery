@@ -19,6 +19,7 @@ use OCP\IUserManager;
 use OCP\Share;
 use OCP\Files\Folder;
 use OCP\Files\Node;
+use OCP\Files\File;
 use OCP\Files\NotFoundException;
 
 use OCA\GalleryPlus\Utility\SmarterLogger;
@@ -143,7 +144,7 @@ class Environment {
 	 *
 	 * @param string $subPath
 	 *
-	 * @return Node
+	 * @return File|Folder
 	 */
 	public function getResourceFromPath($subPath) {
 		$path = $this->getImagePathFromFolder($subPath);
