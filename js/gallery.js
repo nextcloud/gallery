@@ -204,37 +204,50 @@ Gallery.download = function (event) {
 Gallery.showInfo = function (event) {
 	event.stopPropagation();
 	var infoContentElement = $('.album-info-content');
+	var adjustHeight = function () {
+		infoContentElement.removeClass('icon-loading');
+		var newHeight = infoContentElement[0].scrollHeight;
+		infoContentElement.animate({
+			height: newHeight + 40
+		}, 500);
+		infoContentElement.scrollTop(0);
+	};
 
 	if (infoContentElement.is(':visible')) {
 		infoContentElement.slideUp();
 	} else {
-		// Fixme At this stage, the old content is still loaded
-		infoContentElement.slideDown();
 		var albumInfo = Gallery.albumsInfo[Gallery.currentAlbum];
 		if (!albumInfo.infoLoaded) {
+			infoContentElement.addClass('icon-loading');
 			infoContentElement.empty();
+			infoContentElement.height(100);
+			infoContentElement.slideDown();
 			if (!$.isEmptyObject(albumInfo.description)) {
 				var params = {
 					file: Gallery.currentAlbum + '/' + albumInfo.description
 				};
 				var descriptionUrl = Gallery.buildUrl('download', '', params);
-				infoContentElement.addClass('icon-loading');
 				$.get(descriptionUrl).done(function (data) {
 						infoContentElement.append(marked(data));
 						infoContentElement.find('a').attr("target", "_blank");
 						Gallery.showCopyright(albumInfo, infoContentElement);
+						adjustHeight();
 					}
 				).fail(function () {
 						infoContentElement.append('<p>' +
 						t('gallery', 'Could not load the description') + '</p>');
 						Gallery.showCopyright(albumInfo, infoContentElement);
+						adjustHeight();
 					});
-				infoContentElement.removeClass('icon-loading');
 			} else {
 				Gallery.showCopyright(albumInfo, infoContentElement);
+				adjustHeight();
 			}
 			albumInfo.infoLoaded = true;
+		} else {
+			infoContentElement.slideDown();
 		}
+		infoContentElement.scrollTop(0);
 	}
 };
 
@@ -312,6 +325,11 @@ Gallery.view.startSlideshow = function (path, albumPath) {
 	Gallery.slideShow(images, startImage);
 };
 
+/**
+ * Sets up the controls and starts loading the gallery rows
+ *
+ * @param {string} albumPath
+ */
 Gallery.view.viewAlbum = function (albumPath) {
 	albumPath = albumPath || '';
 	if (!Gallery.albumMap[albumPath]) {
@@ -334,6 +352,9 @@ Gallery.view.viewAlbum = function (albumPath) {
 	}, 0);
 };
 
+/**
+ * Shows or hides the share button depending on if we're in a public gallery or not
+ */
 Gallery.view.shareButtonSetup = function (albumPath) {
 	var shareButton = $('button.share');
 	if (albumPath === '' || Gallery.token) {
@@ -343,8 +364,14 @@ Gallery.view.shareButtonSetup = function (albumPath) {
 	}
 };
 
+/**
+ * Shows or hides the info button based on the information we've received from the server
+ */
 Gallery.view.infoButtonSetup = function () {
 	var infoButton = $('#album-info-button');
+	var infoContentElement = $('.album-info-content');
+	infoContentElement.slideUp();
+	infoContentElement.css('max-height', $(window).height() - 150);
 	var albumInfo = Gallery.albumsInfo[Gallery.currentAlbum];
 	if ($.isEmptyObject(albumInfo.description) &&
 		$.isEmptyObject(albumInfo.copyright) &&
@@ -531,6 +558,8 @@ $(document).ready(function () {
 			Gallery.showModernIeWarning();
 		}
 
+		// Needed to centre the spinner in some browsers
+		$('#content').height($(window).height());
 		Gallery.showLoading();
 
 		Gallery.view.element = $('#gallery');
@@ -569,8 +598,12 @@ $(document).ready(function () {
 			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
 		});
 
+		// A shorter delay avoids redrawing the view in the middle of a previous request, but it
+		// may kill baby CPUs
 		$(window).resize(_.throttle(function () {
 			Gallery.view.viewAlbum(Gallery.currentAlbum);
+			var infoContentElement = $('.album-info-content');
+			infoContentElement.css('max-height', $(window).height() - 150);
 		}, 500));
 	}
 });

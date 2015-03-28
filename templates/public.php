@@ -78,7 +78,7 @@ style(
 				<div class="album-info-content markdown-body"></div>
 			</span>
 		</div>
-		<div id='gallery' class="hascontrols"
+		<div id="gallery" class="hascontrols"
 			 data-requesttoken="<?php p($_['requesttoken']) ?>"
 			 data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>"></div>
 	</div>
