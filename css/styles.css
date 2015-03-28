@@ -66,15 +66,14 @@ button.share {
 	margin: 2px;
 }
 
-#gallery a.album .album-label,
-#gallery a.image .album-label {
+#gallery a.album .album-label {
 	color: #fff;
 	text-shadow: none;
 	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: rgba(0, 0, 0, .25);
+	background-color: rgba(0, 0, 0, .5);
 	text-align: center;
 	font-size: 18px;
 	line-height: normal;
@@ -83,6 +82,38 @@ button.share {
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	z-index: 11;
+}
+
+#gallery a.image .image-label {
+	display: none;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, .8);
+	box-sizing: border-box;
+	padding: 5px;
+	overflow-x: hidden;
+	z-index: 11;
+	word-break: break-all;
+}
+
+#gallery a.image .image-label .title {
+	display: inline-block;
+	color: #fff;
+	text-shadow: none;
+	text-align: left;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: normal;
+	overflow-x: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#gallery a.image .image-label .title:hover {
+	overflow: visible;
+	white-space: normal;
 }
 
 #gallery a.album > img {

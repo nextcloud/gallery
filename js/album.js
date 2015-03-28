@@ -371,6 +371,17 @@ GalleryImage.prototype = {
 				var a = $('<a/>').addClass('image').attr('href', '#' +
 				encodeURI(image.path)).attr('data-path', image.path);
 
+				var imageLabel = $('<span/>').addClass('image-label');
+				var imageTitle = $('<span/>').addClass('title').html('<strong>>&nbsp;</strong>' +
+				OC.basename(image.path));
+				imageLabel.append(imageTitle);
+				a.hover(function () {
+					imageLabel.slideToggle(250);
+				}, function () {
+					imageLabel.slideToggle(250);
+				});
+				a.append(imageLabel);
+
 				img.height = targetHeight;
 				img.width = targetHeight * img.ratio;
 				img.setAttribute('width', 'auto');
