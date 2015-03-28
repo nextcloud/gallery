@@ -292,29 +292,28 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 
 Gallery.view = {};
 Gallery.view.element = null;
-Gallery.view.cache = {};
+Gallery.view.requestId = -1;
 
 Gallery.view.clear = function () {
-	Gallery.view.element.empty();
+	// We want to keep all the events
+	Gallery.view.element.children().detach();
 	Gallery.showLoading();
 };
 
 Gallery.view.init = function (albumPath) {
-	var downloadButton = $('#download');
-	var shareButton = $('button.share');
-	var infoButton = $('#album-info-button');
-	downloadButton.off();
-	shareButton.off();
-	infoButton.off();
-
 	if (Gallery.images.length === 0) {
 		Gallery.showEmpty();
 	} else {
+		// Only do it when the app is initialised
+		if (Gallery.view.requestId === -1) {
+			$('#download').click(Gallery.download);
+			$('button.share').click(Gallery.share);
+			$('#album-info-button').click(Gallery.showInfo);
+			$('#sort-name-button').click(Gallery.sorter);
+			$('#sort-date-button').click(Gallery.sorter);
+		}
 		OC.Breadcrumb.container = $('#breadcrumbs');
 		Gallery.view.viewAlbum(albumPath);
-		downloadButton.click(Gallery.download);
-		shareButton.click(Gallery.share);
-		infoButton.click(Gallery.showInfo);
 	}
 };
 
@@ -346,6 +345,13 @@ Gallery.view.viewAlbum = function (albumPath) {
 	}
 
 	Gallery.albumMap[albumPath].viewedItems = 0;
+	Gallery.albumMap[albumPath].preloadOffset = 0;
+
+	// Each request has a unique ID, so that we can track which request a row belongs to
+	Gallery.view.requestId = Math.random();
+	Gallery.albumMap[Gallery.currentAlbum].requestId = Gallery.view.requestId;
+
+	// Loading rows without blocking the execution of the rest of the script
 	setTimeout(function () {
 		Gallery.view.loadVisibleRows.activeIndex = 0;
 		Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
@@ -385,41 +391,81 @@ Gallery.view.infoButtonSetup = function () {
 	descriptionElement.slideUp();
 };
 
+/**
+ * Loads and displays gallery rows on screen
+ *
+ * @param {Album} album
+ * @param {string} path
+ *
+ * @returns {boolean|null|*}
+ */
 Gallery.view.loadVisibleRows = function (album, path) {
+	// If the row is still loading (state() = 'pending'), let it load
 	if (Gallery.view.loadVisibleRows.loading &&
 		Gallery.view.loadVisibleRows.loading.state() !== 'resolved') {
 		return Gallery.view.loadVisibleRows.loading;
 	}
-	// load 2 windows worth of rows
+
+	/**
+	 * At this stage, there is no loading taking place (loading = false|null), so we can look for
+	 * new rows
+	 */
+
 	var scroll = $('#content-wrapper').scrollTop() + $(window).scrollTop();
+	// 2 windows worth of rows is the limit from which we need to start loading new rows. As we
+	// scroll down, it grows
 	var targetHeight = ($(window).height() * 2) + scroll;
 	var showRows = function (album) {
+
+		// If we've reached the end of the album, we kill the loader
 		if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 			Gallery.view.loadVisibleRows.loading = null;
 			return;
 		}
+
+		// Everything is still in sync, since no deferred calls have been placed yet
+
 		return album.getNextRow($(window).width()).then(function (row) {
-			return row.getDom().then(function (dom) {
-				// defer removal of loading class to trigger CSS3 animation
-				_.defer(function () {
-					dom.removeClass('loading');
-				});
-				if (Gallery.currentAlbum !== path) {
+
+			/**
+			 * At this stage, the row has a width and contains references to images based on
+			 * information available when making the request, but this information may have changed
+			 * while we were receiving thumbnails for the row
+			 */
+
+			if (Gallery.view.requestId === row.requestId) {
+				return row.getDom().then(function (dom) {
+
+					// defer removal of loading class to trigger CSS3 animation
+					_.defer(function () {
+						dom.removeClass('loading');
+					});
+					if (Gallery.currentAlbum !== path) {
+						Gallery.view.loadVisibleRows.loading = null;
+						return; //throw away the row if the user has navigated away in the
+								// meantime
+					}
+					if (Gallery.view.element.length === 1) {
+						Gallery.showNormal();
+					}
+
+					Gallery.view.element.append(dom);
+
+					if (album.viewedItems < album.subAlbums.length + album.images.length &&
+						Gallery.view.element.height() < targetHeight) {
+						return showRows(album);
+					}
+
+					// No more rows to load at the moment
 					Gallery.view.loadVisibleRows.loading = null;
-					return; //throw away the row if the user has navigated away in the meantime
-				}
-				if (Gallery.view.element.length === 1) {
-					Gallery.showNormal();
-				}
-				Gallery.view.element.append(dom);
-				if (album.viewedItems < album.subAlbums.length + album.images.length &&
-					Gallery.view.element.height() < targetHeight) {
-					return showRows(album);
-				}
-				Gallery.view.loadVisibleRows.loading = null;
-			}, function () {
-				Gallery.view.loadVisibleRows.loading = null;
-			});
+				}, function () {
+					// Something went wrong, so kill the loader
+					Gallery.view.loadVisibleRows.loading = null;
+				});
+			} else {
+				// This is the safest way to do things
+				Gallery.view.viewAlbum(Gallery.currentAlbum);
+			}
 		});
 	};
 	if (Gallery.view.element.height() < targetHeight) {

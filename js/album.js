@@ -22,12 +22,14 @@ function Album (path, subAlbums, images, name) {
  * Creates a row
  *
  * @param targetWidth
+ * @param requestId
  * @constructor
  */
-function Row (targetWidth) {
+function Row (targetWidth, requestId) {
 	this.targetWidth = targetWidth;
 	this.items = [];
 	this.width = 8; // 4px margin to start with
+	this.requestId = requestId;
 }
 
 /**
@@ -237,7 +239,7 @@ Album.prototype = {
 			});
 		};
 		var items = this.subAlbums.concat(this.images);
-		var row = new Row(width);
+		var row = new Row(width, this.requestId);
 		return addRowElements(this, row, items);
 	},
 
