@@ -20,6 +20,7 @@ $app = new Application();
 $c = $app->getContainer();
 $appName = $c->query('AppName');
 $urlGenerator = $c->query('OCP\IURLGenerator');
+$l = $c->query('L10N');
 
 /**
  * Menu entry in ownCloud
@@ -41,8 +42,7 @@ $navConfig = [
 
 	// The title of the application. This will be used in the
 	// navigation or on the settings page
-	'name'  => $c->query('L10N')
-				 ->t('Gallery+')
+	'name'  => $l->t('Gallery+')
 ];
 $c->query('OCP\INavigationManager')
   ->add($navConfig);

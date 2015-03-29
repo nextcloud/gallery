@@ -10,6 +10,13 @@ Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
 Gallery.currentSort = {};
 
+/**
+ * Builds a map of the albums located in the current folder
+ *
+ * @param {string} path
+ *
+ * @returns {Album}
+ */
 Gallery.getAlbum = function (path) {
 	if (!Gallery.albumMap[path]) {
 		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
@@ -25,6 +32,12 @@ Gallery.getAlbum = function (path) {
 	return Gallery.albumMap[path];
 };
 
+/**
+ * Refreshes the view and starts the slideshow if required
+ *
+ * @param {string} path
+ * @param {string} albumPath
+ */
 Gallery.refresh = function (path, albumPath) {
 	if (Gallery.currentAlbum !== albumPath) {
 		Gallery.view.init(albumPath);
@@ -40,7 +53,11 @@ Gallery.refresh = function (path, albumPath) {
 	}
 };
 
-// fill the albums from Gallery.images
+/**
+ * Retrieves information about all the images and albums located in the current folder
+ *
+ * @returns {*}
+ */
 Gallery.fillAlbums = function () {
 	var album, image;
 	Gallery.images = [];
@@ -109,6 +126,14 @@ Gallery.fillAlbums = function () {
 	});
 };
 
+/**
+ * Sorts images and albums arrays
+ *
+ * @param {string} sortType
+ * @param {string} sortOrder
+ *
+ * @returns {Function}
+ */
 Gallery.sortBy = function (sortType, sortOrder) {
 	if (sortType === 'name') {
 		if (sortOrder === 'asc') {
@@ -136,6 +161,13 @@ Gallery.sortBy = function (sortType, sortOrder) {
 	}
 };
 
+/**
+ * Builds the URL which will retrieve a large preview of the file
+ *
+ * @param {string} image
+ *
+ * @return {string}
+ */
 Gallery.getPreviewUrl = function (image) {
 	var width = $(window).width() * window.devicePixelRatio;
 	var height = $(window).height() * window.devicePixelRatio;
@@ -148,6 +180,11 @@ Gallery.getPreviewUrl = function (image) {
 	return Gallery.buildUrl('preview', '', params);
 };
 
+/**
+ * Populates the share dialog with the needed information
+ *
+ * @param event
+ */
 Gallery.share = function (event) {
 	// Clicking on share button does not trigger automatic slide-up
 	$('.album-info-content').slideUp();
@@ -177,6 +214,15 @@ Gallery.share = function (event) {
 	}
 };
 
+/**
+ * Builds a URL pointing to one of our PHP controllers
+ *
+ * @param {string} endPoint
+ * @param {undefined|string} path
+ * @param params
+ *
+ * @returns {string}
+ */
 Gallery.buildUrl = function (endPoint, path, params) {
 	if (path === undefined) {
 		path = '';
@@ -192,6 +238,11 @@ Gallery.buildUrl = function (endPoint, path, params) {
 		query;
 };
 
+/**
+ * Sends an archive of the current folder to the browser
+ *
+ * @param event
+ */
 Gallery.download = function (event) {
 	event.preventDefault();
 	OC.redirect(OC.generateUrl('s/{token}/download?path={path}&files={files}', {
@@ -201,6 +252,11 @@ Gallery.download = function (event) {
 	}));
 };
 
+/**
+ * Shows an information box to the user
+ *
+ * @param event
+ */
 Gallery.showInfo = function (event) {
 	event.stopPropagation();
 	var infoContentElement = $('.album-info-content');
@@ -251,6 +307,12 @@ Gallery.showInfo = function (event) {
 	}
 };
 
+/**
+ * Adds copyright information to the information box
+ *
+ * @param albumInfo
+ * @param infoContentElement
+ */
 Gallery.showCopyright = function (albumInfo, infoContentElement) {
 	if (!$.isEmptyObject(albumInfo.copyright) || !$.isEmptyObject(albumInfo.copyrightLink)) {
 		var copyright;
@@ -294,12 +356,20 @@ Gallery.view = {};
 Gallery.view.element = null;
 Gallery.view.requestId = -1;
 
+/**
+ * Removes all thumbnails from the view
+ */
 Gallery.view.clear = function () {
 	// We want to keep all the events
 	Gallery.view.element.children().detach();
 	Gallery.showLoading();
 };
 
+/**
+ * Populates the view if there are images or albums to show
+ *
+ * @param {string} albumPath
+ */
 Gallery.view.init = function (albumPath) {
 	if (Gallery.images.length === 0) {
 		Gallery.showEmpty();
@@ -317,6 +387,12 @@ Gallery.view.init = function (albumPath) {
 	}
 };
 
+/**
+ * Starts the slideshow
+ *
+ * @param {string} path
+ * @param {string} albumPath
+ */
 Gallery.view.startSlideshow = function (path, albumPath) {
 	var album = Gallery.albumMap[albumPath];
 	var images = album.images;
@@ -360,6 +436,8 @@ Gallery.view.viewAlbum = function (albumPath) {
 
 /**
  * Shows or hides the share button depending on if we're in a public gallery or not
+ *
+ * @param {string} albumPath
  */
 Gallery.view.shareButtonSetup = function (albumPath) {
 	var shareButton = $('button.share');
@@ -386,9 +464,6 @@ Gallery.view.infoButtonSetup = function () {
 	} else {
 		infoButton.show();
 	}
-
-	var descriptionElement = $('.album-info-content');
-	descriptionElement.slideUp();
 };
 
 /**
@@ -476,6 +551,11 @@ Gallery.view.loadVisibleRows = function (album, path) {
 };
 Gallery.view.loadVisibleRows.loading = false;
 
+/**
+ * Builds the breadcrumb
+ *
+ * @param {string} albumPath
+ */
 Gallery.view.buildBreadCrumb = function (albumPath) {
 	var i, crumbs, path;
 	OC.Breadcrumb.clear();
@@ -499,32 +579,55 @@ Gallery.view.buildBreadCrumb = function (albumPath) {
 	}
 };
 
+/**
+ * Adds a path to the breadcrumb
+ *
+ * @fixme Needs to shorten long paths like on the Files app
+ *
+ * @param {string} text
+ * @param {string} path
+ */
 Gallery.view.pushBreadCrumb = function (text, path) {
 	OC.Breadcrumb.push(text, '#' + path);
 };
 
+/**
+ * Hide the search button while we wait for core to fix the templates
+ */
 Gallery.hideSearch = function () {
 	$('form.searchbox').hide();
 };
 
+/**
+ * Shows an empty gallery message
+ */
 Gallery.showEmpty = function () {
 	$('#emptycontent').removeClass('hidden');
 	$('#controls').addClass('hidden');
 	$('#content').removeClass('icon-loading');
 };
 
+/**
+ * Shows the infamous loading spinner
+ */
 Gallery.showLoading = function () {
 	$('#emptycontent').addClass('hidden');
 	$('#controls').removeClass('hidden');
 	$('#content').addClass('icon-loading');
 };
 
+/**
+ * Shows thumbnails
+ */
 Gallery.showNormal = function () {
 	$('#emptycontent').addClass('hidden');
 	$('#controls').removeClass('hidden');
 	$('#content').removeClass('icon-loading');
 };
 
+/**
+ * Shows a warning to users of old, unsupported version of Internet Explorer
+ */
 Gallery.showOldIeWarning = function () {
 	var text = '<strong>Your browser is not supported!</strong></br>' +
 		'please install one of the following alternatives</br>' +
@@ -534,6 +637,9 @@ Gallery.showOldIeWarning = function () {
 	Gallery.showHtmlNotification(text, 60);
 };
 
+/**
+ * Shows a warning to users of the latest version of Internet Explorer
+ */
 Gallery.showModernIeWarning = function () {
 	var text = '<strong>This application may not work properly on your browser.</strong></br>' +
 		'For an improved experience, please install one of the following alternatives</br>' +
@@ -543,6 +649,12 @@ Gallery.showModernIeWarning = function () {
 	Gallery.showHtmlNotification(text, 15);
 };
 
+/**
+ * Shows a notification at the top of the screen
+ *
+ * @param {string} text
+ * @param {int} timeout
+ */
 Gallery.showHtmlNotification = function (text, timeout) {
 	var options = {
 		timeout: timeout,
@@ -551,6 +663,15 @@ Gallery.showHtmlNotification = function (text, timeout) {
 	OC.Notification.showTemporary(t('gallery', text), options);
 };
 
+/**
+ * Creates a new slideshow using the images found in the current folder
+ *
+ * @param {array} images
+ * @param {string} startImage
+ * @param {bool} autoPlay
+ *
+ * @returns {boolean}
+ */
 Gallery.slideShow = function (images, startImage, autoPlay) {
 	if (startImage === undefined) {
 		OC.Notification.showTemporary(t('gallery', 'Aborting preview. Could not find the file'));
