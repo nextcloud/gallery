@@ -38,6 +38,6 @@
     "commit": "030f993d5bc2a9f9aeabfcafcd5ea4e8424ff68a"
   },
   "_source": "git://github.com/amvtek/EventSource.git",
-  "_target": "~0.9.4",
+  "_target": "~0.9.6",
   "_originalSource": "eventsource-polyfill"
 }
