@@ -21,17 +21,17 @@
  *
  */
 
-
-
-$l = OCP\Util::getL10N('gallery');
-
-OCP\App::addNavigationEntry(array(
+\OC::$server->getNavigationManager()->add(function () {
+	$urlGenerator = \OC::$server->getURLGenerator();
+	$l = \OC::$server->getL10N('gallery');
+	return [
 		'id' => 'gallery_index',
 		'order' => 3,
-		'href' => OCP\Util::linkToRoute('gallery_index'),
-		'icon' => OCP\Util::imagePath('gallery', 'gallery.svg'),
-		'name' => $l->t('Pictures'))
-);
+		'href' => $urlGenerator->linkToRoute('gallery_index'),
+		'icon' => $urlGenerator->imagePath('gallery', 'gallery.svg'),
+		'name' => $l->t('Pictures'),
+	];
+});
 
 // make slideshow available in files and public shares
 OCP\Util::addScript('gallery', 'jquery.mousewheel-3.1.1');
