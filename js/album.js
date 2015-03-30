@@ -177,7 +177,7 @@ Album.prototype = {
 		var album = this;
 
 		return this._getThumbnail().then(function (img) {
-			var a = $('<a/>').addClass('album').attr('href', '#' + encodeURI(album.path));
+			var a = $('<a/>').addClass('album').attr('href', '#' + encodeURIComponent(album.path));
 
 			a.append($('<span/>').addClass('album-label').text(album.name));
 			var ratio = Math.round(img.ratio * 100) / 100;
@@ -213,6 +213,7 @@ Album.prototype = {
 	 */
 	getNextRow: function (width) {
 		var numberOfThumbnailsToPreload = 6;
+
 		/**
 		 * Add images to the row until it's full
 		 *
@@ -367,9 +368,14 @@ GalleryImage.prototype = {
 		var image = this;
 		if (this.domDef === null || this.domHeigth !== targetHeight) {
 			this.domHeigth = targetHeight;
+			// img is a Thumbnail.image
 			this.domDef = this.getThumbnail().then(function (img) {
-				var a = $('<a/>').addClass('image').attr('href', '#' +
-				encodeURI(image.path)).attr('data-path', image.path);
+				img.height = targetHeight;
+				img.width = targetHeight * img.ratio;
+				img.setAttribute('width', 'auto');
+				img.alt = encodeURI(image.path);
+				var url = '#' + encodeURIComponent(image.path);
+				var a = $('<a/>').addClass('image').attr('href', url).attr('data-path', image.path);
 
 				var imageLabel = $('<span/>').addClass('image-label');
 				var imageTitle = $('<span/>').addClass('title').html('<strong>>&nbsp;</strong>' +
@@ -381,11 +387,6 @@ GalleryImage.prototype = {
 					imageLabel.slideToggle(250);
 				});
 				a.append(imageLabel);
-
-				img.height = targetHeight;
-				img.width = targetHeight * img.ratio;
-				img.setAttribute('width', 'auto');
-				img.alt = encodeURI(image.path);
 				a.append(img);
 				return a;
 			});

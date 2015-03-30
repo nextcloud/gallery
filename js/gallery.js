@@ -78,7 +78,7 @@ Gallery.fillAlbums = function () {
 	Gallery.images = [];
 	Gallery.albumMap = {};
 	Gallery.imageMap = {};
-	var currentLocation = decodeURI(window.location.href.split('#')[1] || '');
+	var currentLocation = window.location.href.split('#')[1] || '';
 	var params = {
 		location: currentLocation,
 		mediatypes: Gallery.getMediaTypes()
@@ -608,7 +608,7 @@ Gallery.view.buildBreadCrumb = function (albumPath) {
  * @param {string} path
  */
 Gallery.view.pushBreadCrumb = function (text, path) {
-	OC.Breadcrumb.push(text, '#' + path);
+	OC.Breadcrumb.push(text, '#' + encodeURIComponent(path));
 };
 
 /**
@@ -720,7 +720,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	slideShow.onStop = function () {
 		Gallery.activeSlideShow = null;
 		$('#content').show();
-		location.hash = encodeURI(Gallery.currentAlbum);
+		location.hash = encodeURIComponent(Gallery.currentAlbum);
 	};
 	Gallery.activeSlideShow = slideShow;
 
@@ -771,7 +771,7 @@ $(document).ready(function () {
 
 		$('#openAsFileListButton').click(function () {
 			var subUrl = '';
-			var params = {path: '/' + Gallery.currentAlbum};
+			var params = {path: '/' + encodeURIComponent(Gallery.currentAlbum)};
 			if (Gallery.token) {
 				params.token = Gallery.token;
 				subUrl = 's/{token}?path={path}';
@@ -803,7 +803,8 @@ $(document).ready(function () {
 });
 
 window.onhashchange = function () {
-	var path = decodeURI(window.location.href.split('#')[1] || '');
+	// The hash location is ALWAYS encoded
+	var path = decodeURIComponent(window.location.href.split('#')[1] || '');
 	var albumPath = OC.dirname(path);
 	if (Gallery.albumMap[path]) {
 		albumPath = path;

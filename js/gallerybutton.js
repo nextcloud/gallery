@@ -40,7 +40,7 @@ GalleryButton.buildUrl = function (dir) {
 		params.token = token;
 		tokenPath = 's/{token}';
 	}
-	GalleryButton.url = OC.generateUrl('apps/galleryplus/' + tokenPath, params) + '#' + dir;
+	GalleryButton.url = OC.generateUrl('apps/galleryplus/' + tokenPath, params) + '#' + encodeURIComponent(dir);
 };
 
 GalleryButton.hijackShare = function () {
