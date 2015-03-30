@@ -29,6 +29,8 @@ var SlideShow = function (container, images, interval, maxScale) {
 	this.smallImageScale = 2;
 };
 
+SlideShow.mediaTypes = {};
+
 SlideShow.prototype = {
 	/**
 	 *
@@ -338,7 +340,7 @@ SlideShow.prototype = {
 				}
 			}.bind(this);
 			if (mimeType === 'image/svg+xml') {
-				image.src = this.getSVG(url);
+				image.src = this._getSVG(url);
 			} else {
 				image.src = url;
 			}
@@ -352,7 +354,7 @@ SlideShow.prototype = {
 	 *
 	 * @returns {*}
 	 */
-	getSVG: function (source) {
+	_getSVG: function (source) {
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open("GET", source, false);
 		xmlHttp.send(null);
@@ -678,19 +680,19 @@ $(document).ready(function () {
 			});
 		};
 
-		var url = SlideShow.buildUrl('mimetypes', {});
-		// We're asking for a list of supported mimes. Images are given through the context
-		$.getJSON(url).then(function (supportedMimes) {
-
-			//console.log("enabledPreviewProviders: ", supportedMimes);
+		var url = SlideShow.buildUrl('mediatypes', '', {slideshow: 1});
+		// We're asking for a list of supported media types. Media files are retrieved through the
+		// context
+		$.getJSON(url).then(function (mediaTypes) {
+			//console.log("enabledPreviewProviders: ", mediaTypes);
+			SlideShow.mediaTypes = mediaTypes;
 
 			// We only want to create slideshows for supported media types
-			for (var m = 0; m < supportedMimes.length; ++m) {
-				var mime = supportedMimes[m];
-				// Each click handler gets the same function and images array and is responsible to
-				// load the slideshow
-				prepareFileActions(mime);
-				OCA.Files.fileActions.setDefault(mime, 'View');
+			for (var i = 0, keys = Object.keys(mediaTypes); i < keys.length; i++) {
+				// Each click handler gets the same function and images array and
+				// is responsible to load the slideshow
+				prepareFileActions(keys[i]);
+				OCA.Files.fileActions.setDefault(keys[i], 'View');
 			}
 		});
 	}

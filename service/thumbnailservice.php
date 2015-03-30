@@ -12,15 +12,8 @@
 
 namespace OCA\GalleryPlus\Service;
 
-use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Preview\Preview;
-use OCA\GalleryPlus\Utility\SmarterLogger;
-
 /**
- * Creates thumbnails for the list of images which is submitted to
- * the service
- *
- * Uses EventSource to send back thumbnails as soon as they're ready
+ * Deals with any thumbnail specific requests
  *
  * @package OCA\GalleryPlus\Service
  */

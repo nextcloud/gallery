@@ -13,6 +13,7 @@
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\File;
+use OCP\Template;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Environment\NotFoundEnvException;
@@ -29,13 +30,36 @@ class PreviewService extends Service {
 	use Base64Encode;
 
 	/**
-	 * @type Environment
-	 */
-	private $environment;
-	/**
 	 * @type Preview
 	 */
 	private $previewManager;
+	/**
+	 * @todo This hard-coded array could be replaced by admin settings
+	 *
+	 * @type string[]
+	 */
+	private $baseMimeTypes = [
+		'image/png',
+		'image/jpeg',
+		'image/gif',
+		'image/x-xbitmap',
+		'image/bmp',
+		'image/tiff',
+		'image/x-dcraw',
+		'application/x-photoshop',
+		'application/illustrator',
+		'application/postscript',
+	];
+	/**
+	 * These types are useful for files preview in the files app, but
+	 * not for the gallery side
+	 *
+	 * @type string[]
+	 */
+	private $slideshowMimeTypes = [
+		'application/font-sfnt',
+		'application/x-font',
+	];
 
 	/**
 	 * Constructor
@@ -51,21 +75,45 @@ class PreviewService extends Service {
 		Preview $previewManager,
 		SmarterLogger $logger
 	) {
-		parent::__construct($appName, $logger);
+		parent::__construct($appName, $environment, $logger);
 
-		$this->environment = $environment;
 		$this->previewManager = $previewManager;
 	}
 
 	/**
-	 * Returns true if the passed mime type is supported
+	 * This builds and returns a list of all supported media types
 	 *
-	 * @param string $mimeType
+	 * @todo Native SVG could be disabled via admin settings
 	 *
-	 * @return boolean
+	 * @param bool $slideshow
+	 *
+	 * @return string[] all supported media types
 	 */
-	public function isMimeSupported($mimeType = '*') {
-		return $this->previewManager->isMimeSupported($mimeType);
+	public function getSupportedMediaTypes($slideshow) {
+		$supportedMimes = [];
+		$wantedMimes = $this->baseMimeTypes;
+
+		if ($slideshow) {
+			$wantedMimes = array_merge($wantedMimes, $this->slideshowMimeTypes);
+		}
+
+		foreach ($wantedMimes as $wantedMime) {
+			// Let's see if a preview of files of that media type can be generated
+			if ($this->isMimeSupported($wantedMime)) {
+				$pathToIcon = Template::mimetype_icon($wantedMime);
+				$supportedMimes[$wantedMime] =
+					$pathToIcon; // We add it to the list of supported media types
+			}
+		}
+		// If it's enabled, but doesn't work, an exception will be raised.
+		// If it's disabled, we support it via the browser's native support
+		if (!$supportedMimes['image/svg+xml']) {
+			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
+		}
+
+		$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
+
+		return $supportedMimes;
 	}
 
 	/**
@@ -75,6 +123,8 @@ class PreviewService extends Service {
 	 * @param bool $animatedPreview
 	 *
 	 * @return bool
+	 *
+	 * @throws NotFoundServiceException
 	 */
 	public function isPreviewRequired($image, $animatedPreview) {
 		$file = null;
@@ -173,6 +223,25 @@ class PreviewService extends Service {
 		}
 
 		return $preview;
+	}
+
+	/**
+	 * Returns true if the passed mime type is supported
+	 *
+	 * In case of a failure, we just return that the media type is not supported
+	 *
+	 * @param string $mimeType
+	 *
+	 * @return boolean
+	 */
+	private function isMimeSupported($mimeType = '*') {
+		try {
+			return $this->previewManager->isMimeSupported($mimeType);
+		} catch (\Exception $exception) {
+			unset($exception);
+
+			return false;
+		}
 	}
 
 	/**

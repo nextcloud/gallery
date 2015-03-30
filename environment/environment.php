@@ -129,7 +129,7 @@ class Environment {
 	 * Creates the environment for a logged-in user
 	 *
 	 * userId and userFolder are already known, we define fromRootToFolder
-	 * so that the services can use one method to have access resources
+	 * so that the services can use one method to have access to resources
 	 * without having to know whether they're private or public
 	 */
 	public function setStandardEnv() {
@@ -139,8 +139,8 @@ class Environment {
 	/**
 	 * Returns the resource located at the given path
 	 *
-	 * The path starts from the user's files folder
-	 * The resource is either a File or a Folder
+	 * The path starts from the user's files folder because we'll query that folder to get the
+	 * information we need. The resource is either a File or a Folder
 	 *
 	 * @param string $subPath
 	 *
@@ -254,14 +254,27 @@ class Environment {
 	}
 
 	/**
-	 * Returns fromRootToFolder
+	 * Returns the path which goes from the file, up to the root folder of the Gallery:
+	 * current_folder/my_file
 	 *
-	 * @see buildFromRootToFolder
+	 * That root folder changes when folders are shared publicly
+	 *
+	 * @param Node $file
 	 *
 	 * @return string
 	 */
-	public function getFromRootToFolder() {
-		return $this->fromRootToFolder;
+	public function getPathFromVirtualRoot($file) {
+		$path = $file->getPath();
+
+		if ($file->getType() === 'dir') {
+			// Needed because fromRootToFolder always ends with a slash
+			$path .= '/';
+		}
+
+		$path = str_replace($this->fromRootToFolder, '', $path);
+		$path = rtrim($path, '/');
+
+		return $path;
 	}
 
 	/**
@@ -290,6 +303,8 @@ class Environment {
 	/**
 	 * Returns the path from the shared folder to the root folder in the original
 	 * owner's filesystem: /userId/files/parent_folder/shared_folder
+	 *
+	 * This cannot be calculated with paths and IDs, the linkitem's file source is required
 	 *
 	 * @param string $fileSource
 	 *

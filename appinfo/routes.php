@@ -61,31 +61,31 @@ return [
 		 */
 		// Supported media types. Only called by the slideshow
 		[
-			'name' => 'service#get_types',
-			'url'  => '/mimetypes',
+			'name' => 'preview#get_media_types',
+			'url'  => '/mediatypes',
 			'verb' => 'GET'
 		],
 		// All the images of which a preview can be generated
 		[
-			'name' => 'service#get_files',
+			'name' => 'files#get_files',
 			'url'  => '/files',
 			'verb' => 'GET'
 		],
 		// Batch creation of thumbnails
 		[
-			'name' => 'service#get_thumbnails',
+			'name' => 'preview#get_thumbnails',
 			'url'  => '/thumbnails',
 			'verb' => 'GET'
 		],
 		// Large preview of a file
 		[
-			'name' => 'service#show_preview',
+			'name' => 'preview#show_preview',
 			'url'  => '/preview',
 			'verb' => 'GET'
 		],
 		// Download the file
 		[
-			'name' => 'service#download_preview',
+			'name' => 'preview#download_preview',
 			'url'  => '/download',
 			'verb' => 'GET'
 		],
@@ -93,27 +93,27 @@ return [
 		 * Public services
 		 */
 		[
-			'name' => 'public_service#get_types',
-			'url'  => '/mimetypes.public',
+			'name' => 'public_preview#get_media_types',
+			'url'  => '/mediatypes.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_service#get_files',
+			'name' => 'public_files#get_files',
 			'url'  => '/files.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_service#get_thumbnails',
+			'name' => 'public_preview#get_thumbnails',
 			'url'  => '/thumbnails.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_service#show_preview',
+			'name' => 'public_preview#show_preview',
 			'url'  => '/preview.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_service#download_preview',
+			'name' => 'public_preview#download_preview',
 			'url'  => '/download.public',
 			'verb' => 'GET'
 		],

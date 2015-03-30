@@ -14,39 +14,33 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-use OCP\IEventSource;
-use OCP\IURLGenerator;
 use OCP\IRequest;
+use OCP\IURLGenerator;
+use OCP\IEventSource;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
-use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Environment\EnvironmentException;
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\ServiceException;
-use OCA\GalleryPlus\Service\InfoService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
+use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
- * Class ServiceController
+ * Class PreviewController
  *
  * @package OCA\GalleryPlus\Controller
  */
-class ServiceController extends Controller {
+class PreviewController extends Controller {
 
 	use JsonHttpError;
 
 	/**
-	 * @type Environment
+	 * @type IURLGenerator
 	 */
-	private $environment;
-	/**
-	 * @type InfoService
-	 */
-	private $infoService;
+	private $urlGenerator;
 	/**
 	 * @type ThumbnailService
 	 */
@@ -60,108 +54,58 @@ class ServiceController extends Controller {
 	 */
 	private $downloadService;
 	/**
-	 * @type IURLGenerator
-	 */
-	private $urlGenerator;
-	/**
 	 * @type IEventSource
 	 */
 	private $eventSource;
+	/**
+	 * @type SmarterLogger
+	 */
+	private $logger;
 
 	/**
 	 * Constructor
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
-	 * @param Environment $environment
-	 * @param InfoService $infoService
+	 * @param IURLGenerator $urlGenerator
 	 * @param ThumbnailService $thumbnailService
 	 * @param PreviewService $previewService
 	 * @param DownloadService $downloadService
-	 * @param IURLGenerator $urlGenerator
 	 * @param IEventSource $eventSource
+	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
-		Environment $environment,
-		InfoService $infoService,
+		IURLGenerator $urlGenerator,
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
 		DownloadService $downloadService,
-		IURLGenerator $urlGenerator,
-		IEventSource $eventSource
+		IEventSource $eventSource,
+		SmarterLogger $logger
 	) {
 		parent::__construct($appName, $request);
 
-		$this->environment = $environment;
-		$this->infoService = $infoService;
+		$this->urlGenerator = $urlGenerator;
 		$this->thumbnailService = $thumbnailService;
 		$this->previewService = $previewService;
 		$this->downloadService = $downloadService;
-		$this->urlGenerator = $urlGenerator;
 		$this->eventSource = $eventSource;
+		$this->logger = $logger;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-	 * Returns information about an album, based on its path
+	 * Sends back a list of all media types supported by the system, as well as the name of their
+	 *     icon
 	 *
-	 * Used to see if album thumbnails should be generated for a specific folder
+	 * @param bool $slideshow
 	 *
-	 * @param string $albumpath
-	 *
-	 * @return false|array<string,int>|Http\JSONResponse
+	 * @return array <string,string>|null
 	 */
-	public function getAlbumInfo($albumpath) {
-		try {
-			$nodeInfo = $this->environment->getNodeInfo($albumpath);
-
-			// Thanks to the AppFramework, Arrays are automatically JSON encoded
-			return $nodeInfo;
-		} catch (EnvironmentException $exception) {
-			return $this->error($exception);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 *
-	 * Sends back a list of all media types supported by the system
-	 *
-	 * @return string[]
-	 */
-	public function getTypes() {
-		return $this->infoService->getSupportedMimes();
-	}
-
-	/**
-	 * @NoAdminRequired
-	 *
-	 * Returns a list of all images available to the authenticated user
-	 *
-	 * Authentication can be via a login/password or a token/(password)
-	 *
-	 * For private galleries, it returns all images, with the full path from the root folder
-	 * For public galleries, the path starts from the folder the link gives access to
-	 *
-	 * @return array|Http\JSONResponse
-	 */
-	public function getImages() {
-		try {
-			$imagesFolder = $this->environment->getResourceFromPath('');
-			$fromRootToFolder = $this->environment->getFromRootToFolder();
-
-			$folderData = [
-				'imagesFolder'     => $imagesFolder,
-				'fromRootToFolder' => $fromRootToFolder,
-			];
-
-			return $this->infoService->getImages($folderData);
-		} catch (EnvironmentException $exception) {
-			return $this->error($exception);
-		}
+	public function getMediaTypes($slideshow = false) {
+		return $this->previewService->getSupportedMediaTypes($slideshow);
 	}
 
 	/**
@@ -176,13 +120,13 @@ class ServiceController extends Controller {
 	 * dispatching the request which results in a "Cannot modify header
 	 * information" notice.
 	 *
-	 * WARNING: Returning a JSON response does not work.
+	 * WARNING: Returning a JSON response does not get rid of the problem
 	 *
 	 * @param string $images
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return null|Http\JSONResponse
+	 * @return array<string,array|string>
 	 */
 	public function getThumbnails($images, $square, $scale) {
 		$imagesArray = explode(';', $images);
@@ -192,6 +136,7 @@ class ServiceController extends Controller {
 			$this->eventSource->send('preview', $thumbnail);
 		}
 		$this->eventSource->close();
+
 		exit();
 	}
 
@@ -234,7 +179,7 @@ class ServiceController extends Controller {
 			$download = $this->downloadService->downloadFile($file);
 
 			return new ImageResponse($download);
-		} catch (EnvironmentException $exception) {
+		} catch (ServiceException $exception) {
 			return $this->error($exception);
 		}
 	}
@@ -249,19 +194,23 @@ class ServiceController extends Controller {
 	 * @param bool $square
 	 * @param bool $scale
 	 *
-	 * @return array|Http\JSONResponse
+	 * @return array<string,array|string>
 	 */
 	private function getThumbnail($image, $square, $scale) {
-		$thumbSpecs = $this->thumbnailService->getThumbnailSpecs($square, $scale);
+		list($width, $height, $aspect, $animatedPreview, $base64Encode) =
+			$this->thumbnailService->getThumbnailSpecs($square, $scale);
+
 		try {
 			$preview = $this->getPreview(
-				$image, $thumbSpecs['width'], $thumbSpecs['height'],
-				$thumbSpecs['aspect'], $thumbSpecs['animatedPreview'], $thumbSpecs['base64Encode']
+				$image, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		} catch (ServiceException $exception) {
-			return $this->error($exception);
+			$preview = ['data' => null, 'status' => 500, 'type' => 'error'];
 		}
 		$thumbnail = $preview['data'];
+		if ($preview['status'] === 200 && $preview['type'] === 'preview') {
+			$thumbnail['preview'] = $this->previewService->previewValidator($square, $base64Encode);
+		}
 		$thumbnail['status'] = $preview['status'];
 
 		return $thumbnail;
@@ -289,7 +238,7 @@ class ServiceController extends Controller {
 	 * @param bool $animatedPreview
 	 * @param bool $base64Encode
 	 *
-	 * @return mixed
+	 * @return array<string,\OC_Image|string>
 	 */
 	private function getPreview(
 		$image, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
@@ -297,19 +246,23 @@ class ServiceController extends Controller {
 		$status = Http::STATUS_OK;
 		$previewRequired = $this->previewService->isPreviewRequired($image, $animatedPreview);
 		if ($previewRequired) {
+			$type = 'preview';
 			$preview = $this->previewService->createPreview(
 				$image, $width, $height, $keepAspect, $base64Encode
 			);
 			if (!$this->previewService->isPreviewValid()) {
-				$status = Http::STATUS_UNSUPPORTED_MEDIA_TYPE;
+				$type = 'error';
+				$status = Http::STATUS_NOT_FOUND;
 			}
 		} else {
+			$type = 'download';
 			$preview = $this->downloadService->downloadFile($image, $base64Encode);
 		}
 
 		return [
 			'data'   => $preview,
-			'status' => $status
+			'status' => $status,
+			'type'   => $type
 		];
 	}
 

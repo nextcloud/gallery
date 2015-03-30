@@ -13,30 +13,24 @@
 namespace OCA\GalleryPlus\Controller;
 
 /**
- * Class PublicServiceController
+ * Class PublicPreviewController
+ *
+ * Note: Type casting only works if the "@param" parameters are also included in this class as
+ * their not yet inherited
  *
  * @package OCA\GalleryPlus\Controller
  */
-class PublicServiceController extends ServiceController {
+class PublicPreviewController extends PreviewController {
 
 	/**
 	 * @PublicPage
 	 *
 	 * @inheritDoc
-	 */
-	public function getTypes() {
-		return parent::getTypes();
-	}
-
-	/**
-	 * @PublicPage
 	 *
-	 * Returns a list of all images from the folder the link gives access to
-	 *
-	 * @inheritDoc
+	 * @param bool $slideshow
 	 */
-	public function getImages() {
-		return parent::getImages();
+	public function getMediaTypes($slideshow = false) {
+		return parent::getMediaTypes($slideshow);
 	}
 
 	/**
@@ -49,6 +43,10 @@ class PublicServiceController extends ServiceController {
 	 * for files located on encrypted storage
 	 *
 	 * @inheritDoc
+	 *
+	 * @param string $images
+	 * @param bool $square
+	 * @param bool $scale
 	 */
 	public function getThumbnails($images, $square, $scale) {
 		return parent::getThumbnails($images, $square, $scale);
@@ -64,6 +62,10 @@ class PublicServiceController extends ServiceController {
 	 * for files located on encrypted storage
 	 *
 	 * @inheritDoc
+	 *
+	 * @param string $file
+	 * @param int $x
+	 * @param int $y
 	 */
 	public function showPreview($file, $x, $y) {
 		return parent::showPreview($file, $x, $y);

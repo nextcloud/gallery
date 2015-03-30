@@ -212,6 +212,7 @@ Album.prototype = {
 	 * @returns {$.Deferred<Row>}
 	 */
 	getNextRow: function (width) {
+		var numberOfThumbnailsToPreload = 6;
 		/**
 		 * Add images to the row until it's full
 		 *
@@ -224,7 +225,6 @@ Album.prototype = {
 		 * @returns {$.Deferred<Row>}
 		 */
 		var addRowElements = function (album, row, images) {
-			var numberOfThumbnailsToPreload = 6;
 			if ((album.viewedItems + 5) > album.preloadOffset) {
 				album._preload(numberOfThumbnailsToPreload);
 			}

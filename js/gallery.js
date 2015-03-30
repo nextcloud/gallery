@@ -1,5 +1,6 @@
 /* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken, marked */
 var Gallery = {};
+Gallery.mediaTypes = {};
 Gallery.images = [];
 Gallery.currentAlbum = null;
 Gallery.users = [];
@@ -9,6 +10,20 @@ Gallery.imageMap = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
 Gallery.currentSort = {};
+
+/**
+ * Returns a list of supported media types
+ * 
+ * @returns {string}
+ */
+Gallery.getMediaTypes = function () {
+	var types = '';
+	for (var i = 0, keys = Object.keys(Gallery.mediaTypes); i < keys.length; i++) {
+		types += keys[i] + ';';
+	}
+
+	return types.slice(0, -1);
+};
 
 /**
  * Builds a map of the albums located in the current folder
@@ -63,8 +78,13 @@ Gallery.fillAlbums = function () {
 	Gallery.images = [];
 	Gallery.albumMap = {};
 	Gallery.imageMap = {};
-	var currentFolder = decodeURI(window.location.href.split('#')[1] || '');
-	var url = Gallery.buildUrl('files', '', {location: currentFolder});
+	var currentLocation = decodeURI(window.location.href.split('#')[1] || '');
+	var params = {
+		location: currentLocation,
+		mediatypes: Gallery.getMediaTypes()
+	};
+	// Only use the folder as a GET parameter and not as part of the URL
+	var url = Gallery.buildUrl('files', '', params);
 	return $.getJSON(url).then(function (data) {
 		var path = null;
 		var fileId = null;
@@ -738,9 +758,16 @@ $(document).ready(function () {
 			oc_requesttoken = Gallery.view.element.data('requesttoken');
 		}
 
-		Gallery.fillAlbums().then(function () {
-			window.onhashchange();
-		});
+		$.getJSON(Gallery.buildUrl('mediatypes', '', {}))
+			.then(function (mediaTypes) {
+				//console.log('mediaTypes', mediaTypes);
+				Gallery.mediaTypes = mediaTypes;
+			})
+			.then(function () {
+				Gallery.fillAlbums().then(function () {
+					window.onhashchange();
+				});
+			});
 
 		$('#openAsFileListButton').click(function () {
 			var subUrl = '';

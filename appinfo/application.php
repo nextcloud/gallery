@@ -20,11 +20,14 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 
 use OCA\GalleryPlus\Controller\PageController;
-use OCA\GalleryPlus\Controller\ServiceController;
-use OCA\GalleryPlus\Controller\PublicServiceController;
+use OCA\GalleryPlus\Controller\FilesController;
+use OCA\GalleryPlus\Controller\PreviewController;
+use OCA\GalleryPlus\Controller\PublicFilesController;
+use OCA\GalleryPlus\Controller\PublicPreviewController;
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Preview\Preview;
-use OCA\GalleryPlus\Service\InfoService;
+use OCA\GalleryPlus\Service\FilesService;
+use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
@@ -64,32 +67,52 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'ServiceController', function (IContainer $c) {
-			return new ServiceController(
+			'FilesController', function (IContainer $c) {
+			return new FilesController(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$c->query('Environment'),
-				$c->query('InfoService'),
-				$c->query('ThumbnailService'),
-				$c->query('PreviewService'),
-				$c->query('DownloadService'),
-				$c->query('OCP\IURLGenerator'),
-				$c->query('OCP\IEventSource')
+				$c->query('FilesService'),
+				$c->query('ConfigService'),
+				$c->query('SmarterLogger')
 			);
 		}
 		);
 		$container->registerService(
-			'PublicServiceController', function (IContainer $c) {
-			return new PublicServiceController(
+			'PublicFilesController', function (IContainer $c) {
+			return new PublicFilesController(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$c->query('Environment'),
-				$c->query('InfoService'),
+				$c->query('FilesService'),
+				$c->query('ConfigService'),
+				$c->query('SmarterLogger')
+			);
+		}
+		);
+		$container->registerService(
+			'PreviewController', function (IContainer $c) {
+			return new PreviewController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
+				$c->query('OCP\IEventSource'),
+				$c->query('SmarterLogger')
+			);
+		}
+		);
+		$container->registerService(
+			'PublicPreviewController', function (IContainer $c) {
+			return new PublicPreviewController(
+				$c->query('AppName'),
+				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
-				$c->query('OCP\IEventSource')
+				$c->query('ThumbnailService'),
+				$c->query('PreviewService'),
+				$c->query('DownloadService'),
+				$c->query('OCP\IEventSource'),
+				$c->query('SmarterLogger')
 			);
 		}
 		);
@@ -98,12 +121,12 @@ class Application extends App {
 		 * Core
 		 */
 		$container->registerService(
-			'OCP\IServerContainer', function ($c) {
+			'OCP\IServerContainer', function (IAppContainer $c) {
 			return $c->getServer();
 		}
 		);
 		$container->registerService(
-			'OCP\IEventSource', function ($c) {
+			'OCP\IEventSource', function (IAppContainer $c) {
 			return $c->getServer()
 					 ->createEventSource();
 		}
@@ -186,24 +209,28 @@ class Application extends App {
 		 * Services
 		 */
 		$container->registerService(
-			'InfoService', function (IContainer $c) {
-			return new InfoService(
+			'FilesService', function (IContainer $c) {
+			return new FilesService(
 				$c->query('AppName'),
-				$c->query('PreviewService'),
+				$c->query('Environment'),
 				$c->query('SmarterLogger')
 
 			);
 		}
 		);
 		$container->registerService(
-			'ThumbnailService', function (IAppContainer $c) {
-			return new ThumbnailService(
+			'ConfigService', function (IContainer $c) {
+			return new ConfigService(
 				$c->query('AppName'),
 				$c->query('Environment'),
-				$c->query('CustomPreviewManager'),
 				$c->query('SmarterLogger')
 
 			);
+		}
+		);
+		$container->registerService(
+			'ThumbnailService', function () {
+			return new ThumbnailService();
 		}
 		);
 		$container->registerService(
@@ -259,7 +286,7 @@ class Application extends App {
 			}
 		);
 
-		// executed in the order that it is registered
+		// Executed in the order that it is registered
 		$container->registerMiddleware('SharingCheckMiddleware');
 		$container->registerMiddleware('EnvCheckMiddleware');
 
