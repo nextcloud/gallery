@@ -151,9 +151,8 @@ SlideShow.prototype = {
 				this.currentImage.mimeType = this.images[index].mimeType;
 				this.container.append(image);
 
-				var extension = this.images[index].path.substr(this.images[index].path.length - 3);
 				var backgroundColour = '#fff';
-				if (extension.toLowerCase() === 'jpg') {
+				if (this.currentImage.mimeType === 'image/jpeg') {
 					backgroundColour = '#000';
 				}
 				image.setAttribute('alt', this.images[index].name);
