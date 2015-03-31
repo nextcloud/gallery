@@ -151,11 +151,16 @@ SlideShow.prototype = {
 				this.currentImage.mimeType = this.images[index].mimeType;
 				this.container.append(image);
 
+				var extension = this.images[index].path.substr(this.images[index].path.length - 3);
+				var backgroundColour = '#fff';
+				if (extension.toLowerCase() === 'jpg') {
+					backgroundColour = '#000';
+				}
 				image.setAttribute('alt', this.images[index].name);
 				$(image).css('position', 'absolute');
-				$(image).css('background-color', '#fff');
+				$(image).css('background-color', backgroundColour);
 				var $border = 30 / window.devicePixelRatio;
-				$(image).css('outline', $border + 'px solid #fff');
+				$(image).css('outline', $border + 'px solid ' + backgroundColour);
 
 				this.startBigshot(image);
 
