@@ -16,7 +16,8 @@ script(
 		'eventsource',
 		'vendor/marked/marked.min',
 		'vendor/bigshot/bigshot',
-		'slideshow'
+		'slideshow',
+		'slideshowcontrols'
 	]
 );
 style(

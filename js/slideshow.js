@@ -1,4 +1,4 @@
-/* global jQuery, OC ,OCA, $, t, oc_requesttoken, bigshot */
+/* global jQuery, OC ,OCA, $, t, oc_requesttoken, SlideShowControls, bigshot */
 /**
  *
  * @param {jQuery} container
@@ -10,17 +10,12 @@
 var SlideShow = function (container, images, interval, maxScale) {
 	this.container = container;
 	this.images = images;
-	this.interval = interval || 5000;
 	this.maxScale = maxScale || 1; // This should come from the configuration
-	this.playTimeout = 0;
-	this.current = 0;
+	this.controls = null;
 	this.imageCache = {};
-	this.playing = false;
-	this.progressBar = container.find('.progress');
 	this.currentImage = null;
 	this.errorLoadingImage = false;
 	this.onStop = null;
-	this.active = false;
 	this.zoomable = null;
 	this.fullScreen = null;
 	this.canFullScreen = false;
@@ -37,41 +32,15 @@ SlideShow.prototype = {
 	 * @param play
 	 */
 	init: function (play) {
-		this.active = true;
 		this.hideImage();
 		this.bigShotSetup();
 
-		// hide arrows and play/pause when only one pic
-		this.container.find('.next, .previous').toggle(this.images.length > 1);
-		if (this.images.length === 1) {
-			this.container.find('.play, .pause').hide();
-		}
-
-		// Hide the toggle background button until we have something to show
-		this.container.find('.changeBackground').hide();
-
-		var makeCallBack = function (handler) {
-			return function (evt) {
-				if (!this.active) {
-					return;
-				}
-				evt.stopPropagation();
-				handler.call(this);
-			}.bind(this);
-		}.bind(this);
-
-		this.buttonSetup(makeCallBack);
-		this.keyCodeSetup(makeCallBack);
+		this.controls = new SlideShowControls(this, this.container, this.images);
+		this.controls.init(play);
 
 		$(window).resize(function () {
 			this.zoomDecider();
 		}.bind(this));
-
-		if (play) {
-			this.play();
-		} else {
-			this.pause();
-		}
 	},
 
 	bigShotSetup: function () {
@@ -89,69 +58,6 @@ SlideShow.prototype = {
 			browser.registerListener(e, 'touchstart', browser.stopEventBubblingHandler(), false);
 			browser.registerListener(e, 'touchend', browser.stopEventBubblingHandler(), false);
 		});
-	},
-
-	/**
-	 *
-	 * @param makeCallBack
-	 */
-	buttonSetup: function (makeCallBack) {
-		this.container.children('.next').click(makeCallBack(this.next));
-		this.container.children('.previous').click(makeCallBack(this.previous));
-		this.container.children('.exit').click(makeCallBack(this.stop));
-		this.container.children('.pause').click(makeCallBack(this.pause));
-		this.container.children('.play').click(makeCallBack(this.play));
-		this.container.children('.downloadImage').click(makeCallBack(this.getImageDownload));
-		this.container.children('.changeBackground').click(makeCallBack(this.toggleBackground));
-		//this.container.click(makeCallBack(this.next));
-	},
-
-	/**
-	 *
-	 * @param makeCallBack
-	 */
-	keyCodeSetup: function (makeCallBack) {
-		$(document).keyup(function (evt) {
-			if (evt.keyCode === 27) { // esc
-				makeCallBack(this.stop)(evt);
-			} else if (evt.keyCode === 37) { // left
-				makeCallBack(this.previous)(evt);
-			} else if (evt.keyCode === 39) { // right
-				makeCallBack(this.next)(evt);
-			} else if (evt.keyCode === 32) { // space
-				makeCallBack(this.play)(evt);
-			} else if (evt.keyCode === 70) { // f (fullscreen)
-				makeCallBack(this.fullScreenToggle)(evt);
-			} else if (this.zoomOutKey(evt)) {
-				makeCallBack(this.zoomToOriginal)(evt);
-			} else if (this.zoomInKey(evt)) {
-				makeCallBack(this.zoomToFit)(evt);
-			}
-		}.bind(this));
-	},
-
-	/**
-	 *
-	 * @param evt
-	 *
-	 * @returns {boolean}
-	 */
-	zoomOutKey: function (evt) {
-		// zero, o or down key
-		return (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79 ||
-		evt.keyCode === 40);
-	},
-
-	/**
-	 *
-	 * @param evt
-	 *
-	 * @returns {boolean}
-	 */
-	zoomInKey: function (evt) {
-		// 9, i or up key
-		return (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73 ||
-		evt.keyCode === 38);
 	},
 
 	zoomDecider: function () {
@@ -231,15 +137,15 @@ SlideShow.prototype = {
 	show: function (index) {
 		this.hideErrorNotification();
 		this.container.show();
-		this.current = index;
 		this.container.css('background-position', 'center');
 		this.hideImage();
+		var currentImageId = index;
 		return this.loadImage(this.images[index]).then(function (image) {
 			this.container.css('background-position', '-10000px 0');
 			this.container.find('.changeBackground').show();
 
 			// check if we moved along while we were loading
-			if (this.current === index) {
+			if (currentImageId === index) {
 				this.errorLoadingImage = false;
 				this.currentImage = image;
 				this.currentImage.mimeType = this.images[index].mimeType;
@@ -254,18 +160,17 @@ SlideShow.prototype = {
 				this.startBigshot(image);
 
 				this.setUrl(this.images[index].path);
-				if (this.playing) {
-					this.setTimeout();
-				}
+				this.controls.show(currentImageId);
 			}
 		}.bind(this), function () {
 			// Don't do anything if the user has moved along while we were loading as it would mess
 			// up the index
-			if (this.current === index) {
+			if (currentImageId === index) {
 				this.errorLoadingImage = true;
 				this.showErrorNotification();
 				this.setUrl(this.images[index].path);
 				this.images.splice(index, 1);
+				this.controls.updateControls(this.images, this.errorLoadingImage);
 			}
 
 		}.bind(this));
@@ -368,52 +273,12 @@ SlideShow.prototype = {
 		return null;
 	},
 
-	setTimeout: function () {
-		this.clearTimeout();
-		this.playTimeout = setTimeout(this.next.bind(this), this.interval);
-		this.progressBar.stop();
-		this.progressBar.css('height', '6px');
-		this.progressBar.animate({'height': '26px'}, this.interval, 'linear');
-	},
-
-	clearTimeout: function () {
-		if (this.playTimeout) {
-			clearTimeout(this.playTimeout);
-		}
-		this.progressBar.stop();
-		this.progressBar.css('height', '6px');
-		this.playTimeout = 0;
-	},
-
-	play: function () {
-		this.playing = true;
-		this.container.find('.pause').show();
-		this.container.find('.play').hide();
-		this.setTimeout();
-	},
-
-	pause: function () {
-		this.playing = false;
-		this.container.find('.pause').hide();
-		this.container.find('.play').show();
-		this.clearTimeout();
-	},
-
 	next: function () {
 		if (this.zoomable !== null) {
 			this.zoomable.stopFlying();
 			this.resetZoom();
 		}
 		this.hideErrorNotification();
-		if (this.errorLoadingImage) {
-			this.current -= 1;
-		}
-		this.current = (this.current + 1) % this.images.length;
-		var next = (this.current + 1) % this.images.length;
-		this.show(this.current).then(function () {
-			// preload the next image
-			this.loadImage(this.images[next]);
-		}.bind(this));
 	},
 
 	previous: function () {
@@ -422,25 +287,16 @@ SlideShow.prototype = {
 			this.resetZoom();
 		}
 		this.hideErrorNotification();
-		this.current = (this.current - 1 + this.images.length) % this.images.length;
-		var previous = (this.current - 1 + this.images.length) % this.images.length;
-		this.show(this.current).then(function () {
-			// preload the next image
-			this.loadImage(this.images[previous]);
-		}.bind(this));
 	},
 
 	stop: function () {
 		if (this.fullScreen !== null) {
 			this.fullScreenExit();
 		}
-		this.clearTimeout();
-		this.container.hide();
 		if (this.zoomable !== null) {
 			this.zoomable.dispose();
 			this.zoomable = null;
 		}
-		this.active = false;
 		if (this.onStop) {
 			this.onStop();
 		}
@@ -450,23 +306,23 @@ SlideShow.prototype = {
 		this.container.children('img').remove();
 	},
 
-	togglePlay: function () {
-		if (this.playing) {
-			this.pause();
-		} else {
-			this.play();
-		}
-	},
-
 	/**
+	 * Sends the current image as a download
+	 *
+	 * @param downloadUrl
 	 *
 	 * @returns {boolean}
 	 */
-	getImageDownload: function () {
-		OC.redirect(this.images[this.current].downloadUrl);
+	getImageDownload: function (downloadUrl) {
+		OC.redirect(downloadUrl);
 		return false;
 	},
 
+	/**
+	 * Changes the colour of the background of the image
+	 *
+	 * @private
+	 */
 	toggleBackground: function () {
 		var toHex = function (x) {
 			return ("0" + parseInt(x).toString(16)).slice(-2);
@@ -486,11 +342,20 @@ SlideShow.prototype = {
 		}
 	},
 
+	/**
+	 * Shows an error notification
+	 *
+	 * @private
+	 */
 	showErrorNotification: function () {
 		this.container.find('.notification').show();
 		this.container.find('.changeBackground').hide();
 	},
 
+	/**
+	 * Hides the error notification
+	 * @private
+	 */
 	hideErrorNotification: function () {
 		this.container.find('.notification').hide();
 	}
