@@ -1,4 +1,4 @@
-/* global $, OC, SlideShow */
+/* global $ */
 /**
  * Button and key controls for the slideshow
  *
@@ -49,6 +49,7 @@ SlideShowControls.prototype = {
 		}.bind(this);
 
 		this._buttonSetup(makeCallBack);
+		this._specialButtonSetup(makeCallBack);
 		this._keyCodeSetup(makeCallBack);
 
 		if (play) {
@@ -82,7 +83,8 @@ SlideShowControls.prototype = {
 	},
 
 	/**
-	 * Sets up the button based controls
+	 * Sets up the button based navigation
+	 *
 	 * @param {Function} makeCallBack
 	 * @private
 	 */
@@ -92,66 +94,70 @@ SlideShowControls.prototype = {
 		this.container.children('.exit').click(makeCallBack(this._stop));
 		this.container.children('.pause').click(makeCallBack(this._pause));
 		this.container.children('.play').click(makeCallBack(this._play));
-		this.container.children('.downloadImage').click(makeCallBack(this._getImageDownload));
-		this.container.children('.changeBackground').click(makeCallBack(this._toggleBackground));
 		//this.container.click(makeCallBack(this.next));
 	},
 
 	/**
+	 * Sets up additional buttons
+	 *
+	 * @param {Function} makeCallBack
+	 * @private
+	 */
+	_specialButtonSetup: function (makeCallBack) {
+		this.container.children('.downloadImage').click(makeCallBack(this._getImageDownload));
+		this.container.children('.changeBackground').click(makeCallBack(this._toggleBackground));
+	},
+
+	/**
 	 * Sets up the key based controls
+	 * 
 	 * @param {Function} makeCallBack
 	 * @private
 	 */
 	_keyCodeSetup: function (makeCallBack) {
 		$(document).keyup(function (evt) {
-			if (evt.keyCode === 27) { // esc
+			var escKey = 27;
+			var leftKey = 37;
+			var rightKey = 39;
+			var spaceKey = 32;
+			var fKey = 70;
+			var zoomOutKeys = [48, 96, 79, 40]; // zero, o or down key
+			var zoomInKeys = [57, 105, 73, 38]; // 9, i or up key
+			if (evt.keyCode === escKey) {
 				makeCallBack(this._stop)(evt);
-			} else if (evt.keyCode === 37) { // left
+			} else if (evt.keyCode === leftKey) {
 				makeCallBack(this._previous)(evt);
-			} else if (evt.keyCode === 39) { // right
+			} else if (evt.keyCode === rightKey) {
 				makeCallBack(this._next)(evt);
-			} else if (evt.keyCode === 32) { // space
+			} else if (evt.keyCode === spaceKey) {
 				makeCallBack(this._play)(evt);
-			} else if (evt.keyCode === 70) { // f (fullscreen)
+			} else if (evt.keyCode === fKey) {
 				makeCallBack(this._fullScreenToggle)(evt);
-			} else if (this._zoomOutKey(evt)) {
+			} else if (this._hasKeyBeenPressed(evt, zoomOutKeys)) {
 				makeCallBack(this._zoomToOriginal)(evt);
-			} else if (this._zoomInKey(evt)) {
+			} else if (this._hasKeyBeenPressed(evt, zoomInKeys)) {
 				makeCallBack(this._zoomToFit)(evt);
 			}
 		}.bind(this));
 	},
 
 	/**
-	 * Defines the keys we can use to zoom in
-	 *
-	 * Currently zero, o or down
+	 * Determines if a key has been pressed by comparing the event and the key
 	 *
 	 * @param evt
+	 * @param {Array} keys
 	 *
 	 * @returns {boolean}
 	 * @private
 	 */
-	_zoomOutKey: function (evt) {
-		// zero, o or down key
-		return (evt.keyCode === 48 || evt.keyCode === 96 || evt.keyCode === 79 ||
-		evt.keyCode === 40);
-	},
-
-	/**
-	 * Defines the keys we can use to zoom in
-	 *
-	 * Currently 9, i or up
-	 *
-	 * @param evt
-	 *
-	 * @returns {boolean}
-	 * @private
-	 */
-	_zoomInKey: function (evt) {
-		// 9, i or up key
-		return (evt.keyCode === 57 || evt.keyCode === 105 || evt.keyCode === 73 ||
-		evt.keyCode === 38);
+	_hasKeyBeenPressed: function (evt, keys) {
+		var i, keysLength = keys.length;
+		for (i = 0; i < keysLength; i++) {
+			if (evt.keyCode === keys[i]) {
+				return true;
+			}
+		}
+		return false;
 	},
 
 	/**
@@ -185,8 +191,7 @@ SlideShowControls.prototype = {
 	 */
 	_play: function () {
 		this.playing = true;
-		this.container.find('.pause').show();
-		this.container.find('.play').hide();
+		this._playPauseButtonToggle();
 		this._setTimeout();
 	},
 
@@ -196,9 +201,17 @@ SlideShowControls.prototype = {
 	 */
 	_pause: function () {
 		this.playing = false;
-		this.container.find('.pause').hide();
-		this.container.find('.play').show();
+		this._playPauseButtonToggle();
 		this._clearTimeout();
+	},
+
+	/**
+	 * Shows the play or pause button depending on circumstances
+	 * @private
+	 */
+	_playPauseButtonToggle: function () {
+		this.container.find('.pause').toggle();
+		this.container.find('.play').toggle();
 	},
 
 	/**
@@ -212,10 +225,7 @@ SlideShowControls.prototype = {
 		}
 		this.current = (this.current + 1) % this.images.length;
 		var next = (this.current + 1) % this.images.length;
-		this.slideshow.show(this.current).then(function () {
-			// preload the next image
-			this.slideshow.loadImage(this.images[next]);
-		}.bind(this));
+		this._updateSlideshow(next);
 	},
 
 	/**
@@ -226,9 +236,19 @@ SlideShowControls.prototype = {
 		this.slideshow.previous();
 		this.current = (this.current - 1 + this.images.length) % this.images.length;
 		var previous = (this.current - 1 + this.images.length) % this.images.length;
+		this._updateSlideshow(previous);
+	},
+
+	/**
+	 * Shows a new image in the slideshow and preloads the next in the list
+	 *
+	 * @param imageId
+	 * @private
+	 */
+	_updateSlideshow: function (imageId) {
 		this.slideshow.show(this.current).then(function () {
-			// preload the next image
-			this.slideshow.loadImage(this.images[previous]);
+			// Preloads the next image in the list
+			this.slideshow.loadImage(this.images[imageId]);
 		}.bind(this));
 	},
 
@@ -242,14 +262,6 @@ SlideShowControls.prototype = {
 		this._clearTimeout();
 		this.container.hide();
 		this.active = false;
-	},
-
-	_togglePlay: function () {
-		if (this.playing) {
-			this._pause();
-		} else {
-			this._play();
-		}
 	},
 
 	/**
