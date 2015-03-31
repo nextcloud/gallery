@@ -1,4 +1,4 @@
-/* global $, OC, Thumbnails */
+/* global $, OC, Gallery, Thumbnails */
 /**
  * Creates a new album object to store information about an album
  *
@@ -56,10 +56,11 @@ function GalleryImage (src, path, fileId, mimeType, mTime) {
 Album.prototype = {
 	_getThumbnail: function () {
 		if (this.images.length) {
-			return this.images[0].getThumbnail(1);
+			return this.images[0].getThumbnail(true);
 		}
 		return this.subAlbums[0]._getThumbnail();
 	},
+
 	/**
 	 * Retrieves a thumbnail and adds it to the album representation
 	 *
@@ -76,9 +77,9 @@ Album.prototype = {
 		var parts = image.src.split('/');
 		parts.shift();
 		var path = parts.join('/');
-		//var albumpath = this.path;
 		var gm = new GalleryImage(image.src, path);
-		gm.getThumbnail(1).then(function (img) {
+		// img is a Thumbnail.image, true means square thumbnails
+		gm.getThumbnail(true).then(function (img) {
 			var backgroundHeight, backgroundWidth;
 			img.alt = '';
 			backgroundHeight = (targetHeight / 2);
@@ -126,9 +127,30 @@ Album.prototype = {
 	},
 
 	/**
-	 * preload the first $count thumbnails
+	 * Fills the album representation with images we've received
 	 *
-	 * @param count
+	 *    * Each album includes between 1 and 4 images
+	 *    * Each album is also a link to open that folder
+	 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
+	 * natural size of 200x200 The whole thing gets resized to match the targetHeight
+	 *
+	 * @param targetHeight
+	 * @param a
+	 * @private
+	 */
+	_fillSubAlbum: function (targetHeight, a) {
+		if (this.images.length > 1) {
+			this._getFourImages(this.images, targetHeight, a);
+		} else if (this.images.length === 1) {
+			this._getOneImage(this.images[0], 2 *
+			targetHeight, targetHeight, a, false);
+		}
+	},
+
+	/**
+	 * Preloads the first $count thumbnails
+	 *
+	 * @param {number} count
 	 * @private
 	 */
 	_preload: function (count) {
@@ -144,10 +166,12 @@ Album.prototype = {
 				if (imagesLength > 0 && imagesLength < 4) {
 					maxThumbs = imagesLength;
 				}
-				squarePaths = squarePaths.concat(items[i].getThumbnailPaths(maxThumbs));
+				var squarePath = items[i].getThumbnailPaths(maxThumbs);
+				squarePaths = squarePaths.concat(squarePath);
 				realCounter = realCounter + maxThumbs;
 			} else {
-				paths = paths.concat(items[i].getThumbnailPaths());
+				var path = items[i].getThumbnailPaths();
+				paths = paths.concat(path);
 				realCounter++;
 			}
 			if (realCounter >= count) {
@@ -180,33 +204,18 @@ Album.prototype = {
 			var a = $('<a/>').addClass('album').attr('href', '#' + encodeURIComponent(album.path));
 
 			a.append($('<span/>').addClass('album-label').text(album.name));
-			var ratio = Math.round(img.ratio * 100) / 100;
-			var calcWidth = (targetHeight * ratio) / 2;
 
-			a.width(calcWidth * 2);
+			a.width(targetHeight);
 			a.height(targetHeight);
 
-			if (album.images.length > 1) {
-				album._getFourImages(album.images, targetHeight, a);
-			} else if (album.images.length === 0 && album.subAlbums[0].images.length > 1) {
-				album._getFourImages(album.subAlbums[0].images, targetHeight, a);
-			} else {
-				a.append(img);
-				img.height = (targetHeight - 2);
-				img.width = (targetHeight * ratio) - 2;
-			}
+			album._fillSubAlbum(targetHeight, a);
 
 			return a;
 		});
 	},
 
-	getThumbnailWidth: function () {
-		return this._getThumbnail().then(function (img) {
-			return img.originalWidth;
-		});
-	},
-
 	/**
+	 * Fills the row with albums and images
 	 *
 	 * @param {number} width
 	 * @returns {$.Deferred<Row>}
@@ -276,20 +285,35 @@ Row.prototype = {
 	/**
 	 * Adds sub-albums and images to the row until it's full
 	 *
-	 * @param {GalleryImage} image
+	 * @param {Album|GalleryImage} element
 	 *
 	 * @return {$.Deferred<bool>} true if more images can be added to the row
 	 */
-	addElement: function (image) {
+	addElement: function (element) {
 		var row = this;
+		var targetHeight = 200;
 		var def = new $.Deferred();
-		image.getThumbnailWidth().then(function (width) {
-			row.items.push(image);
+
+		var appendDom = function (itemDom, width) {
+			row.items.push(element);
 			row.width += width + 4; // add 4px for the margin
 			def.resolve(!row._isFull());
-		}, function () {
-			def.resolve(true);
-		});
+		};
+
+		// No need to use getThumbnailWidth() for albums, the width is always 200
+		if (element instanceof  Album) {
+			var width = 200;
+			var itemDom = element.getDom(targetHeight);
+			appendDom(itemDom, width);
+		} else {
+			element.getThumbnailWidth().then(function (width) {
+				element.getDom(targetHeight).then(function (itemDom) {
+					appendDom(itemDom, width);
+				});
+			}, function () {
+				def.resolve(true);
+			});
+		}
 		return def;
 	},
 
@@ -349,7 +373,8 @@ GalleryImage.prototype = {
 	 * @returns {number}
 	 */
 	getThumbnailWidth: function () {
-		return this.getThumbnail().then(function (img) {
+		// img is a Thumbnail.image
+		return this.getThumbnail(false).then(function (img) {
 			if (img) {
 				return img.originalWidth;
 			}
@@ -369,7 +394,7 @@ GalleryImage.prototype = {
 		if (this.domDef === null || this.domHeigth !== targetHeight) {
 			this.domHeigth = targetHeight;
 			// img is a Thumbnail.image
-			this.domDef = this.getThumbnail().then(function (img) {
+			this.domDef = this.getThumbnail(false).then(function (img) {
 				img.height = targetHeight;
 				img.width = targetHeight * img.ratio;
 				img.setAttribute('width', 'auto');

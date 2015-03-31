@@ -34,7 +34,7 @@ Gallery.getMediaTypes = function () {
 Gallery.getAlbum = function (path) {
 	if (!Gallery.albumMap[path]) {
 		Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
-		// Attaches sub-albums to the current one
+		// Attaches this album as a sub-album to the parent folder
 		if (path !== '') {
 			var parent = OC.dirname(path);
 			if (parent === path) {
@@ -105,9 +105,9 @@ Gallery.getFiles = function () {
 
 			image = new GalleryImage(path, path, fileId, mimeType, mTime);
 			var dir = OC.dirname(path);
-			if (dir === path) {
-				dir = '';
-			}
+			var currentFolder = albumInfo.path;
+			dir = Gallery.fixDir(path, dir, currentFolder);
+
 			album = Gallery.getAlbum(dir);
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
@@ -126,6 +126,32 @@ Gallery.getFiles = function () {
 		Gallery.showEmpty();
 		Gallery.currentAlbum = null;
 	});
+};
+
+/**
+ * Removes everything from the path between the 1st sub-folder and the file
+ *
+ * This enables us to show as many as 4 pictures for each albums, even if the images are found in
+ * very deep sub-folders
+ *
+ * @param dir
+ * @param currentFolder
+ */
+Gallery.fixDir = function (path, dir, currentFolder) {
+	if (dir === path) {
+		dir = '';
+	}
+
+	if (dir !== currentFolder) {
+		dir = dir.replace(currentFolder + '/', '');
+		if (currentFolder !== '') {
+			currentFolder = currentFolder + '/';
+		}
+		var parts = dir.split('/');
+		dir = currentFolder + parts[0];
+	}
+
+	return dir;
 };
 
 /**

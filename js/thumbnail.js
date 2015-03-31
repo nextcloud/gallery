@@ -1,4 +1,11 @@
-/* global $, Gallery */
+/* global OC, $, Gallery */
+/**
+ * A thumbnail is the actual image attached to the GalleryImage object
+ *
+ * @param {number} path
+ * @param {bool} square
+ * @constructor
+ */
 function Thumbnail (path, square) {
 	this.square = square;
 	this.path = path;
@@ -15,17 +22,22 @@ var Thumbnails = {};
 Thumbnails.map = {};
 Thumbnails.squareMap = {};
 
+/**
+ * Retrieves the thumbnail linked to the given fileID
+ *
+ * @param {string} path
+ * @param {bool} square
+ *
+ * @returns {Thumbnail}
+ */
 Thumbnails.get = function (path, square) {
 	var map = {};
-	if (square === 1) {
+	if (square === true) {
 		map = Thumbnails.squareMap;
-		square = 1;
-	} else if (square === 2) {//needed Album thumbnail preview if 2 or 3 pics
-		map = Thumbnails.squareMap;
-		square = 0;
+		square = true;
 	} else {
 		map = Thumbnails.map;
-		square = 0;
+		square = false;
 	}
 	if (!map[path]) {
 		map[path] = new Thumbnail(path, square);
@@ -33,8 +45,17 @@ Thumbnails.get = function (path, square) {
 	return map[path];
 };
 
+/**
+ * Loads thumbnails in batch, using EventSource
+ *
+ * @param {Array} paths
+ * @param {bool} square
+ *
+ * @returns {{}}
+ */
 Thumbnails.loadBatch = function (paths, square) {
-	var map = (square) ? Thumbnails.squareMap : Thumbnails.map;
+	var map = (square) ? this.squareMap : this.map;
+	// Purely here as a precaution
 	paths = paths.filter(function (path) {
 		return !map[path];
 	});
