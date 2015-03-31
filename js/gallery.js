@@ -104,6 +104,9 @@ Gallery.getFiles = function () {
 
 			image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
 			var dir = OC.dirname(path);
+			if (dir === path) {
+				dir = '';
+			}
 			album = Gallery.getAlbum(dir);
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
