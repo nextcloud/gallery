@@ -8,8 +8,9 @@
 script(
 	$_['appName'],
 	[
-		'album',
 		'gallery',
+		'galleryview',
+		'album',
 		'thumbnail',
 		'vendor/eventsource-polyfill/dist/eventsource.min',
 		'eventsource',
