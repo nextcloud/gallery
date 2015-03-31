@@ -66,7 +66,7 @@ class FilesService extends Service {
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
-			$subFolders = array_merge($subFolders, $this->isFolder($node, $nodeType));
+			$subFolders = array_merge($subFolders, $this->allowedSubFolder($node, $nodeType));
 
 			if ($nodeType === 'file') {
 				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
@@ -155,9 +155,12 @@ class FilesService extends Service {
 	 *
 	 * @return array|Folder
 	 */
-	private function isFolder($node, $nodeType) {
+	private function allowedSubFolder($node, $nodeType) {
 		if ($nodeType === 'dir') {
-			return [$node];
+			/** @type Folder $node */
+			if (!$node->nodeExists('.nomedia')) {
+				return [$node];
+			}
 		}
 
 		return [];
@@ -191,7 +194,7 @@ class FilesService extends Service {
 	 * If we're at deeper levels, we only need to go further if we haven't managed to find one
 	 * picture in the current folder
 	 *
-	 * @param array<Folder> $subFolders
+	 * @param array <Folder> $subFolders
 	 * @param int $subDepth
 	 * @param int $albumImageCounter
 	 */
@@ -210,7 +213,7 @@ class FilesService extends Service {
 	/**
 	 * Checks if we need to look for media files in the specified folder
 	 *
-	 * @param array<Folder> $subFolders
+	 * @param array <Folder> $subFolders
 	 * @param int $subDepth
 	 * @param int $albumImageCounter
 	 *
