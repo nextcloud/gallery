@@ -23,10 +23,6 @@ use OCP\AppFramework\Http;
 class ImageResponse extends Response {
 
 	/**
-	 * @var string
-	 */
-	private $path;
-	/**
 	 * @var \OC_Image|string
 	 */
 	private $preview;
@@ -38,13 +34,13 @@ class ImageResponse extends Response {
 	 * @param int $statusCode the HTTP status code, defaults to 200
 	 */
 	public function __construct(array $image, $statusCode = Http::STATUS_OK) {
-		$this->path = $image['path'];
+		$name = $image['name'];
 		$this->preview = $image['preview'];
 
 		$this->setStatus($statusCode);
 		$this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
 
-		\OCP\Response::setContentDispositionHeader(basename($this->path), 'attachment');
+		\OCP\Response::setContentDispositionHeader($name, 'attachment');
 	}
 
 	/**

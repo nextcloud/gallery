@@ -32,6 +32,7 @@ use OCA\GalleryPlus\Service\SearchMediaService;
  */
 class FilesController extends Controller {
 
+	use PathManipulation;
 	use JsonHttpError;
 
 	/**
@@ -105,13 +106,37 @@ class FilesController extends Controller {
 				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot, $features);
 			$files =
 				$this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray, $features);
-
+			$files = $this->fixPaths($files, $folderPathFromRoot);
+			
 			return $this->formatResults($files, $albumInfo, $locationHasChanged);
 		} catch (\Exception $exception) {
 			return $this->error($exception);
 		}
 	}
 
+	/**
+	 * Generates shortened paths to the media files
+	 *
+	 * We only want to keep one folder between the current folder and the found media file
+	 * /root/folder/sub1/sub2/file.ext
+	 * becomes
+	 * /root/folder/file.ext
+	 *
+	 * @param $files
+	 * @param $folderPathFromRoot
+	 *
+	 * @return array
+	 */
+	private function fixPaths($files, $folderPathFromRoot) {
+		if (!empty($files)) {
+			foreach ($files as &$file) {
+				$file['path'] = $this->getReducedPath($file['path'], $folderPathFromRoot);
+			}
+		}
+
+		return $files;
+	}
+	
 	/**
 	 * Simply builds and returns an array containing the list of files, the album information and
 	 * whether the location has changed or not

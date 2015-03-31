@@ -71,16 +71,12 @@ Album.prototype = {
 	 * @param {number} calcWidth Album width
 	 * @param {object} a
 	 *
-	 * @returns {a}
+	 * @returns {$.Deferred<Thumbnail>}
 	 * @private
 	 */
 	_getOneImage: function (image, targetHeight, calcWidth, a) {
-		var parts = image.src.split('/');
-		parts.shift();
-		var path = parts.join('/');
-		var gm = new GalleryImage(image.src, path);
 		// img is a Thumbnail.image, true means square thumbnails
-		gm.getThumbnail(true).then(function (img) {
+		return image.getThumbnail(true).then(function (img) {
 			var backgroundHeight, backgroundWidth;
 			img.alt = '';
 			backgroundHeight = (targetHeight / 2);
@@ -156,8 +152,8 @@ Album.prototype = {
 		var items = this.subAlbums.concat(this.images);
 		var realCounter = 0;
 		var maxThumbs = 0;
-		var paths = [];
-		var squarePaths = [];
+		var fileIds = [];
+		var squareFileIds = [];
 		for (var i = this.preloadOffset; i < this.preloadOffset + count && i < items.length; i++) {
 			if (items[i].subAlbums) {
 				maxThumbs = 4;
@@ -165,12 +161,12 @@ Album.prototype = {
 				if (imagesLength > 0 && imagesLength < 4) {
 					maxThumbs = imagesLength;
 				}
-				var squarePath = items[i].getThumbnailPaths(maxThumbs);
-				squarePaths = squarePaths.concat(squarePath);
+				var squareFileId = items[i].getThumbnailIds(maxThumbs);
+				squareFileIds = squareFileIds.concat(squareFileId);
 				realCounter = realCounter + maxThumbs;
 			} else {
-				var path = items[i].getThumbnailPaths();
-				paths = paths.concat(path);
+				var fileId = items[i].getThumbnailIds();
+				fileIds = fileIds.concat(fileId);
 				realCounter++;
 			}
 			if (realCounter >= count) {
@@ -180,8 +176,8 @@ Album.prototype = {
 		}
 
 		this.preloadOffset = i;
-		Thumbnails.loadBatch(paths, false);
-		Thumbnails.loadBatch(squarePaths, true);
+		Thumbnails.loadBatch(fileIds, false);
+		Thumbnails.loadBatch(squareFileIds, true);
 	},
 
 	/**
@@ -253,20 +249,20 @@ Album.prototype = {
 	},
 
 	/**
-	 * Returns paths of thumbnails belonging to the album
+	 * Returns IDs of thumbnails belonging to the album
 	 *
 	 * @param {number} count
 	 *
-	 * @return string[]
+	 * @return number[]
 	 */
-	getThumbnailPaths: function (count) {
-		var paths = [];
+	getThumbnailIds: function (count) {
+		var ids = [];
 		var items = this.images.concat(this.subAlbums);
 		for (var i = 0; i < items.length && i < count; i++) {
-			paths = paths.concat(items[i].getThumbnailPaths(count));
+			ids = ids.concat(items[i].getThumbnailIds(count));
 		}
 
-		return paths;
+		return ids;
 	}
 };
 
@@ -343,12 +339,12 @@ Row.prototype = {
 
 GalleryImage.prototype = {
 	/**
-	 * Returns the Thumbnail path
+	 * Returns the Thumbnail ID
 	 *
-	 * @returns {[string]}
+	 * @returns {[number]}
 	 */
-	getThumbnailPaths: function () {
-		return [this.path];
+	getThumbnailIds: function () {
+		return [this.fileId];
 	},
 
 	/**
@@ -360,7 +356,7 @@ GalleryImage.prototype = {
 	 */
 	getThumbnail: function (square) {
 		if (this.thumbnail === null) {
-			this.thumbnail = Thumbnails.get(this.src, square);
+			this.thumbnail = Thumbnails.get(this.fileId, square);
 		}
 		return this.thumbnail.loadingDeferred;
 	},
@@ -373,6 +369,7 @@ GalleryImage.prototype = {
 	 * @returns {number}
 	 */
 	getThumbnailWidth: function () {
+
 		// img is a Thumbnail.image
 		return this.getThumbnail(false).then(function (img) {
 			if (img) {

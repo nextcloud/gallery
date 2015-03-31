@@ -2,13 +2,13 @@
 /**
  * A thumbnail is the actual image attached to the GalleryImage object
  *
- * @param {string} path
+ * @param {number} fileId
  * @param {bool} square
  * @constructor
  */
-function Thumbnail (path, square) {
+function Thumbnail (fileId, square) {
 	this.square = square;
-	this.path = path;
+	this.fileId = fileId;
 	this.image = null;
 	this.loadingDeferred = new $.Deferred();
 	this.height = 200;
@@ -25,12 +25,12 @@ Thumbnails.squareMap = {};
 /**
  * Retrieves the thumbnail linked to the given fileID
  *
- * @param {string} path
+ * @param {number} fileId
  * @param {bool} square
  *
  * @returns {Thumbnail}
  */
-Thumbnails.get = function (path, square) {
+Thumbnails.get = function (fileId, square) {
 	var map = {};
 	if (square === true) {
 		map = Thumbnails.squareMap;
@@ -39,36 +39,38 @@ Thumbnails.get = function (path, square) {
 		map = Thumbnails.map;
 		square = false;
 	}
-	if (!map[path]) {
-		map[path] = new Thumbnail(path, square);
+	if (!map[fileId]) {
+		map[fileId] = new Thumbnail(fileId, square);
 	}
-	return map[path];
+
+	return map[fileId];
 };
 
 /**
  * Loads thumbnails in batch, using EventSource
  *
- * @param {Array} paths
+ * @param {array} ids
  * @param {bool} square
  *
  * @returns {{}}
  */
-Thumbnails.loadBatch = function (paths, square) {
+Thumbnails.loadBatch = function (ids, square) {
 	var map = (square) ? Thumbnails.squareMap : Thumbnails.map;
 	// Purely here as a precaution
-	paths = paths.filter(function (path) {
-		return !map[path];
+	ids = ids.filter(function (id) {
+		return !map[id];
 	});
 	var batch = {};
-	var i, pathsLength = paths.length;
-	if (pathsLength) {
-		for (i = 0; i < pathsLength; i++) {
-			var thumb = new Thumbnail(paths[i], square);
+	var i, idsLength = ids.length;
+	if (idsLength) {
+		for (i = 0; i < idsLength; i++) {
+			var thumb = new Thumbnail(ids[i], square);
 			thumb.image = new Image();
-			map[paths[i]] = batch[paths[i]] = thumb;
+			map[ids[i]] = batch[ids[i]] = thumb;
+
 		}
 		var params = {
-			images: paths.join(';'),
+			ids: ids.join(';'),
 			scale: window.devicePixelRatio,
 			square: (square) ? 1 : 0
 		};
@@ -76,8 +78,8 @@ Thumbnails.loadBatch = function (paths, square) {
 
 		var eventSource = new Gallery.EventSource(url);
 		eventSource.listen('preview', function (/**{path, status, mimetype, preview}*/ preview) {
-			var path = preview.path;
-			var thumb = batch[path];
+			var id = preview.fileid;
+			var thumb = batch[id];
 			thumb.status = preview.status;
 			thumb.image.onload = function () {
 				// Fix for SVG files which can come in all sizes

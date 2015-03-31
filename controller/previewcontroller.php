@@ -18,12 +18,14 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IEventSource;
 use OCP\ILogger;
+use OCP\Files\File;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\ServiceException;
+use OCA\GalleryPlus\Service\NotFoundServiceException;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
@@ -61,6 +63,10 @@ class PreviewController extends Controller {
 	 * @var ILogger
 	 */
 	private $logger;
+	/**
+	 * @type bool
+	 */
+	private $download = false;
 
 	/**
 	 * Constructor
@@ -122,17 +128,18 @@ class PreviewController extends Controller {
 	 *
 	 * WARNING: Returning a JSON response does not get rid of the problem
 	 *
-	 * @param string $images
+	 * @param string $ids the ID of the files of which we need thumbnail previews of
 	 * @param bool $square
 	 * @param bool $scale
 	 *
 	 * @return array<string,array|string>
 	 */
-	public function getThumbnails($images, $square, $scale) {
-		$imagesArray = explode(';', $images);
+	public function getThumbnails($ids, $square, $scale) {
+		$idsArray = explode(';', $ids);
 
-		foreach ($imagesArray as $image) {
-			$thumbnail = $this->getThumbnail($image, $square, $scale);
+		foreach ($idsArray as $id) {
+			$thumbnail = $this->getThumbnail((int)$id, $square, $scale);
+			$thumbnail['fileid'] = $id;
 			$this->eventSource->send('preview', $thumbnail);
 		}
 		$this->eventSource->close();
@@ -146,18 +153,19 @@ class PreviewController extends Controller {
 	 * Sends either a large preview of the requested file or the
 	 * original file itself
 	 *
-	 * If the browser can use the file as-is then we simply let
-	 * the browser download the file, straight from the filesystem
-	 *
-	 * @param string $file
-	 * @param int $x
-	 * @param int $y
+	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param int $width
+	 * @param int $height
+	 * @param string|null $download
 	 *
 	 * @return ImageResponse|Http\JSONResponse
 	 */
-	public function showPreview($file, $x, $y) {
+	public function getPreview($fileId, $width, $height, $download) {
+		if (!is_null($download)) {
+			$this->download = true;
+		}
 		try {
-			$preview = $this->getPreview($file, $x, $y);
+			$preview = $this->getPreviewData($fileId, $width, $height);
 
 			return new ImageResponse($preview['data'], $preview['status']);
 		} catch (ServiceException $exception) {
@@ -165,24 +173,6 @@ class PreviewController extends Controller {
 		}
 	}
 
-	/**
-	 * @NoAdminRequired
-	 *
-	 * Downloads the file
-	 *
-	 * @param string $file
-	 *
-	 * @return \OCA\GalleryPlus\Http\ImageResponse|Http\JSONResponse
-	 */
-	public function downloadPreview($file) {
-		try {
-			$download = $this->downloadService->downloadFile($file);
-
-			return new ImageResponse($download);
-		} catch (ServiceException $exception) {
-			return $this->error($exception);
-		}
-	}
 
 	/**
 	 * Retrieves the thumbnail to send back to the browser
@@ -190,19 +180,20 @@ class PreviewController extends Controller {
 	 * The thumbnail is either a resized preview of the file or the original file
 	 * Thumbnails are base64encoded before getting sent back
 	 *
-	 * @param string $image
-	 * @param bool $square
-	 * @param bool $scale
+	 *
+	 * @param int $fileId the ID of the file of which we need a thumbnail preview of
+	 * @param bool $square whether the thumbnail should be square
+	 * @param bool $scale whether we're allowed to scale the preview up
 	 *
 	 * @return array<string,array|string>
 	 */
-	private function getThumbnail($image, $square, $scale) {
+	private function getThumbnail($fileId, $square, $scale) {
 		list($width, $height, $aspect, $animatedPreview, $base64Encode) =
 			$this->thumbnailService->getThumbnailSpecs($square, $scale);
 
 		try {
-			$preview = $this->getPreview(
-				$image, $width, $height, $aspect, $animatedPreview, $base64Encode
+			$preview = $this->getPreviewData(
+				$fileId, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		} catch (ServiceException $exception) {
 			$preview = ['data' => null, 'status' => 500, 'type' => 'error'];
@@ -231,7 +222,7 @@ class PreviewController extends Controller {
 	 *              ]
 	 *            );
 	 *
-	 * @param string $image
+	 * @param int $fileId
 	 * @param int $width
 	 * @param int $height
 	 * @param bool $keepAspect
@@ -239,24 +230,43 @@ class PreviewController extends Controller {
 	 * @param bool $base64Encode
 	 *
 	 * @return array<string,\OC_Image|string>
+	 *
+	 * @throws NotFoundServiceException
 	 */
-	private function getPreview(
-		$image, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
+	private function getPreviewData(
+		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
 	) {
 		$status = Http::STATUS_OK;
-		$previewRequired = $this->previewService->isPreviewRequired($image, $animatedPreview);
-		if ($previewRequired) {
-			$type = 'preview';
-			$preview = $this->previewService->createPreview(
-				$image, $width, $height, $keepAspect, $base64Encode
-			);
-			if (!$this->previewService->isPreviewValid()) {
-				$type = 'error';
-				$status = Http::STATUS_NOT_FOUND;
+		try {
+			/** @type File $file */
+			$file = $this->previewService->getResourceFromId($fileId);
+			if (!$this->download) {
+				$previewRequired =
+					$this->previewService->isPreviewRequired($file, $animatedPreview);
+				if ($previewRequired) {
+					$type = 'preview';
+					$preview = $this->previewService->createPreview(
+						$file, $width, $height, $keepAspect, $base64Encode
+					);
+					if (!$this->previewService->isPreviewValid()) {
+						$type = 'error';
+						$status = Http::STATUS_NOT_FOUND;
+					}
+				} else {
+					$type = 'download';
+					$preview = $this->downloadService->downloadFile($file, $base64Encode);
+				}
+			} else {
+				$type = 'download';
+				$preview = $this->downloadService->downloadFile($file, $base64Encode);
 			}
-		} else {
-			$type = 'download';
-			$preview = $this->downloadService->downloadFile($image, $base64Encode);
+
+			$preview['name'] = $file->getName();
+
+		} catch (\Exception $exception) {
+			$type = 'error';
+			$status = Http::STATUS_INTERNAL_SERVER_ERROR;
+			$preview = null;
 		}
 
 		return ['data' => $preview, 'status' => $status, 'type' => $type];

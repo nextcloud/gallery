@@ -104,9 +104,6 @@ Gallery.getFiles = function () {
 
 			image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
 			var dir = OC.dirname(path);
-			var currentFolder = albumInfo.path;
-			dir = Gallery.fixDir(path, dir, currentFolder);
-
 			album = Gallery.getAlbum(dir);
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
@@ -128,26 +125,6 @@ Gallery.getFiles = function () {
  * @param {string} path
  * @param dir
  * @param currentFolder
- */
-Gallery.fixDir = function (path, dir, currentFolder) {
-	if (dir === path) {
-		dir = '';
-	}
-
-	if (dir !== currentFolder) {
-		if (currentFolder !== '') {
-			currentFolder = currentFolder + '/';
-			dir = dir.replace(currentFolder, '');
-		}
-		var parts = dir.split('/');
-		dir = currentFolder + parts[0];
-	}
-
-	return dir;
-};
-
-/**
- * Sorts albums and images based on user preferences
  */
 Gallery.sorter = function () {
 	var sortType = 'name';
@@ -306,17 +283,13 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	var start = images.indexOf(startImage);
 	images = images.map(function (image) {
 		var name = OC.basename(image.path);
-		var previewUrl = Gallery.utility.getPreviewUrl(image.src, image.etag);
-		/* jshint camelcase: false */
-		var params = {
-			file: image.src,
-			requesttoken: oc_requesttoken
-		};
-		var downloadUrl = Gallery.utility.buildGalleryUrl('download', '', params);
+		var previewUrl = Gallery.utility.getPreviewUrl(image.fileId);
+		var downloadUrl = previewUrl + '&download';
 
 		return {
 			name: name,
 			path: image.path,
+			file: image.fileId,
 			mimeType: image.mimeType,
 			url: previewUrl,
 			downloadUrl: downloadUrl

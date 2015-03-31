@@ -96,14 +96,8 @@ return [
 		],
 		// Large preview of a file
 		[
-			'name' => 'preview#show_preview',
-			'url'  => '/preview',
-			'verb' => 'GET'
-		],
-		// Download the file
-		[
-			'name' => 'preview#download_preview',
-			'url'  => '/download',
+			'name' => 'preview#get_preview',
+			'url'  => '/preview/{fileId}',
 			'verb' => 'GET'
 		],
 		/**
@@ -130,13 +124,8 @@ return [
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_preview#show_preview',
-			'url'  => '/preview.public',
-			'verb' => 'GET'
-		],
-		[
-			'name' => 'public_preview#download_preview',
-			'url'  => '/download.public',
+			'name' => 'public_preview#get_preview',
+			'url'  => '/preview.public/{fileId}',
 			'verb' => 'GET'
 		],
 		// API, for later

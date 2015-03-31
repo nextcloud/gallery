@@ -27,22 +27,20 @@ class DownloadService extends Service {
 	/**
 	 * Downloads the requested file
 	 *
-	 * @param string $image
+	 * @param File $file
 	 * @param bool $base64Encode
 	 *
 	 * @return false|array
 	 *
 	 * @throws NotFoundServiceException
 	 */
-	public function downloadFile($image = '', $base64Encode = false) {
-		$this->logger->debug("[DownloadService] File to Download: $image");
-		$file = null;
+	public function downloadFile($file, $base64Encode = false) {
+		$this->logger->debug(
+			"[DownloadService] File to Download: {name}", ['name' => $file->getName()]
+		);
 		$download = false;
 		try {
-			/** @var File $file */
-			$file = $this->environment->getResourceFromPath($image);
 			$download = [
-				'path'     => $image,
 				'preview'  => $file->getContent(),
 				'mimetype' => $file->getMimeType()
 			];

@@ -147,10 +147,29 @@ class Environment {
 	 * @return File|Folder
 	 */
 	public function getResourceFromPath($subPath) {
-		$path = $this->getImagePathFromFolder($subPath);
+		$relativePath = $this->getRelativePath($this->fromRootToFolder);
+		$path = $relativePath . '/' . $subPath;
 		$node = $this->getNode($path);
 
 		return $this->getResourceFromId($node->getId());
+	}
+	
+	/**
+	 * Returns the resource identified by the given ID
+	 *
+	 * @param int $resourceId
+	 *
+	 * @return Node
+	 *
+	 * @throws EnvironmentException
+	 */
+	public function getResourceFromId($resourceId) {
+		$resourcesArray = $this->userFolder->getById($resourceId);
+		if ($resourcesArray[0] === null) {
+			$this->logAndThrowNotFound('Could not locate file linked to ID: ' . $resourceId);
+		}
+
+		return $resourcesArray[0];
 	}
 
 	/**
@@ -191,62 +210,25 @@ class Environment {
 	}
 
 	/**
-	 * Returns /parent_folder/current_folder/_my_file
+	 * Returns the path which goes from the file, up to the user folder, based on a node:
+	 * parent_folder/current_folder/my_file
+	 *
+	 * This is used for the preview system, which needs a full path
 	 *
 	 * getPath() on the file produces a path like:
-	 * '/userId/files/my_folder/my_sub_folder'
+	 * '/userId/files/my_folder/my_sub_folder/my_file'
 	 *
 	 * So we substract the path to the folder, giving us a relative path
-	 * '/my_folder/my_sub_folder'
+	 * 'my_folder/my_sub_folder/my_file'
 	 *
-	 * @param string $image
+	 * @param Node $file
 	 *
 	 * @return string
 	 */
-	public function getImagePathFromFolder($image) {
-		$origSharePath = $this->fromRootToFolder;
-		$folderPath = $this->userFolder->getPath();
-		$origShareRelPath = str_replace($folderPath, '', $origSharePath);
-		$relativePath = $origShareRelPath;
+	public function getPathFromUserFolder($file) {
+		$path = $file->getPath();
 
-		/*$this->logger->debug(
-			'Full Path {origSharePath}, folder path {folderPath}, relative path {relativePath}',
-			[
-				'origSharePath' => $origSharePath,
-				'folderPath'    => $folderPath,
-				'relativePath'  => $relativePath
-			]
-		);*/
-
-		return $relativePath . '/' . $image;
-	}
-
-	/**
-	 * Returns the Node based on the current user's files folder and a given
-	 * path
-	 *
-	 * @param string $path
-	 *
-	 * @return Node|false
-	 *
-	 * @throws EnvironmentException
-	 */
-	public function getNode($path) {
-		$node = false;
-		$folder = $this->userFolder;
-		if ($folder === null) {
-			$this->logAndThrowNotFound("Could not access the user's folder");
-		} else {
-			try {
-				$node = $folder->get($path);
-
-			} catch (NotFoundException $exception) {
-				$message = 'Could not find anything at: ' . $exception->getMessage();
-				$this->logAndThrowNotFound($message);
-			}
-		}
-
-		return $node;
+		return $this->getRelativePath($path);
 	}
 
 	/**
@@ -289,6 +271,7 @@ class Environment {
 		\OC_Util::setupFS($origShareOwner); // FIXME: Private API
 
 		$folder = $this->serverContainer->getUserFolder($origShareOwner);
+
 		/*// Alternative which does not exist yet
 		$user = $this->userManager->get($origShareOwner);
 		$folder = $user->getUserFolder();*/
@@ -314,23 +297,53 @@ class Environment {
 	}
 
 	/**
-	 * Returns the resource identified by the given ID
+	 * Returns the Node based on the current user's files folder and a given
+	 * path
 	 *
-	 * @param int $resourceId
+	 * @param string $path
 	 *
 	 * @return File|Folder
 	 *
 	 * @throws EnvironmentException
 	 */
-	private function getResourceFromId($resourceId) {
-		$resourcesArray = $this->userFolder->getById($resourceId);
-		if ($resourcesArray[0] === null) {
-			$this->logAndThrowNotFound('Could not resolve linkItem');
+	private function getNode($path) {
+		$node = false;
+		$folder = $this->userFolder;
+		if ($folder === null) {
+			$this->logAndThrowNotFound("Could not access the user's folder");
+		} else {
+			try {
+				$node = $folder->get($path);
+			} catch (NotFoundException $exception) {
+				$message = 'Could not find anything at: ' . $exception->getMessage();
+				$this->logAndThrowNotFound($message);
+			}
 		}
 
-		return $resourcesArray[0];
+		return $node;
 	}
+	
+	/**
+	 * Returns the path which goes from the file, up to the user folder, based on a path:
+	 * parent_folder/current_folder/my_file
+	 *
+	 * getPath() on the file produces a path like:
+	 * '/userId/files/my_folder/my_sub_folder/my_file'
+	 *
+	 * So we substract the path to the user folder, giving us a relative path
+	 * 'my_folder/my_sub_folder'
+	 *
+	 * @param string $fullPath
+	 *
+	 * @return string
+	 */
+	private function getRelativePath($fullPath) {
+		$folderPath = $this->userFolder->getPath() . '/';
+		$origShareRelPath = str_replace($folderPath, '', $fullPath);
 
+		return $origShareRelPath;
+	}
+	
 	/**
 	 * Logs the error and raises an exception
 	 *

@@ -92,23 +92,22 @@
 		 *
 		 * @fixme we cannot get rid of oc_requesttoken parameter as it's missing from the headers
 		 *
-		 * @param {string} image
+		 * @param {number} fileId
 		 * @param {number} etag
 		 *
 		 * @return {string}
 		 */
-		getPreviewUrl: function (image, etag) {
+		getPreviewUrl: function (fileId, etag) {
 			var width = $(window).width() * window.devicePixelRatio;
 			var height = $(window).height() * window.devicePixelRatio;
 			/* jshint camelcase: false */
 			var params = {
-				file: image,
 				c: etag,
-				x: width,
-				y: height,
+				width: width,
+				height: height,
 				requesttoken: oc_requesttoken
 			};
-			return this.buildGalleryUrl('preview', '', params);
+			return this.buildGalleryUrl('preview', '/' + fileId, params);
 		},
 
 		/**

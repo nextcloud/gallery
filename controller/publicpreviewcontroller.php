@@ -44,12 +44,12 @@ class PublicPreviewController extends PreviewController {
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string $images
+	 * @param string $ids the ID of the files of which we need thumbnail previews of
 	 * @param bool $square
 	 * @param bool $scale
 	 */
-	public function getThumbnails($images, $square, $scale) {
-		return parent::getThumbnails($images, $square, $scale);
+	public function getThumbnails($ids, $square, $scale) {
+		return parent::getThumbnails($ids, $square, $scale);
 	}
 
 	/**
@@ -63,27 +63,13 @@ class PublicPreviewController extends PreviewController {
 	 *
 	 * @inheritDoc
 	 *
-	 * @param string $file
-	 * @param int $x
-	 * @param int $y
+	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param int $width
+	 * @param int $height
+	 * @param string|null $download
 	 */
-	public function showPreview($file, $x, $y) {
-		return parent::showPreview($file, $x, $y);
-	}
-
-	/**
-	 * @PublicPage
-	 * @UseSession
-	 *
-	 * Downloads the file
-	 *
-	 * The session needs to be maintained open or previews can't be generated
-	 * for files located on encrypted storage
-	 *
-	 * @inheritDoc
-	 */
-	public function downloadPreview($file) {
-		return parent::downloadPreview($file);
+	public function getPreview($fileId, $width, $height, $download) {
+		return parent::getPreview($fileId, $width, $height, $download);
 	}
 
 }

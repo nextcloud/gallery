@@ -12,6 +12,8 @@
 
 namespace OCA\GalleryPlus\Service;
 
+use OCP\Files\Node;
+
 use OCP\ILogger;
 
 use OCA\GalleryPlus\Environment\Environment;
@@ -53,6 +55,33 @@ abstract class Service {
 		$this->logger = $logger;
 	}
 
+	/**
+	 * Returns the node matching the given ID
+	 *
+	 * @param int $nodeId ID of the resource to locate
+	 *
+	 * @return Node
+	 *
+	 * @throws NotFoundServiceException
+	 */
+	public function getResourceFromId($nodeId) {
+		$node = null;
+		try {
+			$node = $this->environment->getResourceFromId($nodeId);
+
+			// Making extra sure that we can actually do something with the file
+			if ($node->getMimetype() && $node->isReadable()) {
+				return $node;
+			} else {
+				$this->logAndThrowNotFound("Can't access the file");
+			}
+		} catch (\Exception $exception) {
+			$this->logAndThrowNotFound($exception->getMessage());
+		}
+
+		return null;
+	}
+	
 	/**
 	 * Logs the error and raises a "Not found" type exception
 	 *

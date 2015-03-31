@@ -17,7 +17,6 @@ use OCP\Template;
 use OCP\ILogger;
 
 use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Environment\NotFoundEnvException;
 use OCA\GalleryPlus\Preview\Preview;
 
 /**
@@ -112,23 +111,14 @@ class PreviewService extends Service {
 	/**
 	 * Decides if we should download the file instead of generating a preview
 	 *
-	 * @param string $image
+	 * @param File $file
 	 * @param bool $animatedPreview
 	 *
 	 * @return bool
-	 *
-	 * @throws NotFoundServiceException
 	 */
-	public function isPreviewRequired($image, $animatedPreview) {
-		$file = null;
-		try {
-			/** @var File $file */
-			$file = $this->environment->getResourceFromPath($image);
-
-		} catch (NotFoundEnvException $exception) {
-			$this->logAndThrowNotFound($exception->getMessage());
-		}
+	public function isPreviewRequired($file, $animatedPreview) {
 		$mime = $file->getMimeType();
+
 		if ($mime === 'image/svg+xml') {
 			return $this->isSvgPreviewRequired();
 		}
@@ -142,24 +132,24 @@ class PreviewService extends Service {
 	/**
 	 * Returns an array containing everything needed by the client to be able to display a preview
 	 *
-	 *    * path: the given path to the file
+	 *    * fileid:  the file's ID
 	 *    * mimetype: the file's media type
 	 *    * preview: the preview's content
 	 *    * status: a code indicating whether the conversion process was successful or not
 	 *
 	 * Example logger
 	 * $this->logger->debug(
-	 * "[PreviewService] Path : {path} / size: {size} / mime: {mimetype} / status: {status}",
+	 * "[PreviewService] Path : {path} / mime: {mimetype} / fileid: {fileid}",
 	 * [
-	 * 'path'     => $perfectPreview['data']['path'],
-	 * 'mimetype' => $perfectPreview['data']['mimetype'],
-	 * 'status'   => $perfectPreview['status']
+	 * 'path'     => $preview['data']['path'],
+	 * 'mimetype' => $preview['data']['mimetype'],
+	 * 'fileid'   => $preview['fileid']
 	 * ]
 	 * );
 	 *
 	 * @todo Get the max size from the settings
 	 *
-	 * @param string $image path to the image, relative to the user folder
+	 * @param File $file
 	 * @param int $maxX asked width for the preview
 	 * @param int $maxY asked height for the preview
 	 * @param bool $keepAspect
@@ -169,24 +159,17 @@ class PreviewService extends Service {
 	 * @throws NotFoundServiceException
 	 */
 	public function createPreview(
-		$image, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
+		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
 	) {
-		$file = null;
-		try {
-			/** @var File $file */
-			$file = $this->environment->getResourceFromPath($image);
-		} catch (NotFoundEnvException $exception) {
-			$this->logAndThrowNotFound($exception->getMessage());
-		}
 		$userId = $this->environment->getUserId();
-		$imagePathFromFolder = $this->environment->getImagePathFromFolder($image);
+		$imagePathFromFolder = $this->environment->getPathFromUserFolder($file);
+
 		$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
 
 		$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
 		if ($base64Encode) {
 			$preview['preview'] = $this->encode($preview['preview']);
 		}
-		$preview['path'] = $image;
 
 		return $preview;
 	}
