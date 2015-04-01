@@ -113,6 +113,7 @@ class PageController extends Controller {
 			// Will render the page using the template found in templates/index.php
 			$response = new TemplateResponse($appName, 'index', $params);
 			$this->addContentSecurityToResponse($response);
+			
 			return $response;
 		}
 	}
@@ -217,6 +218,7 @@ class PageController extends Controller {
 		// Will render the page using the template found in templates/public.php
 		$response = new TemplateResponse($this->appName, 'public', $params, 'public');
 		$this->addContentSecurityToResponse($response);
+		
 		return $response;
 	}
 
