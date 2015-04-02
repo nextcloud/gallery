@@ -1,4 +1,4 @@
-/* global $, Thumbnails */
+/* global $, OC, Thumbnails */
 /**
  * Creates a new album object to store information about an album
  *

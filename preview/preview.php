@@ -23,7 +23,7 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 /**
  * Generates previews
  *
- * @todo On OC8.1, replace \OC\Preview with IPreview
+ * @todo On OC8.2, replace \OC\Preview with IPreview
  *
  * @package OCA\GalleryPlus\Preview
  */
@@ -329,6 +329,9 @@ class Preview {
 
 	/**
 	 * Fixes the preview cache by replacing the broken thumbnail with ours
+	 *
+	 * WARNING: Will break if the thumbnail folder ever moves or if encryption is turned on for
+	 * thumbnails
 	 *
 	 * @param resource $fixedPreview
 	 *

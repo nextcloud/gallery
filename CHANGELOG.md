@@ -1,3 +1,10 @@
+owncloud-galleryplus (2.0.8)
+* Remove permission loading routine and send the information about the current folder with the files (@oparoz)
+* Remove extra slash in preview URL #100 (@oparoz)
+* Fix thumbnail rendering so that the view doesn't break when a new request is made while the previous one is still not completed #56 (@oparoz)
+* Introduce album configuration via a text file #85 (@oparoz)
+* Introduce image labels
+
 owncloud-galleryplus (2.0.7)
 * Improved IE11 compatibility
 
