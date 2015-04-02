@@ -6,6 +6,7 @@ Gallery.currentAlbum = null;
 Gallery.config = {};
 Gallery.albumMap = {};
 Gallery.imageMap = {};
+Gallery.albumCache = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
 
@@ -72,15 +73,20 @@ Gallery.refresh = function (path, albumPath) {
  * @returns {*}
  */
 Gallery.getFiles = function () {
-	var album, image;
+	var album, image, albumEtag;
 	Gallery.images = [];
 	Gallery.albumMap = {};
 	Gallery.imageMap = {};
 	var currentLocation = window.location.href.split('#')[1] || '';
+	var albumCache = Gallery.albumCache[decodeURIComponent(currentLocation)];
+	if (!$.isEmptyObject(albumCache)) {
+		albumEtag = albumCache.etag;
+	}
 	var params = {
 		location: currentLocation,
 		mediatypes: Gallery.getMediaTypes(),
-		features: Gallery.config.galleryFeatures
+		features: Gallery.config.galleryFeatures,
+		etag: albumEtag
 	};
 	// Only use the folder as a GET parameter and not as part of the URL
 	var url = Gallery.utility.buildGalleryUrl('files', '', params);
@@ -90,26 +96,40 @@ Gallery.getFiles = function () {
 		var mimeType = null;
 		var mTime = null;
 		var etag = null;
-		var files = data.files;
+		var files = null;
 		var albumInfo = data.albuminfo;
 		Gallery.config.setAlbumConfig(albumInfo);
-		for (var i = 0; i < files.length; i++) {
-			path = files[i].path;
-			fileId = files[i].fileid;
-			mimeType = files[i].mimetype;
-			mTime = files[i].mtime;
-			etag = files[i].etag;
+		if (albumInfo.etag === albumEtag) {
+			Gallery.images = albumCache.images;
+			Gallery.imageMap = albumCache.imageMap;
+			Gallery.albumMap = albumCache.albumMap;
+		} else {
+			files = data.files;
+			for (var i = 0; i < files.length; i++) {
+				path = files[i].path;
+				fileId = files[i].fileid;
+				mimeType = files[i].mimetype;
+				mTime = files[i].mtime;
+				etag = files[i].etag;
 
-			Gallery.images.push(path);
+				Gallery.images.push(path);
 
-			image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
-			var dir = OC.dirname(path);
-			if (dir === path) {
-				dir = '';
+				image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
+				var dir = OC.dirname(path);
+				if (dir === path) {
+					dir = '';
+				}
+				album = Gallery.getAlbum(dir);
+				album.images.push(image);
+				Gallery.imageMap[image.path] = image;
 			}
-			album = Gallery.getAlbum(dir);
-			album.images.push(image);
-			Gallery.imageMap[image.path] = image;
+			Gallery.albumCache[albumInfo.path] = {
+				etag: albumInfo.etag,
+				files: files,
+				images: Gallery.images,
+				imageMap: Gallery.imageMap,
+				albumMap: Gallery.albumMap
+			};
 		}
 	}, function () {
 		// Triggered if we couldn't find a working folder

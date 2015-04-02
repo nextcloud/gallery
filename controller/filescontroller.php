@@ -92,22 +92,28 @@ class FilesController extends Controller {
 	 *
 	 * @param string $location a path representing the current album in the app
 	 * @param string $features the list of supported features
+	 * @param string $etag the last known etag in the client
 	 *
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
-	public function getFiles($location, $features) {
+	public function getFiles($location, $features, $etag) {
 		$features = explode(',', $features);
 		$mediaTypesArray = explode(';', $this->request->getParam('mediatypes'));
+		$files = [];
 		try {
 			/** @var Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
 				$this->filesService->getCurrentFolder(rawurldecode($location), $features);
 			$albumInfo =
 				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot, $features);
-			$files =
-				$this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray, $features);
-			$files = $this->fixPaths($files, $folderPathFromRoot);
-			
+
+			if ($albumInfo['etag'] !== $etag) {
+				$files = $this->searchMediaService->getMediaFiles(
+					$folderNode, $mediaTypesArray, $features
+				);
+				$files = $this->fixPaths($files, $folderPathFromRoot);
+			}
+
 			return $this->formatResults($files, $albumInfo, $locationHasChanged);
 		} catch (\Exception $exception) {
 			return $this->error($exception);
@@ -136,14 +142,14 @@ class FilesController extends Controller {
 
 		return $files;
 	}
-	
+
 	/**
 	 * Simply builds and returns an array containing the list of files, the album information and
 	 * whether the location has changed or not
 	 *
-	 * @param $files
-	 * @param $albumInfo
-	 * @param $locationHasChanged
+	 * @param array <string,string|int> $files
+	 * @param array $albumInfo
+	 * @param bool $locationHasChanged
 	 *
 	 * @return array
 	 */

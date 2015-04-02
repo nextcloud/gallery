@@ -110,7 +110,8 @@ class ConfigService extends FilesService {
 		$albumInfo = [
 			'path'        => $folderPathFromRoot,
 			'fileid'      => $folderNode->getID(),
-			'permissions' => $folderNode->getPermissions()
+			'permissions' => $folderNode->getPermissions(),
+			'etag'        => $folderNode->getEtag()
 		];
 		// There is always an albumInfo, but the albumConfig may be empty
 		$albumConfig = array_merge($albumInfo, $albumConfig);
