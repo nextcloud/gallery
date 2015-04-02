@@ -12,10 +12,3 @@
 	filter: alpha(opacity=50);
 	opacity: .5;
 }
-
-#linkSwitchButton {
-	height: 18px;
-	margin-left: 10px;
-	padding: 0 5px;
-	font-weight: normal;
-}
