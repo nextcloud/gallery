@@ -30,17 +30,12 @@ return [
 			'url'  => '/',
 			'verb' => 'GET'
 		],
-		// Landing page for public galleries
+		// Landing page for public galleries. If a filename is given the file is downloaded
 		[
 			'name' => 'page#public_index',
-			'url'  => '/s/{token}',
-			'verb' => 'GET'
-		],
-		// Landing page for single media files
-		[
-			'name' => 'public_download#download_file',
-			'url'  => '/s/{token}/{extension}',
-			'verb' => 'GET'
+			'url'  => '/s/{token}/{filename}',
+			'verb' => 'GET',
+			'defaults' => ['filename' => null]
 		],
 		// Landing page after password entry, for public galleries
 		[

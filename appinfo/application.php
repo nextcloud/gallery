@@ -26,7 +26,6 @@ use OCA\GalleryPlus\Controller\PreviewController;
 use OCA\GalleryPlus\Controller\PublicConfigController;
 use OCA\GalleryPlus\Controller\PublicFilesController;
 use OCA\GalleryPlus\Controller\PublicPreviewController;
-use OCA\GalleryPlus\Controller\PublicDownloadController;
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Service\FilesService;
@@ -68,7 +67,8 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('Environment'),
-				$c->query('OCP\IURLGenerator')
+				$c->query('OCP\IURLGenerator'),
+				$c->query('DownloadService')
 			);
 		}
 		);
@@ -140,17 +140,6 @@ class Application extends App {
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
 				$c->query('OCP\IEventSource'),
-				$c->query('Logger')
-			);
-		}
-		);
-		$container->registerService(
-			'PublicDownloadController', function (IContainer $c) {
-			return new PublicDownloadController(
-				$c->query('AppName'),
-				$c->query('Request'),
-				$c->query('OCP\IURLGenerator'),
-				$c->query('DownloadService'),
 				$c->query('Logger')
 			);
 		}

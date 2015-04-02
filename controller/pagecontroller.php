@@ -18,9 +18,14 @@ use OCP\IURLGenerator;
 use OCP\IRequest;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Environment\Environment;
+use OCA\GalleryPlus\Http\ImageResponse;
+use OCA\GalleryPlus\Service\ServiceException;
+use OCA\GalleryPlus\Service\DownloadService;
 
 /**
  * Generates templates for the landing page from within ownCloud, the public
@@ -38,6 +43,10 @@ class PageController extends Controller {
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
+	/**
+	 * @var DownloadService
+	 */
+	private $downloadService;
 
 	/**
 	 * Constructor
@@ -46,17 +55,20 @@ class PageController extends Controller {
 	 * @param IRequest $request
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
+	 * @param DownloadService $downloadService
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		Environment $environment,
-		IURLGenerator $urlGenerator
+		IURLGenerator $urlGenerator,
+		DownloadService $downloadService
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
+		$this->downloadService = $downloadService;
 	}
 
 	/**
@@ -90,24 +102,29 @@ class PageController extends Controller {
 	 * Shows the albums and pictures the token gives access to
 	 *
 	 * @param string $token
+	 * @param null|string $filename
 	 *
 	 * @return TemplateResponse
 	 */
-	public function publicIndex($token) {
-		$appName = $this->appName;
-		$displayName = $this->environment->getDisplayName();
-		$albumName = $this->environment->getSharedFolderName();
+	public function publicIndex($token, $filename) {
+		if (is_null($filename)) {
+			$appName = $this->appName;
+			$displayName = $this->environment->getDisplayName();
+			$albumName = $this->environment->getSharedFolderName();
 
-		// Parameters sent to the template
-		$params = [
-			'appName'     => $appName,
-			'token'       => $token,
-			'displayName' => $displayName,
-			'albumName'   => $albumName
-		];
+			// Parameters sent to the template
+			$params = [
+				'appName'     => $appName,
+				'token'       => $token,
+				'displayName' => $displayName,
+				'albumName'   => $albumName
+			];
 
-		// Will render the page using the template found in templates/public.php
-		return new TemplateResponse($appName, 'public', $params, 'public');
+			// Will render the page using the template found in templates/public.php
+			return new TemplateResponse($appName, 'public', $params, 'public');
+		} else {
+			return $this->downloadFile();
+		}
 	}
 
 	/**
@@ -147,5 +164,31 @@ class PageController extends Controller {
 	 */
 	public function slideshow() {
 		return new TemplateResponse($this->appName, 'slideshow', [], 'blank');
+	}
+
+	/**
+	 * @PublicPage
+	 * @NoCSRFRequired
+	 *
+	 * Downloads the file associated with a token
+	 *
+	 * @return \OCA\GalleryPlus\Http\ImageResponse|Http\RedirectResponse
+	 */
+	private function downloadFile() {
+		try {
+			$download = $this->downloadService->downloadFile();
+
+			return new ImageResponse($download);
+		} catch (ServiceException $exception) {
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page',
+				[
+					'message' => $exception->getMessage(),
+					'code'    => Http::STATUS_NOT_FOUND
+				]
+			);
+
+			return new RedirectResponse($url);
+		}
 	}
 }
