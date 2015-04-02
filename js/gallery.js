@@ -120,14 +120,7 @@ Gallery.getFiles = function () {
 };
 
 /**
- * Removes everything from the path between the 1st sub-folder and the file
- *
- * This enables us to show as many as 4 pictures for each albums, even if the images are found in
- * very deep sub-folders
- *
- * @param {string} path
- * @param dir
- * @param currentFolder
+ * Sorts albums and images based on user preferences
  */
 Gallery.sorter = function () {
 	var sortType = 'name';
