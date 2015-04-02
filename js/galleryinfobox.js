@@ -15,6 +15,7 @@
 			if (this.infoContentElement.is(':visible')) {
 				this.infoContentElement.slideUp();
 			} else {
+				this.infoContentElement.css('max-height', $(window).height() - 150);
 				this.albumInfo = Gallery.config.albumInfo;
 
 				if (!this.albumInfo.infoLoaded) {
