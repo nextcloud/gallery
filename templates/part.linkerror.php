@@ -8,7 +8,7 @@
 style(
 	$_['appName'],
 	[
-		'404'
+		'error'
 	]
 );
 ?>

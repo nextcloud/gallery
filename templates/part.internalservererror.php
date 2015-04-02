@@ -14,14 +14,13 @@ style(
 ?>
 <ul>
 	<li class="error error-broken-link">
-		<p><?php p($l->t("Sorry, this file could not be found.")) ?></p>
+		<p><?php p($l->t("Sorry, but the server could not fulfill your request.")) ?></p>
 
-		<p><?php p($l->t('Reasons might be:')); ?></p>
+		<p><?php p($l->t('Possible reasons for the problem:')); ?></p>
 		<ul>
-			<li><?php p($l->t('the wrong file ID was provided')); ?></li>
-			<li><?php p($l->t('the file was removed')); ?></li>
-			<li><?php p($l->t('the file is corrupt')); ?></li>
-			<li><?php p($l->t('the encryption key is missing')); ?></li>
+			<li><?php p($l->t('a conflicting app was installed')); ?></li>
+			<li><?php p($l->t('a required component is missing or was disconnected')); ?></li>
+			<li><?php p($l->t('the filesystem is not readable')); ?></li>
 		</ul>
 		</br>
 		<p><?php p($l->t('Here is the error message returned by the server: ')); ?>
