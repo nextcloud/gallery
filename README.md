@@ -90,7 +90,6 @@ There are many ways in which you can help make Gallery a better product
 
 #### Within deep folders
 
-* You may stop receiving images as you run into [this issue](https://github.com/owncloud/galleryplus/issues/27)
 * It may take longer to initialise the view as we're parsing every parent folder to look for configuration files
 
 #### Configurations
