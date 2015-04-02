@@ -47,6 +47,42 @@ Thumbnails.get = function (fileId, square) {
 };
 
 /**
+ * Returns an icon of a specific type
+ *
+ * -1 is for a folder
+ * -404 is for a broken file icon
+ * -500 is for a media type icon
+ *
+ * @param {number} type
+ *
+ * @returns {Thumbnail}
+ */
+Thumbnails.getStandardIcon = function (type) {
+	if (!Thumbnails.squareMap[type]) {
+		var icon = '';
+		// true means square
+		var thumb = new Thumbnail(type, true);
+		thumb.image = new Image();
+		thumb.image.onload = function () {
+			thumb.loadingDeferred.resolve(thumb.image);
+		};
+
+		if (type === -1) {
+			icon = 'folder.svg';
+		}
+		thumb.image.src = OC.imagePath(Gallery.appName, icon);
+
+		Thumbnails.squareMap[type] = thumb;
+
+		// FIXME console.log
+		console.log('Folder Thumbnail created', Thumbnails.squareMap[type]);
+
+	}
+
+	return Thumbnails.squareMap[type];
+};
+
+/**
  * Loads thumbnails in batch, using EventSource
  *
  * @param {array} ids
