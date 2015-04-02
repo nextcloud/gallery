@@ -82,7 +82,7 @@ Album.prototype = {
 			if (image.thumbnail.valid) {
 				var backgroundHeight, backgroundWidth;
 				img.alt = '';
-				
+
 				backgroundHeight = (targetHeight / 2);
 				backgroundWidth = calcWidth - 2.01;
 
@@ -175,7 +175,7 @@ Album.prototype = {
 			});
 		} else if (this.images.length === 1) {
 			this._getOneImage(this.images[0], 2 *
-			targetHeight, targetHeight, a, false).fail(function () {
+				targetHeight, targetHeight, a, false).fail(function () {
 				album.images = [];
 				album._showFolder(targetHeight, a);
 			});
@@ -192,7 +192,8 @@ Album.prototype = {
 	 * @private
 	 */
 	_showFolder: function (targetHeight, a) {
-		var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/png', Gallery.token);
+		var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/png',
+			Gallery.token);
 		var thumb = Thumbnails.getStandardIcon(-1);
 		image.thumbnail = thumb;
 		this.images.push(image);

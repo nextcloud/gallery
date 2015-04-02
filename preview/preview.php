@@ -114,7 +114,7 @@ class Preview {
 	 * @param int $maxHeight
 	 * @param bool $keepAspect
 	 *
-	 * @return array
+	 * @return array|false
 	 */
 	public function preparePreview($maxWidth, $maxHeight, $keepAspect) {
 		$this->dims = [$maxWidth, $maxHeight];

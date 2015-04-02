@@ -155,7 +155,7 @@ class PreviewService extends Service {
 	 * @param bool $keepAspect
 	 * @param bool $base64Encode
 	 *
-	 * @return array<string,\OC_Image|string> preview data
+	 * @return array<string,\OC_Image|string>|false preview data
 	 */
 	public function createPreview(
 		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
