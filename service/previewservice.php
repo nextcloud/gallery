@@ -107,7 +107,7 @@ class PreviewService extends Service {
 		}
 		// If it's enabled, but doesn't work, an exception will be raised.
 		// If it's disabled, we support it via the browser's native support
-		if (!$supportedMimes['image/svg+xml']) {
+		if (!in_array('image/svg+xml', $supportedMimes)) {
 			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
 		}
 

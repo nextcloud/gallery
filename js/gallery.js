@@ -1,19 +1,18 @@
-/* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken, marked */
+/* global OC, $, _, t, GalleryConfig, Album, GalleryImage, SlideShow, oc_requesttoken, marked */
 var Gallery = {};
 Gallery.mediaTypes = {};
 Gallery.images = [];
 Gallery.currentAlbum = null;
 Gallery.users = [];
-Gallery.albumsInfo = {};
+Gallery.albumConfig = {};
 Gallery.albumMap = {};
 Gallery.imageMap = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
-Gallery.currentSort = {};
 
 /**
  * Returns a list of supported media types
- * 
+ *
  * @returns {string}
  */
 Gallery.getMediaTypes = function () {
@@ -78,6 +77,7 @@ Gallery.getFiles = function () {
 	Gallery.images = [];
 	Gallery.albumMap = {};
 	Gallery.imageMap = {};
+	Gallery.albumConfig = null;
 	var currentLocation = window.location.href.split('#')[1] || '';
 	var params = {
 		location: currentLocation,
@@ -91,14 +91,10 @@ Gallery.getFiles = function () {
 		var mimeType = null;
 		var mTime = null;
 		var files = data.files;
+
 		var albumInfo = data.albuminfo;
-		Gallery.albumsInfo[albumInfo.path] = {
-			fileid: albumInfo.fileid,
-			permissions: albumInfo.permissions,
-			description: albumInfo.description,
-			copyright: albumInfo.copyright,
-			copyrightLink: albumInfo.copyright_link
-		};
+		Gallery.albumConfig = new GalleryConfig(albumInfo);
+
 		for (var i = 0; i < files.length; i++) {
 			path = files[i].path;
 			fileId = files[i].fileid;
@@ -116,27 +112,13 @@ Gallery.getFiles = function () {
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
 		}
-		var sortType = 'name';
-		var sortOrder = 'asc';
-		var albumSortOrder = 'asc';
-		if (!$.isEmptyObject(albumInfo.sorting)) {
-			sortType = albumInfo.sorting;
-		}
-		if (!$.isEmptyObject(albumInfo.sort_order)) {
-			sortOrder = albumInfo.sort_order;
-			if (sortType === 'name') {
-				albumSortOrder = sortOrder;
-			}
-		}
 
-		Gallery.currentSort = {
-			type: sortType,
-			order: sortOrder
-		};
-
+		var currentSort = Gallery.albumConfig.getAlbumSorting();
 		for (var j = 0, keys = Object.keys(Gallery.albumMap); j < keys.length; j++) {
-			Gallery.albumMap[keys[j]].images.sort(Gallery.sortBy(sortType, sortOrder));
-			Gallery.albumMap[keys[j]].subAlbums.sort(Gallery.sortBy('name', albumSortOrder));
+			Gallery.albumMap[keys[j]].images.sort(Gallery.sortBy(currentSort.type,
+				currentSort.order));
+			Gallery.albumMap[keys[j]].subAlbums.sort(Gallery.sortBy('name',
+				currentSort.albumOrder));
 		}
 	}, function () {
 		// Triggered if we couldn't find a working folder
@@ -224,9 +206,9 @@ Gallery.share = function (event) {
 			};
 		})();
 
-		var albumInfo = Gallery.albumsInfo[Gallery.currentAlbum];
-		$('a.share').data('item', albumInfo.fileid).data('link', true)
-			.data('possible-permissions', albumInfo.permissions).
+		var albumPermissions = Gallery.albumConfig.getAlbumPermissions(Gallery.currentAlbum);
+		$('a.share').data('item', albumPermissions.fileid).data('link', true)
+			.data('possible-permissions', albumPermissions.permissions).
 			click();
 		if (!$('#linkCheckbox').is(':checked')) {
 			$('#linkText').hide();
@@ -292,7 +274,7 @@ Gallery.showInfo = function (event) {
 	if (infoContentElement.is(':visible')) {
 		infoContentElement.slideUp();
 	} else {
-		var albumInfo = Gallery.albumsInfo[Gallery.currentAlbum];
+		var albumInfo = Gallery.albumConfig.getAlbumInfo();
 		if (!albumInfo.infoLoaded) {
 			infoContentElement.addClass('icon-loading');
 			infoContentElement.empty();
@@ -300,7 +282,7 @@ Gallery.showInfo = function (event) {
 			infoContentElement.slideDown();
 			if (!$.isEmptyObject(albumInfo.description)) {
 				var params = {
-					file: Gallery.currentAlbum + '/' + albumInfo.description
+					file: albumInfo.filePath + '/' + albumInfo.description
 				};
 				var descriptionUrl = Gallery.buildUrl('download', '', params);
 				$.get(descriptionUrl).done(function (data) {
@@ -319,7 +301,8 @@ Gallery.showInfo = function (event) {
 				Gallery.showCopyright(albumInfo, infoContentElement);
 				adjustHeight();
 			}
-			albumInfo.infoLoaded = true;
+			Gallery.albumConfig.setInfoLoaded();
+
 		} else {
 			infoContentElement.slideDown();
 		}
@@ -349,7 +332,7 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 		if (!$.isEmptyObject(albumInfo.copyrightLink)) {
 			var subUrl = '';
 			var params = {
-				path: '/' + Gallery.currentAlbum,
+				path: '/' + albumInfo.filePath,
 				files: albumInfo.copyrightLink
 			};
 			if (Gallery.token) {
@@ -547,10 +530,12 @@ $(document).ready(function () {
 		});
 
 		$(window).scroll(function () {
-			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
+				Gallery.currentAlbum);
 		});
 		$('#content-wrapper').scroll(function () {
-			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
+				Gallery.currentAlbum);
 		});
 
 		// A shorter delay avoids redrawing the view in the middle of a previous request, but it

@@ -101,7 +101,7 @@ Gallery.view.infoButtonSetup = function () {
 	var infoContentElement = $('.album-info-content');
 	infoContentElement.slideUp();
 	infoContentElement.css('max-height', $(window).height() - 150);
-	var albumInfo = Gallery.albumsInfo[Gallery.currentAlbum];
+	var albumInfo = Gallery.albumConfig.getAlbumInfo();
 	if ($.isEmptyObject(albumInfo.description) &&
 		$.isEmptyObject(albumInfo.copyright) &&
 		$.isEmptyObject(albumInfo.copyrightLink)) {
