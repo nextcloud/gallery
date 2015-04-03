@@ -12,9 +12,8 @@
 	margin-top: 5px;
 }
 
-button.share {
-	margin-top: 5px;
-	font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
+#share-button img {
+	opacity: 0.6;
 }
 
 .album-info-content {

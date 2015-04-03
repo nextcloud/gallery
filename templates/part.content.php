@@ -49,7 +49,11 @@ style(
 		<div class="album-info-content markdown-body"></div>
 	</span>
 	<span class="right">
-		<button class="share"><?php p($l->t("Share")); ?></button>
+		<div id="share-button" class="button">
+			<img class="svg" src="<?php print_unescaped(
+				image_path('core', 'actions/share.svg')
+			); ?>" alt="<?php p($l->t("Share")); ?>"/>
+		</div>
 		<a class="share" data-item-type="folder" data-item=""
 		   title="<?php p($l->t("Share")); ?>"
 		   data-possible-permissions="31"></a>

@@ -24,7 +24,7 @@ Gallery.view.init = function (albumPath) {
 		// Only do it when the app is initialised
 		if (Gallery.view.requestId === -1) {
 			$('#download').click(Gallery.download);
-			$('button.share').click(Gallery.share);
+			$('#share-button').click(Gallery.share);
 			$('#album-info-button').click(Gallery.showInfo);
 		}
 		OC.Breadcrumb.container = $('#breadcrumbs');
