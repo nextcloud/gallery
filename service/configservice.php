@@ -153,7 +153,7 @@ class ConfigService extends Service {
 	private function isConfigComplete($configItems) {
 		$configComplete = false;
 		$completedItems = 0;
-		foreach ($configItems as $key => $complete) {
+		foreach ($configItems as $complete) {
 			if ($complete === true) {
 				$completedItems++;
 			}
@@ -223,17 +223,58 @@ class ConfigService extends Service {
 	 */
 	private function buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level) {
 		foreach ($configItems as $key => $complete) {
-			if (!$complete && array_key_exists($key, $parsedConfig)) {
+			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
 				$parsedConfigItem = $parsedConfig[$key];
-				list($configItem, $itemComplete) =
-					$this->addConfigItem($key, $parsedConfigItem, $level);
+				if ($this->isConfigUsable($parsedConfigItem, $level)) {
+					list($configItem, $itemComplete) =
+						$this->addConfigItem($key, $parsedConfigItem, $level);
+					$currentConfig = array_merge($currentConfig, $configItem);
+					$configItems[$key] = $itemComplete;
+				}
 
-				$currentConfig = array_merge($currentConfig, $configItem);
-				$configItems[$key] = $itemComplete;
 			}
 		}
 
 		return [$currentConfig, $configItems];
+	}
+
+	/**
+	 * Determines if we already have everything we need for this configuration sub-section
+	 *
+	 * @param string $key
+	 * @param array $parsedConfig
+	 * @param bool $complete
+	 *
+	 * @return bool
+	 */
+	private function isConfigItemComplete($key, $parsedConfig, $complete) {
+		if (!$complete && array_key_exists($key, $parsedConfig)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Determines if we can use this configuration sub-section
+	 *
+	 * @param array $parsedConfigItem
+	 * @param int $level
+	 *
+	 * @return array<null|array<string,string>,bool>
+	 */
+	private function isConfigUsable($parsedConfigItem, $level) {
+		$inherit = false;
+
+		if (array_key_exists('inherit', $parsedConfigItem)) {
+			$inherit = $parsedConfigItem['inherit'];
+		}
+
+		if ($level === 0 || $inherit === 'yes') {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -246,21 +287,16 @@ class ConfigService extends Service {
 	 * @return array<null|array<string,string>,bool>
 	 */
 	private function addConfigItem($key, $parsedConfigItem, $level) {
-		$configItem = [];
-		$itemComplete = false;
-		$inherit = false;
+		if ($key === 'sorting' && !array_key_exists('type', $parsedConfigItem)) {
 
-		if (array_key_exists('inherit', $parsedConfigItem)) {
-			$inherit = $parsedConfigItem['inherit'];
-		}
-
-		if ($level === 0 || $inherit === 'yes') {
+			return [[], false];
+		} else {
 			$parsedConfigItem['level'] = $level;
 			$configItem = [$key => $parsedConfigItem];
 			$itemComplete = true;
-		}
 
-		return [$configItem, $itemComplete];
+			return [$configItem, $itemComplete];
+		}
 	}
 
 }
