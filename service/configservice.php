@@ -99,7 +99,7 @@ class ConfigService extends Service {
 	 * @param Folder $folderNode
 	 * @param string $folderPathFromRoot
 	 *
-	 * @return null|array,bool
+	 * @return array
 	 */
 	private function addAlbumPermissions($albumConfig, $folderNode, $folderPathFromRoot) {
 		$albumInfo = [
@@ -175,7 +175,7 @@ class ConfigService extends Service {
 	 * @param int $level
 	 * @param array <null|string,string> $config
 	 *
-	 * @return array<null|array,array<string,bool>>
+	 * @return array<null|array,bool>
 	 */
 	private function getParentConfig(
 		$folder, $privacyChecker, $configName, $configItems, $level, $config
