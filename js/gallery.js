@@ -288,25 +288,24 @@ Gallery.download = function (event) {
 Gallery.showInfo = function (event) {
 	event.stopPropagation();
 	var infoContentElement = $('.album-info-content');
-	var adjustHeight = function () {
-		infoContentElement.removeClass('icon-loading');
-		var newHeight = infoContentElement[0].scrollHeight;
-		infoContentElement.animate({
-			height: newHeight + 40
-		}, 500);
-		infoContentElement.scrollTop(0);
-	};
-	var addContent = function (content) {
-		infoContentElement.append(marked(content));
-		infoContentElement.find('a').attr("target", "_blank");
-		Gallery.showCopyright(albumInfo, infoContentElement);
-		adjustHeight();
-	};
-
 	if (infoContentElement.is(':visible')) {
 		infoContentElement.slideUp();
 	} else {
 		var albumInfo = Gallery.albumConfig.getAlbumInfo();
+		var adjustHeight = function () {
+			infoContentElement.removeClass('icon-loading');
+			var newHeight = infoContentElement[0].scrollHeight;
+			infoContentElement.animate({
+				height: newHeight + 40
+			}, 500);
+			infoContentElement.scrollTop(0);
+		};
+		var addContent = function (content) {
+			infoContentElement.append(marked(content));
+			infoContentElement.find('a').attr("target", "_blank");
+			Gallery.showCopyright(albumInfo, infoContentElement);
+			adjustHeight();
+		};
 		if (!albumInfo.infoLoaded) {
 			infoContentElement.addClass('icon-loading');
 			infoContentElement.empty();
