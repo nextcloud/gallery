@@ -148,42 +148,10 @@ class Environment {
 	 */
 	public function getResourceFromPath($subPath) {
 		$path = $this->getImagePathFromFolder($subPath);
-		$nodeInfo = $this->getNodeInfo($path);
+		$node = $this->getNode($path);
 
-		return $this->getResourceFromId($nodeInfo['fileid']);
+		return $this->getResourceFromId($node->getId());
 	}
-
-	/**
-	 * Returns the Node based on the current user's files folder and a given
-	 * path
-	 *
-	 * @param string $path
-	 *
-	 * @return array<string,int>|false
-	 *
-	 * @throws EnvironmentException
-	 */
-	public function getNodeInfo($path) {
-		$nodeInfo = false;
-		$folder = $this->userFolder;
-		if ($folder === null) {
-			$this->logAndThrowNotFound("Could not access the user's folder");
-		} else {
-			try {
-				$node = $folder->get($path);
-				$nodeInfo = [
-					'fileid'      => $node->getId(),
-					'permissions' => $node->getPermissions()
-				];
-			} catch (NotFoundException $exception) {
-				$message = 'Could not find anything at: ' . $exception->getMessage();
-				$this->logAndThrowNotFound($message);
-			}
-		}
-
-		return $nodeInfo;
-	}
-
 
 	/**
 	 * Returns the userId of the currently logged-in user or the sharer
@@ -251,6 +219,34 @@ class Environment {
 		);*/
 
 		return $relativePath . '/' . $image;
+	}
+
+	/**
+	 * Returns the Node based on the current user's files folder and a given
+	 * path
+	 *
+	 * @param string $path
+	 *
+	 * @return Node|false
+	 *
+	 * @throws EnvironmentException
+	 */
+	public function getNode($path) {
+		$node = false;
+		$folder = $this->userFolder;
+		if ($folder === null) {
+			$this->logAndThrowNotFound("Could not access the user's folder");
+		} else {
+			try {
+				$node = $folder->get($path);
+
+			} catch (NotFoundException $exception) {
+				$message = 'Could not find anything at: ' . $exception->getMessage();
+				$this->logAndThrowNotFound($message);
+			}
+		}
+
+		return $node;
 	}
 
 	/**

@@ -103,6 +103,7 @@ Gallery.view.infoButtonSetup = function () {
 	infoContentElement.css('max-height', $(window).height() - 150);
 	var albumInfo = Gallery.albumConfig.getAlbumInfo();
 	if ($.isEmptyObject(albumInfo.description) &&
+		$.isEmptyObject(albumInfo.descriptionLink) &&
 		$.isEmptyObject(albumInfo.copyright) &&
 		$.isEmptyObject(albumInfo.copyrightLink)) {
 		infoButton.hide();

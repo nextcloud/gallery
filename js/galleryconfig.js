@@ -50,6 +50,7 @@ GalleryConfig.prototype = {
 
 			params = {
 				description: albumInfo.description,
+				descriptionLink: albumInfo.description_link,
 				copyright: albumInfo.copyright,
 				copyrightLink: albumInfo.copyright_link,
 				filePath: docPath

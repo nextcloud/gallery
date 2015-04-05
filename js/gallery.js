@@ -270,6 +270,12 @@ Gallery.showInfo = function (event) {
 		}, 500);
 		infoContentElement.scrollTop(0);
 	};
+	var addContent = function (content) {
+		infoContentElement.append(marked(content));
+		infoContentElement.find('a').attr("target", "_blank");
+		Gallery.showCopyright(albumInfo, infoContentElement);
+		adjustHeight();
+	};
 
 	if (infoContentElement.is(':visible')) {
 		infoContentElement.slideUp();
@@ -280,29 +286,21 @@ Gallery.showInfo = function (event) {
 			infoContentElement.empty();
 			infoContentElement.height(100);
 			infoContentElement.slideDown();
-			if (!$.isEmptyObject(albumInfo.description)) {
+			if (!$.isEmptyObject(albumInfo.descriptionLink)) {
 				var params = {
-					file: albumInfo.filePath + '/' + albumInfo.description
+					file: albumInfo.filePath + '/' + albumInfo.descriptionLink
 				};
 				var descriptionUrl = Gallery.buildUrl('download', '', params);
 				$.get(descriptionUrl).done(function (data) {
-						infoContentElement.append(marked(data));
-						infoContentElement.find('a').attr("target", "_blank");
-						Gallery.showCopyright(albumInfo, infoContentElement);
-						adjustHeight();
+						addContent(data);
 					}
 				).fail(function () {
-						infoContentElement.append('<p>' +
-						t('gallery', 'Could not load the description') + '</p>');
-						Gallery.showCopyright(albumInfo, infoContentElement);
-						adjustHeight();
+						addContent(t('gallery', 'Could not load the description'));
 					});
 			} else {
-				Gallery.showCopyright(albumInfo, infoContentElement);
-				adjustHeight();
+				addContent(albumInfo.description);
 			}
 			Gallery.albumConfig.setInfoLoaded();
-
 		} else {
 			infoContentElement.slideDown();
 		}
