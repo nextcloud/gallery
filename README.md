@@ -1,4 +1,4 @@
-# Gallery [![Build Status](https://travis-ci.org/owncloud/galleryplus.svg?branch=master)](https://travis-ci.org/owncloud/galleryplus)
+# Gallery [![Build Status](https://travis-ci.org/owncloud/galleryplus.svg?branch=dev)](https://travis-ci.org/owncloud/galleryplus)
 Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
@@ -51,8 +51,8 @@ May not look as nice, but should work
 ### Server requirements
 
 #### Required
-* ownCloud >= 8.0.2
-* [See ownCloud's requirements](https://doc.owncloud.org/server/8.0/admin_manual/installation/source_installation.html#prerequisites)
+* ownCloud >= 8.1
+* [See ownCloud's requirements](https://doc.owncloud.org/server/8.1/admin_manual/installation/source_installation.html#prerequisites)
 
 #### Recommended
 * FreeBSD or Linux server
@@ -132,15 +132,6 @@ Next add a few new entries to your **config/config.php** configuration file.
   ),
 ```
 
-If you want support for Raw picture files, you'll need to patch your installation of ownCloud 8.0
-
-```
-$ patch -p1 -l < apps/galleryplus/patches/tmpfile-extension.pull.13654.patch
-$ patch -p1 -l < apps/galleryplus/patches/raw-preview.pull.13652.patch
-```
-
-and you'll need to add `OC\\Preview\\Raw` to the **config/config.php** configuration file
-
 Look at the sample configuration (config.sample.php) in your config folder if you need more information about how the config file works.
 That's it. You should be able to see more media types in your slideshows and galleries as soon as you've installed the app.
 
@@ -151,21 +142,6 @@ Make sure to enable "asset pipelining", so that all the Javascript and CSS resou
 This can greatly reduce the loading time of the app.
 
 Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
-
-#### Generating thumbnails
-Some of ownCloud's internal operations make the Gallery app very slow
-* Generating thumbnails the first time you open the app
-* Generating a full screen preview
-
-Things are in motion to fix preview caching for ownCloud 8.1, but you can benefit from these improvements right now if you're willing to patch your ownCloud installation.
-
-```
-$ patch -p1 -l < apps/galleryplus/patches/max-preview.pull.13674.patch
-$ patch -p1 -l < apps/galleryplus/patches/bitmap-max-preview.pull.13635.patch
-```
-
-It will always be relatively slow to get the first preview as this is when the conversion is taking place, but from the 2nd request, it should only take a few seconds, even for pictures weighing several hundred MBs.
-The next step will be to be able to generate these previews by clicking on a button per example, so that things are ready when visiting the Gallery app.
 
 ## Installation
 
@@ -182,18 +158,15 @@ The next step will be to be able to generate these previews by clicking on a but
 
 In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
-$ git clone -b stable8 https://github.com/owncloud/galleryplus.git
+$ git clone -b dev https://github.com/owncloud/galleryplus.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery
 
 To update the app go inside you **owncloud/apps/galleryplus/** directory and type:
 ```
-$ git pull --rebase origin stable8
+$ git pull --rebase origin dev
 ```
 
 ## List of patches
-1. max-preview.pull.13674.patch : Limits previews to a max size of 2048x2048 by default
-2. bitmap-max-preview.pull.13635.patch : Forces the bitmap converter to respect the max limits of previews
-3. tmpfile-extension.pull.13654.patch : Makes sure temporary files have an extension so that ImageMagick can identify those files properly
-4. raw-preview.pull.13652.patch : Allows ownCloud to visualise Raw files
+None so far
