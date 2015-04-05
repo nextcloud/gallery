@@ -27,9 +27,9 @@ Spacing is created using 2 spaces. **Do not use tabs**
 ---
 # Gallery+ configuration file
 information:
-  description_link: This is an album description
+  description: This is an **album description** which is only shown if there is no `description_link`
   description_link: readme.md
-  copyright: Copyright 2003-2015 interfaSys sàrl, Switzerland
+  copyright: Copyright 2003-2015 [interfaSys sàrl](http://www.interfasys.ch), Switzerland
   copyright_link: copyright.md
   inherit: yes
 sorting:
@@ -41,7 +41,7 @@ sorting:
 ### Supported variables
 
 * `description`: a markdown formatted string which will be displayed in the info box
-* `description_link`: a markdown file located within the album and which will be parsed and displayed in the info box
+* `description_link`: a markdown file located within the album and which will be parsed and displayed in the info box instead of the description
 * `copyright`: a markdown formatted string. You can add links to external resources if you need to.
 * `copyright_link`: any file (i.e. copyright.html), in the album itself, which will be downloaded when the user clicks on the link
 * `sorting`: `date` or `name`. `date` only works for files
