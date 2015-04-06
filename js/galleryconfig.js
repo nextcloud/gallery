@@ -98,6 +98,17 @@ GalleryConfig.prototype = {
 	},
 
 	/**
+	 * Updates the sorting order
+	 */
+	updateSorting: function (sortType, sortOrder, albumSortOrder) {
+		this.sorting = {
+			type: sortType,
+			order: sortOrder,
+			albumOrder: albumSortOrder
+		};
+	},
+
+	/**
 	 * Retrieves the permissions for the current album
 	 *
 	 * @returns {*|{fileid, permissions}|{fileid: *, permissions: *}}

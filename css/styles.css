@@ -8,11 +8,49 @@
 	overflow: hidden;
 }
 
+/** Preloading icons */
+body:after {
+	display: none;
+	content: url("../img/nameasc.svg") url("../img/namedes.svg") url("../img/dateasc.svg") url("../img/datedes.svg");
+}
+
 #controls .button {
 	margin-top: 5px;
 }
 
-#share-button img {
+#controls .button.left-sort-button {
+	float: left;
+	display: inline;
+	padding: 8px;
+	border-radius: 3px 0 0 3px;
+	margin-left: 3px;
+	margin-right:0;
+	border-right: 0;
+}
+#controls .button.right-sort-button {
+	float: left;
+	display: inline;
+	padding: 8px 9px 8px 8px;
+	border-radius: 0 3px 3px 0;
+	margin-left: -1px;
+}
+
+.sort-inactive {
+	background-color: rgb(230, 230, 230);
+}
+
+#controls .sort-inactive img{
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+	filter: alpha(opacity=25);
+	opacity: 0.25;
+}
+
+#share-button img,
+#sort-name-button img,
+#sort-date-button img {
+	vertical-align: -3px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
 	opacity: 0.6;
 }
 

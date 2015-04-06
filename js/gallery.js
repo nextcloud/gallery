@@ -114,6 +114,10 @@ Gallery.getFiles = function () {
 		}
 
 		var currentSort = Gallery.albumConfig.getAlbumSorting();
+
+		// Update the controls
+		Gallery.view.sortControlsSetup(currentSort.type, currentSort.order);
+
 		for (var j = 0, keys = Object.keys(Gallery.albumMap); j < keys.length; j++) {
 			Gallery.albumMap[keys[j]].images.sort(Gallery.sortBy(currentSort.type,
 				currentSort.order));
@@ -187,6 +191,49 @@ Gallery.sortBy = function (sortType, sortOrder) {
 			return a.mTime - b.mTime;
 		};
 	}
+};
+
+/**
+ * Sorts thumbnails based on user preferences
+ */
+Gallery.sorter = function () {
+	var sortType = 'name';
+	var sortOrder = 'asc';
+	var albumSortType = 'name';
+	var albumSortOrder = 'asc';
+	if (this.id === 'sort-date-button') {
+		sortType = 'date';
+
+	}
+	var currentSort = Gallery.albumConfig.getAlbumSorting();
+	if (currentSort.type === sortType && currentSort.order === sortOrder) {
+		sortOrder = 'des';
+	}
+
+	// Update the controls
+	Gallery.view.sortControlsSetup(sortType, sortOrder);
+
+	// We can't currently sort by album creation time
+	if (sortType === 'name') {
+		albumSortOrder = sortOrder;
+	}
+
+	// FIXME Rendering is still happening while we're sorting...
+
+	// Clear before sorting
+	Gallery.view.clear();
+
+	// Sort the images
+	for (var i = 0, keys = Object.keys(Gallery.albumMap); i < keys.length; i++) {
+		Gallery.albumMap[keys[i]].images.sort(Gallery.sortBy(sortType, sortOrder));
+		Gallery.albumMap[keys[i]].subAlbums.sort(Gallery.sortBy(albumSortType, albumSortOrder));
+	}
+
+	// Save the new settings
+	Gallery.albumConfig.updateSorting(sortType, sortOrder, albumSortOrder);
+
+	// Refresh the view
+	Gallery.view.viewAlbum(Gallery.currentAlbum);
 };
 
 /**

@@ -26,6 +26,8 @@ Gallery.view.init = function (albumPath) {
 			$('#download').click(Gallery.download);
 			$('#share-button').click(Gallery.share);
 			$('#album-info-button').click(Gallery.showInfo);
+			$('#sort-name-button').click(Gallery.sorter);
+			$('#sort-date-button').click(Gallery.sorter);
 		}
 		OC.Breadcrumb.container = $('#breadcrumbs');
 		Gallery.view.viewAlbum(albumPath);
@@ -109,6 +111,35 @@ Gallery.view.infoButtonSetup = function () {
 		infoButton.hide();
 	} else {
 		infoButton.show();
+	}
+};
+
+/**
+ * Manages the sorting interface
+ *
+ * @param {string} sortType
+ * @param {string} sortOrder
+ */
+Gallery.view.sortControlsSetup = function (sortType, sortOrder) {
+	var sortNameButton = $('#sort-name-button');
+	var sortDateButton = $('#sort-date-button');
+	// namedes, dateasc etc.
+	var icon = sortType + sortOrder;
+
+	var setButton = function (button, icon, active) {
+		button.removeClass('sort-inactive');
+		if (!active) {
+			button.addClass('sort-inactive');
+		}
+		button.find('img').attr('src', OC.imagePath(Gallery.appName, icon));
+	};
+
+	if (sortType === 'name') {
+		setButton(sortNameButton, icon, true);
+		setButton(sortDateButton, 'dateasc', false); // default icon
+	} else {
+		setButton(sortDateButton, icon, true);
+		setButton(sortNameButton, 'nameasc', false); // default icon
 	}
 };
 
