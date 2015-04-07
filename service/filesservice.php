@@ -66,7 +66,7 @@ class FilesService extends Service {
 		foreach ($nodes as $node) {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
-			$subFolders = array_merge($subFolders, $this->allowedSubFolder($node, $nodeType));
+			$subFolders = array_merge($subFolders, $this->getAllowedSubFolder($node, $nodeType));
 
 			if ($nodeType === 'file') {
 				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
@@ -75,7 +75,7 @@ class FilesService extends Service {
 				}
 			}
 		}
-		$this->searchSubFolders($subFolders, $subDepth, $albumImageCounter);
+		$albumImageCounter = $this->searchSubFolders($subFolders, $subDepth, $albumImageCounter);
 
 		return $albumImageCounter;
 	}
@@ -155,7 +155,7 @@ class FilesService extends Service {
 	 *
 	 * @return array|Folder
 	 */
-	private function allowedSubFolder($node, $nodeType) {
+	private function getAllowedSubFolder($node, $nodeType) {
 		if ($nodeType === 'dir') {
 			/** @type Folder $node */
 			if (!$node->nodeExists('.nomedia')) {
@@ -197,17 +197,21 @@ class FilesService extends Service {
 	 * @param array <Folder> $subFolders
 	 * @param int $subDepth
 	 * @param int $albumImageCounter
+	 *
+	 * @return int
 	 */
 	private function searchSubFolders($subFolders, $subDepth, $albumImageCounter) {
 		if ($this->folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter)) {
 			$subDepth++;
 			foreach ($subFolders as $subFolder) {
-				$count = $this->searchFolder($subFolder, $subDepth);
-				if ($this->abortSearch($subDepth, $count)) {
+				$albumImageCounter = $this->searchFolder($subFolder, $subDepth);
+				if ($this->abortSearch($subDepth, $albumImageCounter)) {
 					break;
 				}
 			}
 		}
+
+		return $albumImageCounter;
 	}
 
 	/**
