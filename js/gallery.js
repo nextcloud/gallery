@@ -147,9 +147,9 @@ Gallery.fixDir = function (path, dir, currentFolder) {
 	}
 
 	if (dir !== currentFolder) {
-		dir = dir.replace(currentFolder + '/', '');
 		if (currentFolder !== '') {
 			currentFolder = currentFolder + '/';
+			dir = dir.replace(currentFolder, '');
 		}
 		var parts = dir.split('/');
 		dir = currentFolder + parts[0];
