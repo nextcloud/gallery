@@ -72,6 +72,16 @@ style(
 					image_path('core', 'actions/toggle-filelist.svg')
 				); ?>" alt="<?php p($l->t('File list')); ?>"/>
 			</div>
+			<div id="sort-name-button" class="button left-sort-button">
+				<img class="svg" src="<?php print_unescaped(
+					image_path($_['appName'], 'nameasc.svg')
+				); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+			</div>
+			<div id="sort-date-button" class="button right-sort-button">
+				<img class="svg" src="<?php print_unescaped(
+					image_path($_['appName'], 'dateasc.svg')
+				); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+			</div>
 			<span class="right">
 				<div id="album-info-button" class="button">
 					<img class="svg" src="<?php print_unescaped(
