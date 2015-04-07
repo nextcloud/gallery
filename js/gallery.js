@@ -412,9 +412,12 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 				subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
 			}
 			var copyrightUrl = OC.generateUrl(subUrl, params);
+			var copyrightElement = $(copyright);
+			copyrightElement.find('a').removeAttr("href");
+			copyright = copyrightElement.html();
 			var copyrightLink = $('<a>', {
 				html: copyright,
-				title: copyright,
+				title: t('gallery', 'Link to copyright document'),
 				href: copyrightUrl,
 				target: "_blank"
 			});
