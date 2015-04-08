@@ -66,6 +66,10 @@ div.crumb.last a{
 	opacity: 0.6;
 }
 
+#album-info-button {
+	position: relative;
+}
+
 .album-info-content {
 	background-color: #eee;
 	border-bottom-left-radius: 5px;
@@ -254,8 +258,8 @@ div.crumb.last a{
 /*Original ribbon design by Comatosed
 http://www.bypeople.com/author/comatosed/*/
 .ribbon {
-	top: 5px;
-	right: 7px;
+	top: 0;
+	right: 3px;
 	display: none;
 	width: 7px;
 	position: absolute;
