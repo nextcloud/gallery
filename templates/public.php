@@ -11,6 +11,7 @@ script(
 		'gallery',
 		'galleryconfig',
 		'galleryview',
+		'breadcrumb',
 		'album',
 		'thumbnail',
 		'vendor/eventsource-polyfill/dist/eventsource.min',

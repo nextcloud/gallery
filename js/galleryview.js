@@ -1,6 +1,7 @@
 /* global OC, $, _, t, Gallery, Album, GalleryImage, SlideShow */
 Gallery.view = {};
 Gallery.view.element = null;
+Gallery.view.breadcrumb = null;
 Gallery.view.requestId = -1;
 
 /**
@@ -29,7 +30,6 @@ Gallery.view.init = function (albumPath) {
 			$('#sort-name-button').click(Gallery.sorter);
 			$('#sort-date-button').click(Gallery.sorter);
 		}
-		OC.Breadcrumb.container = $('#breadcrumbs');
 		Gallery.view.viewAlbum(albumPath);
 	}
 };
@@ -64,7 +64,8 @@ Gallery.view.viewAlbum = function (albumPath) {
 		Gallery.currentAlbum = albumPath;
 		Gallery.view.shareButtonSetup(albumPath);
 		Gallery.view.infoButtonSetup();
-		Gallery.view.buildBreadCrumb(albumPath);
+		Gallery.view.breadcrumb = new Gallery.Breadcrumb(albumPath);
+		Gallery.view.breadcrumb.setMaxWidth($(window).width() - 320);
 	}
 
 	Gallery.albumMap[albumPath].viewedItems = 0;
@@ -232,43 +233,3 @@ Gallery.view.loadVisibleRows = function (album, path) {
 	}
 };
 Gallery.view.loadVisibleRows.loading = false;
-
-/**
- * Builds the breadcrumb
- *
- * @param {string} albumPath
- */
-Gallery.view.buildBreadCrumb = function (albumPath) {
-	var i, crumbs, path;
-	OC.Breadcrumb.clear();
-	var albumName = $('#content').data('albumname');
-	if (!albumName) {
-		albumName = t('gallery', 'Pictures');
-	}
-	Gallery.view.pushBreadCrumb(albumName, '');
-
-	path = '';
-	crumbs = albumPath.split('/');
-	for (i = 0; i < crumbs.length; i++) {
-		if (crumbs[i]) {
-			if (path) {
-				path += '/' + crumbs[i];
-			} else {
-				path += crumbs[i];
-			}
-			Gallery.view.pushBreadCrumb(crumbs[i], path);
-		}
-	}
-};
-
-/**
- * Adds a path to the breadcrumb
- *
- * @fixme Needs to shorten long paths like on the Files app
- *
- * @param {string} text
- * @param {string} path
- */
-Gallery.view.pushBreadCrumb = function (text, path) {
-	OC.Breadcrumb.push(text, '#' + encodeURIComponent(path));
-};

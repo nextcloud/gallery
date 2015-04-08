@@ -18,6 +18,14 @@ ul {
 	list-style: initial;
 }
 
+#breadcrumbs {
+	float: left;
+}
+
+div.crumb.last a{
+	cursor: default;
+}
+
 #controls .button {
 	margin-top: 5px;
 }

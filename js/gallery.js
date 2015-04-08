@@ -617,13 +617,14 @@ $(document).ready(function () {
 		$(window).resize(_.throttle(function () {
 			if (windowWidth !== $(window).width()) {
 				Gallery.view.viewAlbum(Gallery.currentAlbum);
+				Gallery.view.breadcrumb.setMaxWidth(windowWidth - 320);
 				var windowHeight = $(window).height();
 				$('#content').css("min-height", windowHeight);
 				var infoContentElement = $('.album-info-content');
 				infoContentElement.css('max-height', windowHeight - 150);
 				windowWidth = $(window).width();
 			}
-		}, 500));
+		}, 250));
 	}
 });
 
