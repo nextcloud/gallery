@@ -1,4 +1,9 @@
 # Authors
-* Robin Appelman <icewind@owncloud.com>
+
+## Current
+
 * Olivier Paroz <owncloud@interfasys.ch>
 
+## Alumni
+
+* Robin Appelman <icewind@owncloud.com>

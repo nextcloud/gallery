@@ -14,6 +14,10 @@ body:after {
 	content: url("../img/nameasc.svg") url("../img/namedes.svg") url("../img/dateasc.svg") url("../img/datedes.svg");
 }
 
+ul {
+	list-style: initial;
+}
+
 #controls .button {
 	margin-top: 5px;
 }

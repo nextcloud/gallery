@@ -3,18 +3,32 @@
 	<id>galleryplus</id>
 	<name>Gallery+</name>
 	<description>Picture gallery for ownCloud which includes preview for all media types supported
-		by the system
+		by the system.
+
+		Features:
+
+		- Large, zoomable previews.
+
+		- Image download straight from the slideshow or the gallery.
+
+		- Seamlessly jump between the gallery and the files view
+
+		- Ignore folders containing a '.nomedia' file
+
+		- Sort images by name or date
+
+		- Per album description and copyright statement
 
 		Provides a dedicated view of all images in a grid, adds image viewing capabilities to the
 		files app and adds a gallery view to public links.
 	</description>
 	<licence>AGPL</licence>
-	<author>Olivier Paroz, Robin Appelman,</author>
-	<version>2.0.7</version>
+	<author>Olivier Paroz, Robin Appelman</author>
+	<version>2.0.8</version>
 	<namespace>GalleryPlus</namespace>
 	<category>Multimedia</category>
 	<dependencies>
 		<php min-version="5.4" max-version="5.6"/>
-		<owncloud min-version="8.0.2"/>
+		<owncloud min-version="8.0.2" max-version="8.1"/>
 	</dependencies>
 </info>

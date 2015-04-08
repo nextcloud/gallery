@@ -1,9 +1,12 @@
 owncloud-galleryplus (2.0.8)
+* Introduce album configuration via a text file #85 (@oparoz)
+* Introduce buttons to sort content by name and upload date #90 and #91 (@oparoz)
+* Introduce image labels #106 (@oparoz)
 * Remove permission loading routine and send the information about the current folder with the files (@oparoz)
 * Remove extra slash in preview URL #100 (@oparoz)
 * Fix thumbnail rendering so that the view doesn't break when a new request is made while the previous one is still not completed #56 (@oparoz)
-* Introduce album configuration via a text file #85 (@oparoz)
-* Introduce image labels #106 (@oparoz)
+* Fix searching algorithm to only return a maximum of 4 images per album #112 (@oparoz)
+* Javascript cleanup (@oparoz)
 
 owncloud-galleryplus (2.0.7)
 * Improved IE11 compatibility

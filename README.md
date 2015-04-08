@@ -7,10 +7,12 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
 * Large, zoomable previews
-* Native SVG support
+* Sort images by name or date
+* Per album description and copyright statement
 * Image download straight from the slideshow or the gallery
 * Seamlessly jump between the gallery and the files view
 * Ignore folders containing a '.nomedia' file
+* Native SVG support
 * Mobile support
 
 Checkout the [full changelog](CHANGELOG.md) for more.
@@ -66,8 +68,8 @@ There are many ways in which you can help make Gallery+ a better product
 * Report bugs (see below)
 * Provide patches for both [`owncloud/core`](https://github.com/owncloud/core) and the app
 * Help test new features by checking out new branches on Github
-* Design interface components for when new features must be introduced per example
-* Develop new features
+* Design interface components for new features
+* Develop new features. Please consult with the maintainers before starting your journey
 * Fund a feature, either via [BountySource](https://www.bountysource.com/teams/interfasys/issues?tracker_ids=9328526) or by directly hiring a maintainer or anybody else who is capable of developing and maintaining it
 
 ## Bugs

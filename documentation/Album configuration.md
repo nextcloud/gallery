@@ -50,6 +50,8 @@ sorting:
 
 See [this page](http://www.markitdown.net/markdown) for the markdown syntax
 
+_Note: Do not add links to your copyright string if you intend on adding a copyright link_
+
 ### Possible future extensions
 
 * Different sorting parameters for albums
@@ -62,3 +64,31 @@ See [this page](http://www.markitdown.net/markdown) for the markdown syntax
 ## Tips
 * If you share a folder publicly, don't forget to add all the files you link to inside the shared folder as the user won't have access to files stored in the parent folder
 * Since people can download a whole folder as an archive, it's usually best to include all files within a shared folder as opposed to adding text directly in the configuration file
+
+## Examples
+
+#### Sorting only
+
+Applies to the current folder only
+
+```
+---
+# Gallery+ configuration file
+sorting:
+  type: date
+  order: asc
+```
+
+#### Short description and link to copyright document
+
+Applies to the current folder and all of its sub-folders
+
+```
+---
+# Gallery+ configuration file
+information:
+  description: This is our Winter 2016 collection shot in **Kyoto**
+  copyright: Copyright 2015 La Maison Bleue, France
+  copyright_link: copyright_2015_lmb.html
+  inherit: yes
+```
