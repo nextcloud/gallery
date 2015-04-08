@@ -173,10 +173,12 @@ class ConfigService extends Service {
 	 */
 	private function validatesInfoConfig($albumConfig) {
 		$this->virtualRootLevel;
-		$level = $albumConfig['information']['level'];
-		if ($level > $this->virtualRootLevel) {
-			$albumConfig['information']['description_link'] = null;
-			$albumConfig['information']['copyright_link'] = null;
+		if (array_key_exists('information', $albumConfig)) {
+			$level = $albumConfig['information']['level'];
+			if ($level > $this->virtualRootLevel) {
+				$albumConfig['information']['description_link'] = null;
+				$albumConfig['information']['copyright_link'] = null;
+			}
 		}
 
 		return $albumConfig;
