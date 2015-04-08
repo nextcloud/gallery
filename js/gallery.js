@@ -563,7 +563,7 @@ $(document).ready(function () {
 		}
 
 		// Needed to centre the spinner in some browsers
-		$('#content').height($(window).height());
+		$('#content').css("min-height", $(window).height());
 		Gallery.showLoading();
 
 		Gallery.view.element = $('#gallery');
@@ -615,8 +615,10 @@ $(document).ready(function () {
 		// may kill baby CPUs
 		$(window).resize(_.throttle(function () {
 			Gallery.view.viewAlbum(Gallery.currentAlbum);
+			var windowHeight = $(window).height();
+			$('#content').css("min-height", windowHeight);
 			var infoContentElement = $('.album-info-content');
-			infoContentElement.css('max-height', $(window).height() - 150);
+			infoContentElement.css('max-height', windowHeight - 150);
 		}, 500));
 	}
 });
