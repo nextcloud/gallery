@@ -53,7 +53,9 @@ GalleryConfig.prototype = {
 				descriptionLink: albumInfo.description_link,
 				copyright: albumInfo.copyright,
 				copyrightLink: albumInfo.copyright_link,
-				filePath: docPath
+				filePath: docPath,
+				inherit: albumInfo.inherit,
+				level: albumInfo.level
 			};
 		}
 

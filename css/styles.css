@@ -242,3 +242,54 @@ ul {
 	top: 30%;
 	width: 100%;
 }
+
+/*Original ribbon design by Comatosed
+http://www.bypeople.com/author/comatosed/*/
+.ribbon {
+	top: 5px;
+	right: 7px;
+	display: none;
+	width: 7px;
+	position: absolute;
+	color: #fff;
+	padding: 10px 0 0;
+}
+
+.ribbon:before {
+	display: block;
+	width: 7px;
+	height: 0;
+	position: absolute;
+	top: 5px;
+	content: "";
+	border-top: 1px dotted rgba(0, 0, 0, 0.2);
+	border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
+}
+
+.ribbon:after {
+	display: block;
+	width: 0;
+	height: 0;
+	content: "";
+	position: relative;
+	bottom: -2px;
+	z-index: 100;
+	border-width: 0 3px 2px 4px;
+	border-style: solid;
+}
+
+.ribbon.black {
+	background-color: #bbb;
+	background-repeat: repeat-x;
+	background-image: -moz-linear-gradient(top, #aaa, #bbb);
+	background-image: -ms-linear-gradient(top, #aaa, #bbb);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #aaa), color-stop(100%, #bbb));
+	background-image: -webkit-linear-gradient(top, #aaa, #bbb);
+	background-image: -o-linear-gradient(top, #aaa, #bbb);
+	background-image: linear-gradient(top, #aaa, #bbb);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#aaa', endColorstr='#bbb', GradientType=0);
+}
+
+.ribbon.black:after {
+	border-color: #bbb #bbb transparent #bbb;
+}

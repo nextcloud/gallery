@@ -84,6 +84,7 @@ style(
 			</div>
 			<span class="right">
 				<div id="album-info-button" class="button">
+					<span class="ribbon black"></span>
 					<img class="svg" src="<?php print_unescaped(
 						image_path('core', 'actions/info.svg')
 					); ?>" alt="<?php p($l->t('Album information')); ?>"/>

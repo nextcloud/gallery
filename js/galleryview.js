@@ -111,6 +111,11 @@ Gallery.view.infoButtonSetup = function () {
 		infoButton.hide();
 	} else {
 		infoButton.show();
+		if (albumInfo.inherit === 'yes' && albumInfo.level > 0) {
+			infoButton.find('span').hide();
+		} else {
+			infoButton.find('span').delay(1000).slideDown();
+		}
 	}
 };
 
