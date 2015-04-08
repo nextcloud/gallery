@@ -613,12 +613,16 @@ $(document).ready(function () {
 
 		// A shorter delay avoids redrawing the view in the middle of a previous request, but it
 		// may kill baby CPUs
+		var windowWidth = $(window).width();
 		$(window).resize(_.throttle(function () {
-			Gallery.view.viewAlbum(Gallery.currentAlbum);
-			var windowHeight = $(window).height();
-			$('#content').css("min-height", windowHeight);
-			var infoContentElement = $('.album-info-content');
-			infoContentElement.css('max-height', windowHeight - 150);
+			if (windowWidth !== $(window).width()) {
+				Gallery.view.viewAlbum(Gallery.currentAlbum);
+				var windowHeight = $(window).height();
+				$('#content').css("min-height", windowHeight);
+				var infoContentElement = $('.album-info-content');
+				infoContentElement.css('max-height', windowHeight - 150);
+				windowWidth = $(window).width();
+			}
 		}, 500));
 	}
 });
