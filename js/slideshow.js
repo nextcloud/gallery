@@ -549,7 +549,7 @@ $(document).ready(function () {
 			});
 		};
 
-		var url = SlideShow.buildUrl('mediatypes', '', {slideshow: 1});
+		var url = SlideShow.buildUrl('mediatypes', {slideshow: 1});
 		// We're asking for a list of supported media types. Media files are retrieved through the
 		// context
 		$.getJSON(url).then(function (mediaTypes) {
