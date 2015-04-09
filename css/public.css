@@ -13,31 +13,3 @@ body {
 	height: 100%;
 	width: 100%;
 }
-
-/* transfer to core after body has the id #body-public / #body-public-dark */
-
-footer {
-	text-align: center;
-	color: #777;
-}
-
-footer p.info a {
-	font-weight: bold;
-	color: #777;
-	padding: 13px;
-	margin: -13px;
-}
-
-/* Sticky footer */
-body .wrapper {
-	min-height: 86%;
-	margin: 0 auto -50px;
-}
-
-body footer, body .push {
-	height: 70px;
-}
-
-footer p.info {
-	padding-top: 30px;
-}

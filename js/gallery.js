@@ -488,6 +488,14 @@ Gallery.showHtmlNotification = function (text, timeout) {
 };
 
 /**
+ * Resets the height of the content div so that the spinner can be centred
+ */
+Gallery.resetContentHeight = function () {
+	// 200 is the space required for the footer and the browser toolbar
+	$('#content').css("min-height", $(window).height() - 200);
+};
+
+/**
  * Creates a new slideshow using the images found in the current folder
  *
  * @param {array} images
@@ -524,7 +532,11 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	slideShow.onStop = function () {
 		Gallery.activeSlideShow = null;
 		$('#content').show();
-		location.hash = encodeURIComponent(Gallery.currentAlbum);
+		if (Gallery.currentAlbum !== '') {
+			location.hash = encodeURIComponent(Gallery.currentAlbum);
+		} else {
+			location.hash = '!';
+		}
 	};
 	Gallery.activeSlideShow = slideShow;
 
@@ -550,7 +562,7 @@ $(document).ready(function () {
 		}
 
 		// Needed to centre the spinner in some browsers
-		$('#content').css("min-height", $(window).height());
+		Gallery.resetContentHeight();
 		Gallery.showLoading();
 
 		Gallery.view = new Gallery.View();
@@ -598,11 +610,14 @@ $(document).ready(function () {
 		$(window).resize(_.throttle(function () {
 			if (windowWidth !== $(window).width()) {
 				Gallery.view.viewAlbum(Gallery.currentAlbum);
+				// 320 is the width required for the buttons
 				Gallery.view.breadcrumb.setMaxWidth(windowWidth - 320);
+				Gallery.resetContentHeight();
 				var windowHeight = $(window).height();
-				$('#content').css("min-height", windowHeight);
 				var infoContentElement = $('.album-info-content');
+				// 150 is the space required for the browser toolbar on some mobile OS
 				infoContentElement.css('max-height', windowHeight - 150);
+
 				windowWidth = $(window).width();
 			}
 		}, 250));
