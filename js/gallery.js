@@ -112,18 +112,6 @@ Gallery.getFiles = function () {
 			album.images.push(image);
 			Gallery.imageMap[image.path] = image;
 		}
-
-		var currentSort = Gallery.albumConfig.getAlbumSorting();
-
-		// Update the controls
-		Gallery.view.sortControlsSetup(currentSort.type, currentSort.order);
-
-		for (var j = 0, keys = Object.keys(Gallery.albumMap); j < keys.length; j++) {
-			Gallery.albumMap[keys[j]].images.sort(Gallery.sortBy(currentSort.type,
-				currentSort.order));
-			Gallery.albumMap[keys[j]].subAlbums.sort(Gallery.sortBy('name',
-				currentSort.albumOrder));
-		}
 	}, function () {
 		// Triggered if we couldn't find a working folder
 		Gallery.view.element.empty();
@@ -224,10 +212,9 @@ Gallery.sorter = function () {
 	Gallery.view.clear();
 
 	// Sort the images
-	for (var i = 0, keys = Object.keys(Gallery.albumMap); i < keys.length; i++) {
-		Gallery.albumMap[keys[i]].images.sort(Gallery.sortBy(sortType, sortOrder));
-		Gallery.albumMap[keys[i]].subAlbums.sort(Gallery.sortBy(albumSortType, albumSortOrder));
-	}
+	Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(sortType, sortOrder));
+	Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.sortBy(albumSortType,
+		albumSortOrder));
 
 	// Save the new settings
 	Gallery.albumConfig.updateSorting(sortType, sortOrder, albumSortOrder);

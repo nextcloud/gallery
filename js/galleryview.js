@@ -64,8 +64,16 @@ Gallery.view.viewAlbum = function (albumPath) {
 		Gallery.currentAlbum = albumPath;
 		Gallery.view.shareButtonSetup(albumPath);
 		Gallery.view.infoButtonSetup();
+
 		Gallery.view.breadcrumb = new Gallery.Breadcrumb(albumPath);
 		Gallery.view.breadcrumb.setMaxWidth($(window).width() - 320);
+
+		var currentSort = Gallery.albumConfig.getAlbumSorting();
+		Gallery.view.sortControlsSetup(currentSort.type, currentSort.order);
+		Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(currentSort.type,
+			currentSort.order));
+		Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.sortBy('name',
+			currentSort.albumOrder));
 	}
 
 	Gallery.albumMap[albumPath].viewedItems = 0;
