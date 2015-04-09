@@ -553,14 +553,8 @@ $(document).ready(function () {
 		$('#content').css("min-height", $(window).height());
 		Gallery.showLoading();
 
-		Gallery.view.element = $('#gallery');
-		if (Gallery.view.element.data('token')) {
-			Gallery.token = Gallery.view.element.data('token');
-		}
-
-		if (Gallery.view.element.data('requesttoken')) {
-			oc_requesttoken = Gallery.view.element.data('requesttoken');
-		}
+		Gallery.view = new Gallery.View();
+		Gallery.token = Gallery.view.getRequestToken();
 
 		$.getJSON(Gallery.buildUrl('mediatypes', '', {}))
 			.then(function (mediaTypes) {
