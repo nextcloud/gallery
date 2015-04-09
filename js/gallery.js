@@ -1,4 +1,4 @@
-/* global OC, $, _, t, GalleryConfig, Album, GalleryImage, SlideShow, oc_requesttoken, marked */
+/* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken, marked */
 var Gallery = {};
 Gallery.mediaTypes = {};
 Gallery.images = [];
@@ -93,7 +93,7 @@ Gallery.getFiles = function () {
 		var files = data.files;
 
 		var albumInfo = data.albuminfo;
-		Gallery.albumConfig = new GalleryConfig(albumInfo);
+		Gallery.albumConfig = new Gallery.Config(albumInfo);
 
 		for (var i = 0; i < files.length; i++) {
 			path = files[i].path;

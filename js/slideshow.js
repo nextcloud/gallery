@@ -35,7 +35,7 @@ SlideShow.prototype = {
 		this.hideImage();
 		this.bigShotSetup();
 
-		this.controls = new SlideShowControls(this, this.container, this.images);
+		this.controls = new SlideShow.Controls(this, this.container, this.images);
 		this.controls.init(play);
 
 		$(window).resize(function () {
