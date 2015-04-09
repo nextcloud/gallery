@@ -335,7 +335,12 @@ Gallery.showInfo = function (event) {
 			infoContentElement.scrollTop(0);
 		};
 		var addContent = function (content) {
-			infoContentElement.append(marked(content));
+			try {
+				content = marked(content);
+			} catch (exception) {
+				content = t('gallery', 'Could not load the description: ' + exception.message);
+			}
+			infoContentElement.append(content);
 			infoContentElement.find('a').attr("target", "_blank");
 			Gallery.showCopyright(albumInfo, infoContentElement);
 			adjustHeight();
@@ -381,7 +386,12 @@ Gallery.showCopyright = function (albumInfo, infoContentElement) {
 		infoContentElement.append(copyrightTitle);
 
 		if (!$.isEmptyObject(albumInfo.copyright)) {
-			copyright = marked(albumInfo.copyright);
+			try {
+				copyright = marked(albumInfo.copyright);
+			} catch (exception) {
+				copyright =
+					t('gallery', 'Could not load the copyright notice: ' + exception.message);
+			}
 		} else {
 			copyright = '<p>' + t('gallery', 'Copyright notice') + '</p>';
 		}
