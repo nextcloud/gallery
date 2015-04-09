@@ -1,4 +1,4 @@
-/* global jQuery, OC ,OCA, $, t, oc_requesttoken, SlideShowControls, bigshot */
+/* global jQuery, OC ,OCA, $, t, oc_requesttoken, bigshot */
 /**
  *
  * @param {jQuery} container

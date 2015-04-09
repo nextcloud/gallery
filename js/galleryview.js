@@ -1,4 +1,4 @@
-/* global OC, $, _, Gallery, Album, GalleryImage, SlideShow */
+/* global OC, oc_requesttoken, $, _, Gallery, Album */
 (function () {
 
 	/**
@@ -262,10 +262,10 @@
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
 						});
-					} else {
-						// This is the safest way to do things
-						view.viewAlbum(Gallery.currentAlbum);
 					}
+					// This is the safest way to do things
+					view.viewAlbum(Gallery.currentAlbum);
+
 				});
 			};
 			if (this.element.height() < targetHeight) {
