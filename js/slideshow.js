@@ -211,7 +211,7 @@ SlideShow.prototype = {
 		// prevent zoom-on-doubleClick
 		this.zoomable.addEventListener('dblclick', function (ie) {
 			ie.preventDefault();
-		}.bind(this));
+		});
 	},
 
 	/**

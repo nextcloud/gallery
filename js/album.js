@@ -1,4 +1,4 @@
-/* global $, OC, Gallery, Thumbnails */
+/* global $, OC, Thumbnails */
 /**
  * Creates a new album object to store information about an album
  *
@@ -200,7 +200,7 @@ Album.prototype = {
 	getDom: function (targetHeight) {
 		var album = this;
 
-		return this._getThumbnail().then(function (img) {
+		return this._getThumbnail().then(function () {
 			var a = $('<a/>').addClass('album').attr('href', '#' + encodeURIComponent(album.path));
 
 			a.append($('<span/>').addClass('album-label').text(album.name));

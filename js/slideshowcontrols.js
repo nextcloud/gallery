@@ -110,7 +110,7 @@ SlideShowControls.prototype = {
 
 	/**
 	 * Sets up the key based controls
-	 * 
+	 *
 	 * @param {Function} makeCallBack
 	 * @private
 	 */

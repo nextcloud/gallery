@@ -1,4 +1,4 @@
-/* global OC, $, _, t, Gallery, Album, GalleryImage, SlideShow */
+/* global OC, $, _, Gallery, Album, GalleryImage, SlideShow */
 Gallery.view = {};
 Gallery.view.element = null;
 Gallery.view.breadcrumb = null;

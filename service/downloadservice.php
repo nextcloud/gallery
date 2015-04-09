@@ -30,7 +30,7 @@ class DownloadService extends Service {
 	 * @param string $image
 	 * @param bool $base64Encode
 	 *
-	 * @return array
+	 * @return false|array
 	 *
 	 * @throws NotFoundServiceException
 	 */

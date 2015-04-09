@@ -1,4 +1,4 @@
-/* global OC, $, Gallery */
+/* global $, Gallery */
 /**
  * A thumbnail is the actual image attached to the GalleryImage object
  *

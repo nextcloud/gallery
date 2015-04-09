@@ -305,7 +305,7 @@ class ConfigService extends Service {
 	 * @param int $level
 	 * @param bool $isRootFolder
 	 *
-	 * @return array<null|array<string,string>,bool>
+	 * @return bool
 	 */
 	private function isConfigUsable($key, $parsedConfigItem, $level, $isRootFolder) {
 		$inherit = $this->isConfigInheritable($parsedConfigItem);
