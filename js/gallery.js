@@ -1,4 +1,4 @@
-/* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken, marked */
+/* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken */
 var Gallery = {};
 Gallery.mediaTypes = {};
 Gallery.images = [];
@@ -321,108 +321,7 @@ Gallery.download = function (event) {
  */
 Gallery.showInfo = function (event) {
 	event.stopPropagation();
-	var infoContentElement = $('.album-info-content');
-	if (infoContentElement.is(':visible')) {
-		infoContentElement.slideUp();
-	} else {
-		var albumInfo = Gallery.albumConfig.getAlbumInfo();
-		var adjustHeight = function () {
-			infoContentElement.removeClass('icon-loading');
-			var newHeight = infoContentElement[0].scrollHeight;
-			infoContentElement.animate({
-				height: newHeight + 40
-			}, 500);
-			infoContentElement.scrollTop(0);
-		};
-		var addContent = function (content) {
-			try {
-				content = marked(content);
-			} catch (exception) {
-				content = t('gallery', 'Could not load the description: ' + exception.message);
-			}
-			infoContentElement.append(content);
-			infoContentElement.find('a').attr("target", "_blank");
-			Gallery.showCopyright(albumInfo, infoContentElement);
-			adjustHeight();
-		};
-		if (!albumInfo.infoLoaded) {
-			infoContentElement.addClass('icon-loading');
-			infoContentElement.empty();
-			infoContentElement.height(100);
-			infoContentElement.slideDown();
-			if (!$.isEmptyObject(albumInfo.descriptionLink)) {
-				var params = {
-					file: albumInfo.filePath + '/' + albumInfo.descriptionLink
-				};
-				var descriptionUrl = Gallery.buildUrl('download', '', params);
-				$.get(descriptionUrl).done(function (data) {
-						addContent(data);
-					}
-				).fail(function () {
-						addContent(t('gallery', 'Could not load the description'));
-					});
-			} else {
-				addContent(albumInfo.description);
-			}
-			Gallery.albumConfig.setInfoLoaded();
-		} else {
-			infoContentElement.slideDown();
-		}
-		infoContentElement.scrollTop(0);
-	}
-};
-
-/**
- * Adds copyright information to the information box
- *
- * @param albumInfo
- * @param infoContentElement
- */
-Gallery.showCopyright = function (albumInfo, infoContentElement) {
-	if (!$.isEmptyObject(albumInfo.copyright) || !$.isEmptyObject(albumInfo.copyrightLink)) {
-		var copyright;
-		var copyrightTitle = $('<h4/>');
-		copyrightTitle.append(t('gallery', 'Copyright'));
-		infoContentElement.append(copyrightTitle);
-
-		if (!$.isEmptyObject(albumInfo.copyright)) {
-			try {
-				copyright = marked(albumInfo.copyright);
-			} catch (exception) {
-				copyright =
-					t('gallery', 'Could not load the copyright notice: ' + exception.message);
-			}
-		} else {
-			copyright = '<p>' + t('gallery', 'Copyright notice') + '</p>';
-		}
-
-		if (!$.isEmptyObject(albumInfo.copyrightLink)) {
-			var subUrl = '';
-			var params = {
-				path: '/' + albumInfo.filePath,
-				files: albumInfo.copyrightLink
-			};
-			if (Gallery.token) {
-				params.token = Gallery.token;
-				subUrl = 's/{token}/download?dir={path}&files={files}';
-			} else {
-				subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
-			}
-			var copyrightUrl = OC.generateUrl(subUrl, params);
-			var copyrightElement = $(copyright);
-			copyrightElement.find('a').removeAttr("href");
-			copyright = copyrightElement.html();
-			var copyrightLink = $('<a>', {
-				html: copyright,
-				title: t('gallery', 'Link to copyright document'),
-				href: copyrightUrl,
-				target: "_blank"
-			});
-			infoContentElement.append(copyrightLink);
-		} else {
-			infoContentElement.append(copyright);
-		}
-	}
+	Gallery.infoBox.showInfo();
 };
 
 /**

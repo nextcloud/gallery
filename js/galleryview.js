@@ -38,6 +38,7 @@
 				if (this.requestId === -1) {
 					$('#download').click(Gallery.download);
 					$('#share-button').click(Gallery.share);
+					Gallery.infoBox = new Gallery.InfoBox();
 					$('#album-info-button').click(Gallery.showInfo);
 					$('#sort-name-button').click(Gallery.sorter);
 					$('#sort-date-button').click(Gallery.sorter);
