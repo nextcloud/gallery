@@ -23,6 +23,10 @@ It's advised to add a comment in the file, so that people stumbling upon that fi
 Comments start with #.
 
 Spacing is created using 2 spaces. **Do not use tabs**
+
+Take a look at the format description if you're getting error messages:
+http://symfony.com/doc/current/components/yaml/yaml_format.html
+
 ```
 ---
 # Gallery+ configuration file
@@ -40,7 +44,7 @@ sorting:
 
 ### Supported variables
 
-* `description`: a markdown formatted string which will be displayed in the info box
+* `description`: a markdown formatted string which will be displayed in the info box. It can spread over multiple lines using the Yaml markers
 * `description_link`: a markdown file located within the album and which will be parsed and displayed in the info box instead of the description
 * `copyright`: a markdown formatted string. You can add links to external resources if you need to.
 * `copyright_link`: any file (i.e. copyright.html), in the album itself, which will be downloaded when the user clicks on the link
@@ -83,11 +87,14 @@ sorting:
 
 Applies to the current folder and all of its sub-folders
 
+This also shows you the syntax you can use to spread a description over multiple lines
 ```
 ---
 # Gallery+ configuration file
 information:
-  description: This is our Winter 2016 collection shot in **Kyoto**
+  description: | # La Maison Bleue, Winter '16
+    This is our Winter 2016 collection shot in **Kyoto**
+    Visit out [website](http://www.secretdesigner.ninja) for more information
   copyright: Copyright 2015 La Maison Bleue, France
   copyright_link: copyright_2015_lmb.html
   inherit: yes
