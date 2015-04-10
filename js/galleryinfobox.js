@@ -1,4 +1,4 @@
-/* global $, OC, t, Gallery, marked */
+/* global $, t, Gallery, marked */
 (function () {
 	var InfoBox = function () {
 		this.infoContentElement = $('.album-info-content');

@@ -1,4 +1,4 @@
-/* global OC, oc_requesttoken, $, _, Gallery, Album */
+/* global OC, oc_requesttoken, $, _, Gallery */
 (function () {
 
 	/**

@@ -1,4 +1,4 @@
-/* global jQuery, OC ,OCA, $, t, oc_requesttoken, bigshot */
+/* global jQuery, OC ,OCA, $, t, oc_requesttoken */
 /**
  *
  * @param {jQuery} container

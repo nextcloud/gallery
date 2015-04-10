@@ -1,4 +1,4 @@
-/* global $, OC, t, SlideShow, bigshot*/
+/* global $, SlideShow, bigshot*/
 (function () {
 
 	/**
