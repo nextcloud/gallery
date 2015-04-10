@@ -617,18 +617,22 @@ $(document).ready(function () {
 		// A shorter delay avoids redrawing the view in the middle of a previous request, but it
 		// may kill baby CPUs
 		var windowWidth = $(window).width();
+		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
 			if (windowWidth !== $(window).width()) {
 				Gallery.view.viewAlbum(Gallery.currentAlbum);
 				// 320 is the width required for the buttons
 				Gallery.view.breadcrumb.setMaxWidth(windowWidth - 320);
+
+				windowWidth = $(window).width();
+			}
+			if (windowHeight !== $(window).height()) {
 				Gallery.resetContentHeight();
-				var windowHeight = $(window).height();
 				var infoContentElement = $('.album-info-content');
 				// 150 is the space required for the browser toolbar on some mobile OS
 				infoContentElement.css('max-height', windowHeight - 150);
 
-				windowWidth = $(window).width();
+				windowHeight = $(window).height();
 			}
 		}, 250));
 	}
