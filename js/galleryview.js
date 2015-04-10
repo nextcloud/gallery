@@ -90,21 +90,11 @@
 			}
 
 			this.clear();
+
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
 				Gallery.currentAlbum = albumPath;
-				this.shareButtonSetup(albumPath);
-				this.infoButtonSetup();
-
-				this.breadcrumb = new Gallery.Breadcrumb(albumPath);
-				this.breadcrumb.setMaxWidth($(window).width() - 320);
-
-				var currentSort = Gallery.albumConfig.getAlbumSorting();
-				this.sortControlsSetup(currentSort.type, currentSort.order);
-				Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(currentSort.type,
-					currentSort.order));
-				Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.sortBy('name',
-					currentSort.albumOrder));
+				this.setupButtons(albumPath);
 			}
 
 			Gallery.albumMap[albumPath].viewedItems = 0;
@@ -120,6 +110,26 @@
 				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
 					Gallery.currentAlbum);
 			}.bind(this), 0);
+		},
+
+		/**
+		 * Sets up all the buttons of the interface
+		 *
+		 * @param {string} albumPath
+		 */
+		setupButtons: function (albumPath) {
+			this.shareButtonSetup(albumPath);
+			this.infoButtonSetup();
+
+			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
+			this.breadcrumb.setMaxWidth($(window).width() - 320);
+
+			var currentSort = Gallery.albumConfig.getAlbumSorting();
+			this.sortControlsSetup(currentSort.type, currentSort.order);
+			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(currentSort.type,
+				currentSort.order));
+			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.sortBy('name',
+				currentSort.albumOrder));
 		},
 
 		/**
@@ -145,10 +155,7 @@
 			infoContentElement.slideUp();
 			infoContentElement.css('max-height', $(window).height() - 150);
 			var albumInfo = Gallery.albumConfig.getAlbumInfo();
-			if ($.isEmptyObject(albumInfo.description) &&
-				$.isEmptyObject(albumInfo.descriptionLink) &&
-				$.isEmptyObject(albumInfo.copyright) &&
-				$.isEmptyObject(albumInfo.copyrightLink)) {
+			if (this.isAlbumInfoEmtpy(albumInfo)) {
 				infoButton.hide();
 			} else {
 				infoButton.show();
@@ -158,6 +165,20 @@
 					infoButton.find('span').delay(1000).slideDown();
 				}
 			}
+		},
+
+		/**
+		 * Determines if we have received a description and a copyright statement for the current
+		 * album
+		 *
+		 * @param {object} albumInfo
+		 * @returns {bool}
+		 */
+		isAlbumInfoEmtpy: function (albumInfo) {
+			return $.isEmptyObject(albumInfo.description) &&
+				$.isEmptyObject(albumInfo.descriptionLink) &&
+				$.isEmptyObject(albumInfo.copyright) &&
+				$.isEmptyObject(albumInfo.copyrightLink);
 		},
 
 		/**
