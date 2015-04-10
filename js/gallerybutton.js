@@ -17,7 +17,7 @@ GalleryButton.onFileListUpdated = function () {
 	}
 	files = fileList.files;
 
-	GalleryButton.buildUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
+	GalleryButton.buildGalleryUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
 
 	for (var i = 0; i < files.length; i++) {
 		var file = files[i];
@@ -32,7 +32,7 @@ GalleryButton.onFileListUpdated = function () {
 	}
 };
 
-GalleryButton.buildUrl = function (dir) {
+GalleryButton.buildGalleryUrl = function (dir) {
 	var params = {};
 	var tokenPath = '';
 	var token = ($('#sharingToken').val()) ? $('#sharingToken').val() : false;

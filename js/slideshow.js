@@ -140,31 +140,32 @@ SlideShow.prototype = {
 		this.container.css('background-position', 'center');
 		this.hideImage();
 		var currentImageId = index;
-		return this.loadImage(this.images[index]).then(function (image) {
+		return this.loadImage(this.images[index]).then(function (img) {
 			this.container.css('background-position', '-10000px 0');
 			this.container.find('.changeBackground').show();
 
 			// check if we moved along while we were loading
 			if (currentImageId === index) {
+				var image = this.images[index];
 				this.errorLoadingImage = false;
-				this.currentImage = image;
-				this.currentImage.mimeType = this.images[index].mimeType;
-				this.container.append(image);
+				this.currentImage = img;
+				this.currentImage.mimeType = image.mimeType;
+				this.container.append(img);
 
 				var backgroundColour = '#fff';
 				if (this.currentImage.mimeType === 'image/jpeg' ||
 					this.currentImage.mimeType === 'image/x-dcraw') {
 					backgroundColour = '#000';
 				}
-				image.setAttribute('alt', this.images[index].name);
-				$(image).css('position', 'absolute');
-				$(image).css('background-color', backgroundColour);
+				img.setAttribute('alt', image.name);
+				$(img).css('position', 'absolute');
+				$(img).css('background-color', backgroundColour);
 				var $border = 30 / window.devicePixelRatio;
-				$(image).css('outline', $border + 'px solid ' + backgroundColour);
+				$(img).css('outline', $border + 'px solid ' + backgroundColour);
 
-				this.startBigshot(image);
+				this.startBigshot(img);
 
-				this.setUrl(this.images[index].path);
+				this.setUrl(image.path);
 				this.controls.show(currentImageId);
 			}
 		}.bind(this), function () {
@@ -177,7 +178,6 @@ SlideShow.prototype = {
 				this.images.splice(index, 1);
 				this.controls.updateControls(this.images, this.errorLoadingImage);
 			}
-
 		}.bind(this));
 	},
 
@@ -374,7 +374,7 @@ SlideShow.prototype = {
  *
  * @returns {string}
  */
-SlideShow.buildUrl = function (endPoint, params) {
+SlideShow.buildGalleryUrl = function (endPoint, path, params) {
 	var extension = '';
 	var token = ($('#sharingToken').val()) ? $('#sharingToken').val() : false;
 	if (token) {
@@ -382,7 +382,7 @@ SlideShow.buildUrl = function (endPoint, params) {
 		extension = '.public';
 	}
 	var query = OC.buildQueryString(params);
-	return OC.generateUrl('apps/galleryplus/' + endPoint + extension, null) + '?' + query;
+	return OC.generateUrl('apps/galleryplus/' + endPoint + extension + path, null) + '?' + query;
 };
 
 /**
@@ -515,8 +515,8 @@ $(document).ready(function () {
 
 					for (var i = 0; i < files.length; i++) {
 						var file = files[i];
-						// We only add images to the slideshow if we can generate previews for this
-						// media type
+						// We only add images to the slideshow if we think we'll be able
+						// to generate previews for this media type
 						if (file.isPreviewAvailable || file.mimetype === 'image/svg+xml') {
 							var params = {
 								file: dir + file.name,
@@ -524,8 +524,8 @@ $(document).ready(function () {
 								y: height,
 								requesttoken: requestToken
 							};
-							imageUrl = SlideShow.buildUrl('preview', params);
-							downloadUrl = SlideShow.buildUrl('download', params);
+							imageUrl = SlideShow.buildGalleryUrl('preview', '', params);
+							downloadUrl = SlideShow.buildGalleryUrl('download', '', params);
 
 							images.push({
 								name: file.name,
@@ -551,7 +551,7 @@ $(document).ready(function () {
 				});
 		};
 
-		var url = SlideShow.buildUrl('mediatypes', {slideshow: 1});
+		var url = SlideShow.buildGalleryUrl('mediatypes', '', {slideshow: 1});
 		// We're asking for a list of supported media types. Media files are retrieved through the
 		// context
 		$.getJSON(url).then(function (mediaTypes) {

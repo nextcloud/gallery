@@ -23,10 +23,9 @@
 					this.infoContentElement.height(100);
 					this.infoContentElement.slideDown();
 					if (!$.isEmptyObject(this.albumInfo.descriptionLink)) {
-						var params = {
-							file: this.albumInfo.filePath + '/' + this.albumInfo.descriptionLink
-						};
-						var descriptionUrl = Gallery.buildUrl('download', '', params);
+						var path = '/' + this.albumInfo.filePath;
+						var file = this.albumInfo.descriptionLink;
+						var descriptionUrl = Gallery.buildFilesUrl(path, file);
 						var thisInfoBox = this;
 						$.get(descriptionUrl).done(function (data) {
 								thisInfoBox._addContent(data);
@@ -117,18 +116,9 @@
 		 * @private
 		 */
 		_addCopyrightLink: function (copyright) {
-			var subUrl = '';
-			var params = {
-				path: '/' + this.albumInfo.filePath,
-				files: this.albumInfo.copyrightLink
-			};
-			if (Gallery.token) {
-				params.token = Gallery.token;
-				subUrl = 's/{token}/download?dir={path}&files={files}';
-			} else {
-				subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
-			}
-			var copyrightUrl = OC.generateUrl(subUrl, params);
+			var path = '/' + this.albumInfo.filePath;
+			var file = this.albumInfo.copyrightLink;
+			var copyrightUrl = Gallery.buildFilesUrl(path, file);
 			var copyrightElement = $(copyright);
 			copyrightElement.find('a').removeAttr("href");
 			copyright = copyrightElement.html();

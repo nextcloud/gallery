@@ -84,7 +84,7 @@ Gallery.getFiles = function () {
 		mediatypes: Gallery.getMediaTypes()
 	};
 	// Only use the folder as a GET parameter and not as part of the URL
-	var url = Gallery.buildUrl('files', '', params);
+	var url = Gallery.buildGalleryUrl('files', '', params);
 	return $.getJSON(url).then(function (data) {
 		var path = null;
 		var fileId = null;
@@ -239,7 +239,7 @@ Gallery.getPreviewUrl = function (image) {
 		y: height,
 		requesttoken: oc_requesttoken
 	};
-	return Gallery.buildUrl('preview', '', params);
+	return Gallery.buildGalleryUrl('preview', '', params);
 };
 
 /**
@@ -277,7 +277,7 @@ Gallery.share = function (event) {
 };
 
 /**
- * Builds a URL pointing to one of our PHP controllers
+ * Builds a URL pointing to one of the app's controllers
  *
  * @param {string} endPoint
  * @param {undefined|string} path
@@ -285,7 +285,7 @@ Gallery.share = function (event) {
  *
  * @returns {string}
  */
-Gallery.buildUrl = function (endPoint, path, params) {
+Gallery.buildGalleryUrl = function (endPoint, path, params) {
 	if (path === undefined) {
 		path = '';
 	}
@@ -301,17 +301,43 @@ Gallery.buildUrl = function (endPoint, path, params) {
 };
 
 /**
+ * Builds a URL pointing to one of the files' controllers
+ *
+ * @param {string} path
+ * @param {string} files
+ *
+ * @returns {string}
+ */
+Gallery.buildFilesUrl = function (path, files) {
+	var subUrl = '';
+	var params = {
+		path: path,
+		files: files
+	};
+
+	if (Gallery.token) {
+		params.token = Gallery.token;
+		subUrl = 's/{token}/download?dir={path}&files={files}';
+	} else {
+		subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
+	}
+
+	return OC.generateUrl(subUrl, params);
+};
+
+/**
  * Sends an archive of the current folder to the browser
  *
  * @param event
  */
 Gallery.download = function (event) {
 	event.preventDefault();
-	OC.redirect(OC.generateUrl('s/{token}/download?path={path}&files={files}', {
-		token: Gallery.token,
-		path: $('#content').data('albumname'),
-		files: Gallery.currentAlbum
-	}));
+
+	var path = $('#content').data('albumname');
+	var files = Gallery.currentAlbum;
+	var downloadUrl = Gallery.buildFilesUrl(path, files);
+
+	OC.redirect(downloadUrl);
 };
 
 /**
@@ -426,7 +452,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 			file: image.src,
 			requesttoken: oc_requesttoken
 		};
-		var downloadUrl = Gallery.buildUrl('download', '', params);
+		var downloadUrl = Gallery.buildGalleryUrl('download', '', params);
 
 		return {
 			name: name,
@@ -477,7 +503,7 @@ $(document).ready(function () {
 		Gallery.view = new Gallery.View();
 		Gallery.token = Gallery.view.getRequestToken();
 
-		$.getJSON(Gallery.buildUrl('mediatypes', '', {}))
+		$.getJSON(Gallery.buildGalleryUrl('mediatypes', '', {}))
 			.then(function (mediaTypes) {
 				//console.log('mediaTypes', mediaTypes);
 				Gallery.mediaTypes = mediaTypes;
