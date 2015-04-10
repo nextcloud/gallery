@@ -152,7 +152,8 @@ SlideShow.prototype = {
 				this.container.append(image);
 
 				var backgroundColour = '#fff';
-				if (this.currentImage.mimeType === 'image/jpeg') {
+				if (this.currentImage.mimeType === 'image/jpeg' ||
+					this.currentImage.mimeType === 'image/x-dcraw') {
 					backgroundColour = '#000';
 				}
 				image.setAttribute('alt', this.images[index].name);
@@ -501,52 +502,53 @@ $(document).ready(function () {
 		});
 
 		var prepareFileActions = function (mime) {
-			return OCA.Files.fileActions.register(mime, 'View', OC.PERMISSION_READ, '', function (filename, context) {
-				var imageUrl, downloadUrl;
-				var fileList = context.fileList;
-				var files = fileList.files;
-				var start = 0;
-				var images = [];
-				var dir = context.dir + '/';
-				var width = Math.floor($(window).width() * window.devicePixelRatio);
-				var height = Math.floor($(window).height() * window.devicePixelRatio);
+			return OCA.Files.fileActions.register(mime, 'View', OC.PERMISSION_READ, '',
+				function (filename, context) {
+					var imageUrl, downloadUrl;
+					var fileList = context.fileList;
+					var files = fileList.files;
+					var start = 0;
+					var images = [];
+					var dir = context.dir + '/';
+					var width = Math.floor($(window).width() * window.devicePixelRatio);
+					var height = Math.floor($(window).height() * window.devicePixelRatio);
 
-				for (var i = 0; i < files.length; i++) {
-					var file = files[i];
-					// We only add images to the slideshow if we can generate previews for this
-					// media type
-					if (file.isPreviewAvailable || file.mimetype === 'image/svg+xml') {
-						var params = {
-							file: dir + file.name,
-							x: width,
-							y: height,
-							requesttoken: requestToken
-						};
-						imageUrl = SlideShow.buildUrl('preview', params);
-						downloadUrl = SlideShow.buildUrl('download', params);
+					for (var i = 0; i < files.length; i++) {
+						var file = files[i];
+						// We only add images to the slideshow if we can generate previews for this
+						// media type
+						if (file.isPreviewAvailable || file.mimetype === 'image/svg+xml') {
+							var params = {
+								file: dir + file.name,
+								x: width,
+								y: height,
+								requesttoken: requestToken
+							};
+							imageUrl = SlideShow.buildUrl('preview', params);
+							downloadUrl = SlideShow.buildUrl('download', params);
 
-						images.push({
-							name: file.name,
-							path: dir + file.name,
-							mimeType: file.mimetype,
-							url: imageUrl,
-							downloadUrl: downloadUrl
-						});
+							images.push({
+								name: file.name,
+								path: dir + file.name,
+								mimeType: file.mimetype,
+								url: imageUrl,
+								downloadUrl: downloadUrl
+							});
+						}
 					}
-				}
-				for (i = 0; i < images.length; i++) {
-					//console.log("Images in the slideshow : ", images[i]);
-					if (images[i].name === filename) {
-						start = i;
+					for (i = 0; i < images.length; i++) {
+						//console.log("Images in the slideshow : ", images[i]);
+						if (images[i].name === filename) {
+							start = i;
+						}
 					}
-				}
-				var slideShow = new SlideShow($('#slideshow'), images);
-				slideShow.onStop = function () {
-					location.hash = '';
-				};
-				slideShow.init();
-				slideShow.show(start);
-			});
+					var slideShow = new SlideShow($('#slideshow'), images);
+					slideShow.onStop = function () {
+						location.hash = '';
+					};
+					slideShow.init();
+					slideShow.show(start);
+				});
 		};
 
 		var url = SlideShow.buildUrl('mediatypes', {slideshow: 1});
