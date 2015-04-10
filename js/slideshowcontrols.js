@@ -3,15 +3,17 @@
 	/**
 	 * Button and key controls for the slideshow
 	 *
-	 * @param slideshow
-	 * @param container
-	 * @param images
-	 * @param interval
+	 * @param {object} slideshow
+	 * @param {element} container
+	 * @param {object} zoomablePreview
+	 * @param {array} images
+	 * @param {int} interval
 	 * @constructor
 	 */
-	var Controls = function (slideshow, container, images, interval) {
+	var Controls = function (slideshow, container, zoomablePreview, images, interval) {
 		this.slideshow = slideshow;
 		this.container = container;
+		this.zoomablePreview = zoomablePreview;
 		this.images = images;
 		this.current = 0;
 		this.errorLoadingImage = false;
@@ -221,6 +223,8 @@
 		 */
 		_next: function () {
 			this.slideshow.next();
+			this.zoomablePreview.reset();
+
 			if (this.errorLoadingImage) {
 				this.current -= 1;
 			}
@@ -235,6 +239,8 @@
 		 */
 		_previous: function () {
 			this.slideshow.previous();
+			this.zoomablePreview.reset();
+
 			this.current = (this.current - 1 + this.images.length) % this.images.length;
 			var previous = (this.current - 1 + this.images.length) % this.images.length;
 			this._updateSlideshow(previous);
@@ -259,6 +265,7 @@
 		 */
 		_stop: function () {
 			this.slideshow.stop();
+			this.zoomablePreview.stop();
 
 			this._clearTimeout();
 			this.container.hide();
@@ -270,7 +277,7 @@
 		 * @private
 		 */
 		_fullScreenToggle: function () {
-			this.slideshow.fullScreenToggle();
+			this.zoomablePreview.fullScreenToggle();
 		},
 
 		/**
@@ -278,7 +285,7 @@
 		 * @private
 		 */
 		_zoomToOriginal: function () {
-			this.slideshow.zoomToOriginal();
+			this.zoomablePreview.zoomToOriginal();
 		},
 
 		/**
@@ -286,7 +293,7 @@
 		 * @private
 		 */
 		_zoomToFit: function () {
-			this.slideshow.zoomToFit();
+			this.zoomablePreview.zoomToFit();
 		},
 
 		/**

@@ -16,12 +16,7 @@ var SlideShow = function (container, images, interval, maxScale) {
 	this.currentImage = null;
 	this.errorLoadingImage = false;
 	this.onStop = null;
-	this.zoomable = null;
-	this.fullScreen = null;
-	this.canFullScreen = false;
-	this.maxZoom = 3;
-	this.smallImageDimension = 200 / window.devicePixelRatio;
-	this.smallImageScale = 2;
+	this.zoomablePreview = null;
 };
 
 SlideShow.mediaTypes = {};
@@ -33,99 +28,10 @@ SlideShow.prototype = {
 	 */
 	init: function (play) {
 		this.hideImage();
-		this.bigShotSetup();
-
-		this.controls = new SlideShow.Controls(this, this.container, this.images);
+		this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
+		this.controls =
+			new SlideShow.Controls(this, this.container, this.zoomablePreview, this.images);
 		this.controls.init(play);
-
-		$(window).resize(function () {
-			this.zoomDecider();
-		}.bind(this));
-	},
-
-	bigShotSetup: function () {
-		// Detect fullscreen capability (mobile)
-		var e = this.container.get(0);
-		this.canFullScreen = e.requestFullscreen !== undefined ||
-		e.mozRequestFullScreen !== undefined ||
-		e.webkitRequestFullscreen !== undefined ||
-		e.msRequestFullscreen !== undefined;
-
-		// makes UI controls work in mobile version. Pinch only works on iOS
-		var browser = new bigshot.Browser();
-		this.container.children('input').each(function (i, e) {
-			browser.registerListener(e, 'click', browser.stopEventBubblingHandler(), false);
-			browser.registerListener(e, 'touchstart', browser.stopEventBubblingHandler(), false);
-			browser.registerListener(e, 'touchend', browser.stopEventBubblingHandler(), false);
-		});
-	},
-
-	zoomDecider: function () {
-		if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-			this.zoomToOriginal();
-		} else {
-			this.zoomToFit();
-		}
-	},
-
-	zoomToFit: function () {
-		if (this.zoomable !== null) {
-			this.zoomable.flyZoomToFit();
-		}
-	},
-
-	zoomToOriginal: function () {
-		if (this.zoomable === null) {
-			return;
-		}
-		if (this.currentImage.isSmallImage) {
-			this.zoomable.flyTo(0, 0, this.smallImageScale, true);
-		} else {
-			this.zoomable.flyTo(0, 0, 0, true);
-		}
-	},
-
-	resetZoom: function () {
-		if (this.zoomable === null) {
-			return;
-		}
-		if (this.currentImage.isSmallImage) {
-			this.zoomable.setZoom(this.smallImageScale, true);
-		} else {
-			this.zoomable.setZoom(0, true);
-		}
-	},
-
-	fullScreenStart: function () {
-		if (!this.canFullScreen) {
-			return;
-		}
-		this.fullScreen = new bigshot.FullScreen(this.container.get(0));
-		this.fullScreen.open();
-		this.fullScreen.addOnClose(function () {
-			this.fullScreenExit();
-		}.bind(this));
-	},
-
-	fullScreenExit: function () {
-		if (this.fullScreen === null) {
-			return;
-		}
-		this.fullScreen.close();
-		this.fullScreen = null;
-		this.zoomDecider();
-
-	},
-
-	fullScreenToggle: function () {
-		if (this.zoomable === null) {
-			return;
-		}
-		if (this.fullScreen !== null) {
-			this.fullScreenExit();
-		} else {
-			this.fullScreenStart();
-		}
 	},
 
 	/**
@@ -163,7 +69,7 @@ SlideShow.prototype = {
 				var $border = 30 / window.devicePixelRatio;
 				$(img).css('outline', $border + 'px solid ' + backgroundColour);
 
-				this.startBigshot(img);
+				this.zoomablePreview.startBigshot(img, this.currentImage);
 
 				this.setUrl(image.path);
 				this.controls.show(currentImageId);
@@ -181,39 +87,6 @@ SlideShow.prototype = {
 		}.bind(this));
 	},
 
-	/**
-	 *
-	 * @param image
-	 */
-	startBigshot: function (image) {
-		if (this.zoomable !== null) {
-			this.zoomable.dispose();
-			this.zoomable = null;
-		}
-		var maxZoom = this.maxZoom;
-		var imgWidth = image.naturalWidth / window.devicePixelRatio;
-		var imgHeight = image.naturalHeight / window.devicePixelRatio;
-		if (imgWidth < this.smallImageDimension && imgHeight < this.smallImageDimension) {
-			maxZoom += 3;
-			this.currentImage.isSmallImage = true;
-		}
-		this.zoomable = new bigshot.SimpleImage(new bigshot.ImageParameters({
-			container: this.container.get(0),
-			maxZoom: maxZoom,
-			minZoom: 0,
-			touchUI: false,
-			width: imgWidth,
-			height: imgHeight
-		}), image);
-		if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-			this.resetZoom();
-		}
-
-		// prevent zoom-on-doubleClick
-		this.zoomable.addEventListener('dblclick', function (ie) {
-			ie.preventDefault();
-		});
-	},
 
 	/**
 	 *
@@ -279,29 +152,14 @@ SlideShow.prototype = {
 	},
 
 	next: function () {
-		if (this.zoomable !== null) {
-			this.zoomable.stopFlying();
-			this.resetZoom();
-		}
 		this.hideErrorNotification();
 	},
 
 	previous: function () {
-		if (this.zoomable !== null) {
-			this.zoomable.stopFlying();
-			this.resetZoom();
-		}
 		this.hideErrorNotification();
 	},
 
 	stop: function () {
-		if (this.fullScreen !== null) {
-			this.fullScreenExit();
-		}
-		if (this.zoomable !== null) {
-			this.zoomable.dispose();
-			this.zoomable = null;
-		}
 		if (this.onStop) {
 			this.onStop();
 		}

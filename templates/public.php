@@ -20,7 +20,8 @@ script(
 		'vendor/marked/marked.min',
 		'vendor/bigshot/bigshot',
 		'slideshow',
-		'slideshowcontrols'
+		'slideshowcontrols',
+		'slideshowzoomablepreview'
 	]
 );
 style(
