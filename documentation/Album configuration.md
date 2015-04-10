@@ -1,5 +1,5 @@
 # Album configuration
-It's possible to configure an album via a simple text file, using the [Yaml](https://en.wikipedia.org/wiki/YAML) markup.
+It's possible to configure an album via a simple text file, using the [Yaml](https://en.wikipedia.org/wiki/YAML) markup language.
 
 ## Features
 
@@ -24,7 +24,7 @@ Comments start with #.
 
 Spacing is created using 2 spaces. **Do not use tabs**
 
-Take a look at the format description if you're getting error messages:
+Take a look at the format documentation if you're getting error messages:
 http://symfony.com/doc/current/components/yaml/yaml_format.html
 
 ```
@@ -54,7 +54,7 @@ sorting:
 
 See [this page](http://www.markitdown.net/markdown) for the markdown syntax
 
-_Note: Do not add links to your copyright string if you intend on adding a copyright link_
+_Note: Do not add links to your `copyright` string if you intend on adding a `copyright link`_
 
 ### Possible future extensions
 
