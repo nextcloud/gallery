@@ -209,7 +209,8 @@
 }
 
 .markdown-body>*:last-child {
- /* margin-bottom: 0 !important;*/
+  margin-bottom: 0 !important;
+  padding-bottom: 16px;
 }
 
 .markdown-body a:not(:link):not(:visited) {
@@ -279,7 +280,7 @@
   padding-bottom: 0.3em;
   font-size: 2.25em;
   line-height: 1.2;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
 }
 
 .markdown-body h1 .anchor {
@@ -290,7 +291,7 @@
   padding-bottom: 0.3em;
   font-size: 1.75em;
   line-height: 1.225;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
 }
 
 .markdown-body h2 .anchor {
@@ -346,7 +347,7 @@
   height: 4px;
   padding: 0;
   margin: 16px 0;
-  background-color: #e7e7e7;
+  background-color: #c7c7c7;
   border: 0 none;
 }
 
@@ -387,7 +388,7 @@
 .markdown-body blockquote {
   padding: 0 15px;
   color: #777;
-  border-left: 4px solid #ddd;
+  border-left: 4px solid #bbb;
 }
 
 .markdown-body blockquote>:first-child {
@@ -413,12 +414,12 @@
 .markdown-body table th,
 .markdown-body table td {
   padding: 6px 13px;
-  border: 1px solid #ddd;
+  border: 1px solid #bbb;
 }
 
 .markdown-body table tr {
   background-color: #fff;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #aaa;
 }
 
 .markdown-body table tr:nth-child(2n) {
