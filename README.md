@@ -124,11 +124,14 @@ Next add a few new entries to your **config/config.php** configuration file.
   'preview_max_scale_factor' => 1,
   'enabledPreviewProviders' =>
   array (
-    0 => 'OC\\Preview\\Image',
-    1 => 'OC\\Preview\\Illustrator',
-    2 => 'OC\\Preview\\Postscript',
-    3 => 'OC\\Preview\\Photoshop',
-    4 => 'OC\\Preview\\TIFF',
+    0 => 'OC\\Preview\\PNG',
+    1 => 'OC\\Preview\\JPEG',
+    2 => 'OC\\Preview\\GIF',
+    11 => 'OC\\Preview\\Illustrator',
+    12 => 'OC\\Preview\\Postscript',
+    13 => 'OC\\Preview\\Photoshop',
+    14 => 'OC\\Preview\\TIFF',
+    15 => 'OC\\Preview\\Raw'
   ),
 ```
 
