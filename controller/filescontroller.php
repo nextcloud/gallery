@@ -23,6 +23,7 @@ use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Service\FilesService;
 use OCA\GalleryPlus\Service\ConfigService;
+use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
@@ -42,6 +43,10 @@ class FilesController extends Controller {
 	 * @type ConfigService
 	 */
 	private $configService;
+	/**
+	 * @type SearchMediaService
+	 */
+	private $searchMediaService;
 
 	/**
 	 * Constructor
@@ -50,6 +55,7 @@ class FilesController extends Controller {
 	 * @param IRequest $request
 	 * @param FilesService $filesService
 	 * @param ConfigService $configService
+	 * @param SearchMediaService $searchMediaService
 	 * @param SmarterLogger $logger
 	 */
 	public function __construct(
@@ -57,12 +63,14 @@ class FilesController extends Controller {
 		IRequest $request,
 		FilesService $filesService,
 		ConfigService $configService,
+		SearchMediaService $searchMediaService,
 		SmarterLogger $logger
 	) {
 		parent::__construct($appName, $request);
 
 		$this->filesService = $filesService;
 		$this->configService = $configService;
+		$this->searchMediaService = $searchMediaService;
 		//$this->logger = $logger;
 	}
 
@@ -98,9 +106,11 @@ class FilesController extends Controller {
 			list($albumInfo, $privateAlbum) =
 				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
 			if ($privateAlbum) {
-				return new JSONResponse(['message' => 'Album is private', 'success' => false], 403);
+				return new JSONResponse(
+					['message' => 'Album is private or unavailable', 'success' => false], 403
+				);
 			}
-			$files = $this->filesService->getMediaFiles($folderNode, $mediaTypesArray);
+			$files = $this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray);
 
 			return $this->formatResults($files, $albumInfo, $locationHasChanged);
 		} catch (\Exception $exception) {

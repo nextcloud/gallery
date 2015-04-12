@@ -13,71 +13,49 @@
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
-use OCP\Files\File;
 use OCP\Files\Node;
 
+use OCA\GalleryPlus\Environment\NotFoundEnvException;
+
 /**
- * Contains various methods which provide initial information about the
- * supported media types, the folder permissions and the images contained in
- * the system
+ * Contains various methods to retrieve information from the filesystem
  *
  * @package OCA\GalleryPlus\Service
  */
 class FilesService extends Service {
 
 	/**
-	 * @type null|array<string,string|int>
-	 */
-	private $images = [];
-	/**
-	 * @type string[]
-	 */
-	private $supportedMediaTypes;
-
-	/**
-	 * This returns the list of all media files which can be shown starting from the given folder
+	 * This returns the current folder node based on a path
 	 *
-	 * @param Folder $folder
-	 * @param string[] $supportedMediaTypes
+	 * If the path leads to a file, we'll return the node of the containing folder
 	 *
-	 * @return array<string,string|int> all the images we could find
+	 * If we can't find anything, we try with the parent folder, up to the root or until we reach
+	 * our recursive limit
+	 *
+	 * @param string $location
+	 * @param int $depth
+	 *
+	 * @return array <Folder,string,bool>
 	 */
-	public function getMediaFiles($folder, $supportedMediaTypes) {
-		$this->supportedMediaTypes = $supportedMediaTypes;
-
-		$this->searchFolder($folder);
-
-		return $this->images;
-	}
-
-	/**
-	 * Look for media files and folders in the given folder
-	 *
-	 * @param Folder $folder
-	 * @param int $subDepth
-	 *
-	 * @return int
-	 */
-	private function searchFolder($folder, $subDepth = 0) {
-		$albumImageCounter = 0;
-		$subFolders = [];
-
-		$nodes = $this->getNodes($folder, $subDepth);
-		foreach ($nodes as $node) {
-			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
-			$nodeType = $this->getNodeType($node);
-			$subFolders = array_merge($subFolders, $this->getAllowedSubFolder($node, $nodeType));
-
-			if ($nodeType === 'file') {
-				$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
-				if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
-					break;
-				}
+	public function getCurrentFolder($location, $depth = 0) {
+		$node = null;
+		$location = $this->validateLocation($location, $depth);
+		try {
+			$node = $this->environment->getResourceFromPath($location);
+			if ($node->getType() === 'file') {
+				$node = $node->getParent();
 			}
-		}
-		$albumImageCounter = $this->searchSubFolders($subFolders, $subDepth, $albumImageCounter);
+		} catch (NotFoundEnvException $exception) {
+			// There might be a typo in the file or folder name
+			$folder = pathinfo($location, PATHINFO_DIRNAME);
+			$depth++;
 
-		return $albumImageCounter;
+			return $this->getCurrentFolder($folder, $depth);
+		}
+		$path = $this->environment->getPathFromVirtualRoot($node);
+		$locationHasChanged = $this->hasLocationChanged($depth);
+
+		return [$path, $node, $locationHasChanged];
 	}
 
 	/**
@@ -94,20 +72,104 @@ class FilesService extends Service {
 	 *
 	 * @throws NotFoundServiceException
 	 */
-	private function getNodes($folder, $subDepth) {
-		$nodes = [];
+	protected function getNodes($folder, $subDepth) {
 		try {
-			if ($folder->isReadable()
-				&& $folder->getStorage()
-						  ->isLocal()
-			) {
 				$nodes = $folder->getDirectoryListing();
-			}
 		} catch (\Exception $exception) {
 			$nodes = $this->recoverFromGetNodesError($subDepth, $exception);
 		}
 
 		return $nodes;
+	}
+
+	/**
+	 * Determines if the files are hosted locally (shared or not)
+	 *
+	 * isMounted() includes externally hosted shares, so we need to exclude those
+	 *
+	 * @param Node $node
+	 *
+	 * @return bool
+	 */
+	protected function isLocalAndAvailable($node) {
+		if (!$node->isMounted() && $node->isReadable()) {
+			if ($this->isExternalShare($node)) {
+				return false;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns the node type, either 'dir' or 'file'
+	 *
+	 * If there is a problem, we return an empty string so that the node can be ignored
+	 *
+	 * @param Node $node
+	 *
+	 * @return string
+	 */
+	protected function getNodeType($node) {
+		try {
+			$nodeType = $node->getType();
+		} catch (\Exception $exception) {
+			return '';
+		}
+
+		return $nodeType;
+	}
+
+	/**
+	 * Returns the node if it's a folder we have access to
+	 *
+	 * @param Folder $node
+	 * @param string $nodeType
+	 *
+	 * @return array|Folder
+	 */
+	protected function getAllowedSubFolder($node, $nodeType) {
+		if ($nodeType === 'dir') {
+			/** @type Folder $node */
+			if (!$node->nodeExists('.nomedia')) {
+				return [$node];
+			}
+		}
+
+		return [];
+	}
+
+	/**
+	 * Makes sure we don't go too far up before giving up
+	 *
+	 * @param string $location
+	 * @param int $depth
+	 *
+	 * @return string
+	 */
+	private function validateLocation($location, $depth) {
+		if ($depth === 4) {
+			// We can't find anything, so we decide to return data for the root folder
+			$location = '';
+		}
+
+		return $location;
+	}
+
+	/**
+	 * @param $depth
+	 *
+	 * @return bool
+	 */
+	private function hasLocationChanged($depth) {
+		$locationHasChanged = false;
+		if ($depth > 0) {
+			$locationHasChanged = true;
+		}
+
+		return $locationHasChanged;
 	}
 
 	/**
@@ -129,173 +191,24 @@ class FilesService extends Service {
 	}
 
 	/**
-	 * Returns the node type, either 'dir' or 'file'
-	 *
-	 * If there is a problem, we return an empty string so that the node can be ignored
+	 * Determines if the node is a share which is hosted externally
 	 *
 	 * @param Node $node
 	 *
-	 * @return string
-	 */
-	private function getNodeType($node) {
-		try {
-			$nodeType = $node->getType();
-		} catch (\Exception $exception) {
-			return '';
-		}
-
-		return $nodeType;
-	}
-
-	/**
-	 * Returns the node if it's a folder we have access to
-	 *
-	 * @param Folder $node
-	 * @param string $nodeType
-	 *
-	 * @return array|Folder
-	 */
-	private function getAllowedSubFolder($node, $nodeType) {
-		if ($nodeType === 'dir') {
-			/** @type Folder $node */
-			if (!$node->nodeExists('.nomedia')) {
-				return [$node];
-			}
-		}
-
-		return [];
-	}
-
-	/**
-	 * Checks if we've collected enough pictures to be able to build the view
-	 *
-	 * An album is full when we find max 4 pictures at the same level
-	 *
-	 * @param int $albumImageCounter
-	 * @param int $subDepth
-	 *
 	 * @return bool
 	 */
-	private function haveEnoughPictures($albumImageCounter, $subDepth) {
-		if ($subDepth === 0) {
-			return false;
-		}
-		if ($albumImageCounter === 4) {
+	private function isExternalShare($node) {
+		$sid = explode(
+			':',
+			$node->getStorage()
+				 ->getId()
+		);
+
+		if ($sid[0] === 'shared' && $sid[2][0] !== '/') {
 			return true;
 		}
 
 		return false;
-	}
-
-	/**
-	 * Looks for pictures in sub-folders
-	 *
-	 * If we're at level 0, we need to look for pictures in sub-folders no matter what
-	 * If we're at deeper levels, we only need to go further if we haven't managed to find one
-	 * picture in the current folder
-	 *
-	 * @param array <Folder> $subFolders
-	 * @param int $subDepth
-	 * @param int $albumImageCounter
-	 *
-	 * @return int
-	 */
-	private function searchSubFolders($subFolders, $subDepth, $albumImageCounter) {
-		if ($this->folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter)) {
-			$subDepth++;
-			foreach ($subFolders as $subFolder) {
-				$albumImageCounter = $this->searchFolder($subFolder, $subDepth);
-				if ($this->abortSearch($subDepth, $albumImageCounter)) {
-					break;
-				}
-			}
-		}
-
-		return $albumImageCounter;
-	}
-
-	/**
-	 * Checks if we need to look for media files in the specified folder
-	 *
-	 * @param array <Folder> $subFolders
-	 * @param int $subDepth
-	 * @param int $albumImageCounter
-	 *
-	 * @return bool
-	 */
-	private function folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter) {
-		if (!empty($subFolders) && ($subDepth === 0 || $albumImageCounter === 0)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns true if there is no need to check any other sub-folder at the same depth level
-	 *
-	 * @param int $subDepth
-	 * @param int $count
-	 *
-	 * @return bool
-	 */
-	private function abortSearch($subDepth, $count) {
-		if ($subDepth > 1 && $count > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns true if the file is of a supported media type and adds it to the array of items to
-	 * return
-	 *
-	 * @todo We could potentially check if the file is readable ($file->stat() maybe) in order to
-	 *     only return valid files, but this may slow down operations
-	 *
-	 * @param File $file the file to test
-	 *
-	 * @return bool
-	 */
-	private function isPreviewAvailable($file) {
-		try {
-			$mimeType = $file->getMimetype();
-			$isLocal = $file->getStorage()
-							->isLocal();
-			if ($isLocal && in_array($mimeType, $this->supportedMediaTypes)) {
-				$this->addFileToResults($file);
-
-				return true;
-			}
-		} catch (\Exception $exception) {
-			return false;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Adds various information about a file to the list of results
-	 *
-	 * @param File $file
-	 */
-	private function addFileToResults($file) {
-		$imagePath = $this->environment->getPathFromVirtualRoot($file);
-		$imageId = $file->getId();
-		$mimeType = $file->getMimetype();
-		$mTime = $file->getMTime();
-
-		$imageData = [
-			'path'     => $imagePath,
-			'fileid'   => $imageId,
-			'mimetype' => $mimeType,
-			'mtime'    => $mTime
-		];
-
-		$this->images[] = $imageData;
-
-		//$this->logger->debug("Image path : {path}", ['path' => $imagePath]);
 	}
 
 }

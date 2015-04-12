@@ -28,6 +28,7 @@ use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Service\FilesService;
 use OCA\GalleryPlus\Service\ConfigService;
+use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
@@ -73,6 +74,7 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('FilesService'),
 				$c->query('ConfigService'),
+				$c->query('SearchMediaService'),
 				$c->query('SmarterLogger')
 			);
 		}
@@ -84,6 +86,7 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('FilesService'),
 				$c->query('ConfigService'),
+				$c->query('SearchMediaService'),
 				$c->query('SmarterLogger')
 			);
 		}
@@ -221,6 +224,16 @@ class Application extends App {
 		$container->registerService(
 			'ConfigService', function (IContainer $c) {
 			return new ConfigService(
+				$c->query('AppName'),
+				$c->query('Environment'),
+				$c->query('SmarterLogger')
+
+			);
+		}
+		);
+		$container->registerService(
+			'SearchMediaService', function (IContainer $c) {
+			return new SearchMediaService(
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('SmarterLogger')

@@ -255,14 +255,14 @@ class Environment {
 	 *
 	 * That root folder changes when folders are shared publicly
 	 *
-	 * @param Node $file
+	 * @param File|Folder $node
 	 *
 	 * @return string
 	 */
-	public function getPathFromVirtualRoot($file) {
-		$path = $file->getPath();
+	public function getPathFromVirtualRoot($node) {
+		$path = $node->getPath();
 
-		if ($file->getType() === 'dir') {
+		if ($node->getType() === 'dir') {
 			// Needed because fromRootToFolder always ends with a slash
 			$path .= '/';
 		}
@@ -318,7 +318,7 @@ class Environment {
 	 *
 	 * @param int $resourceId
 	 *
-	 * @return Node
+	 * @return File|Folder
 	 *
 	 * @throws EnvironmentException
 	 */

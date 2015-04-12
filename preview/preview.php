@@ -186,7 +186,7 @@ class Preview {
 	 * @return \OC_Image
 	 */
 	private function getPreviewFromCore($keepAspect) {
-		$this->logger->debug("[PreviewService] Fetching the preview");
+		//$this->logger->debug("[PreviewService] Fetching the preview");
 		list($maxX, $maxY) = $this->dims;
 
 		$this->preview->setMaxX($maxX);

@@ -25,7 +25,7 @@ use OCP\Files\File;
  *
  * @package OCA\GalleryPlus\Service
  */
-class ConfigService extends Service {
+class ConfigService extends FilesService {
 
 	/**
 	 * @type int
@@ -85,8 +85,8 @@ class ConfigService extends Service {
 	private function getAlbumConfig(
 		$folder, $privacyChecker, $configName, $configItems, $level = 0, $config = []
 	) {
-		if ($folder->nodeExists($privacyChecker)) {
-			// Cancel as soon as we find out that the folder is private
+		if (!$this->isLocalAndAvailable($folder) || $folder->nodeExists($privacyChecker)) {
+			// Cancel as soon as we find out that the folder is private or external
 			return [null, true];
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
@@ -135,7 +135,7 @@ class ConfigService extends Service {
 	 * @param Folder $folder
 	 * @param string $configName
 	 * @param array $currentConfig
-	 * @param array<string,bool> $configItems
+	 * @param array <string,bool> $configItems
 	 * @param int $level
 	 * @param bool $isRootFolder
 	 *
@@ -192,7 +192,7 @@ class ConfigService extends Service {
 	 * @param Folder $folder
 	 * @param string $privacyChecker
 	 * @param string $configName
-	 * @param array<string,bool> $configItems
+	 * @param array <string,bool> $configItems
 	 * @param int $level
 	 * @param array $config
 	 *
@@ -232,7 +232,7 @@ class ConfigService extends Service {
 	 *
 	 * @param array $currentConfig
 	 * @param array $parsedConfig
-	 * @param array<string,bool> $configItems
+	 * @param array <string,bool> $configItems
 	 * @param int $level
 	 * @param bool $isRootFolder
 	 *
