@@ -317,7 +317,7 @@ Gallery.buildFilesUrl = function (path, files) {
 
 	if (Gallery.token) {
 		params.token = Gallery.token;
-		subUrl = 's/{token}/download?dir={path}&files={files}';
+		subUrl = 's/{token}/download?path={path}&files={files}';
 	} else {
 		subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
 	}
