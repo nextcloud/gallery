@@ -1,3 +1,7 @@
+owncloud-galleryplus (2.0.9)
+* Restore the ability to see images located on local, shared folders #120 (@oparoz)
+* Fix Url builder for public side (@oparoz)
+
 owncloud-galleryplus (2.0.8)
 * Introduce album configuration via a text file #85 (@oparoz)
 * Introduce buttons to sort content by name and upload date #90 and #91 (@oparoz)
