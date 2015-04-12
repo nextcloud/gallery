@@ -259,11 +259,7 @@ class PreviewController extends Controller {
 			$preview = $this->downloadService->downloadFile($image, $base64Encode);
 		}
 
-		return [
-			'data'   => $preview,
-			'status' => $status,
-			'type'   => $type
-		];
+		return ['data' => $preview, 'status' => $status, 'type' => $type];
 	}
 
 }

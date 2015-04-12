@@ -288,11 +288,7 @@ class ConfigService extends FilesService {
 	 * @return bool
 	 */
 	private function isConfigItemComplete($key, $parsedConfig, $complete) {
-		if (!$complete && array_key_exists($key, $parsedConfig)) {
-			return false;
-		}
-
-		return true;
+		return !(!$complete && array_key_exists($key, $parsedConfig));
 	}
 
 	/**
@@ -309,11 +305,7 @@ class ConfigService extends FilesService {
 		$inherit = $this->isConfigInheritable($parsedConfigItem);
 		$features = $this->isFeaturesListValid($key, $isRootFolder);
 
-		if ($level === 0 || $inherit || $features) {
-			return true;
-		}
-
-		return false;
+		return $level === 0 || $inherit || $features;
 	}
 
 	/**
@@ -368,10 +360,6 @@ class ConfigService extends FilesService {
 	 * @return bool
 	 */
 	private function isFeaturesListValid($key, $isRootFolder) {
-		if ($key === 'features' && $isRootFolder) {
-			return true;
-		}
-
-		return false;
+		return $key === 'features' && $isRootFolder;
 	}
 }

@@ -102,11 +102,7 @@ class FilesService extends Service {
 	 */
 	protected function isLocalAndAvailable($node) {
 		if (!$node->isMounted() && $node->isReadable()) {
-			if ($this->isExternalShare($node)) {
-				return false;
-			}
-
-			return true;
+			return !$this->isExternalShare($node);
 		}
 
 		return false;

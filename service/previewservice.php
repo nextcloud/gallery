@@ -92,11 +92,9 @@ class PreviewService extends Service {
 	public function getSupportedMediaTypes($slideshow) {
 		$supportedMimes = [];
 		$wantedMimes = $this->baseMimeTypes;
-
 		if ($slideshow) {
 			$wantedMimes = array_merge($wantedMimes, $this->slideshowMimeTypes);
 		}
-
 		foreach ($wantedMimes as $wantedMime) {
 			// Let's see if a preview of files of that media type can be generated
 			if ($this->isMimeSupported($wantedMime)) {
@@ -106,8 +104,7 @@ class PreviewService extends Service {
 			}
 		}
 		$supportedMimes = $this->addSvgSupport($supportedMimes);
-
-		$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
+		//$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
 
 		return $supportedMimes;
 	}

@@ -60,7 +60,6 @@ class SearchMediaService extends FilesService {
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
-
 		$nodes = $this->getNodes($folder, $subDepth);
 		foreach ($nodes as $node) {
 			if (!$this->isLocalAndAvailable($node)) {
@@ -73,7 +72,6 @@ class SearchMediaService extends FilesService {
 			if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
 				break;
 			}
-
 		}
 		$albumImageCounter = $this->searchSubFolders($subFolders, $subDepth, $albumImageCounter);
 
@@ -111,11 +109,7 @@ class SearchMediaService extends FilesService {
 		if ($subDepth === 0) {
 			return false;
 		}
-		if ($albumImageCounter === 4) {
-			return true;
-		}
-
-		return false;
+		return $albumImageCounter === 4;
 	}
 
 	/**
@@ -156,11 +150,7 @@ class SearchMediaService extends FilesService {
 	 * @return bool
 	 */
 	private function folderNeedsToBeSearched($subFolders, $subDepth, $albumImageCounter) {
-		if (!empty($subFolders) && ($subDepth === 0 || $albumImageCounter === 0)) {
-			return true;
-		}
-
-		return false;
+		return !empty($subFolders) && ($subDepth === 0 || $albumImageCounter === 0);
 	}
 
 	/**
@@ -172,11 +162,7 @@ class SearchMediaService extends FilesService {
 	 * @return bool
 	 */
 	private function abortSearch($subDepth, $count) {
-		if ($subDepth > 1 && $count > 0) {
-			return true;
-		}
-
-		return false;
+		return $subDepth > 1 && $count > 0;
 	}
 
 	/**
