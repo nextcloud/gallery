@@ -43,7 +43,7 @@ class SearchMediaService extends FilesService {
 	 */
 	public function getMediaFiles($folder, $supportedMediaTypes, $features) {
 		$this->supportedMediaTypes = $supportedMediaTypes;
-		//$this->features = $features;
+		$this->features = $features;
 		$this->searchFolder($folder);
 
 		return $this->images;

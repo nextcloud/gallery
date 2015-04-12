@@ -25,6 +25,15 @@ use OCA\GalleryPlus\Environment\NotFoundEnvException;
 class FilesService extends Service {
 
 	/**
+	 * @type string[]
+	 */
+	protected $features;
+	/**
+	 * @type bool
+	 */
+	private $externalShareAllowed = false;
+
+	/**
 	 * This returns the current folder node based on a path
 	 *
 	 * If the path leads to a file, we'll return the node of the containing folder
@@ -173,7 +182,8 @@ class FilesService extends Service {
 	}
 
 	/**
-	 * Sends an array containing information about the folder
+	 * Makes sure that the folder is not empty, does meet our requirements in terms of location and
+	 * returns details about it
 	 *
 	 * @param string $path
 	 * @param Folder $node
@@ -187,6 +197,9 @@ class FilesService extends Service {
 		if (is_null($node)) {
 			// Something very wrong has just happened
 			$this->logAndThrowNotFound('Oh Nooooes!');
+		}
+		if (!$this->isLocalAndAvailable($node)) {
+			$this->logAndThrowForbidden('Album is private or unavailable');
 		}
 
 		return [$path, $node, $locationHasChanged];
@@ -214,22 +227,42 @@ class FilesService extends Service {
 	/**
 	 * Determines if the node is a share which is hosted externally
 	 *
+	 * @fixme $externalShareAllowed is a hack which can be manually enabled by experts
+	 *
 	 * @param Node $node
 	 *
 	 * @return bool
 	 */
 	private function isExternalShare($node) {
+		if ($this->isExternalShareAllowed() || $this->externalShareAllowed) {
+			return false;
+		}
+
 		$sid = explode(
 			':',
 			$node->getStorage()
 				 ->getId()
 		);
 
-		if ($sid[0] === 'shared' && $sid[2][0] !== '/') {
-			return true;
+		return ($sid[0] === 'shared' && $sid[2][0] !== '/');
+	}
+
+	/**
+	 * Determines if the user has allowed the use of external shares
+	 *
+	 * @fixme Can only fully work if the setting is stored in the database
+	 * @fixme Blocked by https://github.com/owncloud/core/issues/15551
+	 *
+	 * @return bool
+	 */
+	private function isExternalShareAllowed() {
+		$features = $this->features;
+		if (empty($features)) {
+			return false;
 		}
 
-		return false;
+		return (array_key_exists('external_shares', $features)
+				&& $features['external_shares'] === 'yes');
 	}
 
 }

@@ -59,10 +59,8 @@ class ConfigService extends FilesService {
 			'fileid'      => $folderNode->getID(),
 			'permissions' => $folderNode->getPermissions()
 		];
-
-		// There is always an albumInfo, but the config may be empty
+		// There is always an albumInfo, but the albumConfig may be empty
 		$albumConfig = array_merge($albumInfo, $albumConfig);
-
 
 		return $albumConfig;
 	}
@@ -85,7 +83,7 @@ class ConfigService extends FilesService {
 	private function getAlbumConfig(
 		$folder, $privacyChecker, $configName, $configItems, $level = 0, $config = []
 	) {
-		if (!$this->isLocalAndAvailable($folder) || $folder->nodeExists($privacyChecker)) {
+		if ($folder->nodeExists($privacyChecker)) {
 			// Cancel as soon as we find out that the folder is private or external
 			return [null, true];
 		}

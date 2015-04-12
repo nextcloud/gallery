@@ -100,6 +100,7 @@ class FilesController extends Controller {
 				$this->filesService->getCurrentFolder(rawurldecode($location));
 
 			$albumInfo = $this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
+
 			$files = $this->searchMediaService->getMediaFiles(
 				$folderNode, $mediaTypesArray, $albumInfo['features']
 			);
