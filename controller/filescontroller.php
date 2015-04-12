@@ -19,7 +19,6 @@ use OCP\Files\Folder;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Service\FilesService;
 use OCA\GalleryPlus\Service\ConfigService;
@@ -99,18 +98,11 @@ class FilesController extends Controller {
 			/** @type Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
 				$this->filesService->getCurrentFolder(rawurldecode($location));
-			if (is_null($folderNode)) {
-				// Something very wrong has just happened
-				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], 500);
-			}
-			list($albumInfo, $privateAlbum) =
-				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
-			if ($privateAlbum) {
-				return new JSONResponse(
-					['message' => 'Album is private or unavailable', 'success' => false], 403
-				);
-			}
-			$files = $this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray);
+
+			$albumInfo = $this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
+			$files = $this->searchMediaService->getMediaFiles(
+				$folderNode, $mediaTypesArray, $albumInfo['features']
+			);
 
 			return $this->formatResults($files, $albumInfo, $locationHasChanged);
 		} catch (\Exception $exception) {

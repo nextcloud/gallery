@@ -21,6 +21,7 @@ use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Environment\NotFoundEnvException;
 use OCA\GalleryPlus\Service\NotFoundServiceException;
+use OCA\GalleryPlus\Service\ForbiddenServiceException;
 
 /**
  * Our classes extend both Controller and ApiController, so we need to use
@@ -43,6 +44,9 @@ trait JsonHttpError {
 			|| $exception instanceof NotFoundEnvException
 		) {
 			$code = Http::STATUS_NOT_FOUND;
+		}
+		if ($exception instanceof ForbiddenServiceException){
+			$code = Http::STATUS_FORBIDDEN;
 		}
 
 		return new JSONResponse(

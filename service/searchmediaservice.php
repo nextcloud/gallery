@@ -37,11 +37,13 @@ class SearchMediaService extends FilesService {
 	 *
 	 * @param Folder $folder
 	 * @param string[] $supportedMediaTypes
+	 * @param array $features
 	 *
-	 * @return array<string,string|int> all the images we could find
+	 * @return array <string,string|int> all the images we could find
 	 */
-	public function getMediaFiles($folder, $supportedMediaTypes) {
+	public function getMediaFiles($folder, $supportedMediaTypes, $features) {
 		$this->supportedMediaTypes = $supportedMediaTypes;
+		//$this->features = $features;
 		$this->searchFolder($folder);
 
 		return $this->images;
@@ -67,7 +69,7 @@ class SearchMediaService extends FilesService {
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
 			$subFolders = array_merge($subFolders, $this->getAllowedSubFolder($node, $nodeType));
-			$albumImageCounter = $this->addMediaFiles($node, $nodeType, $albumImageCounter);
+			$albumImageCounter = $this->addMediaFile($node, $nodeType, $albumImageCounter);
 			if ($this->haveEnoughPictures($albumImageCounter, $subDepth)) {
 				break;
 			}
@@ -79,15 +81,15 @@ class SearchMediaService extends FilesService {
 	}
 
 	/**
-	 * Fills the album with images and
+	 * Adds the node to the list of images if it's a file and we can generate a preview of it
 	 *
-	 * @param $node
-	 * @param $nodeType
-	 * @param $albumImageCounter
+	 * @param File|Folder $node
+	 * @param string $nodeType
+	 * @param int $albumImageCounter
 	 *
-	 * @return bool
+	 * @return int
 	 */
-	private function addMediaFiles($node, $nodeType, $albumImageCounter) {
+	private function addMediaFile($node, $nodeType, $albumImageCounter) {
 		if ($nodeType === 'file') {
 			$albumImageCounter = $albumImageCounter + (int)$this->isPreviewAvailable($node);
 		}

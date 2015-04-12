@@ -105,11 +105,7 @@ class PreviewService extends Service {
 					$pathToIcon; // We add it to the list of supported media types
 			}
 		}
-		// If it's enabled, but doesn't work, an exception will be raised.
-		// If it's disabled, we support it via the browser's native support
-		if (!in_array('image/svg+xml', $supportedMimes)) {
-			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
-		}
+		$supportedMimes = $this->addSvgSupport($supportedMimes);
 
 		$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
 
@@ -223,6 +219,25 @@ class PreviewService extends Service {
 		}
 
 		return $preview;
+	}
+
+	/**
+	 * Adds the SVG media type if it's not already there
+	 *
+	 * If it's enabled, but doesn't work, an exception will be raised when trying to generate a
+	 * preview. If it's disabled, we support it via the browser's native support
+	 *
+	 * @param string[] $supportedMimes
+	 *
+	 * @return string[]
+	 */
+	private function addSvgSupport($supportedMimes) {
+
+		if (!in_array('image/svg+xml', $supportedMimes)) {
+			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
+		}
+
+		return $supportedMimes;
 	}
 
 	/**

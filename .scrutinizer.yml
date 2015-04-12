@@ -82,6 +82,7 @@ checks:
         avoid_space_indentation: true
         overriding_private_members: true
         no_unnecessary_function_call_in_for_loop: true
+        simplify_boolean_return: true
     javascript:
         wrap_iife: true
         no_process_exit: true
@@ -117,6 +118,9 @@ coding_style:
             general:
                 use_tabs: true
                 size: 4
+        spaces:
+            other:
+                after_type_cast: false
         braces:
             classes_functions:
                 class: end-of-line

@@ -35,7 +35,7 @@ class FilesService extends Service {
 	 * @param string $location
 	 * @param int $depth
 	 *
-	 * @return array <Folder,string,bool>
+	 * @return array <string,Folder,bool>
 	 */
 	public function getCurrentFolder($location, $depth = 0) {
 		$node = null;
@@ -55,7 +55,7 @@ class FilesService extends Service {
 		$path = $this->environment->getPathFromVirtualRoot($node);
 		$locationHasChanged = $this->hasLocationChanged($depth);
 
-		return [$path, $node, $locationHasChanged];
+		return $this->sendFolder($path, $node, $locationHasChanged);
 	}
 
 	/**
@@ -74,7 +74,7 @@ class FilesService extends Service {
 	 */
 	protected function getNodes($folder, $subDepth) {
 		try {
-				$nodes = $folder->getDirectoryListing();
+			$nodes = $folder->getDirectoryListing();
 		} catch (\Exception $exception) {
 			$nodes = $this->recoverFromGetNodesError($subDepth, $exception);
 		}
@@ -173,6 +173,26 @@ class FilesService extends Service {
 	}
 
 	/**
+	 * Sends an array containing information about the folder
+	 *
+	 * @param string $path
+	 * @param Folder $node
+	 * @param bool $locationHasChanged
+	 *
+	 * @return array <string,Folder,bool>
+	 *
+	 * @throws NotFoundServiceException
+	 */
+	private function sendFolder($path, $node, $locationHasChanged) {
+		if (is_null($node)) {
+			// Something very wrong has just happened
+			$this->logAndThrowNotFound('Oh Nooooes!');
+		}
+
+		return [$path, $node, $locationHasChanged];
+	}
+
+	/**
 	 * Throws an exception if this problem occurs in the current folder, otherwise just ignores the
 	 * sub-folder
 	 *
@@ -180,6 +200,7 @@ class FilesService extends Service {
 	 * @param \Exception $exception
 	 *
 	 * @return array
+	 *
 	 * @throws NotFoundServiceException
 	 */
 	private function recoverFromGetNodesError($subDepth, $exception) {

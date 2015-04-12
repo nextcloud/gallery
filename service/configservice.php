@@ -43,28 +43,28 @@ class ConfigService extends FilesService {
 	 * @param Folder $folderNode
 	 * @param string $folderPathFromRoot
 	 *
-	 * @return array<null|array,bool>
+	 * @return null|array
 	 */
 	public function getAlbumInfo($folderNode, $folderPathFromRoot) {
 		$configName = 'gallery.cnf';
 		$privacyChecker = '.nomedia';
 		$configItems = ['information' => false, 'sorting' => false, 'features' => false];
-
 		list ($albumConfig, $privateAlbum) =
 			$this->getAlbumConfig($folderNode, $privacyChecker, $configName, $configItems);
-
-		if (!$privateAlbum) {
-			$albumInfo = [
-				'path'        => $folderPathFromRoot,
-				'fileid'      => $folderNode->getID(),
-				'permissions' => $folderNode->getPermissions()
-			];
-
-			// There is always an albumInfo, but the config may be empty
-			$albumConfig = array_merge($albumInfo, $albumConfig);
+		if ($privateAlbum) {
+			$this->logAndThrowForbidden('Album is private or unavailable');
 		}
+		$albumInfo = [
+			'path'        => $folderPathFromRoot,
+			'fileid'      => $folderNode->getID(),
+			'permissions' => $folderNode->getPermissions()
+		];
 
-		return [$albumConfig, $privateAlbum];
+		// There is always an albumInfo, but the config may be empty
+		$albumConfig = array_merge($albumInfo, $albumConfig);
+
+
+		return $albumConfig;
 	}
 
 	/**

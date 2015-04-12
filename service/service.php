@@ -65,4 +65,17 @@ abstract class Service {
 		throw new NotFoundServiceException($message);
 	}
 
+	/**
+	 * Logs the error and raises a "Forbidden" type exception
+	 *
+	 * @param string $message
+	 *
+	 * @throws ForbiddenServiceException
+	 */
+	protected function logAndThrowForbidden($message) {
+		$this->logger->error($message . ' (403)');
+
+		throw new ForbiddenServiceException($message);
+	}
+
 }
