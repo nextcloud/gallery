@@ -119,7 +119,7 @@ Album.prototype = {
 			this._getOneImage(images[i], targetHeight, targetWidth, a);
 		}
 
-		var labelWidth = (targetHeight - 1);
+		var labelWidth = (targetHeight - 0.01);
 		a.find('.album-label').width(labelWidth);
 	},
 
