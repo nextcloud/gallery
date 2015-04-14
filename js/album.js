@@ -82,7 +82,7 @@ Album.prototype = {
 			var backgroundHeight, backgroundWidth;
 			img.alt = '';
 			backgroundHeight = (targetHeight / 2);
-			backgroundWidth = calcWidth - 2;
+			backgroundWidth = calcWidth - 2.01;
 
 			// Adjust the size because of the margins around pictures
 			backgroundHeight -= 2;
@@ -115,8 +115,12 @@ Album.prototype = {
 			if (imagesCount === 2 || (imagesCount === 3 && i === 0)) {
 				targetWidth = calcWidth * 2;
 			}
+			targetWidth = targetWidth.toFixed(3);
 			this._getOneImage(images[i], targetHeight, targetWidth, a);
 		}
+
+		var labelWidth = (targetHeight - 1);
+		a.find('.album-label').width(labelWidth);
 	},
 
 	/**
@@ -313,6 +317,7 @@ Row.prototype = {
 	getDom: function () {
 		var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
 		var targetHeight = 200 * scaleRatio;
+		targetHeight = targetHeight.toFixed(3);
 		var row = $('<div/>').addClass('row loading');
 		/**
 		 * @param row
