@@ -68,12 +68,11 @@ Album.prototype = {
 	 * @param {number} targetHeight Each row has a specific height
 	 * @param {number} calcWidth Album width
 	 * @param {object} a
-	 * @param {bool} doubleWidth false for a 1x1 album thumbnail and true for a 2x1 album thumbnail
 	 *
 	 * @returns {a}
 	 * @private
 	 */
-	_getOneImage: function (image, targetHeight, calcWidth, a, doubleWidth) {
+	_getOneImage: function (image, targetHeight, calcWidth, a) {
 		var parts = image.src.split('/');
 		parts.shift();
 		var path = parts.join('/');
@@ -86,12 +85,8 @@ Album.prototype = {
 			backgroundWidth = calcWidth - 2;
 
 			// Adjust the size because of the margins around pictures
-			if (doubleWidth) {
-				backgroundHeight -= 3;
-				backgroundWidth -= 2;
-			} else {
-				backgroundHeight -= 2;
-			}
+			backgroundHeight -= 2;
+
 			var croppedDiv = $('<div class="cropped">');
 			croppedDiv.css("background-image", "url('" + img.src + "')");
 			croppedDiv.css("height", backgroundHeight);
@@ -111,18 +106,16 @@ Album.prototype = {
 	 * @private
 	 */
 	_getFourImages: function (images, targetHeight, a) {
-		var calcWidth = Math.floor(targetHeight / 2);
+		var calcWidth = targetHeight / 2;
 		var targetWidth;
 		var imagesCount = images.length;
-		var doubleWidth = false;
 
 		for (var i = 0; i < imagesCount; i++) {
 			targetWidth = calcWidth;
 			if (imagesCount === 2 || (imagesCount === 3 && i === 0)) {
 				targetWidth = calcWidth * 2;
-				doubleWidth = true;
 			}
-			this._getOneImage(images[i], targetHeight, targetWidth, a, doubleWidth);
+			this._getOneImage(images[i], targetHeight, targetWidth, a);
 		}
 	},
 
@@ -318,8 +311,8 @@ Row.prototype = {
 	},
 
 	getDom: function () {
-		var scaleRation = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
-		var targetHeight = 200 * scaleRation;
+		var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
+		var targetHeight = 200 * scaleRatio;
 		var row = $('<div/>').addClass('row loading');
 		/**
 		 * @param row
