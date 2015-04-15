@@ -113,9 +113,9 @@ class ConfigService extends FilesService {
 	 *
 	 * @param Folder $folder
 	 * @param string $configName
-	 * @param $config
-	 * @param $level
-	 * @param $isRootFolder
+	 * @param array $config
+	 * @param int $level
+	 * @param bool $isRootFolder
 	 *
 	 * @return array
 	 */
