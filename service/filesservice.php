@@ -23,6 +23,10 @@ use OCA\GalleryPlus\Environment\NotFoundEnvException;
  * @package OCA\GalleryPlus\Service
  */
 class FilesService extends Service {
+	/**
+	 * @type int
+	 */
+	protected $virtualRootLevel = null;
 
 	/**
 	 * @type string[]
@@ -101,8 +105,8 @@ class FilesService extends Service {
 	 * @return bool
 	 */
 	protected function isLocalAndAvailable($node) {
-		if (!$node->isMounted() && $node->isReadable()) {
-			return !$this->isExternalShare($node);
+		if (!$node->isMounted()) {
+			return !$this->isExternalShare($node) && $node->isReadable();
 		}
 
 		return false;
@@ -144,6 +148,28 @@ class FilesService extends Service {
 		}
 
 		return [];
+	}
+
+	/**
+	 * Determines if we've reached the root folder
+	 *
+	 * @param Folder $folder
+	 * @param int $level
+	 *
+	 * @return bool
+	 */
+	protected function isRootFolder($folder, $level) {
+		$isRootFolder = false;
+		$rootFolder = $this->environment->getNode('');
+		if ($folder->getPath() === $rootFolder->getPath()) {
+			$isRootFolder = true;
+		}
+		$virtualRootFolder = $this->environment->getPathFromVirtualRoot($folder);
+		if (empty($virtualRootFolder)) {
+			$this->virtualRootLevel = $level;
+		}
+
+		return $isRootFolder;
 	}
 
 	/**

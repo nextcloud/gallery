@@ -12,13 +12,10 @@
 
 namespace OCA\GalleryPlus\Service;
 
-use Symfony\Component\Yaml\Yaml;
-
 use OCP\Files\Folder;
-use OCP\Files\File;
 
 /**
- * Finds configurations files, parses them and returns a configuration array
+ * Finds configurations files and returns a configuration array
  *
  * Checks the current and parent folders for configuration files and the privacy flag
  * Supports explicit inheritance
@@ -28,9 +25,14 @@ use OCP\Files\File;
 class ConfigService extends FilesService {
 
 	/**
-	 * @type int
+	 * @type array <string,bool>
 	 */
-	private $virtualRootLevel = null;
+	private $configItems = ['information' => false, 'sorting' => false, 'features' => false];
+
+	/**
+	 * @type ConfigParser
+	 */
+	private $configParser;
 
 	/**
 	 * Returns information about the currently selected folder
@@ -48,9 +50,10 @@ class ConfigService extends FilesService {
 	public function getAlbumInfo($folderNode, $folderPathFromRoot) {
 		$configName = 'gallery.cnf';
 		$privacyChecker = '.nomedia';
-		$configItems = ['information' => false, 'sorting' => false, 'features' => false];
+
+		$this->configParser = new ConfigParser();
 		list ($albumConfig, $privateAlbum) =
-			$this->getAlbumConfig($folderNode, $privacyChecker, $configName, $configItems);
+			$this->getAlbumConfig($folderNode, $privacyChecker, $configName);
 		if ($privateAlbum) {
 			$this->logAndThrowForbidden('Album is private or unavailable');
 		}
@@ -74,14 +77,13 @@ class ConfigService extends FilesService {
 	 * @param Folder $folder
 	 * @param string $privacyChecker
 	 * @param string $configName
-	 * @param array $configItems
 	 * @param int $level
 	 * @param array $config
 	 *
 	 * @return array<null|array,bool>
 	 */
 	private function getAlbumConfig(
-		$folder, $privacyChecker, $configName, $configItems, $level = 0, $config = []
+		$folder, $privacyChecker, $configName, $level = 0, $config = []
 	) {
 		if ($folder->nodeExists($privacyChecker)) {
 			// Cancel as soon as we find out that the folder is private or external
@@ -89,14 +91,14 @@ class ConfigService extends FilesService {
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
-			list($config, $configItems) =
+			list($config) =
 				$this->parseFolderConfig(
-					$folder, $configName, $config, $configItems, $level, $isRootFolder
+					$folder, $configName, $config, $level, $isRootFolder
 				);
 		}
 		if (!$isRootFolder) {
 			return $this->getParentConfig(
-				$folder, $privacyChecker, $configName, $configItems, $level, $config
+				$folder, $privacyChecker, $configName, $level, $config
 			);
 		}
 		$config = $this->validatesInfoConfig($config);
@@ -106,58 +108,57 @@ class ConfigService extends FilesService {
 	}
 
 	/**
-	 * Determines if we've reached the root folder
-	 *
-	 * @param Folder $folder
-	 * @param int $level
-	 *
-	 * @return bool
-	 */
-	private function isRootFolder($folder, $level) {
-		$isRootFolder = false;
-		$rootFolder = $this->environment->getNode('');
-		if ($folder->getPath() === $rootFolder->getPath()) {
-			$isRootFolder = true;
-		}
-		$virtualRootFolder = $this->environment->getPathFromVirtualRoot($folder);
-		if (empty($virtualRootFolder)) {
-			$this->virtualRootLevel = $level;
-		}
-
-		return $isRootFolder;
-	}
-
-	/**
-	 * Returns a parsed configuration if one was found in the current folder
+	 * Returns a parsed configuration if one was found in the current folder or generates an error
+	 * message to send back
 	 *
 	 * @param Folder $folder
 	 * @param string $configName
-	 * @param array $currentConfig
-	 * @param array <string,bool> $configItems
-	 * @param int $level
-	 * @param bool $isRootFolder
+	 * @param $config
+	 * @param $level
+	 * @param $isRootFolder
 	 *
-	 * @return array <null|array,array<string,bool>>
+	 * @return array
 	 */
-	private function parseFolderConfig(
-		$folder, $configName, $currentConfig, $configItems, $level, $isRootFolder
-	) {
-		/** @type File $configFile */
-		$configFile = $folder->get($configName);
+	private function parseFolderConfig($folder, $configName, $config, $level, $isRootFolder) {
 		try {
-			$rawConfig = $configFile->getContent();
-			$saneConfig = $this->bomFixer($rawConfig);
-			$parsedConfig = Yaml::parse($saneConfig);
-
 			list($config, $configItems) =
-				$this->buildAlbumConfig(
-					$currentConfig, $parsedConfig, $configItems, $level, $isRootFolder
+				$this->configParser->parseFolderConfig(
+					$folder, $configName, $config, $this->configItems, $level, $isRootFolder
 				);
-		} catch (\Exception $exception) {
-			list($config, $configItems) = $this->buildErrorMessage($folder, $configItems);
+			$this->configItems = $configItems;
+		} catch (ServiceException $exception) {
+			list($config) =
+				$this->buildErrorMessage($exception, $folder);
 		}
 
-		return [$config, $configItems];
+		return [$config];
+	}
+
+	/**
+	 * Builds the error message to send back when there is an error
+	 *
+	 * @fixme Missing translations
+	 *
+	 * @param ServiceException $exception
+	 * @param Folder $folder
+	 *
+	 * @return array <null|array<string,string>,bool>
+	 * @internal param $array <string,bool> $configItems
+	 *
+	 */
+	private function buildErrorMessage($exception, $folder) {
+		$configPath = $this->environment->getPathFromVirtualRoot($folder);
+		$errorMessage = $exception->getMessage() . "</br></br>Config location: /$configPath";
+		$this->logger->error($errorMessage);
+
+		$config = ['information' => ['description' => $errorMessage]];
+		$configItems = $this->configItems;
+		foreach ($configItems as $key => $complete) {
+			$configItems[$key] = true;
+		}
+		$this->configItems = $configItems;
+
+		return [$config];
 	}
 
 	/**
@@ -172,10 +173,13 @@ class ConfigService extends FilesService {
 	private function validatesInfoConfig($albumConfig) {
 		$this->virtualRootLevel;
 		if (array_key_exists('information', $albumConfig)) {
-			$level = $albumConfig['information']['level'];
-			if ($level > $this->virtualRootLevel) {
-				$albumConfig['information']['description_link'] = null;
-				$albumConfig['information']['copyright_link'] = null;
+			$info = $albumConfig['information'];
+			if (array_key_exists('level', $info)) {
+				$level = $info['level'];
+				if ($level > $this->virtualRootLevel) {
+					$albumConfig['information']['description_link'] = null;
+					$albumConfig['information']['copyright_link'] = null;
+				}
 			}
 		}
 
@@ -190,176 +194,18 @@ class ConfigService extends FilesService {
 	 * @param Folder $folder
 	 * @param string $privacyChecker
 	 * @param string $configName
-	 * @param array <string,bool> $configItems
 	 * @param int $level
 	 * @param array $config
 	 *
 	 * @return array<null|array,bool>
 	 */
-	private function getParentConfig(
-		$folder, $privacyChecker, $configName, $configItems, $level, $config
-	) {
+	private function getParentConfig($folder, $privacyChecker, $configName, $level, $config) {
 		$parentFolder = $folder->getParent();
 		$level++;
 
 		return $this->getAlbumConfig(
-			$parentFolder, $privacyChecker, $configName, $configItems, $level, $config
+			$parentFolder, $privacyChecker, $configName, $level, $config
 		);
 	}
 
-	/**
-	 * Removes the BOM from a file
-	 *
-	 * http://us.php.net/manual/en/function.pack.php#104151
-	 *
-	 * @param string $file
-	 *
-	 * @return string
-	 */
-	private function bomFixer($file) {
-		$bom = pack("CCC", 0xef, 0xbb, 0xbf);
-		if (strncmp($file, $bom, 3) === 0) {
-			$file = substr($file, 3);
-		}
-
-		return $file;
-	}
-
-	/**
-	 * Returns either the local config or one merged with a config containing sorting information
-	 *
-	 * @param array $currentConfig
-	 * @param array $parsedConfig
-	 * @param array <string,bool> $configItems
-	 * @param int $level
-	 * @param bool $isRootFolder
-	 *
-	 * @return array<null|array,array<string,bool>>
-	 */
-	private function buildAlbumConfig(
-		$currentConfig, $parsedConfig, $configItems, $level, $isRootFolder
-	) {
-		foreach ($configItems as $key => $complete) {
-			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
-				$parsedConfigItem = $parsedConfig[$key];
-				if ($this->isConfigUsable($key, $parsedConfigItem, $level, $isRootFolder)) {
-					list($configItem, $itemComplete) =
-						$this->addConfigItem($key, $parsedConfigItem, $level);
-					$currentConfig = array_merge($currentConfig, $configItem);
-					$configItems[$key] = $itemComplete;
-				}
-
-			}
-		}
-
-		return [$currentConfig, $configItems];
-	}
-
-	/**
-	 * Builds the error message to send back when there is an error
-	 *
-	 * @fixme Missing translations
-	 *
-	 * @param Folder $folder
-	 * @param array <string,bool> $configItems
-	 *
-	 * @return array<null|array<string,string>,bool>
-	 */
-	private function buildErrorMessage($folder, $configItems) {
-		$configPath = $this->environment->getPathFromVirtualRoot($folder);
-		$errorMessage = "Problem while parsing the configuration file located in: $configPath";
-		$this->logger->error($errorMessage);
-
-		$config = ['information' => ['description' => $errorMessage]];
-		foreach ($configItems as $key => $complete) {
-			$configItems[$key] = true;
-		}
-
-		return [$config, $configItems];
-	}
-
-	/**
-	 * Determines if we already have everything we need for this configuration sub-section
-	 *
-	 * @param string $key
-	 * @param array $parsedConfig
-	 * @param bool $complete
-	 *
-	 * @return bool
-	 */
-	private function isConfigItemComplete($key, $parsedConfig, $complete) {
-		return !(!$complete && array_key_exists($key, $parsedConfig));
-	}
-
-	/**
-	 * Determines if we can use this configuration sub-section
-	 *
-	 * @param string $key
-	 * @param array $parsedConfigItem
-	 * @param int $level
-	 * @param bool $isRootFolder
-	 *
-	 * @return bool
-	 */
-	private function isConfigUsable($key, $parsedConfigItem, $level, $isRootFolder) {
-		$inherit = $this->isConfigInheritable($parsedConfigItem);
-		$features = $this->isFeaturesListValid($key, $isRootFolder);
-
-		return $level === 0 || $inherit || $features;
-	}
-
-	/**
-	 * Adds a config sub-section to the global config
-	 *
-	 * @param string $key
-	 * @param array $parsedConfigItem
-	 * @param int $level
-	 *
-	 * @return array<null|array<string,string>,bool>
-	 */
-	private function addConfigItem($key, $parsedConfigItem, $level) {
-		if ($key === 'sorting' && !array_key_exists('type', $parsedConfigItem)) {
-
-			return [[], false];
-		} else {
-			$parsedConfigItem['level'] = $level;
-			$configItem = [$key => $parsedConfigItem];
-			$itemComplete = true;
-
-			return [$configItem, $itemComplete];
-		}
-	}
-
-	/**
-	 * Determines if we can use a configuration sub-section found in parent folders
-	 *
-	 * @param array $parsedConfigItem
-	 *
-	 * @return bool
-	 */
-	private function isConfigInheritable($parsedConfigItem) {
-		$inherit = false;
-		if (array_key_exists('inherit', $parsedConfigItem)) {
-			$inherit = $parsedConfigItem['inherit'];
-		}
-
-		if ($inherit === 'yes') {
-			$inherit = true;
-		}
-
-		return $inherit;
-
-	}
-
-	/**
-	 * Determines if we can use the "features" sub-section
-	 *
-	 * @param string $key
-	 * @param bool $isRootFolder
-	 *
-	 * @return bool
-	 */
-	private function isFeaturesListValid($key, $isRootFolder) {
-		return $key === 'features' && $isRootFolder;
-	}
 }

@@ -46,6 +46,10 @@ class FilesController extends Controller {
 	 * @type SearchMediaService
 	 */
 	private $searchMediaService;
+	/**
+	 * @type SmarterLogger
+	 */
+	private $logger;
 
 	/**
 	 * Constructor
@@ -70,7 +74,7 @@ class FilesController extends Controller {
 		$this->filesService = $filesService;
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
-		//$this->logger = $logger;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -98,12 +102,11 @@ class FilesController extends Controller {
 			/** @type Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
 				$this->filesService->getCurrentFolder(rawurldecode($location));
-
 			$albumInfo = $this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
 
-			$files = $this->searchMediaService->getMediaFiles(
-				$folderNode, $mediaTypesArray, $albumInfo['features']
-			);
+			$features = $this->getFeaturesList($albumInfo);
+			$files =
+				$this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray, $features);
 
 			return $this->formatResults($files, $albumInfo, $locationHasChanged);
 		} catch (\Exception $exception) {
@@ -127,6 +130,21 @@ class FilesController extends Controller {
 			'albuminfo'          => $albumInfo,
 			'locationhaschanged' => $locationHasChanged
 		];
+	}
+
+	/**
+	 * Returns the list of activate experimental features
+	 *
+	 * @param $albumInfo
+	 *
+	 * @return array
+	 */
+	private function getFeaturesList($albumInfo) {
+		if (array_key_exists('features', $albumInfo)) {
+			return $albumInfo['features'];
+		}
+
+		return [];
 	}
 
 }
