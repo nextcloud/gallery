@@ -1,4 +1,4 @@
-/* global OC, oc_requesttoken, $, _, Gallery */
+/* global OC, t, oc_requesttoken, $, _, Gallery */
 (function () {
 
 	/**
@@ -125,7 +125,7 @@
 			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 			this.breadcrumb.setMaxWidth($(window).width() - 320);
 
-			var currentSort = Gallery.albumConfig.getAlbumSorting();
+			var currentSort = Gallery.albumConfig.sorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(currentSort.type,
 				currentSort.order));
@@ -152,34 +152,24 @@
 		 */
 		infoButtonSetup: function () {
 			var infoButton = $('#album-info-button');
+			infoButton.find('span').hide();
 			var infoContentElement = $('.album-info-content');
 			infoContentElement.slideUp();
 			infoContentElement.css('max-height', $(window).height() - 150);
-			var albumInfo = Gallery.albumConfig.getAlbumInfo();
-			if (this.isAlbumInfoEmtpy(albumInfo)) {
+			var albumInfo = Gallery.albumConfig.albumInfo;
+			if (Gallery.albumConfig.error) {
+				infoButton.hide();
+				var text = '<strong>' + t('gallery', 'Configuration error') + '</strong></br>' +
+					Gallery.albumConfig.error.message + '</br></br>';
+				Gallery.showHtmlNotification(text, 7);
+			} else if ($.isEmptyObject(albumInfo)) {
 				infoButton.hide();
 			} else {
 				infoButton.show();
-				if (albumInfo.inherit === 'yes' && albumInfo.level > 0) {
-					infoButton.find('span').hide();
-				} else {
+				if (albumInfo.inherit !== 'yes' || albumInfo.level === 0) {
 					infoButton.find('span').delay(1000).slideDown();
 				}
 			}
-		},
-
-		/**
-		 * Determines if we have received a description and a copyright statement for the current
-		 * album
-		 *
-		 * @param {object} albumInfo
-		 * @returns {bool}
-		 */
-		isAlbumInfoEmtpy: function (albumInfo) {
-			return $.isEmptyObject(albumInfo.description) &&
-				$.isEmptyObject(albumInfo.descriptionLink) &&
-				$.isEmptyObject(albumInfo.copyright) &&
-				$.isEmptyObject(albumInfo.copyrightLink);
 		},
 
 		/**

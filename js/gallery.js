@@ -193,7 +193,7 @@ Gallery.sorter = function () {
 		sortType = 'date';
 
 	}
-	var currentSort = Gallery.albumConfig.getAlbumSorting();
+	var currentSort = Gallery.albumConfig.sorting;
 	if (currentSort.type === sortType && currentSort.order === sortOrder) {
 		sortOrder = 'des';
 	}
@@ -266,7 +266,7 @@ Gallery.share = function (event) {
 			};
 		})();
 
-		var albumPermissions = Gallery.albumConfig.getAlbumPermissions(Gallery.currentAlbum);
+		var albumPermissions = Gallery.albumConfig.albumPermissions;
 		$('a.share').data('item', albumPermissions.fileid).data('link', true)
 			.data('possible-permissions', albumPermissions.permissions).
 			click();
@@ -388,8 +388,8 @@ Gallery.showNormal = function () {
  * Shows a warning to users of old, unsupported version of Internet Explorer
  */
 Gallery.showOldIeWarning = function () {
-	var text = '<strong>Your browser is not supported!</strong></br>' +
-		'please install one of the following alternatives</br>' +
+	var text = '<strong>' + t('gallery', 'Your browser is not supported!') + '</strong></br>' +
+		t('gallery', 'please install one of the following alternatives') + '</br>' +
 		'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
 		'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
 		'</br>';
@@ -400,8 +400,11 @@ Gallery.showOldIeWarning = function () {
  * Shows a warning to users of the latest version of Internet Explorer
  */
 Gallery.showModernIeWarning = function () {
-	var text = '<strong>This application may not work properly on your browser.</strong></br>' +
-		'For an improved experience, please install one of the following alternatives</br>' +
+	var text = '<strong>' +
+		t('gallery', 'This application may not work properly on your browser.') + '</strong></br>' +
+		t('gallery',
+			'For an improved experience, please install one of the following alternatives') +
+		'</br>' +
 		'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
 		'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
 		'</br>';
@@ -419,7 +422,7 @@ Gallery.showHtmlNotification = function (text, timeout) {
 		timeout: timeout,
 		isHTML: true
 	};
-	OC.Notification.showTemporary(t('gallery', text), options);
+	OC.Notification.showTemporary(text, options);
 };
 
 /**

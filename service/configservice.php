@@ -137,7 +137,7 @@ class ConfigService extends FilesService {
 	/**
 	 * Builds the error message to send back when there is an error
 	 *
-	 * @fixme Missing translations
+	 * @fixme Missing translation
 	 *
 	 * @param ServiceException $exception
 	 * @param Folder $folder
@@ -150,8 +150,8 @@ class ConfigService extends FilesService {
 		$configPath = $this->environment->getPathFromVirtualRoot($folder);
 		$errorMessage = $exception->getMessage() . "</br></br>Config location: /$configPath";
 		$this->logger->error($errorMessage);
+		$config = ['error' => ['message' => $errorMessage]];
 
-		$config = ['information' => ['description' => $errorMessage]];
 		$configItems = $this->configItems;
 		foreach ($configItems as $key => $complete) {
 			$configItems[$key] = true;

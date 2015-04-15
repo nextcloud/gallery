@@ -10,9 +10,16 @@
 		this.albumPermissions = this.setAlbumPermissions(albumConfig);
 		this.albumInfo = this.setAlbumInfo(albumConfig);
 		this.sorting = this.setAlbumSorting(albumConfig);
+		this.error = albumConfig.error;
 	};
 
 	Config.prototype = {
+		albumPermissions: null,
+		albumInfo: null,
+		sorting: null,
+		error: false,
+		infoLoaded: false,
+
 		/**
 		 * Saves the permissions for the current album
 		 *
@@ -96,13 +103,6 @@
 		},
 
 		/**
-		 * Saves the fact that the description has been successfully loaded
-		 */
-		setInfoLoaded: function () {
-			this.albumInfo.infoLoaded = true;
-		},
-
-		/**
 		 * Updates the sorting order
 		 */
 		updateSorting: function (sortType, sortOrder, albumSortOrder) {
@@ -111,33 +111,6 @@
 				order: sortOrder,
 				albumOrder: albumSortOrder
 			};
-		},
-
-		/**
-		 * Retrieves the permissions for the current album
-		 *
-		 * @returns {*|{fileid, permissions}|{fileid: *, permissions: *}}
-		 */
-		getAlbumPermissions: function () {
-			return this.albumPermissions;
-		},
-
-		/**
-		 * Retrieves the description and copyright information for the current album
-		 *
-		 * @returns {*|{}}
-		 */
-		getAlbumInfo: function () {
-			return this.albumInfo;
-		},
-
-		/**
-		 * Retrieves the sorting configuration for the current album
-		 *
-		 * @returns {*|{type, order, albumOrder}|{type: string, order: string, albumOrder: string}}
-		 */
-		getAlbumSorting: function () {
-			return this.sorting;
 		}
 	};
 
