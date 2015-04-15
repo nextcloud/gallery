@@ -252,10 +252,7 @@ SlideShow._getSlideshowTemplate = function () {
 	var defer = $.Deferred();
 	if (!this.$slideshowTemplate) {
 		var self = this;
-		var appWebRoot = OC.appswebroots.galleryplus;
-		appWebRoot = appWebRoot.replace(OC.webroot, '');
-		var url = OC.generateUrl(appWebRoot + '/templates/slideshow.html', null);
-		url = url.replace('/index.php', '');
+		var url = OC.generateUrl('apps/galleryplus/slideshow', null);
 		$.get(url, function (tmpl) {
 			var template = $(tmpl);
 			var tmplButton;

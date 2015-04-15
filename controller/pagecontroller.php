@@ -136,4 +136,16 @@ class PageController extends Controller {
 		return $errorTemplate;
 	}
 
+	/**
+	 * @PublicPage
+	 * @NoCSRFRequired
+	 * @Guest
+	 *
+	 * Returns the slideshow template
+	 *
+	 * @return TemplateResponse
+	 */
+	public function slideshow() {
+		return new TemplateResponse($this->appName, 'slideshow', [], 'blank');
+	}
 }

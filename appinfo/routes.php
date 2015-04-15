@@ -56,6 +56,11 @@ return [
 			'verb'    => 'POST',
 			'postfix' => 'post'
 		],
+		[
+			'name' => 'page#slideshow',
+			'url'  => '/slideshow',
+			'verb' => 'GET'
+		],
 		/**
 		 * Services
 		 */
