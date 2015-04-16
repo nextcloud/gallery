@@ -8,6 +8,7 @@
 script(
 	$_['appName'],
 	[
+		'app',
 		'gallery',
 		'galleryconfig',
 		'galleryinfobox',

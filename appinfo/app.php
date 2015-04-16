@@ -65,6 +65,7 @@ if (isset($request->server['REQUEST_URI'])) {
 		 * Scripts for the Files app
 		 */
 		Util::addScript($appName, 'vendor/bigshot/bigshot');
+		Util::addScript($appName, 'galleryfileaction');
 		Util::addScript($appName, 'slideshow');
 		Util::addScript($appName, 'slideshowcontrols');
 		Util::addScript($appName, 'slideshowzoomablepreview');
