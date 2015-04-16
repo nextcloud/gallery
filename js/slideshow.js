@@ -11,17 +11,18 @@ var SlideShow = function (container, images, interval, maxScale) {
 	this.container = container;
 	this.images = images;
 	this.maxScale = maxScale || 1; // This should come from the configuration
-	this.controls = null;
-	this.imageCache = {};
-	this.currentImage = null;
-	this.errorLoadingImage = false;
-	this.onStop = null;
-	this.zoomablePreview = null;
 };
 
 SlideShow.mediaTypes = {};
 
 SlideShow.prototype = {
+	controls: null,
+	imageCache: {},
+	currentImage: null,
+	errorLoadingImage: false,
+	onStop: null,
+	zoomablePreview: null,
+
 	/**
 	 *
 	 * @param play

@@ -15,16 +15,18 @@
 		this.container = container;
 		this.zoomablePreview = zoomablePreview;
 		this.images = images;
-		this.current = 0;
-		this.errorLoadingImage = false;
 		this.progressBar = container.find('.progress');
 		this.interval = interval || 5000;
-		this.playTimeout = 0;
-		this.playing = false;
-		this.active = false;
+
 	};
 
 	Controls.prototype = {
+		current: 0,
+		errorLoadingImage: false,
+		playTimeout: 0,
+		playing: false,
+		active: false,
+
 		/**
 		 * Initialises the controls
 		 *
