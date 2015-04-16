@@ -1,4 +1,4 @@
-/* global jQuery, OC ,OCA, $, t, oc_requesttoken, SlideShow */
+/* global OC ,OCA, $, oc_requesttoken, SlideShow */
 $(document).ready(function () {
 	// This is still required in OC8
 	var requestToken;

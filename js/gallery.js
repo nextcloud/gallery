@@ -1,4 +1,4 @@
-/* global OC, $, _, t, Album, GalleryImage, SlideShow, oc_requesttoken */
+/* global OC, $, t, Album, GalleryImage, SlideShow, oc_requesttoken */
 var Gallery = {};
 Gallery.mediaTypes = {};
 Gallery.images = [];

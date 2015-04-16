@@ -1,4 +1,4 @@
-/* global OC, $, _, t, Gallery */
+/* global OC, $, _, Gallery */
 $(document).ready(function () {
 	Gallery.hideSearch();
 
