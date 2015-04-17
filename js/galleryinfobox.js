@@ -25,7 +25,7 @@
 					if (!$.isEmptyObject(this.albumInfo.descriptionLink)) {
 						var path = '/' + this.albumInfo.filePath;
 						var file = this.albumInfo.descriptionLink;
-						var descriptionUrl = Gallery.buildFilesUrl(path, file);
+						var descriptionUrl = Gallery.utility.buildFilesUrl(path, file);
 						var thisInfoBox = this;
 						$.get(descriptionUrl).done(function (data) {
 								thisInfoBox._addContent(data);
@@ -118,7 +118,7 @@
 		_addCopyrightLink: function (copyright) {
 			var path = '/' + this.albumInfo.filePath;
 			var file = this.albumInfo.copyrightLink;
-			var copyrightUrl = Gallery.buildFilesUrl(path, file);
+			var copyrightUrl = Gallery.utility.buildFilesUrl(path, file);
 			var copyrightElement = $(copyright);
 			copyrightElement.find('a').removeAttr("href");
 			copyright = copyrightElement.html();

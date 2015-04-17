@@ -1,6 +1,9 @@
 /* global OC, $, _, Gallery */
 $(document).ready(function () {
 	Gallery.hideSearch();
+	Gallery.utility = new Gallery.Utility();
+	Gallery.view = new Gallery.View();
+	Gallery.token = Gallery.utility.getRequestToken();
 
 	Gallery.ie11AndAbove =
 		navigator.userAgent.indexOf('Trident') != -1 && navigator.userAgent.indexOf('MSIE') == -1;
@@ -18,10 +21,7 @@ $(document).ready(function () {
 		Gallery.resetContentHeight();
 		Gallery.showLoading();
 
-		Gallery.view = new Gallery.View();
-		Gallery.token = Gallery.view.getRequestToken();
-
-		$.getJSON(Gallery.buildGalleryUrl('mediatypes', '', {}))
+		$.getJSON(Gallery.utility.buildGalleryUrl('mediatypes', '', {}))
 			.then(function (mediaTypes) {
 				//console.log('mediaTypes', mediaTypes);
 				Gallery.mediaTypes = mediaTypes;

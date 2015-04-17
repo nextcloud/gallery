@@ -72,7 +72,7 @@ Thumbnails.loadBatch = function (paths, square) {
 			scale: window.devicePixelRatio,
 			square: (square) ? 1 : 0
 		};
-		var url = Gallery.buildGalleryUrl('thumbnails', '', params);
+		var url = Gallery.utility.buildGalleryUrl('thumbnails', '', params);
 
 		var eventSource = new Gallery.EventSource(url);
 		eventSource.listen('preview', function (preview) {

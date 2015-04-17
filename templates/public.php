@@ -10,6 +10,7 @@ script(
 	[
 		'app',
 		'gallery',
+		'galleryutility',
 		'galleryconfig',
 		'galleryinfobox',
 		'galleryview',

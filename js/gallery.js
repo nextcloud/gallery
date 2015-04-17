@@ -84,7 +84,7 @@ Gallery.getFiles = function () {
 		mediatypes: Gallery.getMediaTypes()
 	};
 	// Only use the folder as a GET parameter and not as part of the URL
-	var url = Gallery.buildGalleryUrl('files', '', params);
+	var url = Gallery.utility.buildGalleryUrl('files', '', params);
 	return $.getJSON(url).then(function (data) {
 		var path = null;
 		var fileId = null;
@@ -147,42 +147,7 @@ Gallery.fixDir = function (path, dir, currentFolder) {
 };
 
 /**
- * Sorts images and albums arrays
- *
- * @param {string} sortType
- * @param {string} sortOrder
- *
- * @returns {Function}
- */
-Gallery.sortBy = function (sortType, sortOrder) {
-	if (sortType === 'name') {
-		if (sortOrder === 'asc') {
-			//sortByNameAsc
-			return function (a, b) {
-				return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
-			};
-		}
-		//sortByNameDes
-		return function (a, b) {
-			return b.path.toLowerCase().localeCompare(a.path.toLowerCase());
-		};
-	}
-	if (sortType === 'date') {
-		if (sortOrder === 'asc') {
-			//sortByDateAsc
-			return function (a, b) {
-				return b.mTime - a.mTime;
-			};
-		}
-		//sortByDateDes
-		return function (a, b) {
-			return a.mTime - b.mTime;
-		};
-	}
-};
-
-/**
- * Sorts thumbnails based on user preferences
+ * Sorts albums and images based on user preferences
  */
 Gallery.sorter = function () {
 	var sortType = 'name';
@@ -212,8 +177,8 @@ Gallery.sorter = function () {
 	Gallery.view.clear();
 
 	// Sort the images
-	Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(sortType, sortOrder));
-	Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.sortBy(albumSortType,
+	Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(sortType, sortOrder));
+	Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy(albumSortType,
 		albumSortOrder));
 
 	// Save the new settings
@@ -221,25 +186,6 @@ Gallery.sorter = function () {
 
 	// Refresh the view
 	Gallery.view.viewAlbum(Gallery.currentAlbum);
-};
-
-/**
- * Builds the URL which will retrieve a large preview of the file
- *
- * @param {string} image
- *
- * @return {string}
- */
-Gallery.getPreviewUrl = function (image) {
-	var width = $(window).width() * window.devicePixelRatio;
-	var height = $(window).height() * window.devicePixelRatio;
-	var params = {
-		file: image,
-		x: width,
-		y: height,
-		requesttoken: oc_requesttoken
-	};
-	return Gallery.buildGalleryUrl('preview', '', params);
 };
 
 /**
@@ -277,55 +223,6 @@ Gallery.share = function (event) {
 };
 
 /**
- * Builds a URL pointing to one of the app's controllers
- *
- * @param {string} endPoint
- * @param {undefined|string} path
- * @param params
- *
- * @returns {string}
- */
-Gallery.buildGalleryUrl = function (endPoint, path, params) {
-	if (path === undefined) {
-		path = '';
-	}
-	var extension = '';
-	if (Gallery.token) {
-		params.token = Gallery.token;
-		extension = '.public';
-	}
-	var query = OC.buildQueryString(params);
-	return OC.generateUrl('apps/' + Gallery.appName + '/' + endPoint + extension + path, null) +
-		'?' +
-		query;
-};
-
-/**
- * Builds a URL pointing to one of the files' controllers
- *
- * @param {string} path
- * @param {string} files
- *
- * @returns {string}
- */
-Gallery.buildFilesUrl = function (path, files) {
-	var subUrl = '';
-	var params = {
-		path: path,
-		files: files
-	};
-
-	if (Gallery.token) {
-		params.token = Gallery.token;
-		subUrl = 's/{token}/download?path={path}&files={files}';
-	} else {
-		subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
-	}
-
-	return OC.generateUrl(subUrl, params);
-};
-
-/**
  * Sends an archive of the current folder to the browser
  *
  * @param event
@@ -335,7 +232,7 @@ Gallery.download = function (event) {
 
 	var path = $('#content').data('albumname');
 	var files = Gallery.currentAlbum;
-	var downloadUrl = Gallery.buildFilesUrl(path, files);
+	var downloadUrl = Gallery.utility.buildFilesUrl(path, files);
 
 	OC.redirect(downloadUrl);
 };
@@ -384,16 +281,19 @@ Gallery.showNormal = function () {
 	$('#content').removeClass('icon-loading');
 };
 
+Gallery.recommendedBrowsers = '</br>' +
+'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
+'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
+'</br>';
+
 /**
  * Shows a warning to users of old, unsupported version of Internet Explorer
  */
 Gallery.showOldIeWarning = function () {
 	var text = '<strong>' + t('gallery', 'Your browser is not supported!') + '</strong></br>' +
-		t('gallery', 'please install one of the following alternatives') + '</br>' +
-		'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
-		'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
-		'</br>';
-	Gallery.showHtmlNotification(text, 60);
+		t('gallery', 'please install one of the following alternatives') +
+		Gallery.recommendedBrowsers;
+	Gallery.utility.showHtmlNotification(text, 60);
 };
 
 /**
@@ -404,25 +304,8 @@ Gallery.showModernIeWarning = function () {
 		t('gallery', 'This application may not work properly on your browser.') + '</strong></br>' +
 		t('gallery',
 			'For an improved experience, please install one of the following alternatives') +
-		'</br>' +
-		'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
-		'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
-		'</br>';
-	Gallery.showHtmlNotification(text, 15);
-};
-
-/**
- * Shows a notification at the top of the screen
- *
- * @param {string} text
- * @param {int} timeout
- */
-Gallery.showHtmlNotification = function (text, timeout) {
-	var options = {
-		timeout: timeout,
-		isHTML: true
-	};
-	OC.Notification.showTemporary(text, options);
+		Gallery.recommendedBrowsers;
+	Gallery.utility.showHtmlNotification(text, 15);
 };
 
 /**
@@ -450,12 +333,12 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	var start = images.indexOf(startImage);
 	images = images.map(function (image) {
 		var name = OC.basename(image.path);
-		var previewUrl = Gallery.getPreviewUrl(image.src);
+		var previewUrl = Gallery.utility.getPreviewUrl(image.src);
 		var params = {
 			file: image.src,
 			requesttoken: oc_requesttoken
 		};
-		var downloadUrl = Gallery.buildGalleryUrl('download', '', params);
+		var downloadUrl = Gallery.utility.buildGalleryUrl('download', '', params);
 
 		return {
 			name: name,

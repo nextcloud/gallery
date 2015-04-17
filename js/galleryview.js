@@ -48,25 +48,6 @@
 		},
 
 		/**
-		 * Returns the token alowing access to files
-		 *
-		 * @returns {string}
-		 */
-		getRequestToken: function () {
-			var token;
-
-			if (this.element.data('token')) {
-				token = this.element.data('token');
-			}
-
-			if (this.element.data('requesttoken')) {
-				oc_requesttoken = this.element.data('requesttoken');
-			}
-
-			return token;
-		},
-
-		/**
 		 * Starts the slideshow
 		 *
 		 * @param {string} path
@@ -127,9 +108,9 @@
 
 			var currentSort = Gallery.albumConfig.sorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
-			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.sortBy(currentSort.type,
+			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
 				currentSort.order));
-			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.sortBy('name',
+			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
 				currentSort.albumOrder));
 		},
 
@@ -161,7 +142,7 @@
 				infoButton.hide();
 				var text = '<strong>' + t('gallery', 'Configuration error') + '</strong></br>' +
 					Gallery.albumConfig.error.message + '</br></br>';
-				Gallery.showHtmlNotification(text, 7);
+				Gallery.utility.showHtmlNotification(text, 7);
 			} else if ($.isEmptyObject(albumInfo)) {
 				infoButton.hide();
 			} else {
