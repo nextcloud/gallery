@@ -10,11 +10,11 @@ $(document).ready(function () {
 	Gallery.ie10AndBelow = navigator.userAgent.indexOf('MSIE') != -1;
 
 	if (Gallery.ie10AndBelow) {
-		Gallery.showOldIeWarning();
+		Gallery.utility.showIeWarning('old');
 		Gallery.showEmpty();
 	} else {
 		if (Gallery.ie11AndAbove) {
-			Gallery.showModernIeWarning();
+			Gallery.utility.showIeWarning('modern');
 		}
 
 		// Needed to centre the spinner in some browsers

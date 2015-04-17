@@ -281,33 +281,6 @@ Gallery.showNormal = function () {
 	$('#content').removeClass('icon-loading');
 };
 
-Gallery.recommendedBrowsers = '</br>' +
-'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
-'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
-'</br>';
-
-/**
- * Shows a warning to users of old, unsupported version of Internet Explorer
- */
-Gallery.showOldIeWarning = function () {
-	var text = '<strong>' + t('gallery', 'Your browser is not supported!') + '</strong></br>' +
-		t('gallery', 'please install one of the following alternatives') +
-		Gallery.recommendedBrowsers;
-	Gallery.utility.showHtmlNotification(text, 60);
-};
-
-/**
- * Shows a warning to users of the latest version of Internet Explorer
- */
-Gallery.showModernIeWarning = function () {
-	var text = '<strong>' +
-		t('gallery', 'This application may not work properly on your browser.') + '</strong></br>' +
-		t('gallery',
-			'For an improved experience, please install one of the following alternatives') +
-		Gallery.recommendedBrowsers;
-	Gallery.utility.showHtmlNotification(text, 15);
-};
-
 /**
  * Resets the height of the content div so that the spinner can be centred
  */

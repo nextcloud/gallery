@@ -1,4 +1,4 @@
-/* global OC, $, Gallery, oc_requesttoken */
+/* global OC, $, t, Gallery, oc_requesttoken */
 (function () {
 	/**
 	 * Contains utility methods
@@ -11,6 +11,32 @@
 	};
 
 	Utility.prototype = {
+		/**
+		 * Shows a notification to IE users, letting them know that they should use another browser
+		 * in order to get the best experience
+		 *
+		 * @param {string} age
+		 */
+		showIeWarning: function (age) {
+			var line1 = t('gallery', 'This application may not work properly on your browser.');
+			var line2 = t('gallery',
+				'For an improved experience, please install one of the following alternatives');
+			var timeout = 15;
+			if (age === 'old') {
+				line1 = t('gallery', 'Your browser is not supported!');
+				line2 = t('gallery', 'please install one of the following alternatives')
+				timeout = 60;
+			}
+
+			var recommendedBrowsers = '</br>' +
+				'<a href="http://www.getfirefox.com"><strong>Mozilla Firefox</strong></a> or ' +
+				'<a href="https://www.google.com/chrome/"><strong>Google Chrome</strong></a>' +
+				'</br>';
+
+			var text = '<strong>' + line1 + '</strong></br>' + line2 + recommendedBrowsers;
+			this.showHtmlNotification(text, timeout);
+		},
+
 		/**
 		 * Shows a notification at the top of the screen
 		 *
