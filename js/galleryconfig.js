@@ -7,6 +7,7 @@
 	 * @constructor
 	 */
 	var Config = function (albumConfig) {
+		this.galleryFeatures = this.setGalleryFeatures(albumConfig);
 		this.albumPermissions = this.setAlbumPermissions(albumConfig);
 		this.albumInfo = this.setAlbumInfo(albumConfig);
 		this.sorting = this.setAlbumSorting(albumConfig);
@@ -14,11 +15,32 @@
 	};
 
 	Config.prototype = {
+		galleryFeatures: [],
 		albumPermissions: null,
 		albumInfo: null,
 		sorting: null,
 		error: false,
 		infoLoaded: false,
+
+		/**
+		 * Saves the list of features which have been enabled in the app
+		 *
+		 * @param albumConfig
+		 *
+		 * @returns {Array}
+		 */
+		setGalleryFeatures: function (albumConfig) {
+			var features = [];
+			if (!$.isEmptyObject(albumConfig.features)) {
+				for (var i = 0, keys = Object.keys(albumConfig.features); i < keys.length; i++) {
+					if (albumConfig.features[keys[i]] === 'yes') {
+						features.push(keys[i]);
+					}
+				}
+			}
+
+			return features;
+		},
 
 		/**
 		 * Saves the permissions for the current album
