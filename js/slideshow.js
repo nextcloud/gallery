@@ -27,7 +27,7 @@ SlideShow.prototype = {
 	 * @param play
 	 */
 	init: function (play) {
-		this.hideImage();
+		this._hideImage();
 		this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
 		this.controls =
 			new SlideShow.Controls(this, this.container, this.zoomablePreview, this.images);
@@ -45,7 +45,7 @@ SlideShow.prototype = {
 		this.hideErrorNotification();
 		this.container.show();
 		this.container.css('background-position', 'center');
-		this.hideImage();
+		this._hideImage();
 		var currentImageId = index;
 		return this.loadImage(this.images[index]).then(function (img) {
 			this.container.css('background-position', '-10000px 0');
@@ -72,7 +72,7 @@ SlideShow.prototype = {
 
 				this.zoomablePreview.startBigshot(img, this.currentImage);
 
-				this.setUrl(image.path);
+				this._setUrl(image.path);
 				this.controls.show(currentImageId);
 			}
 		}.bind(this), function () {
@@ -81,23 +81,11 @@ SlideShow.prototype = {
 			if (currentImageId === index) {
 				this.errorLoadingImage = true;
 				this.showErrorNotification();
-				this.setUrl(this.images[index].path);
+				this._setUrl(this.images[index].path);
 				this.images.splice(index, 1);
 				this.controls.updateControls(this.images, this.errorLoadingImage);
 			}
 		}.bind(this));
-	},
-
-
-	/**
-	 * Changes the browser Url, based on the current image
-	 *
-	 * @param path
-	 */
-	setUrl: function (path) {
-		if (history && history.replaceState) {
-			history.replaceState('', '', '#' + encodeURI(path));
-		}
 	},
 
 	/**
@@ -135,47 +123,12 @@ SlideShow.prototype = {
 	},
 
 	/**
-	 * Retrieves an SVG
-	 *
-	 * An SVG can't be simply attached to a src attribute like a bitmap image
-	 *
-	 * @param source
-	 *
-	 * @returns {*}
+	 * Stops the slideshow
 	 */
-	_getSVG: function (source) {
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open("GET", source, false);
-		xmlHttp.send(null);
-		if (xmlHttp.status === 200) {
-			if (xmlHttp.responseXML) {
-				// Has to be base64 encoded for Firefox
-				return "data:image/svg+xml;base64," + btoa(xmlHttp.responseText);
-			}
-			return source;
-		}
-		return null;
-	},
-
-	next: function () {
-		this.hideErrorNotification();
-	},
-
-	previous: function () {
-		this.hideErrorNotification();
-	},
-
 	stop: function () {
 		if (this.onStop) {
 			this.onStop();
 		}
-	},
-
-	/**
-	 * Hides the current image (before loading the next)
-	 */
-	hideImage: function () {
-		this.container.children('img').remove();
 	},
 
 	/**
@@ -192,7 +145,6 @@ SlideShow.prototype = {
 
 	/**
 	 * Changes the colour of the background of the image
-	 * @private
 	 */
 	toggleBackground: function () {
 		var toHex = function (x) {
@@ -215,7 +167,6 @@ SlideShow.prototype = {
 
 	/**
 	 * Shows an error notification
-	 * @private
 	 */
 	showErrorNotification: function () {
 		this.container.find('.notification').show();
@@ -224,10 +175,53 @@ SlideShow.prototype = {
 
 	/**
 	 * Hides the error notification
-	 * @private
 	 */
 	hideErrorNotification: function () {
 		this.container.find('.notification').hide();
+	},
+
+	/**
+	 * Changes the browser Url, based on the current image
+	 *
+	 * @param {string} path
+	 * @private
+	 */
+	_setUrl: function (path) {
+		if (history && history.replaceState) {
+			history.replaceState('', '', '#' + encodeURI(path));
+		}
+	},
+
+	/**
+	 * Hides the current image (before loading the next)
+	 * @private
+	 */
+	_hideImage: function () {
+		this.container.children('img').remove();
+	},
+
+	/**
+	 * Retrieves an SVG
+	 *
+	 * An SVG can't be simply attached to a src attribute like a bitmap image
+	 *
+	 * @param {string} source
+	 *
+	 * @returns {*}
+	 * @private
+	 */
+	_getSVG: function (source) {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open("GET", source, false);
+		xmlHttp.send(null);
+		if (xmlHttp.status === 200) {
+			if (xmlHttp.responseXML) {
+				// Has to be base64 encoded for Firefox
+				return "data:image/svg+xml;base64," + btoa(xmlHttp.responseText);
+			}
+			return source;
+		}
+		return null;
 	}
 };
 

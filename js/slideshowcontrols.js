@@ -224,7 +224,7 @@
 		 * @private
 		 */
 		_next: function () {
-			this.slideshow.next();
+			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
 
 			if (this.errorLoadingImage) {
@@ -240,7 +240,7 @@
 		 * @private
 		 */
 		_previous: function () {
-			this.slideshow.previous();
+			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
 
 			this.current = (this.current - 1 + this.images.length) % this.images.length;
