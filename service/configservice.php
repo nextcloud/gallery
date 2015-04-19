@@ -72,8 +72,13 @@ class ConfigService extends FilesService {
 		$featuresList = [];
 		/** @type Folder $rootFolder */
 		$rootFolder = $this->environment->getNode('');
-		if ($rootFolder) {
-			$featuresList = $this->configParser->getGlobalConfig($rootFolder, $this->configName);
+		if ($rootFolder && $rootFolder->nodeExists($this->configName)) {
+			try {
+				$featuresList =
+					$this->configParser->getGlobalConfig($rootFolder, $this->configName);
+			} catch (ServiceException $exception) {
+				$featuresList = $this->buildErrorMessage($exception, $rootFolder);
+			}
 		}
 
 		return $featuresList;
@@ -167,8 +172,7 @@ class ConfigService extends FilesService {
 			);
 			$this->configItems = $configItems;
 		} catch (ServiceException $exception) {
-			list($config) =
-				$this->buildErrorMessage($exception, $folder);
+			$config = $this->buildErrorMessage($exception, $folder);
 		}
 
 		return [$config];
