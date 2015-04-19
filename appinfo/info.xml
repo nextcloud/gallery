@@ -2,29 +2,35 @@
 <info>
 	<id>galleryplus</id>
 	<name>Gallery+</name>
-	<description>Picture gallery for ownCloud which includes preview for all media types supported
-		by the system.
+	<description>Media gallery for ownCloud with the following features:
 
-		Features:
+		- Support for large selection of media types (depending on ownCloud setup)
 
-		- Large, zoomable previews.
-
-		- Image download straight from the slideshow or the gallery.
-
-		- Seamlessly jump between the gallery and the files view
-
-		- Ignore folders containing a '.nomedia' file
+		- Large, zoomable previews
 
 		- Sort images by name or date
 
 		- Per album description and copyright statement
 
+		- A la carte features
+
+		- Image download straight from the slideshow or the gallery
+
+		- Seamlessly jump between the gallery and the files view
+
+		- Ignore folders containing a ".nomedia" file
+
+		- Native SVG support
+
+		- Mobile support
+
 		Provides a dedicated view of all images in a grid, adds image viewing capabilities to the
 		files app and adds a gallery view to public links.
+		Compatible with Internext Explorer 11
 	</description>
 	<licence>AGPL</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
-	<version>2.0.9</version>
+	<version>2.0.10</version>
 	<namespace>GalleryPlus</namespace>
 	<category>Multimedia</category>
 	<dependencies>

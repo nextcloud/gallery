@@ -1,3 +1,9 @@
+owncloud-galleryplus (2.0.10)
+* Add the possibility to enable external shares via the configuration file (only works on 8.1) (@oparoz)
+* Fix slideshow loading for when the app is installed in a custom folder #121 (@oparoz)
+* Don't load the slideshow on the files public page for single items #123 (@oparoz)
+* Make album labels tighter #117 (@oparoz)
+
 owncloud-galleryplus (2.0.9)
 * Restore the ability to see images located on local, shared folders #120 (@oparoz)
 * Fix Url builder for public side (@oparoz)

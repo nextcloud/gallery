@@ -9,9 +9,10 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 * Large, zoomable previews
 * Sort images by name or date
 * Per album description and copyright statement
+* A la carte features
 * Image download straight from the slideshow or the gallery
 * Seamlessly jump between the gallery and the files view
-* Ignore folders containing a '.nomedia' file
+* Ignore folders containing a ".nomedia" file
 * Native SVG support
 * Mobile support
 
@@ -77,8 +78,20 @@ There are many ways in which you can help make Gallery+ a better product
 ### Before reporting bugs
 
 * Read the section about server and browser requirements
+* Read the "Known issues" section below
 * Get the latest version of the app from [the releases page](https://github.com/interfasys/galleryplus/releases)
 * [Check if they have already been reported](https://github.com/interfasys/galleryplus/issues)
+
+### Known issues
+
+#### Within deep folders
+
+* You may stop receiving images as you run into [this issue](https://github.com/interfasys/galleryplus/issues/27)
+* It may take longer to initialise the view as we're parsing every parent folder to look for configuration files
+
+#### Configurations
+
+* If you have write access on a share belonging to another ownCloud instance, editing the configuration file in your folder will also modify the original folder
 
 ### When reporting bugs
 

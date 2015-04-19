@@ -10,6 +10,7 @@ The following features are currently implemented:
 * Adding a link to a file containing a copyright statement
 * Defining a sort type and order 
 * Defining if sub-albums will inherit the configuration
+* Enabling a specific feature
 
 ## Configuration
 
@@ -40,6 +41,8 @@ sorting:
   type: date
   order: des
   inherit: yes
+features:
+  external_shares: yes
 ```
 
 ### Supported variables
@@ -51,15 +54,16 @@ sorting:
 * `sorting`: `date` or `name`. `date` only works for files
 * `sort_order`: `asc` or `des`
 * `inherit`: set it to yes if you want sub-folders to inherit this part of the configuration
+* `external_shares`: set it to yes in your root configuration file if you want to be able to load images coming from external clouds
 
 See [this page](http://www.markitdown.net/markdown) for the markdown syntax
 
 _Note: Do not add links to your `copyright` string if you intend on adding a `copyright link`_
+_Warning: External shares are 20-50 times slower than local shares. Be prepared to wait a long time before being able to see all the images contained in a shared album_
 
 ### Possible future extensions
 
 * Different sorting parameters for albums
-* Enabling experimental features
 
 ## Sorting
 * in case only the sort `type` variable has been set, the default sort order will be used
@@ -71,7 +75,7 @@ _Note: Do not add links to your `copyright` string if you intend on adding a `co
 
 ## Examples
 
-#### Sorting only
+### Sorting only
 
 Applies to the current folder only
 
@@ -83,7 +87,7 @@ sorting:
   order: asc
 ```
 
-#### Short description and link to copyright document
+### Short description and link to copyright document
 
 Applies to the current folder and all of its sub-folders
 
@@ -99,3 +103,18 @@ information:
   copyright_link: copyright_2015_lmb.html
   inherit: yes
 ```
+
+### Load images from external clouds
+
+**Features can only be defined in the root folder**
+
+You can add standard configuration items to the same configuration file
+
+```
+---
+# Gallery+ configuration file
+features:
+  external_shares: yes
+...
+```
+
