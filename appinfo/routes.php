@@ -105,7 +105,7 @@ return [
 		 */
 		[
 			'name' => 'public_config#get_config',
-			'url'  => '/config',
+			'url'  => '/config.public',
 			'verb' => 'GET'
 		],
 		[

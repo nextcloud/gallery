@@ -3,8 +3,7 @@ var Gallery = {};
 Gallery.mediaTypes = {};
 Gallery.images = [];
 Gallery.currentAlbum = null;
-Gallery.users = [];
-Gallery.albumConfig = {};
+Gallery.config = {};
 Gallery.albumMap = {};
 Gallery.imageMap = {};
 Gallery.appName = 'galleryplus';
@@ -77,7 +76,6 @@ Gallery.getFiles = function () {
 	Gallery.images = [];
 	Gallery.albumMap = {};
 	Gallery.imageMap = {};
-	Gallery.albumConfig = null;
 	var currentLocation = window.location.href.split('#')[1] || '';
 	var params = {
 		location: currentLocation,
@@ -93,8 +91,7 @@ Gallery.getFiles = function () {
 		var files = data.files;
 
 		var albumInfo = data.albuminfo;
-		Gallery.albumConfig = new Gallery.Config(albumInfo);
-
+		Gallery.config.setAlbumConfig(albumInfo);
 		for (var i = 0; i < files.length; i++) {
 			path = files[i].path;
 			fileId = files[i].fileid;
@@ -158,7 +155,7 @@ Gallery.sorter = function () {
 		sortType = 'date';
 
 	}
-	var currentSort = Gallery.albumConfig.sorting;
+	var currentSort = Gallery.config.albumSorting;
 	if (currentSort.type === sortType && currentSort.order === sortOrder) {
 		sortOrder = 'des';
 	}
@@ -182,7 +179,7 @@ Gallery.sorter = function () {
 		albumSortOrder));
 
 	// Save the new settings
-	Gallery.albumConfig.updateSorting(sortType, sortOrder, albumSortOrder);
+	Gallery.config.updateAlbumSorting(sortType, sortOrder, albumSortOrder);
 
 	// Refresh the view
 	Gallery.view.viewAlbum(Gallery.currentAlbum);
@@ -212,7 +209,7 @@ Gallery.share = function (event) {
 			};
 		})();
 
-		var albumPermissions = Gallery.albumConfig.albumPermissions;
+		var albumPermissions = Gallery.config.albumPermissions;
 		$('a.share').data('item', albumPermissions.fileid).data('link', true)
 			.data('possible-permissions', albumPermissions.permissions).
 			click();

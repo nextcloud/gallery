@@ -106,7 +106,7 @@
 			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 			this.breadcrumb.setMaxWidth($(window).width() - 320);
 
-			var currentSort = Gallery.albumConfig.sorting;
+			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
 				currentSort.order));
@@ -137,11 +137,11 @@
 			var infoContentElement = $('.album-info-content');
 			infoContentElement.slideUp();
 			infoContentElement.css('max-height', $(window).height() - 150);
-			var albumInfo = Gallery.albumConfig.albumInfo;
-			if (Gallery.albumConfig.error) {
+			var albumInfo = Gallery.config.albumInfo;
+			if (Gallery.config.albumError) {
 				infoButton.hide();
 				var text = '<strong>' + t('gallery', 'Configuration error') + '</strong></br>' +
-					Gallery.albumConfig.error.message + '</br></br>';
+					Gallery.config.albumError.message + '</br></br>';
 				Gallery.utility.showHtmlNotification(text, 7);
 			} else if ($.isEmptyObject(albumInfo)) {
 				infoButton.hide();

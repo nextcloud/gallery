@@ -73,10 +73,7 @@ class ConfigService extends FilesService {
 		/** @type Folder $rootFolder */
 		$rootFolder = $this->environment->getNode('');
 		if ($rootFolder) {
-			list($featuresList) =
-				$this->configParser->parseConfig(
-					$rootFolder, $this->configName, [], ['features' => false], null
-				);
+			$featuresList = $this->configParser->getGlobalConfig($rootFolder, $this->configName);
 		}
 
 		return $featuresList;
@@ -135,7 +132,7 @@ class ConfigService extends FilesService {
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
-			list($config) = $this->parseFolderConfig($folder, $configName, $config, $level);
+			list($config) = $this->buildFolderConfig($folder, $configName, $config, $level);
 		}
 		if (!$isRootFolder) {
 			return $this->getParentConfig(
@@ -159,9 +156,9 @@ class ConfigService extends FilesService {
 	 *
 	 * @return array
 	 */
-	private function parseFolderConfig($folder, $configName, $config, $level) {
+	private function buildFolderConfig($folder, $configName, $config, $level) {
 		try {
-			list($config, $configItems) = $this->configParser->parseConfig(
+			list($config, $configItems) = $this->configParser->getFolderConfig(
 				$folder, $configName, $config, $this->configItems, $level
 			);
 			$this->configItems = $configItems;

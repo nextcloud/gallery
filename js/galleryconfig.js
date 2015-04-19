@@ -1,45 +1,53 @@
 /* global $, Gallery */
 (function () {
 	/**
-	 * Stores the configuration about the current album
+	 * Stores the gallery configuration
 	 *
-	 * @param {Object} albumConfig
+	 * @param {{features: *}} config
 	 * @constructor
 	 */
-	var Config = function (albumConfig) {
-		this.galleryFeatures = this.setGalleryFeatures(albumConfig);
-		this.albumPermissions = this.setAlbumPermissions(albumConfig);
-		this.albumInfo = this.setAlbumInfo(albumConfig);
-		this.sorting = this.setAlbumSorting(albumConfig);
-		this.error = albumConfig.error;
+	var Config = function (config) {
+		this.galleryFeatures = this.setGalleryFeatures(config);
 	};
 
 	Config.prototype = {
 		galleryFeatures: [],
 		albumPermissions: null,
 		albumInfo: null,
-		sorting: null,
-		error: false,
+		albumSorting: null,
+		albumError: false,
 		infoLoaded: false,
 
 		/**
 		 * Saves the list of features which have been enabled in the app
 		 *
-		 * @param albumConfig
+		 * @param config
 		 *
 		 * @returns {Array}
 		 */
-		setGalleryFeatures: function (albumConfig) {
+		setGalleryFeatures: function (config) {
 			var features = [];
-			if (!$.isEmptyObject(albumConfig.features)) {
-				for (var i = 0, keys = Object.keys(albumConfig.features); i < keys.length; i++) {
-					if (albumConfig.features[keys[i]] === 'yes') {
+			if (!$.isEmptyObject(config.features)) {
+				for (var i = 0, keys = Object.keys(config.features); i < keys.length; i++) {
+					if (config.features[keys[i]] === 'yes') {
 						features.push(keys[i]);
 					}
 				}
 			}
 
 			return features;
+		},
+
+		/**
+		 * Stores the configuration about the current album
+		 *
+		 * @param albumConfig
+		 */
+		setAlbumConfig: function (albumConfig) {
+			this.albumPermissions = this.setAlbumPermissions(albumConfig);
+			this.albumInfo = this.setAlbumInfo(albumConfig);
+			this.albumSorting = this.setAlbumSorting(albumConfig);
+			this.albumError = albumConfig.error;
 		},
 
 		/**
@@ -127,8 +135,8 @@
 		/**
 		 * Updates the sorting order
 		 */
-		updateSorting: function (sortType, sortOrder, albumSortOrder) {
-			this.sorting = {
+		updateAlbumSorting: function (sortType, sortOrder, albumSortOrder) {
+			this.albumSorting = {
 				type: sortType,
 				order: sortOrder,
 				albumOrder: albumSortOrder

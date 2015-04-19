@@ -1,6 +1,6 @@
 /* global OC ,OCA, $, oc_requesttoken, SlideShow */
 var galleryFileAction = {
-	requestToken: null,
+	config: null,
 	mediaTypes: {},
 
 	/**
@@ -107,8 +107,14 @@ $(document).ready(function () {
 		return true;
 	}
 
-	var url = galleryFileAction.buildGalleryUrl('mediatypes', '', {slideshow: 1});
-	// We're asking for a list of supported media types.
-	// Media files are retrieved through the Files context
-	$.getJSON(url, {}, galleryFileAction.register);
+	var url = galleryFileAction.buildGalleryUrl('config', '', {});
+	$.getJSON(url).then(function (config) {
+		if (config) {
+			galleryFileAction.config = config;
+		}
+		url = galleryFileAction.buildGalleryUrl('mediatypes', '', {slideshow: 1});
+		// We're asking for a list of supported media types.
+		// Media files are retrieved through the Files context
+		$.getJSON(url, {}, galleryFileAction.register);
+	});
 });

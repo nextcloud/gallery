@@ -25,6 +25,25 @@ use OCP\Files\File;
 class ConfigParser {
 
 	/**
+	 * Returns a parsed global configuration if one was found in the root folder
+	 *
+	 * @param Folder $folder
+	 * @param string $configName
+	 *
+	 * @return null|array
+	 */
+	public function getGlobalConfig($folder, $configName) {
+		$config = [];
+		$parsedConfig = $this->parseConfig($folder, $configName);
+		$key = 'features';
+		if (array_key_exists('features', $parsedConfig)) {
+			$config = [$key => $parsedConfig[$key]];
+		}
+
+		return $config;
+	}
+
+	/**
 	 * Returns a parsed configuration if one was found in the current folder
 	 *
 	 * @param Folder $folder
@@ -34,10 +53,26 @@ class ConfigParser {
 	 * @param int $level
 	 *
 	 * @return array <null|array,array<string,bool>>
+	 */
+	public function getFolderConfig($folder, $configName, $currentConfig, $configItems, $level) {
+		$parsedConfig = $this->parseConfig($folder, $configName);
+		list($config, $configItems) =
+			$this->buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level);
+
+		return [$config, $configItems];
+	}
+
+	/**
+	 * Returns a parsed configuration
+	 *
+	 * @param Folder $folder
+	 * @param string $configName
+	 *
+	 * @return array <null|array>
 	 *
 	 * @throws ServiceException
 	 */
-	public function parseConfig($folder, $configName, $currentConfig, $configItems, $level) {
+	private function parseConfig($folder, $configName) {
 		/** @type File $configFile */
 		$configFile = $folder->get($configName);
 		try {
@@ -45,14 +80,13 @@ class ConfigParser {
 			$saneConfig = $this->bomFixer($rawConfig);
 			$parsedConfig = Yaml::parse($saneConfig);
 			//\OC::$server->getLogger()->debug("rawConfig : {path}", ['path' => $rawConfig]);
-			list($config, $configItems) =
-				$this->buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level);
+
 		} catch (\Exception $exception) {
 			$errorMessage = "Problem while parsing the configuration file";
 			throw new ServiceException($errorMessage);
 		}
 
-		return [$config, $configItems];
+		return $parsedConfig;
 	}
 
 	/**

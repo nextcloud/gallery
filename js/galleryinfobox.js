@@ -15,7 +15,7 @@
 			if (this.infoContentElement.is(':visible')) {
 				this.infoContentElement.slideUp();
 			} else {
-				this.albumInfo = Gallery.albumConfig.albumInfo;
+				this.albumInfo = Gallery.config.albumInfo;
 
 				if (!this.albumInfo.infoLoaded) {
 					this.infoContentElement.addClass('icon-loading');
@@ -37,7 +37,7 @@
 					} else {
 						this._addContent(this.albumInfo.description);
 					}
-					Gallery.albumConfig.infoLoaded = true;
+					Gallery.config.infoLoaded = true;
 				} else {
 					this.infoContentElement.slideDown();
 				}

@@ -21,15 +21,19 @@ $(document).ready(function () {
 		Gallery.resetContentHeight();
 		Gallery.showLoading();
 
-		$.getJSON(Gallery.utility.buildGalleryUrl('mediatypes', '', {}))
-			.then(function (mediaTypes) {
-				//console.log('mediaTypes', mediaTypes);
-				Gallery.mediaTypes = mediaTypes;
-			})
-			.then(function () {
-				Gallery.getFiles().then(function () {
-					window.onhashchange();
-				});
+		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
+			.then(function (config) {
+				Gallery.config = new Gallery.Config(config);
+				$.getJSON(Gallery.utility.buildGalleryUrl('mediatypes', '', {}))
+					.then(function (mediaTypes) {
+						//console.log('mediaTypes', mediaTypes);
+						Gallery.mediaTypes = mediaTypes;
+					})
+					.then(function () {
+						Gallery.getFiles().then(function () {
+							window.onhashchange();
+						});
+					});
 			});
 
 		$('#openAsFileListButton').click(function () {
