@@ -14,6 +14,9 @@ namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
 
+use OCA\GalleryPlus\Environment\Environment;
+use OCA\GalleryPlus\Utility\SmarterLogger;
+
 /**
  * Finds configurations files and returns a configuration array
  *
@@ -25,14 +28,59 @@ use OCP\Files\Folder;
 class ConfigService extends FilesService {
 
 	/**
+	 * @type string
+	 */
+	private $configName = 'gallery.cnf';
+	/**
+	 * @type string
+	 */
+	private $privacyChecker = '.nomedia';
+	/**
 	 * @type array <string,bool>
 	 */
-	private $configItems = ['information' => false, 'sorting' => false, 'features' => false];
-
+	private $configItems = ['information' => false, 'sorting' => false];
 	/**
 	 * @type ConfigParser
 	 */
 	private $configParser;
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $appName
+	 * @param Environment $environment
+	 * @param ConfigParser $configParser
+	 * @param SmarterLogger $logger
+	 */
+	public function __construct(
+		$appName,
+		Environment $environment,
+		ConfigParser $configParser,
+		SmarterLogger $logger
+	) {
+		parent::__construct($appName, $environment, $logger);
+
+		$this->configParser = $configParser;
+	}
+
+	/**
+	 * Returns a list of supported features
+	 *
+	 * @return array
+	 */
+	public function getFeaturesList() {
+		$featuresList = [];
+		/** @type Folder $rootFolder */
+		$rootFolder = $this->environment->getNode('');
+		if ($rootFolder) {
+			list($featuresList) =
+				$this->configParser->parseConfig(
+					$rootFolder, $this->configName, [], ['features' => false], null
+				);
+		}
+
+		return $featuresList;
+	}
 
 	/**
 	 * Returns information about the currently selected folder
@@ -48,12 +96,8 @@ class ConfigService extends FilesService {
 	 * @return null|array
 	 */
 	public function getAlbumInfo($folderNode, $folderPathFromRoot) {
-		$configName = 'gallery.cnf';
-		$privacyChecker = '.nomedia';
-
-		$this->configParser = new ConfigParser();
 		list ($albumConfig, $privateAlbum) =
-			$this->getAlbumConfig($folderNode, $privacyChecker, $configName);
+			$this->getAlbumConfig($folderNode, $this->privacyChecker, $this->configName);
 		if ($privateAlbum) {
 			$this->logAndThrowForbidden('Album is private or unavailable');
 		}
@@ -91,10 +135,7 @@ class ConfigService extends FilesService {
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
-			list($config) =
-				$this->parseFolderConfig(
-					$folder, $configName, $config, $level, $isRootFolder
-				);
+			list($config) = $this->parseFolderConfig($folder, $configName, $config, $level);
 		}
 		if (!$isRootFolder) {
 			return $this->getParentConfig(
@@ -115,16 +156,14 @@ class ConfigService extends FilesService {
 	 * @param string $configName
 	 * @param array $config
 	 * @param int $level
-	 * @param bool $isRootFolder
 	 *
 	 * @return array
 	 */
-	private function parseFolderConfig($folder, $configName, $config, $level, $isRootFolder) {
+	private function parseFolderConfig($folder, $configName, $config, $level) {
 		try {
-			list($config, $configItems) =
-				$this->configParser->parseFolderConfig(
-					$folder, $configName, $config, $this->configItems, $level, $isRootFolder
-				);
+			list($config, $configItems) = $this->configParser->parseConfig(
+				$folder, $configName, $config, $this->configItems, $level
+			);
 			$this->configItems = $configItems;
 		} catch (ServiceException $exception) {
 			list($config) =

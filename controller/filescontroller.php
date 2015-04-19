@@ -82,29 +82,26 @@ class FilesController extends Controller {
 	 *
 	 * Returns a list of all media files available to the authenticated user
 	 *
-	 * Authentication can be via a login/password or a token/(password)
-	 *
-	 * For private galleries, it returns all media files, with the full path
-	 * from the root folder
-	 * For public galleries, the path starts from the folder the link
-	 * gives access to (virtual root)
-	 *
-	 * An exception is only caught in case something really wrong happens. As we don't test files
-	 *     before including them in the list, we may return some bad apples
+	 *    * Authentication can be via a login/password or a token/(password)
+	 *    * For private galleries, it returns all media files, with the full path from the root
+	 *     folder For public galleries, the path starts from the folder the link gives access to
+	 *     (virtual root)
+	 *    * An exception is only caught in case something really wrong happens. As we don't test
+	 *     files before including them in the list, we may return some bad apples
 	 *
 	 * @param string $location a path representing the current album in the app
+	 * @param string $features the list of supported features
 	 *
-	 * @return array<string,array<string,string|int>>|Http\JSONResponse
+	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
-	public function getFiles($location) {
+	public function getFiles($location, $features) {
+		$features = explode(';', $features);
 		$mediaTypesArray = explode(';', $this->request->getParam('mediatypes'));
 		try {
 			/** @type Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
 				$this->filesService->getCurrentFolder(rawurldecode($location));
 			$albumInfo = $this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
-
-			$features = $this->getFeaturesList($albumInfo);
 			$files =
 				$this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray, $features);
 
@@ -130,21 +127,6 @@ class FilesController extends Controller {
 			'albuminfo'          => $albumInfo,
 			'locationhaschanged' => $locationHasChanged
 		];
-	}
-
-	/**
-	 * Returns the list of activate experimental features
-	 *
-	 * @param $albumInfo
-	 *
-	 * @return array
-	 */
-	private function getFeaturesList($albumInfo) {
-		if (array_key_exists('features', $albumInfo)) {
-			return $albumInfo['features'];
-		}
-
-		return [];
 	}
 
 }

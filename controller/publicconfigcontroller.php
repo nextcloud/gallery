@@ -7,30 +7,30 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2015
  */
 
 namespace OCA\GalleryPlus\Controller;
 
 /**
- * Class PublicFilesController
+ * Class PublicConfigController
  *
  * Note: Type casting only works if the "@param" parameters are also included in this class as
  * their not yet inherited
  *
  * @package OCA\GalleryPlus\Controller
  */
-class PublicFilesController extends FilesController {
+class PublicConfigController extends ConfigController {
 
 	/**
 	 * @PublicPage
 	 *
-	 * Returns a list of all images from the folder the link gives access to
+	 * Returns a list of supported features
 	 *
 	 * @inheritDoc
 	 */
-	public function getFiles($location, $features) {
-		return parent::getFiles($location, $features);
+	public function getConfig() {
+		return parent::getConfig();
 	}
 
 }

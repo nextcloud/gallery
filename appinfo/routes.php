@@ -64,6 +64,12 @@ return [
 		/**
 		 * Services
 		 */
+		// Gallery config
+		[
+			'name' => 'config#get_config',
+			'url'  => '/config',
+			'verb' => 'GET'
+		],
 		// Supported media types. Only called by the slideshow
 		[
 			'name' => 'preview#get_media_types',
@@ -97,6 +103,11 @@ return [
 		/**
 		 * Public services
 		 */
+		[
+			'name' => 'public_config#get_config',
+			'url'  => '/config',
+			'verb' => 'GET'
+		],
 		[
 			'name' => 'public_preview#get_media_types',
 			'url'  => '/mediatypes.public',

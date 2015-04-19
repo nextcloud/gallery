@@ -20,14 +20,17 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 
 use OCA\GalleryPlus\Controller\PageController;
+use OCA\GalleryPlus\Controller\ConfigController;
 use OCA\GalleryPlus\Controller\FilesController;
 use OCA\GalleryPlus\Controller\PreviewController;
+use OCA\GalleryPlus\Controller\PublicConfigController;
 use OCA\GalleryPlus\Controller\PublicFilesController;
 use OCA\GalleryPlus\Controller\PublicPreviewController;
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Service\FilesService;
 use OCA\GalleryPlus\Service\ConfigService;
+use OCA\GalleryPlus\Service\ConfigParser;
 use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
@@ -64,6 +67,26 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('Environment'),
 				$c->query('OCP\IURLGenerator')
+			);
+		}
+		);
+		$container->registerService(
+			'ConfigController', function (IContainer $c) {
+			return new ConfigController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ConfigService'),
+				$c->query('SmarterLogger')
+			);
+		}
+		);
+		$container->registerService(
+			'PublicConfigController', function (IContainer $c) {
+			return new PublicConfigController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ConfigService'),
+				$c->query('SmarterLogger')
 			);
 		}
 		);
@@ -163,6 +186,11 @@ class Application extends App {
 		 * OCA
 		 */
 		$container->registerService(
+			'ConfigParser', function () {
+			return new ConfigParser();
+		}
+		);
+		$container->registerService(
 			'Normalizer', function () {
 			return new Normalizer();
 		}
@@ -226,6 +254,7 @@ class Application extends App {
 			return new ConfigService(
 				$c->query('AppName'),
 				$c->query('Environment'),
+				$c->query('ConfigParser'),
 				$c->query('SmarterLogger')
 
 			);

@@ -30,17 +30,14 @@ class ConfigParser {
 	 * @param Folder $folder
 	 * @param string $configName
 	 * @param array $currentConfig
-	 * @param array<string,bool> $configItems
+	 * @param array <string,bool> $configItems
 	 * @param int $level
-	 * @param bool $isRootFolder
 	 *
 	 * @return array <null|array,array<string,bool>>
 	 *
 	 * @throws ServiceException
 	 */
-	public function parseFolderConfig(
-		$folder, $configName, $currentConfig, $configItems, $level, $isRootFolder
-	) {
+	public function parseConfig($folder, $configName, $currentConfig, $configItems, $level) {
 		/** @type File $configFile */
 		$configFile = $folder->get($configName);
 		try {
@@ -49,9 +46,7 @@ class ConfigParser {
 			$parsedConfig = Yaml::parse($saneConfig);
 			//\OC::$server->getLogger()->debug("rawConfig : {path}", ['path' => $rawConfig]);
 			list($config, $configItems) =
-				$this->buildAlbumConfig(
-					$currentConfig, $parsedConfig, $configItems, $level, $isRootFolder
-				);
+				$this->buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level);
 		} catch (\Exception $exception) {
 			$errorMessage = "Problem while parsing the configuration file";
 			throw new ServiceException($errorMessage);
@@ -85,17 +80,14 @@ class ConfigParser {
 	 * @param array $parsedConfig
 	 * @param array <string,bool> $configItems
 	 * @param int $level
-	 * @param bool $isRootFolder
 	 *
 	 * @return array<null|array,array<string,bool>>
 	 */
-	private function buildAlbumConfig(
-		$currentConfig, $parsedConfig, $configItems, $level, $isRootFolder
-	) {
+	private function buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level) {
 		foreach ($configItems as $key => $complete) {
 			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
 				$parsedConfigItem = $parsedConfig[$key];
-				if ($this->isConfigUsable($key, $parsedConfigItem, $level, $isRootFolder)) {
+				if ($this->isConfigUsable($parsedConfigItem, $level)) {
 					list($configItem, $itemComplete) =
 						$this->addConfigItem($key, $parsedConfigItem, $level);
 					$currentConfig = array_merge($currentConfig, $configItem);
@@ -124,18 +116,15 @@ class ConfigParser {
 	/**
 	 * Determines if we can use this configuration sub-section
 	 *
-	 * @param string $key
 	 * @param array $parsedConfigItem
 	 * @param int $level
-	 * @param bool $isRootFolder
 	 *
 	 * @return bool
 	 */
-	private function isConfigUsable($key, $parsedConfigItem, $level, $isRootFolder) {
+	private function isConfigUsable($parsedConfigItem, $level) {
 		$inherit = $this->isConfigInheritable($parsedConfigItem);
-		$features = $this->isFeaturesListValid($key, $isRootFolder);
 
-		return $level === 0 || $inherit || $features;
+		return $level === 0 || $inherit;
 	}
 
 	/**
@@ -181,15 +170,4 @@ class ConfigParser {
 
 	}
 
-	/**
-	 * Determines if we can use the "features" sub-section
-	 *
-	 * @param string $key
-	 * @param bool $isRootFolder
-	 *
-	 * @return bool
-	 */
-	private function isFeaturesListValid($key, $isRootFolder) {
-		return $key === 'features' && $isRootFolder;
-	}
 }
