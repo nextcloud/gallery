@@ -95,13 +95,14 @@ class FilesController extends Controller {
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
 	public function getFiles($location, $features) {
-		$features = explode(';', $features);
+		$features = explode(',', $features);
 		$mediaTypesArray = explode(';', $this->request->getParam('mediatypes'));
 		try {
 			/** @type Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
-				$this->filesService->getCurrentFolder(rawurldecode($location));
-			$albumInfo = $this->configService->getAlbumInfo($folderNode, $folderPathFromRoot);
+				$this->filesService->getCurrentFolder(rawurldecode($location), $features);
+			$albumInfo =
+				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot, $features);
 			$files =
 				$this->searchMediaService->getMediaFiles($folderNode, $mediaTypesArray, $features);
 

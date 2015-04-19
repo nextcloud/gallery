@@ -32,10 +32,20 @@ class FilesService extends Service {
 	 * @type string[]
 	 */
 	protected $features;
+
 	/**
-	 * @type bool
+	 * This returns what we think is the current folder node based on a given path
+	 *
+	 * @param string $location
+	 * @param string[] $features
+	 *
+	 * @return array <string,Folder,bool>
 	 */
-	private $externalShareAllowed = false;
+	public function getCurrentFolder($location, $features) {
+		$this->features = $features;
+
+		return $this->findFolder($location);
+	}
 
 	/**
 	 * This returns the current folder node based on a path
@@ -50,7 +60,7 @@ class FilesService extends Service {
 	 *
 	 * @return array <string,Folder,bool>
 	 */
-	public function getCurrentFolder($location, $depth = 0) {
+	public function findFolder($location, $depth = 0) {
 		$node = null;
 		$location = $this->validateLocation($location, $depth);
 		try {
@@ -63,7 +73,7 @@ class FilesService extends Service {
 			$folder = pathinfo($location, PATHINFO_DIRNAME);
 			$depth++;
 
-			return $this->getCurrentFolder($folder, $depth);
+			return $this->findFolder($folder, $depth);
 		}
 		$path = $this->environment->getPathFromVirtualRoot($node);
 		$locationHasChanged = $this->hasLocationChanged($depth);
@@ -249,14 +259,13 @@ class FilesService extends Service {
 	/**
 	 * Determines if the node is a share which is hosted externally
 	 *
-	 * @fixme $externalShareAllowed is a hack which can be manually enabled by experts
 	 *
 	 * @param Node $node
 	 *
 	 * @return bool
 	 */
 	private function isExternalShare($node) {
-		if ($this->isExternalShareAllowed() || $this->externalShareAllowed) {
+		if ($this->isExternalShareAllowed()) {
 			return false;
 		}
 
@@ -272,19 +281,16 @@ class FilesService extends Service {
 	/**
 	 * Determines if the user has allowed the use of external shares
 	 *
-	 * @fixme Can only fully work if the setting is stored in the database
 	 * @fixme Blocked by https://github.com/owncloud/core/issues/15551
 	 *
 	 * @return bool
 	 */
 	private function isExternalShareAllowed() {
-		$features = $this->features;
-		if (empty($features)) {
+		if (empty($this->features)) {
 			return false;
 		}
 
-		return (array_key_exists('external_shares', $features)
-				&& $features['external_shares'] === 'yes');
+		return in_array('external_shares', $this->features);
 	}
 
 }

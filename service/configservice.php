@@ -89,10 +89,14 @@ class ConfigService extends FilesService {
 	 *
 	 * @param Folder $folderNode
 	 * @param string $folderPathFromRoot
+	 * @param array $features
 	 *
-	 * @return null|array
+	 * @return array|null
+	 *
+	 * @throws ForbiddenServiceException
 	 */
-	public function getAlbumInfo($folderNode, $folderPathFromRoot) {
+	public function getAlbumInfo($folderNode, $folderPathFromRoot, $features) {
+		$this->features = $features;
 		list ($albumConfig, $privateAlbum) =
 			$this->getAlbumConfig($folderNode, $this->privacyChecker, $this->configName);
 		if ($privateAlbum) {

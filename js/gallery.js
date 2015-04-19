@@ -79,7 +79,8 @@ Gallery.getFiles = function () {
 	var currentLocation = window.location.href.split('#')[1] || '';
 	var params = {
 		location: currentLocation,
-		mediatypes: Gallery.getMediaTypes()
+		mediatypes: Gallery.getMediaTypes(),
+		features: Gallery.config.galleryFeatures
 	};
 	// Only use the folder as a GET parameter and not as part of the URL
 	var url = Gallery.utility.buildGalleryUrl('files', '', params);

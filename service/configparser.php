@@ -68,7 +68,7 @@ class ConfigParser {
 	 * @param Folder $folder
 	 * @param string $configName
 	 *
-	 * @return array <null|array>
+	 * @return array|string[]
 	 *
 	 * @throws ServiceException
 	 */
