@@ -1,4 +1,4 @@
-/* global jQuery, OC, $, t */
+/* global jQuery, OC, OCA, $, t */
 /**
  *
  * @param {jQuery} container
@@ -13,8 +13,6 @@ var SlideShow = function (container, images, interval, maxScale) {
 	this.maxScale = maxScale || 1; // This should come from the configuration
 };
 
-SlideShow.mediaTypes = {};
-
 SlideShow.prototype = {
 	controls: null,
 	imageCache: {},
@@ -24,6 +22,7 @@ SlideShow.prototype = {
 	zoomablePreview: null,
 
 	/**
+	 * Initialises the slideshow
 	 *
 	 * @param play
 	 */
@@ -36,6 +35,7 @@ SlideShow.prototype = {
 	},
 
 	/**
+	 * Launches the slideshow
 	 *
 	 * @param index
 	 *
@@ -90,6 +90,7 @@ SlideShow.prototype = {
 
 
 	/**
+	 * Changes the browser Url, based on the current image
 	 *
 	 * @param path
 	 */
@@ -100,6 +101,7 @@ SlideShow.prototype = {
 	},
 
 	/**
+	 * Loads the image to show in the slideshow and preloads the next one
 	 *
 	 * @param preview
 	 *
@@ -133,6 +135,9 @@ SlideShow.prototype = {
 	},
 
 	/**
+	 * Retrieves an SVG
+	 *
+	 * An SVG can't be simply attached to a src attribute like a bitmap image
 	 *
 	 * @param source
 	 *
@@ -166,6 +171,9 @@ SlideShow.prototype = {
 		}
 	},
 
+	/**
+	 * Hides the current image (before loading the next)
+	 */
 	hideImage: function () {
 		this.container.children('img').remove();
 	},
@@ -184,7 +192,6 @@ SlideShow.prototype = {
 
 	/**
 	 * Changes the colour of the background of the image
-	 *
 	 * @private
 	 */
 	toggleBackground: function () {
@@ -208,7 +215,6 @@ SlideShow.prototype = {
 
 	/**
 	 * Shows an error notification
-	 *
 	 * @private
 	 */
 	showErrorNotification: function () {
@@ -226,30 +232,12 @@ SlideShow.prototype = {
 };
 
 /**
- *
- * @param endPoint
- * @param path
- * @param params
- *
- * @returns {string}
- */
-SlideShow.buildGalleryUrl = function (endPoint, path, params) {
-	var extension = '';
-	var token = ($('#sharingToken').val()) ? $('#sharingToken').val() : false;
-	if (token) {
-		params.token = token;
-		extension = '.public';
-	}
-	var query = OC.buildQueryString(params);
-	return OC.generateUrl('apps/galleryplus/' + endPoint + extension + path, null) + '?' + query;
-};
-
-/**
+ * Retrieves the slideshow's template
  *
  * @returns {*}
  * @private
  */
-SlideShow._getSlideshowTemplate = function () {
+SlideShow.getSlideshowTemplate = function () {
 	var defer = $.Deferred();
 	if (!this.$slideshowTemplate) {
 		var self = this;
@@ -313,11 +301,16 @@ SlideShow._getSlideshowTemplate = function () {
 };
 
 $(document).ready(function () {
+	// Deactivates slideshow on login page
 	if ($('#body-login').length > 0) {
-		return true; //deactivate slideshow on login page
+		return true;
 	}
-
-	$.when(SlideShow._getSlideshowTemplate()).then(function ($tmpl) {
+	// Deactivates slideshow on public preview page
+	if ($('#imgframe').length > 0) {
+		return true;
+	}
+	
+	$.when(SlideShow.getSlideshowTemplate()).then(function ($tmpl) {
 		$('body').append($tmpl); //move the slideshow outside the content so we can hide the content
 
 		var inactiveCallback = function () {

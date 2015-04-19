@@ -24,7 +24,7 @@
 			var timeout = 15;
 			if (age === 'old') {
 				line1 = t('gallery', 'Your browser is not supported!');
-				line2 = t('gallery', 'please install one of the following alternatives')
+				line2 = t('gallery', 'please install one of the following alternatives');
 				timeout = 60;
 			}
 
