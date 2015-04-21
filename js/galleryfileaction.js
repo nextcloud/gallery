@@ -93,7 +93,8 @@ var galleryFileAction = {
 		}
 		var slideShow = new SlideShow($('#slideshow'), images);
 		slideShow.onStop = function () {
-			location.hash = '';
+			history.pushState("", document.title,
+				window.location.pathname + window.location.search);
 		};
 		slideShow.init();
 		slideShow.show(start);
