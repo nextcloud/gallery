@@ -31,11 +31,11 @@ use OCA\GalleryPlus\Environment\Environment;
 class PageController extends Controller {
 
 	/**
-	 * @type Environment
+	 * @var Environment
 	 */
 	private $environment;
 	/**
-	 * @type IURLGenerator
+	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
 

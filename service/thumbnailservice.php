@@ -20,11 +20,11 @@ namespace OCA\GalleryPlus\Service;
 class ThumbnailService {
 
 	/**
-	 * @type bool
+	 * @var bool
 	 */
 	private $animatedPreview = false;
 	/**
-	 * @type bool
+	 * @var bool
 	 */
 	private $base64Encode = true;
 

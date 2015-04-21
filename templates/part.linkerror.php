@@ -1,9 +1,9 @@
 <?php
 /**
- * @type $_ array
+ * @var $_ array
  */
 /**
- * @type $l OC_L10N
+ * @var $l OC_L10N
  */
 style(
 	$_['appName'],

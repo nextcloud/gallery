@@ -23,11 +23,11 @@ use OCP\AppFramework\Http;
 class ImageResponse extends Response {
 
 	/**
-	 * @type string
+	 * @var string
 	 */
 	private $path;
 	/**
-	 * @type \OC_Image|string
+	 * @var \OC_Image|string
 	 */
 	private $preview;
 

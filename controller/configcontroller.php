@@ -30,11 +30,11 @@ class ConfigController extends Controller {
 	use JsonHttpError;
 
 	/**
-	 * @type ConfigService
+	 * @var ConfigService
 	 */
 	private $configService;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	private $logger;
 

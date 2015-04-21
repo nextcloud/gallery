@@ -73,7 +73,7 @@ class ConfigParser {
 	 * @throws ServiceException
 	 */
 	private function parseConfig($folder, $configName) {
-		/** @type File $configFile */
+		/** @var File $configFile */
 		$configFile = $folder->get($configName);
 		try {
 			$rawConfig = $configFile->getContent();

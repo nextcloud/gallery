@@ -30,35 +30,35 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class Preview {
 
 	/**
-	 * @type string
+	 * @var string
 	 */
 	private $dataDir;
 	/**
-	 * @type mixed
+	 * @var mixed
 	 */
 	private $previewManager;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	private $logger;
 	/**
-	 * @type string
+	 * @var string
 	 */
 	private $userId;
 	/**
-	 * @type \OC\Preview
+	 * @var \OC\Preview
 	 */
 	private $preview;
 	/**
-	 * @type File
+	 * @var File
 	 */
 	private $file;
 	/**
-	 * @type int[]
+	 * @var int[]
 	 */
 	private $dims;
 	/**
-	 * @type bool
+	 * @var bool
 	 */
 	private $success = true;
 

@@ -34,13 +34,13 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class Environment {
 
 	/**
-	 * @type string
+	 * @var string
 	 */
 	private $appName;
 	/**
 	 * The userId of the logged-in user or the person sharing a folder publicly
 	 *
-	 * @type string
+	 * @var string
 	 */
 	private $userId;
 	/**
@@ -50,19 +50,19 @@ class Environment {
 	 * A share needs to be tracked back to its original owner in order to be able to access the
 	 * resource
 	 *
-	 * @type Folder|null
+	 * @var Folder|null
 	 */
 	private $userFolder;
 	/**
-	 * @type IUserManager
+	 * @var IUserManager
 	 */
 	private $userManager;
 	/**
-	 * @type IServerContainer
+	 * @var IServerContainer
 	 */
 	private $serverContainer;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	private $logger;
 	/**
@@ -71,13 +71,13 @@ class Environment {
 	 * For public folders, it's the path from the shared folder to the root folder in the original
 	 * owner's filesystem: /userId/files/parent_folder/shared_folder
 	 *
-	 * @type string
+	 * @var string
 	 */
 	private $fromRootToFolder;
 	/**
 	 * The name of the shared folder
 	 *
-	 * @type string
+	 * @var string
 	 */
 	private $folderName;
 

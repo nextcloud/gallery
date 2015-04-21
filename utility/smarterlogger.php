@@ -23,11 +23,11 @@ use OCP\ILogger;
 class SmarterLogger implements ILogger {
 
 	/**
-	 * @type ILogger
+	 * @var ILogger
 	 */
 	private $logger;
 	/**
-	 * @type Normalizer
+	 * @var Normalizer
 	 */
 	private $normalizer;
 

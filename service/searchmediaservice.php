@@ -24,11 +24,11 @@ use OCP\Files\Node;
 class SearchMediaService extends FilesService {
 
 	/**
-	 * @type null|array<string,string|int>
+	 * @var null|array<string,string|int>
 	 */
 	private $images = [];
 	/**
-	 * @type string[]
+	 * @var string[]
 	 */
 	private $supportedMediaTypes;
 

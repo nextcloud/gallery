@@ -28,19 +28,19 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class ConfigService extends FilesService {
 
 	/**
-	 * @type string
+	 * @var string
 	 */
 	private $configName = 'gallery.cnf';
 	/**
-	 * @type string
+	 * @var string
 	 */
 	private $privacyChecker = '.nomedia';
 	/**
-	 * @type array <string,bool>
+	 * @var array <string,bool>
 	 */
 	private $configItems = ['information' => false, 'sorting' => false];
 	/**
-	 * @type ConfigParser
+	 * @var ConfigParser
 	 */
 	private $configParser;
 
@@ -70,7 +70,7 @@ class ConfigService extends FilesService {
 	 */
 	public function getFeaturesList() {
 		$featuresList = [];
-		/** @type Folder $rootFolder */
+		/** @var Folder $rootFolder */
 		$rootFolder = $this->environment->getNode('');
 		if ($rootFolder && $rootFolder->nodeExists($this->configName)) {
 			try {

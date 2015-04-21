@@ -35,19 +35,19 @@ class FilesController extends Controller {
 	use JsonHttpError;
 
 	/**
-	 * @type FilesService
+	 * @var FilesService
 	 */
 	private $filesService;
 	/**
-	 * @type ConfigService
+	 * @var ConfigService
 	 */
 	private $configService;
 	/**
-	 * @type SearchMediaService
+	 * @var SearchMediaService
 	 */
 	private $searchMediaService;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	private $logger;
 
@@ -98,7 +98,7 @@ class FilesController extends Controller {
 		$features = explode(',', $features);
 		$mediaTypesArray = explode(';', $this->request->getParam('mediatypes'));
 		try {
-			/** @type Folder $folderNode */
+			/** @var Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
 				$this->filesService->getCurrentFolder(rawurldecode($location), $features);
 			$albumInfo =

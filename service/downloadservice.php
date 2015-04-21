@@ -39,7 +39,7 @@ class DownloadService extends Service {
 		$file = null;
 		$download = false;
 		try {
-			/** @type File $file */
+			/** @var File $file */
 			$file = $this->environment->getResourceFromPath($image);
 			$download = [
 				'path'     => $image,

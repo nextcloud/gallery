@@ -40,19 +40,19 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class EnvCheckMiddleware extends CheckMiddleware {
 
 	/**
-	 * @type IHasher
+	 * @var IHasher
 	 * */
 	private $hasher;
 	/**
-	 * @type ISession
+	 * @var ISession
 	 * */
 	private $session;
 	/**
-	 * @type Environment
+	 * @var Environment
 	 */
 	private $environment;
 	/**
-	 * @type IControllerMethodReflector
+	 * @var IControllerMethodReflector
 	 */
 	protected $reflector;
 

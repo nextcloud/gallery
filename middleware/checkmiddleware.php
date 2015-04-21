@@ -33,19 +33,19 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 abstract class CheckMiddleware extends Middleware {
 
 	/**
-	 * @type string
+	 * @var string
 	 */
 	protected $appName;
 	/**
-	 * @type IRequest
+	 * @var IRequest
 	 */
 	protected $request;
 	/**
-	 * @type IURLGenerator
+	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	protected $logger;
 

@@ -38,27 +38,27 @@ class PreviewController extends Controller {
 	use JsonHttpError;
 
 	/**
-	 * @type IURLGenerator
+	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
 	/**
-	 * @type ThumbnailService
+	 * @var ThumbnailService
 	 */
 	private $thumbnailService;
 	/**
-	 * @type PreviewService
+	 * @var PreviewService
 	 */
 	private $previewService;
 	/**
-	 * @type DownloadService
+	 * @var DownloadService
 	 */
 	private $downloadService;
 	/**
-	 * @type IEventSource
+	 * @var IEventSource
 	 */
 	private $eventSource;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	private $logger;
 

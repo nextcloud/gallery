@@ -1,6 +1,6 @@
 <?php
 /**
- * @type $_ array
+ * @var $_ array
  */
 ?>
 

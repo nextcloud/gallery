@@ -30,13 +30,13 @@ class PreviewService extends Service {
 	use Base64Encode;
 
 	/**
-	 * @type Preview
+	 * @var Preview
 	 */
 	private $previewManager;
 	/**
 	 * @todo This hard-coded array could be replaced by admin settings
 	 *
-	 * @type string[]
+	 * @var string[]
 	 */
 	private $baseMimeTypes = [
 		'image/png',
@@ -54,7 +54,7 @@ class PreviewService extends Service {
 	 * These types are useful for files preview in the files app, but
 	 * not for the gallery side
 	 *
-	 * @type string[]
+	 * @var string[]
 	 */
 	private $slideshowMimeTypes = [
 		'application/font-sfnt',
@@ -122,7 +122,7 @@ class PreviewService extends Service {
 	public function isPreviewRequired($image, $animatedPreview) {
 		$file = null;
 		try {
-			/** @type File $file */
+			/** @var File $file */
 			$file = $this->environment->getResourceFromPath($image);
 
 		} catch (NotFoundEnvException $exception) {
@@ -173,7 +173,7 @@ class PreviewService extends Service {
 	) {
 		$file = null;
 		try {
-			/** @type File $file */
+			/** @var File $file */
 			$file = $this->environment->getResourceFromPath($image);
 		} catch (NotFoundEnvException $exception) {
 			$this->logAndThrowNotFound($exception->getMessage());

@@ -31,11 +31,11 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 class SharingCheckMiddleware extends CheckMiddleware {
 
 	/**
-	 * @type IConfig
+	 * @var IConfig
 	 * */
 	private $config;
 	/**
-	 * @type IControllerMethodReflector
+	 * @var IControllerMethodReflector
 	 */
 	protected $reflector;
 

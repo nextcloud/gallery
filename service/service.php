@@ -23,15 +23,15 @@ use OCA\GalleryPlus\Utility\SmarterLogger;
 abstract class Service {
 
 	/**
-	 * @type string
+	 * @var string
 	 */
 	protected $appName;
 	/**
-	 * @type Environment
+	 * @var Environment
 	 */
 	protected $environment;
 	/**
-	 * @type SmarterLogger
+	 * @var SmarterLogger
 	 */
 	protected $logger;
 

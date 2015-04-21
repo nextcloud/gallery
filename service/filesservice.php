@@ -24,12 +24,12 @@ use OCA\GalleryPlus\Environment\NotFoundEnvException;
  */
 class FilesService extends Service {
 	/**
-	 * @type int
+	 * @var int
 	 */
 	protected $virtualRootLevel = null;
 
 	/**
-	 * @type string[]
+	 * @var string[]
 	 */
 	protected $features;
 
@@ -151,7 +151,7 @@ class FilesService extends Service {
 	 */
 	protected function getAllowedSubFolder($node, $nodeType) {
 		if ($nodeType === 'dir') {
-			/** @type Folder $node */
+			/** @var Folder $node */
 			if (!$node->nodeExists('.nomedia')) {
 				return [$node];
 			}
