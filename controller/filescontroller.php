@@ -16,6 +16,7 @@ namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
 use OCP\Files\Folder;
+use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -23,7 +24,6 @@ use OCP\AppFramework\Http;
 use OCA\GalleryPlus\Service\FilesService;
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\SearchMediaService;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Class FilesController
@@ -47,7 +47,7 @@ class FilesController extends Controller {
 	 */
 	private $searchMediaService;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	private $logger;
 
@@ -59,7 +59,7 @@ class FilesController extends Controller {
 	 * @param FilesService $filesService
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -67,7 +67,7 @@ class FilesController extends Controller {
 		FilesService $filesService,
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 

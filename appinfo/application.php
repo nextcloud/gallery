@@ -37,8 +37,9 @@ use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
 use OCA\GalleryPlus\Middleware\SharingCheckMiddleware;
 use OCA\GalleryPlus\Middleware\EnvCheckMiddleware;
-use OCA\GalleryPlus\Utility\SmarterLogger;
-use OCA\GalleryPlus\Utility\Normalizer;
+
+use OCA\OcUtility\AppInfo\Application as OcUtility;
+use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
 
 /**
  * Class Application
@@ -76,7 +77,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -86,7 +87,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -98,7 +99,7 @@ class Application extends App {
 				$c->query('FilesService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -110,7 +111,7 @@ class Application extends App {
 				$c->query('FilesService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -124,7 +125,7 @@ class Application extends App {
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
 				$c->query('OCP\IEventSource'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -138,7 +139,7 @@ class Application extends App {
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
 				$c->query('OCP\IEventSource'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -191,25 +192,11 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'Normalizer', function () {
-			return new Normalizer();
-		}
-		);
-		$container->registerService(
-			'SmarterLogger', function (IContainer $c) {
-			return new SmarterLogger(
-				$c->query('AppName'),
-				$c->query('OCP\ILogger'),
-				$c->query('Normalizer')
-			);
-		}
-		);
-		$container->registerService(
 			'CustomPreviewManager', function (IContainer $c) {
 			return new Preview(
 				$c->query('OCP\IConfig'),
 				$c->query('OCP\IPreview'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -221,7 +208,7 @@ class Application extends App {
 				$c->query('UserFolder'),
 				$c->query('OCP\IUserManager'),
 				$c->query('OCP\IServerContainer'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -235,7 +222,39 @@ class Application extends App {
 				->getEnvironment($token);
 		}
 		);*/
+		/**
+		 * OCA External
+		 */
+		if (\OCP\App::isEnabled('ocutility')) {
+			$container->registerService(
+				'UtilityContainer', function () {
+				$app = new OcUtility();
 
+				return $app->getContainer();
+			}
+			);
+			$container->registerService(
+				'Helper', function (IContainer $c) {
+				return $c->query('UtilityContainer')
+						 ->query('OCA\OcUtility\Service\Helper');
+			}
+			);
+			$container->registerService(
+				'Logger', function (IContainer $c) {
+				return new SmarterLogger(
+					$c->query('AppName'),
+					$c->query('OCP\ILogger')
+				);
+
+			}
+			);
+		} else {
+			$container->registerService(
+				'Logger', function (IContainer $c) {
+				return $c->query('OCP\ILogger');
+			}
+			);
+		}
 		/**
 		 * Services
 		 */
@@ -244,7 +263,7 @@ class Application extends App {
 			return new FilesService(
 				$c->query('AppName'),
 				$c->query('Environment'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 
 			);
 		}
@@ -255,7 +274,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('ConfigParser'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 
 			);
 		}
@@ -265,7 +284,7 @@ class Application extends App {
 			return new SearchMediaService(
 				$c->query('AppName'),
 				$c->query('Environment'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 
 			);
 		}
@@ -281,7 +300,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('CustomPreviewManager'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 
 			);
 		}
@@ -291,7 +310,7 @@ class Application extends App {
 			return new DownloadService(
 				$c->query('AppName'),
 				$c->query('Environment'),
-				$c->query('SmarterLogger')
+				$c->query('Logger')
 			);
 		}
 		);
@@ -308,7 +327,7 @@ class Application extends App {
 					$c->query('OCP\IConfig'),
 					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
 					$c->query('OCP\IURLGenerator'),
-					$c->query('SmarterLogger')
+					$c->query('Logger')
 				);
 			}
 		);
@@ -323,7 +342,7 @@ class Application extends App {
 					$c->query('Environment'),
 					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
 					$c->query('OCP\IURLGenerator'),
-					$c->query('SmarterLogger')
+					$c->query('Logger')
 				);
 			}
 		);

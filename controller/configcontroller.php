@@ -13,12 +13,12 @@
 namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
+use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Service\ConfigService;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Class ConfigController
@@ -34,7 +34,7 @@ class ConfigController extends Controller {
 	 */
 	private $configService;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	private $logger;
 
@@ -44,13 +44,13 @@ class ConfigController extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param ConfigService $configService
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		ConfigService $configService,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 

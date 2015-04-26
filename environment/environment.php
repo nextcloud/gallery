@@ -17,12 +17,11 @@ namespace OCA\GalleryPlus\Environment;
 use OCP\IServerContainer;
 use OCP\IUserManager;
 use OCP\Share;
+use OCP\ILogger;
 use OCP\Files\Folder;
 use OCP\Files\Node;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
-
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Builds the environment so that the services have access to the files and folders' owner
@@ -62,7 +61,7 @@ class Environment {
 	 */
 	private $serverContainer;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	private $logger;
 	/**
@@ -89,7 +88,7 @@ class Environment {
 	 * @param Folder|null $userFolder
 	 * @param IUserManager $userManager
 	 * @param IServerContainer $serverContainer
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -97,7 +96,7 @@ class Environment {
 		$userFolder,
 		IUserManager $userManager,
 		IServerContainer $serverContainer,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		$this->appName = $appName;
 		$this->userId = $userId;

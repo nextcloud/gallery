@@ -12,8 +12,9 @@
 
 namespace OCA\GalleryPlus\Service;
 
+use OCP\ILogger;
+
 use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Contains methods which all services will need
@@ -31,7 +32,7 @@ abstract class Service {
 	 */
 	protected $environment;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	protected $logger;
 
@@ -40,12 +41,12 @@ abstract class Service {
 	 *
 	 * @param string $appName
 	 * @param Environment $environment
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		Environment $environment,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		$this->appName = $appName;
 		$this->environment = $environment;

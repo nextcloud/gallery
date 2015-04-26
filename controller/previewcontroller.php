@@ -17,6 +17,7 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IEventSource;
+use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -26,7 +27,6 @@ use OCA\GalleryPlus\Service\ServiceException;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Class PreviewController
@@ -58,7 +58,7 @@ class PreviewController extends Controller {
 	 */
 	private $eventSource;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	private $logger;
 
@@ -72,7 +72,7 @@ class PreviewController extends Controller {
 	 * @param PreviewService $previewService
 	 * @param DownloadService $downloadService
 	 * @param IEventSource $eventSource
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -82,7 +82,7 @@ class PreviewController extends Controller {
 		PreviewService $previewService,
 		DownloadService $downloadService,
 		IEventSource $eventSource,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 

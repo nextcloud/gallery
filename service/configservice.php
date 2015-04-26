@@ -13,9 +13,9 @@
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
+use OCP\ILogger;
 
 use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Finds configurations files and returns a configuration array
@@ -50,13 +50,13 @@ class ConfigService extends FilesService {
 	 * @param string $appName
 	 * @param Environment $environment
 	 * @param ConfigParser $configParser
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		Environment $environment,
 		ConfigParser $configParser,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		parent::__construct($appName, $environment, $logger);
 

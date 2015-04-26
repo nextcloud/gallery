@@ -16,13 +16,12 @@ namespace OCA\GalleryPlus\Middleware;
 
 use OCP\IURLGenerator;
 use OCP\IRequest;
+use OCP\ILogger;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Middleware;
-
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Checks that we have a valid token linked to a valid resource and that the
@@ -45,7 +44,7 @@ abstract class CheckMiddleware extends Middleware {
 	 */
 	private $urlGenerator;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	protected $logger;
 
@@ -55,13 +54,13 @@ abstract class CheckMiddleware extends Middleware {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		IURLGenerator $urlGenerator,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		$this->appName = $appName;
 		$this->request = $request;
@@ -81,7 +80,7 @@ abstract class CheckMiddleware extends Middleware {
 			$message = $exception->getMessage();
 			$code = $exception->getCode();
 
-			$this->logger->debug("[TokenCheckException] {exception}", ['exception' => $exception]);
+			$this->logger->debug("[TokenCheckException] {exception}", ['exception' => $message]);
 
 			return $this->computeResponse($message, $code);
 		}

@@ -19,6 +19,7 @@ namespace OCA\GalleryPlus\Middleware;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\ISession;
+use OCP\ILogger;
 use OCP\Share;
 use OCP\Security\IHasher;
 
@@ -27,7 +28,6 @@ use OCP\AppFramework\Utility\IControllerMethodReflector;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Service\ServiceException;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Checks that we have a valid token linked to a valid resource and that the
@@ -60,14 +60,13 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * Constructor
 	 *
 	 * @param string $appName
+	 * @param IRequest $request
 	 * @param IHasher $hasher
 	 * @param ISession $session
-	 * @param IRequest $request
+	 * @param Environment $environment
 	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
-	 * @param SmarterLogger $logger
-	 * @param Environment $environment
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
@@ -77,7 +76,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		Environment $environment,
 		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		parent::__construct(
 			$appName,

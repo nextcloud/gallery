@@ -14,11 +14,11 @@ namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\File;
 use OCP\Template;
+use OCP\ILogger;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Environment\NotFoundEnvException;
 use OCA\GalleryPlus\Preview\Preview;
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Generates previews
@@ -67,13 +67,13 @@ class PreviewService extends Service {
 	 * @param string $appName
 	 * @param Environment $environment
 	 * @param Preview $previewManager
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		Environment $environment,
 		Preview $previewManager,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		parent::__construct($appName, $environment, $logger);
 

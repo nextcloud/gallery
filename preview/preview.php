@@ -16,9 +16,9 @@ use OCP\IConfig;
 use OCP\Image;
 use OCP\Files\File;
 use OCP\IPreview;
+use OCP\ILogger;
 use OCP\Template;
 
-use OCA\GalleryPlus\Utility\SmarterLogger;
 
 /**
  * Generates previews
@@ -38,7 +38,7 @@ class Preview {
 	 */
 	private $previewManager;
 	/**
-	 * @var SmarterLogger
+	 * @var ILogger
 	 */
 	private $logger;
 	/**
@@ -67,12 +67,12 @@ class Preview {
 	 *
 	 * @param IConfig $config
 	 * @param IPreview $previewManager
-	 * @param SmarterLogger $logger
+	 * @param ILogger $logger
 	 */
 	public function __construct(
 		IConfig $config,
 		IPreview $previewManager,
-		SmarterLogger $logger
+		ILogger $logger
 	) {
 		$this->dataDir = $config->getSystemValue('datadirectory');
 		$this->previewManager = $previewManager;
