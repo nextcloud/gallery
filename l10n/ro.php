@@ -9,6 +9,7 @@ $TRANSLATIONS = array(
 "Close" => "Închide",
 "Error loading slideshow template" => "eroare la incarcarea modelului ",
 "Share" => "Partajează",
+"No pictures found! If you upload pictures in the files app, they will be displayed here." => "Nici o imagine găsită! Dacă tu încarci imagini în aplicațiile de fișiere, ele vor fi afișate aici.",
 "shared by %s" => "partajat de %s",
 "File list" => "Listă de fișiere"
 );
