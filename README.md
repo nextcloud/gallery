@@ -78,6 +78,7 @@ There are many ways in which you can help make Gallery+ a better product
 ### Before reporting bugs
 
 * Read the section about server and browser requirements
+* Make sure you've disabled the original Pictures/Gallery app
 * Read the "Known issues" section below
 * Get the latest version of the app from [the releases page](https://github.com/interfasys/galleryplus/releases)
 * [Check if they have already been reported](https://github.com/interfasys/galleryplus/issues)
