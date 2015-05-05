@@ -4,7 +4,7 @@
 	 * Button and key controls for the slideshow
 	 *
 	 * @param {object} slideshow
-	 * @param {element} container
+	 * @param {*} container
 	 * @param {object} zoomablePreview
 	 * @param {array} images
 	 * @param {int} interval

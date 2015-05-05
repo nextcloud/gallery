@@ -67,6 +67,7 @@ var galleryFileAction = {
 			// We only add images to the slideshow if we think we'll be able
 			// to generate previews for this media type
 			if (galleryFileAction.mediaTypes[file.mimetype]) {
+				/* jshint camelcase: false */
 				var params = {
 					file: dir + file.name,
 					x: width,

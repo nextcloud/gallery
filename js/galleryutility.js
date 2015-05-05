@@ -65,6 +65,7 @@
 			}
 
 			if (element.data('requesttoken')) {
+				/* jshint camelcase: false */
 				oc_requesttoken = element.data('requesttoken');
 			}
 
@@ -83,6 +84,7 @@
 		getPreviewUrl: function (image) {
 			var width = $(window).width() * window.devicePixelRatio;
 			var height = $(window).height() * window.devicePixelRatio;
+			/* jshint camelcase: false */
 			var params = {
 				file: image,
 				x: width,

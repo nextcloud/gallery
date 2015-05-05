@@ -3,8 +3,8 @@
  * Creates a new album object to store information about an album
  *
  * @param {string} path
- * @param {[]} subAlbums
- * @param {[]} images
+ * @param {Array<Album|GalleryImage>} subAlbums
+ * @param {Array<Album|GalleryImage>} images
  * @param {string} name
  * @constructor
  */
@@ -227,7 +227,7 @@ Album.prototype = {
 		 *
 		 * @param {Album} album
 		 * @param {Row} row
-		 * @param {array<Album|GalleryImage>} images
+		 * @param {Array<Album|GalleryImage>} images
 		 *
 		 * @returns {$.Deferred<Row>}
 		 */
@@ -284,7 +284,7 @@ Row.prototype = {
 	 *
 	 * @param {Album|GalleryImage} element
 	 *
-	 * @return {$.Deferred<bool>} true if more images can be added to the row
+	 * @return {jQuery.Deferred<bool>} true if more images can be added to the row
 	 */
 	addElement: function (element) {
 		var row = this;
@@ -354,7 +354,7 @@ GalleryImage.prototype = {
 	 *
 	 * @param {bool} square
 	 *
-	 * @returns {$.Deferred<Thumbnail.image>}
+	 * @returns {jQuery.Deferred<Thumbnail.image>}
 	 */
 	getThumbnail: function (square) {
 		if (this.thumbnail === null) {

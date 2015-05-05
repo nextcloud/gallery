@@ -84,13 +84,12 @@ Gallery.getFiles = function () {
 	};
 	// Only use the folder as a GET parameter and not as part of the URL
 	var url = Gallery.utility.buildGalleryUrl('files', '', params);
-	return $.getJSON(url).then(function (data) {
+	return $.getJSON(url).then(function (/**{albuminfo}*/ data) {
 		var path = null;
 		var fileId = null;
 		var mimeType = null;
 		var mTime = null;
 		var files = data.files;
-
 		var albumInfo = data.albuminfo;
 		Gallery.config.setAlbumConfig(albumInfo);
 		for (var i = 0; i < files.length; i++) {
@@ -124,6 +123,7 @@ Gallery.getFiles = function () {
  * This enables us to show as many as 4 pictures for each albums, even if the images are found in
  * very deep sub-folders
  *
+ * @param {string} path
  * @param dir
  * @param currentFolder
  */
@@ -290,7 +290,7 @@ Gallery.resetContentHeight = function () {
 /**
  * Creates a new slideshow using the images found in the current folder
  *
- * @param {array} images
+ * @param {Array} images
  * @param {string} startImage
  * @param {bool} autoPlay
  *
@@ -305,6 +305,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	images = images.map(function (image) {
 		var name = OC.basename(image.path);
 		var previewUrl = Gallery.utility.getPreviewUrl(image.src);
+		/* jshint camelcase: false */
 		var params = {
 			file: image.src,
 			requesttoken: oc_requesttoken

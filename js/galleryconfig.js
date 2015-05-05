@@ -67,7 +67,7 @@
 		/**
 		 * Saves the description and copyright information for the current album
 		 *
-		 * @param albumConfig
+		 * @param {{path, information, description_link, copyright_link}} albumConfig
 		 *
 		 * @returns {{}}
 		 */
@@ -88,6 +88,7 @@
 					}
 				}
 
+				/* jshint camelcase: false */
 				params = {
 					description: albumInfo.description,
 					descriptionLink: albumInfo.description_link,
@@ -105,7 +106,7 @@
 		/**
 		 * Saves the sorting configuration for the current album
 		 *
-		 * @param albumConfig
+		 * @param {{sorting}} albumConfig
 		 *
 		 * @returns {{type: string, order: string, albumOrder: string}}
 		 */

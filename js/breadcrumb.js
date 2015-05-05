@@ -89,7 +89,7 @@
 		 * Adds an element to the breadcrumb
 		 *
 		 * @param {string} name
-		 * @param {string} link
+		 * @param {string|bool} link
 		 * @param img
 		 * @private
 		 */

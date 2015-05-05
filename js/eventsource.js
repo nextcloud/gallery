@@ -38,6 +38,7 @@
 				dataStr += keys[i] + '=' + encodeURIComponent(data[keys[i]]) + '&';
 			}
 		}
+		/* jshint camelcase: false */
 		dataStr += 'requesttoken=' + encodeURIComponent(oc_requesttoken);
 		if (typeof EventSource !== 'undefined') {
 			joinChar = '&';

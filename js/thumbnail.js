@@ -2,7 +2,7 @@
 /**
  * A thumbnail is the actual image attached to the GalleryImage object
  *
- * @param {number} path
+ * @param {string} path
  * @param {bool} square
  * @constructor
  */
@@ -54,7 +54,7 @@ Thumbnails.get = function (path, square) {
  * @returns {{}}
  */
 Thumbnails.loadBatch = function (paths, square) {
-	var map = (square) ? this.squareMap : this.map;
+	var map = (square) ? Thumbnails.squareMap : Thumbnails.map;
 	// Purely here as a precaution
 	paths = paths.filter(function (path) {
 		return !map[path];
@@ -75,7 +75,7 @@ Thumbnails.loadBatch = function (paths, square) {
 		var url = Gallery.utility.buildGalleryUrl('thumbnails', '', params);
 
 		var eventSource = new Gallery.EventSource(url);
-		eventSource.listen('preview', function (preview) {
+		eventSource.listen('preview', function (/**{path, status, mimetype, preview}*/ preview) {
 			var path = preview.path;
 			var thumb = batch[path];
 			thumb.status = preview.status;
