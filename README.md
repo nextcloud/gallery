@@ -169,7 +169,10 @@ The next step will be to be able to generate these previews by clicking on a but
 
 ## Installation
 
+**IMPORTANT**: Make sure you've disabled the original Pictures/Gallery app
+
 ### Installing from archive
+
 * Go to the [the releases page](https://github.com/interfasys/galleryplus/releases)
 * Download the latest release/archive to your server's **owncloud/apps/** directory
 * Unpack the app
