@@ -42,7 +42,7 @@ $navConfig = [
 
 	// The title of the application. This will be used in the
 	// navigation or on the settings page
-	'name'  => $l->t('Gallery+')
+	'name'  => $l->t('Gallery')
 ];
 $c->query('OCP\INavigationManager')
   ->add($navConfig);

@@ -1,4 +1,4 @@
-# Gallery+ [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=master) [![Codacy Badge](https://www.codacy.com/project/badge/bcf7325c616d42fbb730b8aa0e4505d9)](https://www.codacy.com/public/websitegithub/galleryplus) [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus) [![Build Status](https://travis-ci.org/interfasys/galleryplus.svg?branch=master)](https://travis-ci.org/interfasys/galleryplus)
+# Gallery [![Build Status](https://travis-ci.org/owncloud/galleryplus.svg?branch=master)](https://travis-ci.org/owncloud/galleryplus)
 Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
@@ -64,7 +64,7 @@ May not look as nice, but should work
 
 ## Supporting the development
 
-There are many ways in which you can help make Gallery+ a better product
+There are many ways in which you can help make Gallery a better product
 
 * Report bugs (see below)
 * Provide patches for both [`owncloud/core`](https://github.com/owncloud/core) and the app
@@ -78,16 +78,16 @@ There are many ways in which you can help make Gallery+ a better product
 ### Before reporting bugs
 
 * Read the section about server and browser requirements
-* Make sure you've disabled the original Pictures/Gallery app
+* Make sure you've disabled the original Pictures app
 * Read the "Known issues" section below
-* Get the latest version of the app from [the releases page](https://github.com/interfasys/galleryplus/releases)
-* [Check if they have already been reported](https://github.com/interfasys/galleryplus/issues)
+* Get the latest version of the app from [the releases page](https://github.com/owncloud/galleryplus/releases)
+* [Check if they have already been reported](https://github.com/owncloud/galleryplus/issues)
 
 ### Known issues
 
 #### Within deep folders
 
-* You may stop receiving images as you run into [this issue](https://github.com/interfasys/galleryplus/issues/27)
+* You may stop receiving images as you run into [this issue](https://github.com/owncloud/galleryplus/issues/27)
 * It may take longer to initialise the view as we're parsing every parent folder to look for configuration files
 
 #### Configurations
@@ -153,11 +153,11 @@ This can greatly reduce the loading time of the app.
 Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
 
 #### Generating thumbnails
-Some of ownCloud's internal operations make the gallery app very slow
+Some of ownCloud's internal operations make the Gallery app very slow
 * Generating thumbnails the first time you open the app
 * Generating a full screen preview
 
-Things are in motion to fix preview caching for ownCloud 8.1, but you can benefit from these improvements right now if you're willing to patch yor ownCloud installation.
+Things are in motion to fix preview caching for ownCloud 8.1, but you can benefit from these improvements right now if you're willing to patch your ownCloud installation.
 
 ```
 $ patch -p1 -l < apps/galleryplus/patches/max-preview.pull.13674.patch
@@ -165,15 +165,15 @@ $ patch -p1 -l < apps/galleryplus/patches/bitmap-max-preview.pull.13635.patch
 ```
 
 It will always be relatively slow to get the first preview as this is when the conversion is taking place, but from the 2nd request, it should only take a few seconds, even for pictures weighing several hundred MBs.
-The next step will be to be able to generate these previews by clicking on a button per example, so that things are ready when visiting the gallery app.
+The next step will be to be able to generate these previews by clicking on a button per example, so that things are ready when visiting the Gallery app.
 
 ## Installation
 
-**IMPORTANT**: Make sure you've disabled the original Pictures/Gallery app
+**IMPORTANT**: Make sure you've disabled the original Pictures app
 
 ### Installing from archive
 
-* Go to the [the releases page](https://github.com/interfasys/galleryplus/releases)
+* Go to the [the releases page](https://github.com/owncloud/galleryplus/releases)
 * Download the latest release/archive to your server's **owncloud/apps/** directory
 * Unpack the app
 * **IMPORTANT**: Rename it to galleryplus
@@ -182,10 +182,10 @@ The next step will be to be able to generate these previews by clicking on a but
 
 In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
-$ git clone -b stable8 https://github.com/interfasys/galleryplus.git
+$ git clone -b stable8 https://github.com/owncloud/galleryplus.git
 ```
 
-Now you can activate it in the apps menu. It's called Gallery+
+Now you can activate it in the apps menu. It's called Gallery
 
 To update the app go inside you **owncloud/apps/galleryplus/** directory and type:
 ```

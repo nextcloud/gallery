@@ -1,5 +1,5 @@
 # Album configuration
-It's possible to configure an album via a simple text file, using the [Yaml](https://en.wikipedia.org/wiki/YAML) markup language.
+It's possible to configure a Gallery album via a simple text file, using the [Yaml](https://en.wikipedia.org/wiki/YAML) markup language.
 
 ## Features
 
@@ -30,7 +30,7 @@ http://symfony.com/doc/current/components/yaml/yaml_format.html
 
 ```
 ---
-# Gallery+ configuration file
+# Gallery configuration file
 information:
   description: This is an **album description** which is only shown if there is no `description_link`
   description_link: readme.md
@@ -81,7 +81,7 @@ Applies to the current folder only
 
 ```
 ---
-# Gallery+ configuration file
+# Gallery configuration file
 sorting:
   type: date
   order: asc
@@ -94,7 +94,7 @@ Applies to the current folder and all of its sub-folders
 This also shows you the syntax you can use to spread a description over multiple lines
 ```
 ---
-# Gallery+ configuration file
+# Gallery configuration file
 information:
   description: | # La Maison Bleue, Winter '16
     This is our Winter 2016 collection shot in **Kyoto**
@@ -112,7 +112,7 @@ You can add standard configuration items to the same configuration file
 
 ```
 ---
-# Gallery+ configuration file
+# Gallery configuration file
 features:
   external_shares: yes
 ...

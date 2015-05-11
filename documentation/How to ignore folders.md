@@ -1,5 +1,5 @@
 # How to ignore folders
-It's possible to prevent the content of some folders to be displayed in Gallery+
+It's possible to prevent the content of some folders to be displayed in Gallery
 
 ## Steps to follow
 1. Switch to the "Files" app
@@ -7,7 +7,7 @@ It's possible to prevent the content of some folders to be displayed in Gallery+
 3. Click on the "New" button sitting above the list of files
 4. Type ".nomedia" as the filename
 
-You're done. The folder will be ignored in Gallery+ from now on.
+You're done. The folder will be ignored in Gallery from now on.
 
 You can also create that file in your mobile or desktop OS and sync it with your ownCloud.
 
