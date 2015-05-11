@@ -1,4 +1,4 @@
-owncloud-galleryplus (8.0.11)
+owncloud-galleryplus (8.1.0)
 * Keep the browsing position in the Files app when exiting the slideshow #126 (@oparoz)
 
 owncloud-galleryplus (2.0.10)
