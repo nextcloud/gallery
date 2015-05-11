@@ -4,7 +4,6 @@ Date: Sat, 24 Jan 2015 23:50:48 +0100
 Subject: [PATCH] Add support for Raw files previews
 
 ---
- config/config.sample.php       |  1 +
  lib/private/helper.php         |  1 +
  lib/private/mimetypes.list.php | 17 +++++++++++++++++
  lib/private/preview.php        |  3 ++-
@@ -13,18 +12,6 @@ Subject: [PATCH] Add support for Raw files previews
  6 files changed, 41 insertions(+), 2 deletions(-)
  create mode 100644 lib/private/preview/raw.php
 
-diff --git a/config/config.sample.php b/config/config.sample.php
-index 2513a26..6cc9261 100644
---- a/config/config.sample.php
-+++ b/config/config.sample.php
-@@ -669,6 +669,7 @@
-  *  - OC\Preview\StarOffice
-  *  - OC\Preview\SVG
-  *  - OC\Preview\TIFF
-+ *  - OC\Preview\Raw
-  *
-  * The following providers are not available in Microsoft Windows:
-  *
 diff --git a/lib/private/helper.php b/lib/private/helper.php
 index 6268bd3..ce38e90 100644
 --- a/lib/private/helper.php
