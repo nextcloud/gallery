@@ -1,4 +1,4 @@
-owncloud-galleryplus (8.0.12)
+owncloud-galleryplus (8.1.12)
 * Use IDs instead of paths to retrieve thumbnails #27 (@oparoz)
 * Cache albums instead of parsing the folders every time #41 (@oparoz)
 * Dont send back media type icon #174 (@oparoz)
@@ -18,7 +18,7 @@ owncloud-galleryplus (8.0.12)
 * Fix EOF for some patches (@setnes, @oparoz)
 * Fix bullet point style for Markdown text #147 (@oparoz)
 
-owncloud-galleryplus (8.0.11)
+owncloud-galleryplus (8.1.11)
 * Keep the browsing position in the Files app when exiting the slideshow #126 (@oparoz)
 
 owncloud-galleryplus (2.0.10)
