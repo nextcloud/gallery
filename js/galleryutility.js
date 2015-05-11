@@ -12,6 +12,21 @@
 
 	Utility.prototype = {
 		/**
+		 * Detects if the browser is a recent or an old version of Internet Explorer
+		 *
+		 * @returns {*}
+		 */
+		getIeVersion: function () {
+			if (navigator.userAgent.indexOf("MSIE") > 0) {
+				return 'old';
+			} else if (!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) {
+				return 'modern';
+			}
+
+			return false;
+		},
+
+		/**
 		 * Shows a notification to IE users, letting them know that they should use another browser
 		 * in order to get the best experience
 		 *

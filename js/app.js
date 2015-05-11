@@ -4,17 +4,14 @@ $(document).ready(function () {
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
 	Gallery.token = Gallery.utility.getRequestToken();
+	Gallery.ieVersion = Gallery.utility.getIeVersion();
 
-	Gallery.ie11AndAbove =
-		navigator.userAgent.indexOf('Trident') != -1 && navigator.userAgent.indexOf('MSIE') == -1;
-	Gallery.ie10AndBelow = navigator.userAgent.indexOf('MSIE') != -1;
-
-	if (Gallery.ie10AndBelow) {
-		Gallery.utility.showIeWarning('old');
+	if (Gallery.ieVersion === 'old') {
+		Gallery.utility.showIeWarning(Gallery.ieVersion);
 		Gallery.showEmpty();
 	} else {
-		if (Gallery.ie11AndAbove) {
-			Gallery.utility.showIeWarning('modern');
+		if (Gallery.ieVersion === 'modern') {
+			Gallery.utility.showIeWarning(Gallery.ieVersion);
 		}
 
 		// Needed to centre the spinner in some browsers
