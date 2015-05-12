@@ -6,6 +6,7 @@ php:
 branches:
   only:
     - master
+    - dev
     - /^stable\d+(\.\d+)?$/
 
 #before_install:
