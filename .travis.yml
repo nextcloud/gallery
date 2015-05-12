@@ -8,7 +8,7 @@ php:
 branches:
   only:
     - master
-    - /^stable\d*$/
+    - /^stable\d+(\.\d+)?$/
 
 # optionally specify a list of environments, for example to test different RDBMS
 #env:
