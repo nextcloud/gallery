@@ -59,7 +59,7 @@ $request = $c->query('Request');
 if (isset($request->server['REQUEST_URI'])) {
 	$url = $request->server['REQUEST_URI'];
 	if (preg_match('%index.php/apps/files(/.*)?%', $url)
-		|| preg_match('%index.php/s(/.*)?%', $url)
+		|| preg_match('%index.php/s/(/.*)?%', $url)
 	) {
 		/**
 		 * Scripts for the Files app
