@@ -1,3 +1,6 @@
+owncloud-galleryplus (8.0.12)
+* Fix JS loader regexp so that it only works on shared links #138 (@oparoz)
+
 owncloud-galleryplus (8.0.11)
 * Keep the browsing position in the Files app when exiting the slideshow #126 (@oparoz)
 
