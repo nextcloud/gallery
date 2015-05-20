@@ -70,6 +70,7 @@ var galleryFileAction = {
 				/* jshint camelcase: false */
 				var params = {
 					file: dir + file.name,
+					c: file.etag,
 					x: width,
 					y: height,
 					requesttoken: oc_requesttoken
