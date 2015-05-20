@@ -24,39 +24,57 @@ div.crumb.last a {
 
 #controls .button {
 	margin-top: 5px;
+	width: 40px;
 }
 
-#controls .button.left-sort-button {
+#controls .button.left-switch-button {
 	float: left;
 	display: inline;
-	padding: 8px;
 	border-radius: 3px 0 0 3px;
 	margin-left: 3px;
 	margin-right: 0;
 	border-right: 0;
 }
 
-#controls .button.right-sort-button {
+#controls .button.right-switch-button {
 	float: left;
 	display: inline;
-	padding: 8px 9px 8px 8px;
 	border-radius: 0 3px 3px 0;
 	margin-left: -1px;
 }
 
-.sort-inactive {
+#controls .button.view-switcher {
+	padding: 8px 11px;
+}
+
+#controls .button.sorting {
+	padding: 8px;
+}
+
+#controls .inactive-button {
 	background-color: rgb(230, 230, 230);
 }
 
-#controls .sort-inactive img {
+#controls .inactive-button img{
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
 	filter: alpha(opacity=25);
 	opacity: 0.25;
 }
 
+#controls .inactive-button:hover,
+#controls .inactive-button:focus,
+#controls .inactive-button a:focus{
+	background-color: rgba(255, 255, 255, .95);
+	color: #111;
+}
+
+#controls .disabled-button {
+	pointer-events: none;
+}
+
 #share-button img,
-#sort-name-button img,
-#sort-date-button img {
+.button.left-switch-button img,
+.button.right-switch-button img {
 	vertical-align: -3px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
@@ -65,6 +83,10 @@ div.crumb.last a {
 
 #album-info-button {
 	position: relative;
+}
+
+#album-info-button img {
+	vertical-align: -3px;
 }
 
 .album-info-content {
