@@ -40,18 +40,6 @@ $(document).ready(function () {
 				});
 			});
 
-		$('#openAsFileListButton').click(function () {
-			var subUrl = '';
-			var params = {path: '/' + Gallery.currentAlbum};
-			if (Gallery.token) {
-				params.token = Gallery.token;
-				subUrl = 's/{token}?path={path}';
-			} else {
-				subUrl = 'apps/files?dir={path}';
-			}
-			OC.redirect(OC.generateUrl(subUrl, params));
-		});
-
 		$(document).click(function () {
 			$('.album-info-content').slideUp();
 		});
