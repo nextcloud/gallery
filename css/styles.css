@@ -14,10 +14,6 @@ body:after {
 	content: url("../img/nameasc.svg") url("../img/namedes.svg") url("../img/dateasc.svg") url("../img/datedes.svg");
 }
 
-ul {
-	list-style: initial;
-}
-
 #breadcrumbs {
 	float: left;
 }
@@ -82,6 +78,10 @@ div.crumb.last a{
 	right: 0;
 	padding: 16px;
 	overflow-y: auto;
+}
+
+.album-info-content ul {
+	list-style: initial;
 }
 
 #content-wrapper {
