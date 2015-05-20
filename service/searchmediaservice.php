@@ -109,6 +109,7 @@ class SearchMediaService extends FilesService {
 		if ($subDepth === 0) {
 			return false;
 		}
+
 		return $albumImageCounter === 4;
 	}
 
@@ -201,12 +202,14 @@ class SearchMediaService extends FilesService {
 		$imageId = $file->getId();
 		$mimeType = $file->getMimetype();
 		$mTime = $file->getMTime();
+		$etag = $file->getEtag();
 
 		$imageData = [
 			'path'     => $imagePath,
 			'fileid'   => $imageId,
 			'mimetype' => $mimeType,
-			'mtime'    => $mTime
+			'mtime'    => $mTime,
+			'etag'     => $etag
 		];
 
 		$this->images[] = $imageData;

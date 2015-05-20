@@ -40,14 +40,16 @@ function Row (targetWidth, requestId) {
  * @param fileId
  * @param mimeType
  * @param mTime modification time
+ * @param etag
  * @constructor
  */
-function GalleryImage (src, path, fileId, mimeType, mTime) {
+function GalleryImage (src, path, fileId, mimeType, mTime, etag) {
 	this.src = src;
 	this.path = path;
 	this.fileId = fileId;
 	this.mimeType = mimeType;
 	this.mTime = mTime;
+	this.etag = etag;
 	this.thumbnail = null;
 	this.domDef = null;
 	this.domHeigth = null;
@@ -140,7 +142,7 @@ Album.prototype = {
 			this._getFourImages(this.images, targetHeight, a);
 		} else if (this.images.length === 1) {
 			this._getOneImage(this.images[0], 2 *
-			targetHeight, targetHeight, a, false);
+				targetHeight, targetHeight, a, false);
 		}
 	},
 
@@ -402,7 +404,7 @@ GalleryImage.prototype = {
 
 				var imageLabel = $('<span/>').addClass('image-label');
 				var imageTitle = $('<span/>').addClass('title').html('<strong>>&nbsp;</strong>' +
-				OC.basename(image.path));
+					OC.basename(image.path));
 				imageLabel.append(imageTitle);
 				a.hover(function () {
 					imageLabel.slideToggle(250);

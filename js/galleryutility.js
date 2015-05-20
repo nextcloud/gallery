@@ -93,15 +93,17 @@
 		 * @fixme we cannot get rid of oc_requesttoken parameter as it's missing from the headers
 		 *
 		 * @param {string} image
+		 * @param {number} etag
 		 *
 		 * @return {string}
 		 */
-		getPreviewUrl: function (image) {
+		getPreviewUrl: function (image, etag) {
 			var width = $(window).width() * window.devicePixelRatio;
 			var height = $(window).height() * window.devicePixelRatio;
 			/* jshint camelcase: false */
 			var params = {
 				file: image,
+				c: etag,
 				x: width,
 				y: height,
 				requesttoken: oc_requesttoken

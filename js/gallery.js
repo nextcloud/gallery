@@ -89,6 +89,7 @@ Gallery.getFiles = function () {
 		var fileId = null;
 		var mimeType = null;
 		var mTime = null;
+		var etag = null;
 		var files = data.files;
 		var albumInfo = data.albuminfo;
 		Gallery.config.setAlbumConfig(albumInfo);
@@ -97,10 +98,11 @@ Gallery.getFiles = function () {
 			fileId = files[i].fileid;
 			mimeType = files[i].mimetype;
 			mTime = files[i].mtime;
+			etag = files[i].etag;
 
 			Gallery.images.push(path);
 
-			image = new GalleryImage(path, path, fileId, mimeType, mTime);
+			image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
 			var dir = OC.dirname(path);
 			var currentFolder = albumInfo.path;
 			dir = Gallery.fixDir(path, dir, currentFolder);
@@ -204,7 +206,7 @@ Gallery.share = function (event) {
 			OC.Share.showLink = function () {
 				var r = target.apply(this, arguments);
 				$('#linkText').val($('#linkText').val().replace('index.php/s/', 'index.php/apps/' +
-				Gallery.appName + '/s/'));
+					Gallery.appName + '/s/'));
 
 				return r;
 			};
@@ -304,7 +306,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	var start = images.indexOf(startImage);
 	images = images.map(function (image) {
 		var name = OC.basename(image.path);
-		var previewUrl = Gallery.utility.getPreviewUrl(image.src);
+		var previewUrl = Gallery.utility.getPreviewUrl(image.src, image.etag);
 		/* jshint camelcase: false */
 		var params = {
 			file: image.src,
