@@ -1,14 +1,54 @@
-/* toggle for opening shared picture view as file list */
-#openAsFileListButton {
+/* Toggle for opening the files list in the Gallery app */
+#controls .button.view-switcher {
 	float: right;
 	margin-right: 4px;
 	margin-top: 5px;
 	font-weight: normal;
+	width: 40px;
+	padding: 8px 11px;
 }
 
-#openAsFileListButton img {
-	vertical-align: text-top;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=50);
-	opacity: .5;
+.button.left-switch-button img,
+.button.right-switch-button img {
+	vertical-align: -3px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
+	opacity: 0.6;
 }
+
+#controls .button.left-switch-button {
+	float: left;
+	display: inline;
+	border-radius: 3px 0 0 3px;
+	margin-left: 3px;
+	margin-right:0;
+	border-right: 0;
+}
+#controls .button.right-switch-button {
+	float: left;
+	display: inline;
+	border-radius: 0 3px 3px 0;
+	margin-left: -1px;
+}
+
+#controls .inactive-button {
+	background-color: rgb(230, 230, 230);
+}
+
+#controls .inactive-button img{
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+	filter: alpha(opacity=25);
+	opacity: 0.25;
+}
+
+#controls .inactive-button:hover,
+#controls .inactive-button:focus,
+#controls .inactive-button a:focus{
+	background-color: rgba(255, 255, 255, .95);
+	color: #111;
+}
+
+#controls .disabled-button {
+	pointer-events: none;
+}
+

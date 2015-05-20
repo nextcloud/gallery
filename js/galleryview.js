@@ -54,6 +54,7 @@
 			} else {
 				// Only do it when the app is initialised
 				if (this.requestId === -1) {
+					$('#filelist-button').click(Gallery.switchToFilesView);
 					$('#download').click(Gallery.download);
 					$('#share-button').click(Gallery.share);
 					Gallery.infoBox = new Gallery.InfoBox();
@@ -128,9 +129,9 @@
 			var icon = sortType + sortOrder;
 
 			var setButton = function (button, icon, active) {
-				button.removeClass('sort-inactive');
+				button.removeClass('inactive-button');
 				if (!active) {
-					button.addClass('sort-inactive');
+					button.addClass('inactive-button');
 				}
 				button.find('img').attr('src', OC.imagePath(Gallery.appName, icon));
 			};
