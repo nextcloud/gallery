@@ -53,22 +53,37 @@ style(
 		<div id="logo-claim" style="display:none;"><?php p($theme->getLogoClaim()); ?></div>
 		<div class="header-right">
 			<span id="details">
-				<span id="displayName">
-					<?php p($l->t('shared by %s', $_['displayName'])); ?>
-				</span>
-					<a id="download" class="button">
-						<img class="svg" src="<?php print_unescaped(
-							image_path($_['appName'], "download.svg")
-						); ?>" alt=""/>
+				<?php
+				if ($_['server2ServerSharing']) {
+					?>
+					<span id="save" data-protected="<?php p($_['protected']) ?>"
+						  data-owner="<?php p($_['displayName']) ?>"
+						  data-name="<?php p($_['filename']) ?>">
+									<button id="save-button"><?php p(
+											$l->t('Add to your ownCloud')
+										) ?></button>
+									<form class="save-form hidden" action="#">
+										<input type="text" id="remote_address"
+											   placeholder="example.com/owncloud"/>
+										<button id="save-button-confirm"
+												class="icon-confirm svg"></button>
+									</form>
+								</span>
+				<?php } ?>
+				<a id="download" class="button">
+					<img class="svg" src="<?php print_unescaped(
+						image_path($_['appName'], "download.svg")
+					); ?>" alt=""/>
 						<span id="download-text"><?php p($l->t('Download')) ?>
 						</span>
-					</a>
+				</a>
 			</span>
 		</div>
 	</div>
 </header>
 <div class="content-wrapper">
-	<div id="content" class="app-<?php p($_['appName']) ?>" data-albumname="<?php p($_['albumName']) ?>">
+	<div id="content" class="app-<?php p($_['appName']) ?>"
+		 data-albumname="<?php p($_['albumName']) ?>">
 		<div id="app">
 			<div id="controls">
 				<div id="breadcrumbs"></div>
