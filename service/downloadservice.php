@@ -34,7 +34,7 @@ class DownloadService extends Service {
 	 *
 	 * @throws NotFoundServiceException
 	 */
-	public function downloadFile($image, $base64Encode = false) {
+	public function downloadFile($image = '', $base64Encode = false) {
 		$this->logger->debug("[DownloadService] File to Download: $image");
 		$file = null;
 		$download = false;

@@ -117,6 +117,7 @@ class Environment {
 		$origShareOwner = $rootLinkItem['uid_owner'];
 		$this->userFolder = $this->setupFilesystem($origShareOwner);
 
+		// This is actually the node ID
 		$fileSource = $linkItem['file_source'];
 		$this->fromRootToFolder = $this->buildFromRootToFolder($fileSource);
 

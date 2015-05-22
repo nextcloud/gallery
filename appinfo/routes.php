@@ -36,6 +36,12 @@ return [
 			'url'  => '/s/{token}',
 			'verb' => 'GET'
 		],
+		// Landing page for single media files
+		[
+			'name' => 'public_download#download_file',
+			'url'  => '/s/{token}/{extension}',
+			'verb' => 'GET'
+		],
 		// Landing page after password entry, for public galleries
 		[
 			'name'    => 'page#public_index',
