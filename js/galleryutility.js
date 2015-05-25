@@ -100,11 +100,20 @@
 		getPreviewUrl: function (fileId, etag) {
 			var width = $(window).width() * window.devicePixelRatio;
 			var height = $(window).height() * window.devicePixelRatio;
+
+			/* Find value of longest edge. */
+			var longEdge = Math.max( width, height );
+
+			/* Find the next larger image size. */
+			if ( longEdge % 100 !== 0 ){
+				longEdge = ( longEdge + 100 ) - ( longEdge % 100 );
+			}
+
 			/* jshint camelcase: false */
 			var params = {
 				c: etag,
-				width: width,
-				height: height,
+				width: longEdge,
+				height: longEdge,
 				requesttoken: oc_requesttoken
 			};
 			return this.buildGalleryUrl('preview', '/' + fileId, params);

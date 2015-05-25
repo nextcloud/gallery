@@ -62,6 +62,14 @@ var galleryFileAction = {
 		var width = Math.floor($(window).width() * window.devicePixelRatio);
 		var height = Math.floor($(window).height() * window.devicePixelRatio);
 
+		/* Find value of longest edge. */
+		var longEdge = Math.max( width, height );
+
+		/* Find the next larger image size. */
+		if ( longEdge % 100 !== 0 ){
+			longEdge = ( longEdge + 100 ) - ( longEdge % 100 );
+		}
+
 		for (var i = 0; i < files.length; i++) {
 			var file = files[i];
 			// We only add images to the slideshow if we think we'll be able
@@ -69,8 +77,8 @@ var galleryFileAction = {
 			if (galleryFileAction.mediaTypes[file.mimetype]) {
 				/* jshint camelcase: false */
 				var params = {
-					width: width,
-					height: height,
+					width: longEdge,
+					height: longEdge,
 					c: file.etag,
 					requesttoken: oc_requesttoken
 				};
