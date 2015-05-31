@@ -283,7 +283,7 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 	var start = images.indexOf(startImage);
 	images = images.map(function (image) {
 		var name = OC.basename(image.path);
-		var previewUrl = Gallery.utility.getPreviewUrl(image.fileId);
+		var previewUrl = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
 		var downloadUrl = previewUrl + '&download';
 
 		return {

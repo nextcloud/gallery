@@ -69,18 +69,18 @@ var galleryFileAction = {
 			if (galleryFileAction.mediaTypes[file.mimetype]) {
 				/* jshint camelcase: false */
 				var params = {
-					file: dir + file.name,
+					width: width,
+					height: height,
 					c: file.etag,
-					x: width,
-					y: height,
 					requesttoken: oc_requesttoken
 				};
-				imageUrl = galleryFileAction.buildGalleryUrl('preview', '', params);
-				downloadUrl = galleryFileAction.buildGalleryUrl('download', '', params);
+				imageUrl = galleryFileAction.buildGalleryUrl('preview', '/' + file.id, params);
+				downloadUrl = imageUrl + '&download';
 
 				images.push({
 					name: file.name,
 					path: dir + file.name,
+					fileId: file.id,
 					mimeType: file.mimetype,
 					url: imageUrl,
 					downloadUrl: downloadUrl

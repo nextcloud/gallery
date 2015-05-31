@@ -153,7 +153,34 @@ class Environment {
 
 		return $this->getResourceFromId($node->getId());
 	}
-	
+
+	/**
+	 * Returns the Node based on the current user's files folder and a given
+	 * path
+	 *
+	 * @param string $path
+	 *
+	 * @return File|Folder
+	 *
+	 * @throws EnvironmentException
+	 */
+	public function getNode($path) {
+		$node = false;
+		$folder = $this->userFolder;
+		if ($folder === null) {
+			$this->logAndThrowNotFound("Could not access the user's folder");
+		} else {
+			try {
+				$node = $folder->get($path);
+			} catch (NotFoundException $exception) {
+				$message = 'Could not find anything at: ' . $exception->getMessage();
+				$this->logAndThrowNotFound($message);
+			}
+		}
+
+		return $node;
+	}
+
 	/**
 	 * Returns the resource identified by the given ID
 	 *
@@ -297,33 +324,6 @@ class Environment {
 	}
 
 	/**
-	 * Returns the Node based on the current user's files folder and a given
-	 * path
-	 *
-	 * @param string $path
-	 *
-	 * @return File|Folder
-	 *
-	 * @throws EnvironmentException
-	 */
-	private function getNode($path) {
-		$node = false;
-		$folder = $this->userFolder;
-		if ($folder === null) {
-			$this->logAndThrowNotFound("Could not access the user's folder");
-		} else {
-			try {
-				$node = $folder->get($path);
-			} catch (NotFoundException $exception) {
-				$message = 'Could not find anything at: ' . $exception->getMessage();
-				$this->logAndThrowNotFound($message);
-			}
-		}
-
-		return $node;
-	}
-	
-	/**
 	 * Returns the path which goes from the file, up to the user folder, based on a path:
 	 * parent_folder/current_folder/my_file
 	 *
@@ -343,7 +343,7 @@ class Environment {
 
 		return $origShareRelPath;
 	}
-	
+
 	/**
 	 * Logs the error and raises an exception
 	 *
