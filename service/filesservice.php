@@ -115,8 +115,14 @@ class FilesService extends Service {
 	 * @return bool
 	 */
 	protected function isLocalAndAvailable($node) {
-		if (!$node->isMounted()) {
-			return !$this->isExternalShare($node) && $node->isReadable();
+		try {
+			if (!$node->isMounted()) {
+				return !$this->isExternalShare($node) && $node->isReadable();
+			}
+		} catch (\Exception $exception) {
+			$message = 'The folder is not available: ' . $exception->getMessage();
+			$this->logger->error($message);
+			return false;
 		}
 
 		return false;
