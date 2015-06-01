@@ -65,6 +65,11 @@
 			this.zoomable.addEventListener('dblclick', function (ie) {
 				ie.preventDefault();
 			});
+			// Reset image position and size on orientation change
+			var self = this;
+			$(window).bind('orientationchange resize', function () {
+				self._resetZoom();
+			});
 		},
 
 		/**
