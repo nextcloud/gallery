@@ -122,7 +122,7 @@ class Environment {
 		$this->fromRootToFolder = $this->buildFromRootToFolder($fileSource);
 
 		$this->folderName = $linkItem['file_target'];
-		$this->userId = $linkItem['uid_owner'];
+		$this->userId = $rootLinkItem['uid_owner'];
 	}
 
 	/**
