@@ -10,6 +10,7 @@ OC.L10N.register(
     "Close" : "Đóng",
     "Error loading slideshow template" : "Lỗi khi tải mẫu Slidesh",
     "Share" : "Chia sẻ",
+    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Không có hình ảnh được tìm thấy! Nếu bạn tải lên hình ảnh trong các ứng dụng tập tin, chúng sẽ được hiển thị ở đây.",
     "shared by %s" : " Được chia sẻ bởi %s",
     "File list" : "Danh sách tập t"
 },
