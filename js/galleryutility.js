@@ -98,8 +98,8 @@
 		 * @return {string}
 		 */
 		getPreviewUrl: function (fileId, etag) {
-			var width = $(window).width() * window.devicePixelRatio;
-			var height = $(window).height() * window.devicePixelRatio;
+			var width = Math.floor(screen.width * window.devicePixelRatio);
+			var height = Math.floor(screen.height * window.devicePixelRatio);
 
 			/* Find value of longest edge. */
 			var longEdge = Math.max( width, height );
