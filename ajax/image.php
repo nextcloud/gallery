@@ -26,6 +26,9 @@ if (!empty($_GET['token'])) {
 	OC_User::setIncognitoMode(true);
 
 	$fullPath = \OC\Files\Filesystem::getPath($linkItem['file_source']);
+	if($fullPath === null) {
+		exit();
+	}
 	$img = trim($fullPath . '/' . $img);
 } else {
 	OCP\JSON::checkLoggedIn();
