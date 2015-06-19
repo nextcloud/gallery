@@ -27,6 +27,9 @@ if (!empty($_GET['token'])) {
 	OC_Util::setupFS($user);
 
 	$root = \OC\Files\Filesystem::getPath($linkItem['file_source']) . '/';
+	if($root === null) {
+		exit();
+	}
 	$images = array_map(function ($image) use ($root) {
 		return $root . $image;
 	}, $images);
