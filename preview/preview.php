@@ -17,8 +17,6 @@ use OCP\Image;
 use OCP\Files\File;
 use OCP\IPreview;
 use OCP\ILogger;
-use OCP\Template;
-
 
 /**
  * Generates previews
@@ -57,10 +55,6 @@ class Preview {
 	 * @var int[]
 	 */
 	private $dims;
-	/**
-	 * @var bool
-	 */
-	private $success = true;
 
 	/**
 	 * Constructor
@@ -116,34 +110,27 @@ class Preview {
 	 * @fixme setKeepAspect is missing from public interface.
 	 *     https://github.com/owncloud/core/issues/12772
 	 *
-	 * @param int $maxX
-	 * @param int $maxY
+	 * @param int $maxWidth
+	 * @param int $maxHeight
 	 * @param bool $keepAspect
 	 *
 	 * @return array
 	 */
-	public function preparePreview($maxX, $maxY, $keepAspect) {
-		$this->dims = [$maxX, $maxY];
+	public function preparePreview($maxWidth, $maxHeight, $keepAspect) {
+		$this->dims = [$maxWidth, $maxHeight];
 
 		$previewData = $this->getPreviewFromCore($keepAspect);
 
 		if ($previewData && $previewData->valid()) {
-			$mimeType = $previewData->mimeType();
+			$preview = [
+				'preview'  => $previewData,
+				'mimetype' => $mimeType = $previewData->mimeType()
+			];
 		} else {
-			$previewData = $this->getMimeIcon();
-			$mimeType = 'image/png';
+			$preview = false;
 		}
 
-		return ['preview' => $previewData, 'mimetype' => $mimeType];
-	}
-
-	/**
-	 * Returns true if the preview was successfully generated
-	 *
-	 * @return bool
-	 */
-	public function isPreviewValid() {
-		return $this->success;
+		return $preview;
 	}
 
 	/**
@@ -354,34 +341,6 @@ class Preview {
 		}
 
 		return $previewData;
-	}
-
-	/**
-	 * Returns the media type icon when the server fails to generate a preview
-	 *
-	 * It's not more efficient for the browser to download the mime icon
-	 * directly and won't be necessary once the Preview class sends the mime
-	 * icon when it can't generate a proper preview
-	 * https://github.com/owncloud/core/pull/12546
-	 *
-	 * @return Image
-	 */
-	private function getMimeIcon() {
-		$this->logger->debug("[PreviewService] ERROR! Did not get a preview, sending mime icon");
-		$this->success = false;
-
-		$mime = $this->file->getMimeType();
-		$iconData = new Image();
-
-		$mimeIconPath = Template::mimetype_icon($mime);
-		if (!empty(\OC::$WEBROOT)) {
-			$mimeIconPath = str_replace(\OC::$WEBROOT, '', $mimeIconPath);
-		}
-		$image = \OC::$SERVERROOT . $mimeIconPath;
-
-		$iconData->loadFromFile($image);
-
-		return $iconData;
 	}
 
 }

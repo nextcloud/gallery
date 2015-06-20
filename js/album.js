@@ -1,4 +1,4 @@
-/* global $, OC, Thumbnails */
+/* global $, OC, Gallery, Thumbnails */
 /**
  * Creates a new album object to store information about an album
  *
@@ -66,6 +66,8 @@ Album.prototype = {
 	/**
 	 * Retrieves a thumbnail and adds it to the album representation
 	 *
+	 * Only attaches valid thumbnails to the album
+	 *
 	 * @param {GalleryImage} image
 	 * @param {number} targetHeight Each row has a specific height
 	 * @param {number} calcWidth Album width
@@ -77,19 +79,22 @@ Album.prototype = {
 	_getOneImage: function (image, targetHeight, calcWidth, a) {
 		// img is a Thumbnail.image, true means square thumbnails
 		return image.getThumbnail(true).then(function (img) {
-			var backgroundHeight, backgroundWidth;
-			img.alt = '';
-			backgroundHeight = (targetHeight / 2);
-			backgroundWidth = calcWidth - 2.01;
+			if (image.thumbnail.valid) {
+				var backgroundHeight, backgroundWidth;
+				img.alt = '';
+				
+				backgroundHeight = (targetHeight / 2);
+				backgroundWidth = calcWidth - 2.01;
 
-			// Adjust the size because of the margins around pictures
-			backgroundHeight -= 2;
+				// Adjust the size because of the margins around pictures
+				backgroundHeight -= 2;
 
-			var croppedDiv = $('<div class="cropped">');
-			croppedDiv.css("background-image", "url('" + img.src + "')");
-			croppedDiv.css("height", backgroundHeight);
-			croppedDiv.css("width", backgroundWidth);
-			a.append(croppedDiv);
+				var croppedDiv = $('<div class="cropped">');
+				croppedDiv.css("background-image", "url('" + img.src + "')");
+				croppedDiv.css("height", backgroundHeight);
+				croppedDiv.css("width", backgroundWidth);
+				a.append(croppedDiv);
+			}
 		});
 	},
 
@@ -287,6 +292,7 @@ Row.prototype = {
 	addElement: function (element) {
 		var row = this;
 		var targetHeight = 200;
+		var fileNotFoundStatus = 404;
 		var def = new $.Deferred();
 
 		var appendDom = function (itemDom, width) {
@@ -302,14 +308,19 @@ Row.prototype = {
 			appendDom(itemDom, width);
 		} else {
 			element.getThumbnailWidth().then(function (width) {
-				element.getDom(targetHeight).then(function (itemDom) {
-					appendDom(itemDom, width);
-				});
+				if (element.thumbnail.status !== fileNotFoundStatus) {
+					element.getDom(targetHeight).then(function (itemDom) {
+						appendDom(itemDom, width);
+					});
+				} else {
+					def.resolve(true);
+				}
 			}, function () {
 				def.resolve(true);
 			});
 		}
-		return def;
+
+		return def.promise();
 	},
 
 	getDom: function () {
@@ -397,6 +408,11 @@ GalleryImage.prototype = {
 				img.setAttribute('width', 'auto');
 				img.alt = encodeURI(image.path);
 				var url = '#' + encodeURIComponent(image.path);
+
+				if (!image.thumbnail.valid) {
+					url = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
+					url = url + '&download';
+				}
 				var a = $('<a/>').addClass('image').attr('href', url).attr('data-path', image.path);
 
 				var imageLabel = $('<span/>').addClass('image-label');

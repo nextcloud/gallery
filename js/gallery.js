@@ -346,7 +346,18 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 		return false;
 	}
 	var start = images.indexOf(startImage);
-	images = images.map(function (image) {
+	images = images.filter(function (image, index) {
+		// If the slideshow is loaded before we get a thumbnail, we have to accept all images
+		if (!image.thumbnail) {
+			return image;
+		} else {
+			if (image.thumbnail.valid) {
+				return image;
+			} else if (index < images.indexOf(startImage)) {
+				start--;
+			}
+		}
+	}).map(function (image) {
 		var name = OC.basename(image.path);
 		var previewUrl = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
 		var downloadUrl = previewUrl + '&download';
