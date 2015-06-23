@@ -27,6 +27,9 @@ if (!empty($_GET['token'])) {
 	OC_Util::setupFS($user);
 
 	$fullPath = \OC\Files\Filesystem::getPath($linkItem['file_source']);
+	if($fullPath === null) {
+		exit();
+	}
 	$img = trim($fullPath . '/' . $img);
 } else {
 	OCP\JSON::checkLoggedIn();
