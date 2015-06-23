@@ -22,6 +22,9 @@ if (is_array($linkItem) && isset($linkItem['uid_owner'])) {
 	OC_User::setIncognitoMode(true);
 
 	$fullPath = \OC\Files\Filesystem::getPath($linkItem['file_source']);
+	if($fullPath === null) {
+		exit();
+	}
 	$img = trim($fullPath . '/' . $img);
 } else {
 	OCP\JSON::checkLoggedIn();
