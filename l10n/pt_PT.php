@@ -2,7 +2,7 @@
 $TRANSLATIONS = array(
 "Pictures" => "Imagens",
 "Picture view" => "Visualização da Imagem",
-"Next" => "Próximo",
+"Next" => "Seguinte",
 "Play" => "Reproduzir",
 "Pause" => "Pausar",
 "Previous" => "Anterior",
