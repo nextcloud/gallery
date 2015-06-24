@@ -29,8 +29,8 @@ class PublicFilesController extends FilesController {
 	 *
 	 * @inheritDoc
 	 */
-	public function getFiles($location, $features) {
-		return parent::getFiles($location, $features);
+	public function getFiles($location, $features, $etag) {
+		return parent::getFiles($location, $features, $etag);
 	}
 
 }
