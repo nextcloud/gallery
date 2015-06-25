@@ -79,6 +79,10 @@ class Environment {
 	 * @var string
 	 */
 	private $folderName;
+	/**
+	 * @var string
+	 */
+	private $shareWith;
 
 	/***
 	 * Constructor
@@ -123,6 +127,7 @@ class Environment {
 
 		$this->folderName = $linkItem['file_target'];
 		$this->userId = $rootLinkItem['uid_owner'];
+		$this->shareWith = $linkItem['share_with'];
 	}
 
 	/**
@@ -234,6 +239,15 @@ class Environment {
 	 */
 	public function getSharedFolderName() {
 		return trim($this->folderName, '//');
+	}
+
+	/**
+	 * Returns if the share is protected (share_with === true)
+	 *
+	 * @return string
+	 */
+	public function isShareProtected() {
+		return $this->shareWith;
 	}
 
 	/**

@@ -241,6 +241,70 @@ Gallery.showInfo = function (event) {
 };
 
 /**
+ * Lets the user add the shared files to his ownCloud
+ *
+ * @param event
+ */
+Gallery.showSaveForm = function (event) {
+	$(this).hide();
+	$('.save-form').css('display', 'inline');
+	$('#remote_address').focus();
+};
+
+/**
+ * Sends the shared files to the viewer's ownCloud
+ *
+ * @param event
+ */
+Gallery.saveForm = function (event) {
+	event.preventDefault();
+
+	var saveElement = $('#save');
+	var remote = $(this).find('input[type="text"]').val();
+	var owner = saveElement.data('owner');
+	var name = saveElement.data('name');
+	var isProtected = saveElement.data('protected');
+	Gallery.saveToOwnCloud(remote, Gallery.token, owner, name, isProtected);
+};
+
+/**
+ * Saves the folder to a remote ownCloud installation
+ *
+ * Our location is the remote for the other server
+ *
+ * @param {string} remote
+ * @param {string}token
+ * @param {string}owner
+ * @param {string}name
+ * @param {bool} isProtected
+ */
+Gallery.saveToOwnCloud = function (remote, token, owner, name, isProtected) {
+	var location = window.location.protocol + '//' + window.location.host + OC.webroot;
+	var isProtectedInt = (isProtected) ? 1 : 0;
+	var url = remote + '/index.php/apps/files#' + 'remote=' + encodeURIComponent(location)
+		+ "&token=" + encodeURIComponent(token) + "&owner=" + encodeURIComponent(owner) + "&name=" +
+		encodeURIComponent(name) + "&protected=" + isProtectedInt;
+
+	if (remote.indexOf('://') > 0) {
+		OC.redirect(url);
+	} else {
+		// if no protocol is specified, we automatically detect it by testing https and http
+		// this check needs to happen on the server due to the Content Security Policy directive
+		$.get(OC.generateUrl('apps/files_sharing/testremote'),
+			{remote: remote}).then(function (protocol) {
+				if (protocol !== 'http' && protocol !== 'https') {
+					OC.dialogs.alert(t('files_sharing',
+							'No ownCloud installation (7 or higher) found at {remote}',
+							{remote: remote}),
+						t('files_sharing', 'Invalid ownCloud url'));
+				} else {
+					OC.redirect(protocol + '://' + url);
+				}
+			});
+	}
+};
+
+/**
  * Hide the search button while we wait for core to fix the templates
  */
 Gallery.hideSearch = function () {
