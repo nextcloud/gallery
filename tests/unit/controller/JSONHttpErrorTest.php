@@ -32,7 +32,7 @@ class JsonHttpErrorTest extends \Test\TestCase {
 	 * @param String $status
 	 */
 	public function testError($exception, $message, $status) {
-		$jsonHttpError = $this->getMockForTrait('OCA\Gallery\Controller\JsonHttpError');
+		$jsonHttpError = $this->getMockForTrait('\OCA\Gallery\Controller\JsonHttpError');
 		$response = $jsonHttpError->error($exception);
 
 		$this->assertEquals(['message' => $message, 'success' => false], $response->getData());
