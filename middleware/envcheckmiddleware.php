@@ -261,7 +261,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * @throws ServiceException
 	 */
 	private function authenticate($linkItem, $password) {
-		if ($linkItem['share_type'] == Share::SHARE_TYPE_LINK) {
+		if ((int)$linkItem['share_type'] === Share::SHARE_TYPE_LINK) {
 			$this->checkPassword($linkItem, $password);
 		} else {
 			$this->logAndThrow(

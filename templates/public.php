@@ -20,7 +20,7 @@ script(
 		'vendor/eventsource-polyfill/dist/eventsource.min',
 		'eventsource',
 		'vendor/marked/marked.min',
-		'vendor/bigshot/bigshot',
+		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
 		'slideshowzoomablepreview'
