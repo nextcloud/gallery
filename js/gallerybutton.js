@@ -72,7 +72,6 @@ $(document).ready(function () {
 
 			GalleryButton.button.click(function () {
 				$(this).addClass('loading');
-				$(this).find('img').attr('src', OC.imagePath('core', 'loading-small.gif'));
 				window.location.href = GalleryButton.url;
 			});
 
