@@ -53,10 +53,10 @@ style(
 		<div class="header-appname-container">
 			<h1 class="header-appname">
 				<?php
-					if(OC_Util::getEditionString() === '') {
-						p($theme->getName());
-					} else {
+					if(\OCP\App::isEnabled('enterprise_key')) {
 						print_unescaped($theme->getHTMLName());
+					} else {
+						p($theme->getName());
 					}
 				?>
 			</h1>
