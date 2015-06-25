@@ -47,6 +47,7 @@
 	opacity: 0.25;
 }
 
+#controls .active-button,
 #controls .disabled-button:hover,
 #controls .disabled-button:focus,
 #controls .disabled-button a:focus,
