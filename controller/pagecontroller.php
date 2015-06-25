@@ -17,6 +17,7 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
+use OCP\Files\File;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -118,40 +119,19 @@ class PageController extends Controller {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 *
-	 * Shows the albums and pictures the token gives access to
+	 * Shows the albums and pictures or download the single file the token gives access to
 	 *
 	 * @param string $token
 	 * @param null|string $filename
 	 *
-	 * @return TemplateResponse
+	 * @return TemplateResponse|ImageResponse|RedirectResponse
 	 */
 	public function publicIndex($token, $filename) {
-		if (is_null($filename)) {
-			$appName = $this->appName;
-			$displayName = $this->environment->getDisplayName();
-			$albumName = $this->environment->getSharedFolderName();
-			$server2ServerSharing = $this->appConfig->getAppValue(
-				'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
-			);
-			$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
-			$protected = $this->environment->isShareProtected();
-			$protected = ($protected) ? 'true' : 'false';
-
-			// Parameters sent to the template
-			$params = [
-				'appName'              => $appName,
-				'token'                => $token,
-				'displayName'          => $displayName,
-				'albumName'            => $albumName,
-				'server2ServerSharing' => $server2ServerSharing,
-				'protected'            => $protected,
-				'filename'             => $albumName
-			];
-
-			// Will render the page using the template found in templates/public.php
-			return new TemplateResponse($appName, 'public', $params, 'public');
+		$node = $this->environment->getSharedNode();
+		if ($node->getType() === 'dir') {
+			return $this->showPublicPage($token);
 		} else {
-			return $this->downloadFile();
+			return $this->downloadFile($node, $filename);
 		}
 	}
 
@@ -195,16 +175,50 @@ class PageController extends Controller {
 	}
 
 	/**
-	 * @PublicPage
-	 * @NoCSRFRequired
+	 * Shows the albums and pictures the token gives access to
 	 *
+	 * @param $token
+	 *
+	 * @return TemplateResponse
+	 */
+	private function showPublicPage($token) {
+		$albumName = $this->environment->getSharedFolderName();
+		$server2ServerSharing = $this->appConfig->getAppValue(
+			'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
+		);
+		$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
+		$protected = $this->environment->isShareProtected();
+		$protected = ($protected) ? 'true' : 'false';
+		// Parameters sent to the template
+		$params = [
+			'appName'              => $this->appName,
+			'token'                => $token,
+			'displayName'          => $this->environment->getDisplayName(),
+			'albumName'            => $albumName,
+			'server2ServerSharing' => $server2ServerSharing,
+			'protected'            => $protected,
+			'filename'             => $albumName
+		];
+
+		// Will render the page using the template found in templates/public.php
+		return new TemplateResponse($this->appName, 'public', $params, 'public');
+	}
+
+	/**
 	 * Downloads the file associated with a token
 	 *
-	 * @return \OCA\GalleryPlus\Http\ImageResponse|Http\RedirectResponse
+	 * @param File $file
+	 * @param string|null $filename
+	 *
+	 * @return ImageResponse|RedirectResponse
 	 */
-	private function downloadFile() {
+	private function downloadFile($file, $filename) {
 		try {
-			$download = $this->downloadService->downloadFile();
+			$download = $this->downloadService->downloadFile($file);
+			if (is_null($filename)) {
+				$filename = $file->getName();
+			}
+			$download['name'] = $filename;
 
 			return new ImageResponse($download);
 		} catch (ServiceException $exception) {

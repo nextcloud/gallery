@@ -57,6 +57,10 @@ class Environment {
 	 */
 	private $userManager;
 	/**
+	 * @var int
+	 */
+	private $sharedNodeId;
+	/**
 	 * @var IServerContainer
 	 */
 	private $serverContainer;
@@ -122,8 +126,8 @@ class Environment {
 		$this->userFolder = $this->setupFilesystem($origShareOwner);
 
 		// This is actually the node ID
-		$fileSource = $linkItem['file_source'];
-		$this->fromRootToFolder = $this->buildFromRootToFolder($fileSource);
+		$this->sharedNodeId = $linkItem['file_source'];
+		$this->fromRootToFolder = $this->buildFromRootToFolder($this->sharedNodeId);
 
 		$this->folderName = $linkItem['file_target'];
 		$this->userId = $rootLinkItem['uid_owner'];
@@ -184,6 +188,15 @@ class Environment {
 		}
 
 		return $node;
+	}
+
+	/**
+	 * Returns the shared node
+	 *
+	 * @return File|Folder
+	 */
+	public function getSharedNode() {
+		return $this->getResourceFromId($this->sharedNodeId);
 	}
 
 	/**

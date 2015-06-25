@@ -34,18 +34,12 @@ class DownloadService extends Service {
 	 *
 	 * @throws NotFoundServiceException
 	 */
-	public function downloadFile($file = null, $base64Encode = false) {
+	public function downloadFile($file, $base64Encode = false) {
 		$download = false;
 		try {
-			// If no file is given, we try to get it from the token
-			if (is_null($file)) {
-				$this->logger->debug("[DownloadService] File to Download: File linked with token");
-				$file = $this->environment->getResourceFromPath('');
-			} else {
-				$this->logger->debug(
-					"[DownloadService] File to Download: {name}", ['name' => $file->getName()]
-				);
-			}
+			$this->logger->debug(
+				"[DownloadService] File to Download: {name}", ['name' => $file->getName()]
+			);
 			$download = [
 				'preview'  => $file->getContent(),
 				'mimetype' => $file->getMimeType()
