@@ -55,14 +55,24 @@ style(
 		); ?>" alt="<?php p($l->t('File list')); ?>"/>
 	</div>
 	<div id="sort-date-button" class="button sorting right-switch-button">
-		<img class="svg" src="<?php print_unescaped(
-			image_path($_['appName'], 'dateasc.svg')
-		); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+		<div class="flipper">
+			<img class="svg asc front" src="<?php print_unescaped(
+				image_path($_['appName'], 'dateasc.svg')
+			); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+			<img class="svg des back" src="<?php print_unescaped(
+				image_path($_['appName'], 'datedes.svg')
+			); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+		</div>
 	</div>
 	<div id="sort-name-button" class="button sorting left-switch-button">
-		<img class="svg" src="<?php print_unescaped(
-			image_path($_['appName'], 'nameasc.svg')
-		); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+		<div class="flipper">
+			<img class="svg asc front" src="<?php print_unescaped(
+				image_path($_['appName'], 'nameasc.svg')
+			); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+			<img class="svg des back" src="<?php print_unescaped(
+				image_path($_['appName'], 'namedes.svg')
+			); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+		</div>
 	</div>
 	<span class="right">
 		<div id="album-info-button" class="button">
