@@ -11,6 +11,9 @@
 
 #controls .button.sorting {
 	padding: 8px 7px;
+	-webkit-perspective: 1000px;
+	-moz-perspective: 1000px;
+	perspective: 1000px;
 }
 
 #controls .button.left-switch-button {
@@ -47,7 +50,7 @@
 	opacity: 0.25;
 }
 
-#controls .active-button,
+#controls .button.sorting.active-button,
 #controls .disabled-button:hover,
 #controls .disabled-button:focus,
 #controls .disabled-button a:focus,
@@ -63,4 +66,68 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
 	opacity: 0.6;
+}
+
+/* Original Flip CSS by David Walsh
+http://davidwalsh.name/css-flip*/
+
+/* Wrapping both sort images */
+#controls .button.sorting .flipper {
+	-webkit-transform: perspective(1000px);
+	-moz-transform: perspective(1000px);
+	transform: perspective(1000px);
+
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	transition: 0.3s;
+
+	position: relative;
+}
+
+#controls .button.sorting .front,
+#controls .button.sorting .back {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	transition: 0.3s;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 2px 1px;
+}
+
+#controls .button.sorting .front,
+#controls .button.sorting.active-button.hover .back {
+	z-index: 2;
+
+	-webkit-transform: rotateX(0deg);
+	-moz-transform: rotateX(0deg);
+	transform: rotateX(0deg);
+}
+
+#controls .button.sorting .back {
+	filter: alpha(opacity=0); /* Hide this class in IE<10 */
+
+	-webkit-transform: rotateX(180deg);
+	-moz-transform: rotateX(180deg);
+	transform: rotateX(180deg);
+}
+
+#controls .button.sorting.active-button.hover .front {
+	-webkit-transform: rotateX(180deg);
+	-moz-transform: rotateX(180deg);
+	transform: rotateX(180deg);
 }
