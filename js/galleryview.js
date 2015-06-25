@@ -129,9 +129,9 @@
 			var icon = sortType + sortOrder;
 
 			var setButton = function (button, icon, active) {
-				button.removeClass('inactive-button');
-				if (!active) {
-					button.addClass('inactive-button');
+				button.removeClass('active-button');
+				if (active) {
+					button.addClass('active-button');
 				}
 				button.find('img').attr('src', OC.imagePath(Gallery.appName, icon));
 			};
