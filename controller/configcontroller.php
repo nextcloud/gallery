@@ -19,6 +19,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Service\ConfigService;
+use OCA\GalleryPlus\Service\PreviewService;
 
 /**
  * Class ConfigController
@@ -34,6 +35,10 @@ class ConfigController extends Controller {
 	 */
 	private $configService;
 	/**
+	 * @var PreviewService
+	 */
+	private $previewService;
+	/**
 	 * @var ILogger
 	 */
 	private $logger;
@@ -44,17 +49,20 @@ class ConfigController extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param ConfigService $configService
+	 * @param PreviewService $previewService
 	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		ConfigService $configService,
+		PreviewService $previewService,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 
 		$this->configService = $configService;
+		$this->previewService = $previewService;
 		$this->logger = $logger;
 	}
 
@@ -63,21 +71,35 @@ class ConfigController extends Controller {
 	 *
 	 * Returns an app configuration array
 	 *
+	 * @param bool $slideshow
+	 *
 	 * @return array
 	 */
-	public function getConfig() {
-		return $this->getFeaturesList();
+	public function getConfig($slideshow = false) {
+		$features = $this->configService->getFeaturesList();
+		$nativeSvgSupport = $this->isNativeSvgActivated($features);
+		$mediaTypes = $this->previewService->getSupportedMediaTypes($slideshow, $nativeSvgSupport);
+
+		return ['features' => $features, 'mediatypes' => $mediaTypes];
 	}
 
 	/**
-	 * @NoAdminRequired
+	 * Determines if the native SVG feature has been activated
 	 *
-	 * Returns a list of supported features
+	 * @param array $features
 	 *
-	 * @return array
+	 * @return bool
 	 */
-	private function getFeaturesList() {
-		return $this->configService->getFeaturesList();
+	private function isNativeSvgActivated($features) {
+		$nativeSvgSupport = false;
+		if (!empty($features)
+			&& array_key_exists('native_svg', $features)
+			&& $features['native_svg'] === 'yes'
+		) {
+			$nativeSvgSupport = true;
+		}
+
+		return $nativeSvgSupport;
 	}
 
 }

@@ -65,16 +65,10 @@ return [
 		/**
 		 * Services
 		 */
-		// Gallery config
+		// Gallery config, as well as supported media types
 		[
 			'name' => 'config#get_config',
 			'url'  => '/config',
-			'verb' => 'GET'
-		],
-		// Supported media types. Only called by the slideshow
-		[
-			'name' => 'preview#get_media_types',
-			'url'  => '/mediatypes',
 			'verb' => 'GET'
 		],
 		// All the images of which a preview can be generated

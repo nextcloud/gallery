@@ -1,6 +1,5 @@
 /* global OC, $, t, Album, GalleryImage, SlideShow, oc_requesttoken */
 var Gallery = {};
-Gallery.mediaTypes = {};
 Gallery.images = [];
 Gallery.currentAlbum = null;
 Gallery.config = {};
@@ -9,20 +8,6 @@ Gallery.imageMap = {};
 Gallery.albumCache = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
-
-/**
- * Returns a list of supported media types
- *
- * @returns {string}
- */
-Gallery.getMediaTypes = function () {
-	var types = '';
-	for (var i = 0, keys = Object.keys(Gallery.mediaTypes); i < keys.length; i++) {
-		types += keys[i] + ';';
-	}
-
-	return types.slice(0, -1);
-};
 
 /**
  * Builds a map of the albums located in the current folder
@@ -84,7 +69,7 @@ Gallery.getFiles = function () {
 	}
 	var params = {
 		location: currentLocation,
-		mediatypes: Gallery.getMediaTypes(),
+		mediatypes: Gallery.config.getMediaTypes(),
 		features: Gallery.config.galleryFeatures,
 		etag: albumEtag
 	};

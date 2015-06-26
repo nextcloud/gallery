@@ -7,11 +7,14 @@
 	 * @constructor
 	 */
 	var Config = function (config) {
-		this.galleryFeatures = this.setGalleryFeatures(config);
+		this.galleryFeatures = this.setGalleryFeatures(config.features);
+		this.mediaTypes = config.mediatypes;
 	};
 
 	Config.prototype = {
 		galleryFeatures: [],
+		mediaTypes: {},
+		cachedMediaTypesString: '',
 		albumPermissions: null,
 		albumInfo: null,
 		albumSorting: null,
@@ -36,6 +39,24 @@
 			}
 
 			return features;
+		},
+
+		/**
+		 * Returns the list of supported media types in a string
+		 *
+		 * @returns {string}
+		 */
+		getMediaTypes: function () {
+			if (this.cachedMediaTypesString === '') {
+				var types = '';
+				for (var i = 0, keys = Object.keys(this.mediaTypes); i < keys.length; i++) {
+					types += keys[i] + ';';
+				}
+
+				this.cachedMediaTypesString = types.slice(0, -1);
+			}
+
+			return this.cachedMediaTypesString;
 		},
 
 		/**

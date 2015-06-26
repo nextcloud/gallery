@@ -63,10 +63,10 @@ var galleryFileAction = {
 		var height = Math.floor(screen.height * window.devicePixelRatio);
 
 		/* Find value of longest edge. */
-		var longEdge = Math.max( width, height );
+		var longEdge = Math.max(width, height);
 
 		/* Find the next larger image size. */
-		if ( longEdge % 100 !== 0 ){
+		if (longEdge % 100 !== 0) {
 			longEdge = ( longEdge + 100 ) - ( longEdge % 100 );
 		}
 
@@ -118,14 +118,13 @@ $(document).ready(function () {
 		return true;
 	}
 
-	var url = galleryFileAction.buildGalleryUrl('config', '', {});
+	// We're also asking for a list of supported media types.
+	// Media files are retrieved through the Files context
+	var url = galleryFileAction.buildGalleryUrl('config', '', {slideshow: 1});
 	$.getJSON(url).then(function (config) {
-		if (config) {
-			galleryFileAction.config = config;
+		if (!$.isEmptyObject(config.features)) {
+			galleryFileAction.config = config.features;
 		}
-		url = galleryFileAction.buildGalleryUrl('mediatypes', '', {slideshow: 1});
-		// We're asking for a list of supported media types.
-		// Media files are retrieved through the Files context
-		$.getJSON(url, {}, galleryFileAction.register);
+		galleryFileAction.register(config.mediatypes);
 	});
 });

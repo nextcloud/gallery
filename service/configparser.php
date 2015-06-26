@@ -32,15 +32,15 @@ class ConfigParser {
 	 *
 	 * @return null|array
 	 */
-	public function getGlobalConfig($folder, $configName) {
-		$config = [];
+	public function getFeaturesList($folder, $configName) {
+		$featuresList = [];
 		$parsedConfig = $this->parseConfig($folder, $configName);
 		$key = 'features';
 		if (array_key_exists('features', $parsedConfig)) {
-			$config = [$key => $parsedConfig[$key]];
+			$featuresList = $parsedConfig[$key];
 		}
 
-		return $config;
+		return $featuresList;
 	}
 
 	/**

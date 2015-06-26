@@ -75,7 +75,7 @@ class ConfigService extends FilesService {
 		if ($rootFolder && $rootFolder->nodeExists($this->configName)) {
 			try {
 				$featuresList =
-					$this->configParser->getGlobalConfig($rootFolder, $this->configName);
+					$this->configParser->getFeaturesList($rootFolder, $this->configName);
 			} catch (ServiceException $exception) {
 				$featuresList = $this->buildErrorMessage($exception, $rootFolder);
 			}

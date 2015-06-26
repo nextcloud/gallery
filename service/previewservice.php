@@ -85,10 +85,11 @@ class PreviewService extends Service {
 	 * @todo Native SVG could be disabled via admin settings
 	 *
 	 * @param bool $slideshow
+	 * @param bool $nativeSvgSupport
 	 *
-	 * @return string[] all supported media types
+	 * @return \string[] all supported media types
 	 */
-	public function getSupportedMediaTypes($slideshow) {
+	public function getSupportedMediaTypes($slideshow, $nativeSvgSupport) {
 		$supportedMimes = [];
 		$wantedMimes = $this->baseMimeTypes;
 		if ($slideshow) {
@@ -102,7 +103,7 @@ class PreviewService extends Service {
 					$pathToIcon; // We add it to the list of supported media types
 			}
 		}
-		$supportedMimes = $this->addSvgSupport($supportedMimes);
+		$supportedMimes = $this->addSvgSupport($supportedMimes, $nativeSvgSupport);
 		//$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
 
 		return $supportedMimes;
@@ -208,12 +209,12 @@ class PreviewService extends Service {
 	 * preview. If it's disabled, we support it via the browser's native support
 	 *
 	 * @param string[] $supportedMimes
+	 * @param bool $nativeSvgSupport
 	 *
-	 * @return string[]
+	 * @return \string[]
 	 */
-	private function addSvgSupport($supportedMimes) {
-
-		if (!in_array('image/svg+xml', $supportedMimes)) {
+	private function addSvgSupport($supportedMimes, $nativeSvgSupport) {
+		if (!in_array('image/svg+xml', $supportedMimes) && $nativeSvgSupport) {
 			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
 		}
 

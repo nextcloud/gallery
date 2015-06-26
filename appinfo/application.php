@@ -79,6 +79,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
+				$c->query('PreviewService'),
 				$c->query('Logger')
 			);
 		}
@@ -89,6 +90,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
+				$c->query('PreviewService'),
 				$c->query('Logger')
 			);
 		}

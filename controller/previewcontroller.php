@@ -103,20 +103,6 @@ class PreviewController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * Sends back a list of all media types supported by the system, as well as the name of their
-	 *     icon
-	 *
-	 * @param bool $slideshow
-	 *
-	 * @return array <string,string>|null
-	 */
-	public function getMediaTypes($slideshow = false) {
-		return $this->previewService->getSupportedMediaTypes($slideshow);
-	}
-
-	/**
-	 * @NoAdminRequired
-	 *
 	 * Generates thumbnails
 	 *
 	 * Uses EventSource to send thumbnails back as soon as they're created

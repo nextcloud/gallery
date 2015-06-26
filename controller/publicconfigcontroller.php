@@ -29,8 +29,8 @@ class PublicConfigController extends ConfigController {
 	 *
 	 * @inheritDoc
 	 */
-	public function getConfig() {
-		return parent::getConfig();
+	public function getConfig($slideshow = false) {
+		return parent::getConfig($slideshow);
 	}
 
 }

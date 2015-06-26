@@ -24,17 +24,6 @@ class PublicPreviewController extends PreviewController {
 
 	/**
 	 * @PublicPage
-	 *
-	 * @inheritDoc
-	 *
-	 * @param bool $slideshow
-	 */
-	public function getMediaTypes($slideshow = false) {
-		return parent::getMediaTypes($slideshow);
-	}
-
-	/**
-	 * @PublicPage
 	 * @UseSession
 	 *
 	 * Generates thumbnails for public galleries
