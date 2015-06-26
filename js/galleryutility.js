@@ -182,12 +182,12 @@
 				if (sortOrder === 'asc') {
 					//sortByNameAsc
 					return function (a, b) {
-						return a.path.toLowerCase().localeCompare(b.path.toLowerCase());
+						return OC.Util.naturalSortCompare(a.path, b.path);
 					};
 				}
 				//sortByNameDes
 				return function (a, b) {
-					return b.path.toLowerCase().localeCompare(a.path.toLowerCase());
+					return -OC.Util.naturalSortCompare(a.path, b.path);
 				};
 			}
 			if (sortType === 'date') {
