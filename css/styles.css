@@ -127,7 +127,6 @@ div.crumb.last a{
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: rgba(0, 0, 0, .5);
 	text-align: center;
 	font-size: 18px;
 	line-height: normal;
@@ -144,12 +143,22 @@ div.crumb.last a{
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: rgba(0, 0, 0, .5);
 	box-sizing: border-box;
 	padding: 5px;
 	overflow-x: hidden;
 	z-index: 11;
 	word-break: break-all;
+}
+
+#gallery a.album .album-label,
+#gallery a.image .image-label {
+	background: #333; /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0, 0, 0, 0)), color-stop(100%,rgba(0, 0, 0, .7))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .7) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .7) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .7) 100%); /* IE10+ */
+	background: linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .7) 100%); /* W3C */
 }
 
 #gallery a.image .image-label .title {
