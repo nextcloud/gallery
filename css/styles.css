@@ -144,7 +144,7 @@ div.crumb.last a{
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: rgba(0, 0, 0, .8);
+	background-color: rgba(0, 0, 0, .5);
 	box-sizing: border-box;
 	padding: 5px;
 	overflow-x: hidden;
@@ -156,10 +156,10 @@ div.crumb.last a{
 	display: inline-block;
 	color: #fff;
 	text-shadow: none;
-	text-align: left;
+	text-align: center;
 	font-size: 13px;
-	font-weight: bold;
 	line-height: normal;
+	width: 100%;
 	overflow-x: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
