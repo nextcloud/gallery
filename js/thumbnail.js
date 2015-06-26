@@ -73,10 +73,6 @@ Thumbnails.getStandardIcon = function (type) {
 		thumb.image.src = OC.imagePath(Gallery.appName, icon);
 
 		Thumbnails.squareMap[type] = thumb;
-
-		// FIXME console.log
-		console.log('Folder Thumbnail created', Thumbnails.squareMap[type]);
-
 	}
 
 	return Thumbnails.squareMap[type];
@@ -140,7 +136,7 @@ Thumbnails.loadBatch = function (ids, square) {
 					thumb.image.src = 'data:' + preview.mimetype + ';base64,' + preview.preview;
 				} else {
 					thumb.valid = false;
-					thumb.image.src = Gallery.mediaTypes[preview.mimetype];
+					thumb.image.src = Gallery.config.mediaTypes[preview.mimetype];
 
 				}
 			}
