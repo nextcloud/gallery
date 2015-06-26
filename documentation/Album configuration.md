@@ -25,8 +25,6 @@ The following album features are currently implemented:
 ### File format
 UTF-8, without BOM. A file created from within the web GUI works.
 
-On 8.0, you can simply create a .txt file and rename it to .cnf when you're finished.
-
 ### Structure
 It's advised to add a comment in the file, so that people stumbling upon that file know what it's for.
 Comments start with #.
@@ -69,6 +67,8 @@ features:
 See [this page](http://www.markitdown.net/markdown) for the markdown syntax
 
 _Note: Do not add links to your `copyright` string if you intend on adding a `copyright link`_
+
+_Warning: External shares are 20-50 times slower than local shares. Be prepared to wait a long time before being able to see all the images contained in a shared album_
 
 ### Possible future extensions
 
@@ -141,4 +141,3 @@ features:
   native_svg: yes
 ...
 ```
-
