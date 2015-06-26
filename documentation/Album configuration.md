@@ -1,23 +1,30 @@
-# Album configuration
+# Album and special features configuration
 It's possible to configure a Gallery album via a simple text file, using the [Yaml](https://en.wikipedia.org/wiki/YAML) markup language.
 
 ## Features
 
-The following features are currently implemented:
+### Special features
+
+The following special features are currently implemented:
+
+* Enabling native SVG support
+
+### Albums 
+
+The following album features are currently implemented:
 
 * Adding a link to a file containing a description
 * Typing a simple copyright statement directly in the configuration file
 * Adding a link to a file containing a copyright statement
 * Defining a sort type and order 
 * Defining if sub-albums will inherit the configuration
-* Enabling a specific feature
 
 ## Configuration
 
 ### File format
 UTF-8, without BOM. A file created from within the web GUI works.
 
-From 8.1, it will be possible to edit the files from within the GUI.
+On 8.0, you can simply create a .txt file and rename it to .cnf when you're finished.
 
 ### Structure
 It's advised to add a comment in the file, so that people stumbling upon that file know what it's for.
@@ -54,12 +61,11 @@ features:
 * `sorting`: `date` or `name`. `date` only works for files
 * `sort_order`: `asc` or `des`
 * `inherit`: set it to yes if you want sub-folders to inherit this part of the configuration
-* `external_shares`: set it to yes in your root configuration file if you want to be able to load images coming from external clouds
+* `native_svg`: set it to yes in your root configuration file if you want to be able to see SVG images rendered by the browser. This may represent a security risk if you can't fully trust your SVG files
 
 See [this page](http://www.markitdown.net/markdown) for the markdown syntax
 
 _Note: Do not add links to your `copyright` string if you intend on adding a `copyright link`_
-_Warning: External shares are 20-50 times slower than local shares. Be prepared to wait a long time before being able to see all the images contained in a shared album_
 
 ### Possible future extensions
 
@@ -104,9 +110,9 @@ information:
   inherit: yes
 ```
 
-### Load images from external clouds
+### Enabling native SVG
 
-**Features can only be defined in the root folder**
+**Special features can only be defined in the root folder**
 
 You can add standard configuration items to the same configuration file
 
@@ -114,7 +120,7 @@ You can add standard configuration items to the same configuration file
 ---
 # Gallery configuration file
 features:
-  external_shares: yes
+  native_svg: yes
 ...
 ```
 
