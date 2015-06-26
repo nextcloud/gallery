@@ -47,6 +47,38 @@ Thumbnails.get = function (fileId, square) {
 };
 
 /**
+ * Returns an icon of a specific type
+ *
+ * -1 is for a folder
+ * -404 is for a broken file icon
+ * -500 is for a media type icon
+ *
+ * @param {number} type
+ *
+ * @returns {Thumbnail}
+ */
+Thumbnails.getStandardIcon = function (type) {
+	if (!Thumbnails.squareMap[type]) {
+		var icon = '';
+		// true means square
+		var thumb = new Thumbnail(type, true);
+		thumb.image = new Image();
+		thumb.image.onload = function () {
+			thumb.loadingDeferred.resolve(thumb.image);
+		};
+
+		if (type === -1) {
+			icon = 'folder.svg';
+		}
+		thumb.image.src = OC.imagePath(Gallery.appName, icon);
+
+		Thumbnails.squareMap[type] = thumb;
+	}
+
+	return Thumbnails.squareMap[type];
+};
+
+/**
  * Loads thumbnails in batch, using EventSource
  *
  * @param {array} ids
@@ -81,21 +113,33 @@ Thumbnails.loadBatch = function (ids, square) {
 			var id = preview.fileid;
 			var thumb = batch[id];
 			thumb.status = preview.status;
-			thumb.image.onload = function () {
-				// Fix for SVG files which can come in all sizes
-				if (square) {
-					thumb.image.width = 200;
-					thumb.image.height = 200;
-				}
-				thumb.image.ratio = thumb.image.width / thumb.image.height;
-				thumb.image.originalWidth = 200 * thumb.image.ratio;
-				thumb.loadingDeferred.resolve(thumb.image);
-			};
-			thumb.image.onerror = function () {
+			if (thumb.status === 404) {
 				thumb.valid = false;
-				thumb.loadingDeferred.resolve(thumb.image);
-			};
-			thumb.image.src = 'data:' + preview.mimetype + ';base64,' + preview.preview;
+				thumb.loadingDeferred.resolve(null);
+			} else {
+				thumb.image.onload = function () {
+					// Fix for SVG files which can come in all sizes
+					if (square) {
+						thumb.image.width = 200;
+						thumb.image.height = 200;
+					}
+					thumb.image.ratio = thumb.image.width / thumb.image.height;
+					thumb.image.originalWidth = 200 * thumb.image.ratio;
+					thumb.loadingDeferred.resolve(thumb.image);
+				};
+				thumb.image.onerror = function () {
+					thumb.valid = false;
+					thumb.loadingDeferred.resolve(null);
+				};
+
+				if (thumb.status === 200) {
+					thumb.image.src = 'data:' + preview.mimetype + ';base64,' + preview.preview;
+				} else {
+					thumb.valid = false;
+					thumb.image.src = Gallery.config.mediaTypes[preview.mimetype];
+
+				}
+			}
 		});
 	}
 

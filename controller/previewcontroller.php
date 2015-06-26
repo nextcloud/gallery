@@ -22,6 +22,8 @@ use OCP\Files\File;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
+use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\ServiceException;
@@ -124,8 +126,11 @@ class PreviewController extends Controller {
 		$idsArray = explode(';', $ids);
 
 		foreach ($idsArray as $id) {
-			$thumbnail = $this->getThumbnail((int)$id, $square, $scale);
+			// Casting to integer here instead of using array_map to extract IDs from the URL
+			list($thumbnail, $status) = $this->getThumbnail((int)$id, $square, $scale);
 			$thumbnail['fileid'] = $id;
+			$thumbnail['status'] = $status;
+
 			$this->eventSource->send('preview', $thumbnail);
 		}
 		$this->eventSource->close();
@@ -144,21 +149,29 @@ class PreviewController extends Controller {
 	 * @param int $height
 	 * @param string|null $download
 	 *
-	 * @return ImageResponse|Http\JSONResponse
+	 * @return ImageResponse|RedirectResponse|Http\JSONResponse
 	 */
 	public function getPreview($fileId, $width, $height, $download) {
 		if (!is_null($download)) {
 			$this->download = true;
 		}
-		try {
-			$preview = $this->getPreviewData($fileId, $width, $height);
+		/** @type File $file */
+		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
 
-			return new ImageResponse($preview['data'], $preview['status']);
-		} catch (ServiceException $exception) {
-			return $this->error($exception);
+		if ($preview === null) {
+			if ($this->download) {
+				$url = $this->getErrorUrl($status);
+
+				return new RedirectResponse($url);
+			} else {
+
+				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], $status);
+			}
 		}
-	}
+		$preview['name'] = $file->getName();
 
+		return new ImageResponse($preview, $status);
+	}
 
 	/**
 	 * Retrieves the thumbnail to send back to the browser
@@ -176,37 +189,27 @@ class PreviewController extends Controller {
 	private function getThumbnail($fileId, $square, $scale) {
 		list($width, $height, $aspect, $animatedPreview, $base64Encode) =
 			$this->thumbnailService->getThumbnailSpecs($square, $scale);
-
-		try {
-			$preview = $this->getPreviewData(
+		/** @type File $file */
+		list($file, $preview, $status, $type) =
+			$this->getData(
 				$fileId, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
-		} catch (ServiceException $exception) {
-			$preview = ['data' => null, 'status' => 500, 'type' => 'error'];
+		if ($preview === null) {
+			if ($status !== Http::STATUS_NOT_FOUND) {
+				$preview = ['preview' => null, 'mimetype' => $file->getMimeType()];
+			}
+		} else {
+			if ($type === 'preview') {
+				$preview['preview'] =
+					$this->previewService->previewValidator($square, $base64Encode);
+			}
 		}
-		$thumbnail = $preview['data'];
-		if ($preview['status'] === 200 && $preview['type'] === 'preview') {
-			$thumbnail['preview'] = $this->previewService->previewValidator($square, $base64Encode);
-		}
-		$thumbnail['status'] = $preview['status'];
 
-		return $thumbnail;
+		return [$preview, $status];
 	}
 
 	/**
-	 * Returns either a generated preview (or the mime-icon when the preview generation fails)
-	 * or the file as-is
-	 *
-	 * Sample logger
-	 * We can't just send the preview array as it can contain quite a large data stream
-	 * $this->logger->debug("[Batch] THUMBNAIL NAME : {image} / PATH : {path} /
-	 * MIME : {mimetype} / DATA : {preview}", [
-	 *                'image'    => $preview['data']['image'],
-	 *                'path'     => $preview['data']['path'],
-	 *                'mimetype' => $preview['data']['mimetype'],
-	 *                'preview'  => substr($preview['data']['preview'], 0, 20),
-	 *              ]
-	 *            );
+	 * Returns either a generated preview, the file as-is or an empty object
 	 *
 	 * @param int $fileId
 	 * @param int $width
@@ -219,43 +222,124 @@ class PreviewController extends Controller {
 	 *
 	 * @throws NotFoundServiceException
 	 */
-	private function getPreviewData(
+	private function getData(
 		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
 	) {
-		$status = Http::STATUS_OK;
 		try {
 			/** @type File $file */
 			$file = $this->previewService->getResourceFromId($fileId);
-			if (!$this->download) {
-				$previewRequired =
-					$this->previewService->isPreviewRequired($file, $animatedPreview);
-				if ($previewRequired) {
-					$type = 'preview';
-					$preview = $this->previewService->createPreview(
-						$file, $width, $height, $keepAspect, $base64Encode
-					);
-					if (!$this->previewService->isPreviewValid()) {
-						$type = 'error';
-						$status = Http::STATUS_NOT_FOUND;
-					}
-				} else {
-					$type = 'download';
-					$preview = $this->downloadService->downloadFile($file, $base64Encode);
-				}
+			if (!is_null($file)) {
+				$previewRequired = $this->isPreviewRequired($file, $animatedPreview);
+				$data = $this->getPreviewData(
+					$file, $previewRequired, $width, $height, $keepAspect, $base64Encode
+				);
 			} else {
-				$type = 'download';
-				$preview = $this->downloadService->downloadFile($file, $base64Encode);
+				// Uncaught problem, should never reach this point...
+				$data = $this->getErrorData(Http::STATUS_NOT_FOUND);
 			}
+		} catch (ServiceException $exception) {
+			$file = null;
+			$data = $this->getExceptionData($exception);
+		}
+		array_unshift($data, $file);
 
-			$preview['name'] = $file->getName();
+		return $data;
+	}
 
-		} catch (\Exception $exception) {
+	/**
+	 * Returns true if we need to generate a preview for that file
+	 *
+	 * @param $file
+	 * @param bool $animatedPreview
+	 *
+	 * @return bool
+	 */
+	private function isPreviewRequired($file, $animatedPreview) {
+		$previewRequired = false;
+
+		if (!$this->download) {
+			$previewRequired =
+				$this->previewService->isPreviewRequired($file, $animatedPreview);
+		}
+
+		return $previewRequired;
+	}
+
+	/**
+	 * @param $file
+	 * @param $previewRequired
+	 * @param $width
+	 * @param $height
+	 * @param $keepAspect
+	 * @param $base64Encode
+	 *
+	 * @return array
+	 */
+	private function getPreviewData(
+		$file, $previewRequired, $width, $height, $keepAspect, $base64Encode
+	) {
+		$status = Http::STATUS_OK;
+		if ($previewRequired) {
+			$type = 'preview';
+			$preview = $this->previewService->createPreview(
+				$file, $width, $height, $keepAspect, $base64Encode
+			);
+		} else {
+			$type = 'download';
+			$preview = $this->downloadService->downloadFile($file, $base64Encode);
+		}
+		if (!$preview) {
 			$type = 'error';
 			$status = Http::STATUS_INTERNAL_SERVER_ERROR;
 			$preview = null;
 		}
 
-		return ['data' => $preview, 'status' => $status, 'type' => $type];
+		return [$preview, $status, $type];
+	}
+
+	/**
+	 * Returns an error array
+	 *
+	 * @param $status
+	 *
+	 * @return array<null,int,string>
+	 */
+	private function getErrorData($status) {
+		return [null, $status, 'error'];
+	}
+
+	/**
+	 * Returns an error array
+	 *
+	 * @param $exception
+	 *
+	 * @return array<null,int,string>
+	 */
+	private function getExceptionData($exception) {
+		if ($exception instanceof NotFoundServiceException) {
+			$status = Http::STATUS_NOT_FOUND;
+		} else {
+			$status = Http::STATUS_INTERNAL_SERVER_ERROR;
+		}
+
+		return $this->getErrorData($status);
+	}
+
+	/**
+	 * Returns an URL based on the HTTP status code
+	 *
+	 * @param $status
+	 *
+	 * @return string
+	 */
+	private function getErrorUrl($status) {
+		return $this->urlGenerator->linkToRoute(
+			$this->appName . '.page.error_page',
+			[
+				'message' => 'There was a problem accessing the file',
+				'code'    => $status
+			]
+		);
 	}
 
 }

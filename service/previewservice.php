@@ -136,7 +136,6 @@ class PreviewService extends Service {
 	 *    * fileid:  the file's ID
 	 *    * mimetype: the file's media type
 	 *    * preview: the preview's content
-	 *    * status: a code indicating whether the conversion process was successful or not
 	 *
 	 * Example logger
 	 * $this->logger->debug(
@@ -156,8 +155,7 @@ class PreviewService extends Service {
 	 * @param bool $keepAspect
 	 * @param bool $base64Encode
 	 *
-	 * @return array<string,\OC_Image|string> preview data
-	 * @throws NotFoundServiceException
+	 * @return array<string,\OC_Image|string>|false preview data
 	 */
 	public function createPreview(
 		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
@@ -168,20 +166,13 @@ class PreviewService extends Service {
 		$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
 
 		$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
-		if ($base64Encode) {
-			$preview['preview'] = $this->encode($preview['preview']);
+		if ($preview) {
+			if ($base64Encode) {
+				$preview['preview'] = $this->encode($preview['preview']);
+			}
 		}
 
 		return $preview;
-	}
-
-	/**
-	 * Returns true if the preview was successfully generated
-	 *
-	 * @return bool
-	 */
-	public function isPreviewValid() {
-		return $this->previewManager->isPreviewValid();
 	}
 
 	/**

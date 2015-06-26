@@ -1,4 +1,4 @@
-/* global $, OC, Thumbnails */
+/* global $, OC, Gallery, Thumbnails */
 /**
  * Creates a new album object to store information about an album
  *
@@ -66,6 +66,8 @@ Album.prototype = {
 	/**
 	 * Retrieves a thumbnail and adds it to the album representation
 	 *
+	 * Only attaches valid thumbnails to the album
+	 *
 	 * @param {GalleryImage} image
 	 * @param {number} targetHeight Each row has a specific height
 	 * @param {number} calcWidth Album width
@@ -77,19 +79,22 @@ Album.prototype = {
 	_getOneImage: function (image, targetHeight, calcWidth, a) {
 		// img is a Thumbnail.image, true means square thumbnails
 		return image.getThumbnail(true).then(function (img) {
-			var backgroundHeight, backgroundWidth;
-			img.alt = '';
-			backgroundHeight = (targetHeight / 2);
-			backgroundWidth = calcWidth - 2.01;
+			if (image.thumbnail.valid) {
+				var backgroundHeight, backgroundWidth;
+				img.alt = '';
 
-			// Adjust the size because of the margins around pictures
-			backgroundHeight -= 2;
+				backgroundHeight = (targetHeight / 2);
+				backgroundWidth = calcWidth - 2.01;
 
-			var croppedDiv = $('<div class="cropped">');
-			croppedDiv.css("background-image", "url('" + img.src + "')");
-			croppedDiv.css("height", backgroundHeight);
-			croppedDiv.css("width", backgroundWidth);
-			a.append(croppedDiv);
+				// Adjust the size because of the margins around pictures
+				backgroundHeight -= 2;
+
+				var croppedDiv = $('<div class="cropped">');
+				croppedDiv.css("background-image", "url('" + img.src + "')");
+				croppedDiv.css("height", backgroundHeight);
+				croppedDiv.css("width", backgroundWidth);
+				a.append(croppedDiv);
+			}
 		});
 	},
 
@@ -100,13 +105,17 @@ Album.prototype = {
 	 * @param {number} targetHeight Each row has a specific height
 	 * @param {object} a
 	 *
-	 * @returns {a}
+	 * @returns {$.Deferred<array>}
 	 * @private
 	 */
 	_getFourImages: function (images, targetHeight, a) {
 		var calcWidth = targetHeight / 2;
 		var targetWidth;
 		var imagesCount = images.length;
+		var def = new $.Deferred();
+		var validImages = [];
+		var fail = false;
+		var thumbsArray = [];
 
 		for (var i = 0; i < imagesCount; i++) {
 			targetWidth = calcWidth;
@@ -114,11 +123,34 @@ Album.prototype = {
 				targetWidth = calcWidth * 2;
 			}
 			targetWidth = targetWidth.toFixed(3);
-			this._getOneImage(images[i], targetHeight, targetWidth, a);
+
+			thumbsArray.push(this._getOneImage(images[i], targetHeight, targetWidth, a));
 		}
 
 		var labelWidth = (targetHeight - 0.01);
 		a.find('.album-label').width(labelWidth);
+
+		// This technique allows us to wait for all objects to be resolved before making a decision
+		$.when.apply($, thumbsArray).done(function () {
+			for (var i = 0; i < imagesCount; i++) {
+				// Collect all valid images, just in case
+				if (images[i].thumbnail.valid) {
+					validImages.push(images[i]);
+				} else {
+					fail = true;
+				}
+			}
+
+			// At least one thumbnail could not be retrieved
+			if (fail) {
+				// Clean up the album
+				a.children().not('.album-label').remove();
+				// Send back the list of images which have thumbnails
+				def.reject(validImages);
+			}
+		});
+
+		return def.promise();
 	},
 
 	/**
@@ -134,12 +166,42 @@ Album.prototype = {
 	 * @private
 	 */
 	_fillSubAlbum: function (targetHeight, a) {
+		var album = this;
+
 		if (this.images.length > 1) {
-			this._getFourImages(this.images, targetHeight, a);
+			this._getFourImages(this.images, targetHeight, a).fail(function (validImages) {
+				album.images = validImages;
+				album._fillSubAlbum(targetHeight, a);
+			});
 		} else if (this.images.length === 1) {
 			this._getOneImage(this.images[0], 2 *
-				targetHeight, targetHeight, a, false);
+				targetHeight, targetHeight, a, false).fail(function () {
+				album.images = [];
+				album._showFolder(targetHeight, a);
+			});
+		} else {
+			this._showFolder(targetHeight, a);
 		}
+	},
+
+	/**
+	 * Shows a folder icon in the album since we couldn't get any proper thumbnail
+	 *
+	 * @param {number} targetHeight
+	 * @param a
+	 * @private
+	 */
+	_showFolder: function (targetHeight, a) {
+		var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/png',
+			Gallery.token);
+		var thumb = Thumbnails.getStandardIcon(-1);
+		image.thumbnail = thumb;
+		this.images.push(image);
+		thumb.loadingDeferred.done(function (img) {
+			a.append(img);
+			img.height = (targetHeight - 2);
+			img.width = (targetHeight) - 2;
+		});
 	},
 
 	/**
@@ -287,6 +349,7 @@ Row.prototype = {
 	addElement: function (element) {
 		var row = this;
 		var targetHeight = 200;
+		var fileNotFoundStatus = 404;
 		var def = new $.Deferred();
 
 		var appendDom = function (itemDom, width) {
@@ -302,14 +365,19 @@ Row.prototype = {
 			appendDom(itemDom, width);
 		} else {
 			element.getThumbnailWidth().then(function (width) {
-				element.getDom(targetHeight).then(function (itemDom) {
-					appendDom(itemDom, width);
-				});
+				if (element.thumbnail.status !== fileNotFoundStatus) {
+					element.getDom(targetHeight).then(function (itemDom) {
+						appendDom(itemDom, width);
+					});
+				} else {
+					def.resolve(true);
+				}
 			}, function () {
 				def.resolve(true);
 			});
 		}
-		return def;
+
+		return def.promise();
 	},
 
 	getDom: function () {
@@ -397,6 +465,11 @@ GalleryImage.prototype = {
 				img.setAttribute('width', 'auto');
 				img.alt = encodeURI(image.path);
 				var url = '#' + encodeURIComponent(image.path);
+
+				if (!image.thumbnail.valid) {
+					url = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
+					url = url + '&download';
+				}
 				var a = $('<a/>').addClass('image').attr('href', url).attr('data-path', image.path);
 
 				var imageLabel = $('<span/>').addClass('image-label');
