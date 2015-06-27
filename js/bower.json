@@ -15,8 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "eventsource-polyfill": "~0.9.6",
-    "marked": "~0.3.3",
-    "github-markdown-css": "~2.0.7"
+    "eventsource-polyfill": "~0.*",
+    "marked": "~0.*",
+    "github-markdown-css": "~2.*"
   }
 }
