@@ -98,11 +98,6 @@ return [
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_preview#get_media_types',
-			'url'  => '/mediatypes.public',
-			'verb' => 'GET'
-		],
-		[
 			'name' => 'public_files#get_files',
 			'url'  => '/files.public',
 			'verb' => 'GET'

@@ -28,6 +28,10 @@ class PublicFilesController extends FilesController {
 	 * Returns a list of all images from the folder the link gives access to
 	 *
 	 * @inheritDoc
+	 *
+	 * @param string $location a path representing the current album in the app
+	 * @param string $features the list of supported features
+	 * @param string $etag the last known etag in the client
 	 */
 	public function getFiles($location, $features, $etag) {
 		return parent::getFiles($location, $features, $etag);

@@ -28,6 +28,8 @@ class PublicConfigController extends ConfigController {
 	 * Returns a list of supported features
 	 *
 	 * @inheritDoc
+	 *
+	 * @param bool $slideshow
 	 */
 	public function getConfig($slideshow = false) {
 		return parent::getConfig($slideshow);

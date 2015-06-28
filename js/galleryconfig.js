@@ -24,15 +24,15 @@
 		/**
 		 * Saves the list of features which have been enabled in the app
 		 *
-		 * @param config
+		 * @param configFeatures
 		 *
 		 * @returns {Array}
 		 */
-		setGalleryFeatures: function (config) {
+		setGalleryFeatures: function (configFeatures) {
 			var features = [];
-			if (!$.isEmptyObject(config.features)) {
-				for (var i = 0, keys = Object.keys(config.features); i < keys.length; i++) {
-					if (config.features[keys[i]] === 'yes') {
+			if (!$.isEmptyObject(configFeatures)) {
+				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
+					if (configFeatures[keys[i]] === 'yes') {
 						features.push(keys[i]);
 					}
 				}

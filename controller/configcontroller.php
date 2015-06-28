@@ -77,6 +77,9 @@ class ConfigController extends Controller {
 	 */
 	public function getConfig($slideshow = false) {
 		$features = $this->configService->getFeaturesList();
+
+		//$this->logger->debug("Features: {features}", ['features' => $features]);
+
 		$nativeSvgSupport = $this->isNativeSvgActivated($features);
 		$mediaTypes = $this->previewService->getSupportedMediaTypes($slideshow, $nativeSvgSupport);
 
