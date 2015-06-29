@@ -73,9 +73,9 @@ class ConfigParser {
 	 * @throws ServiceException
 	 */
 	private function parseConfig($folder, $configName) {
-		/** @var File $configFile */
-		$configFile = $folder->get($configName);
 		try {
+			/** @var File $configFile */
+			$configFile = $folder->get($configName);
 			$rawConfig = $configFile->getContent();
 			$saneConfig = $this->bomFixer($rawConfig);
 			$parsedConfig = Yaml::parse($saneConfig);

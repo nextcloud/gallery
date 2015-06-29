@@ -176,7 +176,7 @@ class FilesService extends Service {
 	 */
 	protected function isRootFolder($folder, $level) {
 		$isRootFolder = false;
-		$rootFolder = $this->environment->getNode('');
+		$rootFolder = $this->environment->getVirtualRootFolder();
 		if ($folder->getPath() === $rootFolder->getPath()) {
 			$isRootFolder = true;
 		}

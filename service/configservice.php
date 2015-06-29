@@ -71,7 +71,7 @@ class ConfigService extends FilesService {
 	public function getFeaturesList() {
 		$featuresList = [];
 		/** @var Folder $rootFolder */
-		$rootFolder = $this->environment->getNode('');
+		$rootFolder = $this->environment->getVirtualRootFolder();
 		if ($rootFolder && $rootFolder->nodeExists($this->configName)) {
 			try {
 				$featuresList =

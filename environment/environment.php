@@ -191,15 +191,6 @@ class Environment {
 	}
 
 	/**
-	 * Returns the shared node
-	 *
-	 * @return File|Folder
-	 */
-	public function getSharedNode() {
-		return $this->getResourceFromId($this->sharedNodeId);
-	}
-
-	/**
 	 * Returns the resource identified by the given ID
 	 *
 	 * @param int $resourceId
@@ -215,6 +206,36 @@ class Environment {
 		}
 
 		return $resourcesArray[0];
+	}
+
+	/**
+	 * Returns the shared node
+	 *
+	 * @return File|Folder
+	 */
+	public function getSharedNode() {
+		return $this->getResourceFromId($this->sharedNodeId);
+	}
+
+	/**
+	 * Returns the virtual root where the user lands after logging in or when following a link
+	 *
+	 * @return Folder
+	 *
+	 * @throws EnvironmentException
+	 */
+	public function getVirtualRootFolder() {
+		$rootFolder = $this->userFolder;
+		if (!empty($this->sharedNodeId)) {
+			$node = $this->getResourceFromId($this->sharedNodeId);
+			if ($node->getType() === 'dir') {
+				$rootFolder = $node;
+			} else {
+				$this->logAndThrowNotFound($node->getPath() . ' is not a folder');
+			}
+		}
+
+		return $rootFolder;
 	}
 
 	/**
