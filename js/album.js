@@ -174,8 +174,7 @@ Album.prototype = {
 				album._fillSubAlbum(targetHeight, a);
 			});
 		} else if (this.images.length === 1) {
-			this._getOneImage(this.images[0], 2 *
-				targetHeight, targetHeight, a, false).fail(function () {
+			this._getOneImage(this.images[0], 2 * targetHeight, targetHeight, a).fail(function () {
 				album.images = [];
 				album._showFolder(targetHeight, a);
 			});
@@ -348,11 +347,10 @@ Row.prototype = {
 	 */
 	addElement: function (element) {
 		var row = this;
-		var targetHeight = 200;
 		var fileNotFoundStatus = 404;
 		var def = new $.Deferred();
 
-		var appendDom = function (itemDom, width) {
+		var appendDom = function (width) {
 			row.items.push(element);
 			row.width += width + 4; // add 4px for the margin
 			def.resolve(!row._isFull());
@@ -361,14 +359,11 @@ Row.prototype = {
 		// No need to use getThumbnailWidth() for albums, the width is always 200
 		if (element instanceof  Album) {
 			var width = 200;
-			var itemDom = element.getDom(targetHeight);
-			appendDom(itemDom, width);
+			appendDom(width);
 		} else {
 			element.getThumbnailWidth().then(function (width) {
 				if (element.thumbnail.status !== fileNotFoundStatus) {
-					element.getDom(targetHeight).then(function (itemDom) {
-						appendDom(itemDom, width);
-					});
+					appendDom(width);
 				} else {
 					def.resolve(true);
 				}
