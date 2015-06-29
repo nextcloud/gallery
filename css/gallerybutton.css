@@ -14,7 +14,7 @@
 }
 
 #controls .button.left-switch-button {
-	float: left;
+	float: right;
 	display: inline;
 	border-radius: 3px 0 0 3px;
 	margin-left: 3px;
@@ -23,10 +23,9 @@
 }
 
 #controls .button.right-switch-button {
-	float: left;
+	float: right;
 	display: inline;
 	border-radius: 0 3px 3px 0;
-	margin-left: -1px;
 }
 
 .button.left-switch-button img,
