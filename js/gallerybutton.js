@@ -59,13 +59,13 @@ $(document).ready(function () {
 
 			// Toggle for opening files list as gallery view
 			GalleryButton.button =
-				$('<div class="button view-switcher left-switch-button disabled-button">' +
-					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-filelist.svg') +
+				$('<div id="gallery-button" class="button view-switcher right-switch-button inactive-button">' +
+					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') +
 					'"' +
 					'alt="' + t('gallery', 'Picture view') + '"/>' +
 					'</div>' +
-					'<div id="gallery-button" class="button view-switcher right-switch-button inactive-button">' +
-					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') +
+					'<div class="button view-switcher left-switch-button disabled-button">' +
+					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-filelist.svg') +
 					'"' +
 					'alt="' + t('gallery', 'Picture view') + '"/>' +
 					'</div>');

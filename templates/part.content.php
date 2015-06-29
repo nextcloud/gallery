@@ -44,25 +44,25 @@ style(
 <div id="controls">
 	<div id='breadcrumbs'></div>
 	<!-- toggle for opening the current album as file list -->
-	<div id="filelist-button" class="button view-switcher left-switch-button inactive-button">
-		<img class="svg" src="<?php print_unescaped(
-			image_path('core', 'actions/toggle-filelist.svg')
-		); ?>" alt="<?php p($l->t('File list')); ?>"/>
-	</div>
 	<div class="button view-switcher right-switch-button disabled-button">
 		<img class="svg" src="<?php print_unescaped(
 			image_path('core', 'actions/toggle-pictures.svg')
 		); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
 	</div>
-	<div id="sort-name-button" class="button sorting left-switch-button">
+	<div id="filelist-button" class="button view-switcher left-switch-button inactive-button">
 		<img class="svg" src="<?php print_unescaped(
-			image_path($_['appName'], 'nameasc.svg')
-		); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+			image_path('core', 'actions/toggle-filelist.svg')
+		); ?>" alt="<?php p($l->t('File list')); ?>"/>
 	</div>
 	<div id="sort-date-button" class="button sorting right-switch-button">
 		<img class="svg" src="<?php print_unescaped(
 			image_path($_['appName'], 'dateasc.svg')
 		); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+	</div>
+	<div id="sort-name-button" class="button sorting left-switch-button">
+		<img class="svg" src="<?php print_unescaped(
+			image_path($_['appName'], 'nameasc.svg')
+		); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
 	</div>
 	<span class="right">
 		<div id="album-info-button" class="button">
