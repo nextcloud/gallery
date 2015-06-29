@@ -37,26 +37,23 @@
 	opacity: 0.6;
 }
 
-#controls .inactive-button {
+#controls .disabled-button {
+	pointer-events: none;
 	background-color: rgb(230, 230, 230);
 }
 
-#controls .inactive-button img {
+#controls .disabled-button img {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
 	filter: alpha(opacity=25);
 	opacity: 0.25;
 }
 
-#controls .inactive-button:hover,
-#controls .inactive-button:focus,
-#controls .inactive-button a:focus,
-#controls .inactive-button.loading {
+#controls .disabled-button:hover,
+#controls .disabled-button:focus,
+#controls .disabled-button a:focus,
+#controls .disabled-button.loading {
 	background-color: rgba(255, 255, 255, .95);
 	color: #111;
-}
-
-#controls .disabled-button {
-	pointer-events: none;
 }
 
 #share-button img,
