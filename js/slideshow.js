@@ -45,6 +45,7 @@ SlideShow.prototype = {
 		this.hideErrorNotification();
 		this.container.show();
 		this.container.css('background-position', 'center');
+		$('html').css('overflow-y', 'hidden');
 		this._hideImage();
 		var currentImageId = index;
 		return this.loadImage(this.images[index]).then(function (img) {
@@ -126,6 +127,7 @@ SlideShow.prototype = {
 	 * Stops the slideshow
 	 */
 	stop: function () {
+		$('html').css('overflow-y', 'scroll');
 		if (this.onStop) {
 			this.onStop();
 		}
