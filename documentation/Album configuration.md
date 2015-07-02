@@ -8,6 +8,7 @@ It's possible to configure a Gallery album via a simple text file, using the [Ya
 The following special features are currently implemented:
 
 * Enabling native SVG support
+* Enabling access to external shares
 
 ### Albums 
 
@@ -50,6 +51,7 @@ sorting:
   inherit: yes
 features:
   external_shares: yes
+  native_svg: yes
 ```
 
 ### Supported variables
@@ -61,6 +63,7 @@ features:
 * `sorting`: `date` or `name`. `date` only works for files
 * `sort_order`: `asc` or `des`
 * `inherit`: set it to yes if you want sub-folders to inherit this part of the configuration
+* `external_shares`: set it to yes in your root configuration file if you want to be able to load images coming from external clouds
 * `native_svg`: set it to yes in your root configuration file if you want to be able to see SVG images rendered by the browser. This may represent a security risk if you can't fully trust your SVG files
 
 See [this page](http://www.markitdown.net/markdown) for the markdown syntax
@@ -76,7 +79,8 @@ _Note: Do not add links to your `copyright` string if you intend on adding a `co
 * in case only the sort `order` variable has been found, the sort configuration will be ignored and the script will keep looking for a valid configuration in upper folders
 
 ## Tips
-* If you share a folder publicly, don't forget to add all the files you link to inside the shared folder as the user won't have access to files stored in the parent folder
+* To enable a feature such as native SVG in a public share, you need to create in that folder a configuration file containing that feature
+* If you share a folder publicly, don't forget to add all the files you link to (description.md or copyright.md per example) inside the shared folder as the user won't have access to files stored in the parent folder
 * Since people can download a whole folder as an archive, it's usually best to include all files within a shared folder as opposed to adding text directly in the configuration file
 
 ## Examples
@@ -108,6 +112,20 @@ information:
   copyright: Copyright 2015 La Maison Bleue, France
   copyright_link: copyright_2015_lmb.html
   inherit: yes
+```
+
+### Load images from external clouds
+
+**Features can only be defined in the root folder**
+
+You can add standard configuration items to the same configuration file
+
+```
+---
+# Gallery configuration file
+features:
+  external_shares: yes
+...
 ```
 
 ### Enabling native SVG

@@ -108,20 +108,27 @@ class FilesService extends Service {
 	/**
 	 * Determines if the files are hosted locally (shared or not)
 	 *
-	 * isMounted() includes externally hosted shares, so we need to exclude those
+	 * isMounted() doesn't include externally hosted shares, so we need to exclude those from the
+	 * non-mounted nodes
 	 *
 	 * @param Node $node
 	 *
 	 * @return bool
 	 */
-	protected function isLocalAndAvailable($node) {
+	protected function isAllowedAndAvailable($node) {
 		try {
 			if (!$node->isMounted()) {
-				return !$this->isExternalShare($node) && $node->isReadable();
+				$allowed = $node->isReadable();
+				if ($this->isExternalShare($node)) {
+					$allowed = $allowed && $this->isExternalShareAllowed();
+				}
+
+				return $allowed;
 			}
 		} catch (\Exception $exception) {
 			$message = 'The folder is not available: ' . $exception->getMessage();
 			$this->logger->error($message);
+
 			return false;
 		}
 
@@ -236,7 +243,7 @@ class FilesService extends Service {
 			// Something very wrong has just happened
 			$this->logAndThrowNotFound('Oh Nooooes!');
 		}
-		if (!$this->isLocalAndAvailable($node)) {
+		if (!$this->isAllowedAndAvailable($node)) {
 			$this->logAndThrowForbidden('Album is private or unavailable');
 		}
 
@@ -263,18 +270,27 @@ class FilesService extends Service {
 	}
 
 	/**
-	 * Determines if the node is a share which is hosted externally
+	 * Determines if the user has allowed the use of external shares
 	 *
+	 * @return bool
+	 */
+	private function isExternalShareAllowed() {
+		$rootFolder = $this->environment->getVirtualRootFolder();
+		if ($this->isExternalShare($rootFolder) || in_array('external_shares', $this->features)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Determines if the node is a share which is hosted externally
 	 *
 	 * @param Node $node
 	 *
 	 * @return bool
 	 */
 	private function isExternalShare($node) {
-		if ($this->isExternalShareAllowed()) {
-			return false;
-		}
-
 		$sid = explode(
 			':',
 			$node->getStorage()
@@ -282,21 +298,6 @@ class FilesService extends Service {
 		);
 
 		return ($sid[0] === 'shared' && $sid[2][0] !== '/');
-	}
-
-	/**
-	 * Determines if the user has allowed the use of external shares
-	 *
-	 * @fixme Blocked by https://github.com/owncloud/core/issues/15551
-	 *
-	 * @return bool
-	 */
-	private function isExternalShareAllowed() {
-		if (empty($this->features)) {
-			return false;
-		}
-
-		return in_array('external_shares', $this->features);
 	}
 
 }

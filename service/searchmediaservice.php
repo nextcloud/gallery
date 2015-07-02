@@ -62,7 +62,7 @@ class SearchMediaService extends FilesService {
 		$subFolders = [];
 		$nodes = $this->getNodes($folder, $subDepth);
 		foreach ($nodes as $node) {
-			if (!$this->isLocalAndAvailable($node)) {
+			if (!$this->isAllowedAndAvailable($node)) {
 				continue;
 			}
 			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
