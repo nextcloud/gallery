@@ -123,7 +123,10 @@ class Environment {
 		// Resolves reshares down to the last real share
 		$rootLinkItem = Share::resolveReShare($linkItem);
 		$origShareOwner = $rootLinkItem['uid_owner'];
-		$this->userFolder = $this->setupFilesystem($origShareOwner);
+		$this->userFolder = $this->serverContainer->getUserFolder($origShareOwner);
+		// TODO: Replace with this in 8.2 (https://github.com/owncloud/core/pull/16965)
+		// You get root by calling getRootFolder() on the server container
+		//$this->userFolder = $this->root->getUserFolder($origShareOwner);
 
 		// This is actually the node ID
 		$this->sharedNodeId = $linkItem['file_source'];
@@ -328,30 +331,6 @@ class Environment {
 		$path = rtrim($path, '/');
 
 		return $path;
-	}
-
-	/**
-	 * Sets up the filesystem for the original share owner so that we can
-	 * retrieve the files and returns the userFolder for that user
-	 *
-	 * We can't use 'UserFolder' from Application as the user is not known
-	 * at instantiation time
-	 *
-	 * @param $origShareOwner
-	 *
-	 * @return Folder
-	 */
-	private function setupFilesystem($origShareOwner) {
-		\OC_Util::tearDownFS(); // FIXME: Private API
-		\OC_Util::setupFS($origShareOwner); // FIXME: Private API
-
-		$folder = $this->serverContainer->getUserFolder($origShareOwner);
-
-		/*// Alternative which does not exist yet
-		$user = $this->userManager->get($origShareOwner);
-		$folder = $user->getUserFolder();*/
-
-		return $folder;
 	}
 
 	/**
