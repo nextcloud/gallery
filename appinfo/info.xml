@@ -15,5 +15,4 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 	<public>
 		<gallery>public.php</gallery>
 	</public>
-	<ocsid>166056</ocsid>
 </info>
