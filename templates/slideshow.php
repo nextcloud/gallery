@@ -8,8 +8,5 @@
 	<input type="button" class="svg changeBackground icon-view-toggle-background"/>
 
 	<div class="progress icon-view-pause"/>
-	<div class="notification">
-		<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next
-		slide while we remove this image from the slideshow
-	</div>
+	<div class="notification"></div>
 </div>

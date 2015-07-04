@@ -1,4 +1,4 @@
-/* global jQuery, OC, OCA, $, t */
+/* global jQuery, OC, OCA, $, t, Gallery */
 /**
  *
  * @param {jQuery} container
@@ -81,7 +81,7 @@ SlideShow.prototype = {
 			// up the index
 			if (currentImageId === index) {
 				this.errorLoadingImage = true;
-				this.showErrorNotification();
+				this.showErrorNotification(null);
 				this._setUrl(this.images[index].path);
 				this.images.splice(index, 1);
 				this.controls.updateControls(this.images, this.errorLoadingImage);
@@ -114,7 +114,9 @@ SlideShow.prototype = {
 					this.imageCache[url].reject(url);
 				}
 			}.bind(this);
-			if (mimeType === 'image/svg+xml') {
+			if (mimeType === 'image/svg+xml' &&
+				!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image",
+					"1.1")) {
 				image.src = this._getSVG(url);
 			} else {
 				image.src = url;
@@ -169,8 +171,16 @@ SlideShow.prototype = {
 
 	/**
 	 * Shows an error notification
+	 *
+	 * @param {string} message
 	 */
-	showErrorNotification: function () {
+	showErrorNotification: function (message) {
+		if ($.isEmptyObject(message)) {
+			message = t('gallery',
+				'<strong>Error!</strong> Could not generate a preview of this file.<br>' +
+				'Please go to the next slide while we remove this image from the slideshow');
+		}
+		this.container.find('.notification').html(message);
 		this.container.find('.notification').show();
 		this.container.find('.changeBackground').hide();
 	},
@@ -180,6 +190,7 @@ SlideShow.prototype = {
 	 */
 	hideErrorNotification: function () {
 		this.container.find('.notification').hide();
+		this.container.find('.notification').html('');
 	},
 
 	/**
@@ -213,17 +224,28 @@ SlideShow.prototype = {
 	 * @private
 	 */
 	_getSVG: function (source) {
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open("GET", source, false);
-		xmlHttp.send(null);
-		if (xmlHttp.status === 200) {
-			if (xmlHttp.responseXML) {
-				// Has to be base64 encoded for Firefox
-				return "data:image/svg+xml;base64," + btoa(xmlHttp.responseText);
+		var svgPreview = null;
+		if (window.btoa) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("GET", source, false);
+			xmlHttp.send(null);
+			if (xmlHttp.status === 200) {
+				if (xmlHttp.responseXML) {
+					// Has to be base64 encoded for Firefox
+					svgPreview = "data:image/svg+xml;base64," + window.btoa(xmlHttp.responseText);
+				} else {
+					svgPreview = source;
+				}
 			}
-			return source;
+		} else {
+			var message = t('gallery',
+				"<strong>Error!</strong> Your browser can't show SVG files.<br>" +
+				"Please use a more modern alternative");
+			this.showErrorNotification(message);
+			svgPreview = Gallery.config.mediaTypes['image/svg+xml'];
 		}
-		return null;
+
+		return svgPreview;
 	}
 };
 
@@ -305,7 +327,7 @@ $(document).ready(function () {
 	if ($('#imgframe').length > 0) {
 		return true;
 	}
-	
+
 	$.when(SlideShow.getSlideshowTemplate()).then(function ($tmpl) {
 		$('body').append($tmpl); //move the slideshow outside the content so we can hide the content
 
