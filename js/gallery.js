@@ -43,6 +43,10 @@
 		 * @returns {*}
 		 */
 		getFiles: function (currentLocation) {
+			// Cache the sorting order of the current album before loading new files
+			if (!$.isEmptyObject(Gallery.albumMap)) {
+				Gallery.albumMap[Gallery.currentAlbum].sorting = Gallery.config.albumSorting;
+			}
 			// Checks if we've visited this location before ands saves the etag to use for
 			// comparison later
 			var albumEtag;
@@ -70,6 +74,12 @@
 				} else {
 					Gallery.mapFiles(data);
 				}
+
+				// Restore the previous sorting order for this album
+				if (!$.isEmptyObject(Gallery.albumMap[albumInfo.path].sorting)) {
+					Gallery.config.updateAlbumSorting(Gallery.albumMap[albumInfo.path].sorting);
+				}
+
 			}, function () {
 				// Triggered if we couldn't find a working folder
 				Gallery.view.element.empty();
@@ -223,7 +233,12 @@
 				albumSortOrder));
 
 			// Save the new settings
-			Gallery.config.updateAlbumSorting(sortType, sortOrder, albumSortOrder);
+			var sortConfig = {
+				type: sortType,
+				order: sortOrder,
+				albumOrder: albumSortOrder
+			};
+			Gallery.config.updateAlbumSorting(sortConfig);
 
 			// Refresh the view
 			Gallery.view.viewAlbum(Gallery.currentAlbum);

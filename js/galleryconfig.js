@@ -158,11 +158,11 @@
 		/**
 		 * Updates the sorting order
 		 */
-		updateAlbumSorting: function (sortType, sortOrder, albumSortOrder) {
+		updateAlbumSorting: function (sortConfig) {
 			this.albumSorting = {
-				type: sortType,
-				order: sortOrder,
-				albumOrder: albumSortOrder
+				type: sortConfig.type,
+				order: sortConfig.order,
+				albumOrder: sortConfig.albumOrder
 			};
 		}
 	};
