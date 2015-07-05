@@ -49,9 +49,9 @@
 			var maxZoom = this.maxZoom;
 			var imgWidth = image.naturalWidth / window.devicePixelRatio;
 			var imgHeight = image.naturalHeight / window.devicePixelRatio;
-			if ( imgWidth < this.smallImageDimension &&
-			     imgHeight < this.smallImageDimension &&
-			     this.currentImage.mimeType !== 'image/svg+xml' ) {
+			if (imgWidth < this.smallImageDimension &&
+				imgHeight < this.smallImageDimension &&
+				this.currentImage.mimeType !== 'image/svg+xml') {
 				maxZoom += 3;
 				this.currentImage.isSmallImage = true;
 			}
@@ -124,8 +124,8 @@
 			}
 			if (this.currentImage.isSmallImage) {
 				this.zoomable.flyTo(0, 0, this.smallImageScale, true);
-			} else if ( $(window).width() < this.zoomable.width ||
-				    $(window).height() < this.zoomable.height ) {
+			} else if ($(window).width() < this.zoomable.width ||
+				$(window).height() < this.zoomable.height) {
 				// The image is larger than the window.
 				// Set minimum zoom and call flyZoomToFit.
 				this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
@@ -151,9 +151,9 @@
 		 */
 		_detectFullscreen: function () {
 			this.canFullScreen = this.element.requestFullscreen !== undefined ||
-			this.element.mozRequestFullScreen !== undefined ||
-			this.element.webkitRequestFullscreen !== undefined ||
-			this.element.msRequestFullscreen !== undefined;
+				this.element.mozRequestFullScreen !== undefined ||
+				this.element.webkitRequestFullscreen !== undefined ||
+				this.element.msRequestFullscreen !== undefined;
 		},
 
 		/**
@@ -176,10 +176,12 @@
 		 * @private
 		 */
 		_zoomDecider: function () {
-			if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-				this.zoomToOriginal();
-			} else {
-				this.zoomToFit();
+			if (this.zoomable !== null) {
+				if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
+					this.zoomToOriginal();
+				} else {
+					this.zoomToFit();
+				}
 			}
 		},
 
@@ -193,18 +195,18 @@
 			}
 			if (this.currentImage.isSmallImage) {
 				this.zoomable.setZoom(this.smallImageScale, true);
-			} else if ( $(window).width() < this.zoomable.width || 
-			            $(window).height() < this.zoomable.height ||
-				    this.fullScreen !== null ||
-				    this.currentImage.mimeType === 'image/svg+xml' ) {
+			} else if ($(window).width() < this.zoomable.width ||
+				$(window).height() < this.zoomable.height ||
+				this.fullScreen !== null ||
+				this.currentImage.mimeType === 'image/svg+xml') {
 				// The image is larger than the window, or we are fullScreen,
 				// or this is an SVG. Set minimum zoom and call zoomToFit.
 				this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
 				this.zoomable.zoomToFit();
-			} else { 
+			} else {
 				// Zoom to the image size.
 				this.zoomable.setMinZoom(0);
-				this.zoomable.setZoom(0, true); 
+				this.zoomable.setZoom(0, true);
 			}
 		},
 
