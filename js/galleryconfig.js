@@ -1,5 +1,6 @@
-/* global $, Gallery */
-(function () {
+/* global Gallery */
+(function ($, Gallery) {
+	"use strict";
 	/**
 	 * Stores the gallery configuration
 	 *
@@ -167,4 +168,4 @@
 	};
 
 	Gallery.Config = Config;
-})();
+})(jQuery, Gallery);
