@@ -1,6 +1,6 @@
-/* global OC, t, $, _, Gallery */
-(function () {
-
+/* global Gallery, SlideShow */
+(function (OC, t, $, _) {
+	"use strict";
 	/**
 	 * Builds and updates the Gallery view
 	 *
@@ -44,6 +44,8 @@
 					$('#sort-date-button').click(Gallery.sorter);
 					$('#save #save-button').click(Gallery.showSaveForm);
 					$('.save-form').submit(Gallery.saveForm);
+					Gallery.activeSlideShow = new SlideShow($('#slideshow'));
+					Gallery.activeSlideShow.init(false, null);
 				}
 				this.viewAlbum(albumPath);
 			}
@@ -272,4 +274,4 @@
 	};
 
 	Gallery.View = View;
-})();
+})(OC, t, jQuery, _);

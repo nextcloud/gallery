@@ -1,6 +1,6 @@
-/* global $, SlideShow, bigshot*/
-(function () {
-
+/* global SlideShow, bigshot*/
+(function ($, SlideShow, bigshot) {
+	"use strict";
 	/**
 	 * Creates a zoomable preview
 	 *
@@ -10,6 +10,8 @@
 	var ZoomablePreview = function (container) {
 		this.container = container;
 		this.element = this.container.get(0);
+		var bigshotContainer = container.find('.bigshotContainer');
+		this.bigshotElement = bigshotContainer.get(0);
 
 		this._detectFullscreen();
 		this._setupControls();
@@ -22,6 +24,8 @@
 	ZoomablePreview.prototype = {
 		container: null,
 		element: null,
+		bigshotContainer: null,
+		bigshotElement: null,
 		zoomable: null,
 		fullScreen: null,
 		canFullScreen: false,
@@ -52,7 +56,7 @@
 				this.currentImage.isSmallImage = true;
 			}
 			this.zoomable = new bigshot.SimpleImage(new bigshot.ImageParameters({
-				container: this.element,
+				container: this.bigshotElement,
 				maxZoom: maxZoom,
 				minZoom: 0,
 				touchUI: false,
@@ -235,4 +239,4 @@
 	};
 
 	SlideShow.ZoomablePreview = ZoomablePreview;
-})();
+})(jQuery, SlideShow, bigshot);

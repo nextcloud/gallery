@@ -1,5 +1,6 @@
 /* global OC, $, _, Gallery */
 $(document).ready(function () {
+	"use strict";
 	Gallery.hideSearch();
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
@@ -17,7 +18,6 @@ $(document).ready(function () {
 		// Needed to centre the spinner in some browsers
 		Gallery.resetContentHeight();
 		Gallery.showLoading();
-
 		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
 			.then(function (config) {
 				Gallery.config = new Gallery.Config(config);
@@ -76,6 +76,7 @@ $(document).ready(function () {
 });
 
 window.onhashchange = function () {
+	"use strict";
 	// The hash location is ALWAYS encoded
 	var path = decodeURIComponent(window.location.href.split('#')[1] || '');
 	var albumPath = OC.dirname(path);

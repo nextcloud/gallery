@@ -168,3 +168,8 @@
 	filter: alpha(opacity=90);
 	opacity: .9;
 }
+
+#slideshow > .bigshotContainer {
+	width: 100%;
+	height: 100%;
+}

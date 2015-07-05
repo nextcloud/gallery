@@ -1,4 +1,4 @@
-/* global OC, $, t, Album, GalleryImage, SlideShow, oc_requesttoken */
+/* global OC, $, t, Album, GalleryImage */
 var Gallery = {};
 Gallery.images = [];
 Gallery.currentAlbum = null;
@@ -8,6 +8,7 @@ Gallery.imageMap = {};
 Gallery.albumCache = {};
 Gallery.appName = 'galleryplus';
 Gallery.token = undefined;
+Gallery.activeSlideShow = null;
 
 /**
  * Builds a map of the albums located in the current folder
@@ -47,7 +48,7 @@ Gallery.refresh = function (path, albumPath) {
 		if (Gallery.activeSlideShow) {
 			Gallery.activeSlideShow.stop();
 		}
-	} else if (Gallery.imageMap[path] && !Gallery.activeSlideShow) {
+	} else if (Gallery.imageMap[path] && Gallery.activeSlideShow.active === false) {
 		Gallery.view.startSlideshow(path, albumPath);
 	}
 };
@@ -341,6 +342,7 @@ Gallery.resetContentHeight = function () {
  * @returns {boolean}
  */
 Gallery.slideShow = function (images, startImage, autoPlay) {
+	"use strict";
 	if (startImage === undefined) {
 		OC.Notification.showTemporary(t('gallery', 'Aborting preview. Could not find the file'));
 		return false;
@@ -371,21 +373,14 @@ Gallery.slideShow = function (images, startImage, autoPlay) {
 			downloadUrl: downloadUrl
 		};
 	});
-
-	var slideShow = new SlideShow($('#slideshow'), images);
-	slideShow.onStop = function () {
-		Gallery.activeSlideShow = null;
+	Gallery.activeSlideShow.setImages(images, autoPlay);
+	Gallery.activeSlideShow.onStop = function () {
 		$('#content').show();
 		if (Gallery.currentAlbum !== '') {
-			location.hash = encodeURIComponent(Gallery.currentAlbum);
+			history.replaceState('', '', '#' + encodeURIComponent(Gallery.currentAlbum));
 		} else {
-			location.hash = '!';
+			history.replaceState('', '', '#');
 		}
 	};
-	Gallery.activeSlideShow = slideShow;
-
-	slideShow.init(autoPlay);
-	slideShow.show(start);
+	Gallery.activeSlideShow.show(start);
 };
-
-Gallery.activeSlideShow = null;

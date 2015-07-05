@@ -1,322 +1,355 @@
-/* global jQuery, OC, OCA, $, t, Gallery */
-/**
- *
- * @param {jQuery} container
- * @param {{name:string, url: string, path: string, fallBack: string}[]} images
- * @param {int} interval
- * @param {int} maxScale
- * @constructor
- */
-var SlideShow = function (container, images, interval, maxScale) {
-	this.container = container;
-	this.images = images;
-	this.maxScale = maxScale || 1; // This should come from the configuration
-};
-
-SlideShow.prototype = {
-	controls: null,
-	imageCache: {},
-	currentImage: null,
-	errorLoadingImage: false,
-	onStop: null,
-	zoomablePreview: null,
-
+/* global $, OC, OCA, t, Gallery */
+(function ($, OC, OCA, t) {
+	"use strict";
 	/**
-	 * Initialises the slideshow
+	 * Slideshow featuring zooming
 	 *
-	 * @param play
+	 * @constructor
 	 */
-	init: function (play) {
-		this._hideImage();
-		this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
-		this.controls =
-			new SlideShow.Controls(this, this.container, this.zoomablePreview, this.images);
-		this.controls.init(play);
-	},
+	var SlideShow = function () {
+	};
 
-	/**
-	 * Launches the slideshow
-	 *
-	 * @param index
-	 *
-	 * @returns {*}
-	 */
-	show: function (index) {
-		this.hideErrorNotification();
-		this.container.show();
-		this.container.css('background-position', 'center');
-		$('html').css('overflow-y', 'hidden');
-		this._hideImage();
-		var currentImageId = index;
-		return this.loadImage(this.images[index]).then(function (img) {
-			this.container.css('background-position', '-10000px 0');
-			this.container.find('.changeBackground').show();
+	SlideShow.prototype = {
+		container: null,
+		zoomablePreviewContainer: null,
+		controls: null,
+		imageCache: {},
+		currentImage: null,
+		errorLoadingImage: false,
+		onStop: null,
+		zoomablePreview: null,
+		active: false,
 
-			// check if we moved along while we were loading
-			if (currentImageId === index) {
-				var image = this.images[index];
-				this.errorLoadingImage = false;
-				this.currentImage = img;
-				this.currentImage.mimeType = image.mimeType;
-				this.container.append(img);
+		/**
+		 * Initialises the slideshow
+		 *
+		 * @param {bool} autoPlay
+		 * @param {int} interval
+		 */
+		init: function (autoPlay, interval) {
+			this.container = $('#slideshow');
+			this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
+			// FIXME: This should come from the configuration
+			/**@param {int} maxScale*/
+			this.maxScale = 1;
 
-				var backgroundColour = '#fff';
-				if (this.currentImage.mimeType === 'image/jpeg' ||
-					this.currentImage.mimeType === 'image/x-dcraw') {
-					backgroundColour = '#000';
-				}
-				img.setAttribute('alt', image.name);
-				$(img).css('position', 'absolute');
-				$(img).css('background-color', backgroundColour);
-				var $border = 30 / window.devicePixelRatio;
-				$(img).css('outline', $border + 'px solid ' + backgroundColour);
-
-				this.zoomablePreview.startBigshot(img, this.currentImage);
-
-				this._setUrl(image.path);
-				this.controls.show(currentImageId);
+			// Stop the slideshow when backing out.
+			var self = this;
+			if (history && history.pushState) {
+				$(window).bind('popstate.slideshow', function () {
+					if (self.active === true) {
+						self.active = false;
+						self.controls.stop();
+					}
+				});
 			}
-		}.bind(this), function () {
-			// Don't do anything if the user has moved along while we were loading as it would mess
-			// up the index
-			if (currentImageId === index) {
-				this.errorLoadingImage = true;
-				this.showErrorNotification(null);
-				this._setUrl(this.images[index].path);
-				this.images.splice(index, 1);
-				this.controls.updateControls(this.images, this.errorLoadingImage);
-			}
-		}.bind(this));
-	},
+			this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
+			this.controls =
+				new SlideShow.Controls(this, this.container, this.zoomablePreview, interval);
+			this.controls.init();
+		},
 
-	/**
-	 * Loads the image to show in the slideshow and preloads the next one
-	 *
-	 * @param preview
-	 *
-	 * @returns {*}
-	 */
-	loadImage: function (preview) {
-		var url = preview.url;
-		var mimeType = preview.mimeType;
+		/**
+		 * Refreshes the slideshow's data
+		 *
+		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
+		 * @param autoPlay
+		 */
+		setImages: function (images, autoPlay) {
+			this._hideImage();
+			this.images = images;
+			this.controls.update(images, autoPlay);
+		},
 
-		if (!this.imageCache[url]) {
-			this.imageCache[url] = new jQuery.Deferred();
-			var image = new Image();
+		/**
+		 * Launches the slideshow
+		 *
+		 * @param index
+		 *
+		 * @returns {*}
+		 */
+		show: function (index) {
+			this.hideErrorNotification();
+			this.active = true;
+			this.container.show();
+			this.container.css('background-position', 'center');
+			$('html').css('overflow-y', 'hidden');
+			this._hideImage();
+			var currentImageId = index;
+			return this.loadImage(this.images[index]).then(function (img) {
+				this.container.css('background-position', '-10000px 0');
+				this.container.find('.changeBackground').show();
 
-			image.onload = function () {
-				if (this.imageCache[url]) {
-					this.imageCache[url].resolve(image);
+				// check if we moved along while we were loading
+				if (currentImageId === index) {
+					var image = this.images[index];
+					this.errorLoadingImage = false;
+					this.currentImage = img;
+					this.currentImage.mimeType = image.mimeType;
+
+					var backgroundColour = '#fff';
+					if (this.currentImage.mimeType === 'image/jpeg' ||
+						this.currentImage.mimeType === 'image/x-dcraw') {
+						backgroundColour = '#000';
+					}
+					img.setAttribute('alt', image.name);
+					$(img).css('position', 'absolute');
+					$(img).css('background-color', backgroundColour);
+					var $border = 30 / window.devicePixelRatio;
+					$(img).css('outline', $border + 'px solid ' + backgroundColour);
+
+					this.zoomablePreview.startBigshot(img, this.currentImage);
+
+					this._setUrl(image.path);
+					this.controls.show(currentImageId);
 				}
-			}.bind(this);
-			image.onerror = function () {
-				if (this.imageCache[url]) {
-					this.imageCache[url].reject(url);
+			}.bind(this), function () {
+				// Don't do anything if the user has moved along while we were loading as it would
+				// mess up the index
+				if (currentImageId === index) {
+					this.errorLoadingImage = true;
+					this.showErrorNotification(null);
+					this._setUrl(this.images[index].path);
+					this.images.splice(index, 1);
+					this.controls.updateControls(this.images, this.errorLoadingImage);
 				}
-			}.bind(this);
-			if (mimeType === 'image/svg+xml' &&
-				!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image",
-					"1.1")) {
-				image.src = this._getSVG(url);
-			} else {
-				image.src = url;
-			}
-		}
-		return this.imageCache[url];
-	},
+			}.bind(this));
+		},
 
-	/**
-	 * Stops the slideshow
-	 */
-	stop: function () {
-		$('html').css('overflow-y', 'scroll');
-		if (this.onStop) {
-			this.onStop();
-		}
-	},
+		/**
+		 * Loads the image to show in the slideshow and preloads the next one
+		 *
+		 * @param preview
+		 *
+		 * @returns {*}
+		 */
+		loadImage: function (preview) {
+			var url = preview.url;
+			var mimeType = preview.mimeType;
 
-	/**
-	 * Sends the current image as a download
-	 *
-	 * @param downloadUrl
-	 *
-	 * @returns {boolean}
-	 */
-	getImageDownload: function (downloadUrl) {
-		OC.redirect(downloadUrl);
-		return false;
-	},
+			if (!this.imageCache[url]) {
+				this.imageCache[url] = new $.Deferred();
+				var image = new Image();
 
-	/**
-	 * Changes the colour of the background of the image
-	 */
-	toggleBackground: function () {
-		var toHex = function (x) {
-			return ("0" + parseInt(x).toString(16)).slice(-2);
-		};
-		var container = this.container.children('img');
-		var rgb = container.css('background-color').match(/\d+/g);
-		var hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
-		var $border = 30 / window.devicePixelRatio;
-
-		// Grey #363636
-		if (hex === "#000000") {
-			container.css('background-color', '#FFF');
-			container.css('outline', $border + 'px solid #FFF');
-		} else {
-			container.css('background-color', '#000');
-			container.css('outline', $border + 'px solid #000');
-		}
-	},
-
-	/**
-	 * Shows an error notification
-	 *
-	 * @param {string} message
-	 */
-	showErrorNotification: function (message) {
-		if ($.isEmptyObject(message)) {
-			message = t('gallery',
-				'<strong>Error!</strong> Could not generate a preview of this file.<br>' +
-				'Please go to the next slide while we remove this image from the slideshow');
-		}
-		this.container.find('.notification').html(message);
-		this.container.find('.notification').show();
-		this.container.find('.changeBackground').hide();
-	},
-
-	/**
-	 * Hides the error notification
-	 */
-	hideErrorNotification: function () {
-		this.container.find('.notification').hide();
-		this.container.find('.notification').html('');
-	},
-
-	/**
-	 * Changes the browser Url, based on the current image
-	 *
-	 * @param {string} path
-	 * @private
-	 */
-	_setUrl: function (path) {
-		if (history && history.replaceState) {
-			history.replaceState('', '', '#' + encodeURI(path));
-		}
-	},
-
-	/**
-	 * Hides the current image (before loading the next)
-	 * @private
-	 */
-	_hideImage: function () {
-		this.container.children('img').remove();
-	},
-
-	/**
-	 * Retrieves an SVG
-	 *
-	 * An SVG can't be simply attached to a src attribute like a bitmap image
-	 *
-	 * @param {string} source
-	 *
-	 * @returns {*}
-	 * @private
-	 */
-	_getSVG: function (source) {
-		var svgPreview = null;
-		if (window.btoa) {
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.open("GET", source, false);
-			xmlHttp.send(null);
-			if (xmlHttp.status === 200) {
-				if (xmlHttp.responseXML) {
-					// Has to be base64 encoded for Firefox
-					svgPreview = "data:image/svg+xml;base64," + window.btoa(xmlHttp.responseText);
+				image.onload = function () {
+					if (this.imageCache[url]) {
+						this.imageCache[url].resolve(image);
+					}
+				}.bind(this);
+				image.onerror = function () {
+					if (this.imageCache[url]) {
+						this.imageCache[url].reject(url);
+					}
+				}.bind(this);
+				if (mimeType === 'image/svg+xml' &&
+					!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image",
+						"1.1")) {
+					image.src = this._getSVG(url);
 				} else {
-					svgPreview = source;
+					image.src = url;
 				}
 			}
-		} else {
-			var message = t('gallery',
-				"<strong>Error!</strong> Your browser can't show SVG files.<br>" +
-				"Please use a more modern alternative");
-			this.showErrorNotification(message);
-			svgPreview = Gallery.config.mediaTypes['image/svg+xml'];
+			return this.imageCache[url];
+		},
+
+		/**
+		 * Stops the slideshow
+		 */
+		stop: function () {
+			$('html').css('overflow-y', 'scroll');
+			this.active = false;
+			this.images = null;
+			this._hideImage();
+			if (this.onStop) {
+				this.onStop();
+			}
+		},
+
+		/**
+		 * Sends the current image as a download
+		 *
+		 * @param downloadUrl
+		 *
+		 * @returns {boolean}
+		 */
+		getImageDownload: function (downloadUrl) {
+			OC.redirect(downloadUrl);
+			return false;
+		},
+
+		/**
+		 * Changes the colour of the background of the image
+		 */
+		toggleBackground: function () {
+			var toHex = function (x) {
+				return ("0" + parseInt(x).toString(16)).slice(-2);
+			};
+			var container = this.zoomablePreviewContainer.children('img');
+			var rgb = container.css('background-color').match(/\d+/g);
+			var hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
+			var $border = 30 / window.devicePixelRatio;
+
+			// Grey #363636
+			if (hex === "#000000") {
+				container.css('background-color', '#FFF');
+				container.css('outline', $border + 'px solid #FFF');
+			} else {
+				container.css('background-color', '#000');
+				container.css('outline', $border + 'px solid #000');
+			}
+		},
+
+		/**
+		 * Shows an error notification
+		 *
+		 * @param {string} message
+		 */
+		showErrorNotification: function (message) {
+			if ($.isEmptyObject(message)) {
+				message = t('gallery',
+					'<strong>Error!</strong> Could not generate a preview of this file.<br>' +
+					'Please go to the next slide while we remove this image from the slideshow');
+			}
+			this.container.find('.notification').html(message);
+			this.container.find('.notification').show();
+			this.container.find('.changeBackground').hide();
+		},
+
+		/**
+		 * Hides the error notification
+		 */
+		hideErrorNotification: function () {
+			this.container.find('.notification').hide();
+			this.container.find('.notification').html('');
+		},
+
+		/**
+		 * Changes the browser Url, based on the current image
+		 *
+		 * @param {string} path
+		 * @private
+		 */
+		_setUrl: function (path) {
+			if (history && history.replaceState) {
+				history.replaceState('', '', '#' + encodeURI(path));
+			}
+		},
+
+		/**
+		 * Hides the current image (before loading the next)
+		 * @private
+		 */
+		_hideImage: function () {
+			this.zoomablePreviewContainer.empty();
+		},
+
+		/**
+		 * Retrieves an SVG
+		 *
+		 * An SVG can't be simply attached to a src attribute like a bitmap image
+		 *
+		 * @param {string} source
+		 *
+		 * @returns {*}
+		 * @private
+		 */
+		_getSVG: function (source) {
+			var svgPreview = null;
+			if (window.btoa) {
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("GET", source, false);
+				xmlHttp.send(null);
+				if (xmlHttp.status === 200) {
+					if (xmlHttp.responseXML) {
+						// Has to be base64 encoded for Firefox
+						svgPreview =
+							"data:image/svg+xml;base64," + window.btoa(xmlHttp.responseText);
+					} else {
+						svgPreview = source;
+					}
+				}
+			} else {
+				var message = t('gallery',
+					"<strong>Error!</strong> Your browser can't show SVG files.<br>" +
+					"Please use a more modern alternative");
+				this.showErrorNotification(message);
+				svgPreview = Gallery.config.mediaTypes['image/svg+xml'];
+			}
+
+			return svgPreview;
+		},
+
+		/**
+		 * Retrieves the slideshow's template
+		 *
+		 * @returns {*}
+		 */
+		getSlideshowTemplate: function () {
+			var defer = $.Deferred();
+			if (!this.$slideshowTemplate) {
+				var self = this;
+				var url = OC.generateUrl('apps/galleryplus/slideshow', null);
+				$.get(url, function (tmpl) {
+					var template = $(tmpl);
+					var tmplButton;
+					var tmplTrans;
+					var buttonsArray = [
+						{
+							el: '.next',
+							trans: 'Next'
+						},
+						{
+							el: '.play',
+							trans: 'Play'
+						},
+						{
+							el: '.pause',
+							trans: 'Pause'
+						},
+						{
+							el: '.previous',
+							trans: 'Previous'
+						},
+						{
+							el: '.exit',
+							trans: 'Close'
+						},
+						{
+							el: '.downloadImage',
+							trans: 'Download',
+							toolTip: true
+						},
+						{
+							el: '.changeBackground',
+							trans: 'Toggle background',
+							toolTip: true
+						}
+					];
+					for (var i = 0; i < buttonsArray.length; i++) {
+						var button = buttonsArray[i];
+
+						tmplButton = template.find(button.el);
+						tmplTrans = t('gallery', button.trans);
+						tmplButton.val(tmplTrans);
+						if (button.toolTip) {
+							tmplButton.attr("title", tmplTrans);
+						}
+					}
+					self.$slideshowTemplate = template;
+					defer.resolve(self.$slideshowTemplate);
+				})
+					.fail(function () {
+						defer.reject();
+					});
+			} else {
+				defer.resolve(this.$slideshowTemplate);
+			}
+			return defer.promise();
 		}
+	};
 
-		return svgPreview;
-	}
-};
-
-/**
- * Retrieves the slideshow's template
- *
- * @returns {*}
- * @private
- */
-SlideShow.getSlideshowTemplate = function () {
-	var defer = $.Deferred();
-	if (!this.$slideshowTemplate) {
-		var self = this;
-		var url = OC.generateUrl('apps/galleryplus/slideshow', null);
-		$.get(url, function (tmpl) {
-			var template = $(tmpl);
-			var tmplButton;
-			var tmplTrans;
-			var buttonsArray = [
-				{
-					el: '.next',
-					trans: 'Next'
-				},
-				{
-					el: '.play',
-					trans: 'Play'
-				},
-				{
-					el: '.pause',
-					trans: 'Pause'
-				},
-				{
-					el: '.previous',
-					trans: 'Previous'
-				},
-				{
-					el: '.exit',
-					trans: 'Close'
-				},
-				{
-					el: '.downloadImage',
-					trans: 'Download',
-					toolTip: true
-				},
-				{
-					el: '.changeBackground',
-					trans: 'Toggle background',
-					toolTip: true
-				}
-			];
-			for (var i = 0; i < buttonsArray.length; i++) {
-				var button = buttonsArray[i];
-
-				tmplButton = template.find(button.el);
-				tmplTrans = t('gallery', button.trans);
-				tmplButton.val(tmplTrans);
-				if (button.toolTip) {
-					tmplButton.attr("title", tmplTrans);
-				}
-			}
-			self.$slideshowTemplate = template;
-			defer.resolve(self.$slideshowTemplate);
-		})
-			.fail(function () {
-				defer.reject();
-			});
-	} else {
-		defer.resolve(this.$slideshowTemplate);
-	}
-	return defer.promise();
-};
+	window.SlideShow = SlideShow;
+})(jQuery, OC, OCA, t);
 
 $(document).ready(function () {
 	// Deactivates slideshow on login page
@@ -328,7 +361,9 @@ $(document).ready(function () {
 		return true;
 	}
 
-	$.when(SlideShow.getSlideshowTemplate()).then(function ($tmpl) {
+	var slideshow = new window.SlideShow();
+
+	$.when(slideshow.getSlideshowTemplate()).then(function ($tmpl) {
 		$('body').append($tmpl); //move the slideshow outside the content so we can hide the content
 
 		var inactiveCallback = function () {

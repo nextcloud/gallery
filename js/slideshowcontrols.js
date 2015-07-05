@@ -1,20 +1,19 @@
-/* global $, SlideShow */
-(function () {
+/* global SlideShow */
+(function ($, SlideShow) {
+	"use strict";
 	/**
 	 * Button and key controls for the slideshow
 	 *
 	 * @param {object} slideshow
 	 * @param {*} container
 	 * @param {object} zoomablePreview
-	 * @param {array} images
 	 * @param {int} interval
 	 * @constructor
 	 */
-	var Controls = function (slideshow, container, zoomablePreview, images, interval) {
+	var Controls = function (slideshow, container, zoomablePreview, interval) {
 		this.slideshow = slideshow;
 		this.container = container;
 		this.zoomablePreview = zoomablePreview;
-		this.images = images;
 		this.progressBar = container.find('.progress');
 		this.interval = interval || 5000;
 
@@ -29,20 +28,8 @@
 
 		/**
 		 * Initialises the controls
-		 *
-		 * @param {bool} play
 		 */
-		init: function (play) {
-			this.active = true;
-			// hide arrows and play/pause when only one pic
-			this.container.find('.next, .previous').toggle(this.images.length > 1);
-			if (this.images.length === 1) {
-				this.container.find('.play, .pause').hide();
-			}
-
-			// Hide the toggle background button until we have something to show
-			this.container.find('.changeBackground').hide();
-
+		init: function () {
 			var makeCallBack = function (handler) {
 				return function (evt) {
 					if (!this.active) {
@@ -56,6 +43,25 @@
 			this._buttonSetup(makeCallBack);
 			this._specialButtonSetup(makeCallBack);
 			this._keyCodeSetup(makeCallBack);
+		},
+
+		/**
+		 * Updates the controls
+		 *
+		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
+		 * @param {bool} play
+		 */
+		update: function (images, play) {
+			this.images = images;
+			this.active = true;
+			// hide arrows and play/pause when only one pic
+			this.container.find('.next, .previous').toggle(this.images.length > 1);
+			if (this.images.length === 1) {
+				this.container.find('.play, .pause').hide();
+			}
+
+			// Hide the toggle background button until we have something to show
+			this.container.find('.changeBackground').hide();
 
 			if (play) {
 				this._play();
@@ -63,6 +69,7 @@
 				this._pause();
 			}
 		},
+
 		/**
 		 * Initialises local variables when the show starts
 		 *
@@ -74,6 +81,18 @@
 			if (this.playing) {
 				this._setTimeout();
 			}
+		},
+
+		/**
+		 * Stops the timed slideshow
+		 */
+		stop: function () {
+			this.slideshow.stop();
+			this.zoomablePreview.stop();
+
+			this._clearTimeout();
+			this.container.hide();
+			this.active = false;
 		},
 
 		/**
@@ -96,10 +115,9 @@
 		_buttonSetup: function (makeCallBack) {
 			this.container.children('.next').click(makeCallBack(this._next));
 			this.container.children('.previous').click(makeCallBack(this._previous));
-			this.container.children('.exit').click(makeCallBack(this._stop));
+			this.container.children('.exit').click(makeCallBack(this._exit));
 			this.container.children('.pause').click(makeCallBack(this._pause));
 			this.container.children('.play').click(makeCallBack(this._play));
-			//this.container.click(makeCallBack(this.next));
 		},
 
 		/**
@@ -262,16 +280,17 @@
 		},
 
 		/**
-		 * Stops the timed slideshow
+		 * Exits the slideshow by going back in history
 		 * @private
 		 */
-		_stop: function () {
-			this.slideshow.stop();
-			this.zoomablePreview.stop();
-
-			this._clearTimeout();
-			this.container.hide();
-			this.active = false;
+		_exit: function () {
+			// We simulate a click on the back button in order to be consistent
+			if (history) {
+				window.history.back();
+			} else{
+				// For ancient browsers supported in core
+				this.stop();
+			}
 		},
 
 		/**
@@ -322,4 +341,4 @@
 	};
 
 	SlideShow.Controls = Controls;
-})();
+})(jQuery, SlideShow);
