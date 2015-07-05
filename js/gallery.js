@@ -1,4 +1,4 @@
-/* global Album, GalleryImage */
+/* global Album, GalleryImage, SlideShow */
 (function (OC, $, t) {
 	"use strict";
 	var Gallery = {
@@ -235,7 +235,7 @@
 		 *
 		 * @param event
 		 */
-		showSaveForm: function (event) {
+		showSaveForm: function () {
 			$(this).hide();
 			$('.save-form').css('display', 'inline');
 			$('#remote_address').focus();

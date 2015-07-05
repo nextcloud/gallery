@@ -1,4 +1,4 @@
-/* global $, OC, OCA, t, Gallery */
+/* global Gallery */
 (function ($, OC, OCA, t) {
 	"use strict";
 	/**
@@ -10,6 +10,7 @@
 	};
 
 	SlideShow.prototype = {
+		slideshowTemplate: null,
 		container: null,
 		zoomablePreviewContainer: null,
 		controls: null,
@@ -27,26 +28,44 @@
 		 * @param {int} interval
 		 */
 		init: function (autoPlay, interval) {
-			this.container = $('#slideshow');
-			this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 			// FIXME: This should come from the configuration
 			/**@param {int} maxScale*/
 			this.maxScale = 1;
 
-			// Stop the slideshow when backing out.
-			var self = this;
-			if (history && history.pushState) {
-				$(window).bind('popstate.slideshow', function () {
-					if (self.active === true) {
-						self.active = false;
-						self.controls.stop();
-					}
-				});
-			}
-			this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
-			this.controls =
-				new SlideShow.Controls(this, this.container, this.zoomablePreview, interval);
-			this.controls.init();
+			return $.when(this._getSlideshowTemplate()).then(function ($tmpl) {
+				// Move the slideshow outside the content so we can hide the content
+				$('body').append($tmpl);
+				this.container = $('#slideshow');
+				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
+				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
+				this.controls =
+					new SlideShow.Controls(this, this.container, this.zoomablePreview, interval);
+				this.controls.init();
+
+				this._initControlsAutoFader();
+
+				// Replace all Owncloud svg images with png images for ancient browsers
+				if (!OC.Util.hasSVGSupport()) {
+					OC.Util.replaceSVG(this.$el);
+				}
+
+				// Don't show the download button on the "Files" slideshow
+				if (OCA.Files) {
+					this.container.find('.downloadImage').hide();
+				}
+
+				// Stop the slideshow when backing out.
+				if (history && history.pushState) {
+					$(window).bind('popstate.slideshow', function () {
+						if (this.active === true) {
+							this.active = false;
+							this.controls.stop();
+						}
+					}.bind(this));
+				}
+			}.bind(this)).fail(function () {
+				OC.Notification.show(t('core', 'Error loading slideshow template'));
+			});
 		},
 
 		/**
@@ -224,6 +243,23 @@
 		},
 
 		/**
+		 * Automatically fades the controls after 3 seconds
+		 * @private
+		 */
+		_initControlsAutoFader: function () {
+			var inactiveCallback = function () {
+				this.container.addClass('inactive');
+			}.bind(this);
+			var inactiveTimeout = setTimeout(inactiveCallback, 3000);
+
+			this.container.on('mousemove touchstart', function () {
+				this.container.removeClass('inactive');
+				clearTimeout(inactiveTimeout);
+				inactiveTimeout = setTimeout(inactiveCallback, 3000);
+			}.bind(this));
+		},
+
+		/**
 		 * Changes the browser Url, based on the current image
 		 *
 		 * @param {string} path
@@ -283,8 +319,9 @@
 		 * Retrieves the slideshow's template
 		 *
 		 * @returns {*}
+		 * @private
 		 */
-		getSlideshowTemplate: function () {
+		_getSlideshowTemplate: function () {
 			var defer = $.Deferred();
 			if (!this.$slideshowTemplate) {
 				var self = this;
@@ -350,43 +387,3 @@
 
 	window.SlideShow = SlideShow;
 })(jQuery, OC, OCA, t);
-
-$(document).ready(function () {
-	// Deactivates slideshow on login page
-	if ($('#body-login').length > 0) {
-		return true;
-	}
-	// Deactivates slideshow on public preview page
-	if ($('#imgframe').length > 0) {
-		return true;
-	}
-
-	var slideshow = new window.SlideShow();
-
-	$.when(slideshow.getSlideshowTemplate()).then(function ($tmpl) {
-		$('body').append($tmpl); //move the slideshow outside the content so we can hide the content
-
-		var inactiveCallback = function () {
-			$('#slideshow').addClass('inactive');
-		};
-		var inactiveTimeout = setTimeout(inactiveCallback, 3000);
-
-		$('#slideshow').on('mousemove touchstart', function () {
-			$('#slideshow').removeClass('inactive');
-			clearTimeout(inactiveTimeout);
-			inactiveTimeout = setTimeout(inactiveCallback, 3000);
-		});
-
-		// replace all Owncloud svg images with png images for browser that don't support svg
-		if (!OC.Util.hasSVGSupport()) {
-			OC.Util.replaceSVG(this.$el);
-		}
-
-		if (OCA.Files) {
-			// Don't show the download button on the "Files" slideshow
-			$('#slideshow').find('.downloadImage').hide();
-		}
-	}).fail(function () {
-		OC.Notification.show(t('core', 'Error loading slideshow template'));
-	});
-});

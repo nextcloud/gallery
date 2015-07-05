@@ -1,5 +1,5 @@
 /* global oc_requesttoken, FileList, SlideShow */
-(function (OC ,OCA, $, oc_requesttoken) {
+(function (OC, OCA, $, oc_requesttoken) {
 	"use strict";
 	var galleryFileAction = {
 		config: null,
@@ -108,10 +108,17 @@
 			}
 
 			if ($.isEmptyObject(galleryFileAction.slideShow)) {
-				galleryFileAction.slideShow = new SlideShow($('#slideshow'));
-				galleryFileAction.slideShow.init(false, null);
+				galleryFileAction.slideShow = new SlideShow();
+				$.when(galleryFileAction.slideShow.init(false, null))
+					.then(function () {
+						galleryFileAction._startSlideshow(images, start);
+					});
+			} else {
+				galleryFileAction._startSlideshow(images, start);
 			}
+		},
 
+		_startSlideshow: function (images, start) {
 			galleryFileAction.slideShow.setImages(images);
 
 			var scrollTop = galleryFileAction.scrollContainer.scrollTop();
@@ -141,7 +148,7 @@
 	};
 
 	window.galleryFileAction = galleryFileAction;
-}(OC ,OCA, jQuery, oc_requesttoken));
+}(OC, OCA, jQuery, oc_requesttoken));
 
 $(document).ready(function () {
 	"use strict";

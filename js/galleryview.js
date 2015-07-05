@@ -1,4 +1,4 @@
-/* global Gallery, SlideShow */
+/* global Gallery */
 (function (OC, t, $, _) {
 	"use strict";
 	/**
@@ -44,8 +44,6 @@
 					$('#sort-date-button').click(Gallery.sorter);
 					$('#save #save-button').click(Gallery.showSaveForm);
 					$('.save-form').submit(Gallery.saveForm);
-					Gallery.activeSlideShow = new SlideShow($('#slideshow'));
-					Gallery.activeSlideShow.init(false, null);
 				}
 				this.viewAlbum(albumPath);
 			}

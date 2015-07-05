@@ -1,4 +1,4 @@
-/* global OC, $, _, Gallery */
+/* global OC, $, _, Gallery, SlideShow */
 $(document).ready(function () {
 	"use strict";
 	Gallery.hideSearch();
@@ -22,7 +22,12 @@ $(document).ready(function () {
 			.then(function (config) {
 				Gallery.config = new Gallery.Config(config);
 				Gallery.getFiles().then(function () {
-					window.onhashchange();
+					Gallery.activeSlideShow = new SlideShow();
+					$.when(Gallery.activeSlideShow.init(false, null))
+						.then(function () {
+							window.onhashchange();
+						});
+
 				});
 			});
 
