@@ -117,12 +117,7 @@ style(
 				 data-requesttoken="<?php p($_['requesttoken']) ?>"
 				 data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>">
 			</div>
-			<div id="emptycontent" class="hidden"><?php p(
-					$l->t(
-						"No pictures found! If you upload pictures in the files app, they will be displayed here."
-					)
-				); ?>
-			</div>
+			<div id="emptycontent" class="hidden"></div>
 		</div>
 	</div>
 </div>

@@ -32,7 +32,12 @@
 		 */
 		init: function (albumPath) {
 			if (Gallery.images.length === 0) {
-				Gallery.showEmpty();
+				//Gallery.showEmpty();
+				// FIXME Make the diff between a root and deep folder
+				Gallery.showEmptyFolder();
+				Gallery.currentAlbum = albumPath;
+				this.breadcrumb = new Gallery.Breadcrumb(albumPath);
+				this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 			} else {
 				// Only do it when the app is initialised
 				if (this.requestId === -1) {
@@ -106,7 +111,7 @@
 			this.infoButtonSetup();
 
 			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
-			this.breadcrumb.setMaxWidth($(window).width() - 320);
+			this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
@@ -122,7 +127,7 @@
 		 * @param {string} albumPath
 		 */
 		shareButtonSetup: function (albumPath) {
-			var shareButton = $('button.share');
+			var shareButton = $('#share-button');
 			if (albumPath === '' || Gallery.token) {
 				shareButton.hide();
 			} else {
@@ -138,7 +143,7 @@
 			infoButton.find('span').hide();
 			var infoContentElement = $('.album-info-content');
 			infoContentElement.slideUp();
-			infoContentElement.css('max-height', $(window).height() - 150);
+			infoContentElement.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
 			var albumInfo = Gallery.config.albumInfo;
 			if (Gallery.config.albumError) {
 				infoButton.hide();

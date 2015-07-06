@@ -1,4 +1,4 @@
-/* global Album, GalleryImage, SlideShow */
+/* global Album, GalleryImage */
 (function (OC, $, t) {
 	"use strict";
 	var Gallery = {
@@ -11,6 +11,8 @@
 		appName: 'galleryplus',
 		token: undefined,
 		activeSlideShow: null,
+		buttonsWidth: 320,
+		browserToolbarHeight: 150,
 
 		/**
 		 * Builds a map of the albums located in the current folder
@@ -41,6 +43,10 @@
 		 * @param {string} albumPath
 		 */
 		refresh: function (path, albumPath) {
+
+			// FIXME DEBUG CODE
+			console.log('refresh albumPath', albumPath);
+
 			if (Gallery.currentAlbum !== albumPath) {
 				Gallery.view.init(albumPath);
 			}
@@ -93,31 +99,35 @@
 					Gallery.albumMap = albumCache.albumMap;
 				} else {
 					files = data.files;
-					for (var i = 0; i < files.length; i++) {
-						path = files[i].path;
-						fileId = files[i].fileid;
-						mimeType = files[i].mimetype;
-						mTime = files[i].mtime;
-						etag = files[i].etag;
+					if (files.length > 0) {
+						for (var i = 0; i < files.length; i++) {
+							path = files[i].path;
+							fileId = files[i].fileid;
+							mimeType = files[i].mimetype;
+							mTime = files[i].mtime;
+							etag = files[i].etag;
 
-						Gallery.images.push(path);
+							Gallery.images.push(path);
 
-						image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
-						var dir = OC.dirname(path);
-						if (dir === path) {
-							dir = '';
+							image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
+							var dir = OC.dirname(path);
+							if (dir === path) {
+								dir = '';
+							}
+							album = Gallery.getAlbum(dir);
+							album.images.push(image);
+							Gallery.imageMap[image.path] = image;
 						}
-						album = Gallery.getAlbum(dir);
-						album.images.push(image);
-						Gallery.imageMap[image.path] = image;
+						Gallery.albumCache[albumInfo.path] = {
+							etag: albumInfo.etag,
+							files: files,
+							images: Gallery.images,
+							imageMap: Gallery.imageMap,
+							albumMap: Gallery.albumMap
+						};
+					} else {
+						Gallery.getAlbum(albumInfo.path);
 					}
-					Gallery.albumCache[albumInfo.path] = {
-						etag: albumInfo.etag,
-						files: files,
-						images: Gallery.images,
-						imageMap: Gallery.imageMap,
-						albumMap: Gallery.albumMap
-					};
 				}
 			}, function () {
 				// Triggered if we couldn't find a working folder
@@ -308,9 +318,30 @@
 		 * Shows an empty gallery message
 		 */
 		showEmpty: function () {
-			$('#emptycontent').removeClass('hidden');
+			var emptyContentElement = $('#emptycontent');
+			var message = t('gallery',
+				"No pictures found! If you upload pictures in the files app," +
+				"they will be displayed here.");
+			emptyContentElement.html(message);
+			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
 			$('#content').removeClass('icon-loading');
+		},
+
+		/**
+		 * Shows an empty gallery message
+		 */
+		showEmptyFolder: function () {
+			var emptyContentElement = $('#emptycontent');
+			var message = t('gallery',
+				"I am sorry, but I could not find any media files at this location.");
+			emptyContentElement.html(message);
+			emptyContentElement.removeClass('hidden');
+			$('#content').removeClass('icon-loading');
+			$('#album-info-button').hide();
+			$('#share-button').hide();
+			$('#sort-name-button').hide();
+			$('#sort-date-button').hide();
 		},
 
 		/**

@@ -62,9 +62,11 @@ $(document).ready(function () {
 		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
 			if (windowWidth !== $(window).width()) {
-				Gallery.view.viewAlbum(Gallery.currentAlbum);
+				if ($('#emptycontent').is(':hidden')) {
+					Gallery.view.viewAlbum(Gallery.currentAlbum);
+				}
 				// 320 is the width required for the buttons
-				Gallery.view.breadcrumb.setMaxWidth($(window).width() - 320);
+				Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 
 				windowWidth = $(window).width();
 			}
@@ -72,7 +74,8 @@ $(document).ready(function () {
 				Gallery.resetContentHeight();
 				var infoContentElement = $('.album-info-content');
 				// 150 is the space required for the browser toolbar on some mobile OS
-				infoContentElement.css('max-height', $(window).height() - 150);
+				infoContentElement.css('max-height',
+					$(window).height() - Gallery.browserToolbarHeight);
 
 				windowHeight = $(window).height();
 			}
