@@ -32,13 +32,15 @@
 		 */
 		init: function (albumPath) {
 			if ($.isEmptyObject(Gallery.imageMap)) {
-				//Gallery.showEmpty();
-				// FIXME Make the diff between a root and deep folder
 				this.clear();
-				Gallery.showEmptyFolder();
-				Gallery.currentAlbum = albumPath;
-				this.breadcrumb = new Gallery.Breadcrumb(albumPath);
-				this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+				if (albumPath === '') {
+					Gallery.showEmpty();
+				} else {
+					Gallery.showEmptyFolder();
+					Gallery.currentAlbum = albumPath;
+					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
+					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+				}
 			} else {
 				// Only do it when the app is initialised
 				if (this.requestId === -1) {
