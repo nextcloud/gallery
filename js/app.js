@@ -21,7 +21,8 @@ $(document).ready(function () {
 		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
 			.then(function (config) {
 				Gallery.config = new Gallery.Config(config);
-				Gallery.getFiles().then(function () {
+				var currentLocation = window.location.href.split('#')[1] || '';
+				Gallery.getFiles(currentLocation).then(function () {
 					Gallery.activeSlideShow = new SlideShow();
 					$.when(Gallery.activeSlideShow.init(false, null))
 						.then(function () {
@@ -86,7 +87,8 @@ $(document).ready(function () {
 window.onhashchange = function () {
 	"use strict";
 	// The hash location is ALWAYS encoded
-	var path = decodeURIComponent(window.location.href.split('#')[1] || '');
+	var currentLocation = window.location.href.split('#')[1] || '';
+	var path = decodeURIComponent(currentLocation);
 	var albumPath = OC.dirname(path);
 	if (Gallery.albumMap[path]) {
 		albumPath = path;
@@ -94,7 +96,7 @@ window.onhashchange = function () {
 		albumPath = '';
 	}
 	if (Gallery.currentAlbum !== null && Gallery.currentAlbum !== albumPath) {
-		Gallery.getFiles().done(function () {
+		Gallery.getFiles(currentLocation).done(function () {
 			Gallery.refresh(path, albumPath);
 		});
 	} else {

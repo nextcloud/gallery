@@ -2,39 +2,17 @@
 (function (OC, $, t) {
 	"use strict";
 	var Gallery = {
-		images: [],
 		currentAlbum: null,
 		config: {},
+		/** Map of the whole gallery, built as we navigate through folders */
 		albumMap: {},
+		/** Used to pick an image based on the URL */
 		imageMap: {},
-		albumCache: {},
 		appName: 'galleryplus',
 		token: undefined,
 		activeSlideShow: null,
 		buttonsWidth: 320,
 		browserToolbarHeight: 150,
-
-		/**
-		 * Builds a map of the albums located in the current folder
-		 *
-		 * @param {string} path
-		 *
-		 * @returns {Album}
-		 */
-		getAlbum: function (path) {
-			if (!Gallery.albumMap[path]) {
-				Gallery.albumMap[path] = new Album(path, [], [], OC.basename(path));
-				// Attaches this album as a sub-album to the parent folder
-				if (path !== '') {
-					var parent = OC.dirname(path);
-					if (parent === path) {
-						parent = '';
-					}
-					Gallery.getAlbum(parent).subAlbums.push(Gallery.albumMap[path]);
-				}
-			}
-			return Gallery.albumMap[path];
-		},
 
 		/**
 		 * Refreshes the view and starts the slideshow if required
@@ -43,10 +21,6 @@
 		 * @param {string} albumPath
 		 */
 		refresh: function (path, albumPath) {
-
-			// FIXME DEBUG CODE
-			console.log('refresh albumPath', albumPath);
-
 			if (Gallery.currentAlbum !== albumPath) {
 				Gallery.view.init(albumPath);
 			}
@@ -64,18 +38,20 @@
 		/**
 		 * Retrieves information about all the images and albums located in the current folder
 		 *
+		 * @param {string} currentLocation
+		 *
 		 * @returns {*}
 		 */
-		getFiles: function () {
-			var album, image, albumEtag;
-			Gallery.images = [];
-			Gallery.albumMap = {};
-			Gallery.imageMap = {};
-			var currentLocation = window.location.href.split('#')[1] || '';
-			var albumCache = Gallery.albumCache[decodeURIComponent(currentLocation)];
+		getFiles: function (currentLocation) {
+			// Checks if we've visited this location before ands saves the etag to use for
+			// comparison later
+			var albumEtag;
+			var albumCache = Gallery.albumMap[decodeURIComponent(currentLocation)];
 			if (!$.isEmptyObject(albumCache)) {
 				albumEtag = albumCache.etag;
 			}
+
+			// Sends the request to the server
 			var params = {
 				location: currentLocation,
 				mediatypes: Gallery.config.getMediaTypes(),
@@ -85,49 +61,14 @@
 			// Only use the folder as a GET parameter and not as part of the URL
 			var url = Gallery.utility.buildGalleryUrl('files', '', params);
 			return $.getJSON(url).then(function (/**{albuminfo}*/ data) {
-				var path = null;
-				var fileId = null;
-				var mimeType = null;
-				var mTime = null;
-				var etag = null;
-				var files = null;
 				var albumInfo = data.albuminfo;
 				Gallery.config.setAlbumConfig(albumInfo);
-				if (albumInfo.etag === albumEtag) {
-					Gallery.images = albumCache.images;
+				// Both the folder and the etag have to match
+				if ((decodeURIComponent(currentLocation) === albumInfo.path)
+					&& (albumInfo.etag === albumEtag)) {
 					Gallery.imageMap = albumCache.imageMap;
-					Gallery.albumMap = albumCache.albumMap;
 				} else {
-					files = data.files;
-					if (files.length > 0) {
-						for (var i = 0; i < files.length; i++) {
-							path = files[i].path;
-							fileId = files[i].fileid;
-							mimeType = files[i].mimetype;
-							mTime = files[i].mtime;
-							etag = files[i].etag;
-
-							Gallery.images.push(path);
-
-							image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
-							var dir = OC.dirname(path);
-							if (dir === path) {
-								dir = '';
-							}
-							album = Gallery.getAlbum(dir);
-							album.images.push(image);
-							Gallery.imageMap[image.path] = image;
-						}
-						Gallery.albumCache[albumInfo.path] = {
-							etag: albumInfo.etag,
-							files: files,
-							images: Gallery.images,
-							imageMap: Gallery.imageMap,
-							albumMap: Gallery.albumMap
-						};
-					} else {
-						Gallery.getAlbum(albumInfo.path);
-					}
+					Gallery.mapFiles(data);
 				}
 			}, function () {
 				// Triggered if we couldn't find a working folder
@@ -135,6 +76,114 @@
 				Gallery.showEmpty();
 				Gallery.currentAlbum = null;
 			});
+		},
+
+		/**
+		 * Builds the album's model
+		 *
+		 * @param {{albuminfo:Array, files:Array}} data
+		 */
+		mapFiles: function (data) {
+			Gallery.imageMap = {};
+			var image = null;
+			var path = null;
+			var fileId = null;
+			var mimeType = null;
+			var mTime = null;
+			var etag = null;
+			var albumInfo = data.albuminfo;
+			var currentLocation = albumInfo.path;
+			// This adds a new node to the map for each parent album
+			Gallery.mapStructure(currentLocation);
+			var files = data.files;
+			if (files.length > 0) {
+				var subAlbumCache = {};
+				var albumCache = Gallery.albumMap[currentLocation]
+					= new Album(currentLocation, [], [], OC.basename(currentLocation));
+				for (var i = 0; i < files.length; i++) {
+					path = files[i].path;
+					fileId = files[i].fileid;
+					mimeType = files[i].mimetype;
+					mTime = files[i].mtime;
+					etag = files[i].etag;
+
+					image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
+
+					// Determines the folder name for the image
+					var dir = OC.dirname(path);
+					if (dir === path) {
+						dir = '';
+					}
+					if (dir === currentLocation) {
+						// The image belongs to the current album, so we can add it directly
+						albumCache.images.push(image);
+					} else {
+						// The image belongs to a sub-album, so we create a sub-album cache if it
+						// doesn't exist and add images to it
+						if (!subAlbumCache[dir]) {
+							subAlbumCache[dir] = new Album(dir, [], [],
+								OC.basename(dir));
+						}
+						subAlbumCache[dir].images.push(image);
+
+						// The sub-album also has to be added to the global map
+						if (!Gallery.albumMap[dir]) {
+							Gallery.albumMap[dir] = {};
+						}
+					}
+					Gallery.imageMap[image.path] = image;
+				}
+				// Adds the sub-albums to the current album
+				Gallery.mapAlbums(albumCache, subAlbumCache);
+
+				// Caches the information which is not already cached
+				albumCache.etag = albumInfo.etag;
+				albumCache.imageMap = Gallery.imageMap;
+			}
+		},
+
+		/**
+		 * Adds every album leading the current folder to a global album map
+		 *
+		 * Per example, if you have Root/Folder1/Folder2/CurrentFolder then the map will contain:
+		 *    * Root
+		 *    * Folder1
+		 *    * Folder2
+		 *    * CurrentFolder
+		 *
+		 *  Every time a new location is loaded, the map is completed
+		 *
+		 *
+		 * @param {string} path
+		 *
+		 * @returns {Album}
+		 */
+		mapStructure: function (path) {
+			if (!Gallery.albumMap[path]) {
+				Gallery.albumMap[path] = {};
+				// Builds relationships between albums
+				if (path !== '') {
+					var parent = OC.dirname(path);
+					if (parent === path) {
+						parent = '';
+					}
+					Gallery.mapStructure(parent);
+				}
+			}
+			return Gallery.albumMap[path];
+		},
+
+		/**
+		 * Adds the sub-albums to the current album
+		 *
+		 * @param {Album} albumCache
+		 * @param {{Album}} subAlbumCache
+		 */
+		mapAlbums: function (albumCache, subAlbumCache) {
+			for (var j = 0, keys = Object.keys(subAlbumCache); j <
+			keys.length; j++) {
+				albumCache.subAlbums.push(subAlbumCache[keys[j]]);
+			}
 		},
 
 		/**
@@ -242,8 +291,6 @@
 
 		/**
 		 * Lets the user add the shared files to his ownCloud
-		 *
-		 * @param event
 		 */
 		showSaveForm: function () {
 			$(this).hide();

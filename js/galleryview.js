@@ -31,9 +31,10 @@
 		 * @param {string} albumPath
 		 */
 		init: function (albumPath) {
-			if (Gallery.images.length === 0) {
+			if ($.isEmptyObject(Gallery.imageMap)) {
 				//Gallery.showEmpty();
 				// FIXME Make the diff between a root and deep folder
+				this.clear();
 				Gallery.showEmptyFolder();
 				Gallery.currentAlbum = albumPath;
 				this.breadcrumb = new Gallery.Breadcrumb(albumPath);
