@@ -468,13 +468,13 @@ GalleryImage.prototype = {
 				var a = $('<a/>').addClass('image').attr('href', url).attr('data-path', image.path);
 
 				var imageLabel = $('<span/>').addClass('image-label');
-				var imageTitle = $('<span/>').addClass('title').html('<strong>>&nbsp;</strong>' +
+				var imageTitle = $('<span/>').addClass('title').html(
 					OC.basename(image.path));
 				imageLabel.append(imageTitle);
 				a.hover(function () {
-					imageLabel.slideToggle(250);
+					imageLabel.slideToggle(OC.menuSpeed);
 				}, function () {
-					imageLabel.slideToggle(250);
+					imageLabel.slideToggle(OC.menuSpeed);
 				});
 				a.append(imageLabel);
 				a.append(img);
