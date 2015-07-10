@@ -1,6 +1,6 @@
-/* global $, SlideShow, bigshot*/
-(function () {
-
+/* global SlideShow, bigshot*/
+(function ($, SlideShow, bigshot) {
+	"use strict";
 	/**
 	 * Creates a zoomable preview
 	 *
@@ -10,6 +10,8 @@
 	var ZoomablePreview = function (container) {
 		this.container = container;
 		this.element = this.container.get(0);
+		var bigshotContainer = container.find('.bigshotContainer');
+		this.bigshotElement = bigshotContainer.get(0);
 
 		this._detectFullscreen();
 		this._setupControls();
@@ -22,6 +24,8 @@
 	ZoomablePreview.prototype = {
 		container: null,
 		element: null,
+		bigshotContainer: null,
+		bigshotElement: null,
 		zoomable: null,
 		fullScreen: null,
 		canFullScreen: false,
@@ -45,14 +49,14 @@
 			var maxZoom = this.maxZoom;
 			var imgWidth = image.naturalWidth / window.devicePixelRatio;
 			var imgHeight = image.naturalHeight / window.devicePixelRatio;
-			if ( imgWidth < this.smallImageDimension &&
-			     imgHeight < this.smallImageDimension &&
-			     this.currentImage.mimeType !== 'image/svg+xml' ) {
+			if (imgWidth < this.smallImageDimension &&
+				imgHeight < this.smallImageDimension &&
+				this.currentImage.mimeType !== 'image/svg+xml') {
 				maxZoom += 3;
 				this.currentImage.isSmallImage = true;
 			}
 			this.zoomable = new bigshot.SimpleImage(new bigshot.ImageParameters({
-				container: this.element,
+				container: this.bigshotElement,
 				maxZoom: maxZoom,
 				minZoom: 0,
 				touchUI: false,
@@ -120,8 +124,8 @@
 			}
 			if (this.currentImage.isSmallImage) {
 				this.zoomable.flyTo(0, 0, this.smallImageScale, true);
-			} else if ( $(window).width() < this.zoomable.width ||
-				    $(window).height() < this.zoomable.height ) {
+			} else if ($(window).width() < this.zoomable.width ||
+				$(window).height() < this.zoomable.height) {
 				// The image is larger than the window.
 				// Set minimum zoom and call flyZoomToFit.
 				this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
@@ -147,9 +151,9 @@
 		 */
 		_detectFullscreen: function () {
 			this.canFullScreen = this.element.requestFullscreen !== undefined ||
-			this.element.mozRequestFullScreen !== undefined ||
-			this.element.webkitRequestFullscreen !== undefined ||
-			this.element.msRequestFullscreen !== undefined;
+				this.element.mozRequestFullScreen !== undefined ||
+				this.element.webkitRequestFullscreen !== undefined ||
+				this.element.msRequestFullscreen !== undefined;
 		},
 
 		/**
@@ -172,10 +176,12 @@
 		 * @private
 		 */
 		_zoomDecider: function () {
-			if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
-				this.zoomToOriginal();
-			} else {
-				this.zoomToFit();
+			if (this.zoomable !== null) {
+				if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
+					this.zoomToOriginal();
+				} else {
+					this.zoomToFit();
+				}
 			}
 		},
 
@@ -189,18 +195,18 @@
 			}
 			if (this.currentImage.isSmallImage) {
 				this.zoomable.setZoom(this.smallImageScale, true);
-			} else if ( $(window).width() < this.zoomable.width || 
-			            $(window).height() < this.zoomable.height ||
-				    this.fullScreen !== null ||
-				    this.currentImage.mimeType === 'image/svg+xml' ) {
+			} else if ($(window).width() < this.zoomable.width ||
+				$(window).height() < this.zoomable.height ||
+				this.fullScreen !== null ||
+				this.currentImage.mimeType === 'image/svg+xml') {
 				// The image is larger than the window, or we are fullScreen,
 				// or this is an SVG. Set minimum zoom and call zoomToFit.
 				this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
 				this.zoomable.zoomToFit();
-			} else { 
+			} else {
 				// Zoom to the image size.
 				this.zoomable.setMinZoom(0);
-				this.zoomable.setZoom(0, true); 
+				this.zoomable.setZoom(0, true);
 			}
 		},
 
@@ -235,4 +241,4 @@
 	};
 
 	SlideShow.ZoomablePreview = ZoomablePreview;
-})();
+})(jQuery, SlideShow, bigshot);

@@ -1,5 +1,6 @@
-/* global OC, $, _, Gallery */
+/* global OC, $, _, Gallery, SlideShow */
 $(document).ready(function () {
+	"use strict";
 	Gallery.hideSearch();
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
@@ -17,12 +18,16 @@ $(document).ready(function () {
 		// Needed to centre the spinner in some browsers
 		Gallery.resetContentHeight();
 		Gallery.showLoading();
-
 		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
 			.then(function (config) {
 				Gallery.config = new Gallery.Config(config);
 				Gallery.getFiles().then(function () {
-					window.onhashchange();
+					Gallery.activeSlideShow = new SlideShow();
+					$.when(Gallery.activeSlideShow.init(false, null))
+						.then(function () {
+							window.onhashchange();
+						});
+
 				});
 			});
 
@@ -76,6 +81,7 @@ $(document).ready(function () {
 });
 
 window.onhashchange = function () {
+	"use strict";
 	// The hash location is ALWAYS encoded
 	var path = decodeURIComponent(window.location.href.split('#')[1] || '');
 	var albumPath = OC.dirname(path);

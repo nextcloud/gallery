@@ -1,6 +1,6 @@
-/* global OC, t, $, _, Gallery */
-(function () {
-
+/* global Gallery */
+(function (OC, t, $, _) {
+	"use strict";
 	/**
 	 * Builds and updates the Gallery view
 	 *
@@ -272,4 +272,4 @@
 	};
 
 	Gallery.View = View;
-})();
+})(OC, t, jQuery, _);

@@ -9,4 +9,5 @@
 
 	<div class="progress icon-view-pause"/>
 	<div class="notification"></div>
+	<div class="bigshotContainer"></div>
 </div>
