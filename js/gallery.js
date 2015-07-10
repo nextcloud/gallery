@@ -1,5 +1,5 @@
 /* global Album, GalleryImage */
-(function (OC, $, t) {
+(function ($, OC, t) {
 	"use strict";
 	var Gallery = {
 		currentAlbum: null,
@@ -487,4 +487,4 @@
 		}
 	};
 	window.Gallery = Gallery;
-}(OC, jQuery, t));
+})(jQuery, OC, t);

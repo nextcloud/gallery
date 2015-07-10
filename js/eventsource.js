@@ -17,7 +17,8 @@
  */
 
 /* global EventSource, oc_requesttoken, Gallery */
-(function () {
+(function (oc_requesttoken) {
+	"use strict";
 	/**
 	 * Create a new event source
 	 *
@@ -102,4 +103,4 @@
 	};
 
 	Gallery.EventSource = CustomEventSource;
-})();
+})(oc_requesttoken);

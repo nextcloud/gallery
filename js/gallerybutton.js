@@ -5,6 +5,7 @@ GalleryButton.button = {};
 GalleryButton.url = null;
 
 GalleryButton.onFileListUpdated = function () {
+	"use strict";
 	var fileList;
 
 	if (GalleryButton.isPublic) {
@@ -17,18 +18,21 @@ GalleryButton.onFileListUpdated = function () {
 };
 
 GalleryButton.buildGalleryUrl = function (dir) {
+	"use strict";
 	var params = {};
 	var tokenPath = '';
-	var token = ($('#sharingToken').val()) ? $('#sharingToken').val() : false;
+	var sharingTokenElement = $('#sharingToken');
+	var token = (sharingTokenElement.val()) ? sharingTokenElement.val() : false;
 	if (token) {
 		params.token = token;
 		tokenPath = 's/{token}';
 	}
-	GalleryButton.url = OC.generateUrl('apps/galleryplus/' + tokenPath, params) + '#' + encodeURIComponent(dir);
+	GalleryButton.url =
+		OC.generateUrl('apps/galleryplus/' + tokenPath, params) + '#' + encodeURIComponent(dir);
 };
 
 $(document).ready(function () {
-
+		"use strict";
 		if ($('#body-login').length > 0) {
 			return true; //deactivate on login page
 		}

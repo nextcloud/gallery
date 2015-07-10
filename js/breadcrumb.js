@@ -1,5 +1,6 @@
-/* global $, OC, t, Gallery */
-(function () {
+/* global Gallery */
+(function ($, OC, t, Gallery) {
+	"use strict";
 	/**
 	 * Breadcrumbs that represent the path to the current album
 	 *
@@ -173,4 +174,4 @@
 	};
 
 	Gallery.Breadcrumb = Breadcrumb;
-})();
+})(jQuery, OC, t, Gallery);

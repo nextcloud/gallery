@@ -1,5 +1,5 @@
 /* global oc_requesttoken, FileList, SlideShow */
-(function (OC, OCA, $, oc_requesttoken) {
+(function ($, OC, OCA, oc_requesttoken) {
 	"use strict";
 	var galleryFileAction = {
 		config: null,
@@ -148,7 +148,7 @@
 	};
 
 	window.galleryFileAction = galleryFileAction;
-}(OC, OCA, jQuery, oc_requesttoken));
+})(jQuery, OC, OCA, oc_requesttoken);
 
 $(document).ready(function () {
 	"use strict";
