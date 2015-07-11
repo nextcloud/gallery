@@ -1,3 +1,13 @@
+owncloud-galleryplus (13.0.0)
+* Caching and JS performance improvements (@oparoz)
+* Make the app compatible with the "back" button #160 (@oparoz,@setnes)
+* Fix broken view when going back to a nested folder #206 (@oparoz)
+* Add missing folder navigation if user switched to an empty folder from the Files app #76 (@oparoz)
+* Save the sorting order for the current session #198 (@oparoz)
+* Exit the slideshow with one click when in fullscreen mode #200 (@oparoz)
+* Render native SVGs directly and use fallback for older browsers (@oparoz)
+* fix image titles / labels #191 (@jancborchardt )
+
 owncloud-galleryplus (12)
 * Use IDs instead of paths to retrieve thumbnails #27 (@oparoz)
 * Cache albums instead of parsing the folders every time #41 (@oparoz)
