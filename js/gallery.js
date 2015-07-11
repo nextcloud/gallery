@@ -484,6 +484,9 @@
 				}
 			};
 			Gallery.activeSlideShow.show(start);
+
+			// Resets the last focused element
+			document.activeElement.blur();
 		}
 	};
 	window.Gallery = Gallery;
