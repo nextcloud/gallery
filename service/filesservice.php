@@ -118,17 +118,13 @@ class FilesService extends Service {
 	 */
 	protected function isAllowedAndAvailable($node) {
 		try {
-			if (!$node->isMounted()) {
 				return $this->isAllowed($node) && $this->isAvailable($node);
-			}
 		} catch (\Exception $exception) {
 			$message = 'The folder is not available: ' . $exception->getMessage();
 			$this->logger->error($message);
 
 			return false;
 		}
-
-		return false;
 	}
 
 	/**
@@ -278,9 +274,13 @@ class FilesService extends Service {
 		if ($this->isExternalShare($node)) {
 			$allowed = $this->isExternalShareAllowed();
 		}
-		$mount = $node->getMountPoint();
 
-		return $allowed && $mount && $mount->getOption('previews', true);
+		if ($node->isMounted()) {
+			$mount = $node->getMountPoint();
+			$allowed = $mount && $mount->getOption('previews', true);
+		}
+
+		return $allowed;
 	}
 
 	/**
