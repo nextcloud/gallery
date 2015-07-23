@@ -38,14 +38,15 @@
 	height: 52px;
 	position: absolute;
 	z-index: 1100;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-	filter: alpha(opacity=30);
-	opacity: .3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	opacity: .5;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
-#slideshow.inactive > input {
+#slideshow.inactive > input,
+#slideshow.inactive > .progress {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	filter: alpha(opacity=0);
 	opacity: 0;
@@ -64,9 +65,9 @@
 }
 
 #slideshow > input:hover {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	filter: alpha(opacity=60);
-	opacity: .6;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+	filter: alpha(opacity=75);
+	opacity: .75;
 }
 
 #slideshow > .next, #slideshow > .previous {
@@ -106,20 +107,9 @@
 	right: 13px;
 	background-position: 0 100%;
 	width: 32px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-	filter: alpha(opacity=30);
-	opacity: .3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	opacity: .5;
 	height: 0;
 	min-height: 0;
-}
-
-#slideshow.inactive > .progress {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-	filter: alpha(opacity=0);
-	opacity: 0;
-	/* slow fadeout, fadein will be 300ms again*/
-	-webkit-transition: opacity 3s;
-	-moz-transition: opacity 3s;
-	-o-transition: opacity 3s;
-	transition: opacity 3s;
 }
