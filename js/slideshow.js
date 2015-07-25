@@ -314,11 +314,12 @@
 					}
 				}
 			} else {
+				// This is exclusively for IE8
 				var message = t('gallery',
-					"<strong>Error!</strong> Your browser can't show SVG files.<br>" +
+					"<strong>Error!</strong> Your browser can't display SVG files.<br>" +
 					"Please use a more modern alternative");
 				this.showErrorNotification(message);
-				svgPreview = Gallery.config.mediaTypes['image/svg+xml'];
+				svgPreview = '/core/img/filetypes/image-vector.png';
 			}
 
 			return svgPreview;
