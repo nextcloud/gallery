@@ -478,9 +478,20 @@
 			Gallery.activeSlideShow.onStop = function () {
 				$('#content').show();
 				if (Gallery.currentAlbum !== '') {
-					history.replaceState('', '', '#' + encodeURIComponent(Gallery.currentAlbum));
+					// Only modern browsers can manipulate history
+					if (history && history.replaceState) {
+						history.replaceState('', '',
+							'#' + encodeURIComponent(Gallery.currentAlbum));
+					} else {
+						location.hash = '#' + encodeURIComponent(Gallery.currentAlbum);
+					}
 				} else {
-					history.replaceState('', '', '#');
+					// Only modern browsers can manipulate history
+					if (history && history.replaceState) {
+						history.replaceState('', '', '#');
+					} else {
+						location.hash = '#';
+					}
 				}
 			};
 			Gallery.activeSlideShow.show(start);

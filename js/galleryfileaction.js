@@ -133,15 +133,18 @@
 				});
 			};
 
-			// This stores the fileslist in the history state
-			var stateData = {
-				dir: FileList.getCurrentDirectory()
-			};
-			history.replaceState(stateData, document.title, window.location);
+			// Only modern browsers can manipulate history
+			if (history && history.replaceState) {
+				// This stores the fileslist in the history state
+				var stateData = {
+					dir: FileList.getCurrentDirectory()
+				};
+				history.replaceState(stateData, document.title, window.location);
 
-			// This creates a new entry in history for the slideshow. It will
-			// be updated as the user navigates from picture to picture
-			history.pushState(null, '', '#loading');
+				// This creates a new entry in history for the slideshow. It will
+				// be updated as the user navigates from picture to picture
+				history.pushState(null, '', '#loading');
+			}
 
 			galleryFileAction.slideShow.show(start);
 		}
