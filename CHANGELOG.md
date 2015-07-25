@@ -1,5 +1,10 @@
 owncloud-gallery (14.0.0)
 * Take over the Gallery namespace
+* Restore IE9/10 compatibility (@oparoz)
+* Restore IE8 compatibility for the slideshow (@oparoz)
+* Fix external share permission logic #218 (@oparoz)
+* Fix native SVG previews on IE #218 (@oparoz)
+* Fix slideshow controls contrast, remove duplicate code #222 (@jancborchardt )
 
 owncloud-gallery (13.0.0)
 * Caching and JS performance improvements (@oparoz)
