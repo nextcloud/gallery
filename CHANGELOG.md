@@ -1,3 +1,6 @@
+owncloud-gallery (14.0.0)
+* Take over the Gallery namespace
+
 owncloud-gallery (13.0.0)
 * Caching and JS performance improvements (@oparoz)
 * Make the app compatible with the "back" button #160 (@oparoz,@setnes)

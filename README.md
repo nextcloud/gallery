@@ -163,14 +163,14 @@ Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0
 
 In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
-$ git clone -b dev https://github.com/owncloud/gallery.git
+$ git clone https://github.com/owncloud/gallery.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery
 
 To update the app go inside you **owncloud/apps/gallery/** directory and type:
 ```
-$ git pull --rebase origin dev
+$ git pull --rebase
 ```
 
 ## List of patches
