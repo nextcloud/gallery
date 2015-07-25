@@ -30,6 +30,7 @@
 		fullScreen: null,
 		canFullScreen: false,
 		currentImage: null,
+		mimeType: null,
 		maxZoom: 3,
 		smallImageDimension: 200 / window.devicePixelRatio,
 		smallImageScale: 2,
@@ -39,9 +40,11 @@
 		 *
 		 * @param image
 		 * @param currentImage
+		 * @param {string} mimeType
 		 */
-		startBigshot: function (image, currentImage) {
+		startBigshot: function (image, currentImage, mimeType) {
 			this.currentImage = currentImage;
+			this.mimeType = mimeType;
 			if (this.zoomable !== null) {
 				this.zoomable.dispose();
 				this.zoomable = null;
@@ -51,7 +54,7 @@
 			var imgHeight = image.naturalHeight / window.devicePixelRatio;
 			if (imgWidth < this.smallImageDimension &&
 				imgHeight < this.smallImageDimension &&
-				this.currentImage.mimeType !== 'image/svg+xml') {
+				this.mimeType !== 'image/svg+xml') {
 				maxZoom += 3;
 				this.currentImage.isSmallImage = true;
 			}
@@ -177,7 +180,7 @@
 		 */
 		_zoomDecider: function () {
 			if (this.zoomable !== null) {
-				if (this.fullScreen === null && this.currentImage.mimeType !== 'image/svg+xml') {
+				if (this.fullScreen === null && this.mimeType !== 'image/svg+xml') {
 					this.zoomToOriginal();
 				} else {
 					this.zoomToFit();
@@ -198,7 +201,7 @@
 			} else if ($(window).width() < this.zoomable.width ||
 				$(window).height() < this.zoomable.height ||
 				this.fullScreen !== null ||
-				this.currentImage.mimeType === 'image/svg+xml') {
+				this.mimeType === 'image/svg+xml') {
 				// The image is larger than the window, or we are fullScreen,
 				// or this is an SVG. Set minimum zoom and call zoomToFit.
 				this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());

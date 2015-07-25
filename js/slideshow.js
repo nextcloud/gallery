@@ -105,11 +105,10 @@
 					var image = this.images[index];
 					this.errorLoadingImage = false;
 					this.currentImage = img;
-					this.currentImage.mimeType = image.mimeType;
 
 					var backgroundColour = '#fff';
-					if (this.currentImage.mimeType === 'image/jpeg' ||
-						this.currentImage.mimeType === 'image/x-dcraw') {
+					if (image.mimeType === 'image/jpeg' ||
+						image.mimeType === 'image/x-dcraw') {
 						backgroundColour = '#000';
 					}
 					img.setAttribute('alt', image.name);
@@ -118,7 +117,16 @@
 					var $border = 30 / window.devicePixelRatio;
 					$(img).css('outline', $border + 'px solid ' + backgroundColour);
 
-					this.zoomablePreview.startBigshot(img, this.currentImage);
+					// We cannot use nice things on IE8
+					if ($('html').is('.ie8')) {
+						$(img).addClass('scale')
+							.attr('data-scale', 'best-fit-down')
+							.attr('data-align', 'center');
+						this.zoomablePreviewContainer.append(img);
+						$(img).imageScale();
+					} else {
+						this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
+					}
 
 					this._setUrl(image.path);
 					this.controls.show(currentImageId);
