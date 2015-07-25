@@ -33,14 +33,14 @@
 		 * Shows a notification to IE users, letting them know that they should use another browser
 		 * in order to get the best experience
 		 *
-		 * @param {string} age
+		 * @param {string} version
 		 */
-		showIeWarning: function (age) {
+		showIeWarning: function (version) {
 			var line1 = t('gallery', 'This application may not work properly on your browser.');
 			var line2 = t('gallery',
 				'For an improved experience, please install one of the following alternatives');
 			var timeout = 15;
-			if (age === 'old') {
+			if (version === 'unsupportedIe') {
 				line1 = t('gallery', 'Your browser is not supported!');
 				line2 = t('gallery', 'please install one of the following alternatives');
 				timeout = 60;
