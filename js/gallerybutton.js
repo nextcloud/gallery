@@ -37,6 +37,10 @@ $(document).ready(function () {
 			return true; //deactivate on login page
 		}
 
+		if ($('html').is('.ie8')) {
+			return true; //deactivate in IE8
+		}
+
 		if ($('#isPublic').val()) {
 			GalleryButton.isPublic = true;
 		}
