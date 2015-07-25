@@ -284,8 +284,10 @@
 		 * @private
 		 */
 		_exit: function () {
-			// We simulate a click on the back button in order to be consistent
-			if (history) {
+
+			// Only modern browsers can manipulate history
+			if (history && history.replaceState) {
+				// We simulate a click on the back button in order to be consistent
 				window.history.back();
 			} else{
 				// For ancient browsers supported in core
