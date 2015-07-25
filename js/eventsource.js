@@ -50,7 +50,6 @@
 			if (EventSource.isPolyfill !== undefined) {
 				// 10 thumbnails * 200k per thumbnail
 				options.bufferSizeLimit = 10 * 200 * 1024;
-				options.silentTimeout = 1000;
 				//options.loggingEnabled = true;
 			}
 			this.source = new EventSource(src + joinChar + dataStr, options);
