@@ -7,11 +7,11 @@ $(document).ready(function () {
 	Gallery.token = Gallery.utility.getRequestToken();
 	Gallery.ieVersion = Gallery.utility.getIeVersion();
 
-	if (Gallery.ieVersion === 'old') {
+	if (Gallery.ieVersion === 'unsupportedIe') {
 		Gallery.utility.showIeWarning(Gallery.ieVersion);
 		Gallery.showEmpty();
 	} else {
-		if (Gallery.ieVersion === 'modern') {
+		if (Gallery.ieVersion === 'oldIe') {
 			Gallery.utility.showIeWarning(Gallery.ieVersion);
 		}
 

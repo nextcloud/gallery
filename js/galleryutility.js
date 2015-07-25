@@ -17,10 +17,13 @@
 		 * @returns {*}
 		 */
 		getIeVersion: function () {
-			if (navigator.userAgent.indexOf("MSIE") > 0) {
-				return 'old';
+			// Blocking IE8
+			if ($('html').is('.ie8')) {
+				return 'unsupportedIe';
+			} else	if (navigator.userAgent.indexOf("MSIE") > 0) {
+				return 'oldIe';
 			} else if (!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) {
-				return 'modern';
+				return 'modernIe';
 			}
 
 			return false;
