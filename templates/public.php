@@ -25,7 +25,8 @@ script(
 		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
-		'slideshowzoomablepreview'
+		'slideshowzoomablepreview',
+		'vendor/image-scale/image-scale.min'
 	]
 );
 style(
