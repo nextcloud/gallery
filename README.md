@@ -1,6 +1,6 @@
 # Gallery 
-[![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=dev)](https://travis-ci.org/owncloud/gallery)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=dev)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=dev)
+[![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=master)](https://travis-ci.org/owncloud/gallery)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
 
 Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
@@ -25,11 +25,12 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 
 ### Current
 * [Olivier Paroz (@oparoz)](https://github.com/oparoz)
+* [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
+* All the people who have [provided patches](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) over the years
 
 ### Alumni
 * [Robin Appelman (@icewind1991)](https://github.com/icewind1991)
-* [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
-* All the people who have [provided patches](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) over the years
+* All the people who have [provided patches](https://github.com/owncloud/gallery-legacy/pulls?q=is%3Apr+is%3Aclosed) over the years
 
 ## Requirements
 
@@ -44,11 +45,11 @@ It will evolve if and when people provide patches to fix all known current issue
 #### Partially supported
 May not look as nice, but should work
 
-* Desktop: Internet Explorer 11+
+* Desktop: Internet Explorer 9-11
 * Mobile: Opera, Chrome on Android 4
 
 #### Not supported
-* Desktop: Internet Explorer prior to 11, Safari, Opera
+* Desktop: Internet Explorer prior to 9, Safari, Opera
 * Mobile: Windows Phone
 
 ### Server requirements
@@ -150,14 +151,12 @@ Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0
 
 ## Installation
 
-**IMPORTANT**: Make sure you've disabled the original Pictures app
-
 ### Installing from archive
 
 * Go to the [the releases page](https://github.com/owncloud/gallery/releases)
 * Download the latest release/archive to your server's **owncloud/apps/** directory
 * Unpack the app
-* **IMPORTANT**: Rename it to gallery
+* **IMPORTANT**: Make sure the folder name is gallery
 
 ### Installing from Git
 
