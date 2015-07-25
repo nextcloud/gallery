@@ -33,7 +33,7 @@
 		 *
 		 * Only attaches valid thumbnails to the album
 		 *
-		 * @param {Image} image
+		 * @param {GalleryImage} image
 		 * @param {number} targetHeight Each row has a specific height
 		 * @param {number} calcWidth Album width
 		 * @param {object} a

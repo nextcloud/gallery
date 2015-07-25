@@ -54,8 +54,9 @@
 					this.container.find('.downloadImage').hide();
 				}
 
-				// Stop the slideshow when backing out.
+				// Only modern browsers can manipulate history
 				if (history && history.pushState) {
+					// Stop the slideshow when backing out.
 					$(window).bind('popstate.slideshow', function () {
 						if (this.active === true) {
 							this.active = false;
