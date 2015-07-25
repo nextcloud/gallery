@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -14,7 +14,7 @@
  * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2015
  */
 
-namespace OCA\GalleryPlus\Middleware;
+namespace OCA\Gallery\Middleware;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -26,8 +26,8 @@ use OCP\Security\IHasher;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
 
-use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Service\ServiceException;
+use OCA\Gallery\Environment\Environment;
+use OCA\Gallery\Service\ServiceException;
 
 /**
  * Checks that we have a valid token linked to a valid resource and that the
@@ -35,7 +35,7 @@ use OCA\GalleryPlus\Service\ServiceException;
  *
  * Once all checks have been passed, the environment is ready to use
  *
- * @package OCA\GalleryPlus\Middleware
+ * @package OCA\Gallery\Middleware
  */
 class EnvCheckMiddleware extends CheckMiddleware {
 

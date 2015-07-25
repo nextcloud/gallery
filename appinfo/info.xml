@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <info>
-	<id>galleryplus</id>
+	<id>gallery</id>
 	<name>Gallery</name>
 	<description>Media gallery for ownCloud with the following features:
 
@@ -31,7 +31,7 @@
 	<licence>AGPL</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
 	<version>13.0.0</version>
-	<namespace>GalleryPlus</namespace>
+	<namespace>Gallery</namespace>
 	<category>Multimedia</category>
 	<ocsid>169116</ocsid>
 	<dependencies>

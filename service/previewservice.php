@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,19 +10,19 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Service;
+namespace OCA\Gallery\Service;
 
 use OCP\Files\File;
 use OCP\Template;
 use OCP\ILogger;
 
-use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Preview\Preview;
+use OCA\Gallery\Environment\Environment;
+use OCA\Gallery\Preview\Preview;
 
 /**
  * Generates previews
  *
- * @package OCA\GalleryPlus\Service
+ * @package OCA\Gallery\Service
  */
 class PreviewService extends Service {
 

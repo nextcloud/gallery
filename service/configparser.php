@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Service;
+namespace OCA\Gallery\Service;
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -20,7 +20,7 @@ use OCP\Files\File;
 /**
  * Parses configuration files
  *
- * @package OCA\GalleryPlus\Service
+ * @package OCA\Gallery\Service
  */
 class ConfigParser {
 

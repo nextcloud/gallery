@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -12,22 +12,22 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\Gallery\Controller;
 
 use Exception;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
-use OCA\GalleryPlus\Environment\NotFoundEnvException;
-use OCA\GalleryPlus\Service\NotFoundServiceException;
-use OCA\GalleryPlus\Service\ForbiddenServiceException;
+use OCA\Gallery\Environment\NotFoundEnvException;
+use OCA\Gallery\Service\NotFoundServiceException;
+use OCA\Gallery\Service\ForbiddenServiceException;
 
 /**
  * Our classes extend both Controller and ApiController, so we need to use
  * traits to add some common methods
  *
- * @package OCA\GalleryPlus\Controller
+ * @package OCA\Gallery\Controller
  */
 trait JsonHttpError {
 

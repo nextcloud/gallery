@@ -5,7 +5,7 @@
 /**
  * @var $l OC_L10N
  */
-style('galleryplus', 'authenticate');
+style('gallery', 'authenticate');
 ?>
 <form method="post">
 	<fieldset>

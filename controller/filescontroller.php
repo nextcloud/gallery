@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -12,7 +12,7 @@
  * @copyright Robin Appelman 2012-2014
  */
 
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\Files\Folder;
@@ -21,14 +21,14 @@ use OCP\ILogger;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
-use OCA\GalleryPlus\Service\FilesService;
-use OCA\GalleryPlus\Service\ConfigService;
-use OCA\GalleryPlus\Service\SearchMediaService;
+use OCA\Gallery\Service\FilesService;
+use OCA\Gallery\Service\ConfigService;
+use OCA\Gallery\Service\SearchMediaService;
 
 /**
  * Class FilesController
  *
- * @package OCA\GalleryPlus\Controller
+ * @package OCA\Gallery\Controller
  */
 class FilesController extends Controller {
 

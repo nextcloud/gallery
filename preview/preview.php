@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Preview;
+namespace OCA\Gallery\Preview;
 
 use OCP\IConfig;
 use OCP\Image;
@@ -23,7 +23,7 @@ use OCP\ILogger;
  *
  * @todo On OC8.2, replace \OC\Preview with IPreview
  *
- * @package OCA\GalleryPlus\Preview
+ * @package OCA\Gallery\Preview
  */
 class Preview {
 

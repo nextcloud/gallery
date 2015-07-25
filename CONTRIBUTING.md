@@ -3,16 +3,16 @@
 ### Short version
 
 * Make sure you have installed and configured both ownCloud and Gallery
-* Make sure your issue was not reported before and that it isn't a [known issue](https://github.com/owncloud/galleryplus/blob/master/README.md#known-issues)
+* Make sure your issue was not reported before and that it isn't a [known issue](https://github.com/owncloud/gallery/blob/master/README.md#known-issues)
 * Use the [**issue template**](https://raw.githubusercontent.com/owncloud/core/master/issue_template.md) when reporting issues.
 
 ### Long version
 
-* Read the section in the README about [server and browser requirements](https://github.com/owncloud/galleryplus/blob/master/README.md#requirements)
+* Read the section in the README about [server and browser requirements](https://github.com/owncloud/gallery/blob/master/README.md#requirements)
 * Make sure you have disabled the original Pictures app
-* Read the [known issue](https://github.com/owncloud/galleryplus/blob/master/README.md#known-issues) section in the README
-* Get the latest version of the app from [the releases page](https://github.com/owncloud/galleryplus/releases)
-* [Check if they have already been reported](https://github.com/owncloud/galleryplus/issues)
+* Read the [known issue](https://github.com/owncloud/gallery/blob/master/README.md#known-issues) section in the README
+* Get the latest version of the app from [the releases page](https://github.com/owncloud/gallery/releases)
+* [Check if they have already been reported](https://github.com/owncloud/gallery/issues)
 * Please search the existing issues first, it is likely that your issue was already reported or even fixed.
   - Click on "issues" in the column on the right and type any word in the top search/command bar.
   - You can also filter by appending e. g. "state:open" or "state:closed" to the search string.

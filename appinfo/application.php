@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\AppInfo;
+namespace OCA\Gallery\AppInfo;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -19,24 +19,24 @@ use OCP\IContainer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 
-use OCA\GalleryPlus\Controller\PageController;
-use OCA\GalleryPlus\Controller\ConfigController;
-use OCA\GalleryPlus\Controller\FilesController;
-use OCA\GalleryPlus\Controller\PreviewController;
-use OCA\GalleryPlus\Controller\PublicConfigController;
-use OCA\GalleryPlus\Controller\PublicFilesController;
-use OCA\GalleryPlus\Controller\PublicPreviewController;
-use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Preview\Preview;
-use OCA\GalleryPlus\Service\FilesService;
-use OCA\GalleryPlus\Service\ConfigService;
-use OCA\GalleryPlus\Service\ConfigParser;
-use OCA\GalleryPlus\Service\SearchMediaService;
-use OCA\GalleryPlus\Service\ThumbnailService;
-use OCA\GalleryPlus\Service\PreviewService;
-use OCA\GalleryPlus\Service\DownloadService;
-use OCA\GalleryPlus\Middleware\SharingCheckMiddleware;
-use OCA\GalleryPlus\Middleware\EnvCheckMiddleware;
+use OCA\Gallery\Controller\PageController;
+use OCA\Gallery\Controller\ConfigController;
+use OCA\Gallery\Controller\FilesController;
+use OCA\Gallery\Controller\PreviewController;
+use OCA\Gallery\Controller\PublicConfigController;
+use OCA\Gallery\Controller\PublicFilesController;
+use OCA\Gallery\Controller\PublicPreviewController;
+use OCA\Gallery\Environment\Environment;
+use OCA\Gallery\Preview\Preview;
+use OCA\Gallery\Service\FilesService;
+use OCA\Gallery\Service\ConfigService;
+use OCA\Gallery\Service\ConfigParser;
+use OCA\Gallery\Service\SearchMediaService;
+use OCA\Gallery\Service\ThumbnailService;
+use OCA\Gallery\Service\PreviewService;
+use OCA\Gallery\Service\DownloadService;
+use OCA\Gallery\Middleware\SharingCheckMiddleware;
+use OCA\Gallery\Middleware\EnvCheckMiddleware;
 
 use OCA\OcUtility\AppInfo\Application as OcUtility;
 use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
@@ -44,7 +44,7 @@ use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
 /**
  * Class Application
  *
- * @package OCA\GalleryPlus\AppInfo
+ * @package OCA\Gallery\AppInfo
  */
 class Application extends App {
 
@@ -54,7 +54,7 @@ class Application extends App {
 	 * @param array $urlParams
 	 */
 	public function __construct(array $urlParams = []) {
-		parent::__construct('galleryplus', $urlParams);
+		parent::__construct('gallery', $urlParams);
 
 		$container = $this->getContainer();
 

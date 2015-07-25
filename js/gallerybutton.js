@@ -28,7 +28,7 @@ GalleryButton.buildGalleryUrl = function (dir) {
 		tokenPath = 's/{token}';
 	}
 	GalleryButton.url =
-		OC.generateUrl('apps/galleryplus/' + tokenPath, params) + '#' + encodeURIComponent(dir);
+		OC.generateUrl('apps/gallery/' + tokenPath, params) + '#' + encodeURIComponent(dir);
 };
 
 $(document).ready(function () {

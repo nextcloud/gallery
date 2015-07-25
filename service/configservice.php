@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,12 +10,12 @@
  * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Service;
+namespace OCA\Gallery\Service;
 
 use OCP\Files\Folder;
 use OCP\ILogger;
 
-use OCA\GalleryPlus\Environment\Environment;
+use OCA\Gallery\Environment\Environment;
 
 /**
  * Finds configurations files and returns a configuration array
@@ -23,7 +23,7 @@ use OCA\GalleryPlus\Environment\Environment;
  * Checks the current and parent folders for configuration files and the privacy flag
  * Supports explicit inheritance
  *
- * @package OCA\GalleryPlus\Service
+ * @package OCA\Gallery\Service
  */
 class ConfigService extends FilesService {
 

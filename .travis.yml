@@ -12,11 +12,11 @@ branches:
 #before_install:
 #  - cd ..
 #  - git clone https://github.com/owncloud/core.git
-#  - mv galleryplus core/apps/
+#  - mv gallery core/apps/
 #  - cd core
 #  - git submodule init
 #  - git submodule update
-#  - cd apps/galleryplus
+#  - cd apps/gallery
 
 script: ant test
 #  - phpunit tests

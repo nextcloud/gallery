@@ -83,8 +83,8 @@ There are many ways in which you can help make Gallery a better product
 * Read the section about server and browser requirements
 * Make sure you've disabled the original Pictures app
 * Read the "Known issues" section below
-* Get the latest version of the app from [the releases page](https://github.com/owncloud/galleryplus/releases)
-* [Check if they have already been reported](https://github.com/owncloud/galleryplus/issues)
+* Get the latest version of the app from [the releases page](https://github.com/owncloud/gallery/releases)
+* [Check if they have already been reported](https://github.com/owncloud/gallery/issues)
 
 ### Known issues
 
@@ -154,21 +154,21 @@ Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0
 
 ### Installing from archive
 
-* Go to the [the releases page](https://github.com/owncloud/galleryplus/releases)
+* Go to the [the releases page](https://github.com/owncloud/gallery/releases)
 * Download the latest release/archive to your server's **owncloud/apps/** directory
 * Unpack the app
-* **IMPORTANT**: Rename it to galleryplus
+* **IMPORTANT**: Rename it to gallery
 
 ### Installing from Git
 
 In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
-$ git clone -b dev https://github.com/owncloud/galleryplus.git
+$ git clone -b dev https://github.com/owncloud/gallery.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery
 
-To update the app go inside you **owncloud/apps/galleryplus/** directory and type:
+To update the app go inside you **owncloud/apps/gallery/** directory and type:
 ```
 $ git pull --rebase origin dev
 ```

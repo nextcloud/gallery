@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\ILogger;
@@ -18,13 +18,13 @@ use OCP\ILogger;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
-use OCA\GalleryPlus\Service\ConfigService;
-use OCA\GalleryPlus\Service\PreviewService;
+use OCA\Gallery\Service\ConfigService;
+use OCA\Gallery\Service\PreviewService;
 
 /**
  * Class ConfigController
  *
- * @package OCA\GalleryPlus\Controller
+ * @package OCA\Gallery\Controller
  */
 class ConfigController extends Controller {
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -12,7 +12,7 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\Gallery\Controller;
 
 use OCP\IURLGenerator;
 use OCP\IRequest;
@@ -24,16 +24,16 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 
-use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Http\ImageResponse;
-use OCA\GalleryPlus\Service\ServiceException;
-use OCA\GalleryPlus\Service\DownloadService;
+use OCA\Gallery\Environment\Environment;
+use OCA\Gallery\Http\ImageResponse;
+use OCA\Gallery\Service\ServiceException;
+use OCA\Gallery\Service\DownloadService;
 
 /**
  * Generates templates for the landing page from within ownCloud, the public
  * gallery and error pages
  *
- * @package OCA\GalleryPlus\Controller
+ * @package OCA\Gallery\Controller
  */
 class PageController extends Controller {
 
@@ -96,11 +96,11 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$appName = $this->appName;
-		if (\OCP\App::isEnabled('gallery')) {
+		if (\OCP\App::isEnabled('galleryplus')) {
 			$url = $this->urlGenerator->linkToRoute(
 				$appName . '.page.error_page',
 				[
-					'message' => "You need to disable the Pictures app before being able to use the Gallery app",
+					'message' => "You need to disable the Gallery+ app before being able to use the official Gallery app",
 					'code'    => Http::STATUS_INTERNAL_SERVER_ERROR
 				]
 			);
@@ -113,7 +113,7 @@ class PageController extends Controller {
 			// Will render the page using the template found in templates/index.php
 			$response = new TemplateResponse($appName, 'index', $params);
 			$this->addContentSecurityToResponse($response);
-			
+
 			return $response;
 		}
 	}
@@ -218,7 +218,7 @@ class PageController extends Controller {
 		// Will render the page using the template found in templates/public.php
 		$response = new TemplateResponse($this->appName, 'public', $params, 'public');
 		$this->addContentSecurityToResponse($response);
-		
+
 		return $response;
 	}
 

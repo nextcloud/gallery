@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Http;
+namespace OCA\Gallery\Http;
 
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Http;
@@ -18,7 +18,7 @@ use OCP\AppFramework\Http;
 /**
  * A renderer for images
  *
- * @package OCA\GalleryPlus\Http
+ * @package OCA\Gallery\Http
  */
 class ImageResponse extends Response {
 

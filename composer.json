@@ -1,9 +1,9 @@
 {
-  "name": "interfasys/galleryplus",
+  "name": "owncloud/gallery",
   "type": "project",
   "description": "Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.",
   "license": "AGPL 3.0",
-  "homepage": "https://github.com/interfasys/galleryplus",
+  "homepage": "https://github.com/owncloud/gallery",
   "authors": [
     {
       "name": "Olivier Paroz",
@@ -19,9 +19,9 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/interfasys/galleryplus/issues",
-    "wiki": "https://github.com/interfasys/galleryplus/wiki",
-    "source": "https://github.com/interfasys/galleryplus"
+    "issues": "https://github.com/owncloud/gallery/issues",
+    "wiki": "https://github.com/owncloud/gallery/wiki",
+    "source": "https://github.com/owncloud/gallery"
   },
   "require": {
     "symfony/yaml": "~2.6"

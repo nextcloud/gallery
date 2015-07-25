@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -11,12 +11,12 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Middleware;
+namespace OCA\Gallery\Middleware;
 
 /**
  * Thrown when one of the tests in the "check" middlewares fails
  *
- * @package OCA\GalleryPlus\Middleware
+ * @package OCA\Gallery\Middleware
  */
 class CheckException extends \Exception {
 

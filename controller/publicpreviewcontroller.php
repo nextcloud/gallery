@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\Gallery\Controller;
 
 /**
  * Class PublicPreviewController
@@ -18,7 +18,7 @@ namespace OCA\GalleryPlus\Controller;
  * Note: Type casting only works if the "@param" parameters are also included in this class as
  * their not yet inherited
  *
- * @package OCA\GalleryPlus\Controller
+ * @package OCA\Gallery\Controller
  */
 class PublicPreviewController extends PreviewController {
 

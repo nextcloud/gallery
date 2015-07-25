@@ -1,6 +1,6 @@
 {
-  "name": "galleryplus",
-  "homepage": "https://github.com/interfasys/galleryplus",
+  "name": "gallery",
+  "homepage": "https://github.com/owncloud/gallery",
   "authors": [
     "Olivier Paroz <owncloud@interfasys.ch>"
   ],

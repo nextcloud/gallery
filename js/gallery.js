@@ -8,7 +8,7 @@
 		albumMap: {},
 		/** Used to pick an image based on the URL */
 		imageMap: {},
-		appName: 'galleryplus',
+		appName: 'gallery',
 		token: undefined,
 		activeSlideShow: null,
 		buttonsWidth: 320,

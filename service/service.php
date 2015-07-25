@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,18 +10,18 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Service;
+namespace OCA\Gallery\Service;
 
 use OCP\Files\Node;
 
 use OCP\ILogger;
 
-use OCA\GalleryPlus\Environment\Environment;
+use OCA\Gallery\Environment\Environment;
 
 /**
  * Contains methods which all services will need
  *
- * @package OCA\GalleryPlus\Service
+ * @package OCA\Gallery\Service
  */
 abstract class Service {
 

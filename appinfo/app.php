@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus application
+ * ownCloud - gallery application
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -12,7 +12,7 @@
  * @copyright Robin Appelman 2014-2015
  */
 
-namespace OCA\GalleryPlus\AppInfo;
+namespace OCA\Gallery\AppInfo;
 
 use OCP\Util;
 
@@ -52,7 +52,7 @@ $c->query('OCP\INavigationManager')
  *
  * The string has to match the app's folder name
  */
-Util::addTranslations('galleryplus');
+Util::addTranslations('gallery');
 
 // Hack which only loads the scripts in the Files app
 $request = $c->query('Request');

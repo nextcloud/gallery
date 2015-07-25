@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\GalleryPlus\Service;
+namespace OCA\Gallery\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\File;
@@ -19,7 +19,7 @@ use OCP\Files\Node;
 /**
  * Searches the instance for media files which can be shown
  *
- * @package OCA\GalleryPlus\Service
+ * @package OCA\Gallery\Service
  */
 class SearchMediaService extends FilesService {
 

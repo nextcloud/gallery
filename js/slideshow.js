@@ -325,7 +325,7 @@
 			var defer = $.Deferred();
 			if (!this.$slideshowTemplate) {
 				var self = this;
-				var url = OC.generateUrl('apps/galleryplus/slideshow', null);
+				var url = OC.generateUrl('apps/gallery/slideshow', null);
 				$.get(url, function (tmpl) {
 					var template = $(tmpl);
 					var tmplButton;

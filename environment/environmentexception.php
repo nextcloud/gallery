@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Environment;
+namespace OCA\Gallery\Environment;
 
 use Exception;
 

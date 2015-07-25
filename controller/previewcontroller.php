@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * ownCloud - gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -12,7 +12,7 @@
  * @copyright Robin Appelman 2012-2014
  */
 
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -25,17 +25,17 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\JSONResponse;
 
-use OCA\GalleryPlus\Http\ImageResponse;
-use OCA\GalleryPlus\Service\ServiceException;
-use OCA\GalleryPlus\Service\NotFoundServiceException;
-use OCA\GalleryPlus\Service\ThumbnailService;
-use OCA\GalleryPlus\Service\PreviewService;
-use OCA\GalleryPlus\Service\DownloadService;
+use OCA\Gallery\Http\ImageResponse;
+use OCA\Gallery\Service\ServiceException;
+use OCA\Gallery\Service\NotFoundServiceException;
+use OCA\Gallery\Service\ThumbnailService;
+use OCA\Gallery\Service\PreviewService;
+use OCA\Gallery\Service\DownloadService;
 
 /**
  * Class PreviewController
  *
- * @package OCA\GalleryPlus\Controller
+ * @package OCA\Gallery\Controller
  */
 class PreviewController extends Controller {
 
