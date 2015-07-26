@@ -93,7 +93,7 @@
 				mediaType = keys[i];
 				if (this._validateMediaType(mediaType)) {
 					mediaTypesString += mediaType + ';';
-					supportedMediaTypes.push(mediaType);
+					supportedMediaTypes[mediaType] = mediaTypes[mediaType];
 				}
 			}
 			this.cachedMediaTypesString = mediaTypesString.slice(0, -1);
