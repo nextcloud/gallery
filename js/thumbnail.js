@@ -126,8 +126,8 @@ function Thumbnail (fileId, square) {
 									thumb.image.width = 200;
 									thumb.image.height = 200;
 								}
-								thumb.image.ratio = thumb.image.width / thumb.image.height;
-								thumb.image.originalWidth = 200 * thumb.image.ratio;
+								thumb.ratio = thumb.image.width / thumb.image.height;
+								thumb.image.originalWidth = 200 * thumb.ratio;
 								thumb.loadingDeferred.resolve(thumb.image);
 							};
 							thumb.image.onerror = function () {
