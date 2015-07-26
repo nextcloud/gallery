@@ -79,9 +79,10 @@
 				this.domHeigth = targetHeight;
 				// img is a Thumbnail.image
 				this.domDef = this.getThumbnail(false).then(function (img) {
-					img.height = targetHeight;
-					img.width = targetHeight * img.ratio;
-					img.setAttribute('width', 'auto');
+					$(img).css({
+						'height': targetHeight,
+						'width': targetHeight * image.thumbnail.ratio
+					});
 					img.alt = encodeURI(image.path);
 					var url = '#' + encodeURIComponent(image.path);
 
