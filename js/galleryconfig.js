@@ -8,8 +8,8 @@
 	 * @constructor
 	 */
 	var Config = function (config) {
-		this.galleryFeatures = this.setGalleryFeatures(config.features);
-		this.mediaTypes = config.mediatypes;
+		this.galleryFeatures = this._setGalleryFeatures(config.features);
+		this.mediaTypes = this._setMediaTypes(config.mediatypes);
 	};
 
 	Config.prototype = {
@@ -23,40 +23,11 @@
 		infoLoaded: false,
 
 		/**
-		 * Saves the list of features which have been enabled in the app
-		 *
-		 * @param configFeatures
-		 *
-		 * @returns {Array}
-		 */
-		setGalleryFeatures: function (configFeatures) {
-			var features = [];
-			if (!$.isEmptyObject(configFeatures)) {
-				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
-					if (configFeatures[keys[i]] === 'yes') {
-						features.push(keys[i]);
-					}
-				}
-			}
-
-			return features;
-		},
-
-		/**
 		 * Returns the list of supported media types in a string
 		 *
 		 * @returns {string}
 		 */
 		getMediaTypes: function () {
-			if (this.cachedMediaTypesString === '') {
-				var types = '';
-				for (var i = 0, keys = Object.keys(this.mediaTypes); i < keys.length; i++) {
-					types += keys[i] + ';';
-				}
-
-				this.cachedMediaTypesString = types.slice(0, -1);
-			}
-
 			return this.cachedMediaTypesString;
 		},
 
@@ -66,10 +37,102 @@
 		 * @param albumConfig
 		 */
 		setAlbumConfig: function (albumConfig) {
-			this.albumPermissions = this.setAlbumPermissions(albumConfig);
-			this.albumInfo = this.setAlbumInfo(albumConfig);
-			this.albumSorting = this.setAlbumSorting(albumConfig);
+			this.albumPermissions = this._setAlbumPermissions(albumConfig);
+			this.albumInfo = this._setAlbumInfo(albumConfig);
+			this.albumSorting = this._setAlbumSorting(albumConfig);
 			this.albumError = albumConfig.error;
+		},
+
+		/**
+		 * Updates the sorting order
+		 */
+		updateAlbumSorting: function (sortConfig) {
+			this.albumSorting = {
+				type: sortConfig.type,
+				order: sortConfig.order,
+				albumOrder: sortConfig.albumOrder
+			};
+		},
+
+		/**
+		 * Saves the list of features which have been enabled in the app
+		 *
+		 * @param configFeatures
+		 *
+		 * @returns {Array}
+		 * @private
+		 */
+		_setGalleryFeatures: function (configFeatures) {
+			var features = [];
+			var feature = null;
+			if (!$.isEmptyObject(configFeatures)) {
+				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
+					feature = keys[i];
+					if (configFeatures[feature] === 'yes' && this._validateFeature(feature)) {
+						features.push(feature);
+					}
+				}
+			}
+
+			return features;
+		},
+
+		/**
+		 * Saves the list of supported media types
+		 *
+		 * @param mediaTypes
+		 *
+		 * @returns {Array}
+		 * @private
+		 */
+		_setMediaTypes: function (mediaTypes) {
+			var supportedMediaTypes = [];
+			var mediaType = null;
+			var mediaTypesString = '';
+			for (var i = 0, keys = Object.keys(mediaTypes); i < keys.length; i++) {
+				mediaType = keys[i];
+				if (this._validateMediaType(mediaType)) {
+					mediaTypesString += mediaType + ';';
+					supportedMediaTypes.push(mediaType);
+				}
+			}
+			this.cachedMediaTypesString = mediaTypesString.slice(0, -1);
+
+			return supportedMediaTypes;
+		},
+
+		/**
+		 * Determines if we can accept the feature in this browser environment
+		 *
+		 * @param feature
+		 *
+		 * @returns {bool}
+		 * @private
+		 */
+		_validateFeature: function (feature) {
+			var isAcceptable = true;
+			if (feature === 'native_svg' && Gallery.ieVersion !== false) {
+				isAcceptable = false;
+			}
+
+			return isAcceptable;
+		},
+
+		/**
+		 * Determines if we can accept the media type in this browser environment
+		 *
+		 * @param mediaType
+		 *
+		 * @returns {bool}
+		 * @private
+		 */
+		_validateMediaType: function (mediaType) {
+			var isAcceptable = true;
+			if (mediaType === 'image/svg+xml' && Gallery.ieVersion !== false) {
+				isAcceptable = false;
+			}
+
+			return isAcceptable;
 		},
 
 		/**
@@ -78,8 +141,9 @@
 		 * @param albumConfig
 		 *
 		 * @returns {{fileid: *, permissions: *}}
+		 * @private
 		 */
-		setAlbumPermissions: function (albumConfig) {
+		_setAlbumPermissions: function (albumConfig) {
 			return {
 				fileid: albumConfig.fileid,
 				permissions: albumConfig.permissions
@@ -92,8 +156,9 @@
 		 * @param {{path, information, description_link, copyright_link}} albumConfig
 		 *
 		 * @returns {{}}
+		 * @private
 		 */
-		setAlbumInfo: function (albumConfig) {
+		_setAlbumInfo: function (albumConfig) {
 			var albumPath = albumConfig.path;
 			var albumInfo = albumConfig.information;
 			var params = {};
@@ -131,8 +196,9 @@
 		 * @param {{sorting}} albumConfig
 		 *
 		 * @returns {{type: string, order: string, albumOrder: string}}
+		 * @private
 		 */
-		setAlbumSorting: function (albumConfig) {
+		_setAlbumSorting: function (albumConfig) {
 			var sortType = 'name';
 			var sortOrder = 'asc';
 			var albumSortOrder = 'asc';
@@ -152,17 +218,6 @@
 				type: sortType,
 				order: sortOrder,
 				albumOrder: albumSortOrder
-			};
-		},
-
-		/**
-		 * Updates the sorting order
-		 */
-		updateAlbumSorting: function (sortConfig) {
-			this.albumSorting = {
-				type: sortConfig.type,
-				order: sortConfig.order,
-				albumOrder: sortConfig.albumOrder
 			};
 		}
 	};
