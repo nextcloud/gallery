@@ -284,7 +284,6 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	private function checkPassword($linkItem, $password) {
 		$newHash = '';
 		if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
-
 			// Save item id in session for future requests
 			$this->session->set('public_link_authenticated', $linkItem['id']);
 			if (!empty($newHash)) {

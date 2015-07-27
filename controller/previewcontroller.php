@@ -118,9 +118,9 @@ class PreviewController extends Controller {
 	 *
 	 * @param string $ids the ID of the files of which we need thumbnail previews of
 	 * @param bool $square
-	 * @param bool $scale
+	 * @param double $scale
 	 *
-	 * @return array<string,array|string>
+	 * @return array<string,array|string|null>
 	 */
 	public function getThumbnails($ids, $square, $scale) {
 		$idsArray = explode(';', $ids);
@@ -182,7 +182,7 @@ class PreviewController extends Controller {
 	 *
 	 * @param int $fileId the ID of the file of which we need a thumbnail preview of
 	 * @param bool $square whether the thumbnail should be square
-	 * @param bool $scale whether we're allowed to scale the preview up
+	 * @param double $scale whether we're allowed to scale the preview up
 	 *
 	 * @return array<string,array|string>
 	 */
@@ -302,7 +302,7 @@ class PreviewController extends Controller {
 	 *
 	 * @param $status
 	 *
-	 * @return array<null,int,string>
+	 * @return array<null|int|string>
 	 */
 	private function getErrorData($status) {
 		return [null, $status, 'error'];
@@ -313,7 +313,7 @@ class PreviewController extends Controller {
 	 *
 	 * @param $exception
 	 *
-	 * @return array<null,int,string>
+	 * @return array<null|int|string>
 	 */
 	private function getExceptionData($exception) {
 		if ($exception instanceof NotFoundServiceException) {

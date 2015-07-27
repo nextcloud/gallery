@@ -240,11 +240,7 @@ class PreviewService extends Service {
 	 * @return bool
 	 */
 	private function isSvgPreviewRequired() {
-		if (!$this->isMimeSupported('image/svg+xml')) {
-			return false;
-		}
-
-		return true;
+		return $this->isMimeSupported('image/svg+xml');
 	}
 
 	/**

@@ -114,7 +114,7 @@ class Preview {
 	 * @param int $maxHeight
 	 * @param bool $keepAspect
 	 *
-	 * @return array|false
+	 * @return array<string,string|\OC_Image>|false
 	 */
 	public function preparePreview($maxWidth, $maxHeight, $keepAspect) {
 		$this->dims = [$maxWidth, $maxHeight];
@@ -124,7 +124,7 @@ class Preview {
 		if ($previewData && $previewData->valid()) {
 			$preview = [
 				'preview'  => $previewData,
-				'mimetype' => $mimeType = $previewData->mimeType()
+				'mimetype' => $previewData->mimeType()
 			];
 		} else {
 			$preview = false;
