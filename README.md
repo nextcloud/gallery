@@ -1,6 +1,8 @@
 # Gallery+
 [![Build Status](https://travis-ci.org/interfasys/galleryplus.svg?branch=stable8)](https://travis-ci.org/interfasys/galleryplus)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=stable8)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=stable8)
+[![Codacy Badge](https://www.codacy.com/project/badge/02f02de5292e4f7393cd7e5697227a5a)](https://www.codacy.com/app/interfaSys/galleryplus)
+[![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus)
 
 Fork of media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
