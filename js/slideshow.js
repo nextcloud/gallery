@@ -341,36 +341,35 @@
 				$.get(url, function (tmpl) {
 					var template = $(tmpl);
 					var tmplButton;
-					var tmplTrans;
 					var buttonsArray = [
 						{
 							el: '.next',
-							trans: 'Next'
+							trans: t('gallery', 'Next')
 						},
 						{
 							el: '.play',
-							trans: 'Play'
+							trans: t('gallery', 'Play')
 						},
 						{
 							el: '.pause',
-							trans: 'Pause'
+							trans: t('gallery', 'Pause')
 						},
 						{
 							el: '.previous',
-							trans: 'Previous'
+							trans: t('gallery', 'Previous')
 						},
 						{
 							el: '.exit',
-							trans: 'Close'
+							trans: t('gallery', 'Close')
 						},
 						{
 							el: '.downloadImage',
-							trans: 'Download',
+							trans: t('gallery', 'Download'),
 							toolTip: true
 						},
 						{
 							el: '.changeBackground',
-							trans: 'Toggle background',
+							trans: t('gallery', 'Toggle background'),
 							toolTip: true
 						}
 					];
@@ -378,10 +377,9 @@
 						var button = buttonsArray[i];
 
 						tmplButton = template.find(button.el);
-						tmplTrans = t('gallery', button.trans);
-						tmplButton.val(tmplTrans);
+						tmplButton.val(button.trans);
 						if (button.toolTip) {
-							tmplButton.attr("title", tmplTrans);
+							tmplButton.attr("title", button.trans);
 						}
 					}
 					self.$slideshowTemplate = template;
