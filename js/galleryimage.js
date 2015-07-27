@@ -56,7 +56,6 @@
 		 * @returns {number}
 		 */
 		getThumbnailWidth: function () {
-
 			// img is a Thumbnail.image
 			return this.getThumbnail(false).then(function (img) {
 				if (img) {
@@ -70,6 +69,8 @@
 		 * Creates the a and img element in the DOM
 		 *
 		 * Each image is also a link to start the full screen slideshow
+		 *
+		 * @param {number} targetHeight
 		 *
 		 * @return {a}
 		 */
@@ -113,4 +114,3 @@
 
 	window.GalleryImage = GalleryImage;
 })(jQuery, Gallery);
-

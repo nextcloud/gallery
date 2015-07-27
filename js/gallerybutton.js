@@ -4,6 +4,9 @@ GalleryButton.isPublic = false;
 GalleryButton.button = {};
 GalleryButton.url = null;
 
+/**
+ * Rebuilds the Gallery URL every time the files list has changed
+ */
 GalleryButton.onFileListUpdated = function () {
 	"use strict";
 	var fileList;
@@ -17,6 +20,11 @@ GalleryButton.onFileListUpdated = function () {
 	GalleryButton.buildGalleryUrl(fileList.getCurrentDirectory().replace(/^\//, ''));
 };
 
+/**
+ * Builds the URL which will load the exact same folder in Gallery
+ *
+ * @param dir
+ */
 GalleryButton.buildGalleryUrl = function (dir) {
 	"use strict";
 	var params = {};
@@ -49,7 +57,7 @@ $(document).ready(function () {
 
 			$('#fileList').on('updated', GalleryButton.onFileListUpdated);
 
-			// toggle for opening shared file list as picture view
+			// Toggle for opening files list as gallery view
 			GalleryButton.button = $('<div id="openAsFileListButton" class="button">' +
 			'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') + '"' +
 			'alt="' + t('gallery', 'Picture view') + '"/>' +

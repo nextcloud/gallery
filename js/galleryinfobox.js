@@ -1,5 +1,11 @@
-/* global $, t, Gallery, marked */
-(function () {
+/* global Gallery, marked */
+(function ($, t, Gallery) {
+	"use strict";
+	/**
+	 * Shows some information about the current album
+	 *
+	 * @constructor
+	 */
 	var InfoBox = function () {
 		this.infoContentElement = $('.album-info-content');
 	};
@@ -133,4 +139,4 @@
 	};
 
 	Gallery.InfoBox = InfoBox;
-})();
+})(jQuery, t, Gallery);

@@ -21,6 +21,98 @@
 	};
 
 	Album.prototype = {
+		/**
+		 * Creates the album, which will include between 1 and 4 images
+		 *
+		 *    * Each album is also a link to open that folder
+		 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
+		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
+		 *    * Thumbnails are checked first in order to make sure that we have something to show
+		 *
+		 * @param {number} targetHeight Each row has a specific height
+		 *
+		 * @return {a} The album to be placed on the row
+		 */
+		getDom: function (targetHeight) {
+			var album = this;
+
+			return this._getThumbnail().then(function () {
+				var a = $('<a/>').addClass('album').attr('href',
+					'#' + encodeURIComponent(album.path));
+
+				a.append($('<span/>').addClass('album-label').text(album.name));
+
+				a.width(targetHeight);
+				a.height(targetHeight);
+
+				album._fillSubAlbum(targetHeight, a);
+
+				return a;
+			});
+		},
+
+		/**
+		 * Fills the row with albums and images
+		 *
+		 * @param {number} width
+		 * @returns {$.Deferred<Gallery.Row>}
+		 */
+		getNextRow: function (width) {
+			var numberOfThumbnailsToPreload = 6;
+
+			/**
+			 * Add images to the row until it's full
+			 *
+			 * @todo The number of images to preload should be a user setting
+			 *
+			 * @param {Album} album
+			 * @param {Row} row
+			 * @param {Array<Album|GalleryImage>} images
+			 *
+			 * @returns {$.Deferred<Gallery.Row>}
+			 */
+			var addRowElements = function (album, row, images) {
+				if ((album.viewedItems + 5) > album.preloadOffset) {
+					album._preload(numberOfThumbnailsToPreload);
+				}
+
+				var image = images[album.viewedItems];
+				return row.addElement(image).then(function (more) {
+					album.viewedItems++;
+					if (more && album.viewedItems < images.length) {
+						return addRowElements(album, row, images);
+					}
+					return row;
+				});
+			};
+			var items = this.subAlbums.concat(this.images);
+			var row = new Gallery.Row(width, this.requestId);
+			return addRowElements(this, row, items);
+		},
+
+		/**
+		 * Returns IDs of thumbnails belonging to the album
+		 *
+		 * @param {number} count
+		 *
+		 * @return number[]
+		 */
+		getThumbnailIds: function (count) {
+			var ids = [];
+			var items = this.images.concat(this.subAlbums);
+			for (var i = 0; i < items.length && i < count; i++) {
+				ids = ids.concat(items[i].getThumbnailIds(count));
+			}
+
+			return ids;
+		},
+
+		/**
+		 * Returns the first thumbnail it finds
+		 *
+		 * @returns {*}
+		 * @private
+		 */
 		_getThumbnail: function () {
 			if (this.images.length) {
 				return this.images[0].getThumbnail(true);
@@ -127,7 +219,7 @@
 		 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
 		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
 		 *
-		 * @param targetHeight
+		 * @param {number} targetHeight
 		 * @param a
 		 * @private
 		 */
@@ -207,92 +299,6 @@
 			this.preloadOffset = i;
 			Thumbnails.loadBatch(fileIds, false);
 			Thumbnails.loadBatch(squareFileIds, true);
-		},
-
-		/**
-		 * Creates the album, which will include between 1 and 4 images
-		 *
-		 *    * Each album is also a link to open that folder
-		 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
-		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
-		 *    * Thumbnails are checked first in order to make sure that we have something to show
-		 *
-		 * @param {number} targetHeight Each row has a specific height
-		 *
-		 * @return {a} The album to be placed on the row
-		 */
-		getDom: function (targetHeight) {
-			var album = this;
-
-			return this._getThumbnail().then(function () {
-				var a = $('<a/>').addClass('album').attr('href',
-					'#' + encodeURIComponent(album.path));
-
-				a.append($('<span/>').addClass('album-label').text(album.name));
-
-				a.width(targetHeight);
-				a.height(targetHeight);
-
-				album._fillSubAlbum(targetHeight, a);
-
-				return a;
-			});
-		},
-
-		/**
-		 * Fills the row with albums and images
-		 *
-		 * @param {number} width
-		 * @returns {$.Deferred<Gallery.Row>}
-		 */
-		getNextRow: function (width) {
-			var numberOfThumbnailsToPreload = 6;
-
-			/**
-			 * Add images to the row until it's full
-			 *
-			 * @todo The number of images to preload should be a user setting
-			 *
-			 * @param {Album} album
-			 * @param {Row} row
-			 * @param {Array<Album|GalleryImage>} images
-			 *
-			 * @returns {$.Deferred<Gallery.Row>}
-			 */
-			var addRowElements = function (album, row, images) {
-				if ((album.viewedItems + 5) > album.preloadOffset) {
-					album._preload(numberOfThumbnailsToPreload);
-				}
-
-				var image = images[album.viewedItems];
-				return row.addElement(image).then(function (more) {
-					album.viewedItems++;
-					if (more && album.viewedItems < images.length) {
-						return addRowElements(album, row, images);
-					}
-					return row;
-				});
-			};
-			var items = this.subAlbums.concat(this.images);
-			var row = new Gallery.Row(width, this.requestId);
-			return addRowElements(this, row, items);
-		},
-
-		/**
-		 * Returns IDs of thumbnails belonging to the album
-		 *
-		 * @param {number} count
-		 *
-		 * @return number[]
-		 */
-		getThumbnailIds: function (count) {
-			var ids = [];
-			var items = this.images.concat(this.subAlbums);
-			for (var i = 0; i < items.length && i < count; i++) {
-				ids = ids.concat(items[i].getThumbnailIds(count));
-			}
-
-			return ids;
 		}
 	};
 

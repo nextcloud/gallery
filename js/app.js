@@ -7,6 +7,7 @@ $(document).ready(function () {
 	Gallery.token = Gallery.utility.getRequestToken();
 	Gallery.ieVersion = Gallery.utility.getIeVersion();
 
+	// The first thing to do is to detect if we're on IE
 	if (Gallery.ieVersion === 'unsupportedIe') {
 		Gallery.utility.showIeWarning(Gallery.ieVersion);
 		Gallery.showEmpty();
@@ -17,6 +18,8 @@ $(document).ready(function () {
 
 		// Needed to centre the spinner in some browsers
 		Gallery.resetContentHeight();
+
+		// Get the config, the files and initialise the slideshow
 		Gallery.showLoading();
 		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
 			.then(function (config) {
@@ -48,58 +51,62 @@ $(document).ready(function () {
 			$('.album-info-content').slideUp();
 		});
 
-		$(window).scroll(function () {
-			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
-				Gallery.currentAlbum);
-		});
-		$('#content-wrapper').scroll(function () {
+		// This block loads new rows
+		$('html, #content-wrapper').scroll(function () {
 			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
 				Gallery.currentAlbum);
 		});
 
-		// A shorter delay avoids redrawing the view in the middle of a previous request, but it
-		// may kill baby CPUs
+
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
+			// This section redraws the photowall
 			if (windowWidth !== $(window).width()) {
 				if ($('#emptycontent').is(':hidden')) {
 					Gallery.view.viewAlbum(Gallery.currentAlbum);
 				}
-				// 320 is the width required for the buttons
 				Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 
 				windowWidth = $(window).width();
 			}
+			// This makes sure dropdowns will not be hidden after a window resize
 			if (windowHeight !== $(window).height()) {
 				Gallery.resetContentHeight();
 				var infoContentElement = $('.album-info-content');
-				// 150 is the space required for the browser toolbar on some mobile OS
 				infoContentElement.css('max-height',
 					$(window).height() - Gallery.browserToolbarHeight);
 
 				windowHeight = $(window).height();
 			}
-		}, 250));
+		}, 250)); // A shorter delay avoids redrawing the view in the middle of a previous request,
+				  // but it may kill baby CPUs
 	}
 });
 
+/**
+ * Responsible to refresh the view when we detect a change of location via the browser URL
+ */
 window.onhashchange = function () {
 	"use strict";
-	// The hash location is ALWAYS encoded
 	var currentLocation = window.location.href.split('#')[1] || '';
+	// The hash location is ALWAYS encoded, despite what the browser shows
 	var path = decodeURIComponent(currentLocation);
+
+	// This section tries to determine if the hash location points to a file or a folder
 	var albumPath = OC.dirname(path);
 	if (Gallery.albumMap[path]) {
 		albumPath = path;
 	} else if (!Gallery.albumMap[albumPath]) {
 		albumPath = '';
 	}
+	// We need to get new files if we've assessed that we've changed folder
 	if (Gallery.currentAlbum !== null && Gallery.currentAlbum !== albumPath) {
 		Gallery.getFiles(currentLocation).done(function () {
 			Gallery.refresh(path, albumPath);
 		});
 	} else {
+		// When the gallery is first loaded, the files have already been fetched
 		Gallery.refresh(path, albumPath);
 	}
 };
