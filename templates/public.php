@@ -19,7 +19,7 @@ script(
 		'galleryrow',
 		'galleryimage',
 		'thumbnail',
-		'eventsource-polyfill',
+		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
 		'vendor/marked/marked.min',
 		'vendor/bigshot/bigshot-compressed',
