@@ -4,7 +4,7 @@
 	/**
 	 * Stores the gallery configuration
 	 *
-	 * @param {{features: *}} config
+	 * @param {{features: string[], mediatypes: string[]}} config
 	 * @constructor
 	 */
 	var Config = function (config) {
@@ -34,7 +34,15 @@
 		/**
 		 * Stores the configuration about the current album
 		 *
-		 * @param albumConfig
+		 * @param {{
+		 * 	fileid: number,
+		 * 	permissions: number,
+		 * 	path: string,
+		 * 	etag: string
+		 * 	information,
+		 * 	sorting,
+		 * 	error: string
+		 * }} albumConfig
 		 */
 		setAlbumConfig: function (albumConfig) {
 			this.albumPermissions = this._setAlbumPermissions(albumConfig);
@@ -57,7 +65,7 @@
 		/**
 		 * Saves the list of features which have been enabled in the app
 		 *
-		 * @param configFeatures
+		 * @param {string[]} configFeatures
 		 *
 		 * @returns {Array}
 		 * @private
@@ -80,7 +88,7 @@
 		/**
 		 * Saves the list of supported media types
 		 *
-		 * @param mediaTypes
+		 * @param {string[]} mediaTypes
 		 *
 		 * @returns {Array}
 		 * @private
@@ -104,7 +112,7 @@
 		/**
 		 * Determines if we can accept the feature in this browser environment
 		 *
-		 * @param feature
+		 * @param {string} feature
 		 *
 		 * @returns {bool}
 		 * @private
@@ -121,7 +129,7 @@
 		/**
 		 * Determines if we can accept the media type in this browser environment
 		 *
-		 * @param mediaType
+		 * @param {string} mediaType
 		 *
 		 * @returns {bool}
 		 * @private
@@ -138,9 +146,17 @@
 		/**
 		 * Saves the permissions for the current album
 		 *
-		 * @param albumConfig
+		 * @param {{
+		 * 	fileid: number,
+		 * 	permissions: number,
+		 * 	path: string,
+		 * 	etag: string
+		 * 	information,
+		 * 	sorting,
+		 * 	error: string
+		 * }} albumConfig
 		 *
-		 * @returns {{fileid: *, permissions: *}}
+		 * @returns {{fileid: number, permissions: number}}
 		 * @private
 		 */
 		_setAlbumPermissions: function (albumConfig) {
@@ -153,15 +169,41 @@
 		/**
 		 * Saves the description and copyright information for the current album
 		 *
-		 * @param {{path, information, description_link, copyright_link}} albumConfig
+		 * @param {{
+		 * 	fileid: number,
+		 * 	permissions: number,
+		 * 	path: string,
+		 * 	etag: string
+		 * 	information,
+		 * 	sorting,
+		 * 	error: string
+		 * }} albumConfig
 		 *
-		 * @returns {{}}
+		 * @returns {null||{
+		 * 	description: string,
+		 * 	descriptionLink: string,
+		 * 	copyright: string,
+		 * 	copyrightLink: string,
+		 * 	filePath: string,
+		 * 	inherit: bool,
+		 * 	level: number
+		 * }}
 		 * @private
 		 */
 		_setAlbumInfo: function (albumConfig) {
 			var albumPath = albumConfig.path;
+
+			/**@type {{
+			 * 	description: string,
+			 * 	description_link: string,
+			 * 	copyright: string,
+			 * 	copyright_link: string,
+			 * 	inherit: bool,
+			 * 	level: number
+			 * }}
+			 */
 			var albumInfo = albumConfig.information;
-			var params = {};
+			var params = null;
 			if (!$.isEmptyObject(albumInfo)) {
 				var docPath = albumPath;
 				var level = albumInfo.level;
@@ -193,7 +235,15 @@
 		/**
 		 * Saves the sorting configuration for the current album
 		 *
-		 * @param {{sorting}} albumConfig
+		 * @param {{
+		 * 	fileid: number,
+		 * 	permissions: number,
+		 * 	path: string,
+		 * 	etag: string
+		 * 	information,
+		 * 	sorting,
+		 * 	error: string
+		 * }} albumConfig
 		 *
 		 * @returns {{type: string, order: string, albumOrder: string}}
 		 * @private

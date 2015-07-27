@@ -64,7 +64,16 @@
 			};
 			// Only use the folder as a GET parameter and not as part of the URL
 			var url = Gallery.utility.buildGalleryUrl('files', '', params);
-			return $.getJSON(url).then(function (/**{albuminfo}*/ data) {
+			return $.getJSON(url).then(function (/**{{albuminfo:Object, files:Array}}*/ data) {
+				/**@type {{
+				 * 	fileid: number,
+				 * 	permissions: number,
+				 * 	path: string,
+				 * 	etag: string
+				 * 	information,
+				 * 	sorting,
+				 * 	error: string
+				 * }}*/
 				var albumInfo = data.albuminfo;
 				Gallery.config.setAlbumConfig(albumInfo);
 				// Both the folder and the etag have to match
@@ -72,7 +81,7 @@
 					&& (albumInfo.etag === albumEtag)) {
 					Gallery.imageMap = albumCache.imageMap;
 				} else {
-					Gallery.mapFiles(data);
+					Gallery._mapFiles(data);
 				}
 
 				// Restore the previous sorting order for this album
@@ -86,114 +95,6 @@
 				Gallery.showEmpty();
 				Gallery.currentAlbum = null;
 			});
-		},
-
-		/**
-		 * Builds the album's model
-		 *
-		 * @param {{albuminfo:Array, files:Array}} data
-		 */
-		mapFiles: function (data) {
-			Gallery.imageMap = {};
-			var image = null;
-			var path = null;
-			var fileId = null;
-			var mimeType = null;
-			var mTime = null;
-			var etag = null;
-			var albumInfo = data.albuminfo;
-			var currentLocation = albumInfo.path;
-			// This adds a new node to the map for each parent album
-			Gallery.mapStructure(currentLocation);
-			var files = data.files;
-			if (files.length > 0) {
-				var subAlbumCache = {};
-				var albumCache = Gallery.albumMap[currentLocation]
-					= new Album(currentLocation, [], [], OC.basename(currentLocation));
-				for (var i = 0; i < files.length; i++) {
-					path = files[i].path;
-					fileId = files[i].fileid;
-					mimeType = files[i].mimetype;
-					mTime = files[i].mtime;
-					etag = files[i].etag;
-
-					image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
-
-					// Determines the folder name for the image
-					var dir = OC.dirname(path);
-					if (dir === path) {
-						dir = '';
-					}
-					if (dir === currentLocation) {
-						// The image belongs to the current album, so we can add it directly
-						albumCache.images.push(image);
-					} else {
-						// The image belongs to a sub-album, so we create a sub-album cache if it
-						// doesn't exist and add images to it
-						if (!subAlbumCache[dir]) {
-							subAlbumCache[dir] = new Album(dir, [], [],
-								OC.basename(dir));
-						}
-						subAlbumCache[dir].images.push(image);
-
-						// The sub-album also has to be added to the global map
-						if (!Gallery.albumMap[dir]) {
-							Gallery.albumMap[dir] = {};
-						}
-					}
-					Gallery.imageMap[image.path] = image;
-				}
-				// Adds the sub-albums to the current album
-				Gallery.mapAlbums(albumCache, subAlbumCache);
-
-				// Caches the information which is not already cached
-				albumCache.etag = albumInfo.etag;
-				albumCache.imageMap = Gallery.imageMap;
-			}
-		},
-
-		/**
-		 * Adds every album leading the current folder to a global album map
-		 *
-		 * Per example, if you have Root/Folder1/Folder2/CurrentFolder then the map will contain:
-		 *    * Root
-		 *    * Folder1
-		 *    * Folder2
-		 *    * CurrentFolder
-		 *
-		 *  Every time a new location is loaded, the map is completed
-		 *
-		 *
-		 * @param {string} path
-		 *
-		 * @returns {Album}
-		 */
-		mapStructure: function (path) {
-			if (!Gallery.albumMap[path]) {
-				Gallery.albumMap[path] = {};
-				// Builds relationships between albums
-				if (path !== '') {
-					var parent = OC.dirname(path);
-					if (parent === path) {
-						parent = '';
-					}
-					Gallery.mapStructure(parent);
-				}
-			}
-			return Gallery.albumMap[path];
-		},
-
-		/**
-		 * Adds the sub-albums to the current album
-		 *
-		 * @param {Album} albumCache
-		 * @param {{Album}} subAlbumCache
-		 */
-		mapAlbums: function (albumCache, subAlbumCache) {
-			for (var j = 0, keys = Object.keys(subAlbumCache); j <
-			keys.length; j++) {
-				albumCache.subAlbums.push(subAlbumCache[keys[j]]);
-			}
 		},
 
 		/**
@@ -326,47 +227,7 @@
 			var owner = saveElement.data('owner');
 			var name = saveElement.data('name');
 			var isProtected = saveElement.data('protected');
-			Gallery.saveToOwnCloud(remote, Gallery.token, owner, name, isProtected);
-		},
-
-		/**
-		 * Saves the folder to a remote ownCloud installation
-		 *
-		 * Our location is the remote for the other server
-		 *
-		 * @param {string} remote
-		 * @param {string}token
-		 * @param {string}owner
-		 * @param {string}name
-		 * @param {bool} isProtected
-		 */
-		saveToOwnCloud: function (remote, token, owner, name, isProtected) {
-			var location = window.location.protocol + '//' + window.location.host + OC.webroot;
-			var isProtectedInt = (isProtected) ? 1 : 0;
-			var url = remote + '/index.php/apps/files#' + 'remote=' + encodeURIComponent(location)
-				+ "&token=" + encodeURIComponent(token) + "&owner=" + encodeURIComponent(owner) +
-				"&name=" +
-				encodeURIComponent(name) + "&protected=" + isProtectedInt;
-
-			if (remote.indexOf('://') > 0) {
-				OC.redirect(url);
-			} else {
-				// if no protocol is specified, we automatically detect it by testing https and
-				// http
-				// this check needs to happen on the server due to the Content Security Policy
-				// directive
-				$.get(OC.generateUrl('apps/files_sharing/testremote'),
-					{remote: remote}).then(function (protocol) {
-						if (protocol !== 'http' && protocol !== 'https') {
-							OC.dialogs.alert(t('files_sharing',
-									'No ownCloud installation (7 or higher) found at {remote}',
-									{remote: remote}),
-								t('files_sharing', 'Invalid ownCloud url'));
-						} else {
-							OC.redirect(protocol + '://' + url);
-						}
-					});
-			}
+			Gallery._saveToOwnCloud(remote, Gallery.token, owner, name, isProtected);
 		},
 
 		/**
@@ -498,6 +359,158 @@
 
 			// Resets the last focused element
 			document.activeElement.blur();
+		},
+
+		/**
+		 * Builds the album's model
+		 *
+		 * @param {{albuminfo:Object, files:Array}} data
+		 * @private
+		 */
+		_mapFiles: function (data) {
+			Gallery.imageMap = {};
+			var image = null;
+			var path = null;
+			var fileId = null;
+			var mimeType = null;
+			var mTime = null;
+			var etag = null;
+			var albumInfo = data.albuminfo;
+			var currentLocation = albumInfo.path;
+			// This adds a new node to the map for each parent album
+			Gallery._mapStructure(currentLocation);
+			var files = data.files;
+			if (files.length > 0) {
+				var subAlbumCache = {};
+				var albumCache = Gallery.albumMap[currentLocation]
+					= new Album(currentLocation, [], [], OC.basename(currentLocation));
+				for (var i = 0; i < files.length; i++) {
+					path = files[i].path;
+					fileId = files[i].fileid;
+					mimeType = files[i].mimetype;
+					mTime = files[i].mtime;
+					etag = files[i].etag;
+
+					image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
+
+					// Determines the folder name for the image
+					var dir = OC.dirname(path);
+					if (dir === path) {
+						dir = '';
+					}
+					if (dir === currentLocation) {
+						// The image belongs to the current album, so we can add it directly
+						albumCache.images.push(image);
+					} else {
+						// The image belongs to a sub-album, so we create a sub-album cache if it
+						// doesn't exist and add images to it
+						if (!subAlbumCache[dir]) {
+							subAlbumCache[dir] = new Album(dir, [], [],
+								OC.basename(dir));
+						}
+						subAlbumCache[dir].images.push(image);
+
+						// The sub-album also has to be added to the global map
+						if (!Gallery.albumMap[dir]) {
+							Gallery.albumMap[dir] = {};
+						}
+					}
+					Gallery.imageMap[image.path] = image;
+				}
+				// Adds the sub-albums to the current album
+				Gallery._mapAlbums(albumCache, subAlbumCache);
+
+				// Caches the information which is not already cached
+				albumCache.etag = albumInfo.etag;
+				albumCache.imageMap = Gallery.imageMap;
+			}
+		},
+
+		/**
+		 * Adds every album leading the current folder to a global album map
+		 *
+		 * Per example, if you have Root/Folder1/Folder2/CurrentFolder then the map will contain:
+		 *    * Root
+		 *    * Folder1
+		 *    * Folder2
+		 *    * CurrentFolder
+		 *
+		 *  Every time a new location is loaded, the map is completed
+		 *
+		 *
+		 * @param {string} path
+		 *
+		 * @returns {Album}
+		 * @private
+		 */
+		_mapStructure: function (path) {
+			if (!Gallery.albumMap[path]) {
+				Gallery.albumMap[path] = {};
+				// Builds relationships between albums
+				if (path !== '') {
+					var parent = OC.dirname(path);
+					if (parent === path) {
+						parent = '';
+					}
+					Gallery._mapStructure(parent);
+				}
+			}
+			return Gallery.albumMap[path];
+		},
+
+		/**
+		 * Adds the sub-albums to the current album
+		 *
+		 * @param {Album} albumCache
+		 * @param {{Album}} subAlbumCache
+		 * @private
+		 */
+		_mapAlbums: function (albumCache, subAlbumCache) {
+			for (var j = 0, keys = Object.keys(subAlbumCache); j <
+			keys.length; j++) {
+				albumCache.subAlbums.push(subAlbumCache[keys[j]]);
+			}
+		},
+
+		/**
+		 * Saves the folder to a remote ownCloud installation
+		 *
+		 * Our location is the remote for the other server
+		 *
+		 * @param {string} remote
+		 * @param {string}token
+		 * @param {string}owner
+		 * @param {string}name
+		 * @param {bool} isProtected
+		 * @private
+		 */
+		_saveToOwnCloud: function (remote, token, owner, name, isProtected) {
+			var location = window.location.protocol + '//' + window.location.host + OC.webroot;
+			var isProtectedInt = (isProtected) ? 1 : 0;
+			var url = remote + '/index.php/apps/files#' + 'remote=' + encodeURIComponent(location)
+				+ "&token=" + encodeURIComponent(token) + "&owner=" + encodeURIComponent(owner) +
+				"&name=" +
+				encodeURIComponent(name) + "&protected=" + isProtectedInt;
+
+			if (remote.indexOf('://') > 0) {
+				OC.redirect(url);
+			} else {
+				// if no protocol is specified, we automatically detect it by testing https and
+				// http
+				// this check needs to happen on the server due to the Content Security Policy
+				// directive
+				$.get(OC.generateUrl('apps/files_sharing/testremote'),
+					{remote: remote}).then(function (protocol) {
+						if (protocol !== 'http' && protocol !== 'https') {
+							OC.dialogs.alert(t('files_sharing',
+									'No ownCloud installation (7 or higher) found at {remote}',
+									{remote: remote}),
+								t('files_sharing', 'Invalid ownCloud url'));
+						} else {
+							OC.redirect(protocol + '://' + url);
+						}
+					});
+			}
 		}
 	};
 	window.Gallery = Gallery;

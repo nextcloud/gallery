@@ -4,7 +4,7 @@
 	/**
 	 * Creates a zoomable preview
 	 *
-	 * @param container
+	 * @param {*} container
 	 * @constructor
 	 */
 	var ZoomablePreview = function (container) {
@@ -38,8 +38,8 @@
 		/**
 		 * Launches the Bigshot zoomable preview
 		 *
-		 * @param image
-		 * @param currentImage
+		 * @param {*} image
+		 * @param {number} currentImage
 		 * @param {string} mimeType
 		 */
 		startBigshot: function (image, currentImage, mimeType) {
@@ -182,6 +182,7 @@
 		/**
 		 * Determines whether the image should be shown at its original size or if it should fill
 		 * the screen
+		 *
 		 * @private
 		 */
 		_zoomDecider: function () {
@@ -196,6 +197,7 @@
 
 		/**
 		 * Resets the image to its original zoomed size
+		 *
 		 * @private
 		 */
 		_resetZoom: function () {
@@ -221,6 +223,7 @@
 
 		/**
 		 * Starts the fullscreen previews
+		 *
 		 * @private
 		 */
 		_fullScreenStart: function () {
@@ -236,6 +239,7 @@
 
 		/**
 		 * Stops the fullscreen previews
+		 *
 		 * @private
 		 */
 		_fullScreenExit: function () {

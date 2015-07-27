@@ -27,8 +27,7 @@
 	 *
 	 * @param {string} src
 	 * @param {object} [data] to be send as GET
-	 *
-	 * @constructs Gallery.EventSource
+	 * @constructor
 	 */
 	var CustomEventSource = function (src, data) {
 		var dataStr = '';

@@ -86,7 +86,7 @@
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
 				Gallery.currentAlbum = albumPath;
-				this.setupButtons(albumPath);
+				this._setupButtons(albumPath);
 			}
 
 			Gallery.albumMap[albumPath].viewedItems = 0;
@@ -102,65 +102,6 @@
 				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
 					Gallery.currentAlbum);
 			}.bind(this), 0);
-		},
-
-		/**
-		 * Sets up all the buttons of the interface
-		 *
-		 * @param {string} albumPath
-		 */
-		setupButtons: function (albumPath) {
-			this.shareButtonSetup(albumPath);
-			this.infoButtonSetup();
-
-			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
-			this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
-
-			var currentSort = Gallery.config.albumSorting;
-			this.sortControlsSetup(currentSort.type, currentSort.order);
-			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
-				currentSort.order));
-			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
-				currentSort.albumOrder));
-		},
-
-		/**
-		 * Shows or hides the share button depending on if we're in a public gallery or not
-		 *
-		 * @param {string} albumPath
-		 */
-		shareButtonSetup: function (albumPath) {
-			var shareButton = $('#share-button');
-			if (albumPath === '' || Gallery.token) {
-				shareButton.hide();
-			} else {
-				shareButton.show();
-			}
-		},
-
-		/**
-		 * Shows or hides the info button based on the information we've received from the server
-		 */
-		infoButtonSetup: function () {
-			var infoButton = $('#album-info-button');
-			infoButton.find('span').hide();
-			var infoContentElement = $('.album-info-content');
-			infoContentElement.slideUp();
-			infoContentElement.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
-			var albumInfo = Gallery.config.albumInfo;
-			if (Gallery.config.albumError) {
-				infoButton.hide();
-				var text = '<strong>' + t('gallery', 'Configuration error') + '</strong></br>' +
-					Gallery.config.albumError.message + '</br></br>';
-				Gallery.utility.showHtmlNotification(text, 7);
-			} else if ($.isEmptyObject(albumInfo)) {
-				infoButton.hide();
-			} else {
-				infoButton.show();
-				if (albumInfo.inherit !== 'yes' || albumInfo.level === 0) {
-					infoButton.find('span').delay(1000).slideDown();
-				}
-			}
 		},
 
 		/**
@@ -275,6 +216,69 @@
 				this.loadVisibleRows.loading = true;
 				this.loadVisibleRows.loading = showRows(album);
 				return this.loadVisibleRows.loading;
+			}
+		},
+
+		/**
+		 * Sets up all the buttons of the interface
+		 *
+		 * @param {string} albumPath
+		 * @private
+		 */
+		_setupButtons: function (albumPath) {
+			this._shareButtonSetup(albumPath);
+			this._infoButtonSetup();
+
+			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
+			this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+
+			var currentSort = Gallery.config.albumSorting;
+			this.sortControlsSetup(currentSort.type, currentSort.order);
+			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
+				currentSort.order));
+			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
+				currentSort.albumOrder));
+		},
+
+		/**
+		 * Shows or hides the share button depending on if we're in a public gallery or not
+		 *
+		 * @param {string} albumPath
+		 * @private
+		 */
+		_shareButtonSetup: function (albumPath) {
+			var shareButton = $('#share-button');
+			if (albumPath === '' || Gallery.token) {
+				shareButton.hide();
+			} else {
+				shareButton.show();
+			}
+		},
+
+		/**
+		 * Shows or hides the info button based on the information we've received from the server
+		 *
+		 * @private
+		 */
+		_infoButtonSetup: function () {
+			var infoButton = $('#album-info-button');
+			infoButton.find('span').hide();
+			var infoContentElement = $('.album-info-content');
+			infoContentElement.slideUp();
+			infoContentElement.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
+			var albumInfo = Gallery.config.albumInfo;
+			if (Gallery.config.albumError) {
+				infoButton.hide();
+				var text = '<strong>' + t('gallery', 'Configuration error') + '</strong></br>' +
+					Gallery.config.albumError.message + '</br></br>';
+				Gallery.utility.showHtmlNotification(text, 7);
+			} else if ($.isEmptyObject(albumInfo)) {
+				infoButton.hide();
+			} else {
+				infoButton.show();
+				if (albumInfo.inherit !== 'yes' || albumInfo.level === 0) {
+					infoButton.find('span').delay(1000).slideDown();
+				}
 			}
 		}
 	};

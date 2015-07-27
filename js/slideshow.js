@@ -25,7 +25,7 @@
 		 * Initialises the slideshow
 		 *
 		 * @param {bool} autoPlay
-		 * @param {int} interval
+		 * @param {number} interval
 		 */
 		init: function (autoPlay, interval) {
 			// FIXME: This should come from the configuration
@@ -73,7 +73,7 @@
 		 * Refreshes the slideshow's data
 		 *
 		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
-		 * @param autoPlay
+		 * @param {bool} autoPlay
 		 */
 		setImages: function (images, autoPlay) {
 			this._hideImage();
@@ -84,7 +84,7 @@
 		/**
 		 * Launches the slideshow
 		 *
-		 * @param index
+		 * @param {number} index
 		 *
 		 * @returns {*}
 		 */
@@ -147,7 +147,7 @@
 		/**
 		 * Loads the image to show in the slideshow and preloads the next one
 		 *
-		 * @param preview
+		 * @param {Object} preview
 		 *
 		 * @returns {*}
 		 */
@@ -196,7 +196,7 @@
 		/**
 		 * Sends the current image as a download
 		 *
-		 * @param downloadUrl
+		 * @param {string} downloadUrl
 		 *
 		 * @returns {boolean}
 		 */
@@ -253,6 +253,7 @@
 
 		/**
 		 * Automatically fades the controls after 3 seconds
+		 *
 		 * @private
 		 */
 		_initControlsAutoFader: function () {
@@ -282,6 +283,7 @@
 
 		/**
 		 * Hides the current image (before loading the next)
+		 *
 		 * @private
 		 */
 		_hideImage: function () {
