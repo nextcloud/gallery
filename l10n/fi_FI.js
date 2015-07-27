@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Galleria",
     "Pictures" : "Kuvat",
-    "No pictures found! If you upload pictures in the files app," : "Kuvia ei löytynyt! Jos lähetät kuvia tiedostosovelluksesta,",
     "I am sorry, but I could not find any media files at this location." : "Valitettavasti tästä sijainnista ei löytynyt yhtäkään mediatiedostoa.",
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
@@ -23,6 +22,7 @@ OC.L10N.register(
     "Error loading slideshow template" : "Virhe ladatessa diaesityksen mallipohjaa",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Virhe!</strong> Esikatselua tälle tiedostolle ei voitu toteuttaa.<br>",
     "<strong>Error!</strong> Your browser can't display SVG files.<br>" : "<strong>Virhe!</strong> Selaimesi ei kykene näyttämään SVG-tiedostoja.<br>",
+    "Download" : "Lataa",
     "This share is password-protected" : "Tämä jako on suojattu salasanalla",
     "The password is wrong. Try again." : "Väärä salasana. Yritä uudelleen.",
     "Password" : "Salasana",
@@ -49,7 +49,6 @@ OC.L10N.register(
     "the link has expired" : "linkki on vanhentunut",
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
-    "Add to your ownCloud" : "Lisää ownCloudiisi",
-    "Download" : "Lataa"
+    "Add to your ownCloud" : "Lisää ownCloudiisi"
 },
 "nplurals=2; plural=(n != 1);");
