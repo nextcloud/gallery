@@ -72,9 +72,7 @@ class ConfigService extends FilesService {
 		$featuresList = [];
 		/** @var Folder $rootFolder */
 		$rootFolder = $this->environment->getVirtualRootFolder();
-		if ($rootFolder && $this->isAllowedAndAvailable($rootFolder)
-			&& $rootFolder->nodeExists($this->configName)
-		) {
+		if ($this->isAllowedAndAvailable($rootFolder) && $this->configExists($rootFolder)) {
 			try {
 				$featuresList =
 					$this->configParser->getFeaturesList($rootFolder, $this->configName);
@@ -119,6 +117,17 @@ class ConfigService extends FilesService {
 		$albumConfig = array_merge($albumInfo, $albumConfig);
 
 		return $albumConfig;
+	}
+
+	/**
+	 * Determines if we have a configuration file to work with
+	 *
+	 * @param Folder $rootFolder
+	 *
+	 * @return bool
+	 */
+	private function configExists($rootFolder) {
+		return $rootFolder && $rootFolder->nodeExists($this->configName);
 	}
 
 	/**
