@@ -209,7 +209,7 @@ class ConfigService extends FilesService {
 		$config = ['error' => ['message' => $errorMessage]];
 
 		$configItems = $this->configItems;
-		foreach ($configItems as $key => $complete) {
+		foreach ($configItems as $key) {
 			$configItems[$key] = true;
 		}
 		$this->configItems = $configItems;

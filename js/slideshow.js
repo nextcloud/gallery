@@ -1,4 +1,3 @@
-/* global Gallery */
 (function ($, OC, OCA, t) {
 	"use strict";
 	/**

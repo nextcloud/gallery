@@ -36,9 +36,9 @@ class ThumbnailService {
 	 *    * Standard thumbnails are 400x200.
 	 *
 	 * @param bool $square
-	 * @param bool $scale
+	 * @param double $scale
 	 *
-	 * @return array
+	 * @return array<int|double|boolean>
 	 */
 	public function getThumbnailSpecs($square, $scale) {
 		$height = 200 * $scale;

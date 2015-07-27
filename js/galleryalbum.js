@@ -1,4 +1,4 @@
-/* global Gallery, Thumbnails, GalleryImage, Row */
+/* global Gallery, Thumbnails, GalleryImage */
 (function ($, Gallery) {
 	"use strict";
 	/**

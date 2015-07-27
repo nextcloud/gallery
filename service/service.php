@@ -60,7 +60,7 @@ abstract class Service {
 	 *
 	 * @param int $nodeId ID of the resource to locate
 	 *
-	 * @return Node
+	 * @return Node|null
 	 *
 	 * @throws NotFoundServiceException
 	 */

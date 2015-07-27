@@ -73,7 +73,7 @@ class ConfigController extends Controller {
 	 *
 	 * @param bool $slideshow
 	 *
-	 * @return array
+	 * @return array<string,null|array>
 	 */
 	public function getConfig($slideshow = false) {
 		$features = $this->configService->getFeaturesList();
