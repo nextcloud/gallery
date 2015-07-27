@@ -4,21 +4,50 @@ php:
   - 5.5
   - 5.6
   - 7
+  - hhvm
+
+env:
+  global:
+    - CORE_BRANCH=master
+    - APP_NAME=gallery
+  matrix:
+    - DB=sqlite
 
 branches:
   only:
     - master
-    - dev
     - /^stable\d+(\.\d+)?$/
 
-#before_install:
-#  - cd ..
-#  - git clone https://github.com/owncloud/core.git
-#  - mv gallery core/apps/
-#  - cd core
-#  - git submodule init
-#  - git submodule update
-#  - cd apps/gallery
+before_install:
+  - composer self-update
+  - composer install
+  - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
+  - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+  - cd ../core
+  - php occ app:enable $APP_NAME
 
-script: ant test
-#  - phpunit tests
+script:
+  # Test lint
+  - cd apps/$APP_NAME
+  - find . -name \*.php -exec php -l "{}" \;
+
+  # Run phpunit tests
+  - cd tests
+  - phpunit --configuration phpunit.xml --testsuite unit-tests
+
+  # Create coverage report
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover clover.xml; fi"
+
+matrix:
+  include:
+    - php: 5.4
+      env: DB=mysql
+    - php: 5.4
+      env: DB=pgsql
+    - php: 5.4
+      env: "DB=mysql CORE_BRANCH=stable8.1"
+  allow_failures:
+    - php: hhvm
+    - php: 7
+  fast_finish: true
