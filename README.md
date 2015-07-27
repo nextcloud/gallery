@@ -1,10 +1,12 @@
-# Gallery 
-[![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=master)](https://travis-ci.org/owncloud/gallery)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
+# Gallery+
+[![Build Status](https://travis-ci.org/interfasys/galleryplus.svg?branch=stable8)](https://travis-ci.org/interfasys/galleryplus)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=stable8)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=stable8)
 
-Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
+Fork of media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
+
+This branch currently targets ownCloud 8.0
 
 ![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
 ## Featuring
@@ -29,7 +31,7 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 ### Alumni
 * [Robin Appelman (@icewind1991)](https://github.com/icewind1991)
 * [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
-* All the people who have [provided patches](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) over the years
+* All the people who have provided patches to [Gallery](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) and [Gallery+](https://github.com/interfasys/galleryplus/pulls?q=is%3Apr+is%3Aclosed) over the years
 
 ## Requirements
 
@@ -54,7 +56,7 @@ May not look as nice, but should work
 ### Server requirements
 
 #### Required
-* ownCloud >= 8.0.2
+* ownCloud >= 8.0.5
 * [See ownCloud's requirements](https://doc.owncloud.org/server/8.0/admin_manual/installation/source_installation.html#prerequisites)
 
 #### Recommended
@@ -83,8 +85,8 @@ There are many ways in which you can help make Gallery a better product
 * Read the section about server and browser requirements
 * Make sure you've disabled the original Pictures app
 * Read the "Known issues" section below
-* Get the latest version of the app from [the releases page](https://github.com/owncloud/galleryplus/releases)
-* [Check if they have already been reported](https://github.com/owncloud/galleryplus/issues)
+* Get the latest version of the app from [the releases page](https://github.com/interfasys/galleryplus/releases)
+* Check if they have already been reported in [Gallery](https://github.com/owncloud/gallery/issues) and [Gallery+](https://github.com/interfasys/galleryplus/issues)
 
 ### Known issues
 
@@ -175,7 +177,7 @@ The next step will be to be able to generate these previews by clicking on a but
 
 ### Installing from archive
 
-* Go to the [the releases page](https://github.com/owncloud/galleryplus/releases)
+* Go to the [the releases page](https://github.com/interfasys/galleryplus/releases)
 * Download the latest release/archive to your server's **owncloud/apps/** directory
 * Unpack the app
 * **IMPORTANT**: Rename it to galleryplus
@@ -184,7 +186,7 @@ The next step will be to be able to generate these previews by clicking on a but
 
 In your terminal go into the **owncloud/apps/** directory and then run the following command:
 ```
-$ git clone -b stable8 https://github.com/owncloud/galleryplus.git
+$ git clone -b stable8 https://github.com/interfasys/galleryplus.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery
