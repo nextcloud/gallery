@@ -230,7 +230,7 @@ class Environment {
 	public function getVirtualRootFolder() {
 		$rootFolder = $this->userFolder;
 		if (!empty($this->sharedNodeId)) {
-			$node = $this->getResourceFromId($this->sharedNodeId);
+			$node = $this->getSharedNode();
 			if ($node->getType() === 'dir') {
 				$rootFolder = $node;
 			} else {

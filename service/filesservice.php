@@ -118,7 +118,7 @@ class FilesService extends Service {
 	 */
 	protected function isAllowedAndAvailable($node) {
 		try {
-				return $this->isAllowed($node) && $this->isAvailable($node);
+				return $node && $this->isAllowed($node) && $this->isAvailable($node);
 		} catch (\Exception $exception) {
 			$message = 'The folder is not available: ' . $exception->getMessage();
 			$this->logger->error($message);
