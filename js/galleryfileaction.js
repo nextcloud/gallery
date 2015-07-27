@@ -12,7 +12,7 @@
 		 *
 		 * @param {string} endPoint
 		 * @param {undefined|string} path
-		 * @param params
+		 * @param {Object} params
 		 *
 		 * @returns {string}
 		 */
@@ -32,7 +32,7 @@
 		/**
 		 * Registers a file action for each media type
 		 *
-		 * @param mediaTypes
+		 * @param {Array} mediaTypes
 		 */
 		register: function (mediaTypes) {
 			//console.log("enabledPreviewProviders: ", mediaTypes);
@@ -55,7 +55,7 @@
 		 * Builds an array containing all the images we can show in the slideshow
 		 *
 		 * @param {string} filename
-		 * @param context
+		 * @param {Object} context
 		 */
 		onView: function (filename, context) {
 			var imageUrl, downloadUrl;
@@ -118,16 +118,19 @@
 			}
 		},
 
+		/**
+		 * Launches the slideshow
+		 *
+		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
+		 * @param {number} start
+		 * @private
+		 */
 		_startSlideshow: function (images, start) {
 			galleryFileAction.slideShow.setImages(images);
 
 			var scrollTop = galleryFileAction.scrollContainer.scrollTop();
 			// This is only called when the slideshow is stopped
 			galleryFileAction.slideShow.onStop = function () {
-				// Adding to the history will add a new URL every time the slideshow is launched
-				/*history.pushState('', document.title,
-				 window.location.pathname + window.location.search + '#');*/
-
 				FileList.$fileList.one('updated', function () {
 					galleryFileAction.scrollContainer.scrollTop(scrollTop);
 				});
@@ -165,8 +168,8 @@ $(document).ready(function () {
 		window.galleryFileAction.scrollContainer = $(window);
 	}
 
-	// We're also asking for a list of supported media types.
-	// Media files are retrieved through the Files context
+	// Retrieve the config as well as the list of supported media types.
+	// The list of media files is retrieved when the user clicks on a row
 	var url = window.galleryFileAction.buildGalleryUrl('config', '', {slideshow: 1});
 	$.getJSON(url).then(function (config) {
 		if (!$.isEmptyObject(config.features)) {

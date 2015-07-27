@@ -4,8 +4,8 @@
 	/**
 	 * Creates a row
 	 *
-	 * @param targetWidth
-	 * @param requestId
+	 * @param {number} targetWidth
+	 * @param {number} requestId
 	 * @constructor
 	 */
 	var Row = function (targetWidth, requestId) {
@@ -16,16 +16,6 @@
 	};
 
 	Row.prototype = {
-		/**
-		 * Calculates if the row is full
-		 *
-		 * @returns {boolean}
-		 * @private
-		 */
-		_isFull: function () {
-			return this.width > this.targetWidth;
-		},
-
 		/**
 		 * Adds sub-albums and images to the row until it's full
 		 *
@@ -63,15 +53,21 @@
 			return def.promise();
 		},
 
+		/**
+		 * Creates the row element in the DOM
+		 *
+		 * @returns {*}
+		 */
 		getDom: function () {
 			var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
 			var targetHeight = 200 * scaleRatio;
 			targetHeight = targetHeight.toFixed(3);
 			var row = $('<div/>').addClass('row loading');
 			/**
-			 * @param row
-			 * @param {Gallery.Image[]} items
-			 * @param i
+			 * @param {*} row
+			 * @param {GalleryImage[]|Album[]} items
+			 * @param {number} i
+			 *
 			 * @returns {*}
 			 */
 			var addImageToDom = function (row, items, i) {
@@ -85,6 +81,16 @@
 				});
 			};
 			return addImageToDom(row, this.items, 0);
+		},
+
+		/**
+		 * Calculates if the row is full
+		 *
+		 * @returns {boolean}
+		 * @private
+		 */
+		_isFull: function () {
+			return this.width > this.targetWidth;
 		}
 	};
 

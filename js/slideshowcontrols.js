@@ -4,10 +4,10 @@
 	/**
 	 * Button and key controls for the slideshow
 	 *
-	 * @param {object} slideshow
+	 * @param {Object} slideshow
 	 * @param {*} container
-	 * @param {object} zoomablePreview
-	 * @param {int} interval
+	 * @param {Object} zoomablePreview
+	 * @param {number} interval
 	 * @constructor
 	 */
 	var Controls = function (slideshow, container, zoomablePreview, interval) {
@@ -185,6 +185,7 @@
 
 		/**
 		 * Starts the slideshow timer
+		 *
 		 * @private
 		 */
 		_setTimeout: function () {
@@ -197,6 +198,7 @@
 
 		/**
 		 * Stops the slideshow timer
+		 *
 		 * @private
 		 */
 		_clearTimeout: function () {
@@ -210,6 +212,7 @@
 
 		/**
 		 * Starts the times slideshow
+		 *
 		 * @private
 		 */
 		_play: function () {
@@ -220,6 +223,7 @@
 
 		/**
 		 * Pauses the timed slideshow
+		 *
 		 * @private
 		 */
 		_pause: function () {
@@ -230,6 +234,7 @@
 
 		/**
 		 * Shows the play or pause button depending on circumstances
+		 *
 		 * @private
 		 */
 		_playPauseButtonToggle: function () {
@@ -239,6 +244,7 @@
 
 		/**
 		 * Shows the next slide
+		 *
 		 * @private
 		 */
 		_next: function () {
@@ -255,6 +261,7 @@
 
 		/**
 		 * Shows the previous slide
+		 *
 		 * @private
 		 */
 		_previous: function () {
@@ -269,7 +276,7 @@
 		/**
 		 * Shows a new image in the slideshow and preloads the next in the list
 		 *
-		 * @param imageId
+		 * @param {number} imageId
 		 * @private
 		 */
 		_updateSlideshow: function (imageId) {
@@ -281,6 +288,7 @@
 
 		/**
 		 * Exits the slideshow by going back in history
+		 *
 		 * @private
 		 */
 		_exit: function () {
@@ -297,6 +305,7 @@
 
 		/**
 		 * Launches fullscreen mode if the browser supports it
+		 *
 		 * @private
 		 */
 		_fullScreenToggle: function () {
@@ -305,6 +314,7 @@
 
 		/**
 		 * Resizes the image to its original size
+		 *
 		 * @private
 		 */
 		_zoomToOriginal: function () {
@@ -313,6 +323,7 @@
 
 		/**
 		 * Fits the image in the browser window
+		 *
 		 * @private
 		 */
 		_zoomToFit: function () {

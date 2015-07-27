@@ -1,5 +1,6 @@
-/* global OC, $, t, Gallery, oc_requesttoken */
-(function () {
+/* global Gallery */
+(function ($, OC, t, oc_requesttoken, Gallery) {
+	"use strict";
 	/**
 	 * Contains utility methods
 	 *
@@ -14,7 +15,7 @@
 		/**
 		 * Detects if the browser is a recent or an old version of Internet Explorer
 		 *
-		 * @returns {*}
+		 * @returns {string|bool}
 		 */
 		getIeVersion: function () {
 			// Blocking IE8
@@ -70,7 +71,7 @@
 		},
 
 		/**
-		 * Returns the token alowing access to files
+		 * Returns the token allowing access to files
 		 *
 		 * @returns {string}
 		 */
@@ -209,4 +210,4 @@
 	};
 
 	Gallery.Utility = Utility;
-})();
+})(jQuery, OC, t, oc_requesttoken, Gallery);
