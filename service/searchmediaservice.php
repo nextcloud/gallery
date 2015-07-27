@@ -39,7 +39,7 @@ class SearchMediaService extends FilesService {
 	 * @param string[] $supportedMediaTypes
 	 * @param array $features
 	 *
-	 * @return array <string,string|int> all the images we could find
+	 * @return array<string,string|int>|null all the images we could find
 	 */
 	public function getMediaFiles($folder, $supportedMediaTypes, $features) {
 		$this->supportedMediaTypes = $supportedMediaTypes;

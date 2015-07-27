@@ -45,7 +45,7 @@ trait JsonHttpError {
 		) {
 			$code = Http::STATUS_NOT_FOUND;
 		}
-		if ($exception instanceof ForbiddenServiceException){
+		if ($exception instanceof ForbiddenServiceException) {
 			$code = Http::STATUS_FORBIDDEN;
 		}
 
