@@ -117,7 +117,7 @@ class FilesService extends Service {
 	 */
 	protected function isAllowedAndAvailable($node) {
 		try {
-			if (!$node->isMounted()) {
+			if ($node && !$node->isMounted()) {
 				$allowed = $node->isReadable();
 				if ($this->isExternalShare($node)) {
 					$allowed = $allowed && $this->isExternalShareAllowed();
