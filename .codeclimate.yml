@@ -3,13 +3,13 @@ languages:
   JavaScript: true
   PHP: true
   Python: false
-  exclude_paths:
-    - 'appinfo/application.php'
-    - 'l10n/*'
-    - 'js/jquery*'
-    - 'js/bigshot*'
-    - 'vendor/*'
-    - 'js/vendor/*'
-    - 'templates/*'
-    - 'css/*'
-    - 'img/*'
+exclude_paths:
+  - 'appinfo/application.php'
+  - 'l10n/*'
+  - 'js/jquery*'
+  - 'js/bigshot*'
+  - 'vendor/*'
+  - 'js/vendor/*'
+  - 'templates/*'
+  - 'css/*'
+  - 'img/*'
