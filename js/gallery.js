@@ -243,8 +243,7 @@
 		showEmpty: function () {
 			var emptyContentElement = $('#emptycontent');
 			var message = t('gallery',
-				"No pictures found! If you upload pictures in the files app," +
-				"they will be displayed here.");
+				"No pictures found! If you upload pictures in the files app, they will be displayed here.");
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
