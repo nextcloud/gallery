@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - gallery
+ * ownCloud - galleryplus
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -10,11 +10,11 @@
  * @copyright Olivier Paroz 2014-2015
  */
 
-namespace OCA\Gallery\Service;
+namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Folder;
 
-use OCA\Gallery\Environment\NotFoundEnvException;
+use OCA\GalleryPlus\Environment\NotFoundEnvException;
 
 /**
  * Contains various methods to retrieve information from the filesystem
