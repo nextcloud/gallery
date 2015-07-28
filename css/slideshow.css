@@ -113,10 +113,10 @@
 }
 
 #slideshow > .play {
-	display: none;
 }
 
 #slideshow > .pause {
+	display: none;
 }
 
 #slideshow > .progress {

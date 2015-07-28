@@ -49,24 +49,21 @@
 		 * Updates the controls
 		 *
 		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
-		 * @param {bool} play
+		 * @param {bool} autoPlay
 		 */
-		update: function (images, play) {
+		update: function (images, autoPlay) {
 			this.images = images;
 			this.active = true;
-			// hide arrows and play/pause when only one pic
-			this.container.find('.next, .previous').toggle(this.images.length > 1);
-			if (this.images.length === 1) {
-				this.container.find('.play, .pause').hide();
-			}
+			this.container.find('.pause').hide();
+
+			// Hide prev/next and play buttons when we only have one pic
+			this.container.find('.next, .previous, .play').toggle(this.images.length > 1);
 
 			// Hide the toggle background button until we have something to show
 			this.container.find('.changeBackground').hide();
 
-			if (play) {
+			if (autoPlay) {
 				this._play();
-			} else {
-				this._pause();
 			}
 		},
 
@@ -87,6 +84,7 @@
 		 * Stops the timed slideshow
 		 */
 		stop: function () {
+			this.playing = false;
 			this.slideshow.stop();
 			this.zoomablePreview.stop();
 
@@ -211,7 +209,7 @@
 		},
 
 		/**
-		 * Starts the times slideshow
+		 * Starts the timed slideshow
 		 *
 		 * @private
 		 */
@@ -238,8 +236,7 @@
 		 * @private
 		 */
 		_playPauseButtonToggle: function () {
-			this.container.find('.pause').toggle();
-			this.container.find('.play').toggle();
+			this.container.find('.play, .pause').toggle();
 		},
 
 		/**

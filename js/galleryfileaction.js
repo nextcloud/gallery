@@ -126,7 +126,7 @@
 		 * @private
 		 */
 		_startSlideshow: function (images, start) {
-			galleryFileAction.slideShow.setImages(images);
+			galleryFileAction.slideShow.setImages(images, false);
 
 			var scrollTop = galleryFileAction.scrollContainer.scrollTop();
 			// This is only called when the slideshow is stopped
