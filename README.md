@@ -33,12 +33,15 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 
 ### Current
 * [Olivier Paroz (@oparoz)](https://github.com/oparoz)
-* All the people who have [provided patches](https://github.com/interfasys/galleryplus/pulls?q=is%3Apr+is%3Aclosed) over the years
+* [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
 
 ### Alumni
 * [Robin Appelman (@icewind1991)](https://github.com/icewind1991)
-* [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
-* All the people who have provided patches to [Gallery](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) and [Pictures](https://github.com/owncloud/gallery-old/pulls?q=is%3Apr+is%3Aclosed) over the years
+
+## Contributors
+
+* All the people who have provided patches to [Gallery+](https://github.com/interfasys/galleryplus/pulls?q=is%3Apr+is%3Aclosed), [Gallery(+)](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) and [Pictures](https://github.com/owncloud/gallery-old/pulls?q=is%3Apr+is%3Aclosed) over the years
+
 
 ## Requirements
 
