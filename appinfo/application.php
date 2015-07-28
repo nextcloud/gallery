@@ -28,7 +28,7 @@ use OCA\Gallery\Controller\PublicFilesController;
 use OCA\Gallery\Controller\PublicPreviewController;
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Preview\Preview;
-use OCA\Gallery\Service\FilesService;
+use OCA\Gallery\Service\SearchFolderService;
 use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\ConfigParser;
 use OCA\Gallery\Service\SearchMediaService;
@@ -100,7 +100,7 @@ class Application extends App {
 			return new FilesController(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$c->query('FilesService'),
+				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('Logger')
@@ -112,7 +112,7 @@ class Application extends App {
 			return new PublicFilesController(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$c->query('FilesService'),
+				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('Logger')
@@ -249,7 +249,6 @@ class Application extends App {
 					$c->query('AppName'),
 					$c->query('OCP\ILogger')
 				);
-
 			}
 			);
 		} else {
@@ -263,12 +262,11 @@ class Application extends App {
 		 * Services
 		 */
 		$container->registerService(
-			'FilesService', function (IContainer $c) {
-			return new FilesService(
+			'SearchFolderService', function (IContainer $c) {
+			return new SearchFolderService(
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('Logger')
-
 			);
 		}
 		);
@@ -279,7 +277,6 @@ class Application extends App {
 				$c->query('Environment'),
 				$c->query('ConfigParser'),
 				$c->query('Logger')
-
 			);
 		}
 		);
@@ -289,7 +286,6 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('Logger')
-
 			);
 		}
 		);
@@ -305,7 +301,6 @@ class Application extends App {
 				$c->query('Environment'),
 				$c->query('CustomPreviewManager'),
 				$c->query('Logger')
-
 			);
 		}
 		);
@@ -354,7 +349,6 @@ class Application extends App {
 		// Executed in the order that it is registered
 		$container->registerMiddleware('SharingCheckMiddleware');
 		$container->registerMiddleware('EnvCheckMiddleware');
-
 	}
 
 }

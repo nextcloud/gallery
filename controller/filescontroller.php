@@ -21,7 +21,7 @@ use OCP\ILogger;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
-use OCA\Gallery\Service\FilesService;
+use OCA\Gallery\Service\SearchFolderService;
 use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\SearchMediaService;
 
@@ -36,9 +36,9 @@ class FilesController extends Controller {
 	use JsonHttpError;
 
 	/**
-	 * @var FilesService
+	 * @var SearchFolderService
 	 */
-	private $filesService;
+	private $searchFolderService;
 	/**
 	 * @var ConfigService
 	 */
@@ -57,7 +57,7 @@ class FilesController extends Controller {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
-	 * @param FilesService $filesService
+	 * @param SearchFolderService $searchFolderService
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
 	 * @param ILogger $logger
@@ -65,14 +65,14 @@ class FilesController extends Controller {
 	public function __construct(
 		$appName,
 		IRequest $request,
-		FilesService $filesService,
+		SearchFolderService $searchFolderService,
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 
-		$this->filesService = $filesService;
+		$this->searchFolderService = $searchFolderService;
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
 		$this->logger = $logger;
@@ -103,7 +103,7 @@ class FilesController extends Controller {
 		try {
 			/** @var Folder $folderNode */
 			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
-				$this->filesService->getCurrentFolder(rawurldecode($location), $features);
+				$this->searchFolderService->getCurrentFolder(rawurldecode($location), $features);
 			$albumInfo =
 				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot, $features);
 
