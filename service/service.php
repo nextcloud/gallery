@@ -13,7 +13,6 @@
 namespace OCA\GalleryPlus\Service;
 
 use OCP\Files\Node;
-
 use OCP\ILogger;
 
 use OCA\GalleryPlus\Environment\Environment;
