@@ -4,11 +4,15 @@
 [![Codacy Badge](https://www.codacy.com/project/badge/02f02de5292e4f7393cd7e5697227a5a)](https://www.codacy.com/app/interfaSys/galleryplus)
 [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus)
 
-Fork of media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
+Fork of the official Gallery app for ownCloud which brings current features and more to older versions of ownCloud.
+ 
+This branch currently targets ownCloud 8.0.
+ 
+### What is Gallery?
 
-Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
+A media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
-This branch currently targets ownCloud 8.0
+This branch currently targets 8.1
 
 ![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
 ## Featuring
