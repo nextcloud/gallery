@@ -187,12 +187,8 @@ class PageController extends Controller {
 	 */
 	private function showPublicPage($token) {
 		$albumName = $this->environment->getSharedFolderName();
-		$server2ServerSharing = $this->appConfig->getAppValue(
-			'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
-		);
-		$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
-		$protected = $this->environment->isShareProtected();
-		$protected = ($protected) ? 'true' : 'false';
+		list($server2ServerSharing, $protected) = $this->getServer2ServerProperties();
+
 		// Parameters sent to the template
 		$params = [
 			'appName'              => $this->appName,
@@ -239,5 +235,21 @@ class PageController extends Controller {
 
 			return new RedirectResponse($url);
 		}
+	}
+
+	/**
+	 * Determines if we can add external shared to this instance
+	 *
+	 * @return array
+	 */
+	private function getServer2ServerProperties() {
+		$server2ServerSharing = $this->appConfig->getAppValue(
+			'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
+		);
+		$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
+		$protected = $this->environment->isShareProtected();
+		$protected = ($protected) ? 'true' : 'false';
+
+		return [$server2ServerSharing, $protected];
 	}
 }
