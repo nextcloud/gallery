@@ -67,7 +67,7 @@
 			var album = Gallery.albumMap[albumPath];
 			var images = album.images;
 			var startImage = Gallery.imageMap[path];
-			Gallery.slideShow(images, startImage);
+			Gallery.slideShow(images, startImage, false);
 		},
 
 		/**
