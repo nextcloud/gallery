@@ -96,26 +96,15 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$appName = $this->appName;
-		if (\OCP\App::isEnabled('galleryplus')) {
-			$url = $this->urlGenerator->linkToRoute(
-				$appName . '.page.error_page',
-				[
-					'message' => "You need to disable the Gallery+ app before being able to use the official Gallery app",
-					'code'    => Http::STATUS_INTERNAL_SERVER_ERROR
-				]
-			);
 
-			return new RedirectResponse($url);
-		} else {
-			// Parameters sent to the template
-			$params = ['appName' => $appName];
+		// Parameters sent to the template
+		$params = ['appName' => $appName];
 
-			// Will render the page using the template found in templates/index.php
-			$response = new TemplateResponse($appName, 'index', $params);
-			$this->addContentSecurityToResponse($response);
+		// Will render the page using the template found in templates/index.php
+		$response = new TemplateResponse($appName, 'index', $params);
+		$this->addContentSecurityToResponse($response);
 
-			return $response;
-		}
+		return $response;
 	}
 
 	/**
