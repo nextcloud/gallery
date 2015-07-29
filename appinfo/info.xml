@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <info>
 	<id>galleryplus</id>
-	<name>Gallery</name>
-	<description>Media gallery for ownCloud with the following features:
+	<name>Gallery+</name>
+	<description>Fork of the official Gallery app for ownCloud with the following features:
 
 		- Support for large selection of media types (depending on ownCloud setup)
 
