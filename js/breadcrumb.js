@@ -82,7 +82,6 @@
 		 * Clears the breadcrumbs and its tooltip
 		 */
 		_clear: function () {
-			$('.tipsy:last').remove();
 			this.breadcrumbsElement.children().remove();
 		},
 
@@ -164,10 +163,12 @@
 			// If we had to hide crumbs, we'll add a pay to go to the parent folder
 			if (shorten) {
 				crumbElement = this._push('...', ellipsisPath);
-				crumbElement.attr('title', ellipsisPath).tipsy({
+				crumbElement.attr('title', ellipsisPath).tooltip({
 					fade: true,
-					gravity: 'nw',
-					delayOut: 5
+					placement: 'bottom',
+					delay: {
+						hide: 5
+					}
 				});
 			}
 		}
