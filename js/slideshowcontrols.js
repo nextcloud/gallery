@@ -145,7 +145,7 @@
 				var zoomOutKeys = [48, 96, 79, 40]; // zero, o or down key
 				var zoomInKeys = [57, 105, 73, 38]; // 9, i or up key
 				if (evt.keyCode === escKey) {
-					makeCallBack(this._stop)(evt);
+					makeCallBack(this._exit)(evt);
 				} else if (evt.keyCode === leftKey) {
 					makeCallBack(this._previous)(evt);
 				} else if (evt.keyCode === rightKey) {
