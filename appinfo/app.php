@@ -54,9 +54,9 @@ $c->query('OCP\INavigationManager')
  */
 Util::addTranslations('galleryplus');
 
-// Hack which only loads the scripts in the Files app
+// Hack which only loads the scripts in the Files app, if the official Gallery is disabled
 $request = $c->query('Request');
-if (isset($request->server['REQUEST_URI'])) {
+if (isset($request->server['REQUEST_URI']) && !\OCP\App::isEnabled('gallery')) {
 	$url = $request->server['REQUEST_URI'];
 	if (preg_match('%index.php/apps/files(/.*)?%', $url)
 		|| preg_match('%index.php/s/(/.*)?%', $url)
