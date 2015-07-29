@@ -26,7 +26,7 @@
 
 		Provides a dedicated view of all images in a grid, adds image viewing capabilities to the
 		files app and adds a gallery view to public links.
-		Compatible with Firefox, Chrome and Internet Explorer 11
+		Compatible with Firefox, Chrome and Internet Explorer 9+
 	</description>
 	<licence>AGPL</licence>
 	<author>Olivier Paroz, Robin Appelman</author>

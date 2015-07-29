@@ -1,10 +1,11 @@
 owncloud-gallery (14.0.0)
-* Take over the Gallery namespace
+* Make Gallery the new official app to display images in ownCloud
 * Restore IE9/10 compatibility (@oparoz)
 * Restore IE8 compatibility for the slideshow (@oparoz)
 * Fix external share permission logic #218 (@oparoz)
-* Fix native SVG previews on IE #218 (@oparoz)
+* Fix native SVG previews on IE #238 (@oparoz)
 * Fix slideshow controls contrast, remove duplicate code #222 (@jancborchardt )
+* Fix slideshow when the folder contains a single image #246 (@oparoz)
 
 owncloud-gallery (13.0.0)
 * Caching and JS performance improvements (@oparoz)
