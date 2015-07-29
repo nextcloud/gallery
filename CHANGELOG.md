@@ -4,7 +4,7 @@ owncloud-galleryplus (14.0.0)
 * Fix external share permission logic #218 (@oparoz)
 * Fix native SVG previews on IE #218 (@oparoz)
 * Fix slideshow controls contrast, remove duplicate code #222 (@jancborchardt )
-* Don't crash and burn if we detect Pictures #1(@oparoz)
+* Don't crash and burn if we detect Pictures +#1 (@oparoz)
 
 owncloud-galleryplus (13.0.0)
 * Caching and JS performance improvements (@oparoz)
