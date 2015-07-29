@@ -100,7 +100,7 @@ class PageController extends Controller {
 			$url = $this->urlGenerator->linkToRoute(
 				$appName . '.page.error_page',
 				[
-					'message' => "You need to disable the Pictures app before being able to use the Gallery app",
+					'message' => "You need to disable the Pictures app before being able to use the Gallery+ app",
 					'code'    => Http::STATUS_INTERNAL_SERVER_ERROR
 				]
 			);
