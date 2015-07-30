@@ -8,7 +8,7 @@ php:
 
 env:
   global:
-    - CORE_BRANCH=master
+    - CORE_BRANCH=stable8.1
     - APP_NAME=galleryplus
   matrix:
     - DB=sqlite
@@ -16,7 +16,6 @@ env:
 branches:
   only:
     - master
-    - /^stable\d+(\.\d+)?$/
 
 before_install:
   - composer self-update
@@ -45,8 +44,6 @@ matrix:
       env: DB=mysql
     - php: 5.4
       env: DB=pgsql
-    - php: 5.4
-      env: "DB=mysql CORE_BRANCH=stable8.1"
   allow_failures:
     - php: hhvm
     - php: 7
