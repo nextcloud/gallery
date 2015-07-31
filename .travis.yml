@@ -46,7 +46,7 @@ after_script:
   # Go back to root folder
   - cd ../
   # Codacy coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php vendor/bin/codacycoverage clover; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php vendor/bin/codacycoverage clover build/logs/clover.xml; fi;"
   # Codeclimate coverage report
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php vendor/bin/test-reporter; fi;"
 
