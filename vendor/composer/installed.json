@@ -1,17 +1,17 @@
 [
     {
         "name": "symfony/yaml",
-        "version": "v2.7.2",
-        "version_normalized": "2.7.2.0",
+        "version": "v2.7.3",
+        "version_normalized": "2.7.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Yaml.git",
-            "reference": "4bfbe0ed3909bfddd75b70c094391ec1f142f860"
+            "reference": "71340e996171474a53f3d29111d046be4ad8a0ff"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Yaml/zipball/4bfbe0ed3909bfddd75b70c094391ec1f142f860",
-            "reference": "4bfbe0ed3909bfddd75b70c094391ec1f142f860",
+            "url": "https://api.github.com/repos/symfony/Yaml/zipball/71340e996171474a53f3d29111d046be4ad8a0ff",
+            "reference": "71340e996171474a53f3d29111d046be4ad8a0ff",
             "shasum": ""
         },
         "require": {
@@ -20,7 +20,7 @@
         "require-dev": {
             "symfony/phpunit-bridge": "~2.7"
         },
-        "time": "2015-07-01 11:25:50",
+        "time": "2015-07-28 14:07:07",
         "type": "library",
         "extra": {
             "branch-alias": {
