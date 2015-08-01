@@ -12,8 +12,6 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-use OCP\AppFramework\Http;
-
 /**
  * @package OCA\GalleryPlus\Controller
  */
