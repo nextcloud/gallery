@@ -14,7 +14,6 @@ namespace OCA\Gallery\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\File;
-use OCP\Files\Node;
 
 /**
  * Searches the instance for media files which can be shown
