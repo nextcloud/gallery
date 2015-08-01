@@ -21,9 +21,10 @@
 			// Blocking IE8
 			if ($('html').is('.ie8')) {
 				return 'unsupportedIe';
-			} else	if (navigator.userAgent.indexOf("MSIE") > 0) {
+			} else if (navigator.userAgent.indexOf("MSIE") > 0) {
 				return 'oldIe';
-			} else if (!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) {
+			} else if ((!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) ||
+				(navigator.userAgent.indexOf("Edge/") > 0)) {
 				return 'modernIe';
 			}
 
@@ -106,10 +107,10 @@
 			var height = Math.floor(screen.height * window.devicePixelRatio);
 
 			/* Find value of longest edge. */
-			var longEdge = Math.max( width, height );
+			var longEdge = Math.max(width, height);
 
 			/* Find the next larger image size. */
-			if ( longEdge % 100 !== 0 ){
+			if (longEdge % 100 !== 0) {
 				longEdge = ( longEdge + 100 ) - ( longEdge % 100 );
 			}
 
