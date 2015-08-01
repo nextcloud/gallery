@@ -2,7 +2,7 @@
   "name": "interfasys/galleryplus",
   "type": "project",
   "description": "Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.",
-  "license": "AGPL 3.0",
+  "license": "AGPL-3.0",
   "homepage": "https://github.com/interfasys/galleryplus",
   "authors": [
     {
