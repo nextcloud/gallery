@@ -14,8 +14,6 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IRequest;
 use OCP\ILogger;
 
-use OCP\AppFramework\Http;
-
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\ServiceException;
