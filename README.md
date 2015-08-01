@@ -3,6 +3,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/quality-score.png?b=stable8)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=stable8)
 [![Codacy Badge](https://www.codacy.com/project/badge/02f02de5292e4f7393cd7e5697227a5a)](https://www.codacy.com/app/interfaSys/galleryplus)
 [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9/mini.png)](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9)
 
 Fork of the official Gallery app for ownCloud which brings current features and more to older versions of ownCloud.
  
