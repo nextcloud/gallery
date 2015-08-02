@@ -25,7 +25,7 @@ use OCP\AppFramework\Utility\IControllerMethodReflector;
 /**
  * Checks whether the "sharing check" is enabled
  *
- * @package OCA\Files_Sharing\Middleware
+ * @package OCA\GalleryPlus\SharingCheckMiddleware
  */
 class SharingCheckMiddleware extends CheckMiddleware {
 
