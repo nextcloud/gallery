@@ -18,7 +18,6 @@ use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\ServiceException;
 
-
 /**
  * Class ConfigControllerTest
  *
@@ -144,18 +143,8 @@ class ConfigControllerTest extends \Test\TestCase {
 	 * @param bool $slideshow
 	 */
 	public function testGetConfig($features, $mimeTypes, $nativeSvgSupport, $slideshow) {
-
-		$this->configService->expects($this->once())
-							->method('getFeaturesList')
-							->willReturn($features);
-
-		$this->previewService->expects($this->once())
-							 ->method('getSupportedMediaTypes')
-							 ->with(
-								 $this->equalTo($slideshow),
-								 $this->equalTo($nativeSvgSupport)
-							 )
-							 ->willReturn($mimeTypes);
+		$this->mockFeaturesList($features);
+		$this->mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $mimeTypes);
 
 		$response = $this->controller->getConfig($slideshow);
 
@@ -166,29 +155,59 @@ class ConfigControllerTest extends \Test\TestCase {
 	 * Not being able to get a config file is not a hard failure
 	 */
 	public function testCannotGetConfig() {
-		$exception = new ServiceException('Config corrupt');
-		$errorMessage = $exception->getMessage() . "</br></br>Config location: /user1";
-		$features = ['error' => ['message' => $errorMessage]];
-		$nativeSvgSupport = false;
+		$features = $this->mockConfigRetrievalError();
 		$slideshow = true;
-
-		$this->configService->expects($this->once())
-							->method('getFeaturesList')
-							->willReturn($features);
-
-		$this->previewService->expects($this->once())
-							 ->method('getSupportedMediaTypes')
-							 ->with(
-								 $this->equalTo($slideshow),
-								 $this->equalTo($nativeSvgSupport)
-							 )
-							 ->willReturn($this->baseMimeTypes);
+		$nativeSvgSupport = false;
+		$this->mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $this->baseMimeTypes);
 
 		$response = $this->controller->getConfig($slideshow);
 
 		$this->assertEquals(
 			['features' => $features, 'mediatypes' => $this->baseMimeTypes], $response
 		);
+	}
+
+	/**
+	 * Mocks ConfigService->getFeaturesList
+	 *
+	 * @param $features
+	 */
+	private function mockFeaturesList($features) {
+		$this->configService->expects($this->any())
+							->method('getFeaturesList')
+							->willReturn($features);
+	}
+
+	/**
+	 * Mocks PreviewService->getSupportedMediaTypes
+	 *
+	 * @param $slideshow
+	 * @param $nativeSvgSupport
+	 * @param $mimeTypes
+	 */
+	private function mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $mimeTypes) {
+		$this->previewService->expects($this->any())
+							 ->method('getSupportedMediaTypes')
+							 ->with(
+								 $this->equalTo($slideshow),
+								 $this->equalTo($nativeSvgSupport)
+							 )
+							 ->willReturn($mimeTypes);
+	}
+
+	/**
+	 * Returns an error message instead of a proper features list
+	 *
+	 * @return array
+	 */
+	private function mockConfigRetrievalError() {
+		$exception = new ServiceException('Config corrupt');
+		$errorMessage = $exception->getMessage() . "</br></br>Config location: /user1";
+		$features = ['error' => ['message' => $errorMessage]];
+
+		$this->mockFeaturesList($features);
+
+		return $features;
 	}
 
 }
