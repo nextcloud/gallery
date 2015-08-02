@@ -29,6 +29,7 @@ OC.L10N.register(
     "Previous" : "Indietro",
     "Close" : "Chiudi",
     "Download" : "Scarica",
+    "Toggle background" : "Commuta lo sfondo",
     "This share is password-protected" : "Questa condivione è protetta da password",
     "The password is wrong. Try again." : "La password è errata. Prova ancora.",
     "Password" : "Password",
