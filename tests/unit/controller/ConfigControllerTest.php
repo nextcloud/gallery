@@ -55,6 +55,8 @@ class ConfigControllerTest extends \Test\TestCase {
 	 * Test set up
 	 */
 	public function setUp() {
+		parent::setUp();
+
 		$this->request = $this->getMockBuilder('\OCP\IRequest')
 							  ->disableOriginalConstructor()
 							  ->getMock();
