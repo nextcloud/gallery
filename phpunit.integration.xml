@@ -1,0 +1,23 @@
+<phpunit bootstrap="tests/integration/bootstrap.php">
+	<testsuites>
+		<testsuite name="integration">
+			<directory>./tests/integration</directory>
+		</testsuite>
+	</testsuites>
+	<!-- filters for code coverage -->
+	<filter>
+		<whitelist>
+			<directory suffix=".php">../galleryplus</directory>
+			<exclude>
+				<directory suffix=".php">../galleryplus/l10n</directory>
+				<directory suffix=".php">../galleryplus/templates</directory>
+				<directory suffix=".php">../galleryplus/tests</directory>
+				<directory suffix=".php">../galleryplus/vendor</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+	<logging>
+		<!-- and this is where your report will be written -->
+		<log type="coverage-clover" target="./build/logs/tmp/integration-clover.xml"/>
+	</logging>
+</phpunit>
