@@ -40,11 +40,11 @@ script:
   - phpunit -c phpunit.integration.xml
 
   # Merge clover reports
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php vendor/bin/phpcov merge --clover build/logs/clover.xml build/logs; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php vendor/bin/phpcov merge --clover ./build/logs/clover.xml ./build/logs; fi;"
 
   # Create coverage report
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover ../build/logs/clover.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi"
 
 after_script:
   # Codacy coverage report
