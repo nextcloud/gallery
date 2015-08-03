@@ -23,6 +23,6 @@
 	</filter>
 	<logging>
 		<!-- and this is where your report will be written -->
-		<log type="coverage-clover" target="./tests/cov/unit-clover.xml"/>
+		<log type="coverage-php" target="./tests/unit-clover.cov"/>
 	</logging>
 </phpunit>
