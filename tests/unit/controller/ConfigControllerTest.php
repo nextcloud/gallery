@@ -21,7 +21,7 @@ use OCA\GalleryPlus\Service\ServiceException;
 /**
  * Class ConfigControllerTest
  *
- * @package OCA\Gallery\Controller
+ * @package OCA\GalleryPlus\Controller
  */
 class ConfigControllerTest extends \Test\TestCase {
 
