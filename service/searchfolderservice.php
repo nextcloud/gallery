@@ -19,7 +19,7 @@ use OCA\GalleryPlus\Environment\NotFoundEnvException;
 /**
  * Contains various methods to retrieve information from the filesystem
  *
- * @package OCA\Gallery\Service
+ * @package OCA\GalleryPlus\Service
  */
 class SearchFolderService extends FilesService {
 	/**

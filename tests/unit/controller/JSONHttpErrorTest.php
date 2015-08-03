@@ -20,7 +20,7 @@ use OCA\GalleryPlus\Service\ForbiddenServiceException;
 /**
  * Class JsonHttpErrorTest
  *
- * @package OCA\Gallery\Controller
+ * @package OCA\GalleryPlus\Controller
  */
 class JsonHttpErrorTest extends \Test\TestCase {
 
