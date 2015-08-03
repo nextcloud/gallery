@@ -26,7 +26,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
 
 /**
- * @package OCA\Files_Sharing\Middleware\SharingCheckMiddleware
+ * @package OCA\Gallery\Middleware\SharingCheckMiddleware
  *
  * @todo It's not possible to test if beforeController still works as expected when sharing is
  *     disabled without creating a full working environment or by refactoring isSharingEnabled
