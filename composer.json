@@ -26,9 +26,5 @@
   "require": {
     "php": ">=5.4.0",
     "symfony/yaml": "~2.6"
-  },
-  "require-dev": {
-    "codeclimate/php-test-reporter": "dev-master",
-    "codacy/coverage": "dev-master"
   }
 }

@@ -36,23 +36,6 @@ script:
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.4' ]; then find . -name \*.php -print0 | xargs -0 -n 1 -P 4 php -l; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then find . -name \*.php -exec php -l "{}" \;; fi"
 
-  # Run phpunit tests
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7' ]; then phpunit -c phpunit.xml; fi;"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7' ]; then phpunit -c phpunit.integration.xml; fi;"
-
-  # Merge clover reports
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/phpcov merge --clover build/logs/clover.xml tests; fi;"
-
-  # Create coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi"
-
-after_script:
-  # Codacy coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codacycoverage clover; fi;"
-  # Codeclimate coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/test-reporter; fi;"
-
 matrix:
   include:
     - php: 5.4
