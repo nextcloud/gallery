@@ -34,8 +34,9 @@ script:
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then find . -name \*.php -exec php -l "{}" \;; fi"
 
   # Run phpunit tests
-  - phpunit -c phpunit.xml
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7' ]; then phpunit -c phpunit.xml; fi;"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7' ]; then phpunit -c phpunit.integration.xml; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7' ]; then phpunit -c phpunit.xml --coverage-clover tests/clover.xml; fi;"
 
   # Merge clover reports
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/phpcov merge --clover tests/clover.xml tests; fi;"
