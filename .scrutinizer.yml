@@ -21,7 +21,7 @@ tools:
     php_analyzer: true
     external_code_coverage:
         timeout: 3600 # Timeout in seconds. 60 minutes
-        runs: 7 # The number of scenarios we're testing with Travis
+        runs: 8 # The number of scenarios we're testing with Travis
 
 checks:
     php:
