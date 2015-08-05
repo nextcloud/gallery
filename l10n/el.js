@@ -45,8 +45,17 @@ OC.L10N.register(
     "the file is corrupt" : "το αρχείο είναι κατεστραμμένο",
     "the encryption key is missing" : "λείπει το κλειδί κρυπτογράφησης",
     "Here is the error message returned by the server: " : "Εδώ είναι το μήνυμα σφάλματος που επέστρεψε ο διακομιστής:",
+    "For more information, please contact your friendly ownCloud administrator." : "Για περισσότερες πληροφορίες παρακαλούμε, επικοινωνήστε με το φιλικό διαχειριστή του συστήματός σας.",
+    "Sorry, but the server could not fulfill your request." : "Συγγνώμη αλλά ο διακομιστής δεν μπόρεσε να εκπληρώσει το αίτημά σας.",
+    "Possible reasons for the problem:" : "Πιθανές αιτίες του πορβλήματος:",
+    "a conflicting app was installed" : "εγκαταστάθηκε μια ασύμβατη εφαρμογή",
+    "a required component is missing or was disconnected" : "λείπει ή δεν είναι συνδεδεμένο ένα απαιτούμενο στοιχείο",
+    "the filesystem is not readable" : "το σύστημα αρχείων δεν είναι αναγνώσιμο",
+    "Sorry, this link doesn't seem to work anymore." : "Συγγνώμη, αυτός ο σύνδεσμος φαίνεται ότι δεν ισχύει πια.",
     "the item was removed" : "το αντικείμενο απομακρύνθηκε",
+    "the link has expired" : "ο σύνδεσμος έληξε",
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
+    "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Add to your ownCloud" : "Προσθήκη στο ownCloud σου"
 },
 "nplurals=2; plural=(n != 1);");
