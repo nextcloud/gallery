@@ -259,9 +259,9 @@ class PageController extends Controller {
 			'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
 		);
 		$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
-		$protected = $this->environment->isShareProtected();
-		$protected = ($protected) ? 'true' : 'false';
+		$password = $this->environment->getSharePassword();
+		$passwordProtected = ($password) ? 'true' : 'false';
 
-		return [$server2ServerSharing, $protected];
+		return [$server2ServerSharing, $passwordProtected];
 	}
 }
