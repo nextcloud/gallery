@@ -63,7 +63,7 @@ class SearchFolderService extends FilesService {
 		$node = null;
 		$location = $this->validateLocation($location, $depth);
 		try {
-			$node = $this->environment->getResourceFromPath($location);
+			$node = $this->environment->getNodeFromVirtualRoot($location);
 			if ($node->getType() === 'file') {
 				$node = $node->getParent();
 			}

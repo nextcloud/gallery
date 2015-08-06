@@ -12,6 +12,9 @@
 
 namespace OCA\Gallery\Environment;
 
+use OCP\Files\Folder;
+use OCP\Files\Node;
+
 use \OCA\Gallery\Tests\Integration\GalleryIntegrationTest;
 
 /**
@@ -39,7 +42,7 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	 * Tests is setting up the environment using a token works
 	 */
 	public function testSetTokenBasedEnv() {
-		$token = $this->prepareFolderToken();
+		list($token) = $this->prepareFolderToken();
 		$this->environment = $this->setTokenBasedEnv($token);
 	}
 
@@ -56,7 +59,7 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	}
 
 	public function testGetResourceFromIdAsATokenUser() {
-		$token = $this->prepareFolderToken();
+		list($token) = $this->prepareFolderToken();
 		$this->environment = $this->setTokenBasedEnv($token);
 
 		$sharedFolder = $this->rootFolder->get($this->sharerUserId . '/files/folder1');
@@ -69,7 +72,7 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	}
 
 	public function testGetSharedNodeAsATokenUser() {
-		$token = $this->prepareFolderToken();
+		list($token) = $this->prepareFolderToken();
 		$this->environment = $this->setTokenBasedEnv($token);
 
 		$sharedFolder = $this->rootFolder->get($this->sharerUserId . '/files/folder1');
@@ -86,7 +89,7 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	 * @expects EnvironmentException
 	 */
 	public function testGetSharedNodeAsATokenUserWhenGivenFileToken() {
-		$token = $this->prepareFileToken();
+		list($token) = $this->prepareFileToken();
 		$this->environment = $this->setTokenBasedEnv($token);
 
 		$this->environment->getSharedNode();
@@ -96,14 +99,15 @@ class EnvironmentTest extends GalleryIntegrationTest {
 		$this->environment = $this->setUserBasedEnv();
 
 		$result = $this->environment->getVirtualRootFolder();
-		$userFolderId = $this->server->getUserFolder($this->userId)
-									 ->getId();
+		/*$userFolderId = $this->server->getUserFolder($this->userId)
+									 ->getId();*/
+		$userFolderId = $this->userFolder->getId();
 
 		$this->assertEquals($userFolderId, $result->getId());
 	}
 
 	public function testGetVirtualRootFolderAsATokenUser() {
-		$token = $this->prepareFolderToken();
+		list($token) = $this->prepareFolderToken();
 		$this->environment = $this->setTokenBasedEnv($token);
 
 		$result = $this->environment->getVirtualRootFolder();
@@ -123,10 +127,126 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	}
 
 	public function testGetUserIdAsATokenUser() {
-		$token = $this->prepareFolderToken();
+		list($token) = $this->prepareFolderToken();
 		$this->environment = $this->setTokenBasedEnv($token);
 
 		$result = $this->environment->getUserId();
 		$this->assertEquals($this->sharerUserId, $result);
+	}
+
+	public function testGetSharedFolderNameAsATokenUser() {
+		list($token, $sharedFolder) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result = $this->environment->getSharedFolderName();
+		$this->assertEquals($sharedFolder->getName(), $result);
+	}
+
+	public function testGetSharePasswordAsATokenUser() {
+		/** @type Node $sharedFolder */
+		list($token) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result = $this->environment->getSharePassword();
+
+		// The password is defined in the bootstrap
+		$this->assertTrue(
+			$this->server->getHasher()
+						 ->verify('sh@red p@ssw0rd', $result)
+		);
+	}
+
+	public function testGetPathFromVirtualRootAsALoggedInUser() {
+		$this->environment = $this->setUserBasedEnv();
+		$result =
+			$this->environment->getPathFromVirtualRoot(
+				$this->userFolder->get('folder1/folder1.1/file1.1')
+			);
+
+		$this->assertEquals('folder1/folder1.1/file1.1', $result);
+	}
+
+	public function testGetPathFromVirtualRootAsATokenUser() {
+		/** @type Folder $sharedFolder */
+		list($token, $sharedFolder) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result =
+			$this->environment->getPathFromVirtualRoot($sharedFolder->get('folder1.1/file1.1'));
+
+		$this->assertEquals('folder1.1/file1.1', $result);
+	}
+
+	public function testGetPathFromUserFolderAsALoggedInUser() {
+		$this->environment = $this->setUserBasedEnv();
+
+		$result =
+			$this->environment->getPathFromUserFolder(
+				$this->userFolder->get('folder1/folder1.1/file1.1')
+			);
+
+		$this->assertEquals('folder1/folder1.1/file1.1', $result);
+	}
+
+	public function testGetPathFromUserFolderAsATokenUser() {
+		/** @type Folder $sharedFolder */
+		list($token, $sharedFolder) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result =
+			$this->environment->getPathFromUserFolder($sharedFolder->get('folder1.1/file1.1'));
+
+		$this->assertEquals('folder1/folder1.1/file1.1', $result);
+	}
+
+	public function testGetDisplayNameAsATokenUser() {
+		list($token) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result = $this->environment->getDisplayName();
+
+		$this->assertEquals('UberTester (' . $this->sharerUserId . ')', $result);
+	}
+
+	public function testGetNodeFromVirtualRootAsALoggedInUser() {
+		$this->environment = $this->setUserBasedEnv();
+		$result = $this->environment->getNodeFromVirtualRoot('folder1/folder1.1/file1.1');
+
+		$file = $this->userFolder->get('folder1/folder1.1/file1.1');
+
+		$this->assertEquals($file, $result);
+	}
+
+	public function testGetNodeFromVirtualRootAsATokenUser() {
+		/** @type Folder $sharedFolder */
+		list($token, $sharedFolder) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result = $this->environment->getNodeFromVirtualRoot('folder1.1/file1.1');
+
+		$file = $sharedFolder->get('folder1.1/file1.1');
+
+		$this->assertEquals($file, $result);
+	}
+
+	public function testGetNodeFromUserFolderAsALoggedInUser() {
+		$this->environment = $this->setUserBasedEnv();
+		$result = $this->environment->getNodeFromUserFolder('folder1/folder1.1/file1.1');
+
+		$file = $this->userFolder->get('folder1/folder1.1/file1.1');
+
+		$this->assertEquals($file, $result);
+	}
+
+	public function testGetNodeFromUserFolderAsATokenUser() {
+		/** @type Folder $sharedFolder */
+		list($token, $sharedFolder) = $this->prepareFolderToken();
+		$this->environment = $this->setTokenBasedEnv($token);
+
+		$result = $this->environment->getNodeFromUserFolder('folder1/folder1.1/file1.1');
+
+		$file = $sharedFolder->get('folder1.1/file1.1');
+
+		$this->assertEquals($file, $result);
 	}
 }

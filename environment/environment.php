@@ -86,7 +86,7 @@ class Environment {
 	/**
 	 * @var string
 	 */
-	private $shareWith;
+	private $sharePassword;
 
 	/***
 	 * Constructor
@@ -134,7 +134,7 @@ class Environment {
 
 		$this->folderName = $linkItem['file_target'];
 		$this->userId = $rootLinkItem['uid_owner'];
-		$this->shareWith = $linkItem['share_with'];
+		$this->sharePassword = $linkItem['share_with'];
 	}
 
 	/**
@@ -149,26 +149,25 @@ class Environment {
 	}
 
 	/**
-	 * Returns the resource located at the given path
-	 *
-	 * The path starts from the user's files folder because we'll query that folder to get the
-	 * information we need. The resource is either a File or a Folder
+	 * Returns the Node based on a path starting from the virtual root
 	 *
 	 * @param string $subPath
 	 *
 	 * @return File|Folder
 	 */
-	public function getResourceFromPath($subPath) {
+	public function getNodeFromVirtualRoot($subPath) {
 		$relativePath = $this->getRelativePath($this->fromRootToFolder);
 		$path = $relativePath . '/' . $subPath;
-		$node = $this->getNode($path);
+		$node = $this->getNodeFromUserFolder($path);
 
 		return $this->getResourceFromId($node->getId());
 	}
 
 	/**
-	 * Returns the Node based on the current user's files folder and a given
-	 * path
+	 * Returns the Node based on a path starting from the files' owner user folder
+	 *
+	 * When logged in, this is the current user's user folder
+	 * When visiting a link, this is the sharer's user folder
 	 *
 	 * @param string $path
 	 *
@@ -176,7 +175,7 @@ class Environment {
 	 *
 	 * @throws EnvironmentException
 	 */
-	public function getNode($path) {
+	public function getNodeFromUserFolder($path) {
 		$node = false;
 		$folder = $this->userFolder;
 		if ($folder === null) {
@@ -279,12 +278,12 @@ class Environment {
 	}
 
 	/**
-	 * Returns if the share is protected (share_with === true)
+	 * Returns the password for the share, if there is one
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function isShareProtected() {
-		return $this->shareWith;
+	public function getSharePassword() {
+		return $this->sharePassword;
 	}
 
 	/**

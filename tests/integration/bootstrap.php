@@ -66,13 +66,12 @@ class GalleryIntegrationTest extends TestCase {
 		$this->rootFolder = $this->server->getRootFolder();
 
 		/**
-		 * FIXME Anybody is welcome to fix the class to make it work with encryption
+		 * Logging hooks are missing at the moment, so we need to disable encryption
 		 *
-		 * This is the exception being thrown when trying to write to the filesystem
-		 * OCA\Encryption\Exceptions\PrivateKeyMissingException: Private Key missing for user: please try to log-out and log-in again
+		 * @link https://github.com/owncloud/core/issues/18085#issuecomment-128093797
 		 */
-		$this->server->getAppManager()
-					 ->disableApp('encryption');
+		$this->server->getConfig()
+					 ->setAppValue('core', 'encryption_enabled', 'no');
 
 		// This is because the filesystem is not properly cleaned up sometimes
 		$this->server->getAppManager()
@@ -136,7 +135,7 @@ class GalleryIntegrationTest extends TestCase {
 	}
 
 	/**
-	 * @param strong $token
+	 * @param string $token
 	 *
 	 * @return mixed
 	 */
@@ -152,7 +151,7 @@ class GalleryIntegrationTest extends TestCase {
 	/**
 	 * Creates a token for a file
 	 *
-	 * @return bool|string
+	 * @return array<bool|string|File>
 	 */
 	protected function prepareFileToken() {
 		$sharedFolder = $this->createEnv($this->sharerUserId, $this->sharerPassword);
@@ -167,13 +166,13 @@ class GalleryIntegrationTest extends TestCase {
 
 		$this->logout();
 
-		return $token;
+		return [$token, $sharedFile];
 	}
 
 	/**
 	 * Creates a token for a folder
 	 *
-	 * @return bool|string
+	 * @return array<bool|string|Folder>
 	 */
 	protected function prepareFolderToken() {
 		$sharedFolder = $this->createEnv($this->sharerUserId, $this->sharerPassword);
@@ -183,7 +182,7 @@ class GalleryIntegrationTest extends TestCase {
 
 		$this->logout();
 
-		return $token;
+		return [$token, $sharedFolder];
 	}
 
 	/**
@@ -222,6 +221,9 @@ class GalleryIntegrationTest extends TestCase {
 	private function createEnv($userId, $userPassword) {
 		$this->setupUser($userId, $userPassword);
 		$userFolder = $this->server->getUserFolder($userId);
+		$user = $this->server->getUserManager()
+							 ->get($userId);
+		$user->setDisplayName('UberTester (' . $userId . ')');
 
 		$folder1 = $userFolder->newFolder('folder1');
 		$folder1->newFile('file1');
@@ -243,7 +245,7 @@ class GalleryIntegrationTest extends TestCase {
 					 ->setAppValue('core', 'shareapi_allow_links', 'yes');
 
 		return Share::shareItem(
-			$nodeType, $nodeId, \OCP\Share::SHARE_TYPE_LINK, $this->userId,
+			$nodeType, $nodeId, \OCP\Share::SHARE_TYPE_LINK, 'sh@red p@ssw0rd',
 			\OCP\Constants::PERMISSION_ALL
 		);
 	}
