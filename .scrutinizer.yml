@@ -13,6 +13,7 @@ filter:
         - 'templates/*'
         - 'css/*'
         - 'img/*'
+        - 'tests/*'
 
 tools:
     sensiolabs_security_checker: true
