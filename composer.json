@@ -25,5 +25,8 @@
   },
   "require": {
     "symfony/yaml": "~2.6"
+  },
+  "require-dev": {
+    "Codeception/Codeception": "2.1.*"
   }
 }

@@ -12,10 +12,6 @@
 
 namespace OCA\Gallery\Tests\Integration;
 
-require_once __DIR__ . '/../../../../lib/base.php';
-
-use Test\TestCase;
-
 use OCP\Share;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
@@ -33,7 +29,7 @@ use OCA\Gallery\Environment\Environment;
  *
  * @package OCA\Gallery\Tests\Integration
  */
-class GalleryIntegrationTest extends TestCase {
+abstract class GalleryIntegrationTest extends \Test\TestCase {
 
 	/** @var string */
 	protected $appName = 'gallery';
@@ -60,7 +56,7 @@ class GalleryIntegrationTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$app = new Application($this->appName);
+		$app = new Application();
 		$this->container = $app->getContainer();
 		$this->server = $this->container->getServer();
 		$this->rootFolder = $this->server->getRootFolder();
