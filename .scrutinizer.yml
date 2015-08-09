@@ -6,8 +6,6 @@ filter:
     excluded_paths:
         - 'appinfo/application.php'
         - 'l10n/*'
-        - 'js/jquery*'
-        - 'js/bigshot*'
         - 'vendor/*'
         - 'js/vendor/*'
         - 'templates/*'
