@@ -15,7 +15,7 @@ namespace OCA\GalleryPlus\Environment;
 use OCP\Files\Folder;
 use OCP\Files\Node;
 
-use \OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
+use OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
 
 /**
  * Class EnvironmentTest

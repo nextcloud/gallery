@@ -1,0 +1,33 @@
+actor: Tester
+paths:
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+settings:
+    bootstrap: _bootstrap.php
+    colors: true
+    memory_limit: 1024M
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+coverage:
+    enabled: true
+    include:
+        - appinfo/*
+        - controller/*
+        - environment/*
+        - http/*
+        - middleware/*
+        - preview/*
+        - service/*
+    exclude:
+        - css/*
+        - documentation/*
+        - img/*
+        - js/*
+        - l10n/*
+        - templates/*
+        - tests/*
+        - vendor/*

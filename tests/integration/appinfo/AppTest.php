@@ -12,7 +12,7 @@
 
 namespace OCA\GalleryPlus\AppInfo;
 
-use \OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
+use OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
 
 /**
  * Class AppTest
