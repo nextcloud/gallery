@@ -12,6 +12,13 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+        - Codeception\Extension\PhpBuiltinServer
+    config:
+        Codeception\Extension\PhpBuiltinServer:
+            hostname: localhost
+            port: 8000
+            documentRoot: ../..
+            startDelay: 1
 coverage:
     enabled: true
     include:
