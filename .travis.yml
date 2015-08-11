@@ -22,28 +22,44 @@ branches:
     - master
 
 before_install:
+  # Setup Selenium
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - wget https://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.0.jar
+  - java -jar selenium-server-standalone-2.47.0.jar -port 4444 >/dev/null 2>&1 & # WARNING - Takes a long time to start up. Keep here
+
+  # Download the latest PhantomJS
+  #- mkdir travis-phantomjs
+  #- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  #- tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
+  #- export PATH=$PWD/travis-phantomjs:$PATH
+  # Ghostdriver does not work on Travis# - phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
+
+  # Getting dependencies
   - composer self-update
   - composer install --prefer-dist --no-interaction -o
-  - composer require phpunit/phpcov:*
+
+  # Installing ownCloud
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
   - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
   - cd ../core
   - php occ app:enable $APP_NAME
 
 before_script:
-  - php -S localhost:8000 &
-  - phantomjs --webdriver=4444 &
+  # Make sure Webdriver is running
+  - curl http://localhost:4444/wd/hub/status
+  #- phantomjs --version
 
 script:
   # Test lint
   - cd apps/$APP_NAME
   - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
-  # Run tests
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration --coverage --coverage-xml; fi;"
-
-  # Merge clover reports
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/phpcov merge --clover build/logs/clover.xml tests; fi;"
+  # Run unit, integration and API tests, with code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml; fi;"
+  # Acceptance tests, using Firefox, without code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run acceptance --env firefox; fi;"
 
   # Create coverage report
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
@@ -51,9 +67,9 @@ script:
 
 after_script:
   # Codacy coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codacycoverage clover; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codacycoverage clover tests/_output/coverage.xml; fi;"
   # Codeclimate coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/test-reporter; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/test-reporter tests/_output/coverage.xml; fi;"
 
 matrix:
   include:
