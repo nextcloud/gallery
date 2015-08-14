@@ -8,6 +8,7 @@ class_name: AcceptanceTester
 modules:
     enabled:
          - \Helper\Acceptance
+         - \Helper\DataSetup
          - WebDriver:
              url: http://localhost:8000
              browser: phantomjs

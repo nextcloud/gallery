@@ -3,3 +3,4 @@ modules:
     enabled:
         - Asserts
         - \Helper\Unit
+        - \Helper\DataSetup
