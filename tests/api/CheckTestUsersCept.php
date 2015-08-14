@@ -13,29 +13,17 @@
 use Codeception\Util\Xml as XmlUtils;
 
 $I = new ApiTester($scenario);
-$I->wantTo('create a user via the provisioning API');
+$I->wantTo('make sure my test users have been created');
 $baseUrl = '/ocs/v1.php/cloud';
 $I->amHttpAuthenticated('admin', 'admin');
-$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
-$I->sendPOST($baseUrl . '/users', ['userid' => 'test', 'password' => 'test']);
+$I->sendGET($baseUrl . '/users/tester');
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsXml();
 $I->seeXmlResponseIncludes(
 	XmlUtils::toXml(
 		['status'   => 'ok']
 ));
-
-// Make sure the user exists
-$I->sendGET($baseUrl . '/users/test');
-$I->seeResponseCodeIs(200);
-$I->seeResponseIsXml();
-$I->seeXmlResponseIncludes(
-	XmlUtils::toXml(
-		['status'   => 'ok']
-));
-
-// Delete the user
-$I->sendDELETE($baseUrl . '/users/test');
+$I->sendGET($baseUrl . '/users/sharer');
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsXml();
 $I->seeXmlResponseIncludes(
