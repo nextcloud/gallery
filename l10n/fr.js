@@ -24,7 +24,7 @@ OC.L10N.register(
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Erreur !</strong> Impossible de générer un aperçu de ce fichier.<br>",
     "<strong>Error!</strong> Your browser can't display SVG files.<br>" : "<strong>Erreur !</strong> Votre navigateur ne sait pas afficher les fichiers SVG.<br>",
     "Next" : "Suivant",
-    "Play" : "Lire",
+    "Play" : "Démarrer",
     "Pause" : "Pause",
     "Previous" : "Précédent",
     "Close" : "Fermer",
