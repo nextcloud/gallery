@@ -10,6 +10,8 @@ env:
   global:
     - CORE_BRANCH=master
     - APP_NAME=gallery
+    - GH_REF: github.com/owncloud/gallery.git
+    - secure: "cLmMqrbVZrvn2GAoVs6JWa5h70tzrAISjPZUfENjl0KYT6B84z3B94W/dGU+I2mxwvyBqEP+x83Bih2CxEflqc7tJmdqC+MM/ZZiigPX7RCjq5XHbzUpPpMbC8MFxT2K3jcFXUitfwZvNaZXJIiK3ZQJU4ayKaegLvI91x1SqH0="
   matrix:
     - DB=sqlite
 
@@ -26,14 +28,17 @@ before_install:
   - wget https://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.0.jar
   - java -jar selenium-server-standalone-2.47.0.jar -port 4444 >/dev/null 2>&1 & # WARNING - Takes a long time to start up. Keep here
 
-  # Download the latest PhantomJS
-  - mkdir travis-phantomjs
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
-  # Ghostdriver does not work on Travis# - phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
+  # Ghostdriver does not work on Travis - Download the latest PhantomJS
+  #- mkdir travis-phantomjs
+  #- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  #- tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
+  #- export PATH=$PWD/travis-phantomjs:$PATH
+  #- phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
 
   # Getting dependencies
+  - sudo apt-get -qq update > /dev/null
+  - sudo apt-get -qq install graphviz > /dev/null
+  - phpenv rehash > /dev/null
   - composer self-update
   - composer install -o
 
@@ -46,7 +51,7 @@ before_install:
 before_script:
   # Make sure Webdriver is running
   - curl http://localhost:4444/wd/hub/status
-  - phantomjs --version
+  #- phantomjs --version
 
 script:
   # Test lint
@@ -55,13 +60,20 @@ script:
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then find . -name \*.php -exec php -l "{}" \;; fi"
 
   # Run unit, integration and API tests, with code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # Acceptance tests, using Firefox, without code coverage
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run acceptance --env firefox; fi;"
 
   # Send coverage report to Scrutinizer
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
+
+  # Generate API documentation
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/phpdoc run; fi"
+  # Generate Wiki documentation
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then git submodule update --init; fi"
+  # Send documentation to Github Pages
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
 
 matrix:
   include:

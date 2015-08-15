@@ -28,6 +28,7 @@
   },
   "require-dev": {
     "codeception/codeception": "2.1.*",
-    "codeception/phpbuiltinserver": "*"
+    "codeception/phpbuiltinserver": "*",
+    "phpdocumentor/phpdocumentor": "^2.8"
   }
 }
