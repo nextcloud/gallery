@@ -23,7 +23,7 @@ branches:
 
 before_install:
   - composer self-update
-  - composer install --prefer-source --no-interaction -o
+  - composer install --prefer-dist --no-interaction -o
   - composer require phpunit/phpcov:*
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
   - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
@@ -33,8 +33,7 @@ before_install:
 script:
   # Test lint
   - cd apps/$APP_NAME
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.4' ]; then find . -name \*.php -print0 | xargs -0 -n 1 -P 4 php -l; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then find . -name \*.php -exec php -l "{}" \;; fi"
+  - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
 matrix:
   include:
