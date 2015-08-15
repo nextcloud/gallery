@@ -56,8 +56,7 @@ before_script:
 script:
   # Test lint
   - cd apps/$APP_NAME
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.4' ]; then find . -name \*.php -print0 | xargs -0 -n 1 -P 4 php -l; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ]; then find . -name \*.php -exec php -l "{}" \;; fi"
+  - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
   # Run unit, integration and API tests, with code coverage
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"

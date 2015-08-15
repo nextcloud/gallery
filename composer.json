@@ -29,6 +29,8 @@
   "require-dev": {
     "codeception/codeception": "2.1.*",
     "codeception/phpbuiltinserver": "*",
-    "phpdocumentor/phpdocumentor": "^2.8"
+    "phpdocumentor/phpdocumentor": "^2.8",
+	"jakub-onderka/php-parallel-lint": "0.*",
+	"jakub-onderka/php-console-highlighter": "0.*"
   }
 }
