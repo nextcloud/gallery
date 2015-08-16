@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2014-2015
  */
 
 namespace OCA\GalleryPlus\Controller;
@@ -15,18 +15,18 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IRequest;
 use OCP\ILogger;
 
-use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
 
 use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\SearchMediaService;
 
 /**
- * Class FilesController
+ * Class FilesApiController
  *
  * @package OCA\GalleryPlus\Controller
  */
-class FilesController extends Controller {
+class FilesApiController extends ApiController {
 
 	use Files;
 	use JsonHttpError;
@@ -59,6 +59,8 @@ class FilesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * Returns a list of all media files available to the authenticated user
 	 *

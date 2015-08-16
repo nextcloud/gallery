@@ -12,7 +12,7 @@
 
 namespace OCA\GalleryPlus\Tests\Integration;
 
-use \Helper\CoreTestCase;
+use Helper\CoreTestCase;
 
 use OCP\Share;
 use OCP\Files\Node;
