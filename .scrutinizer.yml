@@ -12,6 +12,8 @@ filter:
         - 'css/*'
         - 'img/*'
         - 'tests/*'
+        - 'build/*'
+        - 'documentation/*'
 
 tools:
     sensiolabs_security_checker: true
