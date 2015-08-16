@@ -103,7 +103,7 @@ $I->see('Welcome, Davert!');
 
 Before running acceptance tests, you need to start PhantomJS manually
 
-`phantomjs --webdriver=4444 &`
+`# phantomjs --webdriver=4444 &`
 
 then you simply do:
 
