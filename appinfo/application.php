@@ -14,6 +14,12 @@ namespace OCA\GalleryPlus\AppInfo;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// A production environment will not have xdebug enabled and
+// a development environment should have the dev packages installed
+if (extension_loaded('xdebug')) {
+	include_once __DIR__ . '/../c3.php';
+}
+
 use OCP\IContainer;
 
 use OCP\AppFramework\App;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "46caeea5fc95043a57865a84c7d3d78b",
+    "hash": "2ee335622d19ff49ebaf764445421b90",
     "packages": [
         {
             "name": "symfony/yaml",
@@ -219,6 +219,48 @@
             "description": "Sends PHP test coverage information to Codacy.",
             "homepage": "https://github.com/codacy/php-codacy-coverage",
             "time": "2015-06-26 20:33:13"
+        },
+        {
+            "name": "codeception/c3",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/c3.git",
+                "reference": "30321efb2421c5d201d02e2cb8da1a1ca96e4a38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/c3/zipball/30321efb2421c5d201d02e2cb8da1a1ca96e4a38",
+                "reference": "30321efb2421c5d201d02e2cb8da1a1ca96e4a38",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Codeception\\c3\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Bodnarchuk",
+                    "email": "davert.php@resend.cc",
+                    "homepage": "http://codegyre.com"
+                }
+            ],
+            "description": "CodeCoverage collector for Codeception",
+            "homepage": "http://codeception.com/",
+            "keywords": [
+                "code coverage",
+                "codecoverage"
+            ],
+            "time": "2014-11-18 22:06:45"
         },
         {
             "name": "codeception/codeception",
