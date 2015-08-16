@@ -18,14 +18,14 @@ This branch currently targets 8.1
 ![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
-* Large, zoomable previews
-* Sort images by name or date
+* Large, zoomable previews which can be shown in fullscreen mode
+* Sort images by name or date added
 * Per album description and copyright statement
-* A la carte features
+* A la carte features (external shares, native svg, etc.)
 * Image download straight from the slideshow or the gallery
 * Seamlessly jump between the gallery and the files view
 * Ignore folders containing a ".nomedia" file
-* Native SVG support
+* Native SVG support (disabled by default)
 * Mobile support
 
 Checkout the [full changelog](CHANGELOG.md) for more.
@@ -33,11 +33,11 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 ## Maintainers
 
 ### Current
-* [Olivier Paroz (@oparoz)](https://github.com/oparoz)
+* [Olivier Paroz](https://github.com/oparoz)
 * [Jan-Christoph Borchardt](https://github.com/jancborchardt) (Design)
 
 ### Alumni
-* [Robin Appelman (@icewind1991)](https://github.com/icewind1991)
+* [Robin Appelman](https://github.com/icewind1991)
 
 ## Contributors
 
@@ -57,7 +57,7 @@ It will evolve if and when people provide patches to fix all known current issue
 #### Partially supported
 May not look as nice, but should work
 
-* Desktop: Internet Explorer 9-11
+* Desktop: Internet Explorer 9-11, Edge
 * Mobile: Opera, Chrome on Android 4
 
 #### Not supported
@@ -122,7 +122,8 @@ DEFINE('DEBUG', true);
 
 Please provide the following details so that your problem can be fixed:
 
-* **data/owncloud.log** (important!)
+* **Owncloud log** (data/owncloud.log)
+* **Browser log** (Hit F12 to gain access)
 * ownCloud version
 * App version
 * Browser version
