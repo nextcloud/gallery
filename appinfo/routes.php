@@ -32,9 +32,9 @@ return [
 		],
 		// Landing page for public galleries. If a filename is given the file is downloaded
 		[
-			'name' => 'page#public_index',
-			'url'  => '/s/{token}/{filename}',
-			'verb' => 'GET',
+			'name'     => 'page#public_index',
+			'url'      => '/s/{token}/{filename}',
+			'verb'     => 'GET',
 			'defaults' => ['filename' => null]
 		],
 		// Landing page after password entry, for public galleries
@@ -73,7 +73,7 @@ return [
 		],
 		// All the images of which a preview can be generated
 		[
-			'name' => 'files#get_files',
+			'name' => 'files#get_list',
 			'url'  => '/files',
 			'verb' => 'GET'
 		],
@@ -98,7 +98,7 @@ return [
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_files#get_files',
+			'name' => 'files_public#get_lists',
 			'url'  => '/files.public',
 			'verb' => 'GET'
 		],
@@ -112,11 +112,34 @@ return [
 			'url'  => '/preview.public/{fileId}',
 			'verb' => 'GET'
 		],
-		// API, for later
-		/*[
-			 'name' => 'api#get_types',
-			 'url'  => '/api/1.0/types',
-			 'verb' => 'GET'
-		 ],*/
+		/**
+		 * API
+		 */
+		[
+			'name' => 'files_api#preflighted_cors', // Valid for all API end points
+			'url'  => '/api/{path}',
+			'verb' => 'OPTIONS',
+			'requirements' => ['path' => '.+']
+		],
+		[
+			'name' => 'files_api#get_list',
+			'url'  => '/api/files/list',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'files_api#download',
+			'url'  => '/api/files/download/{fileId}',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'preview_api#get_thumbnails',
+			'url'  => '/api/preview/thumbnails',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'preview_api#get_preview',
+			'url'  => '/api/preview/{fileId}/{width}/{height}',
+			'verb' => 'GET'
+		],
 	]
 ];

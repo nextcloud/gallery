@@ -22,9 +22,11 @@ use OCP\AppFramework\IAppContainer;
 use OCA\Gallery\Controller\PageController;
 use OCA\Gallery\Controller\ConfigController;
 use OCA\Gallery\Controller\FilesController;
+use OCA\Gallery\Controller\FilesPublicController;
+use OCA\Gallery\Controller\FilesApiController;
 use OCA\Gallery\Controller\PreviewController;
 use OCA\Gallery\Controller\PublicConfigController;
-use OCA\Gallery\Controller\PublicFilesController;
+
 use OCA\Gallery\Controller\PublicPreviewController;
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Preview\Preview;
@@ -108,8 +110,20 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'PublicFilesController', function (IContainer $c) {
-			return new PublicFilesController(
+			'FilesPublicController', function (IContainer $c) {
+			return new FilesPublicController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('SearchFolderService'),
+				$c->query('ConfigService'),
+				$c->query('SearchMediaService'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'FilesApiController', function (IContainer $c) {
+			return new FilesApiController(
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('SearchFolderService'),
