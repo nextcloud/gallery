@@ -58,11 +58,13 @@ script:
   - cd apps/$APP_NAME
   - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
-  # Run unit, integration and API tests, with code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # Acceptance tests, using Firefox, without code coverage
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run acceptance --env firefox; fi;"
+  # Unit, integration and api tests, without code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ] && [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
 
+  # PHP 5.6 ONLY: Unit, integration and api tests with code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # Send coverage report to Scrutinizer
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
