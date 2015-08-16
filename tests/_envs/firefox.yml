@@ -1,0 +1,5 @@
+# `firefox` environment config goes here
+modules:
+    enabled:
+         - WebDriver:
+             browser: firefox

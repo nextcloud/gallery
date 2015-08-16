@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>    Gallery PHP code documentation &raquo; \OCA\Gallery\Service\SearchMediaService
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+            <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+            <!--[if lt IE 9]>
+        <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.js" type="text/javascript"></script>
+        <script src="../js/template.js" type="text/javascript"></script>
+        <script src="../js/prettify/prettify.min.js" type="text/javascript"></script>
+    
+            <link rel="shortcut icon" href="../img/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png"/>
+    </head>
+<body>
+
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> </a>
+                <a class="brand" href="../index.html">Gallery PHP code documentation</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                API Documentation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                                                    <li><a>Namespaces</a></li>
+                                                                        <li><a href="../namespaces/OCA.html">OCA</a></li>
+                                                                                                                                </ul>
+                        </li>
+                        <li class="dropdown" id="charts-menu">
+                            <a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                Charts <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../graph_class.html">
+                                        <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" id="reports-menu">
+                            <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                Reports <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../errors.html">
+                                        <i class="icon-list-alt"></i>&#160;Errors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../markers.html">
+                                        <i class="icon-list-alt"></i>&#160;Markers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../deprecated.html">
+                                        <i class="icon-list-alt"></i>&#160;Deprecated
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="go_to_top">
+            <a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>
+        </div>
+    </div>
+    
+    <div id="___" class="container">
+        <noscript>
+            <div class="alert alert-warning">
+                Javascript is disabled; several features are only available if Javascript is enabled.
+            </div>
+        </noscript>
+
+        
+            <style>
+        .deprecated h2 {
+            text-decoration: line-through;
+        }
+    </style>
+    <div class="row">
+        <div class="span4">
+                    <div class="btn-group view pull-right" data-toggle="buttons-radio">
+        <button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button>
+        <button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+    </div>
+    <div class="btn-group visibility" data-toggle="buttons-checkbox">
+        <button class="btn public active" title="Show public elements">Public</button>
+        <button class="btn protected" title="Show protected elements">Protected</button>
+        <button class="btn private" title="Show private elements">Private</button>
+        <button class="btn inherited active" title="Show inherited elements">Inherited</button>
+    </div>
+
+        <ul class="side-nav nav nav-list">
+        <li class="nav-header">
+            <i class="icon-custom icon-method"></i> Methods
+            <ul>
+                                                                                                    <li class="method public inherited">
+        <a href="#method___construct" title="__construct :: Constructor">
+            <span class="description">Constructor</span><pre>__construct</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                                                                                                                                                                                                <li class="method public">
+        <a href="#method_getMediaFiles" title="getMediaFiles :: This returns the list of all media files which can be shown starting from the given folder">
+            <span class="description">This returns the list of all media files which can be shown starting from the given folder</span><pre>getMediaFiles</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                        <li class="method public inherited">
+        <a href="#method_getResourceFromId" title="getResourceFromId :: Returns the node matching the given ID">
+            <span class="description">Returns the node matching the given ID</span><pre>getResourceFromId</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </ul>
+        </li>
+        <li class="nav-header protected">» Protected
+            <ul>
+                                                                                                                                                                                                                                                                <li class="method protected inherited">
+                            <a href="#method_getAllowedSubFolder" title="getAllowedSubFolder :: Returns the node if it&#039;s a folder we have access to">
+                                <span class="description">Returns the node if it&#039;s a folder we have access to</span><pre>getAllowedSubFolder</pre>
+                            </a>
+                        </li>
+                                                                                                                    <li class="method protected inherited">
+                            <a href="#method_getNodes" title="getNodes :: Retrieves all files and sub-folders contained in a folder">
+                                <span class="description">Retrieves all files and sub-folders contained in a folder</span><pre>getNodes</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected inherited">
+                            <a href="#method_getNodeType" title="getNodeType :: Returns the node type, either &#039;dir&#039; or &#039;file&#039;">
+                                <span class="description">Returns the node type, either &#039;dir&#039; or &#039;file&#039;</span><pre>getNodeType</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                            <li class="method protected inherited">
+                            <a href="#method_isAllowedAndAvailable" title="isAllowedAndAvailable :: Determines if the files are hosted locally (shared or not) and can be used by the preview
+system">
+                                <span class="description">Determines if the files are hosted locally (shared or not) and can be used by the preview
+system</span><pre>isAllowedAndAvailable</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                                                                <li class="method protected inherited">
+                            <a href="#method_isRootFolder" title="isRootFolder :: Determines if we&#039;ve reached the root folder">
+                                <span class="description">Determines if we&#039;ve reached the root folder</span><pre>isRootFolder</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected inherited">
+                            <a href="#method_logAndThrowForbidden" title="logAndThrowForbidden :: Logs the error and raises a &quot;Forbidden&quot; type exception">
+                                <span class="description">Logs the error and raises a &quot;Forbidden&quot; type exception</span><pre>logAndThrowForbidden</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected inherited">
+                            <a href="#method_logAndThrowNotFound" title="logAndThrowNotFound :: Logs the error and raises a &quot;Not found&quot; type exception">
+                                <span class="description">Logs the error and raises a &quot;Not found&quot; type exception</span><pre>logAndThrowNotFound</pre>
+                            </a>
+                        </li>
+                                                                                                                                                            </ul>
+        </li>
+        <li class="nav-header private">» Private
+            <ul>
+                                                                                                                <li class="method private">
+                            <a href="#method_abortSearch" title="abortSearch :: Returns true if there is no need to check any other sub-folder at the same depth level">
+                                <span class="description">Returns true if there is no need to check any other sub-folder at the same depth level</span><pre>abortSearch</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method_addFileToResults" title="addFileToResults :: Adds various information about a file to the list of results">
+                                <span class="description">Adds various information about a file to the list of results</span><pre>addFileToResults</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method_addMediaFile" title="addMediaFile :: Adds the node to the list of images if it&#039;s a file and we can generate a preview of it">
+                                <span class="description">Adds the node to the list of images if it&#039;s a file and we can generate a preview of it</span><pre>addMediaFile</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method_folderNeedsToBeSearched" title="folderNeedsToBeSearched :: Checks if we need to look for media files in the specified folder">
+                                <span class="description">Checks if we need to look for media files in the specified folder</span><pre>folderNeedsToBeSearched</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                                                                                                    <li class="method private">
+                            <a href="#method_haveEnoughPictures" title="haveEnoughPictures :: Checks if we&#039;ve collected enough pictures to be able to build the view">
+                                <span class="description">Checks if we&#039;ve collected enough pictures to be able to build the view</span><pre>haveEnoughPictures</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private inherited">
+                            <a href="#method_isAllowed" title="isAllowed :: Determines if we can consider the node mounted locally or if it&#039;s been authorised to be
+scanned">
+                                <span class="description">Determines if we can consider the node mounted locally or if it&#039;s been authorised to be
+scanned</span><pre>isAllowed</pre>
+                            </a>
+                        </li>
+                                                                                                                    <li class="method private inherited">
+                            <a href="#method_isAvailable" title="isAvailable :: Determines if the node is available, as in readable">
+                                <span class="description">Determines if the node is available, as in readable</span><pre>isAvailable</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private inherited">
+                            <a href="#method_isExternalShare" title="isExternalShare :: Determines if the node is a share which is hosted externally">
+                                <span class="description">Determines if the node is a share which is hosted externally</span><pre>isExternalShare</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private inherited">
+                            <a href="#method_isExternalShareAllowed" title="isExternalShareAllowed :: Determines if the user has allowed the use of external shares">
+                                <span class="description">Determines if the user has allowed the use of external shares</span><pre>isExternalShareAllowed</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method_isPreviewAvailable" title="isPreviewAvailable :: Returns true if the file is of a supported media type and adds it to the array of items to
+return">
+                                <span class="description">Returns true if the file is of a supported media type and adds it to the array of items to
+return</span><pre>isPreviewAvailable</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                            <li class="method private inherited">
+                            <a href="#method_recoverFromGetNodesError" title="recoverFromGetNodesError :: Throws an exception if this problem occurs in the current folder, otherwise just ignores the
+sub-folder">
+                                <span class="description">Throws an exception if this problem occurs in the current folder, otherwise just ignores the
+sub-folder</span><pre>recoverFromGetNodesError</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method_searchFolder" title="searchFolder :: Look for media files and folders in the given folder">
+                                <span class="description">Look for media files and folders in the given folder</span><pre>searchFolder</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method_searchSubFolders" title="searchSubFolders :: Looks for pictures in sub-folders">
+                                <span class="description">Looks for pictures in sub-folders</span><pre>searchSubFolders</pre>
+                            </a>
+                        </li>
+                                                </ul>
+        </li>
+        <li class="nav-header">
+            <i class="icon-custom icon-constant"></i> Constants
+            <ul>
+                            </ul>
+        </li>
+    </ul>
+
+
+        </div>
+
+        <div class="span8">
+            <div class="element class">
+                <h1>SearchMediaService</h1>
+                <small style="display: block; text-align: right">
+                                            Extends <a href="OCA.Gallery.Service.FilesService.html">\OCA\Gallery\Service\FilesService</a>
+                                                        </small>
+                <p class="short_description">Searches the instance for media files which can be shown</p>
+                <div class="details">
+                    <div class="long_description">
+                        
+                    </div>
+                    <table class="table table-bordered">
+                                                                                    <tr>
+                                    <th>
+                                        package
+                                                                            </th>
+                                    <td>
+                                                                                    
+                                                                                <p>OCA\Gallery\Service</p>
+                                    </td>
+                                </tr>
+                                                                                                                                                                                </table>
+
+                    <h3><i class="icon-custom icon-method"></i> Methods</h3>
+                                                                <a id="method___construct"></a>
+                        <div class="element clickable method public  method___construct inherited" data-toggle="collapse" data-target=".method___construct .collapse">
+                            <h2>Constructor</h2>
+                            <pre>__construct(string $appName, \OCA\Gallery\Environment\Environment $environment, \OCP\ILogger $logger) </pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$appName</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$environment</h4>
+                                                <code><a href="OCA.Gallery.Environment.Environment.html">\OCA\Gallery\Environment\Environment</a></code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$logger</h4>
+                                                <code>\OCP\ILogger</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_abortSearch"></a>
+                        <div class="element clickable method private  method_abortSearch" data-toggle="collapse" data-target=".method_abortSearch .collapse">
+                            <h2>Returns true if there is no need to check any other sub-folder at the same depth level</h2>
+                            <pre>abortSearch(integer $subDepth, integer $count) : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$count</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_addFileToResults"></a>
+                        <div class="element clickable method private  method_addFileToResults" data-toggle="collapse" data-target=".method_addFileToResults .collapse">
+                            <h2>Adds various information about a file to the list of results</h2>
+                            <pre>addFileToResults(\OCP\Files\File $file) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$file</h4>
+                                                <code>\OCP\Files\File</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_addMediaFile"></a>
+                        <div class="element clickable method private  method_addMediaFile" data-toggle="collapse" data-target=".method_addMediaFile .collapse">
+                            <h2>Adds the node to the list of images if it&#039;s a file and we can generate a preview of it</h2>
+                            <pre>addMediaFile(\OCP\Files\File|\OCP\Files\Folder $node, string $nodeType, integer $albumImageCounter) : integer</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\File|\OCP\Files\Folder</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$nodeType</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$albumImageCounter</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>integer</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_folderNeedsToBeSearched"></a>
+                        <div class="element clickable method private  method_folderNeedsToBeSearched" data-toggle="collapse" data-target=".method_folderNeedsToBeSearched .collapse">
+                            <h2>Checks if we need to look for media files in the specified folder</h2>
+                            <pre>folderNeedsToBeSearched( $subFolders, integer $subDepth, integer $albumImageCounter) : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subFolders</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$albumImageCounter</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getAllowedSubFolder"></a>
+                        <div class="element clickable method protected  method_getAllowedSubFolder inherited" data-toggle="collapse" data-target=".method_getAllowedSubFolder .collapse">
+                            <h2>Returns the node if it&#039;s a folder we have access to</h2>
+                            <pre>getAllowedSubFolder(\OCP\Files\Folder $node, string $nodeType) : array|\OCP\Files\Folder</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\Folder</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$nodeType</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>array|\OCP\Files\Folder</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getMediaFiles"></a>
+                        <div class="element clickable method public  method_getMediaFiles" data-toggle="collapse" data-target=".method_getMediaFiles .collapse">
+                            <h2>This returns the list of all media files which can be shown starting from the given folder</h2>
+                            <pre>getMediaFiles(\OCP\Files\Folder $folder, array&lt;mixed,string&gt; $supportedMediaTypes, array $features) : \OCA\Gallery\Service\array&lt;string,string|\OCA\Gallery\Service\int&gt;|null</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$folder</h4>
+                                                <code>\OCP\Files\Folder</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$supportedMediaTypes</h4>
+                                                <code>array&lt;mixed,string&gt;</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$features</h4>
+                                                <code>array</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>\OCA\Gallery\Service\array<string,string|\OCA\Gallery\Service\int>|null</code><p><p>all the images we could find</p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getNodes"></a>
+                        <div class="element clickable method protected  method_getNodes inherited" data-toggle="collapse" data-target=".method_getNodes .collapse">
+                            <h2>Retrieves all files and sub-folders contained in a folder</h2>
+                            <pre>getNodes(\OCP\Files\Folder $folder, integer $subDepth) : array</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>If we can't find anything in the current folder, we throw an exception as there is no point
+in doing any more work, but if we're looking at a sub-folder, we return an empty array so
+that it can be simply ignored</p></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$folder</h4>
+                                                <code>\OCP\Files\Folder</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getNodeType"></a>
+                        <div class="element clickable method protected  method_getNodeType inherited" data-toggle="collapse" data-target=".method_getNodeType .collapse">
+                            <h2>Returns the node type, either &#039;dir&#039; or &#039;file&#039;</h2>
+                            <pre>getNodeType(\OCP\Files\Node $node) : string</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>If there is a problem, we return an empty string so that the node can be ignored</p></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\Node</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_getResourceFromId"></a>
+                        <div class="element clickable method public  method_getResourceFromId inherited" data-toggle="collapse" data-target=".method_getResourceFromId .collapse">
+                            <h2>Returns the node matching the given ID</h2>
+                            <pre>getResourceFromId(integer $nodeId) : \OCP\Files\Node|null</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$nodeId</h4>
+                                                <code>integer</code><p><p>ID of the resource to locate</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>\OCP\Files\Node|null</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_haveEnoughPictures"></a>
+                        <div class="element clickable method private  method_haveEnoughPictures" data-toggle="collapse" data-target=".method_haveEnoughPictures .collapse">
+                            <h2>Checks if we&#039;ve collected enough pictures to be able to build the view</h2>
+                            <pre>haveEnoughPictures(integer $albumImageCounter, integer $subDepth) : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>An album is full when we find max 4 pictures at the same level</p></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$albumImageCounter</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isAllowed"></a>
+                        <div class="element clickable method private  method_isAllowed inherited" data-toggle="collapse" data-target=".method_isAllowed .collapse">
+                            <h2>Determines if we can consider the node mounted locally or if it&#039;s been authorised to be
+scanned</h2>
+                            <pre>isAllowed(\OCP\Files\Node $node) : boolean</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\Node</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isAllowedAndAvailable"></a>
+                        <div class="element clickable method protected  method_isAllowedAndAvailable inherited" data-toggle="collapse" data-target=".method_isAllowedAndAvailable .collapse">
+                            <h2>Determines if the files are hosted locally (shared or not) and can be used by the preview
+system</h2>
+                            <pre>isAllowedAndAvailable(\OCP\Files\Node $node) : boolean</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>isMounted() doesn't include externally hosted shares, so we need to exclude those from the
+non-mounted nodes</p></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\Node</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isAvailable"></a>
+                        <div class="element clickable method private  method_isAvailable inherited" data-toggle="collapse" data-target=".method_isAvailable .collapse">
+                            <h2>Determines if the node is available, as in readable</h2>
+                            <pre>isAvailable(\OCP\Files\Node $node) : boolean</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    todo
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        <p>Test to see by how much using file_exists slows things down</p>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\Node</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isExternalShare"></a>
+                        <div class="element clickable method private  method_isExternalShare inherited" data-toggle="collapse" data-target=".method_isExternalShare .collapse">
+                            <h2>Determines if the node is a share which is hosted externally</h2>
+                            <pre>isExternalShare(\OCP\Files\Node $node) : boolean</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$node</h4>
+                                                <code>\OCP\Files\Node</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isExternalShareAllowed"></a>
+                        <div class="element clickable method private  method_isExternalShareAllowed inherited" data-toggle="collapse" data-target=".method_isExternalShareAllowed .collapse">
+                            <h2>Determines if the user has allowed the use of external shares</h2>
+                            <pre>isExternalShareAllowed() : boolean</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isPreviewAvailable"></a>
+                        <div class="element clickable method private  method_isPreviewAvailable" data-toggle="collapse" data-target=".method_isPreviewAvailable .collapse">
+                            <h2>Returns true if the file is of a supported media type and adds it to the array of items to
+return</h2>
+                            <pre>isPreviewAvailable(\OCP\Files\File $file) : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    todo
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        <p>We could potentially check if the file is readable ($file-&gt;stat() maybe) in order to
+only return valid files, but this may slow down operations</p>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$file</h4>
+                                                <code>\OCP\Files\File</code><p><p>the file to test</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_isRootFolder"></a>
+                        <div class="element clickable method protected  method_isRootFolder inherited" data-toggle="collapse" data-target=".method_isRootFolder .collapse">
+                            <h2>Determines if we&#039;ve reached the root folder</h2>
+                            <pre>isRootFolder(\OCP\Files\Folder $folder, integer $level) : boolean</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$folder</h4>
+                                                <code>\OCP\Files\Folder</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$level</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_logAndThrowForbidden"></a>
+                        <div class="element clickable method protected  method_logAndThrowForbidden inherited" data-toggle="collapse" data-target=".method_logAndThrowForbidden .collapse">
+                            <h2>Logs the error and raises a &quot;Forbidden&quot; type exception</h2>
+                            <pre>logAndThrowForbidden(string $message) </pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$message</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_logAndThrowNotFound"></a>
+                        <div class="element clickable method protected  method_logAndThrowNotFound inherited" data-toggle="collapse" data-target=".method_logAndThrowNotFound .collapse">
+                            <h2>Logs the error and raises a &quot;Not found&quot; type exception</h2>
+                            <pre>logAndThrowNotFound(string $message) </pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$message</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_recoverFromGetNodesError"></a>
+                        <div class="element clickable method private  method_recoverFromGetNodesError inherited" data-toggle="collapse" data-target=".method_recoverFromGetNodesError .collapse">
+                            <h2>Throws an exception if this problem occurs in the current folder, otherwise just ignores the
+sub-folder</h2>
+                            <pre>recoverFromGetNodesError(integer $subDepth, \Exception $exception) : array</pre>
+                            <div class="labels">
+                                <span class="label">inherited</span>                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$exception</h4>
+                                                <code>\Exception</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_searchFolder"></a>
+                        <div class="element clickable method private  method_searchFolder" data-toggle="collapse" data-target=".method_searchFolder .collapse">
+                            <h2>Look for media files and folders in the given folder</h2>
+                            <pre>searchFolder(\OCP\Files\Folder $folder, integer $subDepth) : integer</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$folder</h4>
+                                                <code>\OCP\Files\Folder</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>integer</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                                            <a id="method_searchSubFolders"></a>
+                        <div class="element clickable method private  method_searchSubFolders" data-toggle="collapse" data-target=".method_searchSubFolders .collapse">
+                            <h2>Looks for pictures in sub-folders</h2>
+                            <pre>searchSubFolders( $subFolders, integer $subDepth, integer $albumImageCounter) : integer</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+
+                            
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>If we're at level 0, we need to look for pictures in sub-folders no matter what
+If we're at deeper levels, we only need to go further if we haven't managed to find one
+picture in the current folder</p></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subFolders</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$subDepth</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$albumImageCounter</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>integer</code><p></p>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                    
+                    
+                                                                <h3><i class="icon-custom icon-property"></i> Properties</h3>
+                                                    <a id="property_images"> </a>
+                            <div class="element clickable property  private property_images" data-toggle="collapse" data-target=".property_images .collapse">
+                                <h2>images</h2>
+                                <pre>images : null|\OCA\Gallery\Service\array&lt;string,string|\OCA\Gallery\Service\int&gt;</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>null|\OCA\Gallery\Service\array<string,string|\OCA\Gallery\Service\int></code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_supportedMediaTypes"> </a>
+                            <div class="element clickable property  private property_supportedMediaTypes" data-toggle="collapse" data-target=".property_supportedMediaTypes .collapse">
+                                <h2>supportedMediaTypes</h2>
+                                <pre>supportedMediaTypes : array&lt;mixed,string&gt;</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>array&lt;mixed,string&gt;</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_virtualRootLevel"> </a>
+                            <div class="element clickable property  protected property_virtualRootLevel inherited" data-toggle="collapse" data-target=".property_virtualRootLevel .collapse">
+                                <h2>virtualRootLevel</h2>
+                                <pre>virtualRootLevel : integer</pre>
+                                <div class="labels">
+                                    <span class="label">inherited</span>                                                                    </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>integer</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_features"> </a>
+                            <div class="element clickable property  protected property_features inherited" data-toggle="collapse" data-target=".property_features .collapse">
+                                <h2>features</h2>
+                                <pre>features : array&lt;mixed,string&gt;</pre>
+                                <div class="labels">
+                                    <span class="label">inherited</span>                                                                    </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>array&lt;mixed,string&gt;</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_appName"> </a>
+                            <div class="element clickable property  protected property_appName inherited" data-toggle="collapse" data-target=".property_appName .collapse">
+                                <h2>appName</h2>
+                                <pre>appName : string</pre>
+                                <div class="labels">
+                                    <span class="label">inherited</span>                                                                    </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>string</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_environment"> </a>
+                            <div class="element clickable property  protected property_environment inherited" data-toggle="collapse" data-target=".property_environment .collapse">
+                                <h2>environment</h2>
+                                <pre>environment : \OCA\Gallery\Environment\Environment</pre>
+                                <div class="labels">
+                                    <span class="label">inherited</span>                                                                    </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code><a href="OCA.Gallery.Environment.Environment.html">\OCA\Gallery\Environment\Environment</a></code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_logger"> </a>
+                            <div class="element clickable property  protected property_logger inherited" data-toggle="collapse" data-target=".property_logger .collapse">
+                                <h2>logger</h2>
+                                <pre>logger : \OCP\ILogger</pre>
+                                <div class="labels">
+                                    <span class="label">inherited</span>                                                                    </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>\OCP\ILogger</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                            </div>
+            </div>
+            <a id="\OCA\Gallery\Service\SearchMediaService"></a>
+            <ul class="breadcrumb">
+                <li><a href="../index.html"><i class="icon-custom icon-class"></i></a></li>
+                    
+    
+    <li><span class="divider">\</span><a href="../namespaces/OCA.Gallery.Service.html">Service</a></li>
+
+                <li class="active"><span class="divider">\</span><a href="../classes/OCA.Gallery.Service.SearchMediaService.html">SearchMediaService</a></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+        <footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by
+            <a href="http://glyphicons.com/">Glyphicons</a>.<br/>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and<br/>
+            generated on Sat, 15 Aug 2015 01:15:08 +0000.<br/>
+    </footer>
+    </body>
+</html>

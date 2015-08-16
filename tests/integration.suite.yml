@@ -1,0 +1,6 @@
+class_name: IntegrationTester
+modules:
+    enabled:
+        - Asserts
+        - \Helper\Unit
+        - \Helper\DataSetup
