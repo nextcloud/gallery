@@ -6,14 +6,16 @@ namespace Helper;
 class Api extends \Codeception\Module {
 
 	/**
+	 * Retrieves the user's credentials from the test data
+	 *
 	 * @return mixed
 	 * @throws \Codeception\Exception\ModuleException
 	 */
 	public function getUserCredentials() {
-		$user = $this->getModule('\Helper\DataSetup')->userId;
+		$userId = $this->getModule('\Helper\DataSetup')->userId;
 		$password = $this->getModule('\Helper\DataSetup')->userPassword;
 
-		return [$user, $password];
+		return [$userId, $password];
 	}
 
 	/**
@@ -25,5 +27,15 @@ class Api extends \Codeception\Module {
 		$extraMediaTypes = $this->getModule('\Helper\DataSetup')->extraMediaTypes;
 
 		return [$mediaTypes, $extraMediaTypes];
+	}
+
+	/**
+	 * @param string $folderPath
+	 *
+	 * @return array<string,int|string>
+	 * @throws \Codeception\Exception\ModuleException
+	 */
+	public function getFilesDataForFolder($folderPath) {
+		return $this->getModule('\Helper\DataSetup')->getFilesDataForFolder($folderPath);
 	}
 }

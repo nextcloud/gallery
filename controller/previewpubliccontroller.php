@@ -13,14 +13,14 @@
 namespace OCA\Gallery\Controller;
 
 /**
- * Class PublicPreviewController
+ * Class PreviewPublicController
  *
  * Note: Type casting only works if the "@param" parameters are also included in this class as
  * their not yet inherited
  *
  * @package OCA\Gallery\Controller
  */
-class PublicPreviewController extends PreviewController {
+class PreviewPublicController extends PreviewController {
 
 	/**
 	 * @PublicPage

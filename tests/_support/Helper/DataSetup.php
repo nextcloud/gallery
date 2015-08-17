@@ -151,6 +151,35 @@ class DataSetup extends \Codeception\Module {
 	}
 
 	/**
+	 * Returns a list of ids available in the given folder
+	 *
+	 * @param string $folderPath
+	 *
+	 * @return array<string,int|string>
+	 */
+	public function getFilesDataForFolder($folderPath) {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		/** @type Folder $folder */
+		$folder = $userFolder->get($folderPath);
+		$content = $folder->getDirectoryListing();
+		$data = [];
+
+		foreach ($content as $node) {
+			$nodeType = $node->getType();
+			if ($nodeType === 'file') {
+				$data[] = [
+					'id'        => $node->getId(),
+					'name'      => $node->getName(),
+					'mediatype' => $node->getMimetype(),
+					'etag'      => $node->getEtag(),
+				];
+			}
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Creates a test environment for a given user
 	 *
 	 * @param string $userId

@@ -33,9 +33,8 @@ use OCA\Gallery\Controller\FilesController;
 use OCA\Gallery\Controller\FilesPublicController;
 use OCA\Gallery\Controller\FilesApiController;
 use OCA\Gallery\Controller\PreviewController;
-
-
-use OCA\Gallery\Controller\PublicPreviewController;
+use OCA\Gallery\Controller\PreviewPublicController;
+use OCA\Gallery\Controller\PreviewApiController;
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Preview\Preview;
 use OCA\Gallery\Service\SearchFolderService;
@@ -167,8 +166,22 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'PublicPreviewController', function (IContainer $c) {
-			return new PublicPreviewController(
+			'PreviewPublicController', function (IContainer $c) {
+			return new PreviewPublicController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
+				$c->query('ThumbnailService'),
+				$c->query('PreviewService'),
+				$c->query('DownloadService'),
+				$c->query('OCP\IEventSource'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'PreviewApiController', function (IContainer $c) {
+			return new PreviewApiController(
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
