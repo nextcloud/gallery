@@ -53,19 +53,24 @@ before_script:
   - curl http://localhost:4444/wd/hub/status
   #- phantomjs --version
 
+  # Install the Imagick PHP extension
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then printf "\n" | pecl install imagick; fi;"
+
 script:
   # Test lint
   - cd apps/$APP_NAME
   - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
-  # Run unit, integration and API tests, with code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # Acceptance tests, using Firefox, without code coverage
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run acceptance --env firefox; fi;"
+  # Unit, integration and api tests, without code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ] && [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
 
+  # PHP 5.6 ONLY: Unit, integration and api tests with code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # Send coverage report to Scrutinizer
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
 
   # Generate API documentation
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/phpdoc run; fi"
@@ -80,8 +85,6 @@ matrix:
       env: DB=mysql
     - php: 5.4
       env: DB=pgsql
-    - php: 5.4
-      env: "DB=mysql CORE_BRANCH=stable8.1"
   allow_failures:
     - php: hhvm
     - php: 7

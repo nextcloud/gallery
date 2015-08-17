@@ -29,8 +29,17 @@
   "require-dev": {
     "codeception/codeception": "2.1.*",
     "codeception/phpbuiltinserver": "*",
+    "codeception/c3": "2.*",
     "phpdocumentor/phpdocumentor": "^2.8",
-	"jakub-onderka/php-parallel-lint": "0.*",
-	"jakub-onderka/php-console-highlighter": "0.*"
+    "jakub-onderka/php-parallel-lint": "0.*",
+    "jakub-onderka/php-console-highlighter": "0.*"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "Codeception\\c3\\Installer::copyC3ToRoot"
+    ],
+    "post-update-cmd": [
+      "Codeception\\c3\\Installer::copyC3ToRoot"
+    ]
   }
 }

@@ -15,18 +15,18 @@ namespace OCA\Gallery\Controller;
 use OCP\IRequest;
 use OCP\ILogger;
 
-use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 
 use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\PreviewService;
 
 /**
- * Class ConfigController
+ * Class ConfigApiController
  *
  * @package OCA\Gallery\Controller
  */
-class ConfigController extends Controller {
+class ConfigApiController extends ApiController {
 
 	use Config;
 	use JsonHttpError;
@@ -56,6 +56,8 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * Returns an app configuration array
 	 *

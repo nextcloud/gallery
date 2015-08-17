@@ -31,6 +31,10 @@ use OCP\AppFramework\IAppContainer;
  */
 class DataSetup extends \Codeception\Module {
 
+	/** @var array<string> */
+	public $mediaTypes;
+	/** @var array<string> */
+	public $extraMediaTypes;
 	/** @var string */
 	public $userId = 'tester';
 	/** @var string */
@@ -42,7 +46,7 @@ class DataSetup extends \Codeception\Module {
 	/**
 	 * The file structure for the tests
 	 *
-	 * folder1 is the shared folder
+	 * shared1 is the shared folder
 	 * testimage-wide.png is the shared file
 	 *
 	 * @todo Add more files in Gallery directly
@@ -53,22 +57,28 @@ class DataSetup extends \Codeception\Module {
 	public $filesHierarchy = [
 		'testimage.jpg',
 		'folder1' => [
+			'testimage.jpg',
 			'testimage-wide.png',
-			'folder1.1' => [
+			'shared1' => [
 				'testimage.eps',
 				'testimagelarge.svg',
 				'testimage.gif',
-			],
-			'folder1.2' => [
-				'testimage.png',
+				'shared1.1' => [
+					'testimage.png',
+				]
 			]
 		],
-		'folder2' => []
+		'folder2' => [
+			'testimage.jpg',
+			'testimage.png',
+			'testimagelarge.svg',
+		],
+		'folder3' => []
 	];
 	/** @var Folder */
 	public $sharedFolder;
 	/** @var string */
-	public $sharedFolderName = 'folder1';
+	public $sharedFolderName = 'shared1';
 	/** @var string */
 	public $sharedFolderToken;
 	/** @var File */
@@ -172,10 +182,23 @@ class DataSetup extends \Codeception\Module {
 			'OC\\Preview\\JPEG',
 			'OC\\Preview\\PNG',
 			'OC\\Preview\\GIF',
-			'OC\\Preview\\Postscript'
+			'OC\\Preview\\Postscript',
+			'OC\\Preview\\Font'
 		];
 		$this->server->getConfig()
 					 ->setSystemValue('enabledPreviewProviders', $providers);
+
+		$this->mediaTypes = [
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+			'application/postscript'
+		];
+
+		$this->extraMediaTypes = [
+			'application/font-sfnt',
+			'application/x-font',
+		];
 	}
 
 	/**
@@ -255,6 +278,10 @@ class DataSetup extends \Codeception\Module {
 
 	/**
 	 * Shares the file and folder, both publicly and with the tester
+	 *
+	 * Warning - File operations don't work properly in the test environment provided by core as
+	 * the cache is not updated and the scanner does not work. Do not attempt to rename or move
+	 * files
 	 */
 	private function createShares() {
 		$this->coreTestCase->loginAsUser($this->sharerUserId);
