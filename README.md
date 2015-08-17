@@ -1,6 +1,7 @@
 # Gallery 
 [![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=master)](https://travis-ci.org/owncloud/gallery)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/owncloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
 
 Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
