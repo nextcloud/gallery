@@ -84,15 +84,15 @@ class PreviewService extends Service {
 	 *
 	 * @todo Native SVG could be disabled via admin settings
 	 *
-	 * @param bool $slideshow
+	 * @param bool $extraMediaTypes
 	 * @param bool $nativeSvgSupport
 	 *
 	 * @return \string[] all supported media types
 	 */
-	public function getSupportedMediaTypes($slideshow, $nativeSvgSupport) {
+	public function getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport) {
 		$supportedMimes = [];
 		$wantedMimes = $this->baseMimeTypes;
-		if ($slideshow) {
+		if ($extraMediaTypes) {
 			$wantedMimes = array_merge($wantedMimes, $this->slideshowMimeTypes);
 		}
 		foreach ($wantedMimes as $wantedMime) {

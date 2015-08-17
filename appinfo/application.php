@@ -27,6 +27,8 @@ use OCP\AppFramework\IAppContainer;
 
 use OCA\GalleryPlus\Controller\PageController;
 use OCA\GalleryPlus\Controller\ConfigController;
+use OCA\GalleryPlus\Controller\ConfigPublicController;
+use OCA\GalleryPlus\Controller\ConfigApiController;
 use OCA\GalleryPlus\Controller\FilesController;
 use OCA\GalleryPlus\Controller\FilesPublicController;
 use OCA\GalleryPlus\Controller\FilesApiController;
@@ -92,8 +94,19 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'PublicConfigController', function (IContainer $c) {
-			return new PublicConfigController(
+			'ConfigPublicController', function (IContainer $c) {
+			return new ConfigPublicController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ConfigService'),
+				$c->query('PreviewService'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'ConfigApiController', function (IContainer $c) {
+			return new ConfigApiController(
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),

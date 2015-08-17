@@ -31,6 +31,10 @@ use OCP\AppFramework\IAppContainer;
  */
 class DataSetup extends \Codeception\Module {
 
+	/** @var array<string> */
+	public $mediaTypes;
+	/** @var array<string> */
+	public $extraMediaTypes;
 	/** @var string */
 	public $userId = 'tester';
 	/** @var string */
@@ -178,10 +182,23 @@ class DataSetup extends \Codeception\Module {
 			'OC\\Preview\\JPEG',
 			'OC\\Preview\\PNG',
 			'OC\\Preview\\GIF',
-			'OC\\Preview\\Postscript'
+			'OC\\Preview\\Postscript',
+			'OC\\Preview\\Font'
 		];
 		$this->server->getConfig()
 					 ->setSystemValue('enabledPreviewProviders', $providers);
+
+		$this->mediaTypes = [
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+			'application/postscript'
+		];
+
+		$this->extraMediaTypes = [
+			'application/font-sfnt',
+			'application/x-font',
+		];
 	}
 
 	/**

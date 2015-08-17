@@ -148,7 +148,7 @@ class ConfigControllerTest extends \Test\TestCase {
 		$this->mockFeaturesList($features);
 		$this->mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $mimeTypes);
 
-		$response = $this->controller->getConfig($slideshow);
+		$response = $this->controller->get($slideshow);
 
 		$this->assertEquals(['features' => $features, 'mediatypes' => $mimeTypes], $response);
 	}
@@ -162,7 +162,7 @@ class ConfigControllerTest extends \Test\TestCase {
 		$nativeSvgSupport = false;
 		$this->mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $this->baseMimeTypes);
 
-		$response = $this->controller->getConfig($slideshow);
+		$response = $this->controller->get($slideshow);
 
 		$this->assertEquals(
 			['features' => $features, 'mediatypes' => $this->baseMimeTypes], $response
