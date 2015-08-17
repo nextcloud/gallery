@@ -68,7 +68,7 @@ trait Files {
 	 *
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
-	public function getFiles($location, $features, $etag, $mediatypes) {
+	private function getFiles($location, $features, $etag, $mediatypes) {
 		$files = [];
 		/** @var Folder $folderNode */
 		list($folderPathFromRoot, $folderNode, $locationHasChanged) =
