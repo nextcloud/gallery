@@ -67,7 +67,7 @@ return [
 		 */
 		// Gallery config, as well as supported media types
 		[
-			'name' => 'config#get_config',
+			'name' => 'config#get',
 			'url'  => '/config',
 			'verb' => 'GET'
 		],
@@ -93,7 +93,7 @@ return [
 		 * Public services
 		 */
 		[
-			'name' => 'public_config#get_config',
+			'name' => 'config_public#get',
 			'url'  => '/config.public',
 			'verb' => 'GET'
 		],
@@ -116,10 +116,15 @@ return [
 		 * API
 		 */
 		[
-			'name' => 'files_api#preflighted_cors', // Valid for all API end points
+			'name' => 'config_api#preflighted_cors', // Valid for all API end points
 			'url'  => '/api/{path}',
 			'verb' => 'OPTIONS',
 			'requirements' => ['path' => '.+']
+		],
+		[
+			'name' => 'config_api#get',
+			'url'  => '/api/config',
+			'verb' => 'GET'
 		],
 		[
 			'name' => 'files_api#get_list',

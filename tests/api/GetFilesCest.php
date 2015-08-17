@@ -11,7 +11,6 @@
  */
 
 use Page\Gallery as GalleryApp;
-use Helper\DataSetup;
 
 /**
  * Class GetFilesCest
@@ -20,27 +19,26 @@ use Helper\DataSetup;
  */
 class GetFilesCest {
 
-	private $setupData;
 	private $userId;
 	private $password;
 	private $filesApi;
-	private $params = [
-		'mediatypes' => 'image/png;image/jpeg;image/gif;application/postscript'
-	];
+	private $params;
 
 	/**
-	 * Injects objects we need
+	 * Sets up the environment for this series of tests
 	 *
-	 * @param DataSetup $setupData
+	 * We use custom methods defined in _support/Helper/Api
+	 * If these are re-usable across suites, they may move to _support/Step
+	 *
+	 * @param ApiTester $I
 	 */
-	protected function _inject(DataSetup $setupData) {
-		$this->setupData = $setupData;
-	}
-
 	public function _before(ApiTester $I) {
 		$this->filesApi = GalleryApp::$URL . 'api/files/list';
-		$this->userId = $this->setupData->userId;
-		$this->password = $this->setupData->userPassword;
+		list ($this->userId, $this->password) = $I->getUserCredentials();
+		list($mediaTypes) = $I->getMediaTypes();
+		$this->params = [
+			'mediatypes' => implode(';', $mediaTypes)
+		];
 	}
 
 	public function _after(ApiTester $I) {
@@ -77,7 +75,7 @@ class GetFilesCest {
 	}
 
 	/**
-	 * @after getStandardList
+	 * @depends getStandardList
 	 *
 	 * @param ApiTester $I
 	 */

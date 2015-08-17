@@ -35,7 +35,7 @@ class PublicPreviewController extends PreviewController {
 	 *
 	 * @param string $ids the ID of the files of which we need thumbnail previews of
 	 * @param bool $square
-	 * @param bool $scale
+	 * @param float $scale
 	 */
 	public function getThumbnails($ids, $square, $scale) {
 		return parent::getThumbnails($ids, $square, $scale);

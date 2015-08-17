@@ -53,6 +53,9 @@ before_script:
   - curl http://localhost:4444/wd/hub/status
   #- phantomjs --version
 
+  # Install the Imagick PHP extension
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then printf "\n" | pecl install imagick; fi;"
+
 script:
   # Test lint
   - cd apps/$APP_NAME
@@ -66,8 +69,8 @@ script:
   # PHP 5.6 ONLY: Unit, integration and api tests with code coverage
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # Send coverage report to Scrutinizer
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
 
   # Generate API documentation
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/phpdoc run; fi"

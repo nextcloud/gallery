@@ -13,14 +13,14 @@
 namespace OCA\Gallery\Controller;
 
 /**
- * Class PublicConfigController
+ * Class ConfigPublicController
  *
  * Note: Type casting only works if the "@param" parameters are also included in this class as
  * their not yet inherited
  *
  * @package OCA\Gallery\Controller
  */
-class PublicConfigController extends ConfigController {
+class ConfigPublicController extends ConfigController {
 
 	/**
 	 * @PublicPage
@@ -29,10 +29,10 @@ class PublicConfigController extends ConfigController {
 	 *
 	 * @inheritDoc
 	 *
-	 * @param bool $slideshow
+	 * @param bool $extramediatypes
 	 */
-	public function getConfig($slideshow = false) {
-		return parent::getConfig($slideshow);
+	public function get($extramediatypes = false) {
+		return parent::get($extramediatypes);
 	}
 
 }
