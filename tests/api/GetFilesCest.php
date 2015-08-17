@@ -19,9 +19,7 @@ use Page\Gallery as GalleryApp;
  */
 class GetFilesCest {
 
-	private $userId;
-	private $password;
-	private $filesApi;
+	private $apiUrl;
 	private $params;
 
 	/**
@@ -33,8 +31,7 @@ class GetFilesCest {
 	 * @param ApiTester $I
 	 */
 	public function _before(ApiTester $I) {
-		$this->filesApi = GalleryApp::$URL . 'api/files/list';
-		list ($this->userId, $this->password) = $I->getUserCredentials();
+		$this->apiUrl = GalleryApp::$URL . 'api/files/list';
 		list($mediaTypes) = $I->getMediaTypes();
 		$this->params = [
 			'mediatypes' => implode(';', $mediaTypes)
@@ -44,22 +41,23 @@ class GetFilesCest {
 	public function _after(ApiTester $I) {
 	}
 
-	public function unauthorizedAccess(ApiTester $I) {
-		$I->am('an app');
-		$I->wantTo('connect to the Files API without credentials');
-		$I->sendGET($this->filesApi, $this->params);
-		$I->seeResponseCodeIs(500);
-		$I->seeResponseIsJson();
+	/**
+	 * Connects to the API as an anonymous user
+	 *
+	 * @param \Step\Api\Anonymous $I
+	 */
+	public function unauthorizedAccess(\Step\Api\Anonymous $I) {
+		$I->connectToTheApi($this->apiUrl, 'the files/list API');
 	}
 
-	public function getStandardList(ApiTester $I) {
+	public function getStandardList(\Step\Api\User $I) {
 		$I->am('an app');
 		$I->wantTo(
 			'get the list of available media files'
 		);
 
-		$I->amHttpAuthenticated($this->userId, $this->password);
-		$I->sendGET($this->filesApi, $this->params);
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->sendGET($this->apiUrl, $this->params);
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 
@@ -79,15 +77,15 @@ class GetFilesCest {
 	 *
 	 * @param ApiTester $I
 	 */
-	public function getListWithNativeSvgEnabled(ApiTester $I) {
+	public function getListWithNativeSvgEnabled(\Step\Api\User $I) {
 		$mediaTypes = $this->params['mediatypes'];
 		$params = ['mediatypes' => $mediaTypes . ';image/svg+xml'];
 
 		$I->am('an app');
 		$I->wantTo('get the list of available media files which should include SVGs');
 
-		$I->amHttpAuthenticated($this->userId, $this->password);
-		$I->sendGET($this->filesApi, $params);
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->sendGET($this->apiUrl, $params);
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 		$I->seeResponseContainsJson(['path' => 'folder2/testimagelarge.svg']);

@@ -138,12 +138,18 @@ return [
 		],
 		[
 			'name' => 'preview_api#get_thumbnails',
-			'url'  => '/api/preview/thumbnails',
+			'url'  => '/api/thumbnails',
 			'verb' => 'GET'
 		],
 		[
 			'name' => 'preview_api#get_preview',
 			'url'  => '/api/preview/{fileId}/{width}/{height}',
+			'verb' => 'GET'
+		],
+		[
+			// For embeddable galleries
+			'name' => 'preview_api#show_gallery',
+			'url'  => '/api/gallery/{folderId}',
 			'verb' => 'GET'
 		],
 	]

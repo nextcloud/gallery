@@ -19,24 +19,22 @@ use Page\Gallery as GalleryApp;
  */
 class GetConfigCest {
 
-	private $userId;
-	private $password;
-	private $configApi;
+	private $apiUrl;
 
 	public function _before(ApiTester $I) {
-		$this->configApi = GalleryApp::$URL . 'api/config';
-		list ($this->userId, $this->password) = $I->getUserCredentials();
+		$this->apiUrl = GalleryApp::$URL . 'api/config';
 	}
 
 	public function _after(ApiTester $I) {
 	}
 
-	public function unauthorizedAccess(ApiTester $I) {
-		$I->am('an app');
-		$I->wantTo('connect to the Config API without credentials');
-		$I->sendGET($this->configApi);
-		$I->seeResponseCodeIs(401);
-		$I->seeResponseIsJson();
+	/**
+	 * Connects to the API as an anonymous user
+	 *
+	 * @param \Step\Api\Anonymous $I
+	 */
+	public function unauthorizedAccess(\Step\Api\Anonymous $I) {
+		$I->connectToTheApi($this->apiUrl, 'the config API');
 	}
 
 	/**
@@ -47,13 +45,13 @@ class GetConfigCest {
 	 *
 	 * @param ApiTester $I
 	 */
-	public function getConfig(ApiTester $I) {
+	public function getConfig(\Step\Api\User $I) {
 		$I->am('an app');
 		$I->wantTo('get the current Gallery configuration');
 
-		$I->amHttpAuthenticated($this->userId, $this->password);
+		$I->getUserCredentialsAndUseHttpAuthentication();
 		$params = ['extramediatypes' => false];
-		$I->sendGET($this->configApi, $params);
+		$I->sendGET($this->apiUrl, $params);
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 
@@ -81,13 +79,13 @@ class GetConfigCest {
 	 * @param ApiTester $I
 	 * @param $scenario
 	 */
-	public function getConfigWithExtraMediaTypes(ApiTester $I, \Codeception\Scenario $scenario) {
+	public function getConfigWithExtraMediaTypes(\Step\Api\User $I, \Codeception\Scenario $scenario) {
 		$I->am('an app');
 		$I->wantTo('get the current Gallery configuration which should include extra media types');
 
-		$I->amHttpAuthenticated($this->userId, $this->password);
+		$I->getUserCredentialsAndUseHttpAuthentication();
 		$params = ['extramediatypes' => true];
-		$I->sendGET($this->configApi, $params);
+		$I->sendGET($this->apiUrl, $params);
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 

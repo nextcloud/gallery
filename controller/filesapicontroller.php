@@ -64,12 +64,7 @@ class FilesApiController extends ApiController {
 	 *
 	 * Returns a list of all media files available to the authenticated user
 	 *
-	 *    * Authentication can be via a login/password or a token/(password)
-	 *    * For private galleries, it returns all media files, with the full path from the root
-	 *     folder For public galleries, the path starts from the folder the link gives access to
-	 *     (virtual root)
-	 *    * An exception is only caught in case something really wrong happens. As we don't test
-	 *     files before including them in the list, we may return some bad apples
+	 * @see FilesController::getList()
 	 *
 	 * @param string $location a path representing the current album in the app
 	 * @param string $features the list of supported features
