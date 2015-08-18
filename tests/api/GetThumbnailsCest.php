@@ -69,12 +69,12 @@ class GetThumbnailsCest {
 		$I->wantTo('receive 404 events when I send the wrong IDs');
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$I->haveHttpHeader('Accept', 'text/event-stream');
-		$this->params['ids'] = '0;1';
+		$this->params['ids'] = '99998;99999';
 		$I->sendGET($this->apiUrl, $this->params);
 		$I->seeResponseCodeIs(200);
 		$I->seeHttpHeader('Content-type', 'text/event-stream;charset=UTF-8');
-		$I->seeResponseContains('"fileid":"0","status":404');
-		$I->seeResponseContains('"fileid":"1","status":404');
+		$I->seeResponseContains('"fileid":"99998","status":404');
+		$I->seeResponseContains('"fileid":"99999","status":404');
 	}
 
 }
