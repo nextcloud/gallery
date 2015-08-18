@@ -33,9 +33,8 @@ use OCA\Gallery\Controller\FilesController;
 use OCA\Gallery\Controller\FilesPublicController;
 use OCA\Gallery\Controller\FilesApiController;
 use OCA\Gallery\Controller\PreviewController;
-
-
-use OCA\Gallery\Controller\PublicPreviewController;
+use OCA\Gallery\Controller\PreviewPublicController;
+use OCA\Gallery\Controller\PreviewApiController;
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Preview\Preview;
 use OCA\Gallery\Service\SearchFolderService;
@@ -47,6 +46,7 @@ use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
 use OCA\Gallery\Middleware\SharingCheckMiddleware;
 use OCA\Gallery\Middleware\EnvCheckMiddleware;
+use OCA\Gallery\Utility\EventSource;
 
 use OCA\OcUtility\AppInfo\Application as OcUtility;
 use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
@@ -161,21 +161,35 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
 		);
 		$container->registerService(
-			'PublicPreviewController', function (IContainer $c) {
-			return new PublicPreviewController(
+			'PreviewPublicController', function (IContainer $c) {
+			return new PreviewPublicController(
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'PreviewApiController', function (IContainer $c) {
+			return new PreviewApiController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
+				$c->query('ThumbnailService'),
+				$c->query('PreviewService'),
+				$c->query('DownloadService'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
@@ -190,9 +204,8 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'OCP\IEventSource', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->createEventSource();
+			'EventSource', function (IAppContainer $c) {
+			return new EventSource();
 		}
 		);
 		$container->registerService(

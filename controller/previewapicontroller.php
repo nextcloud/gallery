@@ -14,11 +14,10 @@ namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\IEventSource;
 use OCP\ILogger;
 use OCP\Files\File;
 
-use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\JSONResponse;
@@ -30,11 +29,11 @@ use OCA\Gallery\Service\DownloadService;
 use OCA\Gallery\Utility\EventSource;
 
 /**
- * Class PreviewController
+ * Class PreviewApiController
  *
  * @package OCA\Gallery\Controller
  */
-class PreviewController extends Controller {
+class PreviewApiController extends ApiController {
 
 	use Preview;
 	use JsonHttpError;
@@ -78,17 +77,12 @@ class PreviewController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * Generates thumbnails
 	 *
-	 * Uses EventSource to send thumbnails back as soon as they're created
-	 *
-	 * FIXME: @LukasReschke says: The exit is required here because
-	 * otherwise the AppFramework is trying to add headers as well after
-	 * dispatching the request which results in a "Cannot modify header
-	 * information" notice.
-	 *
-	 * WARNING: Returning a JSON response does not get rid of the problem
+	 * @see PreviewController::getThumbnails()
 	 *
 	 * @param string $ids the ID of the files of which we need thumbnail previews of
 	 * @param bool $square
@@ -114,6 +108,8 @@ class PreviewController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * Sends either a large preview of the requested file or the original file itself
 	 *

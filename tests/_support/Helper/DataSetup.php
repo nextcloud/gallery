@@ -151,6 +151,48 @@ class DataSetup extends \Codeception\Module {
 	}
 
 	/**
+	 * Called when a test fails
+	 *
+	 * Here we want to make sure the setup is restored to its original state
+	 *
+	 * @param TestCase $test
+	 * @param $fail
+	 */
+	public function _failed(\Codeception\TestCase $test, $fail) {
+		$this->_afterSuite();
+	}
+
+	/**
+	 * Returns a list of ids available in the given folder
+	 *
+	 * @param string $folderPath
+	 *
+	 * @return array<string,int|string>
+	 */
+	public function getFilesDataForFolder($folderPath) {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		/** @type Folder $folder */
+		$folder = $userFolder->get($folderPath);
+		$content = $folder->getDirectoryListing();
+		$data = [];
+
+		foreach ($content as $node) {
+			$nodeType = $node->getType();
+			$mimeType = $node->getMimetype();
+			if ($nodeType === 'file' && in_array($mimeType, $this->mediaTypes)) {
+				$data[] = [
+					'id'        => $node->getId(),
+					'name'      => $node->getName(),
+					'mediatype' => $mimeType,
+					'etag'      => $node->getEtag(),
+				];
+			}
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Creates a test environment for a given user
 	 *
 	 * @param string $userId
