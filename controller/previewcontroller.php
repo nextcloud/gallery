@@ -27,6 +27,7 @@ use OCA\Gallery\Http\ImageResponse;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
+use OCA\Gallery\Utility\EventSource;
 
 /**
  * Class PreviewController
@@ -39,7 +40,7 @@ class PreviewController extends Controller {
 	use JsonHttpError;
 
 	/**
-	 * @var IEventSource
+	 * @var EventSource
 	 */
 	private $eventSource;
 
@@ -52,7 +53,7 @@ class PreviewController extends Controller {
 	 * @param ThumbnailService $thumbnailService
 	 * @param PreviewService $previewService
 	 * @param DownloadService $downloadService
-	 * @param IEventSource $eventSource
+	 * @param EventSource $eventSource
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -62,7 +63,7 @@ class PreviewController extends Controller {
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
 		DownloadService $downloadService,
-		IEventSource $eventSource,
+		EventSource $eventSource,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
@@ -132,7 +133,7 @@ class PreviewController extends Controller {
 
 		if ($preview === null) {
 			if ($this->download) {
-				$url = $this->getErrorUrl($status);
+				$url = $this->getErrorUrl($this->appName, $status);
 
 				return new RedirectResponse($url);
 			} else {

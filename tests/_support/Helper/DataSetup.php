@@ -151,6 +151,18 @@ class DataSetup extends \Codeception\Module {
 	}
 
 	/**
+	 * Called when a test fails
+	 *
+	 * Here we want to make sure the setup is restored to its original state
+	 *
+	 * @param TestCase $test
+	 * @param $fail
+	 */
+	public function _failed(\Codeception\TestCase $test, $fail) {
+		$this->_afterSuite();
+	}
+
+	/**
 	 * Returns a list of ids available in the given folder
 	 *
 	 * @param string $folderPath
