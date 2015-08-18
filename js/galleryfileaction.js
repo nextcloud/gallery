@@ -170,7 +170,7 @@ $(document).ready(function () {
 
 	// Retrieve the config as well as the list of supported media types.
 	// The list of media files is retrieved when the user clicks on a row
-	var url = window.galleryFileAction.buildGalleryUrl('config', '', {slideshow: 1});
+	var url = window.galleryFileAction.buildGalleryUrl('config', '', {extramediatypes: 1});
 	$.getJSON(url).then(function (config) {
 		if (!$.isEmptyObject(config.features)) {
 			window.galleryFileAction.config = config.features;
