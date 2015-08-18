@@ -73,7 +73,7 @@ class EventSource implements \OCP\IEventSource {
 			$type = null;
 		}
 
-		if ($type) {
+		if (!empty($type)) {
 			echo 'event: ' . $type . PHP_EOL;
 		}
 		echo 'data: ' . json_encode($data) . PHP_EOL;
