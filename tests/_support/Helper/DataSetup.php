@@ -178,11 +178,12 @@ class DataSetup extends \Codeception\Module {
 
 		foreach ($content as $node) {
 			$nodeType = $node->getType();
-			if ($nodeType === 'file') {
+			$mimeType = $node->getMimetype();
+			if ($nodeType === 'file' && in_array($mimeType, $this->mediaTypes)) {
 				$data[] = [
 					'id'        => $node->getId(),
 					'name'      => $node->getName(),
-					'mediatype' => $node->getMimetype(),
+					'mediatype' => $mimeType,
 					'etag'      => $node->getEtag(),
 				];
 			}
