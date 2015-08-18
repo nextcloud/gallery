@@ -63,7 +63,7 @@
 				etag: albumEtag
 			};
 			// Only use the folder as a GET parameter and not as part of the URL
-			var url = Gallery.utility.buildGalleryUrl('files', '', params);
+			var url = Gallery.utility.buildGalleryUrl('files/list', '', params);
 			return $.getJSON(url).then(function (/**{{albuminfo:Object, files:Array}}*/ data) {
 				/**@type {{
 				 * 	fileid: number,
@@ -323,7 +323,12 @@
 			}).map(function (image) {
 				var name = OC.basename(image.path);
 				var previewUrl = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
-				var downloadUrl = previewUrl + '&download';
+				var params = {
+					c: image.etag,
+					requesttoken: oc_requesttoken
+				};
+				var downloadUrl = Gallery.utility.buildGalleryUrl('files/download', '/' + image.fileId,
+					params);
 
 				return {
 					name: name,

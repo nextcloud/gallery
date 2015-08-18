@@ -39,8 +39,10 @@ class ImageResponse extends Response {
 
 		$this->setStatus($statusCode);
 		$this->addHeader('Content-type', $image['mimetype'] . '; charset=utf-8');
-
-		\OCP\Response::setContentDispositionHeader($name, 'attachment');
+		$this->addHeader('Content-Disposition',
+						 'attachment; filename*=UTF-8\'\'' . rawurlencode($name) . '; filename="'
+						 . rawurlencode($name) . '"'
+		);
 	}
 
 	/**

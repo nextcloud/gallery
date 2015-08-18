@@ -17,7 +17,6 @@ namespace OCA\Gallery\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
-use OCP\Files\File;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -26,7 +25,6 @@ use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Http\ImageResponse;
-use OCA\Gallery\Service\ServiceException;
 use OCA\Gallery\Service\DownloadService;
 
 /**
@@ -111,7 +109,7 @@ class PageController extends Controller {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 *
-	 * Shows the albums and pictures or download the single file the token gives access to
+	 * Shows the albums and pictures or redirects to the download location the token gives access to
 	 *
 	 * @param string $token
 	 * @param null|string $filename
@@ -123,7 +121,16 @@ class PageController extends Controller {
 		if ($node->getType() === 'dir') {
 			return $this->showPublicPage($token);
 		} else {
-			return $this->downloadFile($node, $filename);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.files_public.download',
+				[
+					'token' => $token,
+					'fileId'   => $node->getId(),
+					'filename' => $filename
+				]
+			);
+
+			return new RedirectResponse($url);
 		}
 	}
 
@@ -206,36 +213,6 @@ class PageController extends Controller {
 		$this->addContentSecurityToResponse($response);
 
 		return $response;
-	}
-
-	/**
-	 * Downloads the file associated with a token
-	 *
-	 * @param File $file
-	 * @param string|null $filename
-	 *
-	 * @return ImageResponse|RedirectResponse
-	 */
-	private function downloadFile($file, $filename) {
-		try {
-			$download = $this->downloadService->downloadFile($file);
-			if (is_null($filename)) {
-				$filename = $file->getName();
-			}
-			$download['name'] = $filename;
-
-			return new ImageResponse($download);
-		} catch (ServiceException $exception) {
-			$url = $this->urlGenerator->linkToRoute(
-				$this->appName . '.page.error_page',
-				[
-					'message' => $exception->getMessage(),
-					'code'    => Http::STATUS_NOT_FOUND
-				]
-			);
-
-			return new RedirectResponse($url);
-		}
 	}
 
 	/**
