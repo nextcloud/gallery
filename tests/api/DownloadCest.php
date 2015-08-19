@@ -13,9 +13,9 @@
 use Page\Gallery as GalleryApp;
 
 /**
- * Class GetPreviewCest
+ * Class DownloadCest
  */
-class GetPreviewCest {
+class DownloadCest {
 
 	private $apiUrl;
 
@@ -25,7 +25,7 @@ class GetPreviewCest {
 	 * @param ApiTester $I
 	 */
 	public function _before(ApiTester $I) {
-		$this->apiUrl = GalleryApp::$URL . 'api/preview';
+		$this->apiUrl = GalleryApp::$URL . 'api/files/download';
 	}
 
 	public function _after(ApiTester $I) {
@@ -37,29 +37,30 @@ class GetPreviewCest {
 	 * @param \Step\Api\Anonymous $I
 	 */
 	public function unauthorizedAccess(\Step\Api\Anonymous $I) {
-		$I->connectToTheApi($this->apiUrl. '/9999999/1920/1080', 'the preview API');
+		$I->connectToTheApi($this->apiUrl. '/9999999', 'the download API');
 	}
 
-	public function getPreview(\Step\Api\User $I) {
+	public function downloadFile(\Step\Api\User $I) {
 		$I->am('an app');
-		$I->wantTo('get the preview of a file');
+		$I->wantTo('download a file');
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$data = $I->getFilesDataForFolder('');
 		$file = $data[0];
-		$url = $this->apiUrl . '/' . $file['id'] . '/1920/1080';
+		$url = $this->apiUrl . '/' . $file['id'];
 		$I->sendGET($url);
 		$I->downloadAFile($file);
 	}
 
-	public function emptyResponse(\Step\Api\User $I) {
+	public function fileNotFoundPage(\Step\Api\User $I) {
 		$I->am('an app');
-		$I->wantTo('get the preview of a file without a valid fileId');
+		$I->wantTo('download a file without a valid fileId');
 		$I->amGoingTo("send a fileId which doesn't exist");
-		$I->expectTo("receive a 404");
+		$I->expectTo("be redirected to an error 404 page");
 		$I->getUserCredentialsAndUseHttpAuthentication();
-		$url = $this->apiUrl . '/9999999/1920/1080';
+		$url = $this->apiUrl . '/9999999';
 		$I->sendGET($url);
 		$I->seeResponseCodeIs(404);
+		$I->seeHttpHeader('Content-type', 'text/html; charset=UTF-8');
 	}
 }

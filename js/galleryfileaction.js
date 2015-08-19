@@ -88,7 +88,12 @@
 						requesttoken: oc_requesttoken
 					};
 					imageUrl = galleryFileAction.buildGalleryUrl('preview', '/' + file.id, params);
-					downloadUrl = imageUrl + '&download';
+					params = {
+						c: file.etag,
+						requesttoken: oc_requesttoken
+					};
+					downloadUrl =
+						galleryFileAction.buildGalleryUrl('files/download', '/' + file.id, params);
 
 					images.push({
 						name: file.name,

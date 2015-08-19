@@ -50,7 +50,7 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 	/** @var string */
 	public $sharedFileToken;
 	/** @var string */
-	public $passwordForShares;
+	public $passwordForFolderShare;
 	/** @var Folder */
 	protected $sharedFolder;
 	/** @var string */
@@ -95,7 +95,7 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 		$this->sharedFileName = $this->sharedFile->getName();
 		$this->sharedFolderToken = $setupData->sharedFolderToken;
 		$this->sharedFileToken = $setupData->sharedFileToken;
-		$this->passwordForShares = $setupData->passwordForShares;
+		$this->passwordForFolderShare = $setupData->passwordForFolderShare;
 	}
 
 	protected function _after() {

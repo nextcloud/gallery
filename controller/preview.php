@@ -115,9 +115,8 @@ trait Preview {
 			/** @type File $file */
 			$file = $this->previewService->getResourceFromId($fileId);
 			if (!is_null($file)) {
-				$previewRequired = $this->isPreviewRequired($file, $animatedPreview);
 				$data = $this->getPreviewData(
-					$file, $previewRequired, $width, $height, $keepAspect, $base64Encode
+					$file, $animatedPreview, $width, $height, $keepAspect, $base64Encode
 				);
 			} else {
 				// Uncaught problem, should never reach this point...
@@ -133,39 +132,20 @@ trait Preview {
 	}
 
 	/**
-	 * Returns true if we need to generate a preview for that file
-	 *
-	 * @param $file
+	 * @param File $file
 	 * @param bool $animatedPreview
-	 *
-	 * @return bool
-	 */
-	private function isPreviewRequired($file, $animatedPreview) {
-		$previewRequired = false;
-
-		if (!$this->download) {
-			$previewRequired =
-				$this->previewService->isPreviewRequired($file, $animatedPreview);
-		}
-
-		return $previewRequired;
-	}
-
-	/**
-	 * @param $file
-	 * @param $previewRequired
-	 * @param $width
-	 * @param $height
-	 * @param $keepAspect
-	 * @param $base64Encode
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $keepAspect
+	 * @param bool $base64Encode
 	 *
 	 * @return array
 	 */
 	private function getPreviewData(
-		$file, $previewRequired, $width, $height, $keepAspect, $base64Encode
+		$file, $animatedPreview, $width, $height, $keepAspect, $base64Encode
 	) {
 		$status = Http::STATUS_OK;
-		if ($previewRequired) {
+		if ($this->previewService->isPreviewRequired($file, $animatedPreview)) {
 			$type = 'preview';
 			$preview = $this->previewService->createPreview(
 				$file, $width, $height, $keepAspect, $base64Encode
@@ -209,24 +189,6 @@ trait Preview {
 		}
 
 		return $this->getErrorData($status);
-	}
-
-	/**
-	 * Returns an URL based on the HTTP status code
-	 *
-	 * @param string $appName
-	 * @param int $status
-	 *
-	 * @return string
-	 */
-	private function getErrorUrl($appName, $status) {
-		return $this->urlGenerator->linkToRoute(
-			$appName . '.page.error_page',
-			[
-				'message' => 'There was a problem accessing the file',
-				'code'    => $status
-			]
-		);
 	}
 
 }

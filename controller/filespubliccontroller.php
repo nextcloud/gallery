@@ -38,4 +38,18 @@ class FilesPublicController extends FilesController {
 		return parent::getList($location, $features, $etag, $mediatypes);
 	}
 
+	/**
+	 * @PublicPage
+	 * @NoCSRFRequired
+	 *
+	 * Sends the file matching the fileId
+	 *
+	 * @inheritDoc
+	 *
+	 * @param int $fileId the ID of the file we want to download
+	 * @param string|null $filename
+	 */
+	public function download($fileId, $filename = null) {
+		return parent::download($fileId, $filename);
+	}
 }

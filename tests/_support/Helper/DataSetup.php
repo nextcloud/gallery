@@ -81,14 +81,14 @@ class DataSetup extends \Codeception\Module {
 	public $sharedFolderName = 'shared1';
 	/** @var string */
 	public $sharedFolderToken;
+	/** @var string */
+	public $passwordForFolderShare = 'p@ssw0rd4sh@re5';
 	/** @var File */
 	public $sharedFile;
 	/** @var string */
 	public $sharedFileName = 'testimage-wide.png';
 	/** @var string */
 	public $sharedFileToken;
-	/** @var string */
-	public $passwordForShares = 'p@ssw0rd4sh@re5';
 
 	/** @var CoreTestCase */
 	private $coreTestCase;
@@ -365,8 +365,10 @@ class DataSetup extends \Codeception\Module {
 			$this->server->getConfig()
 						 ->setAppValue('core', 'shareapi_allow_links', 'yes');
 
-			// Set so that this case is always covered
-			$shareWith = $this->passwordForShares;
+			// Only password protect the folders
+			if ($nodeType === 'folder') {
+				$shareWith = $this->passwordForFolderShare;
+			}
 			$shareType = \OCP\Share::SHARE_TYPE_LINK;
 		}
 

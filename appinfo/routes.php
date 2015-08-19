@@ -71,11 +71,18 @@ return [
 			'url'  => '/config',
 			'verb' => 'GET'
 		],
-		// All the images of which a preview can be generated
+		// The list of images of which previews can be generated
 		[
 			'name' => 'files#get_list',
-			'url'  => '/files',
+			'url'  => '/files/list',
 			'verb' => 'GET'
+		],
+		// File download
+		[
+			'name'     => 'files#download',
+			'url'      => '/files/download/{fileId}',
+			'verb'     => 'GET',
+			'defaults' => ['fileId' => null]
 		],
 		// Batch creation of thumbnails
 		[
@@ -99,8 +106,14 @@ return [
 		],
 		[
 			'name' => 'files_public#get_lists',
-			'url'  => '/files.public',
+			'url'  => '/files.public/list',
 			'verb' => 'GET'
+		],
+		[
+			'name'     => 'files_public#download',
+			'url'      => '/files.public/download/{fileId}',
+			'verb'     => 'GET',
+			'defaults' => ['fileId' => null]
 		],
 		[
 			'name' => 'public_preview#get_thumbnails',
@@ -116,9 +129,9 @@ return [
 		 * API
 		 */
 		[
-			'name' => 'config_api#preflighted_cors', // Valid for all API end points
-			'url'  => '/api/{path}',
-			'verb' => 'OPTIONS',
+			'name'         => 'config_api#preflighted_cors', // Valid for all API end points
+			'url'          => '/api/{path}',
+			'verb'         => 'OPTIONS',
 			'requirements' => ['path' => '.+']
 		],
 		[
