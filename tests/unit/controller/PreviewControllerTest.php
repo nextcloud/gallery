@@ -117,11 +117,8 @@ class PreviewControllerTest extends \Test\TestCase {
 		$this->assertEquals(
 			'image/png; charset=utf-8', $response->getHeaders()['Content-type']
 		);
-
-		// TODO Save to a temp file and check the dimensions
-		//$this->assertEquals($preview['preview'], $response->render());
 	}
-	
+
 	public function testGetPreviewWithWrongId() {
 		$fileId = 99999;
 		$width = 1024;
