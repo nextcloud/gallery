@@ -1,0 +1,13 @@
+---
+# Gallery configuration file
+information:
+  description: This is the sharer collection
+  copyright: Copyright 2015 [Acme](http://www.ubersecretsharer.ninja)
+  inherit: yes
+sorting:
+  type: name
+  order: asc
+  inherit: yes
+features:
+  external_shares: yes
+  native_svg: yes

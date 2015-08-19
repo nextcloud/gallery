@@ -56,7 +56,18 @@ class GetConfigCest {
 		$I->seeResponseIsJson();
 
 
-		$I->seeResponseContainsJson(['features' => []]);
+		/**
+		 * Warning: Needs to match what is in the test config
+		 * If we automate the detection, we're dependant on the results created by a 3rd party lib
+		 */
+		$I->seeResponseContainsJson(
+			[
+				'features' => [
+					'external_shares' => 'yes',
+					'native_svg'      => 'no',
+				]
+			]
+		);
 
 		/**
 		 * TODO Replace with JSONPath once the library is fixed
@@ -79,7 +90,8 @@ class GetConfigCest {
 	 * @param ApiTester $I
 	 * @param $scenario
 	 */
-	public function getConfigWithExtraMediaTypes(\Step\Api\User $I, \Codeception\Scenario $scenario) {
+	public function getConfigWithExtraMediaTypes(\Step\Api\User $I, \Codeception\Scenario $scenario
+	) {
 		$I->am('an app');
 		$I->wantTo('get the current Gallery configuration which should include extra media types');
 
