@@ -51,8 +51,8 @@ class GetThumbnailsCest {
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$I->haveHttpHeader('Accept', 'text/event-stream');
 		$data = $I->getFilesDataForFolder('');
-		$id1 = $data[0]['id'];
-		$id2 = $data[1]['id'];
+		$id1 = $data['testimage.jpg']['id'];
+		$id2 = $data['animated.gif']['id'];
 		$this->params['ids'] = $id1.';'.$id2;
 
 		$I->sendGET($this->apiUrl, $this->params);

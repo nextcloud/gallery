@@ -56,6 +56,12 @@ class DataSetup extends \Codeception\Module {
 	 */
 	public $filesHierarchy = [
 		'testimage.jpg',
+		'animated.gif',
+		'testimage-corrupt.jpg',
+		'font.ttf',
+		'testimagelarge.svg',
+		'testimage.eps',
+		'testimage.gif',
 		'folder1' => [
 			'testimage.jpg',
 			'testimage-wide.png',
@@ -180,9 +186,9 @@ class DataSetup extends \Codeception\Module {
 			$nodeType = $node->getType();
 			$mimeType = $node->getMimetype();
 			if ($nodeType === 'file' && in_array($mimeType, $this->mediaTypes)) {
-				$data[] = [
+				$name = $node->getName();
+				$data[$name] = [
 					'id'        => $node->getId(),
-					'name'      => $node->getName(),
 					'mediatype' => $mimeType,
 					'etag'      => $node->getEtag(),
 				];
@@ -308,7 +314,8 @@ class DataSetup extends \Codeception\Module {
 				}
 			} else {
 				$file = $baseFolder->newFile($value);
-				$imgData = file_get_contents(\OC::$SERVERROOT . '/tests/data/' . $value);
+				// Not the most reliable way
+				$imgData = file_get_contents(__DIR__ . '/../../_data/' . $value);
 				$file->putContent($imgData);
 
 				if ($value === $this->sharedFileName) {

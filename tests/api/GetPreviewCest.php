@@ -46,10 +46,10 @@ class GetPreviewCest {
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$data = $I->getFilesDataForFolder('');
-		$file = $data[0];
+		$file = $data['animated.gif'];
 		$url = $this->apiUrl . '/' . $file['id'] . '/1920/1080';
 		$I->sendGET($url);
-		$I->downloadAFile($file);
+		$I->downloadAFile($file, 'animated.gif');
 	}
 
 	public function emptyResponse(\Step\Api\User $I) {
