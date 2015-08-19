@@ -52,9 +52,7 @@ class GetFilesCest {
 
 	public function getStandardList(\Step\Api\User $I) {
 		$I->am('an app');
-		$I->wantTo(
-			'get the list of available media files'
-		);
+		$I->wantTo('get the list of available media files');
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$I->sendGET($this->apiUrl, $this->params);
@@ -89,6 +87,42 @@ class GetFilesCest {
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 		$I->seeResponseContainsJson(['path' => 'folder2/testimagelarge.svg']);
+	}
+
+	public function getListOfRootWhenGivenBogusPath(\Step\Api\User $I) {
+		$params = $this->params;
+		$params['location'] = '/completely/lost in/tests';
+
+		$I->am('an app');
+		$I->wantTo(
+			'get the list of files of the root folder when typing a deep path which is completely wrong'
+		);
+
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->sendGET($this->apiUrl, $params);
+		$I->seeResponseCodeIs(200);
+		$I->seeResponseIsJson();
+		$I->seeResponseContainsJson(['path' => 'testimage-corrupt.jpg']);
+	}
+
+	public function getListOfParentFolderWhenFolderHasTypo(\Step\Api\User $I) {
+		$params = $this->params;
+		// The correct path is /folder1/shared1/shared1.1, containing testimage.png
+		$params['location'] = '/folder1/shared1/shared1.2';
+
+		$I->am('an app');
+		$I->wantTo(
+			'get the list of files of the parent folder when the last folder contains a typo'
+		);
+
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->sendGET($this->apiUrl, $params);
+		$I->seeResponseCodeIs(200);
+		$I->seeResponseIsJson();
+		// /folder1/shared1 only contains 2 files. Warning, alphabetical order
+		$I->seeResponseJsonMatchesXpath('//files[path[1]="folder1/shared1/testimage.eps"]');
+		// This is weird and might come from a bug in Codeception
+		$I->seeResponseJsonMatchesXpath('//files[path[1][1]="folder1/shared1/testimage.gif"]');
 	}
 
 }

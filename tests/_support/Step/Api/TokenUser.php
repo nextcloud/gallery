@@ -22,6 +22,7 @@ class TokenUser extends \ApiTester {
 		$sharedFile = $I->getSharedFile();
 
 		$fileMetaData = [
+			'fileId'    => $sharedFile['file']->getId(),
 			'name'      => $sharedFile['file']->getName(),
 			'mediatype' => $sharedFile['file']->getMimetype(),
 			'token'     => $sharedFile['token']

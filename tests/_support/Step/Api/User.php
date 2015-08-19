@@ -25,4 +25,24 @@ class User extends \ApiTester {
 		$I->amHttpAuthenticated($userId, $password);
 	}
 
+	public function breakMyConfigFile() {
+		$I = $this;
+		$I->createBrokenConfig();
+	}
+
+	public function createMyConfigFileWithABom() {
+		$I = $this;
+		$I->createConfigWithBom();
+	}
+
+	public function emptyMyConfigFile() {
+		$I = $this;
+		$I->emptyConfig();
+	}
+
+	public function fixMyConfigFile() {
+		$I = $this;
+		$I->restoreValidConfig();
+	}
+
 }
