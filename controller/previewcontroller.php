@@ -126,7 +126,12 @@ class PreviewController extends Controller {
 		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
 
 		if (!$preview) {
-			return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], $status);
+			return new JSONResponse(
+				[
+					'message' => "I'm truly sorry, but we were unable to generate a preview for this file",
+					'success' => false
+				], $status
+			);
 		}
 		$preview['name'] = $file->getName();
 
