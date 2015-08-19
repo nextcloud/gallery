@@ -59,15 +59,14 @@ class GetFilesCest {
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 
-		$I->seeResponseJsonMatchesXpath('//files');
-		$I->seeResponseJsonMatchesXpath('//albuminfo');
-		$I->seeResponseJsonMatchesXpath('//locationhaschanged');
-
-
 		$I->seeResponseJsonMatchesXpath('//files/path');
 		$I->dontSeeResponseContainsJson(['path' => 'folder2/testimagelarge.svg']);
+		// Folder 4 contains the .nomedia file
+		$I->dontSeeResponseContainsJson(['path' => 'folder4']);
 
 		$I->seeResponseJsonMatchesXpath('//albuminfo/path', '');
+
+		$I->seeResponseContainsJson(['locationhaschanged' => false]);
 	}
 
 	/**
@@ -103,6 +102,7 @@ class GetFilesCest {
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 		$I->seeResponseContainsJson(['path' => 'testimage-corrupt.jpg']);
+		$I->seeResponseContainsJson(['locationhaschanged' => true]);
 	}
 
 	public function getListOfParentFolderWhenFolderHasTypo(\Step\Api\User $I) {
@@ -123,6 +123,7 @@ class GetFilesCest {
 		$I->seeResponseJsonMatchesXpath('//files[path[1]="folder1/shared1/testimage.eps"]');
 		// This is weird and might come from a bug in Codeception
 		$I->seeResponseJsonMatchesXpath('//files[path[1][1]="folder1/shared1/testimage.gif"]');
+		$I->seeResponseContainsJson(['locationhaschanged' => true]);
 	}
 
 }
