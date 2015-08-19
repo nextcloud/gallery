@@ -37,7 +37,7 @@ class DownloadCest {
 	 * @param \Step\Api\Anonymous $I
 	 */
 	public function unauthorizedAccess(\Step\Api\Anonymous $I) {
-		$I->connectToTheApi($this->apiUrl. '/9999999', 'the download API');
+		$I->connectToTheApi($this->apiUrl . '/9999999', 'the download API');
 	}
 
 	public function downloadFile(\Step\Api\User $I) {
@@ -46,10 +46,10 @@ class DownloadCest {
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$data = $I->getFilesDataForFolder('');
-		$file = $data[0];
+		$file = $data['testimage.jpg'];
 		$url = $this->apiUrl . '/' . $file['id'];
 		$I->sendGET($url);
-		$I->downloadAFile($file);
+		$I->downloadAFile($file, 'testimage.jpg');
 	}
 
 	public function fileNotFoundPage(\Step\Api\User $I) {
