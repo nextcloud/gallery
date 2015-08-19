@@ -157,6 +157,18 @@ class DataSetup extends \Codeception\Module {
 	}
 
 	/**
+	 * Called when a test fails
+	 *
+	 * This is called after every test, not after a suite run
+	 *
+	 * @param TestCase $test
+	 * @param $fail
+	 */
+	public function _failed(\Codeception\TestCase $test, $fail) {
+
+	}
+
+	/**
 	 * Returns a list of ids available in the given folder
 	 *
 	 * @param string $folderPath
@@ -201,7 +213,6 @@ class DataSetup extends \Codeception\Module {
 
 		// Create folders and files
 		$this->createSampleData($userId, $this->filesHierarchy);
-
 
 		$this->coreTestCase->logoutUser();
 	}
@@ -278,6 +289,9 @@ class DataSetup extends \Codeception\Module {
 		$userFolder = $this->server->getUserFolder($userId);
 
 		$this->createStructure($userFolder, $structure);
+
+		// Add configuration. This will break if the config filename or the userId is changed
+		$this->addFile($userFolder, 'gallery.cnf', $userId . '-' . 'gallery.cnf');
 	}
 
 	/**
@@ -301,16 +315,30 @@ class DataSetup extends \Codeception\Module {
 					$this->createStructure($subFolder, $value);
 				}
 			} else {
-				$file = $baseFolder->newFile($value);
-				// Not the most reliable way
-				$imgData = file_get_contents(__DIR__ . '/../../_data/' . $value);
-				$file->putContent($imgData);
+				$file = $this->addFile($baseFolder, $value, $value);
 
 				if ($value === $this->sharedFileName) {
 					$this->sharedFile = $file;
 				}
 			}
 		}
+	}
+
+	/**
+	 * Copies the content of one file to another
+	 *
+	 * @param Folder $folder
+	 * @param string $sourceName
+	 * @param string $destinationName
+	 *
+	 * @return File
+	 */
+	private function addFile($folder, $sourceName, $destinationName) {
+		$file = $folder->newFile($sourceName);
+		$fileData = file_get_contents(__DIR__ . '/../../_data/' . $destinationName);
+		$file->putContent($fileData);
+
+		return $file;
 	}
 
 	/**
