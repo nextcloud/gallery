@@ -12,24 +12,25 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-require_once __DIR__ . '/FilesControllerTest.php';
+require_once __DIR__ . '/PreviewControllerTest.php';
+
 /**
- * Class FilesPublicControllerTest
+ * Class PreviewApiControllerTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class FilesPublicControllerTest extends FilesControllerTest {
+class PreviewApiControllerTest extends PreviewControllerTest {
 
 	public function setUp() {
 		parent::setUp();
-		$this->controller = new FilesPublicController(
+		$this->controller = new PreviewApiController(
 			$this->appName,
 			$this->request,
 			$this->urlGenerator,
-			$this->searchFolderService,
-			$this->configService,
-			$this->searchMediaService,
+			$this->thumbnailService,
+			$this->previewService,
 			$this->downloadService,
+			$this->eventSource,
 			$this->logger
 		);
 	}

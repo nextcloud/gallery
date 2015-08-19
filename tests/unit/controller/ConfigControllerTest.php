@@ -26,17 +26,17 @@ use OCA\GalleryPlus\Service\ServiceException;
 class ConfigControllerTest extends \Test\TestCase {
 
 	/** @var string */
-	private $appName = 'galleryplus';
+	protected $appName = 'galleryplus';
 	/** @var IRequest */
-	private $request;
+	protected $request;
 	/** @var ConfigController */
-	private $controller;
+	protected $controller;
 	/** @var ConfigService */
-	private $configService;
+	protected $configService;
 	/** @var PreviewService */
-	private $previewService;
+	protected $previewService;
 	/** @var ILogger */
-	private $logger;
+	protected $logger;
 	/** @var array */
 	private $baseMimeTypes = [
 		'image/png',

@@ -12,24 +12,22 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-require_once __DIR__ . '/FilesControllerTest.php';
+require_once __DIR__ . '/ConfigControllerTest.php';
+
 /**
- * Class FilesPublicControllerTest
+ * Class ConfigApiControllerTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class FilesPublicControllerTest extends FilesControllerTest {
+class ConfigApiControllerTest extends ConfigControllerTest {
 
 	public function setUp() {
 		parent::setUp();
-		$this->controller = new FilesPublicController(
+		$this->controller = new ConfigApiController(
 			$this->appName,
 			$this->request,
-			$this->urlGenerator,
-			$this->searchFolderService,
 			$this->configService,
-			$this->searchMediaService,
-			$this->downloadService,
+			$this->previewService,
 			$this->logger
 		);
 	}

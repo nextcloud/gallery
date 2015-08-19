@@ -120,7 +120,7 @@ class FilesControllerTest extends \Test\TestCase {
 		$fileId = 99999;
 		$filename = null;
 
-		$this->mockGetDownloadWithWrongId($fileId);
+		$this->mockGetResourceFromId($fileId, false);
 
 		$redirect = new RedirectResponse(
 			$this->urlGenerator->linkToRoute($this->appName . '.page.error_page')
@@ -143,43 +143,21 @@ class FilesControllerTest extends \Test\TestCase {
 	private function mockGetDownload($fileId, $filename) {
 		$file = $this->mockFile($fileId);
 
-		$this->downloadService->expects($this->once())
-							  ->method('getResourceFromId')
-							  ->with($this->equalTo($fileId))
-							  ->willReturn($file);
+		$this->mockGetResourceFromId($fileId, $file);
 
-		$download = [
-			'preview' => $file->getContent(),
-			'mimetype' => $file->getMimeType(),
-		];
+		$download = $this->mockDownloadData($file, $filename);
 
-		if ($download) {
-			if (is_null($filename)) {
-				$filename = $file->getName();
-			}
-			$download['name'] = $filename;
-		}
-
-		$this->downloadService->expects($this->once())
-							  ->method('downloadFile')
-							  ->with($this->equalTo($file))
-							  ->willReturn($download);
+		$this->mockDownloadFile($file, $download);
 
 		return $download;
 	}
 
 	/**
+	 * Mocks OCP\Files\File
+	 *
+	 * Contains a JPG
+	 *
 	 * @param int $fileId
-	 */
-	private function mockGetDownloadWithWrongId($fileId) {
-		$this->downloadService->expects($this->once())
-							  ->method('getResourceFromId')
-							  ->with($this->equalTo($fileId))
-							  ->willReturn(false);
-	}
-
-	/**
-	 * @param $fileId
 	 *
 	 * @return object|\PHPUnit_Framework_MockObject_MockObject
 	 */
@@ -199,4 +177,51 @@ class FilesControllerTest extends \Test\TestCase {
 		return $file;
 	}
 
+	/**
+	 * Mocks DownloadService->getResourceFromId
+	 *
+	 * @param int $fileId
+	 * @param object|\PHPUnit_Framework_MockObject_MockObject|bool $answer
+	 */
+	private function mockGetResourceFromId($fileId, $answer) {
+		$this->downloadService->expects($this->once())
+							  ->method('getResourceFromId')
+							  ->with($this->equalTo($fileId))
+							  ->willReturn($answer);
+	}
+
+	/**
+	 * @param object|\PHPUnit_Framework_MockObject_MockObject $file
+	 * @param $filename
+	 *
+	 * @return array
+	 */
+	private function mockDownloadData($file, $filename) {
+		$download = [
+			'preview'  => $file->getContent(),
+			'mimetype' => $file->getMimeType(),
+		];
+
+		if ($download) {
+			if (is_null($filename)) {
+				$filename = $file->getName();
+			}
+			$download['name'] = $filename;
+		}
+
+		return $download;
+	}
+
+	/**
+	 * Mocks DownloadService->downloadFile
+	 *
+	 * @param object|\PHPUnit_Framework_MockObject_MockObject $file
+	 * @param array $download
+	 */
+	private function mockDownloadFile($file, $download) {
+		$this->downloadService->expects($this->once())
+							  ->method('downloadFile')
+							  ->with($this->equalTo($file))
+							  ->willReturn($download);
+	}
 }
