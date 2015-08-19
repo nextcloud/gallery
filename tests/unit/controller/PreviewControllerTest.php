@@ -121,8 +121,7 @@ class PreviewControllerTest extends \Test\TestCase {
 		// TODO Save to a temp file and check the dimensions
 		//$this->assertEquals($preview['preview'], $response->render());
 	}
-
-
+	
 	public function testGetPreviewWithWrongId() {
 		$fileId = 99999;
 		$width = 1024;
@@ -130,14 +129,17 @@ class PreviewControllerTest extends \Test\TestCase {
 
 		$this->mockGetResourceFromId($fileId, false);
 
-		// Todo: Only match status and success
 		$errorResponse = new JSONResponse(
-			['message' => 'Oh Nooooes!', 'success' => false], Http::STATUS_NOT_FOUND
+			[
+				'message' => "I'm truly sorry, but we were unable to generate a preview for this file",
+				'success' => false
+			], Http::STATUS_INTERNAL_SERVER_ERROR
 		);
 
 		$response = $this->controller->getPreview($fileId, $width, $height);
 
-		$this->assertEquals($errorResponse->getData(), $response->getData());
+		$this->assertEquals($errorResponse->getStatus(), $response->getStatus());
+		$this->assertEquals($errorResponse->getData()['success'], $response->getData()['success']);
 	}
 
 	/**
@@ -230,7 +232,7 @@ class PreviewControllerTest extends \Test\TestCase {
 	 */
 	private function mockPreviewData($file) {
 		$preview = [
-			'preview' => $file->getContent(), // Not a real preview, but it's not important
+			'preview'  => $file->getContent(), // Not a real preview, but it's not important
 			'mimetype' => 'image/png', //Most previews are PNGs
 		];
 
