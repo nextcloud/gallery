@@ -49,7 +49,6 @@ class DataSetup extends \Codeception\Module {
 	 * shared1 is the shared folder
 	 * testimage-wide.png is the shared file
 	 *
-	 * @todo Add more files in Gallery directly
 	 * @todo Don't depend on ImageMagick
 	 *
 	 * @var array
@@ -79,7 +78,12 @@ class DataSetup extends \Codeception\Module {
 			'testimage.png',
 			'testimagelarge.svg',
 		],
-		'folder3' => []
+		'folder3' => [],
+		'folder4' => [ // Folder will be hidden in Gallery
+			'testimage.jpg',
+			'testimage-wide.png',
+			'.nomedia',
+		]
 	];
 	/** @var Folder */
 	public $sharedFolder;
@@ -198,6 +202,27 @@ class DataSetup extends \Codeception\Module {
 		return $data;
 	}
 
+	public function createBrokenConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'broken-gallery.cnf', 'gallery.cnf');
+	}
+
+	public function createConfigWithBom() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'bom-gallery.cnf', 'gallery.cnf');
+	}
+
+
+	public function emptyConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'empty-gallery.cnf', 'gallery.cnf');
+	}
+
+	public function restoreValidConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, $this->userId . '-' . 'gallery.cnf', 'gallery.cnf');
+	}
+
 	/**
 	 * Creates a test environment for a given user
 	 *
@@ -291,7 +316,7 @@ class DataSetup extends \Codeception\Module {
 		$this->createStructure($userFolder, $structure);
 
 		// Add configuration. This will break if the config filename or the userId is changed
-		$this->addFile($userFolder, 'gallery.cnf', $userId . '-' . 'gallery.cnf');
+		$this->addFile($userFolder, $userId . '-' . 'gallery.cnf', 'gallery.cnf');
 	}
 
 	/**
@@ -334,8 +359,8 @@ class DataSetup extends \Codeception\Module {
 	 * @return File
 	 */
 	private function addFile($folder, $sourceName, $destinationName) {
-		$file = $folder->newFile($sourceName);
-		$fileData = file_get_contents(__DIR__ . '/../../_data/' . $destinationName);
+		$file = $folder->newFile($destinationName);
+		$fileData = file_get_contents(__DIR__ . '/../../_data/' . $sourceName);
 		$file->putContent($fileData);
 
 		return $file;

@@ -130,6 +130,7 @@ class PreviewControllerTest extends \Test\TestCase {
 
 		$this->mockGetResourceFromId($fileId, false);
 
+		// Todo: Only match status and success
 		$errorResponse = new JSONResponse(
 			['message' => 'Oh Nooooes!', 'success' => false], Http::STATUS_NOT_FOUND
 		);
