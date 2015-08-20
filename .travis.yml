@@ -1,3 +1,4 @@
+sudo: false
 language: php
 php:
   - 5.4
@@ -21,6 +22,11 @@ branches:
   only:
     - master
 
+cache:
+  directories:
+      - core/apps/$APP_NAME/vendor
+      - $HOME/.composer/cache
+
 before_install:
   # Setup Selenium
   - export DISPLAY=:99.0
@@ -29,14 +35,15 @@ before_install:
   - wget https://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.0.jar
   - java -jar selenium-server-standalone-2.47.0.jar -port 4444 >/dev/null 2>&1 & # WARNING - Takes a long time to start up. Keep here
 
-  # Download the latest PhantomJS
+  # Ghostdriver does not work on Travis - Download the latest PhantomJS
   #- mkdir travis-phantomjs
   #- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
   #- tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
   #- export PATH=$PWD/travis-phantomjs:$PATH
-  # Ghostdriver does not work on Travis# - phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
+  #- phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
 
   # Getting dependencies
+  # Composer
   - composer self-update
   - composer install --prefer-dist --no-interaction -o
 
@@ -56,20 +63,22 @@ script:
   - cd apps/$APP_NAME
   - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
-  # Run unit, integration and API tests, with code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml; fi;"
   # Acceptance tests, using Firefox, without code coverage
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run acceptance --env firefox; fi;"
+  # Unit, integration and api tests, without code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ] && [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
 
-  # Create coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
+  # PHP 5.6 ONLY: Unit, integration and api tests with code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
+  # Send coverage report to Scrutinizer
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
 
 after_script:
   # Codacy coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codacycoverage clover tests/_output/coverage.xml; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/codacycoverage clover tests/_output/coverage.xml; fi;"
   # Codeclimate coverage report
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/test-reporter tests/_output/coverage.xml; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/test-reporter --coverage-report=tests/_output/coverage.xml; fi;"
 
 matrix:
   include:
