@@ -1,3 +1,4 @@
+sudo: false
 language: php
 php:
   - 5.4
@@ -20,6 +21,11 @@ env:
 branches:
   only:
     - stable8
+
+cache:
+  directories:
+      - core/apps/$APP_NAME/vendor
+      - $HOME/.composer/cache
 
 before_install:
   - composer self-update
