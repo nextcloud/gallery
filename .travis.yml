@@ -24,22 +24,34 @@ branches:
 
 cache:
   directories:
-      - core/apps/$APP_NAME/vendor
-      - $HOME/.composer/cache
+    # ${TRAVIS_BUILD_DIR} is /home/travis/build/interfasys/galleryplus/
+    - ${TRAVIS_BUILD_DIR}/travis/php-cache
+    - $HOME/.composer/cache
+
+before_cache:
+  # Archive the vendor folder. Watch closely!
+  - cp -r ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`
 
 before_install:
-  - composer self-update
-  - composer install --prefer-dist --no-interaction -o
-  - composer require phpunit/phpcov:*
+  # Installing ownCloud
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
   - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
   - cd ../core
   - php occ app:enable $APP_NAME
 
+  # Sets up the cache
+  - sh -c "if [ ! -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum` ]; then mkdir -p ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`; fi;"
+  - rm -rf ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor
+  - sh -c "if [ -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ]; then cp -r ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi;"
+
+  # Composer
+  - cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME
+  - composer self-update
+  - composer install -o --prefer-dist --no-interaction
+
 script:
   # Test lint
-  - cd apps/$APP_NAME
-  - php vendor/bin/parallel-lint --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
+  - php vendor/bin/parallel-lint --exclude travis --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
 matrix:
   include:
