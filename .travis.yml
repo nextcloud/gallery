@@ -29,7 +29,7 @@ cache:
 
 before_cache:
   # Archive the vendor folder
-  - cp ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`
+  - cp -r ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`
 
 before_install:
   # Setup Selenium
@@ -61,7 +61,7 @@ before_install:
   # Sets up the cache
   - sh -c "if [ ! -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum` ]; then mkdir -p ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`; fi;"
   - rm -rf ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor
-  - sh -c "if [ -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ]; then cp ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi;"
+  - sh -c "if [ -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ]; then cp -r ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi;"
 
   # Composer
   - cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME
