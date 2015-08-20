@@ -1,3 +1,4 @@
+sudo: false
 language: php
 php:
   - 5.4
@@ -20,6 +21,11 @@ branches:
     - master
     - /^stable\d+(\.\d+)?$/
 
+cache:
+  directories:
+      - core/apps/$APP_NAME/vendor
+      - $HOME/.composer/cache
+
 before_install:
   # Setup Selenium
   - export DISPLAY=:99.0
@@ -36,9 +42,12 @@ before_install:
   #- phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
 
   # Getting dependencies
-  - sudo apt-get -qq update > /dev/null
-  - sudo apt-get -qq install graphviz > /dev/null
-  - phpenv rehash > /dev/null
+  # Graphviz. Disabled on Travis because it requires sudo and will be replaced by proper diagrams
+  #- sudo apt-get -qq update > /dev/null
+  #- sudo apt-get -qq install graphviz > /dev/null
+  #- phpenv rehash > /dev/null
+
+  # Composer
   - composer self-update
   - composer install -o
 
