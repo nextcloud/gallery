@@ -23,7 +23,7 @@ branches:
 
 cache:
   directories:
-      - core/apps/$APP_NAME/vendor
+      - ../core/apps/$APP_NAME/vendor
       - $HOME/.composer/cache
 
 before_install:
@@ -49,7 +49,7 @@ before_install:
 
   # Composer
   - composer self-update
-  - composer install -o
+  - composer install -o --prefer-source
 
   # Installing ownCloud
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
