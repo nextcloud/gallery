@@ -24,6 +24,9 @@ use OCP\Share;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\RedirectResponse;
+use OCP\AppFramework\Http\TemplateResponse;
 
 use OCA\Gallery\Environment\Environment;
 
@@ -336,6 +339,45 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 		self::invokePrivate($this->middleware, 'noTokenFound');
 	}
 
+	public function testAfterExceptionWithCheckExceptionAndHtmlAcceptAnd401Code() {
+		$message = 'fail';
+		$code = Http::STATUS_UNAUTHORIZED;
+		$exception = new CheckException($message, $code);
+
+		$template = $this->mockHtml401Response();
+
+		$response =
+			$this->middleware->afterException($this->controller, 'checkSession', $exception);
+
+		$this->assertEquals($template, $response);
+	}
+
+	public function testAfterExceptionWithCheckExceptionAndHtmlAcceptAnd404Code() {
+		$message = 'fail';
+		$code = Http::STATUS_NOT_FOUND;
+		$exception = new CheckException($message, $code);
+
+		$template = $this->mockHtml404Response($message, $code);
+
+		$response =
+			$this->middleware->afterException($this->controller, 'authenticate', $exception);
+
+		$this->assertEquals($template, $response);
+	}
+
+	public function testAfterExceptionWithCheckExceptionAndJsonAccept() {
+		$message = 'fail';
+		$code = Http::STATUS_NOT_FOUND;
+		$exception = new CheckException($message, $code);
+
+		$template = $this->mockJsonResponse($message, $code);
+
+		$response =
+			$this->middleware->afterException($this->controller, 'checkLinkItemIsValid', $exception);
+
+		$this->assertEquals($template, $response);
+	}
+
 	/**
 	 * Mocks ISession->exists('public_link_authenticated')
 	 *
@@ -374,6 +416,72 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 						 ''
 					 )
 					 ->willReturn($valid);
+	}
+
+	private function mockHtml401Response() {
+		$this->mockAcceptHeader('html');
+		$this->mockGetParams();
+
+		return new TemplateResponse($this->appName, 'authenticate', [], 'guest');
+	}
+
+	private function mockHtml404Response($message, $code) {
+		$this->mockAcceptHeader('html');
+		$redirectUrl = 'http://newroute.com';
+		$this->mockUrlToErrorPage($message, $code, $redirectUrl);
+
+		return new RedirectResponse($redirectUrl);
+	}
+
+	private function mockJsonResponse($message, $code) {
+		$this->mockAcceptHeader('json');
+		$jsonData = [
+			'message' => $message,
+			'success' => false
+		];
+
+		return new JSONResponse($jsonData, $code);
+	}
+
+	/**
+	 * Mocks IRequest->getHeader('Accept')
+	 *
+	 * @param string $type
+	 */
+	private function mockAcceptHeader($type) {
+		$this->request->expects($this->once())
+					  ->method('getHeader')
+					  ->with('Accept')
+					  ->willReturn($type);
+	}
+
+	/**
+	 * Mocks IRequest->getParams()
+	 */
+	private function mockGetParams() {
+		$this->request->expects($this->once())
+					  ->method('getParams')
+					  ->willReturn([]);
+	}
+
+	/**
+	 * Mocks IURLGenerator->linkToRoute()
+	 *
+	 * @param string $message
+	 * @param int $code
+	 * @param string $url
+	 */
+	private function mockUrlToErrorPage($message, $code, $url) {
+		$this->urlGenerator->expects($this->once())
+						   ->method('linkToRoute')
+						   ->with(
+							   $this->appName . '.page.error_page',
+							   [
+								   'message' => $message,
+								   'code'    => $code
+							   ]
+						   )
+						   ->willReturn($url);
 	}
 
 }
