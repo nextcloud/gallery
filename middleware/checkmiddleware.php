@@ -112,7 +112,7 @@ abstract class CheckMiddleware extends Middleware {
 	private function computeResponse($message, $code) {
 		$acceptHtml = stripos($this->request->getHeader('Accept'), 'html');
 		if ($acceptHtml === false) {
-			$response = $this->sendJsonResponse($acceptHtml, $code);
+			$response = $this->sendJsonResponse($message, $code);
 		} else {
 			$response = $this->sendHtmlResponse($message, $code);
 		}
