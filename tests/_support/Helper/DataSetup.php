@@ -31,6 +31,8 @@ use OCP\AppFramework\IAppContainer;
  */
 class DataSetup extends \Codeception\Module {
 
+	/** @var CoreTestCase */
+	public $coreTestCase;
 	/** @var array<string> */
 	public $mediaTypes;
 	/** @var array<string> */
@@ -80,9 +82,9 @@ class DataSetup extends \Codeception\Module {
 		],
 		'folder3' => [],
 		'folder4' => [ // Folder will be hidden in Gallery
-			'testimage.jpg',
-			'testimage-wide.png',
-			'.nomedia',
+					   'testimage.jpg',
+					   'testimage-wide.png',
+					   '.nomedia',
 		]
 	];
 	/** @var Folder */
@@ -100,8 +102,6 @@ class DataSetup extends \Codeception\Module {
 	/** @var string */
 	public $sharedFileToken;
 
-	/** @var CoreTestCase */
-	private $coreTestCase;
 	/** @var IAppContainer */
 	private $container;
 	/** @var IServerContainer */
