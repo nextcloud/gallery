@@ -37,7 +37,7 @@ class GetPreviewCest {
 	 * @param \Step\Api\Anonymous $I
 	 */
 	public function unauthorizedAccess(\Step\Api\Anonymous $I) {
-		$I->connectToTheApi($this->apiUrl. '/9999999/1920/1080', 'the preview API');
+		$I->connectToTheApi($this->apiUrl . '/9999999/1920/1080', 'the preview API');
 	}
 
 	public function getPreview(\Step\Api\User $I) {
@@ -46,10 +46,10 @@ class GetPreviewCest {
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$data = $I->getFilesDataForFolder('');
-		$file = $data[0];
+		$file = $data['animated.gif'];
 		$url = $this->apiUrl . '/' . $file['id'] . '/1920/1080';
 		$I->sendGET($url);
-		$I->downloadAFile($file);
+		$I->downloadAFile($file, 'animated.gif');
 	}
 
 	public function emptyResponse(\Step\Api\User $I) {
@@ -61,5 +61,19 @@ class GetPreviewCest {
 		$url = $this->apiUrl . '/9999999/1920/1080';
 		$I->sendGET($url);
 		$I->seeResponseCodeIs(404);
+	}
+
+	public function getPreviewOfBrokenFile(\Step\Api\User $I) {
+		$I->am('an app');
+		$I->wantTo('get the preview of a broken file');
+		$I->expect('an 500 status and an error message');
+
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$data = $I->getFilesDataForFolder('');
+		$file = $data['testimage-corrupt.jpg'];
+		$url = $this->apiUrl . '/' . $file['id'] . '/1920/1080';
+		$I->sendGET($url);
+		$I->seeResponseCodeIs(500);
+		$I->seeResponseContainsJson(['success' => false]);
 	}
 }

@@ -44,24 +44,31 @@ class GetThumbnailsCest {
 		$I->connectToTheApi($this->apiUrl, 'the thumbnails API');
 	}
 
-	public function getFilesThumbnails(\Step\Api\User $I) {
+	/**
+	 * @param \Step\Api\User $I
+	 */
+	public function getFileThumbnails(\Step\Api\User $I) {
 		$I->am('an app');
 		$I->wantTo('get the thumbnails for the files in this folder');
-
-		$I->getUserCredentialsAndUseHttpAuthentication();
-		$I->haveHttpHeader('Accept', 'text/event-stream');
+		$params = $this->params;
 		$data = $I->getFilesDataForFolder('');
-		$id1 = $data[0]['id'];
-		$id2 = $data[1]['id'];
-		$this->params['ids'] = $id1.';'.$id2;
+		$id1 = $data['testimage.jpg']['id'];
+		$id2 = $data['animated.gif']['id'];
+		$this->getThumbnails($I, $params, $id1, $id2);
+	}
 
-		$I->sendGET($this->apiUrl, $this->params);
-		$I->seeResponseCodeIs(200);
-		$I->seeHttpHeader('Content-type', 'text/event-stream;charset=UTF-8');
-		$I->seeResponseContains('"status":200');
-		$I->seeResponseContains('"fileid":"' . $id1 . '","status":200');
-		$I->seeResponseContains('"fileid":"' . $id2 . '","status":200');
-
+	/**
+	 * @param \Step\Api\User $I
+	 */
+	public function getFolderThumbnails(\Step\Api\User $I) {
+		$I->am('an app');
+		$I->wantTo('get the thumbnails for the albums in this folder');
+		$params = $this->params;
+		$params['square'] = true;
+		$data = $I->getFilesDataForFolder('folder1');
+		$id1 = $data['testimage.jpg']['id'];
+		$id2 = $data['testimage-wide.png']['id'];
+		$this->getThumbnails($I, $params, $id1, $id2);
 	}
 
 	public function getFileNotFoundCode(\Step\Api\User $I) {
@@ -75,6 +82,24 @@ class GetThumbnailsCest {
 		$I->seeHttpHeader('Content-type', 'text/event-stream;charset=UTF-8');
 		$I->seeResponseContains('"fileid":"99998","status":404');
 		$I->seeResponseContains('"fileid":"99999","status":404');
+	}
+
+	/**
+	 * @param \Step\Api\User $I
+	 * @param array $params
+	 * @param int $id1
+	 * @param int $id2
+	 */
+	private function getThumbnails(\Step\Api\User $I, $params, $id1, $id2) {
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->haveHttpHeader('Accept', 'text/event-stream');
+		$params['ids'] = $id1 . ';' . $id2;
+		$I->sendGET($this->apiUrl, $params);
+		$I->seeResponseCodeIs(200);
+		$I->seeHttpHeader('Content-type', 'text/event-stream;charset=UTF-8');
+		$I->seeResponseContains('"status":200');
+		$I->seeResponseContains('"fileid":"' . $id1 . '","status":200');
+		$I->seeResponseContains('"fileid":"' . $id2 . '","status":200');
 	}
 
 }

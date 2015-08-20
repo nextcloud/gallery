@@ -23,7 +23,7 @@ class FilesApiControllerTest extends FilesControllerTest {
 
 	public function setUp() {
 		parent::setUp();
-		$this->controller = new FilesController(
+		$this->controller = new FilesApiController(
 			$this->appName,
 			$this->request,
 			$this->urlGenerator,

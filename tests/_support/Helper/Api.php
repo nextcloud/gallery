@@ -50,4 +50,24 @@ class Api extends \Codeception\Module {
 
 		return $sharedFile;
 	}
+
+	public function createBrokenConfig() {
+		$this->getModule('\Helper\DataSetup')
+			 ->createBrokenConfig();
+	}
+
+	public function createConfigWithBom() {
+		$this->getModule('\Helper\DataSetup')
+			 ->createConfigWithBom();
+	}
+
+	public function emptyConfig() {
+		$this->getModule('\Helper\DataSetup')
+			 ->emptyConfig();
+	}
+
+	public function restoreValidConfig() {
+		$this->getModule('\Helper\DataSetup')
+			 ->restoreValidConfig();
+	}
 }

@@ -49,13 +49,18 @@ class DataSetup extends \Codeception\Module {
 	 * shared1 is the shared folder
 	 * testimage-wide.png is the shared file
 	 *
-	 * @todo Add more files in Gallery directly
 	 * @todo Don't depend on ImageMagick
 	 *
 	 * @var array
 	 */
 	public $filesHierarchy = [
 		'testimage.jpg',
+		'animated.gif',
+		'testimage-corrupt.jpg',
+		'font.ttf',
+		'testimagelarge.svg',
+		'testimage.eps',
+		'testimage.gif',
 		'folder1' => [
 			'testimage.jpg',
 			'testimage-wide.png',
@@ -73,7 +78,12 @@ class DataSetup extends \Codeception\Module {
 			'testimage.png',
 			'testimagelarge.svg',
 		],
-		'folder3' => []
+		'folder3' => [],
+		'folder4' => [ // Folder will be hidden in Gallery
+			'testimage.jpg',
+			'testimage-wide.png',
+			'.nomedia',
+		]
 	];
 	/** @var Folder */
 	public $sharedFolder;
@@ -153,13 +163,13 @@ class DataSetup extends \Codeception\Module {
 	/**
 	 * Called when a test fails
 	 *
-	 * Here we want to make sure the setup is restored to its original state
+	 * This is called after every test, not after a suite run
 	 *
 	 * @param TestCase $test
 	 * @param $fail
 	 */
 	public function _failed(\Codeception\TestCase $test, $fail) {
-		$this->_afterSuite();
+
 	}
 
 	/**
@@ -180,9 +190,9 @@ class DataSetup extends \Codeception\Module {
 			$nodeType = $node->getType();
 			$mimeType = $node->getMimetype();
 			if ($nodeType === 'file' && in_array($mimeType, $this->mediaTypes)) {
-				$data[] = [
+				$name = $node->getName();
+				$data[$name] = [
 					'id'        => $node->getId(),
-					'name'      => $node->getName(),
 					'mediatype' => $mimeType,
 					'etag'      => $node->getEtag(),
 				];
@@ -190,6 +200,27 @@ class DataSetup extends \Codeception\Module {
 		}
 
 		return $data;
+	}
+
+	public function createBrokenConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'broken-gallery.cnf', 'gallery.cnf');
+	}
+
+	public function createConfigWithBom() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'bom-gallery.cnf', 'gallery.cnf');
+	}
+
+
+	public function emptyConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'empty-gallery.cnf', 'gallery.cnf');
+	}
+
+	public function restoreValidConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, $this->userId . '-' . 'gallery.cnf', 'gallery.cnf');
 	}
 
 	/**
@@ -207,7 +238,6 @@ class DataSetup extends \Codeception\Module {
 
 		// Create folders and files
 		$this->createSampleData($userId, $this->filesHierarchy);
-
 
 		$this->coreTestCase->logoutUser();
 	}
@@ -284,6 +314,9 @@ class DataSetup extends \Codeception\Module {
 		$userFolder = $this->server->getUserFolder($userId);
 
 		$this->createStructure($userFolder, $structure);
+
+		// Add configuration. This will break if the config filename or the userId is changed
+		$this->addFile($userFolder, $userId . '-' . 'gallery.cnf', 'gallery.cnf');
 	}
 
 	/**
@@ -307,15 +340,30 @@ class DataSetup extends \Codeception\Module {
 					$this->createStructure($subFolder, $value);
 				}
 			} else {
-				$file = $baseFolder->newFile($value);
-				$imgData = file_get_contents(\OC::$SERVERROOT . '/tests/data/' . $value);
-				$file->putContent($imgData);
+				$file = $this->addFile($baseFolder, $value, $value);
 
 				if ($value === $this->sharedFileName) {
 					$this->sharedFile = $file;
 				}
 			}
 		}
+	}
+
+	/**
+	 * Copies the content of one file to another
+	 *
+	 * @param Folder $folder
+	 * @param string $sourceName
+	 * @param string $destinationName
+	 *
+	 * @return File
+	 */
+	private function addFile($folder, $sourceName, $destinationName) {
+		$file = $folder->newFile($destinationName);
+		$fileData = file_get_contents(__DIR__ . '/../../_data/' . $sourceName);
+		$file->putContent($fileData);
+
+		return $file;
 	}
 
 	/**
