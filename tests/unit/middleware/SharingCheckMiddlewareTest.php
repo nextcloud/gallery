@@ -10,6 +10,7 @@
  * @author Bernhard Posselt
  *
  * @copyright Olivier Paroz 2015
+ * @copyright ownCloud Inc. 2015
  */
 
 namespace OCA\GalleryPlus\Middleware;
