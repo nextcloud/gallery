@@ -12,6 +12,8 @@
 
 namespace OCA\GalleryPlus\AppInfo;
 
+use \OCP\App;
+
 use OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
 
 /**
@@ -24,5 +26,23 @@ class AppTest extends GalleryIntegrationTest {
 	public function testAppInstalled() {
 		$appManager = $this->container->query('OCP\App\IAppManager');
 		$this->assertTrue($appManager->isInstalled('galleryplus'));
+	}
+
+	public function testAppName() {
+		$appData = App::getAppInfo('galleryplus');
+
+		$this->assertSame('galleryplus', $appData['id']);
+	}
+
+	public function testAppLicense() {
+		$appData = App::getAppInfo('galleryplus');
+
+		$this->assertSame('AGPL', $appData['licence']);
+	}
+
+	public function testAppMaxPhpVersion() {
+		$appData = App::getAppInfo('galleryplus');
+
+		$this->assertSame('7', $appData['dependencies']['php']['@attributes']['max-version']);
 	}
 }
