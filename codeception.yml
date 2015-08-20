@@ -37,4 +37,5 @@ coverage:
         - l10n/*
         - templates/*
         - tests/*
+        - travis/*
         - vendor/*
