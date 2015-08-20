@@ -28,7 +28,7 @@ cache:
     - $HOME/.composer/cache
 
 before_cache:
-  # Archive the vendor folder
+  # Archive the vendor folder. Watch closely!
   - cp -r ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`
 
 before_install:
@@ -66,7 +66,7 @@ before_install:
   # Composer
   - cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME
   - composer self-update
-  - composer install -o --prefer-source
+  - composer install -o --prefer-dist --no-interaction
 
 before_script:
   # Make sure Webdriver is running
