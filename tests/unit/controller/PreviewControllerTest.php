@@ -41,7 +41,7 @@ class PreviewControllerTest extends \Test\TestCase {
 	protected $appName = 'gallery';
 	/** @var IRequest */
 	protected $request;
-	/** @var ConfigController */
+	/** @var PreviewController */
 	protected $controller;
 	/** @var IURLGenerator */
 	protected $urlGenerator;

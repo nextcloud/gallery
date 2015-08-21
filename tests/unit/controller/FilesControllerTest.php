@@ -40,7 +40,7 @@ class FilesControllerTest extends \Test\TestCase {
 	protected $appName = 'gallery';
 	/** @var IRequest */
 	protected $request;
-	/** @var ConfigController */
+	/** @var FilesController */
 	protected $controller;
 	/** @var IURLGenerator */
 	protected $urlGenerator;
