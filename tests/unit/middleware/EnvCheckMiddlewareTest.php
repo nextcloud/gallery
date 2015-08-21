@@ -13,6 +13,7 @@
 namespace OCA\Gallery\Middleware;
 
 use OC\AppFramework\Utility\ControllerMethodReflector;
+use Helper\CoreTestCase;
 
 use OCP\IRequest;
 use OCP\Security\IHasher;
@@ -24,13 +25,20 @@ use OCP\Share;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\RedirectResponse;
+use OCP\AppFramework\Http\TemplateResponse;
 
 use OCA\Gallery\Environment\Environment;
+use OCA\Gallery\Environment\EnvironmentException;
 
 /**
  * @package OCA\Gallery\Middleware\EnvCheckMiddlewareTest
  */
-class EnvCheckMiddlewareTest extends \Test\TestCase {
+class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
+
+	/** @var CoreTestCase */
+	private $coreTestCase;
 
 	/** @var string */
 	private $appName = 'gallery';
@@ -52,6 +60,11 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 	private $controller;
 	/** @var SharingCheckMiddleware */
 	private $middleware;
+
+	/** @var string */
+	public $sharedFolderToken;
+	/** @var string */
+	public $passwordForFolderShare;
 
 	/**
 	 * Test set up
@@ -93,6 +106,93 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 			$this->urlGenerator,
 			$this->logger
 		);
+
+		/**
+		 * Injects objects we need to bypass the static methods
+		 *
+		 * CODECEPTION SPECIFIC
+		 */
+		$setupData = $this->getModule('\Helper\DataSetup');
+		$this->sharedFolderToken = $setupData->sharedFolderToken;
+		$this->passwordForFolderShare = $setupData->passwordForFolderShare;
+		$this->coreTestCase = $setupData->coreTestCase;
+	}
+
+	/**
+	 * Invokes private methods
+	 *
+	 * CODECEPTION SPECIFIC
+	 * This is from the core TestCase
+	 *
+	 * @param $object
+	 * @param $methodName
+	 * @param array $parameters
+	 *
+	 * @return mixed
+	 */
+	public function invokePrivate($object, $methodName, array $parameters = []) {
+		return $this->coreTestCase->invokePrivate($object, $methodName, $parameters);
+	}
+
+
+	/**
+	 * @todo Mock an environment response
+	 */
+	public function testBeforeControllerWithoutNotation() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 */
+	public function testBeforeControllerWithPublicNotationAndInvalidToken() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$token = 'aaaabbbbccccdddd';
+		$this->mockGetTokenParam($token);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * Because the method tested is static, we need to load our test environment \Helper\DataSetup
+	 */
+	public function testBeforeControllerWithPublicNotationAndToken() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$this->mockGetTokenAndPasswordParams($this->sharedFolderToken, $this->passwordForFolderShare);
+		$linkItem = Share::getShareByToken($this->sharedFolderToken, false);
+
+		$this->mockHasherVerify($this->passwordForFolderShare, $linkItem['share_with'], true);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 */
+	public function testBeforeControllerWithPublicNotationAndNoToken() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$token = null;
+		$this->mockGetTokenParam($token);
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @@Guest
+	 */
+	public function testBeforeControllerWithGuestNotation() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
 	}
 
 	public function testCheckSessionAfterPasswordEntry() {
@@ -180,6 +280,20 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 			'share_type' => Share::SHARE_TYPE_LINK
 		];
 		$this->mockHasherVerify($password, $linkItem['share_with'], false);
+
+		self::invokePrivate($this->middleware, 'authenticate', [$linkItem, $password]);
+	}
+
+	/**
+	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 */
+	public function testAuthenticateWithWrongLinkType() {
+		$password = 'Je suis une pipe';
+		$linkItem = [
+			'id'         => 12345,
+			'share_with' => 'tester',
+			'share_type' => Share::SHARE_TYPE_USER
+		];
 
 		self::invokePrivate($this->middleware, 'authenticate', [$linkItem, $password]);
 	}
@@ -336,6 +450,58 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 		self::invokePrivate($this->middleware, 'noTokenFound');
 	}
 
+	public function testAfterExceptionWithCheckExceptionAndHtmlAcceptAnd401Code() {
+		$message = 'fail';
+		$code = Http::STATUS_UNAUTHORIZED;
+		$exception = new CheckException($message, $code);
+
+		$template = $this->mockHtml401Response();
+
+		$response =
+			$this->middleware->afterException($this->controller, 'checkSession', $exception);
+
+		$this->assertEquals($template, $response);
+	}
+
+	public function testAfterExceptionWithCheckExceptionAndHtmlAcceptAnd404Code() {
+		$message = 'fail';
+		$code = Http::STATUS_NOT_FOUND;
+		$exception = new CheckException($message, $code);
+
+		$template = $this->mockHtml404Response($message, $code);
+
+		$response =
+			$this->middleware->afterException($this->controller, 'authenticate', $exception);
+
+		$this->assertEquals($template, $response);
+	}
+
+	public function testAfterExceptionWithCheckExceptionAndJsonAccept() {
+		$message = 'fail';
+		$code = Http::STATUS_NOT_FOUND;
+		$exception = new CheckException($message, $code);
+
+		$template = $this->mockJsonResponse($message, $code);
+
+		$response =
+			$this->middleware->afterException(
+				$this->controller, 'checkLinkItemIsValid', $exception
+			);
+
+		$this->assertEquals($template, $response);
+	}
+
+	/**
+	 * @expectedException \OCA\Gallery\Environment\EnvironmentException
+	 */
+	public function testAfterExceptionWithNonCheckException() {
+		$message = 'fail';
+		$code = Http::STATUS_NOT_FOUND;
+		$exception = new EnvironmentException($message, $code);
+
+		$this->middleware->afterException($this->controller, 'checkLinkItemIsValid', $exception);
+	}
+
 	/**
 	 * Mocks ISession->exists('public_link_authenticated')
 	 *
@@ -361,8 +527,8 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 	}
 
 	/**
-	 * @param string $givenPassword
-	 * @param string $tokenPassword
+	 * @param string $givenPassword clear text password
+	 * @param string $tokenPassword encrypted password
 	 * @param bool $valid
 	 */
 	private function mockHasherVerify($givenPassword, $tokenPassword, $valid) {
@@ -374,6 +540,99 @@ class EnvCheckMiddlewareTest extends \Test\TestCase {
 						 ''
 					 )
 					 ->willReturn($valid);
+	}
+
+	private function mockHtml401Response() {
+		$this->mockAcceptHeader('html');
+		$this->mockGetParams();
+
+		return new TemplateResponse($this->appName, 'authenticate', [], 'guest');
+	}
+
+	private function mockHtml404Response($message, $code) {
+		$this->mockAcceptHeader('html');
+		$redirectUrl = 'http://newroute.com';
+		$this->mockUrlToErrorPage($message, $code, $redirectUrl);
+
+		return new RedirectResponse($redirectUrl);
+	}
+
+	private function mockJsonResponse($message, $code) {
+		$this->mockAcceptHeader('json');
+		$jsonData = [
+			'message' => $message,
+			'success' => false
+		];
+
+		return new JSONResponse($jsonData, $code);
+	}
+
+	/**
+	 * Mocks IRequest->getHeader('Accept')
+	 *
+	 * @param string $type
+	 */
+	private function mockAcceptHeader($type) {
+		$this->request->expects($this->once())
+					  ->method('getHeader')
+					  ->with('Accept')
+					  ->willReturn($type);
+	}
+
+	/**
+	 * Mocks IRequest->getParams()
+	 */
+	private function mockGetParams() {
+		$this->request->expects($this->once())
+					  ->method('getParams')
+					  ->willReturn([]);
+	}
+
+	/**
+	 * Mocks IURLGenerator->linkToRoute()
+	 *
+	 * @param string $message
+	 * @param int $code
+	 * @param string $url
+	 */
+	private function mockUrlToErrorPage($message, $code, $url) {
+		$this->urlGenerator->expects($this->once())
+						   ->method('linkToRoute')
+						   ->with(
+							   $this->appName . '.page.error_page',
+							   [
+								   'message' => $message,
+								   'code'    => $code
+							   ]
+						   )
+						   ->willReturn($url);
+	}
+
+	/**
+	 * Mocks IRequest->getParam()
+	 *
+	 * @param $token
+	 * @param $password
+	 */
+	private function mockGetTokenAndPasswordParams($token, $password = null) {
+		$this->request->expects($this->at(0))
+					  ->method('getParam')
+					  ->with('token')
+					  ->willReturn($token);
+		$this->request->expects($this->at(1))
+					  ->method('getParam')
+					  ->with('password')
+					  ->willReturn($password);
+	}
+
+	/**
+	 * Mocks IRequest->getParam('token')
+	 */
+	private function mockGetTokenParam($token) {
+		$this->request->expects($this->any())
+					  ->method('getParam')
+					  ->with('token')
+					  ->willReturn($token);
 	}
 
 }

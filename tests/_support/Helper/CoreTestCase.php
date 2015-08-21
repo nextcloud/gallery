@@ -63,8 +63,8 @@ class CoreTestCase extends \Test\TestCase {
 	 *
 	 * @return mixed
 	 */
-	protected static function invokePrivate($object, $methodName, array $parameters = []) {
-		parent::invokePrivate($object, $methodName, $parameters);
+	public static function invokePrivate($object, $methodName, array $parameters = []) {
+		return parent::invokePrivate($object, $methodName, $parameters);
 	}
 
 }

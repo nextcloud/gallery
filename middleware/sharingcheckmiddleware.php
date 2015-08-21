@@ -68,7 +68,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	}
 
 	/**
-	 * Check if sharing is enabled before the controllers is executed
+	 * Checks if sharing is enabled before the controllers is executed
 	 *
 	 * Inspects the controller method annotations and if PublicPage is found
 	 * it makes sure that sharing is enabled in the configuration settings
@@ -79,12 +79,13 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	 * @inheritDoc
 	 */
 	public function beforeController($controller, $methodName) {
+		if ($this->reflector->hasAnnotation('Guest')) {
+			return;
+		}
+
 		$sharingEnabled = $this->isSharingEnabled();
-
 		$isPublicPage = $this->reflector->hasAnnotation('PublicPage');
-		$isGuest = $this->reflector->hasAnnotation('Guest');
-
-		if ($isPublicPage && !$isGuest && !$sharingEnabled) {
+		if ($isPublicPage  && !$sharingEnabled) {
 			$this->logAndThrow("'Sharing is disabled'", Http::STATUS_SERVICE_UNAVAILABLE);
 		}
 	}

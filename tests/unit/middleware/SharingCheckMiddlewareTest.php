@@ -98,10 +98,10 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 	}
 
 	/**
-	 * @PublicPage
 	 * @Guest
+	 * @PublicPage
 	 *
-	 * Contains both notations and sharing is always enabled, so should not throw any exception
+	 * Guest pages don't need to be checked
 	 */
 	public function testBeforeControllerWithGuestNotation() {
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
@@ -111,11 +111,34 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 	/**
 	 * @PublicPage
 	 *
-	 * The special Guest notation is missing
+	 * Contains PublicPage notation, does not contain Guest notation and sharing is enabled, so
+	 *     should not throw any exception
+	 */
+	public function testBeforeControllerWithAllRequirements() {
+		$this->mockSharingConfigTo('yes');
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * Non-public pages don't need to be checked
+	 */
+	public function testBeforeControllerWithoutPublicPageNotation() {
+		$this->mockSharingConfigTo('yes');
+
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * Sharing needs to be enabled on public pages
 	 *
 	 * @expectedException \OCA\Gallery\Middleware\CheckException
 	 */
-	public function testBeforeControllerWithoutGuestNotation() {
+	public function testBeforeControllerWithSharingDisabled() {
+		$this->mockSharingConfigTo('no');
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
 		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
 	}
@@ -128,7 +151,11 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 	private function mockSharingConfigTo($state) {
 		$this->config->expects($this->once())
 					 ->method('getAppValue')
-					 ->with('core', 'shareapi_allow_links', 'yes')
+					 ->with(
+						 'core',
+						 'shareapi_allow_links',
+						 'yes'
+					 )
 					 ->willReturn($state);
 	}
 
