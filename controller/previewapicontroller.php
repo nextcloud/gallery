@@ -102,7 +102,7 @@ class PreviewApiController extends ApiController {
 		}
 		$this->eventSource->close();
 
-		exit();
+		$this->exitController();
 	}
 
 	/**
