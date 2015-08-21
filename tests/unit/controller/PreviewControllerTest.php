@@ -100,6 +100,67 @@ class PreviewControllerTest extends \Test\TestCase {
 		);
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
+	public function testGetThumbnailsWillDie() {
+		$square = true;
+		$scale = 2.5;
+		$thumbnailId = 1234;
+
+		$this->controller->getThumbnails($thumbnailId, $square, $scale);
+	}
+
+	public function testEventSourceSend() {
+		$thumbnailId = 1234;
+		$file = $this->mockFile($thumbnailId);
+		$preview = $this->mockBase64PreviewData($file);
+
+		$event = 'preview';
+		$message = 'event: ' . $event . PHP_EOL .
+				   'data: ' . json_encode($preview) . PHP_EOL .
+				   PHP_EOL;
+		$this->mockEventSourceSend($event, $preview, $message);
+
+		$this->assertSame($message, $this->eventSource->send('preview', $preview));
+	}
+
+	/**
+	 * @todo Really base64 encode the preview instead of just passing around the binary content
+	 */
+	public function testGetThumbnail() {
+		$square = true;
+		$scale = 2.5;
+		$width = 400;
+		$height = 400;
+		$aspect = !$square;
+		$animatedPreview = false;
+		$base64Encode = true;
+		$thumbnailId = 1234;
+		$returnedArray = [
+			$width,
+			$height,
+			$aspect,
+			$animatedPreview,
+			$base64Encode
+		];
+		$this->mockGetThumbnailSpecs($square, $scale, $returnedArray);
+
+		list($file, $mockedPreview) =
+			$this->mockGetData(
+				$thumbnailId, $width, $height, $aspect, $animatedPreview, $base64Encode
+			);
+
+		$this->mockPreviewValidator($square, $base64Encode, $mockedPreview['preview']);
+
+		list($preview, $status) = self::invokePrivate(
+			$this->controller, 'getThumbnail', [$thumbnailId, $square, $scale]
+		);
+
+		$this->assertEquals(Http::STATUS_OK, $status);
+		$this->assertEquals($mockedPreview, $preview);
+	}
+
 	public function testGetPreview() {
 		$fileId = 1234;
 		$width = 1024;
@@ -237,6 +298,21 @@ class PreviewControllerTest extends \Test\TestCase {
 	}
 
 	/**
+	 * @param object|\PHPUnit_Framework_MockObject_MockObject $file
+	 *
+	 * @return array<string,mixed>
+	 */
+	private function mockBase64PreviewData($file) {
+		$preview = [
+			'preview'  => base64_encode($file->getContent()),
+			// Not a real preview, but it's not important
+			'mimetype' => 'image/png', //Most previews are PNGs
+		];
+
+		return $preview;
+	}
+
+	/**
 	 * @param $file
 	 * @param $width
 	 * @param $height
@@ -256,6 +332,39 @@ class PreviewControllerTest extends \Test\TestCase {
 								 $this->equalTo($base64Encode)
 							 )
 							 ->willReturn($preview);
+	}
+
+	private function mockEventSourceSend($event, $data, $message) {
+		$this->eventSource->expects($this->once())
+						  ->method('send')
+						  ->with(
+							  $event,
+							  $data
+						  )
+						  ->willReturn($message);
+
+	}
+
+	private function mockGetThumbnailSpecs($square, $scale, $array) {
+		$this->thumbnailService->expects($this->once())
+							   ->method('getThumbnailSpecs')
+							   ->with(
+								   $square,
+								   $scale
+							   )
+							   ->willReturn($array);
+
+	}
+
+	private function mockPreviewValidator($square, $base64Encode, $base64EncodedPreview) {
+		$this->previewService->expects($this->once())
+							 ->method('previewValidator')
+							 ->with(
+								 $square,
+								 $base64Encode
+							 )
+							 ->willReturn($base64EncodedPreview);
+
 	}
 
 }
