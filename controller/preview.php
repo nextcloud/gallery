@@ -58,6 +58,16 @@ trait Preview {
 	 */
 	private $download = false;
 
+	/**
+	 * Exits the controller in a live environment and throws an exception when testing
+	 */
+	protected function exitController() {
+		if (defined('PHPUNIT_RUN')) {
+			throw new \Exception();
+		} else {
+			exit();
+		}
+	}
 
 	/**
 	 * Retrieves the thumbnail to send back to the browser

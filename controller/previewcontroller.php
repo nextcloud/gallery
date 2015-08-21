@@ -107,7 +107,7 @@ class PreviewController extends Controller {
 		}
 		$this->eventSource->close();
 
-		exit();
+		$this->exitController();
 	}
 
 	/**
