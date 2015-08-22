@@ -37,8 +37,6 @@ class PageControllerTest extends \Test\TestCase {
 	private $environment;
 	/** @var IURLGenerator */
 	private $urlGenerator;
-	/** @var DownloadService */
-	private $downloadService;
 	/** @var IConfig */
 	private $appConfig;
 	/** @var PageController */
@@ -59,9 +57,6 @@ class PageControllerTest extends \Test\TestCase {
 		$this->urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
 								   ->disableOriginalConstructor()
 								   ->getMock();
-		$this->downloadService = $this->getMockBuilder('\OCA\GalleryPlus\Service\DownloadService')
-									  ->disableOriginalConstructor()
-									  ->getMock();
 		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
 								->disableOriginalConstructor()
 								->getMock();
@@ -70,7 +65,6 @@ class PageControllerTest extends \Test\TestCase {
 			$this->request,
 			$this->environment,
 			$this->urlGenerator,
-			$this->downloadService,
 			$this->appConfig
 		);
 	}
