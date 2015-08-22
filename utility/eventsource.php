@@ -64,7 +64,7 @@ class EventSource implements \OCP\IEventSource {
 	 * @throws \BadMethodCallException
 	 */
 	public function send($type, $data = null) {
-		if ($data and !preg_match('/^[A-Za-z0-9_]+$/', $type)) {
+		if ($data && !preg_match('/^[A-Za-z0-9_]+$/', $type)) {
 			throw new \BadMethodCallException('Type needs to be alphanumeric (' . $type . ')');
 		}
 		$this->init();
