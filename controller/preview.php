@@ -15,7 +15,6 @@
 namespace OCA\GalleryPlus\Controller;
 
 use OCP\IURLGenerator;
-use OCP\IEventSource;
 use OCP\ILogger;
 use OCP\Files\File;
 
@@ -50,10 +49,6 @@ trait Preview {
 	 * @var DownloadService
 	 */
 	private $downloadService;
-	/**
-	 * @var IEventSource
-	 */
-	private $eventSource;
 	/**
 	 * @var ILogger
 	 */
@@ -219,13 +214,14 @@ trait Preview {
 	/**
 	 * Returns an URL based on the HTTP status code
 	 *
-	 * @param $status
+	 * @param string $appName
+	 * @param int $status
 	 *
 	 * @return string
 	 */
-	private function getErrorUrl($status) {
+	private function getErrorUrl($appName, $status) {
 		return $this->urlGenerator->linkToRoute(
-			$this->appName . '.page.error_page',
+			$appName . '.page.error_page',
 			[
 				'message' => 'There was a problem accessing the file',
 				'code'    => $status

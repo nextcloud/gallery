@@ -14,7 +14,6 @@ namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\IEventSource;
 use OCP\ILogger;
 use OCP\Files\File;
 
@@ -27,6 +26,7 @@ use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
+use OCA\GalleryPlus\Utility\EventSource;
 
 /**
  * Class PreviewApiController
@@ -39,7 +39,7 @@ class PreviewApiController extends ApiController {
 	use JsonHttpError;
 
 	/**
-	 * @var IEventSource
+	 * @var EventSource
 	 */
 	private $eventSource;
 
@@ -52,7 +52,7 @@ class PreviewApiController extends ApiController {
 	 * @param ThumbnailService $thumbnailService
 	 * @param PreviewService $previewService
 	 * @param DownloadService $downloadService
-	 * @param IEventSource $eventSource
+	 * @param EventSource $eventSource
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -62,7 +62,7 @@ class PreviewApiController extends ApiController {
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
 		DownloadService $downloadService,
-		IEventSource $eventSource,
+		EventSource $eventSource,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
@@ -73,6 +73,37 @@ class PreviewApiController extends ApiController {
 		$this->downloadService = $downloadService;
 		$this->eventSource = $eventSource;
 		$this->logger = $logger;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
+	 *
+	 * Generates thumbnails
+	 *
+	 * @see PreviewController::getThumbnails()
+	 *
+	 * @param string $ids the ID of the files of which we need thumbnail previews of
+	 * @param bool $square
+	 * @param double $scale
+	 *
+	 * @return array<string,array|string|null>
+	 */
+	public function getThumbnails($ids, $square, $scale) {
+		$idsArray = explode(';', $ids);
+
+		foreach ($idsArray as $id) {
+			// Casting to integer here instead of using array_map to extract IDs from the URL
+			list($thumbnail, $status) = $this->getThumbnail((int)$id, $square, $scale);
+			$thumbnail['fileid'] = $id;
+			$thumbnail['status'] = $status;
+
+			$this->eventSource->send('preview', $thumbnail);
+		}
+		$this->eventSource->close();
+
+		exit();
 	}
 
 	/**
@@ -98,7 +129,7 @@ class PreviewApiController extends ApiController {
 
 		if ($preview === null) {
 			if ($this->download) {
-				$url = $this->getErrorUrl($status);
+				$url = $this->getErrorUrl($this->appName, $status);
 
 				return new RedirectResponse($url);
 			} else {
