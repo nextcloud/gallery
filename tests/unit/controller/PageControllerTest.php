@@ -78,21 +78,19 @@ class PageControllerTest extends \Test\TestCase {
 
 	public function testIndex() {
 		$params = ['appName' => $this->appName];
-		$template = new TemplateResponse($this->appName, 'index', $params);
 
 		$response = $this->controller->index();
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
-		$this->assertEquals($template->render(), $response->render());
 	}
 
 	public function testCspForImgContainsData() {
 		$response = $this->controller->index();
 
 		$this->assertContains(
-			"img-src 'self' data: data:", $response->getHeaders()['Content-Security-Policy']
+			"img-src 'self' data:", $response->getHeaders()['Content-Security-Policy']
 		);
 	}
 
@@ -105,13 +103,10 @@ class PageControllerTest extends \Test\TestCase {
 	}
 
 	public function testSlideshow() {
-		$template = new TemplateResponse($this->appName, 'slideshow', [], 'blank');
-
 		$response = $this->controller->slideshow();
 
 		$this->assertEquals('slideshow', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
-		$this->assertEquals($template->render(), $response->render());
 	}
 
 	public function testPublicIndexWithFolderToken() {
@@ -137,14 +132,11 @@ class PageControllerTest extends \Test\TestCase {
 		$this->mockGetSharePassword($password);
 		$this->mockGetAppValue($server2ServerSharingEnabled);
 
-		$template = new TemplateResponse($this->appName, 'public', $params, 'public');
-
 		$response = $this->controller->publicIndex($token, null);
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('public', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
-		$this->assertEquals($template->render(), $response->render());
 	}
 
 	public function testPublicIndexWithFileToken() {
@@ -171,14 +163,12 @@ class PageControllerTest extends \Test\TestCase {
 			'message' => $message,
 			'code'    => $code,
 		];
-		$template = new TemplateResponse($this->appName, 'index', $params, 'guest');
 
 		$response = $this->controller->errorPage($message, $code);
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
-		$this->assertEquals($template->render(), $response->render());
 	}
 
 	private function mockGetSharedNode($nodeType, $nodeId) {
