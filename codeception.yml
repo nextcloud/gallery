@@ -30,6 +30,8 @@ coverage:
         - preview/*
         - service/*
     exclude:
+        - appinfo/info.xml
+        - build/*
         - css/*
         - documentation/*
         - img/*

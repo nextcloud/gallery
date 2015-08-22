@@ -5,6 +5,8 @@ imports:
 filter:
     excluded_paths:
         - 'appinfo/application.php'
+        - 'appinfo/routes.php'
+        - 'appinfo/info.xml'
         - 'l10n/*'
         - 'vendor/*'
         - 'js/vendor/*'
@@ -12,6 +14,11 @@ filter:
         - 'css/*'
         - 'img/*'
         - 'tests/*'
+        - 'build/*'
+        - 'documentation/*'
+        - 'controller/configapicontroller.php'
+        - 'controller/filesapicontroller.php'
+        - 'controller/previewapicontroller.php'
 
 tools:
     sensiolabs_security_checker: true

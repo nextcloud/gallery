@@ -31,6 +31,12 @@ use OCP\AppFramework\IAppContainer;
  */
 class DataSetup extends \Codeception\Module {
 
+	/** @var CoreTestCase */
+	public $coreTestCase;
+	/** @var array<string> */
+	public $mediaTypes;
+	/** @var array<string> */
+	public $extraMediaTypes;
 	/** @var string */
 	public $userId = 'tester';
 	/** @var string */
@@ -42,46 +48,60 @@ class DataSetup extends \Codeception\Module {
 	/**
 	 * The file structure for the tests
 	 *
-	 * folder1 is the shared folder
+	 * shared1 is the shared folder
 	 * testimage-wide.png is the shared file
 	 *
-	 * @todo Add more files in Gallery directly
 	 * @todo Don't depend on ImageMagick
 	 *
 	 * @var array
 	 */
 	public $filesHierarchy = [
 		'testimage.jpg',
+		'animated.gif',
+		'testimage-corrupt.jpg',
+		'font.ttf',
+		'testimagelarge.svg',
+		'testimage.eps',
+		'testimage.gif',
 		'folder1' => [
+			'testimage.jpg',
 			'testimage-wide.png',
-			'folder1.1' => [
+			'shared1' => [
 				'testimage.eps',
 				'testimagelarge.svg',
 				'testimage.gif',
-			],
-			'folder1.2' => [
-				'testimage.png',
+				'shared1.1' => [
+					'testimage.png',
+				]
 			]
 		],
-		'folder2' => []
+		'folder2' => [
+			'testimage.jpg',
+			'testimage.png',
+			'testimagelarge.svg',
+		],
+		'folder3' => [],
+		'folder4' => [ // Folder will be hidden in Gallery
+					   'testimage.jpg',
+					   'testimage-wide.png',
+					   '.nomedia',
+		]
 	];
 	/** @var Folder */
 	public $sharedFolder;
 	/** @var string */
-	public $sharedFolderName = 'folder1';
+	public $sharedFolderName = 'shared1';
 	/** @var string */
 	public $sharedFolderToken;
+	/** @var string */
+	public $passwordForFolderShare = 'p@ssw0rd4sh@re5';
 	/** @var File */
 	public $sharedFile;
 	/** @var string */
 	public $sharedFileName = 'testimage-wide.png';
 	/** @var string */
 	public $sharedFileToken;
-	/** @var string */
-	public $passwordForShares = 'p@ssw0rd4sh@re5';
 
-	/** @var CoreTestCase */
-	private $coreTestCase;
 	/** @var IAppContainer */
 	private $container;
 	/** @var IServerContainer */
@@ -141,6 +161,69 @@ class DataSetup extends \Codeception\Module {
 	}
 
 	/**
+	 * Called when a test fails
+	 *
+	 * This is called after every test, not after a suite run
+	 *
+	 * @param TestCase $test
+	 * @param $fail
+	 */
+	public function _failed(\Codeception\TestCase $test, $fail) {
+
+	}
+
+	/**
+	 * Returns a list of ids available in the given folder
+	 *
+	 * @param string $folderPath
+	 *
+	 * @return array<string,int|string>
+	 */
+	public function getFilesDataForFolder($folderPath) {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		/** @type Folder $folder */
+		$folder = $userFolder->get($folderPath);
+		$content = $folder->getDirectoryListing();
+		$data = [];
+
+		foreach ($content as $node) {
+			$nodeType = $node->getType();
+			$mimeType = $node->getMimetype();
+			if ($nodeType === 'file' && in_array($mimeType, $this->mediaTypes)) {
+				$name = $node->getName();
+				$data[$name] = [
+					'id'        => $node->getId(),
+					'mediatype' => $mimeType,
+					'etag'      => $node->getEtag(),
+				];
+			}
+		}
+
+		return $data;
+	}
+
+	public function createBrokenConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'broken-gallery.cnf', 'gallery.cnf');
+	}
+
+	public function createConfigWithBom() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'bom-gallery.cnf', 'gallery.cnf');
+	}
+
+
+	public function emptyConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, 'empty-gallery.cnf', 'gallery.cnf');
+	}
+
+	public function restoreValidConfig() {
+		$userFolder = $this->server->getUserFolder($this->userId);
+		$this->addFile($userFolder, $this->userId . '-' . 'gallery.cnf', 'gallery.cnf');
+	}
+
+	/**
 	 * Creates a test environment for a given user
 	 *
 	 * @param string $userId
@@ -155,7 +238,6 @@ class DataSetup extends \Codeception\Module {
 
 		// Create folders and files
 		$this->createSampleData($userId, $this->filesHierarchy);
-
 
 		$this->coreTestCase->logoutUser();
 	}
@@ -172,10 +254,23 @@ class DataSetup extends \Codeception\Module {
 			'OC\\Preview\\JPEG',
 			'OC\\Preview\\PNG',
 			'OC\\Preview\\GIF',
-			'OC\\Preview\\Postscript'
+			'OC\\Preview\\Postscript',
+			'OC\\Preview\\Font'
 		];
 		$this->server->getConfig()
 					 ->setSystemValue('enabledPreviewProviders', $providers);
+
+		$this->mediaTypes = [
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+			'application/postscript'
+		];
+
+		$this->extraMediaTypes = [
+			'application/font-sfnt',
+			'application/x-font',
+		];
 	}
 
 	/**
@@ -219,6 +314,9 @@ class DataSetup extends \Codeception\Module {
 		$userFolder = $this->server->getUserFolder($userId);
 
 		$this->createStructure($userFolder, $structure);
+
+		// Add configuration. This will break if the config filename or the userId is changed
+		$this->addFile($userFolder, $userId . '-' . 'gallery.cnf', 'gallery.cnf');
 	}
 
 	/**
@@ -242,9 +340,7 @@ class DataSetup extends \Codeception\Module {
 					$this->createStructure($subFolder, $value);
 				}
 			} else {
-				$file = $baseFolder->newFile($value);
-				$imgData = file_get_contents(\OC::$SERVERROOT . '/tests/data/' . $value);
-				$file->putContent($imgData);
+				$file = $this->addFile($baseFolder, $value, $value);
 
 				if ($value === $this->sharedFileName) {
 					$this->sharedFile = $file;
@@ -254,7 +350,28 @@ class DataSetup extends \Codeception\Module {
 	}
 
 	/**
+	 * Copies the content of one file to another
+	 *
+	 * @param Folder $folder
+	 * @param string $sourceName
+	 * @param string $destinationName
+	 *
+	 * @return File
+	 */
+	private function addFile($folder, $sourceName, $destinationName) {
+		$file = $folder->newFile($destinationName);
+		$fileData = file_get_contents(__DIR__ . '/../../_data/' . $sourceName);
+		$file->putContent($fileData);
+
+		return $file;
+	}
+
+	/**
 	 * Shares the file and folder, both publicly and with the tester
+	 *
+	 * Warning - File operations don't work properly in the test environment provided by core as
+	 * the cache is not updated and the scanner does not work. Do not attempt to rename or move
+	 * files
 	 */
 	private function createShares() {
 		$this->coreTestCase->loginAsUser($this->sharerUserId);
@@ -296,8 +413,10 @@ class DataSetup extends \Codeception\Module {
 			$this->server->getConfig()
 						 ->setAppValue('core', 'shareapi_allow_links', 'yes');
 
-			// Set so that this case is always covered
-			$shareWith = $this->passwordForShares;
+			// Only password protect the folders
+			if ($nodeType === 'folder') {
+				$shareWith = $this->passwordForFolderShare;
+			}
 			$shareType = \OCP\Share::SHARE_TYPE_LINK;
 		}
 

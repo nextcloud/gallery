@@ -104,8 +104,7 @@ class Preview {
 	 * Returns a preview based on OC's preview class and our custom methods
 	 *
 	 * We check that the preview returned by the Preview class can be used by
-	 * the browser. If not, we send the mime icon and change the status code so
-	 * that the client knows that the process has failed.
+	 * the browser. If not, we send "false" to the controller
 	 *
 	 * @fixme setKeepAspect is missing from public interface.
 	 *     https://github.com/owncloud/core/issues/12772

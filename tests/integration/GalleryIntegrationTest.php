@@ -12,7 +12,7 @@
 
 namespace OCA\GalleryPlus\Tests\Integration;
 
-use \Helper\CoreTestCase;
+use Helper\CoreTestCase;
 
 use OCP\Share;
 use OCP\Files\Node;
@@ -51,7 +51,7 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 	/** @var string */
 	public $sharedFileToken;
 	/** @var string */
-	public $passwordForShares;
+	public $passwordForFolderShare;
 	/** @var Folder */
 	protected $sharedFolder;
 	/** @var string */
@@ -96,7 +96,7 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 		$this->sharedFileName = $this->sharedFile->getName();
 		$this->sharedFolderToken = $setupData->sharedFolderToken;
 		$this->sharedFileToken = $setupData->sharedFileToken;
-		$this->passwordForShares = $setupData->passwordForShares;
+		$this->passwordForFolderShare = $setupData->passwordForFolderShare;
 	}
 
 	protected function _after() {

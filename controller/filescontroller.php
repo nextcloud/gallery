@@ -6,24 +6,25 @@
  * later. See the COPYING file.
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
- * @author Robin Appelman <icewind@owncloud.com>
  *
- * @copyright Olivier Paroz 2014-2015
- * @copyright Robin Appelman 2012-2014
+ * @copyright Olivier Paroz 2015
  */
 
 namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
-use OCP\Files\Folder;
+use OCP\IURLGenerator;
 use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
+use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\SearchMediaService;
+use OCA\GalleryPlus\Service\DownloadService;
 
 /**
  * Class FilesController
@@ -32,49 +33,41 @@ use OCA\GalleryPlus\Service\SearchMediaService;
  */
 class FilesController extends Controller {
 
-	use PathManipulation;
+	use Files;
 	use JsonHttpError;
 
-	/**
-	 * @var SearchFolderService
-	 */
-	private $searchFolderService;
-	/**
-	 * @var ConfigService
-	 */
-	private $configService;
-	/**
-	 * @var SearchMediaService
-	 */
-	private $searchMediaService;
-	/**
-	 * @var ILogger
-	 */
-	private $logger;
+	/** @var IURLGenerator */
+	private $urlGenerator;
 
 	/**
 	 * Constructor
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
+	 * @param IURLGenerator $urlGenerator
 	 * @param SearchFolderService $searchFolderService
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
+	 * @param DownloadService $downloadService
 	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
+		IURLGenerator $urlGenerator,
 		SearchFolderService $searchFolderService,
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
+		DownloadService $downloadService,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 
+		$this->urlGenerator = $urlGenerator;
 		$this->searchFolderService = $searchFolderService;
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
+		$this->downloadService = $downloadService;
 		$this->logger = $logger;
 	}
 
@@ -93,72 +86,46 @@ class FilesController extends Controller {
 	 * @param string $location a path representing the current album in the app
 	 * @param string $features the list of supported features
 	 * @param string $etag the last known etag in the client
+	 * @param string $mediatypes the list of supported media types
 	 *
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
-	public function getFiles($location, $features, $etag) {
-		$features = explode(',', $features);
-		$mediaTypesArray = explode(';', $this->request->getParam('mediatypes'));
-		$files = [];
+	public function getList($location, $features, $etag, $mediatypes) {
+		$featuresArray = explode(',', $features);
+		$mediaTypesArray = explode(';', $mediatypes);
 		try {
-			/** @var Folder $folderNode */
-			list($folderPathFromRoot, $folderNode, $locationHasChanged) =
-				$this->searchFolderService->getCurrentFolder(rawurldecode($location), $features);
-			$albumInfo =
-				$this->configService->getAlbumInfo($folderNode, $folderPathFromRoot, $features);
-
-			if ($albumInfo['etag'] !== $etag) {
-				$files = $this->searchMediaService->getMediaFiles(
-					$folderNode, $mediaTypesArray, $features
-				);
-				$files = $this->fixPaths($files, $folderPathFromRoot);
-			}
-
-			return $this->formatResults($files, $albumInfo, $locationHasChanged);
+			return $this->getFiles($location, $featuresArray, $etag, $mediaTypesArray);
 		} catch (\Exception $exception) {
 			return $this->error($exception);
 		}
 	}
 
 	/**
-	 * Generates shortened paths to the media files
+	 * @NoAdminRequired
 	 *
-	 * We only want to keep one folder between the current folder and the found media file
-	 * /root/folder/sub1/sub2/file.ext
-	 * becomes
-	 * /root/folder/file.ext
+	 * Sends the file matching the fileId
 	 *
-	 * @param $files
-	 * @param $folderPathFromRoot
+	 * @param int $fileId the ID of the file we want to download
+	 * @param string|null $filename
 	 *
-	 * @return array
+	 * @return ImageResponse|RedirectResponse
 	 */
-	private function fixPaths($files, $folderPathFromRoot) {
-		if (!empty($files)) {
-			foreach ($files as &$file) {
-				$file['path'] = $this->getReducedPath($file['path'], $folderPathFromRoot);
-			}
+	public function download($fileId, $filename = null) {
+		$download = $this->getDownload($fileId, $filename);
+
+		if (!$download) {
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page',
+				[
+					'message' => 'There was a problem accessing the file',
+					'code'    => Http::STATUS_NOT_FOUND
+				]
+			);
+
+			return new RedirectResponse($url);
 		}
 
-		return $files;
-	}
-
-	/**
-	 * Simply builds and returns an array containing the list of files, the album information and
-	 * whether the location has changed or not
-	 *
-	 * @param array <string,string|int> $files
-	 * @param array $albumInfo
-	 * @param bool $locationHasChanged
-	 *
-	 * @return array
-	 */
-	private function formatResults($files, $albumInfo, $locationHasChanged) {
-		return [
-			'files'              => $files,
-			'albuminfo'          => $albumInfo,
-			'locationhaschanged' => $locationHasChanged
-		];
+		return new ImageResponse($download);
 	}
 
 }

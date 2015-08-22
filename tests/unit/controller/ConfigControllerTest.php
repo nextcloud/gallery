@@ -26,17 +26,17 @@ use OCA\GalleryPlus\Service\ServiceException;
 class ConfigControllerTest extends \Test\TestCase {
 
 	/** @var string */
-	private $appName = 'gallery';
+	protected $appName = 'galleryplus';
 	/** @var IRequest */
-	private $request;
+	protected $request;
 	/** @var ConfigController */
-	private $controller;
+	protected $controller;
 	/** @var ConfigService */
-	private $configService;
+	protected $configService;
 	/** @var PreviewService */
-	private $previewService;
+	protected $previewService;
 	/** @var ILogger */
-	private $logger;
+	protected $logger;
 	/** @var array */
 	private $baseMimeTypes = [
 		'image/png',
@@ -148,7 +148,7 @@ class ConfigControllerTest extends \Test\TestCase {
 		$this->mockFeaturesList($features);
 		$this->mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $mimeTypes);
 
-		$response = $this->controller->getConfig($slideshow);
+		$response = $this->controller->get($slideshow);
 
 		$this->assertEquals(['features' => $features, 'mediatypes' => $mimeTypes], $response);
 	}
@@ -162,7 +162,7 @@ class ConfigControllerTest extends \Test\TestCase {
 		$nativeSvgSupport = false;
 		$this->mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $this->baseMimeTypes);
 
-		$response = $this->controller->getConfig($slideshow);
+		$response = $this->controller->get($slideshow);
 
 		$this->assertEquals(
 			['features' => $features, 'mediatypes' => $this->baseMimeTypes], $response

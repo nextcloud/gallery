@@ -41,8 +41,8 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	public function testGetResourceFromIdAsALoggedInUser() {
 		$environment = $this->setUserBasedEnv();
 
-		$this->sharedFolderId = $this->sharedFolder->getId();
-		$result = $environment->getResourceFromId($this->sharedFolderId);
+		$sharedFolderId = $this->sharedFolder->getId();
+		$result = $environment->getResourceFromId($sharedFolderId);
 
 		$this->assertEquals($this->sharedFolder->getId(), $result->getId());
 	}
@@ -50,8 +50,8 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	public function testGetResourceFromIdAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
-		$this->sharedFolderId = $this->sharedFolder->getId();
-		$result = $environment->getResourceFromId($this->sharedFolderId);
+		$sharedFolderId = $this->sharedFolder->getId();
+		$result = $environment->getResourceFromId($sharedFolderId);
 
 		$this->assertEquals($this->sharedFolder->getId(), $result->getId());
 	}
@@ -59,10 +59,10 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	public function testGetSharedNodeAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
-		$this->sharedFolderId = $this->sharedFolder->getId();
+		$sharedFolderId = $this->sharedFolder->getId();
 		$result = $environment->getSharedNode();
 
-		$this->assertEquals($this->sharedFolderId, $result->getId());
+		$this->assertEquals($sharedFolderId, $result->getId());
 	}
 
 	/**
@@ -124,7 +124,7 @@ class EnvironmentTest extends GalleryIntegrationTest {
 		// The password is defined in the bootstrap
 		$this->assertTrue(
 			$this->server->getHasher()
-						 ->verify($this->passwordForShares, $result)
+						 ->verify($this->passwordForFolderShare, $result)
 		);
 	}
 
@@ -133,45 +133,40 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	 */
 	public function testGetPathFromVirtualRootAsALoggedInUser() {
 		$environment = $this->setUserBasedEnv();
-		$result =
-			$environment->getPathFromVirtualRoot(
-				$this->userFolder->get($this->sharedFolderName . '/folder1.1/testimage.gif')
-			);
 
-		$this->assertEquals($this->sharedFolderName . '/folder1.1/testimage.gif', $result);
+		$path = 'folder1/' . $this->sharedFolderName . '/testimage.gif';
+		$result = $environment->getPathFromVirtualRoot($this->userFolder->get($path));
+
+		$this->assertEquals($path, $result);
 	}
 
 	public function testGetPathFromVirtualRootAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
-		$result =
-			$environment->getPathFromVirtualRoot(
-				$this->sharedFolder->get('folder1.1/testimage.gif')
-			);
+		$path = 'shared1.1/testimage.png';
+		$result = $environment->getPathFromVirtualRoot($this->sharedFolder->get($path));
 
-		$this->assertEquals('folder1.1/testimage.gif', $result);
+		$this->assertEquals($path, $result);
 	}
 
 	public function testGetPathFromUserFolderAsALoggedInUser() {
 		$environment = $this->setUserBasedEnv();
 
-		$result =
-			$environment->getPathFromUserFolder(
-				$this->userFolder->get($this->sharedFolderName . '/folder1.1/testimage.gif')
-			);
+		$path = 'shared1.1/testimage.png';
+		$result = $environment->getPathFromUserFolder(
+			$this->userFolder->get($this->sharedFolderName . '/' . $path)
+		);
 
-		$this->assertEquals($this->sharedFolderName . '/folder1.1/testimage.gif', $result);
+		$this->assertEquals($this->sharedFolderName . '/' . $path, $result);
 	}
 
 	public function testGetPathFromUserFolderAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
-		$result =
-			$environment->getPathFromUserFolder(
-				$this->sharedFolder->get('folder1.1/testimage.gif')
-			);
+		$path = 'shared1.1/testimage.png';
+		$result = $environment->getPathFromUserFolder($this->sharedFolder->get($path));
 
-		$this->assertEquals($this->sharedFolderName . '/folder1.1/testimage.gif', $result);
+		$this->assertEquals('folder1/' . $this->sharedFolderName . '/' . $path, $result);
 	}
 
 	public function testGetDisplayNameAsATokenUser() {
@@ -184,12 +179,11 @@ class EnvironmentTest extends GalleryIntegrationTest {
 
 	public function testGetNodeFromVirtualRootAsALoggedInUser() {
 		$environment = $this->setUserBasedEnv();
-		$result =
-			$environment->getNodeFromVirtualRoot(
-				$this->sharedFolderName . '/folder1.1/testimage.gif'
-			);
 
-		$file = $this->userFolder->get($this->sharedFolderName . '/folder1.1/testimage.gif');
+		$path = 'shared1.1/testimage.png';
+		$result = $environment->getNodeFromVirtualRoot($this->sharedFolderName . '/' . $path);
+
+		$file = $this->userFolder->get($this->sharedFolderName . '/' . $path);
 
 		$this->assertEquals($file, $result);
 	}
@@ -197,21 +191,21 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	public function testGetNodeFromVirtualRootAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
-		$result = $environment->getNodeFromVirtualRoot('folder1.1/testimage.gif');
+		$path = 'shared1.1/testimage.png';
+		$result = $environment->getNodeFromVirtualRoot($path);
 
-		$file = $this->sharedFolder->get('folder1.1/testimage.gif');
+		$file = $this->sharedFolder->get($path);
 
 		$this->assertEquals($file, $result);
 	}
 
 	public function testGetNodeFromUserFolderAsALoggedInUser() {
 		$environment = $this->setUserBasedEnv();
-		$result =
-			$environment->getNodeFromUserFolder(
-				$this->sharedFolderName . '/folder1.1/testimage.gif'
-			);
 
-		$file = $this->userFolder->get($this->sharedFolderName . '/folder1.1/testimage.gif');
+		$path = 'shared1.1/testimage.png';
+		$result = $environment->getNodeFromUserFolder($this->sharedFolderName . '/' . $path);
+
+		$file = $this->userFolder->get($this->sharedFolderName . '/' . $path);
 
 		$this->assertEquals($file, $result);
 	}
@@ -219,12 +213,11 @@ class EnvironmentTest extends GalleryIntegrationTest {
 	public function testGetNodeFromUserFolderAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
+		$path = 'shared1.1/testimage.png';
 		$result =
-			$environment->getNodeFromUserFolder(
-				$this->sharedFolderName . '/folder1.1/testimage.gif'
-			);
+			$environment->getNodeFromUserFolder('folder1/' . $this->sharedFolderName . '/' . $path);
 
-		$file = $this->sharedFolder->get('folder1.1/testimage.gif');
+		$file = $this->sharedFolder->get($path);
 
 		$this->assertEquals($file, $result);
 	}

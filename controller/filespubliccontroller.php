@@ -13,14 +13,14 @@
 namespace OCA\GalleryPlus\Controller;
 
 /**
- * Class PublicFilesController
+ * Class FilesPublicController
  *
  * Note: Type casting only works if the "@param" parameters are also included in this class as
  * their not yet inherited
  *
  * @package OCA\GalleryPlus\Controller
  */
-class PublicFilesController extends FilesController {
+class FilesPublicController extends FilesController {
 
 	/**
 	 * @PublicPage
@@ -32,9 +32,24 @@ class PublicFilesController extends FilesController {
 	 * @param string $location a path representing the current album in the app
 	 * @param string $features the list of supported features
 	 * @param string $etag the last known etag in the client
+	 * @param string $mediatypes the list of supported media types
 	 */
-	public function getFiles($location, $features, $etag) {
-		return parent::getFiles($location, $features, $etag);
+	public function getList($location, $features, $etag, $mediatypes) {
+		return parent::getList($location, $features, $etag, $mediatypes);
 	}
 
+	/**
+	 * @PublicPage
+	 * @NoCSRFRequired
+	 *
+	 * Sends the file matching the fileId
+	 *
+	 * @inheritDoc
+	 *
+	 * @param int $fileId the ID of the file we want to download
+	 * @param string|null $filename
+	 */
+	public function download($fileId, $filename = null) {
+		return parent::download($fileId, $filename);
+	}
 }
