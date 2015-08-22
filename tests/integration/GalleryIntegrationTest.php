@@ -192,7 +192,7 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 
 		return Share::shareItem(
 			$nodeType, $nodeId, \OCP\Share::SHARE_TYPE_LINK, 'sh@red p@ssw0rd',
-			\OCP\Constants::PERMISSION_ALL
+			\OCP\Constants::PERMISSION_ALL,
 			'OCA\GalleryPlus\Environment\Environment'
 		);
 	}
