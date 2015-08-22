@@ -44,10 +44,6 @@ class PageController extends Controller {
 	 */
 	private $urlGenerator;
 	/**
-	 * @var DownloadService
-	 */
-	private $downloadService;
-	/**
 	 * @var IConfig
 	 */
 	private $appConfig;
@@ -59,7 +55,6 @@ class PageController extends Controller {
 	 * @param IRequest $request
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
-	 * @param DownloadService $downloadService
 	 * @param IConfig $appConfig
 	 */
 	public function __construct(
@@ -67,14 +62,12 @@ class PageController extends Controller {
 		IRequest $request,
 		Environment $environment,
 		IURLGenerator $urlGenerator,
-		DownloadService $downloadService,
 		IConfig $appConfig
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
-		$this->downloadService = $downloadService;
 		$this->appConfig = $appConfig;
 	}
 
