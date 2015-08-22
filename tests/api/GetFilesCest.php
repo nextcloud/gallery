@@ -50,7 +50,7 @@ class GetFilesCest {
 		$I->am('an app');
 		$I->wantTo('connect to the Files API without credentials');
 		$I->sendGET($this->filesApi, $this->params);
-		$I->seeResponseCodeIs(401);
+		$I->seeResponseCodeIs(500);
 		$I->seeResponseIsJson();
 	}
 
