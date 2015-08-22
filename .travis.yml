@@ -11,6 +11,8 @@ env:
   global:
     - CORE_BRANCH=stable8
     - APP_NAME=galleryplus
+    - GH_REF: github.com/owncloud/gallery.git
+    - secure: "cLmMqrbVZrvn2GAoVs6JWa5h70tzrAISjPZUfENjl0KYT6B84z3B94W/dGU+I2mxwvyBqEP+x83Bih2CxEflqc7tJmdqC+MM/ZZiigPX7RCjq5XHbzUpPpMbC8MFxT2K3jcFXUitfwZvNaZXJIiK3ZQJU4ayKaegLvI91x1SqH0="
     # Codacy credentials
     - secure: "JS+oBSHTeqiEf0bWn2LL15Dhb8O6Ne34hke6dDuCu5lJgMyDpEwezvCW5wuMy8xfyjDobWytxxDI+pB86UfyVMMuHI/RWYqtzmevjdUamS9JAU1kgsFcfL0XXMzgPsqykeIQdyxj0zkqLawJHetNtnENA3zYc9WyzmmM0b/0MSPr+AHtlejuFjSdpG0X3/PBCiU9mZqZScq8dwjE4PvFEdd1med2VLpsbl8d+V8M9nRTX/8d2sNzWk9k0jgerWyRT3FgGoGuVFFuePZR4XA8mcEnsXmsQ/AbvV+fZFKFcj2HZCJZqCkqhyY6x3JGqVMNk8uYmP9B4vINL+0ociAxfGM4099yv220Z76pGNE+/vGpSfHygx8BYd0KwSd0oJr5dxdik9OcN6DtsUjLVLr90LO1Z+R4FVQxuCo5oNfRL0kd8Ab84Dtir+jyOQWxWOKr38j/QPyo9Sb6HcICPMp/GpT+aPjxV737SM4OCr+FbJbkHfuQxy7qt0NOTe52apWAzTJHitHPKHN/A0PqMuoKU+IVx3QTkAg/ziQPY76XgNagrtvPSkv3iAPpbnrxLYTiX5skW6Na60YKBfYtCZwG8++FXQ767QXzB+SOTTRaob+VQ9XiBqU3vxu27/1hmXbnkWGgFCy9O6pk23BwRM4eILIzFNQz8Bt1iD118Vh+0MA="
     # Code Climate credentials
@@ -52,6 +54,12 @@ before_install:
 script:
   # Test lint
   - php vendor/bin/parallel-lint --exclude travis --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
+  # Generate API documentation
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/phpdoc run; fi"
+  # Generate Wiki documentation
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then git submodule update --init; fi"
+  # Send documentation to Github Pages
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
 
 matrix:
   include:
