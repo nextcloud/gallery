@@ -28,7 +28,7 @@
     "symfony/yaml": "~2.6"
   },
   "require-dev": {
-    "Codeception/Codeception": "2.1.*"
+    "Codeception/Codeception": "2.1.*",
     "codeclimate/php-test-reporter": "dev-master",
     "codacy/coverage": "dev-master"
   }
