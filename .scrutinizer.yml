@@ -5,6 +5,7 @@ imports:
 filter:
     excluded_paths:
         - 'appinfo/application.php'
+        - 'appinfo/routes.php'
         - 'l10n/*'
         - 'vendor/*'
         - 'js/vendor/*'
