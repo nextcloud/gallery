@@ -30,6 +30,7 @@ coverage:
         - preview/*
         - service/*
     exclude:
+        - build/*
         - css/*
         - documentation/*
         - img/*
