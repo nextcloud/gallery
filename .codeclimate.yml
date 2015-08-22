@@ -35,6 +35,7 @@ ratings:
     - controller/**
     - environment/**
     - http/**
+    - js/**
     - middleware/**
     - preview/**
     - service/**
