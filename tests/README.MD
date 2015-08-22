@@ -7,6 +7,7 @@ Read more about automated testing in [the wiki](https://github.com/owncloud/gall
 * `core` cloned via git
 * `core` submodule initialised
 * `core` has to be installed
+* **Disable gallery** `sudo -u<myuser> ./occ app:disable gallery`
 * composer installed (see below)
 
 ## PHP
@@ -47,7 +48,7 @@ Test your installation using the following command:
 
 `# php vendor/bin/codecept -- version`
 
-*Note: The binary is located in a different location*
+*Note: The binary is located in a different location than if you're using the phar*
 
 And remember to not push your `vendor` folder if submitting pull requests.
 
