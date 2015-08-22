@@ -115,9 +115,11 @@ class Application extends App {
 			return new FilesController(
 				$c->query('AppName'),
 				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
 				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
+				$c->query('DownloadService'),
 				$c->query('Logger')
 			);
 		}
@@ -127,9 +129,11 @@ class Application extends App {
 			return new FilesPublicController(
 				$c->query('AppName'),
 				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
 				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
+				$c->query('DownloadService'),
 				$c->query('Logger')
 			);
 		}
@@ -139,9 +143,11 @@ class Application extends App {
 			return new FilesApiController(
 				$c->query('AppName'),
 				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
 				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
+				$c->query('DownloadService'),
 				$c->query('Logger')
 			);
 		}
