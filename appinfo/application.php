@@ -46,6 +46,7 @@ use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
 use OCA\GalleryPlus\Middleware\SharingCheckMiddleware;
 use OCA\GalleryPlus\Middleware\EnvCheckMiddleware;
+use OCA\GalleryPlus\Utility\EventSource;
 
 use OCA\OcUtility\AppInfo\Application as OcUtility;
 use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
@@ -160,7 +161,7 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
@@ -174,7 +175,7 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
@@ -188,7 +189,7 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
@@ -203,9 +204,8 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'OCP\IEventSource', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->createEventSource();
+			'EventSource', function (IAppContainer $c) {
+			return new EventSource();
 		}
 		);
 		$container->registerService(

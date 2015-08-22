@@ -26,7 +26,7 @@ use OCA\GalleryPlus\Service\ServiceException;
 class ConfigControllerTest extends \Test\TestCase {
 
 	/** @var string */
-	private $appName = 'gallery';
+	private $appName = 'galleryplus';
 	/** @var IRequest */
 	private $request;
 	/** @var ConfigController */

@@ -34,7 +34,7 @@ use OCP\AppFramework\Utility\IControllerMethodReflector;
 class SharingCheckMiddlewareTest extends \Test\TestCase {
 
 	/** @var string */
-	private $appName = 'gallery';
+	private $appName = 'galleryplus';
 	/** @var IRequest */
 	private $request;
 	/** @var IConfig */
