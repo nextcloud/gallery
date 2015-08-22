@@ -124,7 +124,7 @@ class EnvironmentTest extends GalleryIntegrationTest {
 		// The password is defined in the bootstrap
 		$this->assertTrue(
 			$this->server->getHasher()
-						 ->verify($this->passwordForShares, $result)
+						 ->verify($this->passwordForFolderShare, $result)
 		);
 	}
 

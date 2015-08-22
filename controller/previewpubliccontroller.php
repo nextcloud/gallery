@@ -55,10 +55,9 @@ class PreviewPublicController extends PreviewController {
 	 * @param int $fileId the ID of the file of which we need a large preview of
 	 * @param int $width
 	 * @param int $height
-	 * @param string|null $download
 	 */
-	public function getPreview($fileId, $width, $height, $download) {
-		return parent::getPreview($fileId, $width, $height, $download);
+	public function getPreview($fileId, $width, $height) {
+		return parent::getPreview($fileId, $width, $height);
 	}
 
 }

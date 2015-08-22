@@ -14,13 +14,11 @@ namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\IEventSource;
 use OCP\ILogger;
 use OCP\Files\File;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
@@ -120,26 +118,15 @@ class PreviewController extends Controller {
 	 * @param int $fileId the ID of the file of which we need a large preview of
 	 * @param int $width
 	 * @param int $height
-	 * @param string|null $download
 	 *
-	 * @return ImageResponse|RedirectResponse|Http\JSONResponse
+	 * @return ImageResponse|Http\JSONResponse
 	 */
-	public function getPreview($fileId, $width, $height, $download) {
-		if (!is_null($download)) {
-			$this->download = true;
-		}
+	public function getPreview($fileId, $width, $height) {
 		/** @type File $file */
 		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
 
-		if ($preview === null) {
-			if ($this->download) {
-				$url = $this->getErrorUrl($this->appName, $status);
-
-				return new RedirectResponse($url);
-			} else {
-
-				return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], $status);
-			}
+		if (!$preview) {
+			return new JSONResponse(['message' => 'Oh Nooooes!', 'success' => false], $status);
 		}
 		$preview['name'] = $file->getName();
 

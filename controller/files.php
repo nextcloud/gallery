@@ -14,6 +14,7 @@
 
 namespace OCA\GalleryPlus\Controller;
 
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\ILogger;
 
@@ -22,6 +23,8 @@ use OCP\AppFramework\Http;
 use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\SearchMediaService;
+use OCA\GalleryPlus\Service\DownloadService;
+use OCA\GalleryPlus\Service\ServiceException;
 
 /**
  * Trait Files
@@ -44,6 +47,10 @@ trait Files {
 	 * @var SearchMediaService
 	 */
 	private $searchMediaService;
+	/**
+	 * @var DownloadService
+	 */
+	private $downloadService;
 	/**
 	 * @var ILogger
 	 */
@@ -125,6 +132,48 @@ trait Files {
 			'albuminfo'          => $albumInfo,
 			'locationhaschanged' => $locationHasChanged
 		];
+	}
+
+	/**
+	 * Generates the download data
+	 *
+	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param string|null $filename
+	 *
+	 * @return array|false
+	 */
+	private function getDownload($fileId, $filename) {
+		$download = false;
+		$file = $this->getFile($fileId);
+		if ($file) {
+			$download = $this->downloadService->downloadFile($file);
+		}
+		if ($download) {
+			if (is_null($filename)) {
+				$filename = $file->getName();
+			}
+			$download['name'] = $filename;
+		}
+
+		return $download;
+	}
+
+	/**
+	 * Retrieves the file based on the given ID
+	 *
+	 * @param int $fileId
+	 *
+	 * @return File
+	 */
+	private function getFile($fileId) {
+		try {
+			/** @type File $file */
+			$file = $this->downloadService->getResourceFromId($fileId);
+		} catch (ServiceException $exception) {
+			$file = false;
+		}
+
+		return $file;
 	}
 
 }
