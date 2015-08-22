@@ -2,6 +2,13 @@
 
 Read more about automated testing in [the wiki](https://github.com/owncloud/gallery/wiki/Behavioural%2C-functional-and-unit-testing-suite/)
 
+## Requirements
+
+* `core` cloned via git
+* `core` submodule initialised
+* `core` has to be installed
+* composer installed (see below)
+
 ## PHP
 
 This repository is using [Codeception](http://codeception.com/) which makes it possible to use a single tool for behavioural, api, integration and unit testing.
@@ -34,7 +41,7 @@ This usually works well:
 
 Now you can install all the packages which we need to test the app:
 
-`# composer install -o`
+`# php -dmemory_limit=1G /usr/local/bin/composer install --prefer-source -o`
 
 Test your installation using the following command:
 
