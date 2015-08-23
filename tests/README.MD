@@ -7,8 +7,10 @@ Read more about automated testing in [the wiki](https://github.com/owncloud/gall
 * `core` cloned via git
 * `core` submodule initialised
 * `core` has to be installed
-* **Disable gallery** `sudo -u<myuser> ./occ app:disable gallery`
+* Gallery+ has to be enabled `sudo -u<myuser> ./occ app:enable galleryplus`
+* **Gallery has to be disabled** `sudo -u<myuser> ./occ app:disable gallery`
 * composer installed (see below)
+* vendor folder and composer.lock file removed
 
 ## PHP
 
