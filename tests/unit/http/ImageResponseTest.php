@@ -9,12 +9,9 @@
  *
  * @copyright Olivier Paroz 2015
  */
-namespace OCA\Gallery\Controller;
+namespace OCA\Gallery\Http;
 
 use OCP\AppFramework\Http;
-
-use OCA\Gallery\Http\ImageResponse;
-
 
 /**
  * Class ImageResponseTest
