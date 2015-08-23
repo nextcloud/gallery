@@ -14,6 +14,8 @@ namespace OCA\Gallery\Controller;
 use OCP\IRequest;
 use OCP\ILogger;
 
+use OCP\AppFramework\Http\JSONResponse;
+
 use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\ServiceException;
@@ -167,6 +169,22 @@ class ConfigControllerTest extends \Test\TestCase {
 		$this->assertEquals(
 			['features' => $features, 'mediatypes' => $this->baseMimeTypes], $response
 		);
+	}
+
+	public function testGetConfigWithBrokenSystem() {
+		$slideshow = true;
+		$exceptionMessage = 'Aïe!';
+		$this->configService->expects($this->any())
+							->method('getFeaturesList')
+							->willThrowException(new ServiceException($exceptionMessage));
+		$errorMessage = [
+			'message' => $exceptionMessage,
+			'success' => false
+		];
+		/** @type JSONResponse $response */
+		$response = $this->controller->get($slideshow);
+
+		$this->assertEquals($errorMessage, $response->getData());
 	}
 
 	/**
