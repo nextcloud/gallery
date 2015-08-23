@@ -18,11 +18,11 @@ use OCP\Files\Node;
 use OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
 
 /**
- * Class EnvironmentTest
+ * Class EnvironmentSetupTest
  *
  * @package OCA\GalleryPlus\Tests\Integration
  */
-class EnvironmentTest extends GalleryIntegrationTest {
+class EnvironmentSetupTest extends GalleryIntegrationTest {
 
 	/**
 	 * Tests is setting up the environment using a normal user works
@@ -65,15 +65,24 @@ class EnvironmentTest extends GalleryIntegrationTest {
 		$this->assertEquals($sharedFolderId, $result->getId());
 	}
 
-	/**
-	 * We can't get the folder if we're given a file token
-	 *
-	 * @expects EnvironmentException
-	 */
 	public function testGetSharedNodeAsATokenUserWhenGivenFileToken() {
 		$environment = $this->setTokenBasedEnv($this->sharedFileToken);
 
-		$environment->getSharedNode();
+		$sharedFileId = $this->sharedFile->getId();
+		$result = $environment->getSharedNode();
+
+		$this->assertEquals($sharedFileId, $result->getId());
+	}
+
+	/**
+	 * We can't get the virtual root if we're given a file token
+	 *
+	 * @expectedException \OCA\GalleryPlus\Environment\NotFoundEnvException
+	 */
+	public function testGetVirtualRootFolderAsATokenUserWhenGivenFileToken() {
+		$environment = $this->setTokenBasedEnv($this->sharedFileToken);
+
+		$environment->getVirtualRootFolder();
 	}
 
 	public function testGetVirtualRootFolderAsALoggedInUser() {
