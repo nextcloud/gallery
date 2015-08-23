@@ -126,4 +126,20 @@ class GetFilesCest {
 		$I->seeResponseContainsJson(['locationhaschanged' => true]);
 	}
 
+	public function getListOfForbiddenPath(\Step\Api\User $I) {
+		$params = $this->params;
+		// This folder contains a .nomedia file
+		$params['location'] = 'folder4';
+
+		$I->am('an app');
+		$I->wantTo('get the list of files of a folder which contains the .nomedia file'
+		);
+
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->sendGET($this->apiUrl, $params);
+		$I->seeResponseCodeIs(403);
+		$I->seeResponseIsJson();
+		$I->seeResponseContainsJson(['message' => 'Album is private or unavailable']);
+	}
+
 }
