@@ -9,7 +9,7 @@
  *
  * @copyright Olivier Paroz 2015
  */
-namespace OCA\GalleryPlus\Controller;
+namespace OCA\GalleryPlus\Http;
 
 use OCP\AppFramework\Http;
 
