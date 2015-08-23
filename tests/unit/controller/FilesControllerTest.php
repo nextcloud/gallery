@@ -36,6 +36,8 @@ use OCA\GalleryPlus\Service\DownloadService;
  */
 class FilesControllerTest extends \Test\TestCase {
 
+	use PathManipulation;
+
 	/** @var IAppContainer */
 	protected $container;
 	/** @var string */
@@ -193,6 +195,42 @@ class FilesControllerTest extends \Test\TestCase {
 		$response = $this->controller->getList($location, $features, $etag, $mediatypes);
 
 		$this->assertEquals($errorMessage, $response->getData());
+	}
+
+	public function providesFilesData() {
+		$location = 'folder1';
+		$folderPathFromRoot = 'user/files/' . $location;
+
+		return [
+			[
+				['path' => $folderPathFromRoot . '/deep/folder/to/test/path/reduction.png'],
+				$folderPathFromRoot . '/deep/reduction.png',
+				$folderPathFromRoot
+			],
+			[
+				['path' => $folderPathFromRoot . '/folder/image.png'],
+				$folderPathFromRoot . '/folder/image.png',
+				$folderPathFromRoot
+			],
+			[
+				['path' => $folderPathFromRoot . '/testimage.png'],
+				$folderPathFromRoot . '/testimage.png',
+				$folderPathFromRoot
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider providesFilesData
+	 *
+	 * @param array $file
+	 * @param string $fixedPath
+	 * @param string $folderPathFromRoot
+	 */
+	public function testGetReducedPath($file, $fixedPath, $folderPathFromRoot) {
+		$response = $this->getReducedPath($file['path'], $folderPathFromRoot);
+
+		$this->assertEquals($fixedPath, $response);
 	}
 
 	/**
