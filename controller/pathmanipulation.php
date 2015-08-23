@@ -30,7 +30,7 @@ trait PathManipulation {
 	 *
 	 * @return string
 	 */
-	public function getReducedPath($path, $currFolderPath) {
+	private function getReducedPath($path, $currFolderPath) {
 		// Adding a slash to make sure we don't cut a folder in half
 		if ($currFolderPath) {
 			$currFolderPath .= '/';
