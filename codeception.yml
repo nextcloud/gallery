@@ -22,7 +22,7 @@ extensions:
 coverage:
     enabled: true
     include:
-        - appinfo/*
+        - appinfo/*.php
         - controller/*
         - environment/*
         - http/*
@@ -30,7 +30,6 @@ coverage:
         - preview/*
         - service/*
     exclude:
-        - appinfo/info.xml
         - build/*
         - css/*
         - documentation/*
