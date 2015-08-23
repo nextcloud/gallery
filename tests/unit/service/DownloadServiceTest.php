@@ -10,29 +10,21 @@
  * @copyright Olivier Paroz 2015
  */
 namespace OCA\Gallery\Service;
+include_once 'FilesServiceTest.php';
 
-use OCP\ILogger;
 use OCP\Files\File;
-
-use OCA\Gallery\Environment\Environment;
 
 /**
  * Class DownloadServiceTest
  *
  * @package OCA\Gallery\Controller
  */
-class DownloadServiceTest extends \Test\TestCase {
+class DownloadServiceTest extends FilesServiceTest {
 
 	use Base64Encode;
 
 	/** @var DownloadService */
 	protected $service;
-	/** @var string */
-	protected $appName = 'gallery';
-	/** @var Environment */
-	private $environment;
-	/** @var ILogger */
-	protected $logger;
 
 	/**
 	 * Test set up
@@ -40,12 +32,6 @@ class DownloadServiceTest extends \Test\TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->environment = $this->getMockBuilder('\OCA\Gallery\Environment\Environment')
-								  ->disableOriginalConstructor()
-								  ->getMock();
-		$this->logger = $this->getMockBuilder('\OCP\ILogger')
-							 ->disableOriginalConstructor()
-							 ->getMock();
 		$this->service = new DownloadService (
 			$this->appName,
 			$this->environment,
@@ -89,43 +75,6 @@ class DownloadServiceTest extends \Test\TestCase {
 		$downloadResponse = $this->service->downloadFile($file);
 
 		$this->assertFalse($downloadResponse);
-	}
-
-	/**
-	 * Mocks OCP\Files\File
-	 *
-	 * Duplicate of PreviewControllerTest->mockFile
-	 *
-	 * Contains a JPG
-	 *
-	 * @param $fileId
-	 *
-	 * @return object|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function mockFile($fileId) {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getId')
-			 ->willReturn($fileId);
-		$file->method('getContent')
-			 ->willReturn(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
-		$file->method('getName')
-			 ->willReturn('testimage.jpg');
-		$file->method('getMimeType')
-			 ->willReturn('image/jpeg');
-
-		return $file;
-	}
-
-	private function mockBadFile() {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getContent')
-			 ->willThrowException(new ServiceException("Can't read file"));
-
-		return $file;
 	}
 
 }
