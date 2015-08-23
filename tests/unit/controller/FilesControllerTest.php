@@ -12,6 +12,7 @@
 
 namespace OCA\Gallery\Controller;
 
+use OCA\Gallery\Service\ServiceException;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\ILogger;
@@ -19,6 +20,7 @@ use OCP\ILogger;
 use OCP\AppFramework\IAppContainer;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\RedirectResponse;
+use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\Gallery\AppInfo\Application;
 use OCA\Gallery\Http\ImageResponse;
@@ -131,6 +133,67 @@ class FilesControllerTest extends \Test\TestCase {
 		$this->assertEquals($redirect->getRedirectURL(), $response->getRedirectURL());
 	}
 
+	public function testGetFilesWithWorkingSetup() {
+		$location = 'folder1';
+		$folderPathFromRoot = 'user/files/' . $location;
+		$features = '';
+		$etag = 1111222233334444;
+		$mediatypes = 'image/png';
+		$folderId = 9876;
+		$folderPermissions = 31;
+		$folderEtag = 9999888877776666;
+		$files = [
+			['path' => $folderPathFromRoot . '/deep/path.png'],
+			['path' => $folderPathFromRoot . '/testimage.png']
+		];
+		$albumInfo = [
+			'path'        => $folderPathFromRoot,
+			'fileid'      => $folderId,
+			'permissions' => $folderPermissions,
+			'etag'        => $folderEtag
+		];
+		$locationHasChanged = false;
+		$result = [
+			'files'              => $files,
+			'albuminfo'          => $albumInfo,
+			'locationhaschanged' => $locationHasChanged
+		];
+		$folder = $this->mockGetFolder($folderId, $files, $folderPermissions, $folderEtag);
+
+		$this->mockGetCurrentFolder(
+			$location, $folderPathFromRoot, [$features], $locationHasChanged, $folder
+		);
+		$this->mockGetAlbumInfo($folder, $folderPathFromRoot, [$features], $albumInfo);
+		$this->mockGetMediaFiles($folder, [$mediatypes], [$features], $files);
+
+		$response = $this->controller->getList($location, $features, $etag, $mediatypes);
+
+		$this->assertEquals($result, $response);
+	}
+
+	public function testGetFilesWithBrokenSetup() {
+		$location = '';
+		$features = '';
+		$etag = 1111222233334444;
+		$mediatypes = 'image/png';
+		$exceptionMessage = 'Aïe!';
+		$this->searchFolderService->expects($this->once())
+								  ->method('getCurrentFolder')
+								  ->with(
+									  $location,
+									  [$features]
+								  )
+								  ->willThrowException(new ServiceException($exceptionMessage));
+
+		$errorMessage = [
+			'message' => $exceptionMessage,
+			'success' => false
+		];
+		/** @type JSONResponse $response */
+		$response = $this->controller->getList($location, $features, $etag, $mediatypes);
+
+		$this->assertEquals($errorMessage, $response->getData());
+	}
 
 	/**
 	 * Mocks Files->getDownload
@@ -223,5 +286,71 @@ class FilesControllerTest extends \Test\TestCase {
 							  ->method('downloadFile')
 							  ->with($this->equalTo($file))
 							  ->willReturn($download);
+	}
+
+	/**
+	 * Mocks SearchFolderService->getCurrentFolder
+	 *
+	 * @param $location
+	 * @param $folderPathFromRoot
+	 * @param $features
+	 * @param $locationHasChanged
+	 * @param $folder
+	 */
+	private function mockGetCurrentFolder(
+		$location, $folderPathFromRoot, $features, $locationHasChanged, $folder
+	) {
+		$answer = [
+			$folderPathFromRoot,
+			$folder,
+			$locationHasChanged
+		];
+		$this->searchFolderService->expects($this->once())
+								  ->method('getCurrentFolder')
+								  ->with(
+									  $location,
+									  $features
+								  )
+								  ->willReturn($answer);
+	}
+
+	private function mockGetFolder($nodeId, $files, $permissions, $etag) {
+		$folder = $this->getMockBuilder('OCP\Files\Folder')
+					   ->disableOriginalConstructor()
+					   ->getMock();
+		$folder->method('getType')
+			   ->willReturn('folder');
+		$folder->method('getId')
+			   ->willReturn($nodeId);
+		$folder->method('getDirectoryListing')
+			   ->willReturn($files);
+		$folder->method('getPermissions')
+			   ->willReturn($permissions);
+		$folder->method('getEtag')
+			   ->willReturn($etag);
+
+		return $folder;
+	}
+
+	private function mockGetAlbumInfo($folderNode, $folderPathFromRoot, $features, $answer) {
+		$this->configService->expects($this->once())
+							->method('getAlbumInfo')
+							->with(
+								$folderNode,
+								$folderPathFromRoot,
+								$features
+							)
+							->willReturn($answer);
+	}
+
+	private function mockGetMediaFiles($folderNode, $mediatypes, $features, $answer) {
+		$this->searchMediaService->expects($this->once())
+								 ->method('getMediaFiles')
+								 ->with(
+									 $folderNode,
+									 $mediatypes,
+									 $features
+								 )
+								 ->willReturn($answer);
 	}
 }
