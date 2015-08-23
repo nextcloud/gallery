@@ -10,6 +10,8 @@
  * @copyright Olivier Paroz 2015
  */
 namespace OCA\GalleryPlus\Service;
+namespace OCA\GalleryPlus\Service;
+include_once 'ServiceTest.php';
 
 use OCP\ILogger;
 use OCP\Files\File;
@@ -21,7 +23,7 @@ use OCA\GalleryPlus\Environment\Environment;
  *
  * @package OCA\GalleryPlus\Controller
  */
-class SearchFolderServiceTest extends \Test\TestCase {
+class SearchFolderServiceTest extends FilesServiceTest {
 
 	/** @var SearchFolderService */
 	protected $service;
@@ -144,6 +146,16 @@ class SearchFolderServiceTest extends \Test\TestCase {
 		$this->assertFalse($response);
 	}
 
+	public function testIsAllowedAndAvailableWithBrokenSetup() {
+		$node = $this->mockGetFolder('home::user', 909090, []);
+		$node->method('isReadable')
+			 ->willThrowException(new \Exception('Boom'));
+
+		$response = self::invokePrivate($this->service, 'isAllowedAndAvailable', [$node]);
+
+		$this->assertFalse($response);
+	}
+
 	public function providesIsPreviewAllowedData() {
 		return [
 			// Mounted, so looking at options
@@ -176,37 +188,6 @@ class SearchFolderServiceTest extends \Test\TestCase {
 		$response = self::invokePrivate($this->service, 'isAllowed', [$node]);
 
 		$this->assertSame($expectedResult, $response);
-	}
-
-
-	private function mockGetFolder(
-		$storageId, $nodeId, $files, $isReadable = true, $mounted = false, $mount = null
-	) {
-		$storage = $this->getMockBuilder('OCP\Files\Storage')
-						->disableOriginalConstructor()
-						->getMock();
-		$storage->method('getId')
-				->willReturn($storageId);
-
-		$folder = $this->getMockBuilder('OCP\Files\Folder')
-					   ->disableOriginalConstructor()
-					   ->getMock();
-		$folder->method('getType')
-			   ->willReturn('folder');
-		$folder->method('getId')
-			   ->willReturn($nodeId);
-		$folder->method('getDirectoryListing')
-			   ->willReturn($files);
-		$folder->method('getStorage')
-			   ->willReturn($storage);
-		$folder->method('isReadable')
-			   ->willReturn($isReadable);
-		$folder->method('isMounted')
-			   ->willReturn($mounted);
-		$folder->method('getMountPoint')
-			   ->willReturn($mount);
-
-		return $folder;
 	}
 
 	private function mockBrokenDirectoryListing() {

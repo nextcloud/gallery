@@ -10,8 +10,8 @@
  * @copyright Olivier Paroz 2015
  */
 namespace OCA\GalleryPlus\Service;
+include_once 'FilesServiceTest.php';
 
-use OCP\ILogger;
 use OCP\Files\File;
 
 use OCA\GalleryPlus\Environment\Environment;
@@ -21,18 +21,12 @@ use OCA\GalleryPlus\Environment\Environment;
  *
  * @package OCA\GalleryPlus\Controller
  */
-class DownloadServiceTest extends \Test\TestCase {
+class DownloadServiceTest extends FilesServiceTest {
 
 	use Base64Encode;
 
 	/** @var DownloadService */
 	protected $service;
-	/** @var string */
-	protected $appName = 'gallery';
-	/** @var Environment */
-	private $environment;
-	/** @var ILogger */
-	protected $logger;
 
 	/**
 	 * Test set up
@@ -89,43 +83,6 @@ class DownloadServiceTest extends \Test\TestCase {
 		$downloadResponse = $this->service->downloadFile($file);
 
 		$this->assertFalse($downloadResponse);
-	}
-
-	/**
-	 * Mocks OCP\Files\File
-	 *
-	 * Duplicate of PreviewControllerTest->mockFile
-	 *
-	 * Contains a JPG
-	 *
-	 * @param $fileId
-	 *
-	 * @return object|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function mockFile($fileId) {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getId')
-			 ->willReturn($fileId);
-		$file->method('getContent')
-			 ->willReturn(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
-		$file->method('getName')
-			 ->willReturn('testimage.jpg');
-		$file->method('getMimeType')
-			 ->willReturn('image/jpeg');
-
-		return $file;
-	}
-
-	private function mockBadFile() {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getContent')
-			 ->willThrowException(new ServiceException("Can't read file"));
-
-		return $file;
 	}
 
 }
