@@ -146,4 +146,17 @@ class SearchMediaServiceTest extends FilesServiceTest {
 		$this->assertSame($result, sizeof($response));
 	}
 
+	/**
+	 * @expectedException \OCA\Gallery\Service\NotFoundServiceException
+	 */
+	public function testGetResourceFromIdWithUnreadableFile() {
+		$fileId = 99999;
+		$storageId = 'home::user';
+		$isReadable = false;
+		$file = $this->mockFile($fileId, $storageId, $isReadable);
+		$this->mockGetResourceFromId($fileId, $file);
+
+		$this->service->getResourceFromId($fileId);
+	}
+
 }

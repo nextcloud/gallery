@@ -20,8 +20,8 @@ use OCA\GalleryPlus\Environment\NotFoundEnvException;
  * Looks for the folder to use, based on the request made by the client
  *
  * This is to make sure we were not:
- * 	* given a file
- * 	* given a folder name with a typo
+ *    * given a file
+ *    * given a folder name with a typo
  *
  * @package OCA\GalleryPlus\Service
  */
@@ -131,8 +131,7 @@ class SearchFolderService extends FilesService {
 		if (is_null($node)) {
 			// Something very wrong has just happened
 			$this->logAndThrowNotFound('Oh Nooooes!');
-		}
-		if (!$this->isAllowedAndAvailable($node)) {
+		} elseif (!$this->isAllowedAndAvailable($node)) {
 			$this->logAndThrowForbidden('Album is private or unavailable');
 		}
 
