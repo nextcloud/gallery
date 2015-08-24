@@ -130,11 +130,18 @@ abstract class ServiceTest extends \Test\TestCase {
 	}
 
 	protected function mockBadFile() {
+		$exception = new ServiceException("Can't read file");
 		$file = $this->getMockBuilder('OCP\Files\File')
 					 ->disableOriginalConstructor()
 					 ->getMock();
+		$file->method('getId')
+			 ->willThrowException($exception);
+		$file->method('getType')
+			 ->willThrowException($exception);
+		$file->method('getPath')
+			 ->willThrowException($exception);
 		$file->method('getContent')
-			 ->willThrowException(new ServiceException("Can't read file"));
+			 ->willThrowException($exception);
 
 		return $file;
 	}
@@ -182,6 +189,24 @@ abstract class ServiceTest extends \Test\TestCase {
 				->willReturn($storageId);
 
 		return $storage;
+	}
+
+	protected function mockGetFileNodeFromVirtualRoot($location, $file) {
+		$this->environment->expects($this->any())
+						  ->method('getNodeFromVirtualRoot')
+						  ->with(
+							  $location
+						  )
+						  ->willReturn($file);
+	}
+
+	protected function mockGetPathFromVirtualRoot($node, $path) {
+		$this->environment->expects($this->any())
+						  ->method('getPathFromVirtualRoot')
+						  ->with(
+							  $node
+						  )
+						  ->willReturn($path);
 	}
 
 }

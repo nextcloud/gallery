@@ -64,19 +64,18 @@ abstract class Service {
 	 * @throws NotFoundServiceException
 	 */
 	public function getResourceFromId($nodeId) {
-		$node = null;
 		try {
 			$node = $this->environment->getResourceFromId($nodeId);
 
 			// Making extra sure that we can actually do something with the file
-			if (!$node->getMimetype() || !$node->isReadable()) {
+			if ($node->getMimetype() && $node->isReadable()) {
+				return $node;
+			} else {
 				$this->logAndThrowNotFound("Can't access the file");
 			}
 		} catch (\Exception $exception) {
 			$this->logAndThrowNotFound($exception->getMessage());
 		}
-
-		return $node;
 	}
 
 	/**
