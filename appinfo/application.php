@@ -281,6 +281,7 @@ class Application extends App {
 		 * OCA External
 		 */
 		if (\OCP\App::isEnabled('ocutility')) {
+			// @codeCoverageIgnoreStart
 			$container->registerService(
 				'UtilityContainer', function () {
 				$app = new OcUtility();
@@ -302,6 +303,7 @@ class Application extends App {
 				);
 			}
 			);
+			// @codeCoverageIgnoreEnd
 		} else {
 			$container->registerService(
 				'Logger', function (IContainer $c) {
