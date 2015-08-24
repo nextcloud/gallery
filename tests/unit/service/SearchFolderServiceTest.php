@@ -35,6 +35,24 @@ class SearchFolderServiceTest extends ServiceTest {
 		);
 	}
 
+
+	public function testGetNodeTypeWithBrokenFolder() {
+		$node = $this->mockBadFile();
+
+		$response = self::invokePrivate($this->service, 'getNodeType', [$node]);
+
+		$this->assertSame('', $response);
+	}
+
+	public function testGetAllowedSubFolderWithFile() {
+		$node = $this->mockFile(11335);
+		$nodeType = $node->getType();
+
+		$response = self::invokePrivate($this->service, 'getAllowedSubFolder', [$node, $nodeType]);
+
+		$this->assertSame([], $response);
+	}
+
 	/**
 	 * @expectedException \OCA\GalleryPlus\Service\NotFoundServiceException
 	 */
@@ -73,22 +91,37 @@ class SearchFolderServiceTest extends ServiceTest {
 		$this->assertSame($folder, $response);
 	}
 
-	public function testSendExternalFolder() {
+	public function providesSendExternalFolderData() {
+		return [
+			['shared::99999'],
+			['home::user']
+		];
+	}
+
+	/**
+	 * @dataProvider providesSendExternalFolderData
+	 */
+	public function testSendExternalFolder($storageId) {
+		$expectedException =
+			new \OCA\GalleryPlus\Service\ForbiddenServiceException('Album is private or unavailable');
 		$path = '';
 		$nodeId = 94875;
 		$files = [];
 		$shared = $this->mockFolder('shared::12345', $nodeId, $files);
 		$rootNodeId = 91919191;
 		$rootFiles = [$shared];
-		$sharedRoot = $this->mockFolder('shared::99999', $rootNodeId, $rootFiles);
+		$sharedRoot = $this->mockFolder($storageId, $rootNodeId, $rootFiles);
 		$this->mockGetVirtualRootFolderOfSharedFolder($sharedRoot);
 
 		$locationHasChanged = false;
 		$folder = [$path, $shared, $locationHasChanged];
-
-		$response = self::invokePrivate($this->service, 'sendFolder', $folder);
-
-		$this->assertSame($folder, $response);
+		try {
+			$response = self::invokePrivate($this->service, 'sendFolder', $folder);
+			$this->assertSame($folder, $response);
+		} catch (\Exception $exception) {
+			$this->assertInstanceOf('\OCA\GalleryPlus\Service\ForbiddenServiceException', $exception);
+			$this->assertSame($expectedException->getMessage(), $exception->getMessage());
+		}
 	}
 
 	public function providesNodesData() {
@@ -118,6 +151,37 @@ class SearchFolderServiceTest extends ServiceTest {
 		} catch (\Exception $exception) {
 			$this->assertInstanceOf('\OCA\GalleryPlus\Service\NotFoundServiceException', $exception);
 			$this->assertSame($nodes->getMessage(), $exception->getMessage());
+		}
+	}
+
+	public function providesRecoverFromGetNodesData() {
+		$caughtException = new \Exception('Nasty');
+		$newException = new \OCA\GalleryPlus\Service\NotFoundServiceException('Boom');
+
+		return [
+			[0, $caughtException, $newException],
+			[1, $caughtException, []]
+		];
+	}
+
+	/**
+	 * @dataProvider providesRecoverFromGetNodesData
+	 *
+	 * @param $subDepth
+	 * @param $exception
+	 * @param $nodes
+	 */
+	public function testRecoverFromGetNodesError($subDepth, $caughtException, $nodes) {
+		try {
+			$response = self::invokePrivate(
+				$this->service, 'recoverFromGetNodesError', [$subDepth, $caughtException]
+			);
+			$this->assertSame($nodes, $response);
+		} catch (\Exception $thisException) {
+			$this->assertInstanceOf(
+				'\OCA\GalleryPlus\Service\NotFoundServiceException', $thisException
+			);
+			$this->assertSame($caughtException->getMessage(), $thisException->getMessage());
 		}
 	}
 
@@ -220,7 +284,7 @@ class SearchFolderServiceTest extends ServiceTest {
 			 ->willReturn($folder);
 
 		$this->mockGetFileNodeFromVirtualRoot($location, $file);
-		$this->mockgetPathFromVirtualRoot($folder, $location);
+		$this->mockGetPathFromVirtualRoot($folder, $location);
 
 		$locationHasChanged = false;
 		$expectedResult = [$location, $folder, $locationHasChanged];
@@ -259,24 +323,6 @@ class SearchFolderServiceTest extends ServiceTest {
 				   ->willReturn($previewsAllowed);
 
 		return $mountPoint;
-	}
-
-	private function mockGetFileNodeFromVirtualRoot($location, $file) {
-		$this->environment->expects($this->any())
-						  ->method('getNodeFromVirtualRoot')
-						  ->with(
-							  $location
-						  )
-						  ->willReturn($file);
-	}
-
-	private function mockgetPathFromVirtualRoot($node, $path) {
-		$this->environment->expects($this->any())
-						  ->method('getPathFromVirtualRoot')
-						  ->with(
-							  $node
-						  )
-						  ->willReturn($path);
 	}
 
 }
