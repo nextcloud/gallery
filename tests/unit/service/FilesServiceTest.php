@@ -31,7 +31,9 @@ abstract class FilesServiceTest extends ServiceTest {
 	 *
 	 * @return object|\PHPUnit_Framework_MockObject_MockObject
 	 */
-	protected function mockFile($fileId, $storageId = 'home::user', $isReadable = true) {
+	protected function mockFile($fileId, $storageId = 'home::user', $isReadable = true, $path = ''
+	) {
+		$filename = 'testimage.jpg';
 		$storage = $this->mockGetStorage($storageId);
 		$file = $this->getMockBuilder('OCP\Files\File')
 					 ->disableOriginalConstructor()
@@ -41,7 +43,7 @@ abstract class FilesServiceTest extends ServiceTest {
 		$file->method('getType')
 			 ->willReturn('file');
 		$file->method('getContent')
-			 ->willReturn(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
+			 ->willReturn(file_get_contents(\OC::$SERVERROOT . '/tests/data/' . $filename));
 		$file->method('getName')
 			 ->willReturn('testimage.jpg');
 		$file->method('getMimeType')
@@ -50,6 +52,8 @@ abstract class FilesServiceTest extends ServiceTest {
 			 ->willReturn($storage);
 		$file->method('isReadable')
 			 ->willReturn($isReadable);
+		$file->method('getPath')
+			 ->willReturn($path);
 
 		return $file;
 	}

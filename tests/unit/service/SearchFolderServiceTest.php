@@ -172,6 +172,64 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$this->assertSame($expectedResult, $response);
 	}
 
+	public function providesLocationChangeData() {
+		return [
+			[0, false],
+			[1, true],
+		];
+	}
+
+	/**
+	 * @dataProvider providesLocationChangeData
+	 *
+	 * @param int $depth
+	 * @param bool $expectedResult
+	 */
+	public function testHasLocationChanged($depth, $expectedResult) {
+		$response = self::invokePrivate($this->service, 'hasLocationChanged', [$depth]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
+	public function providesValidateLocationData() {
+		return [
+			['folder1', 0, 'folder1'],
+			['completely/bogus/set/of/folders/I/give/up', 4, ''],
+		];
+	}
+
+	/**
+	 * @dataProvider providesValidateLocationData
+	 *
+	 * @param string $location
+	 * @param int $depth
+	 * @param bool $expectedResult
+	 */
+	public function testValidateLocation($location, $depth, $expectedResult) {
+		$response = self::invokePrivate($this->service, 'validateLocation', [$location, $depth]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
+	public function testFindFolderWithFileLocation() {
+		$location = 'folder/file1.jpg';
+		$fileId = 99999;
+		$file = $this->mockFile($fileId);
+		$folder = $this->mockGetFolder('home::user', 10101, [$file]);
+		$file->method('getParent')
+			 ->willReturn($folder);
+
+		$this->mockGetFileNodeFromVirtualRoot($location, $file);
+		$this->mockgetPathFromVirtualRoot($folder, $location);
+
+		$locationHasChanged = false;
+		$expectedResult = [$location, $folder, $locationHasChanged];
+
+		$response = self::invokePrivate($this->service, 'findFolder', [$location]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
 	private function mockBrokenDirectoryListing() {
 		$folder = $this->getMockBuilder('OCP\Files\Folder')
 					   ->disableOriginalConstructor()
@@ -201,6 +259,24 @@ class SearchFolderServiceTest extends FilesServiceTest {
 				   ->willReturn($previewsAllowed);
 
 		return $mountPoint;
+	}
+
+	private function mockGetFileNodeFromVirtualRoot($location, $file) {
+		$this->environment->expects($this->any())
+						  ->method('getNodeFromVirtualRoot')
+						  ->with(
+							  $location
+						  )
+						  ->willReturn($file);
+	}
+
+	private function mockgetPathFromVirtualRoot($node, $path) {
+		$this->environment->expects($this->any())
+						  ->method('getPathFromVirtualRoot')
+						  ->with(
+							  $node
+						  )
+						  ->willReturn($path);
 	}
 
 }
