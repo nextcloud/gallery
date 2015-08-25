@@ -194,7 +194,7 @@ class Preview {
 	/**
 	 * Makes a preview fit in the asked dimension and, if required, fills the empty space
 	 *
-	 * @param \OC_Image $previewData
+	 * @param \OCP\IImage $previewData
 	 * @param int $previewWidth
 	 * @param int $previewHeight
 	 * @param int $maxWidth
@@ -220,7 +220,7 @@ class Preview {
 	/**
 	 * Makes a preview fit in the asked dimension and, if required, fills the empty space
 	 *
-	 * @param \OC_Image $previewData
+	 * @param \OCP\IImage $previewData
 	 * @param int $previewWidth
 	 * @param int $previewHeight
 	 * @param int $maxWidth
@@ -252,7 +252,7 @@ class Preview {
 	/**
 	 * Mixes a transparent background with a resized foreground preview
 	 *
-	 * @param \OC_Image $previewData
+	 * @param \OCP\IImage $previewData
 	 * @param int $previewWidth
 	 * @param int $previewHeight
 	 * @param int $newWidth
@@ -321,22 +321,22 @@ class Preview {
 	 *
 	 * @param resource $fixedPreview
 	 *
-	 * @return \OC_Image
+	 * @return \OCP\IImage
 	 */
 	private function fixPreviewCache($fixedPreview) {
 		$owner = $this->userId;
 		$file = $this->file;
 		$preview = $this->preview;
 		$fixedPreviewObject = new Image($fixedPreview);
-		$previewData = $preview->getPreview();
-
 		// Get the location where the broken thumbnail is stored
 		$thumbnailFolder = $this->dataDir . '/' . $owner . '/';
 		$thumbnail = $thumbnailFolder . $preview->isCached($file->getId());
 
 		// Caching it for next time
 		if ($fixedPreviewObject->save($thumbnail)) {
-			$previewData = $fixedPreviewObject->data();
+			$previewData = $fixedPreviewObject;
+		} else {
+			$previewData = $preview->getPreview();
 		}
 
 		return $previewData;
