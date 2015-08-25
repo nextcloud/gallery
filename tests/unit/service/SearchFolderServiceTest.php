@@ -17,7 +17,7 @@ include_once 'ServiceTest.php';
  *
  * @package OCA\Gallery\Controller
  */
-class SearchFolderServiceTest extends FilesServiceTest {
+class SearchFolderServiceTest extends ServiceTest {
 
 	/** @var SearchFolderService */
 	protected $service;
@@ -33,6 +33,24 @@ class SearchFolderServiceTest extends FilesServiceTest {
 			$this->environment,
 			$this->logger
 		);
+	}
+
+
+	public function testGetNodeTypeWithBrokenFolder() {
+		$node = $this->mockBadFile();
+
+		$response = self::invokePrivate($this->service, 'getNodeType', [$node]);
+
+		$this->assertSame('', $response);
+	}
+
+	public function testGetAllowedSubFolderWithFile() {
+		$node = $this->mockFile(11335);
+		$nodeType = $node->getType();
+
+		$response = self::invokePrivate($this->service, 'getAllowedSubFolder', [$node, $nodeType]);
+
+		$this->assertSame([], $response);
 	}
 
 	/**
@@ -53,7 +71,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$path = '';
 		$nodeId = 94875;
 		$isReadable = false;
-		$node = $this->mockGetFolder('home::user', $nodeId, [], $isReadable);
+		$node = $this->mockFolder('home::user', $nodeId, [], $isReadable);
 		$locationHasChanged = false;
 
 		self::invokePrivate($this->service, 'sendFolder', [$path, $node, $locationHasChanged]);
@@ -63,7 +81,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$path = '';
 		$nodeId = 94875;
 		$files = [];
-		$node = $this->mockGetFolder('home::user', $nodeId, $files);
+		$node = $this->mockFolder('home::user', $nodeId, $files);
 		$locationHasChanged = false;
 
 		$folder = [$path, $node, $locationHasChanged];
@@ -73,22 +91,37 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$this->assertSame($folder, $response);
 	}
 
-	public function testSendExternalFolder() {
+	public function providesSendExternalFolderData() {
+		return [
+			['shared::99999'],
+			['home::user']
+		];
+	}
+
+	/**
+	 * @dataProvider providesSendExternalFolderData
+	 */
+	public function testSendExternalFolder($storageId) {
+		$expectedException =
+			new \OCA\Gallery\Service\ForbiddenServiceException('Album is private or unavailable');
 		$path = '';
 		$nodeId = 94875;
 		$files = [];
-		$shared = $this->mockGetFolder('shared::12345', $nodeId, $files);
+		$shared = $this->mockFolder('shared::12345', $nodeId, $files);
 		$rootNodeId = 91919191;
 		$rootFiles = [$shared];
-		$sharedRoot = $this->mockGetFolder('shared::99999', $rootNodeId, $rootFiles);
+		$sharedRoot = $this->mockFolder($storageId, $rootNodeId, $rootFiles);
 		$this->mockGetVirtualRootFolderOfSharedFolder($sharedRoot);
 
 		$locationHasChanged = false;
 		$folder = [$path, $shared, $locationHasChanged];
-
-		$response = self::invokePrivate($this->service, 'sendFolder', $folder);
-
-		$this->assertSame($folder, $response);
+		try {
+			$response = self::invokePrivate($this->service, 'sendFolder', $folder);
+			$this->assertSame($folder, $response);
+		} catch (\Exception $exception) {
+			$this->assertInstanceOf('\OCA\Gallery\Service\ForbiddenServiceException', $exception);
+			$this->assertSame($expectedException->getMessage(), $exception->getMessage());
+		}
 	}
 
 	public function providesNodesData() {
@@ -121,6 +154,37 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		}
 	}
 
+	public function providesRecoverFromGetNodesData() {
+		$caughtException = new \Exception('Nasty');
+		$newException = new \OCA\Gallery\Service\NotFoundServiceException('Boom');
+
+		return [
+			[0, $caughtException, $newException],
+			[1, $caughtException, []]
+		];
+	}
+
+	/**
+	 * @dataProvider providesRecoverFromGetNodesData
+	 *
+	 * @param $subDepth
+	 * @param $exception
+	 * @param $nodes
+	 */
+	public function testRecoverFromGetNodesError($subDepth, $caughtException, $nodes) {
+		try {
+			$response = self::invokePrivate(
+				$this->service, 'recoverFromGetNodesError', [$subDepth, $caughtException]
+			);
+			$this->assertSame($nodes, $response);
+		} catch (\Exception $thisException) {
+			$this->assertInstanceOf(
+				'\OCA\Gallery\Service\NotFoundServiceException', $thisException
+			);
+			$this->assertSame($caughtException->getMessage(), $thisException->getMessage());
+		}
+	}
+
 	public function testIsAllowedAndAvailableWithNullFolder() {
 		$node = null;
 		$response = self::invokePrivate($this->service, 'isAllowedAndAvailable', [$node]);
@@ -129,7 +193,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 	}
 
 	public function testIsAllowedAndAvailableWithBrokenSetup() {
-		$node = $this->mockGetFolder('home::user', 909090, []);
+		$node = $this->mockFolder('home::user', 909090, []);
 		$node->method('isReadable')
 			 ->willThrowException(new \Exception('Boom'));
 
@@ -163,11 +227,69 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$files = [];
 		$isReadable = true;
 		$mount = $this->mockMountPoint($previewsAllowedOnMountedShare);
-		$node = $this->mockGetFolder(
+		$node = $this->mockFolder(
 			'webdav::user@domain.com/dav', $nodeId, $files, $isReadable, $mounted, $mount
 		);
 
 		$response = self::invokePrivate($this->service, 'isAllowed', [$node]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
+	public function providesLocationChangeData() {
+		return [
+			[0, false],
+			[1, true],
+		];
+	}
+
+	/**
+	 * @dataProvider providesLocationChangeData
+	 *
+	 * @param int $depth
+	 * @param bool $expectedResult
+	 */
+	public function testHasLocationChanged($depth, $expectedResult) {
+		$response = self::invokePrivate($this->service, 'hasLocationChanged', [$depth]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
+	public function providesValidateLocationData() {
+		return [
+			['folder1', 0, 'folder1'],
+			['completely/bogus/set/of/folders/I/give/up', 4, ''],
+		];
+	}
+
+	/**
+	 * @dataProvider providesValidateLocationData
+	 *
+	 * @param string $location
+	 * @param int $depth
+	 * @param bool $expectedResult
+	 */
+	public function testValidateLocation($location, $depth, $expectedResult) {
+		$response = self::invokePrivate($this->service, 'validateLocation', [$location, $depth]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
+	public function testFindFolderWithFileLocation() {
+		$location = 'folder/file1.jpg';
+		$fileId = 99999;
+		$file = $this->mockJpgFile($fileId);
+		$folder = $this->mockFolder('home::user', 10101, [$file]);
+		$file->method('getParent')
+			 ->willReturn($folder);
+
+		$this->mockGetFileNodeFromVirtualRoot($location, $file);
+		$this->mockGetPathFromVirtualRoot($folder, $location);
+
+		$locationHasChanged = false;
+		$expectedResult = [$location, $folder, $locationHasChanged];
+
+		$response = self::invokePrivate($this->service, 'findFolder', [$location]);
 
 		$this->assertSame($expectedResult, $response);
 	}

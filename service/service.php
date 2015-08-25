@@ -64,7 +64,6 @@ abstract class Service {
 	 * @throws NotFoundServiceException
 	 */
 	public function getResourceFromId($nodeId) {
-		$node = null;
 		try {
 			$node = $this->environment->getResourceFromId($nodeId);
 
@@ -77,10 +76,8 @@ abstract class Service {
 		} catch (\Exception $exception) {
 			$this->logAndThrowNotFound($exception->getMessage());
 		}
-
-		return null;
 	}
-	
+
 	/**
 	 * Logs the error and raises a "Not found" type exception
 	 *

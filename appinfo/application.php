@@ -303,8 +303,8 @@ class Application extends App {
 				);
 			}
 			);
-			// @codeCoverageIgnoreEnd
 		} else {
+			// @codeCoverageIgnoreEnd
 			$container->registerService(
 				'Logger', function (IContainer $c) {
 				return $c->query('OCP\ILogger');
