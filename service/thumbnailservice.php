@@ -38,7 +38,7 @@ class ThumbnailService {
 	 * @param bool $square
 	 * @param double $scale
 	 *
-	 * @return array<int|double|boolean>
+	 * @return array<double|boolean>
 	 */
 	public function getThumbnailSpecs($square, $scale) {
 		$height = 200 * $scale;

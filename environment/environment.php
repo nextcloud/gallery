@@ -84,7 +84,7 @@ class Environment {
 	 */
 	private $folderName;
 	/**
-	 * @var string
+	 * @var string|null
 	 */
 	private $sharePassword;
 

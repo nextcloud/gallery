@@ -295,7 +295,7 @@ class Preview {
 	 * @param int $maxWidth
 	 * @param int $maxHeight
 	 *
-	 * @return array
+	 * @return array<int,double>
 	 */
 	private function calculateNewDimensions($previewWidth, $previewHeight, $maxWidth, $maxHeight) {
 		if (($previewWidth / $previewHeight) >= ($maxWidth / $maxHeight)) {
