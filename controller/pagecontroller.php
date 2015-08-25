@@ -203,7 +203,7 @@ class PageController extends Controller {
 	/**
 	 * Determines if we can add external shared to this instance
 	 *
-	 * @return array
+	 * @return array<bool,string>
 	 */
 	private function getServer2ServerProperties() {
 		$server2ServerSharing = $this->appConfig->getAppValue(

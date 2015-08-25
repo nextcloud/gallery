@@ -66,7 +66,7 @@ class ConfigService extends FilesService {
 	/**
 	 * Returns a list of supported features
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getFeaturesList() {
 		$featuresList = [];
@@ -193,14 +193,12 @@ class ConfigService extends FilesService {
 	/**
 	 * Builds the error message to send back when there is an error
 	 *
-	 * @fixme Missing translation
+	 * @fixme Missing translation and should not contain HTML
 	 *
 	 * @param ServiceException $exception
 	 * @param Folder $folder
 	 *
-	 * @return array <null|array<string,string>,bool>
-	 * @internal param $array <string,bool> $configItems
-	 *
+	 * @return array<array<string,string>,bool>
 	 */
 	private function buildErrorMessage($exception, $folder) {
 		$configPath = $this->environment->getPathFromVirtualRoot($folder);
