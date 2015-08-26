@@ -286,9 +286,11 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
 			// Save item id in session for future requests
 			$this->session->set('public_link_authenticated', $linkItem['id']);
+			// @codeCoverageIgnoreStart
 			if (!empty($newHash)) {
 				// For future use
 			}
+			// @codeCoverageIgnoreEnd
 		} else {
 			$this->logAndThrow("Wrong password", Http::STATUS_UNAUTHORIZED);
 		}

@@ -38,7 +38,7 @@ class PreviewControllerTest extends \Test\TestCase {
 	/** @var IAppContainer */
 	protected $container;
 	/** @var string */
-	protected $appName = 'gallery';
+	protected $appName = 'galleryplus';
 	/** @var IRequest */
 	protected $request;
 	/** @var PreviewController */

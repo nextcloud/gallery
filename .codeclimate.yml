@@ -17,6 +17,15 @@ engines:
 # to turn off an engine, set enabled to `false` or remove it
   phpcodesniffer :
     enabled: true
+    checks:
+      Generic WhiteSpace DisallowTabIndent TabsUsed:
+        enabled: false
+      Squiz Functions MultiLineFunctionDeclaration BraceOnSameLine:
+        enabled: false
+      PSR2 Classes ClassDeclaration CloseBraceAfterBody:
+        enabled: false
+      PSR2 Methods FunctionCallSignature MultipleArguments:
+        enabled: false
   eslint:
     enabled: true
   csslint:

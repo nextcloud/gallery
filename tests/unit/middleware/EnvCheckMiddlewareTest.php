@@ -40,7 +40,7 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	private $coreTestCase;
 
 	/** @var string */
-	private $appName = 'gallery';
+	private $appName = 'galleryplus';
 	/** @var IRequest */
 	private $request;
 	/** @var IHasher    * */
