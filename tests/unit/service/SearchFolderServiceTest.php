@@ -17,7 +17,7 @@ include_once 'ServiceTest.php';
  *
  * @package OCA\GalleryPlus\Controller
  */
-class SearchFolderServiceTest extends FilesServiceTest {
+class SearchFolderServiceTest extends ServiceTest {
 
 	/** @var SearchFolderService */
 	protected $service;
@@ -53,7 +53,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$path = '';
 		$nodeId = 94875;
 		$isReadable = false;
-		$node = $this->mockGetFolder('home::user', $nodeId, [], $isReadable);
+		$node = $this->mockFolder('home::user', $nodeId, [], $isReadable);
 		$locationHasChanged = false;
 
 		self::invokePrivate($this->service, 'sendFolder', [$path, $node, $locationHasChanged]);
@@ -63,7 +63,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$path = '';
 		$nodeId = 94875;
 		$files = [];
-		$node = $this->mockGetFolder('home::user', $nodeId, $files);
+		$node = $this->mockFolder('home::user', $nodeId, $files);
 		$locationHasChanged = false;
 
 		$folder = [$path, $node, $locationHasChanged];
@@ -77,10 +77,10 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$path = '';
 		$nodeId = 94875;
 		$files = [];
-		$shared = $this->mockGetFolder('shared::12345', $nodeId, $files);
+		$shared = $this->mockFolder('shared::12345', $nodeId, $files);
 		$rootNodeId = 91919191;
 		$rootFiles = [$shared];
-		$sharedRoot = $this->mockGetFolder('shared::99999', $rootNodeId, $rootFiles);
+		$sharedRoot = $this->mockFolder('shared::99999', $rootNodeId, $rootFiles);
 		$this->mockGetVirtualRootFolderOfSharedFolder($sharedRoot);
 
 		$locationHasChanged = false;
@@ -129,7 +129,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 	}
 
 	public function testIsAllowedAndAvailableWithBrokenSetup() {
-		$node = $this->mockGetFolder('home::user', 909090, []);
+		$node = $this->mockFolder('home::user', 909090, []);
 		$node->method('isReadable')
 			 ->willThrowException(new \Exception('Boom'));
 
@@ -163,7 +163,7 @@ class SearchFolderServiceTest extends FilesServiceTest {
 		$files = [];
 		$isReadable = true;
 		$mount = $this->mockMountPoint($previewsAllowedOnMountedShare);
-		$node = $this->mockGetFolder(
+		$node = $this->mockFolder(
 			'webdav::user@domain.com/dav', $nodeId, $files, $isReadable, $mounted, $mount
 		);
 
@@ -214,8 +214,8 @@ class SearchFolderServiceTest extends FilesServiceTest {
 	public function testFindFolderWithFileLocation() {
 		$location = 'folder/file1.jpg';
 		$fileId = 99999;
-		$file = $this->mockFile($fileId);
-		$folder = $this->mockGetFolder('home::user', 10101, [$file]);
+		$file = $this->mockJpgFile($fileId);
+		$folder = $this->mockFolder('home::user', 10101, [$file]);
 		$file->method('getParent')
 			 ->willReturn($folder);
 

@@ -10,7 +10,7 @@
  * @copyright Olivier Paroz 2015
  */
 namespace OCA\GalleryPlus\Service;
-include_once 'FilesServiceTest.php';
+include_once 'ServiceTest.php';
 
 use OCP\Files\File;
 
@@ -19,7 +19,7 @@ use OCP\Files\File;
  *
  * @package OCA\GalleryPlus\Controller
  */
-class DownloadServiceTest extends FilesServiceTest {
+class DownloadServiceTest extends ServiceTest {
 
 	use Base64Encode;
 
@@ -41,7 +41,7 @@ class DownloadServiceTest extends FilesServiceTest {
 
 	public function testDownloadRawFile() {
 		/** @type File $file */
-		$file = $this->mockFile(12345);
+		$file = $this->mockJpgFile(12345);
 
 		$download = [
 			'preview'  => $file->getContent(),
@@ -56,7 +56,7 @@ class DownloadServiceTest extends FilesServiceTest {
 
 	public function testDownloadBase64EncodedFile() {
 		/** @type File $file */
-		$file = $this->mockFile(12345);
+		$file = $this->mockJpgFile(12345);
 
 		$download = [
 			'preview'  => $this->encode($file->getContent()),
