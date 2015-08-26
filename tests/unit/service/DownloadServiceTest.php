@@ -14,8 +14,6 @@ include_once 'FilesServiceTest.php';
 
 use OCP\Files\File;
 
-use OCA\GalleryPlus\Environment\Environment;
-
 /**
  * Class DownloadServiceTest
  *
@@ -34,12 +32,6 @@ class DownloadServiceTest extends FilesServiceTest {
 	public function setUp() {
 		parent::setUp();
 
-		$this->environment = $this->getMockBuilder('\OCA\GalleryPlus\Environment\Environment')
-								  ->disableOriginalConstructor()
-								  ->getMock();
-		$this->logger = $this->getMockBuilder('\OCP\ILogger')
-							 ->disableOriginalConstructor()
-							 ->getMock();
 		$this->service = new DownloadService (
 			$this->appName,
 			$this->environment,

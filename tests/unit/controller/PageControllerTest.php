@@ -30,7 +30,7 @@ use OCA\GalleryPlus\Service\DownloadService;
 class PageControllerTest extends \Test\TestCase {
 
 	/** @var string */
-	private $appName = 'gallery';
+	private $appName = 'galleryplus';
 	/** @var IRequest */
 	private $request;
 	/** @var Environment */

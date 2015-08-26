@@ -32,7 +32,7 @@ class EnvironmentTest extends \Test\TestCase {
 	/** @var IAppContainer */
 	private $container;
 	/** @var string */
-	private $appName = 'gallery';
+	private $appName = 'galleryplus';
 	/** @var IRootFolder */
 	private $rootFolder;
 	/** @var IUserManager */

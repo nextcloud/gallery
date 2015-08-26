@@ -10,13 +10,7 @@
  * @copyright Olivier Paroz 2015
  */
 namespace OCA\GalleryPlus\Service;
-namespace OCA\GalleryPlus\Service;
 include_once 'ServiceTest.php';
-
-use OCP\ILogger;
-use OCP\Files\File;
-
-use OCA\GalleryPlus\Environment\Environment;
 
 /**
  * Class SearchFolderServiceTest
@@ -27,12 +21,6 @@ class SearchFolderServiceTest extends FilesServiceTest {
 
 	/** @var SearchFolderService */
 	protected $service;
-	/** @var string */
-	protected $appName = 'galleryplus';
-	/** @var Environment */
-	private $environment;
-	/** @var ILogger */
-	protected $logger;
 
 	/**
 	 * Test set up
@@ -40,12 +28,6 @@ class SearchFolderServiceTest extends FilesServiceTest {
 	public function setUp() {
 		parent::setUp();
 
-		$this->environment = $this->getMockBuilder('\OCA\GalleryPlus\Environment\Environment')
-								  ->disableOriginalConstructor()
-								  ->getMock();
-		$this->logger = $this->getMockBuilder('\OCP\ILogger')
-							 ->disableOriginalConstructor()
-							 ->getMock();
 		$this->service = new SearchFolderService (
 			$this->appName,
 			$this->environment,
