@@ -3,7 +3,7 @@
     "Pictures" : "Imágenes",
     "No pictures found! If you upload pictures in the files app, they will be displayed here." : "¡No se encontraron imágenes! Si carga imágenes en la aplicación de archivos, se mostrarán aquí.",
     "I am sorry, but I could not find any media files at this location." : "Lo siento, pero no he podido encontrar ningún archivo multimedia en este lugar.",
-    "Aborting preview. Could not find the file" : "Abortando pre-visualización. No se pudo encontrar el archivo",
+    "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
     "No ownCloud installation (7 or higher) found at {remote}" : "No se encontró una instalación de ownCloud (7 o mayor) en {remote}",
     "Invalid ownCloud url" : "URL de ownCloud inválida",
     "Picture view" : "Vista de imágenes",
