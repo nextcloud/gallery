@@ -37,4 +37,6 @@
 		<php min-version="5.4" max-version="7"/>
 		<owncloud min-version="8.1" max-version="8.2.99"/>
 	</dependencies>
+	<default_enable />
+	<shipped>true</shipped>
 </info>
