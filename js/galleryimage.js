@@ -95,7 +95,7 @@
 						image.path);
 
 					var imageLabel = $('<span/>').addClass('image-label');
-					var imageTitle = $('<span/>').addClass('title').html(
+					var imageTitle = $('<span/>').addClass('title').text(
 						OC.basename(image.path));
 					imageLabel.append(imageTitle);
 					a.hover(function () {
