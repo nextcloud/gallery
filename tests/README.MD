@@ -42,6 +42,13 @@ This usually works well:
 
 `# curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer`
 
+Next you'll need to add a Github token to composer so that you can easily download as many dependencies as you need.
+
+1. Generate a personal token in your Github profile. Don't give any Github permissions to it.
+
+2. Type the following command:
+`# composer config --global github-oauth.github.com <your-token> `
+
 Now you can install all the packages which we need to test the app:
 
 `# php -dmemory_limit=1G /usr/local/bin/composer install --prefer-source -o`
