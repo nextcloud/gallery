@@ -15,6 +15,7 @@ use Codeception\Util\Autoload;
 define('PHPUNIT_RUN', 1);
 
 require_once __DIR__ . '/../../../lib/base.php';
+OC::$loader->addValidRoot(OC::$SERVERROOT . '/tests');
 Autoload::addNamespace('Test', '/../../../tests/lib');
 
 
