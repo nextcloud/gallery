@@ -105,7 +105,7 @@ return [
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'files_public#get_lists',
+			'name' => 'files_public#get_list',
 			'url'  => '/files.public/list',
 			'verb' => 'GET'
 		],
@@ -116,12 +116,12 @@ return [
 			'defaults' => ['fileId' => null]
 		],
 		[
-			'name' => 'public_preview#get_thumbnails',
+			'name' => 'preview_public#get_thumbnails',
 			'url'  => '/thumbnails.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_preview#get_preview',
+			'name' => 'preview_public#get_preview',
 			'url'  => '/preview.public/{fileId}',
 			'verb' => 'GET'
 		],
