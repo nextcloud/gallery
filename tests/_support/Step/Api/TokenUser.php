@@ -31,4 +31,20 @@ class TokenUser extends \ApiTester {
 		return $fileMetaData;
 	}
 
+	/**
+	 * Retrieves the shared folder and its token
+	 */
+	public function getSharedFolderInformation() {
+		$I = $this;
+		$sharedFolder = $I->getSharedFolder();
+
+		$folderMetaData = [
+			'fileId'   => $sharedFolder['folder']->getId(),
+			'name'     => $sharedFolder['folder']->getName(),
+			'token'    => $sharedFolder['token'],
+			'password' => $sharedFolder['password']
+		];
+
+		return $folderMetaData;
+	}
 }

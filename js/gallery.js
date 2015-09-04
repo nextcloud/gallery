@@ -63,7 +63,7 @@
 				etag: albumEtag
 			};
 			// Only use the folder as a GET parameter and not as part of the URL
-			var url = Gallery.utility.buildGalleryUrl('files/list', '', params);
+			var url = Gallery.utility.buildGalleryUrl('files', '/list', params);
 			return $.getJSON(url).then(function (/**{{albuminfo:Object, files:Array}}*/ data) {
 				/**@type {{
 				 * 	fileid: number,
