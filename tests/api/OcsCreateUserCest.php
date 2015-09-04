@@ -33,7 +33,7 @@ class OcsCreateUserCest {
 	}
 
 	public function createUser(ApiTester $I, \Codeception\Scenario $scenario) {
-		$scenario->skip('ownCloud master is broken');
+		//$scenario->skip('ownCloud master is broken');
 		$I->wantTo('create a user via the provisioning API');
 		$I->amHttpAuthenticated('admin', 'admin');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -51,7 +51,7 @@ class OcsCreateUserCest {
 	}
 
 	public function checkUserExists(ApiTester $I, \Codeception\Scenario $scenario) {
-		$scenario->skip('ownCloud master is broken');
+		//$scenario->skip('ownCloud master is broken');
 		$I->wantTo('make sure the user exists');
 		$I->amHttpAuthenticated('admin', 'admin');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -67,7 +67,7 @@ class OcsCreateUserCest {
 	}
 
 	public function deleteUser(ApiTester $I, \Codeception\Scenario $scenario) {
-		$scenario->skip('ownCloud master is broken');
+		//$scenario->skip('ownCloud master is broken');
 		$I->wantTo('delete the user');
 		$I->amHttpAuthenticated('admin', 'admin');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
