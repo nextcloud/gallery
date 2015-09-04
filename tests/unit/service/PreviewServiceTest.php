@@ -147,7 +147,7 @@ class PreviewServiceTest extends ServiceTest {
 			$supportedMimes,
 			[
 				// The method returns the path, but only checks for the key
-				'image/svg+xml' => '/core/img/filetypes/image-vector.png',
+				'image/svg+xml' => '/core/img/filetypes/image.png',
 			]
 		);
 

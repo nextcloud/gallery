@@ -320,7 +320,7 @@
 					"<strong>Error!</strong> Your browser can't display SVG files.<br>" +
 					"Please use a more modern alternative");
 				this.showErrorNotification(message);
-				svgPreview = '/core/img/filetypes/image-vector.png';
+				svgPreview = '/core/img/filetypes/image.png';
 			}
 
 			return svgPreview;
