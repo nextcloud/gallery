@@ -16,15 +16,15 @@ Read more about automated testing in [the wiki](https://github.com/owncloud/gall
 This repository is using [Codeception](http://codeception.com/) which makes it possible to use a single tool for behavioural, api, integration and unit testing.
 If you're a PHPUnit veteran, don't fret! You can write unit and integration tests using the syntax you love and they will be executed just fine.
 
-### Install Codeception
+### Installing Codeception
 
 There are several methods to install Codeception, depending on the test suites you want to run.
-If using the phar, you'll be limited to unit and integration testing because it doesn't come with an integrated web server on which api and acceptance tests can be run.
+If using the phar, you'll be limited to unit and integration testing because it doesn't come with an integrated web server for the api and acceptance tests to connect to.
 
 
-#### Install the phar
+#### Using the phar package
 
-Go to the app's root directory and type:
+Go to Gallery's root directory and type:
 
 `# wget http://codeception.com/codecept.phar .`
 
@@ -32,7 +32,7 @@ That's it. You can check that it's properly "installed" by typing:
 
 `# php codecept.phar -- version`
 
-#### Install via Composer
+#### Installing via Composer
 
 If you intend on adding and running more than the unit tests, then it's best to install all the required packages via composer.
 The first step is to [install composer](https://getcomposer.org/doc/00-intro.md)
@@ -43,12 +43,11 @@ This usually works well:
 
 Next you'll need to add a Github token to composer so that you can easily download as many dependencies as you need.
 
-1. Generate a personal token in your Github profile. Don't give any Github permissions to it.
+1. Generate a personal token in your Github profile. You don't need to associate any Github permissions to this token.
 
-2. Type the following command:
-`# composer config --global github-oauth.github.com <your-token> `
+2. Type the following command: `# composer config --global github-oauth.github.com <your-token> `
 
-Now you can install all the packages which we need to test the app:
+You can now install all the packages needed to test the app:
 
 `# php -dmemory_limit=1G /usr/local/bin/composer install --prefer-source -o`
 
@@ -58,7 +57,7 @@ Test your installation using the following command:
 
 *Note: The binary is located in a different location than if you're using the phar*
 
-And remember to not push your `vendor` folder if submitting pull requests.
+And remember to **not** push your `vendor` folder if submitting pull requests.
 
 Refer to the Codeception [quick guide](http://codeception.com/quickstart) if you need to customise your installation.
 
@@ -70,9 +69,11 @@ In order to be able to test the Javascript in acceptance tests, we need to insta
 
 ### Running tests
 
+**WARNING - RUNNING TESTS WILL DELETE ALL YOUR DATA**
+
 #### Unit
 
-Let's create a unit test using the PHPUnit syntax:
+Let's create a unit test class compatible with the PHPUnit syntax:
 
 `# php vendor/bin/codecept g:phpunit unit service/MyServiceTest`
 
@@ -90,7 +91,7 @@ If you want to run all the unit tests, it's:
 
 #### Integration
 
-You can use the same commands to generate your files, but you need to extend `GalleryIntegrationTest` in order to have access to the variables which are set at initialisation time. Things like the userId, shared folder, token.
+You can use the same commands to generate your files, but your class needs to extend `GalleryIntegrationTest` in order to have access to the variables which are set at initialisation time. Things like the userId, shared folder, token, etc.
 
 `# php vendor/bin/codecept g:phpunit integration service/MyServiceTest`
 
@@ -100,7 +101,15 @@ You can then run all tests using:
 
 #### API and acceptance
 
-I invite you to read the official documentation in order to understand the BDD style syntax used by Codeception, but don't worry, it's easy to grasp
+Those suites use a different, scenario based syntax, but don't worry, it's easy to grasp.
+
+Files storing unique scenarios are called **Cepts**
+
+**Generating a Cept**
+
+`# php vendor/bin/codecept g:cept acceptance SignIn`
+
+An example of a sign in test:
 
 ```
 <?php
@@ -113,6 +122,49 @@ $I->click('LOGIN');
 $I->see('Welcome, Davert!');
 ?>
 ```
+
+It's possible to group scenarios in a **Cest** which organises them in a class.
+
+**Generating a Cest**
+
+`# php vendor/bin/codecept g:cest acceptance PageCrud`
+
+It's structure:
+
+```
+<?php
+class PageCrudCest
+{
+    function _before(AcceptanceTester $I)
+    {
+        // will be executed at the beginning of each test
+        $I->amOnPage('/');
+    }
+
+    function createPage(AcceptanceTester $I)
+    {
+       // todo: write test
+    }
+
+    function viewPage(AcceptanceTester $I)
+    {
+       // todo: write test
+    }    
+
+    function updatePage(AcceptanceTester $I)
+    {
+        // todo: write test
+    }
+    
+    function deletePage(AcceptanceTester $I)
+    {
+       // todo: write test
+    }
+}
+?>
+```
+
+I invite you to read the official documentation in order to understand the BDD style syntax used by Codeception and to discover all the useful commands you're going to be able to fire in order to test Gallery:
 
 * [Testing WebServices](http://codeception.com/docs/10-WebServices)
 * [Acceptance Testing](http://codeception.com/docs/03-AcceptanceTests)
@@ -131,4 +183,4 @@ Don't forget to kill the phantomjs when you're done.
 
 ### Notes
 
-If you want to get more details about what is going on during your tests, simply add `-vvv` or `--debug`
+If you want to get more details about what is going on during your tests, simply add `-vvv` or `--debug` at the end of the command line
