@@ -66,6 +66,7 @@ if (isset($request->server['REQUEST_URI'])) {
 	if (preg_match('%index.php/apps/files(/.*)?%', $url)
 		|| preg_match('%index.php/s/(/.*)?%', $url)
 	) {
+		// @codeCoverageIgnoreStart
 		/**
 		 * Scripts for the Files app
 		 */
@@ -83,4 +84,4 @@ if (isset($request->server['REQUEST_URI'])) {
 		Util::addStyle($appName, 'slideshow');
 		Util::addStyle($appName, 'gallerybutton');
 	}
-}
+}// @codeCoverageIgnoreEnd
