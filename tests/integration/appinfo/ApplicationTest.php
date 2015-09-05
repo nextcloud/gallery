@@ -14,17 +14,6 @@ namespace OCA\Gallery\AppInfo;
 
 use OCA\Gallery\Tests\Integration\GalleryIntegrationTest;
 
-use OCA\Gallery\Controller\PageController;
-use OCA\Gallery\Controller\ConfigController;
-use OCA\Gallery\Controller\ConfigPublicController;
-use OCA\Gallery\Controller\ConfigApiController;
-use OCA\Gallery\Controller\FilesController;
-use OCA\Gallery\Controller\FilesPublicController;
-use OCA\Gallery\Controller\FilesApiController;
-use OCA\Gallery\Controller\PreviewController;
-use OCA\Gallery\Controller\PreviewPublicController;
-use OCA\Gallery\Controller\PreviewApiController;
-
 /**
  * Class ApplicationTest
  *
@@ -32,52 +21,28 @@ use OCA\Gallery\Controller\PreviewApiController;
  */
 class ApplicationTest extends GalleryIntegrationTest {
 
-	public function testConfigController() {
-		$controller = $this->container->query(
-			'ConfigController'
-		);
-
-		$this->assertTrue($controller instanceof ConfigController);
+	public function providesServiceData() {
+		return [
+			['ConfigController', 'OCA\Gallery\Controller\ConfigController'],
+			['ConfigPublicController', 'OCA\Gallery\Controller\ConfigPublicController'],
+			['FilesController', 'OCA\Gallery\Controller\FilesController'],
+			['FilesPublicController', 'OCA\Gallery\Controller\FilesPublicController'],
+			['PreviewController', 'OCA\Gallery\Controller\PreviewController'],
+			['PreviewPublicController', 'OCA\Gallery\Controller\PreviewPublicController'],
+			['L10N', '\OC_L10N']
+		];
 	}
 
-	public function testConfigPublicController() {
-		$controller = $this->container->query(
-			'ConfigPublicController'
-		);
+	/**
+	 * @dataProvider providesServiceData
+	 *
+	 * @param string $registeredService
+	 * @param string $expectedClass
+	 */
+	public function testContainerQuery($registeredService, $expectedClass) {
+		$service = $this->container->query($registeredService);
 
-		$this->assertTrue($controller instanceof ConfigPublicController);
-	}
-
-	public function testFilesController() {
-		$controller = $this->container->query(
-			'FilesController'
-		);
-
-		$this->assertTrue($controller instanceof FilesController);
-	}
-
-	public function testFilesPublicController() {
-		$controller = $this->container->query(
-			'FilesPublicController'
-		);
-
-		$this->assertTrue($controller instanceof FilesPublicController);
-	}
-
-	public function testPreviewController() {
-		$controller = $this->container->query(
-			'PreviewController'
-		);
-
-		$this->assertTrue($controller instanceof PreviewController);
-	}
-
-	public function testPreviewPublicController() {
-		$controller = $this->container->query(
-			'PreviewPublicController'
-		);
-
-		$this->assertTrue($controller instanceof PreviewPublicController);
+		$this->assertTrue($service instanceof $expectedClass);
 	}
 
 	public function testToken() {
