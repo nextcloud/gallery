@@ -108,7 +108,8 @@ class PreviewController extends Controller {
 		$this->eventSource->close();
 
 		$this->exitController();
-	}
+		// @codeCoverageIgnoreStart
+	} // @codeCoverageIgnoreEnd
 
 	/**
 	 * @NoAdminRequired
