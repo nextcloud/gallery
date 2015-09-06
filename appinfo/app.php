@@ -42,12 +42,13 @@ $c->query('OCP\INavigationManager')
 
 			  // The icon that will be shown in the navigation
 			  // This file needs to exist in img/
+			  // @codeCoverageIgnoreStart
 			  'icon'  => $urlGenerator->imagePath($appName, 'app.svg'),
 
 			  // The title of the application. This will be used in the
 			  // navigation or on the settings page
 			  'name'  => $l10n->t('Gallery')
-		  ];
+		  ];// @codeCoverageIgnoreEnd
 	  }
   );
 
@@ -65,6 +66,7 @@ if (isset($request->server['REQUEST_URI'])) {
 	if (preg_match('%index.php/apps/files(/.*)?%', $url)
 		|| preg_match('%index.php/s/(/.*)?%', $url)
 	) {
+		// @codeCoverageIgnoreStart
 		/**
 		 * Scripts for the Files app
 		 */
@@ -82,4 +84,4 @@ if (isset($request->server['REQUEST_URI'])) {
 		Util::addStyle($appName, 'slideshow');
 		Util::addStyle($appName, 'gallerybutton');
 	}
-}
+}// @codeCoverageIgnoreEnd
