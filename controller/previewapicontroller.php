@@ -103,7 +103,8 @@ class PreviewApiController extends ApiController {
 		$this->eventSource->close();
 
 		$this->exitController();
-	}
+		// @codeCoverageIgnoreStart
+	} // @codeCoverageIgnoreEnd
 
 	/**
 	 * @NoAdminRequired
