@@ -33,6 +33,7 @@ class DownloadService extends Service {
 	 * @return false|array
 	 */
 	public function downloadFile($file, $base64Encode = false) {
+		$download = [];
 		try {
 			$this->logger->debug(
 				"[DownloadService] File to Download: {name}", ['name' => $file->getName()]
@@ -46,7 +47,7 @@ class DownloadService extends Service {
 				$download['preview'] = $this->encode($download['preview']);
 			}
 		} catch (\Exception $exception) {
-			$download = false;
+			$this->logAndThrowNotFound('There was a problem accessing the file');
 		}
 
 		return $download;

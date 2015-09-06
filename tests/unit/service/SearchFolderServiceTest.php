@@ -9,15 +9,15 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\Gallery\Service;
-include_once 'ServiceTest.php';
 
 /**
  * Class SearchFolderServiceTest
  *
  * @package OCA\Gallery\Controller
  */
-class SearchFolderServiceTest extends ServiceTest {
+class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var SearchFolderService */
 	protected $service;

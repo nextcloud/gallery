@@ -13,6 +13,6 @@
 namespace OCA\Gallery\Service;
 
 /**
- * Thrown when the service cannot reply to a request
+ * Thrown when the service cannot find a node
  */
 class NotFoundServiceException extends ServiceException {}

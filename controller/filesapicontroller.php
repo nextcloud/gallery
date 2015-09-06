@@ -18,13 +18,13 @@ use OCP\ILogger;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Http\ImageResponse;
 use OCA\Gallery\Service\SearchFolderService;
 use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\SearchMediaService;
 use OCA\Gallery\Service\DownloadService;
+use OCA\Gallery\Service\ServiceException;
 
 /**
  * Class FilesApiController
@@ -34,7 +34,7 @@ use OCA\Gallery\Service\DownloadService;
 class FilesApiController extends ApiController {
 
 	use Files;
-	use JsonHttpError;
+	use HttpError;
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
@@ -93,7 +93,7 @@ class FilesApiController extends ApiController {
 		try {
 			return $this->getFiles($location, $featuresArray, $etag, $mediaTypesArray);
 		} catch (\Exception $exception) {
-			return $this->error($exception);
+			return $this->jsonError($exception);
 		}
 	}
 
@@ -107,21 +107,13 @@ class FilesApiController extends ApiController {
 	 * @param int $fileId the ID of the file we want to download
 	 * @param string|null $filename
 	 *
-	 * @return ImageResponse|RedirectResponse
+	 * @return ImageResponse
 	 */
 	public function download($fileId, $filename = null) {
-		$download = $this->getDownload($fileId, $filename);
-
-		if (!$download) {
-			$url = $this->urlGenerator->linkToRoute(
-				$this->appName . '.page.error_page',
-				[
-					'message' => 'There was a problem accessing the file',
-					'code'    => Http::STATUS_NOT_FOUND
-				]
-			);
-
-			return new RedirectResponse($url);
+		try {
+			$download = $this->getDownload($fileId, $filename);
+		} catch (ServiceException $exception) {
+			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
 		}
 
 		return new ImageResponse($download);
