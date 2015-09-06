@@ -27,13 +27,15 @@ use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
 use OCA\GalleryPlus\Utility\EventSource;
+use OCA\GalleryPlus\Service\NotFoundServiceException;
+use OCA\GalleryPlus\Service\InternalServerErrorServiceException;
 
 /**
  * Class PreviewControllerTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class PreviewControllerTest extends \Test\TestCase {
+class PreviewControllerTest extends \Test\GalleryUnitTest {
 
 	/** @var IAppContainer */
 	protected $container;
@@ -180,8 +182,8 @@ class PreviewControllerTest extends \Test\TestCase {
 		$this->mockGetThumbnailSpecs($square, $scale, $thumbnailSpecs);
 
 		/** @type File $file */
-		list($file) = $this->mockGetData(
-			$thumbnailId, $width, $height, $aspect, $animatedPreview, $base64Encode, false
+		list($file) = $this->mockGetDataWithBrokenPreview(
+			$thumbnailId, $width, $height, $aspect, $animatedPreview, $base64Encode
 		);
 
 		list($preview, $status) = self::invokePrivate(
@@ -201,6 +203,7 @@ class PreviewControllerTest extends \Test\TestCase {
 
 		/** @type File $file */
 		$file = $this->mockGetDataWithBrokenSetup($thumbnailId, $animatedPreview);
+		$this->mockIsPreviewRequiredThrowsException($file, $animatedPreview);
 
 		list($preview, $status) = self::invokePrivate(
 			$this->controller, 'getThumbnail', [$thumbnailId, $square, $scale]
@@ -236,13 +239,14 @@ class PreviewControllerTest extends \Test\TestCase {
 		$width = 1024;
 		$height = 768;
 
-		$this->mockGetResourceFromId($fileId, false);
+		$exception = new NotFoundServiceException('Not found');
+		$this->mockGetResourceFromIdWithBadFile($this->previewService, $fileId, $exception);
 
 		$errorResponse = new JSONResponse(
 			[
 				'message' => "I'm truly sorry, but we were unable to generate a preview for this file",
 				'success' => false
-			], Http::STATUS_INTERNAL_SERVER_ERROR
+			], Http::STATUS_NOT_FOUND
 		);
 
 		$response = $this->controller->getPreview($fileId, $width, $height);
@@ -260,26 +264,46 @@ class PreviewControllerTest extends \Test\TestCase {
 	 * @param bool $keepAspect
 	 * @param bool $animatedPreview
 	 * @param bool $base64Encode
-	 * @param bool $preview
 	 *
 	 * @return array
 	 */
 	private function mockGetData(
-		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true,
-		$base64Encode = false, $preview = true
+		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
 	) {
-		$file = $this->mockFile($fileId);
-		$this->mockGetResourceFromId($fileId, $file);
+		$file = $this->mockJpgFile($fileId);
+		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
 
-		if ($preview) {
-			$previewData = $this->mockGetPreviewData(
-				$file, $width, $height, $keepAspect, $animatedPreview, $base64Encode
-			);
-		} else {
-			$previewData = $this->mockBrokenPreviewData($file);
-		}
+		$this->mockIsPreviewRequired($file, $animatedPreview, true);
+		$previewData = $this->mockPreviewData($file);
+
+		$this->mockCreatePreview($file, $width, $height, $keepAspect, $base64Encode, $previewData);
 
 		return [$file, $previewData];
+	}
+
+	/**
+	 * Mocks Preview->getData
+	 *
+	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $keepAspect
+	 * @param bool $animatedPreview
+	 * @param bool $base64Encode
+	 *
+	 * @return array
+	 */
+	private function mockGetDataWithBrokenPreview(
+		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
+	) {
+		$file = $this->mockJpgFile($fileId);
+		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
+
+		$this->mockIsPreviewRequired($file, $animatedPreview, true);
+
+		$this->mockCreatePreviewThrowsException($file, $width, $height, $keepAspect, $base64Encode);
+
+		return [$file];
 	}
 
 	/**
@@ -289,75 +313,14 @@ class PreviewControllerTest extends \Test\TestCase {
 	 * @return object|\PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function mockGetDataWithBrokenSetup($fileId, $animatedPreview) {
-		$file = $this->mockFile($fileId);
-		$this->mockGetResourceFromId($fileId, $file);
+		$file = $this->mockJpgFile($fileId);
+		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
 
 		$this->mockIsPreviewRequiredThrowsException($file, $animatedPreview);
 
 		return $file;
 	}
 
-	/**
-	 * Mocks Preview->getPreviewData
-	 *
-	 * @param \PHPUnit_Framework_MockObject_MockObject $file
-	 * @param int $width
-	 * @param int $height
-	 * @param bool $keepAspect
-	 * @param bool $animatedPreview
-	 * @param bool $base64Encode
-	 *
-	 * @return array
-	 */
-	private function mockGetPreviewData(
-		$file, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
-	) {
-		$this->mockIsPreviewRequired($file, $animatedPreview, true);
-		$previewData = $this->mockPreviewData($file);
-
-		$this->mockCreatePreview($file, $width, $height, $keepAspect, $base64Encode, $previewData);
-
-		return $previewData;
-	}
-
-	/**
-	 * Mocks OCP\Files\File
-	 *
-	 * Contains a JPG
-	 *
-	 * @param $fileId
-	 *
-	 * @return object|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function mockFile($fileId) {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getId')
-			 ->willReturn($fileId);
-		$file->method('getContent')
-			 ->willReturn(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
-		$file->method('getName')
-			 ->willReturn('testimage.jpg');
-		$file->method('getMimeType')
-			 ->willReturn('image/jpeg');
-
-		return $file;
-	}
-
-	/**
-	 * Mocks PreviewService->getResourceFromId
-	 * return $file;
-	 *
-	 * @param int $fileId
-	 * @param object|\PHPUnit_Framework_MockObject_MockObject|bool $answer
-	 */
-	private function mockGetResourceFromId($fileId, $answer) {
-		$this->previewService->expects($this->once())
-							 ->method('getResourceFromId')
-							 ->with($this->equalTo($fileId))
-							 ->willReturn($answer);
-	}
 
 	/**
 	 * @param object|\PHPUnit_Framework_MockObject_MockObject $file
@@ -379,14 +342,14 @@ class PreviewControllerTest extends \Test\TestCase {
 	 * @param bool $animatedPreview
 	 */
 	private function mockIsPreviewRequiredThrowsException($file, $animatedPreview) {
-		$exception = new \Exception('Broken');
+		$exception = new InternalServerErrorServiceException('Broken');
 		$this->previewService->expects($this->once())
 							 ->method('isPreviewRequired')
 							 ->with(
 								 $this->equalTo($file),
 								 $this->equalTo($animatedPreview)
 							 )
-							 ->willReturn($exception);
+							 ->willThrowException($exception);
 	}
 
 	/**
@@ -419,26 +382,12 @@ class PreviewControllerTest extends \Test\TestCase {
 	}
 
 	/**
-	 * @param object|\PHPUnit_Framework_MockObject_MockObject $file
-	 *
-	 * @return array<string,mixed>
-	 */
-	private function mockBrokenPreviewData($file) {
-		$preview = [
-			'preview'  => null,
-			'mimetype' => $file->getMimeType()
-		];
-
-		return $preview;
-	}
-
-	/**
-	 * @param $file
-	 * @param $width
-	 * @param $height
-	 * @param $keepAspect
-	 * @param $base64Encode
-	 * @param $preview
+	 * @param File $file
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $keepAspect
+	 * @param bool $base64Encode
+	 * @param array $preview
 	 */
 	private function mockCreatePreview($file, $width, $height, $keepAspect, $base64Encode, $preview
 	) {
@@ -454,6 +403,34 @@ class PreviewControllerTest extends \Test\TestCase {
 							 ->willReturn($preview);
 	}
 
+	/**
+	 * @param File $file
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $keepAspect
+	 * @param bool $base64Encode
+	 */
+	private function mockCreatePreviewThrowsException(
+		$file, $width, $height, $keepAspect, $base64Encode
+	) {
+		$exception = new InternalServerErrorServiceException('Encryption ate your file');
+		$this->previewService->expects($this->once())
+							 ->method('createPreview')
+							 ->with(
+								 $this->equalTo($file),
+								 $this->equalTo($width),
+								 $this->equalTo($height),
+								 $this->equalTo($keepAspect),
+								 $this->equalTo($base64Encode)
+							 )
+							 ->willthrowException($exception);
+	}
+
+	/**
+	 * @param $event
+	 * @param $data
+	 * @param $message
+	 */
 	private function mockEventSourceSend($event, $data, $message) {
 		$this->eventSource->expects($this->once())
 						  ->method('send')
@@ -465,6 +442,11 @@ class PreviewControllerTest extends \Test\TestCase {
 
 	}
 
+	/**
+	 * @param $square
+	 * @param $scale
+	 * @param $array
+	 */
 	private function mockGetThumbnailSpecs($square, $scale, $array) {
 		$this->thumbnailService->expects($this->once())
 							   ->method('getThumbnailSpecs')
@@ -476,6 +458,11 @@ class PreviewControllerTest extends \Test\TestCase {
 
 	}
 
+	/**
+	 * @param $square
+	 * @param $base64Encode
+	 * @param $base64EncodedPreview
+	 */
 	private function mockPreviewValidator($square, $base64Encode, $base64EncodedPreview) {
 		$this->previewService->expects($this->once())
 							 ->method('previewValidator')

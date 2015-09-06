@@ -16,13 +16,14 @@ use OCP\AppFramework\Http;
 use OCA\GalleryPlus\Environment\NotFoundEnvException;
 use OCA\GalleryPlus\Service\NotFoundServiceException;
 use OCA\GalleryPlus\Service\ForbiddenServiceException;
+use OCA\GalleryPlus\Service\InternalServerErrorServiceException;
 
 /**
- * Class JsonHttpErrorTest
+ * Class HttpErrorTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class JsonHttpErrorTest extends \Test\TestCase {
+class HttpErrorTest extends \Test\TestCase {
 
 	/**
 	 * @dataProvider providesExceptionData
@@ -32,10 +33,12 @@ class JsonHttpErrorTest extends \Test\TestCase {
 	 * @param String $status
 	 */
 	public function testError($exception, $message, $status) {
-		$jsonHttpError = $this->getMockForTrait('\OCA\GalleryPlus\Controller\JsonHttpError');
-		$response = $jsonHttpError->error($exception);
+		$httpError = $this->getMockForTrait('\OCA\GalleryPlus\Controller\HttpError');
+		$response = $httpError->jsonError($exception);
 
-		$this->assertEquals(['message' => $message, 'success' => false], $response->getData());
+		$this->assertEquals(
+			['message' => $message . ' (' . $status . ')', 'success' => false], $response->getData()
+		);
 		$this->assertEquals($status, $response->getStatus());
 	}
 
@@ -55,11 +58,20 @@ class JsonHttpErrorTest extends \Test\TestCase {
 		$forbiddenServiceException = new ForbiddenServiceException($forbiddenServiceMessage);
 		$forbiddenServiceStatus = Http::STATUS_FORBIDDEN;
 
+		$errorServiceMessage = 'Broken service';
+		$errorServiceException = new InternalServerErrorServiceException($errorServiceMessage);
+		$errorServiceStatus = Http::STATUS_INTERNAL_SERVER_ERROR;
+
+		$coreServiceMessage = 'Broken core';
+		$coreServiceException = new \Exception($coreServiceMessage);
+		$coreServiceStatus = Http::STATUS_INTERNAL_SERVER_ERROR;
+
 		return [
 			[$notFoundEnvException, $notFoundEnvMessage, $notFoundEnvStatus],
 			[$notFoundServiceException, $notFoundServiceMessage, $notFoundServiceStatus],
 			[$forbiddenServiceException, $forbiddenServiceMessage, $forbiddenServiceStatus],
-
+			[$errorServiceException, $errorServiceMessage, $errorServiceStatus],
+			[$coreServiceException, $coreServiceMessage, $coreServiceStatus]
 		];
 	}
 }

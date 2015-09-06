@@ -9,15 +9,15 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\GalleryPlus\Service;
-include_once 'ServiceTest.php';
 
 /**
  * Class SearchMediaServiceTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class SearchMediaServiceTest extends ServiceTest {
+class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var SearchMediaService */
 	protected $service;
@@ -154,7 +154,7 @@ class SearchMediaServiceTest extends ServiceTest {
 		$storageId = 'home::user';
 		$isReadable = false;
 		$file = $this->mockFile($fileId, $storageId, $isReadable);
-		$this->mockGetResourceFromId($fileId, $file);
+		$this->mockGetResourceFromId($this->environment, $fileId, $file);
 
 		$this->service->getResourceFromId($fileId);
 	}

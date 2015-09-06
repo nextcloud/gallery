@@ -16,8 +16,11 @@ namespace OCA\GalleryPlus\Controller;
 
 use Exception;
 
+use OCP\IURLGenerator;
+
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Environment\NotFoundEnvException;
 use OCA\GalleryPlus\Service\NotFoundServiceException;
@@ -29,17 +32,57 @@ use OCA\GalleryPlus\Service\ForbiddenServiceException;
  *
  * @package OCA\GalleryPlus\Controller
  */
-trait JsonHttpError {
+trait HttpError {
 
 	/**
-	 * @param \Exception $exception the message that is returned taken from the exception
+	 * @param \Exception $exception
 	 *
 	 * @return JSONResponse
 	 */
-	public function error(Exception $exception) {
+	public function jsonError(Exception $exception) {
 		$message = $exception->getMessage();
-		$code = Http::STATUS_INTERNAL_SERVER_ERROR;
+		$code = $this->getHttpStatusCode($exception);
 
+		return new JSONResponse(
+			[
+				'message' => $message . ' (' . $code . ')',
+				'success' => false
+			],
+			$code
+		);
+	}
+
+	/**
+	 * @param IURLGenerator $urlGenerator
+	 * @param string $appName
+	 * @param \Exception $exception
+	 *
+	 * @return RedirectResponse
+	 */
+	public function htmlError($urlGenerator, $appName, Exception $exception) {
+		$message = $exception->getMessage();
+		$code = $this->getHttpStatusCode($exception);
+
+		$url = $urlGenerator->linkToRoute(
+			$appName . '.page.error_page',
+			[
+				'message' => $message,
+				'code'    => $code
+			]
+		);
+
+		return new RedirectResponse($url);
+	}
+
+	/**
+	 * Returns an error array
+	 *
+	 * @param $exception
+	 *
+	 * @return array<null|int|string>
+	 */
+	public function getHttpStatusCode($exception) {
+		$code = Http::STATUS_INTERNAL_SERVER_ERROR;
 		if ($exception instanceof NotFoundServiceException
 			|| $exception instanceof NotFoundEnvException
 		) {
@@ -49,12 +92,6 @@ trait JsonHttpError {
 			$code = Http::STATUS_FORBIDDEN;
 		}
 
-		return new JSONResponse(
-			[
-				'message' => $message,
-				'success' => false
-			],
-			$code
-		);
+		return $code;
 	}
 }

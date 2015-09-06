@@ -28,13 +28,14 @@ use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Service\DownloadService;
+use OCA\GalleryPlus\Service\NotFoundServiceException;
 
 /**
  * Class FilesControllerTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class FilesControllerTest extends \Test\TestCase {
+class FilesControllerTest extends \Test\GalleryUnitTest {
 
 	use PathManipulation;
 
@@ -124,7 +125,8 @@ class FilesControllerTest extends \Test\TestCase {
 		$fileId = 99999;
 		$filename = null;
 
-		$this->mockGetResourceFromId($fileId, false);
+		$exception = new NotFoundServiceException('Not found');
+		$this->mockGetResourceFromIdWithBadFile($this->downloadService, $fileId, $exception);
 
 		$redirect = new RedirectResponse(
 			$this->urlGenerator->linkToRoute($this->appName . '.page.error_page')
@@ -186,9 +188,10 @@ class FilesControllerTest extends \Test\TestCase {
 									  [$features]
 								  )
 								  ->willThrowException(new ServiceException($exceptionMessage));
-
+		// Default status code when something breaks
+		$status = Http::STATUS_INTERNAL_SERVER_ERROR;
 		$errorMessage = [
-			'message' => $exceptionMessage,
+			'message' => $exceptionMessage . ' (' . $status . ')',
 			'success' => false
 		];
 		/** @type JSONResponse $response */
@@ -244,51 +247,13 @@ class FilesControllerTest extends \Test\TestCase {
 	private function mockGetDownload($fileId, $filename) {
 		$file = $this->mockFile($fileId);
 
-		$this->mockGetResourceFromId($fileId, $file);
+		$this->mockGetResourceFromId($this->downloadService, $fileId, $file);
 
 		$download = $this->mockDownloadData($file, $filename);
 
 		$this->mockDownloadFile($file, $download);
 
 		return $download;
-	}
-
-	/**
-	 * Mocks OCP\Files\File
-	 *
-	 * Contains a JPG
-	 *
-	 * @param int $fileId
-	 *
-	 * @return object|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function mockFile($fileId) {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getId')
-			 ->willReturn($fileId);
-		$file->method('getContent')
-			 ->willReturn(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
-		$file->method('getName')
-			 ->willReturn('testimage.jpg');
-		$file->method('getMimeType')
-			 ->willReturn('image/jpeg');
-
-		return $file;
-	}
-
-	/**
-	 * Mocks DownloadService->getResourceFromId
-	 *
-	 * @param int $fileId
-	 * @param object|\PHPUnit_Framework_MockObject_MockObject|bool $answer
-	 */
-	private function mockGetResourceFromId($fileId, $answer) {
-		$this->downloadService->expects($this->once())
-							  ->method('getResourceFromId')
-							  ->with($this->equalTo($fileId))
-							  ->willReturn($answer);
 	}
 
 	/**

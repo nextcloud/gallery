@@ -29,7 +29,7 @@ use OCA\GalleryPlus\Service\PreviewService;
 class ConfigApiController extends ApiController {
 
 	use Config;
-	use JsonHttpError;
+	use HttpError;
 
 	/**
 	 * Constructor
@@ -69,7 +69,7 @@ class ConfigApiController extends ApiController {
 		try {
 			return $this->getConfig($extramediatypes);
 		} catch (\Exception $exception) {
-			return $this->error($exception);
+			return $this->jsonError($exception);
 		}
 	}
 

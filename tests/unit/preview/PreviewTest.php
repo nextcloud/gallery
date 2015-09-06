@@ -110,6 +110,14 @@ class PreviewTest extends \Test\TestCase {
 
 	/**
 	 * @dataProvider providesPreviewValidatorData
+	 *
+	 * @param int $maxWidth
+	 * @param int $maxHeight
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $square
+	 * @param int $expectedWidth
+	 * @param int $expectedHeight
 	 */
 	public function testPreviewValidator(
 		$maxWidth, $maxHeight, $width, $height, $square, $expectedWidth, $expectedHeight
@@ -135,15 +143,16 @@ class PreviewTest extends \Test\TestCase {
 		);
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testGetPreviewFromCoreWithBrokenSystem() {
 		$keepAspect = true; // Doesn't matter
 		$exception = new \Exception('Encryption ate your file');
 		$preview = $this->mockGetPreviewWithBrokenSetup($exception);
 		self::invokePrivate($this->previewManager, 'preview', [$preview]);
 
-		$response = self::invokePrivate($this->previewManager, 'getPreviewFromCore', [$keepAspect]);
-
-		$this->assertNull($response);
+		self::invokePrivate($this->previewManager, 'getPreviewFromCore', [$keepAspect]);
 	}
 
 	protected function mockFile($fileId) {
