@@ -28,9 +28,7 @@ class PreviewService extends Service {
 
 	use Base64Encode;
 
-	/**
-	 * @var Preview
-	 */
+	/** @var Preview */
 	private $previewManager;
 	/**
 	 * @todo This hard-coded array could be replaced by admin settings
@@ -104,6 +102,7 @@ class PreviewService extends Service {
 			}
 		}
 		$supportedMimes = $this->addSvgSupport($supportedMimes, $nativeSvgSupport);
+
 		//$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
 
 		return $supportedMimes;
@@ -160,16 +159,19 @@ class PreviewService extends Service {
 	public function createPreview(
 		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
 	) {
-		$userId = $this->environment->getUserId();
-		$imagePathFromFolder = $this->environment->getPathFromUserFolder($file);
-
-		$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
-
-		$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
-		if ($preview) {
-			if ($base64Encode) {
+		$preview = false;
+		try {
+			$userId = $this->environment->getUserId();
+			$imagePathFromFolder = $this->environment->getPathFromUserFolder($file);
+			$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
+			$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
+			if ($preview && $base64Encode) {
 				$preview['preview'] = $this->encode($preview['preview']);
 			}
+
+			return $preview;
+		} catch (\Exception $exception) {
+			$this->logAndThrowInternalError('Preview generation has failed');
 		}
 
 		return $preview;
@@ -185,9 +187,14 @@ class PreviewService extends Service {
 	 * @return \OC_Image|string
 	 */
 	public function previewValidator($square, $base64Encode) {
-		$preview = $this->previewManager->previewValidator($square);
-		if ($base64Encode) {
-			$preview = $this->encode($preview);
+		$preview = false;
+		try {
+			$preview = $this->previewManager->previewValidator($square);
+			if ($base64Encode) {
+				$preview = $this->encode($preview);
+			}
+		} catch (\Exception $exception) {
+			$this->logAndThrowInternalError('There was an error while trying to fix the preview');
 		}
 
 		return $preview;
@@ -255,9 +262,10 @@ class PreviewService extends Service {
 	 * @return bool
 	 */
 	private function isGifPreviewRequired($file, $animatedPreview) {
+		$gifSupport = $this->isMimeSupported('image/gif');
 		$animatedGif = $this->isGifAnimated($file);
 
-		if ($animatedPreview && $animatedGif) {
+		if (!$gifSupport || ($animatedGif && $animatedPreview)) {
 			return false;
 		}
 
@@ -283,16 +291,19 @@ class PreviewService extends Service {
 	 * @return bool
 	 */
 	private function isGifAnimated($file) {
-		$fileHandle = $file->fopen('rb');
 		$count = 0;
-		while (!feof($fileHandle) && $count < 2) {
-			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-			$count += preg_match_all(
-				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-			);
+		try {
+			$fileHandle = $file->fopen('rb');
+			while (!feof($fileHandle) && $count < 2) {
+				$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+				$count += preg_match_all(
+					'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
+				);
+			}
+			fclose($fileHandle);
+		} catch (\Exception $exception) {
+			$this->logAndThrowInternalError('Something went wrong when trying to read a GIF file');
 		}
-
-		fclose($fileHandle);
 
 		return $count > 1;
 	}

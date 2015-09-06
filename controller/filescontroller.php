@@ -18,13 +18,13 @@ use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Service\DownloadService;
+use OCA\GalleryPlus\Service\ServiceException;
 
 /**
  * Class FilesController
@@ -34,7 +34,7 @@ use OCA\GalleryPlus\Service\DownloadService;
 class FilesController extends Controller {
 
 	use Files;
-	use JsonHttpError;
+	use HttpError;
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
@@ -96,7 +96,7 @@ class FilesController extends Controller {
 		try {
 			return $this->getFiles($location, $featuresArray, $etag, $mediaTypesArray);
 		} catch (\Exception $exception) {
-			return $this->error($exception);
+			return $this->jsonError($exception);
 		}
 	}
 
@@ -108,21 +108,13 @@ class FilesController extends Controller {
 	 * @param int $fileId the ID of the file we want to download
 	 * @param string|null $filename
 	 *
-	 * @return ImageResponse|RedirectResponse
+	 * @return ImageResponse
 	 */
 	public function download($fileId, $filename = null) {
-		$download = $this->getDownload($fileId, $filename);
-
-		if (!$download) {
-			$url = $this->urlGenerator->linkToRoute(
-				$this->appName . '.page.error_page',
-				[
-					'message' => 'There was a problem accessing the file',
-					'code'    => Http::STATUS_NOT_FOUND
-				]
-			);
-
-			return new RedirectResponse($url);
+		try {
+			$download = $this->getDownload($fileId, $filename);
+		} catch (ServiceException $exception) {
+			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
 		}
 
 		return new ImageResponse($download);
