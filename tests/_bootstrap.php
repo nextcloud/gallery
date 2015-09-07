@@ -18,7 +18,11 @@ require_once __DIR__ . '/../../../lib/base.php';
 Autoload::addNamespace('Test', '/../../../tests/lib');
 
 
-// load minimum set of apps
-OC_App::loadApps(array('authentication'));
-OC_App::loadApps(array('filesystem', 'logging'));
+// Load minimum set of apps
+OC_App::loadApps(['authentication']);
+OC_App::loadApps(['filesystem', 'logging']);
+
+// Load this app
+OC_App::loadApp('gallery');
+
 OC_Hook::clear();
