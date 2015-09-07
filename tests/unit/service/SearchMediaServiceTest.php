@@ -78,10 +78,10 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		], $isReadable, $mounted, $mount, $query, $queryResult
 		);
 		$folder3 = $this->mockFolder(
-			'home::user', 10101, [$folder1], $isReadable, $mounted, $mount, $query, $queryResult
+			'home::user', 101010, [$folder1], $isReadable, $mounted, $mount, $query, $queryResult
 		);
 		$folder4 = $this->mockFolder(
-			'home::user', 10101, [$folder1, $folder2], $isReadable, $mounted, $mount, $query,
+			'home::user', 101010, [$folder1, $folder2], $isReadable, $mounted, $mount, $query,
 			$queryResult
 		);
 		$folder5 = $this->mockFolder(
@@ -90,6 +90,20 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			$this->mockJpgFile(998876),
 			$this->mockNoMediaFile(998875)
 		], $isReadable, $mounted, $mount, '.nomedia', true
+		);
+		$folder6 = $this->mockFolder(
+			'webdav::user@domain.com/dav', 545454, [
+			$this->mockJpgFile(11111)
+		], $isReadable, true, $mount, $query, $queryResult
+		);
+		$folder7 = $this->mockFolder(
+			'home::user', 545454, [
+			$this->mockJpgFile(1),
+			$this->mockJpgFile(2),
+			$this->mockJpgFile(3),
+			$this->mockJpgFile(4),
+			$this->mockJpgFile(5),
+		], $isReadable, $mounted, $mount, $query, $queryResult
 		);
 
 		// 2 folders and 3 files, everything is reachable
@@ -125,6 +139,24 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			$this->mockJpgFile(99999)
 
 		];
+		// 1 standard folder, 1 external share and 3 files
+		$config5 = [
+			$folder1,
+			$folder6,
+			$this->mockJpgFile(77777),
+			$this->mockJpgFile(88888),
+			$this->mockJpgFile(99999)
+
+		];
+		// 1 standard folder (3), 1 deep folder and 3 files
+		$config6 = [
+			$folder1,
+			$folder7,
+			$this->mockJpgFile(77777),
+			$this->mockJpgFile(88888),
+			$this->mockJpgFile(99999)
+
+		];
 		$topFolder1 = $this->mockFolder(
 			'home::user', 909090, $config1, $isReadable, $mounted, $mount, $query, $queryResult
 		);
@@ -137,12 +169,20 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		$topFolder4 = $this->mockFolder(
 			'home::user', 909090, $config4, $isReadable, $mounted, $mount, $query, $queryResult
 		);
+		$topFolder5 = $this->mockFolder(
+			'home::user', 909090, $config5, $isReadable, $mounted, $mount, $query, $queryResult
+		);
+		$topFolder6 = $this->mockFolder(
+			'home::user', 909090, $config6, $isReadable, $mounted, $mount, $query, $queryResult
+		);
 
 		return [
 			[$topFolder1, 9],
 			[$topFolder2, 9],
 			[$topFolder3, 6],
-			[$topFolder4, 3]
+			[$topFolder4, 3],
+			[$topFolder5, 6],
+			[$topFolder6, 10]
 		];
 	}
 
