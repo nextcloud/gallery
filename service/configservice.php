@@ -97,7 +97,6 @@ class ConfigService extends FilesService {
 	 * @param array $features
 	 *
 	 * @return array|null
-	 *
 	 * @throws ForbiddenServiceException
 	 */
 	public function getAlbumInfo($folderNode, $folderPathFromRoot, $features) {
@@ -105,7 +104,7 @@ class ConfigService extends FilesService {
 		list ($albumConfig, $privateAlbum) =
 			$this->getAlbumConfig($folderNode, $this->privacyChecker, $this->configName);
 		if ($privateAlbum) {
-			$this->logAndThrowForbidden('Album is private or unavailable');
+			throw new ForbiddenServiceException('Album is private or unavailable');
 		}
 		$albumInfo = [
 			'path'        => $folderPathFromRoot,

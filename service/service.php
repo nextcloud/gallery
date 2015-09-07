@@ -70,52 +70,13 @@ abstract class Service {
 
 			// Making extra sure that we can actually do something with the file
 			if (!$node->getMimetype() || !$node->isReadable()) {
-				$this->logAndThrowNotFound("Can't access the file");
+				throw new NotFoundServiceException("Can't access the file");
 			}
 		} catch (\Exception $exception) {
-			$this->logAndThrowNotFound($exception->getMessage());
+			throw new NotFoundServiceException($exception->getMessage());
 		}
 
 		return $node;
-	}
-
-	/**
-	 * Logs the error and raises a "Not found" type exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws NotFoundServiceException
-	 */
-	protected function logAndThrowNotFound($message) {
-		$this->logger->error($message);
-
-		throw new NotFoundServiceException($message);
-	}
-
-	/**
-	 * Logs the error and raises a "Forbidden" type exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws ForbiddenServiceException
-	 */
-	protected function logAndThrowForbidden($message) {
-		$this->logger->error($message);
-
-		throw new ForbiddenServiceException($message);
-	}
-
-	/**
-	 * Logs the error and raises a "Internal Server Error" type exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws InternalServerErrorServiceException
-	 */
-	protected function logAndThrowInternalError($message) {
-		$this->logger->error($message);
-
-		throw new InternalServerErrorServiceException($message);
 	}
 
 }
