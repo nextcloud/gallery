@@ -59,12 +59,10 @@ abstract class Service {
 	 *
 	 * @param int $nodeId ID of the resource to locate
 	 *
-	 * @return Node|null
-	 *
+	 * @return Node
 	 * @throws NotFoundServiceException
 	 */
 	public function getResourceFromId($nodeId) {
-		$node = null;
 		try {
 			$node = $this->environment->getResourceFromId($nodeId);
 
@@ -72,11 +70,11 @@ abstract class Service {
 			if (!$node->getMimetype() || !$node->isReadable()) {
 				throw new NotFoundServiceException("Can't access the file");
 			}
+
+			return $node;
 		} catch (\Exception $exception) {
 			throw new NotFoundServiceException($exception->getMessage());
 		}
-
-		return $node;
 	}
 
 }
