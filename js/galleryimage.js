@@ -1,4 +1,4 @@
-/* global Gallery, Thumbnails */
+/* global oc_requesttoken, Gallery, Thumbnails */
 (function ($, Gallery, oc_requesttoken) {
 	"use strict";
 	/**
