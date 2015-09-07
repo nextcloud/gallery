@@ -13,6 +13,6 @@
 namespace OCA\GalleryPlus\Environment;
 
 /**
- * Thrown when the service cannot reply to a request
+ * Thrown when the Environment cannot find or access a node
  */
 class NotFoundEnvException extends EnvironmentException {}
