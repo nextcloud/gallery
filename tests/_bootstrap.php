@@ -16,11 +16,14 @@ define('PHPUNIT_RUN', 1);
 
 require_once __DIR__ . '/../../../lib/base.php';
 OC::$loader->addValidRoot(OC::$SERVERROOT . '/tests');
-OC::$loader->addValidRoot(__DIR__ . '/../');
 Autoload::addNamespace('Test', '/../../../tests/lib');
 
 
-// load minimum set of apps
+// Load minimum set of apps
 OC_App::loadApps(['authentication']);
 OC_App::loadApps(['filesystem', 'logging']);
+
+// Load this app
+OC_App::loadApp('gallery');
+
 OC_Hook::clear();
