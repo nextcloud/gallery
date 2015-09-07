@@ -24,14 +24,14 @@ use OCA\GalleryPlus\AppInfo\Application;
  *
  * @package OCA\GalleryPlus\Environment
  */
-class PreviewTest extends \Test\TestCase {
+class PreviewTest extends \Test\GalleryUnitTest {
 
 	/** @var IConfig */
 	private $config;
 	/** @var IPreview */
 	private $corePreviewManager;
 	/** @var ILogger */
-	private $logger;
+	protected $logger;
 	/** @var Preview */
 	private $previewManager;
 
@@ -144,6 +144,32 @@ class PreviewTest extends \Test\TestCase {
 	}
 
 	/**
+	 * Without a defined datadirectory, the thumbnail can't be saved and the original preview will
+	 * be used
+	 *
+	 * Ideally, Image->save should be mocked, but the mock is never called
+	 */
+	public function testPreviewValidatorWhenCannotSaveThumbnail() {
+		$maxWidth = $width = 400;
+		$maxHeight = $height = 200;
+		$width = 500;
+		$height = 100;
+		$square = false;
+		$fileId = 12345;
+		$file = $this->mockFile($fileId);
+		self::invokePrivate($this->previewManager, 'file', [$file]);
+		self::invokePrivate($this->previewManager, 'dims', [[$maxWidth, $maxHeight]]);
+		$preview = $this->mockGetPreview($fileId, $width, $height);
+		self::invokePrivate($this->previewManager, 'preview', [$preview]);
+
+		$response = $this->previewManager->previewValidator($square);
+
+		$this->assertEquals(
+			[$width, $height], [$response->width(), $response->height()]
+		);
+	}
+
+	/**
 	 * @expectedException \Exception
 	 */
 	public function testGetPreviewFromCoreWithBrokenSystem() {
@@ -155,16 +181,13 @@ class PreviewTest extends \Test\TestCase {
 		self::invokePrivate($this->previewManager, 'getPreviewFromCore', [$keepAspect]);
 	}
 
-	protected function mockFile($fileId) {
-		$file = $this->getMockBuilder('OCP\Files\File')
-					 ->disableOriginalConstructor()
-					 ->getMock();
-		$file->method('getId')
-			 ->willReturn($fileId);
-
-		return $file;
-	}
-
+	/**
+	 * @param $fileId
+	 * @param $width
+	 * @param $height
+	 *
+	 * @return object|\PHPUnit_Framework_MockObject_MockObject
+	 */
 	private function mockGetPreview($fileId, $width, $height) {
 		$image = new \OC_Image(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
 		$image->preciseResize($width, $height);
