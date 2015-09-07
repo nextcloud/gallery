@@ -124,15 +124,14 @@ class SearchFolderService extends FilesService {
 	 * @param bool $locationHasChanged
 	 *
 	 * @return array <string,Folder,bool>
-	 *
-	 * @throws NotFoundServiceException
+	 * @throws ForbiddenServiceException|NotFoundServiceException
 	 */
 	private function sendFolder($path, $node, $locationHasChanged) {
 		if (is_null($node)) {
 			// Something very wrong has just happened
-			$this->logAndThrowNotFound('Oh Nooooes!');
+			throw new NotFoundServiceException('Oh Nooooes!');
 		} elseif (!$this->isAllowedAndAvailable($node)) {
-			$this->logAndThrowForbidden('Album is private or unavailable');
+			throw new ForbiddenServiceException('Album is private or unavailable');
 		}
 
 		return [$path, $node, $locationHasChanged];
