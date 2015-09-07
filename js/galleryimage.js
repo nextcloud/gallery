@@ -1,5 +1,5 @@
 /* global Gallery, Thumbnails */
-(function ($, Gallery) {
+(function ($, Gallery, oc_requesttoken) {
 	"use strict";
 	/**
 	 * Creates a new image object to store information about a media file
@@ -88,8 +88,12 @@
 					var url = '#' + encodeURIComponent(image.path);
 
 					if (!image.thumbnail.valid) {
-						url = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
-						url = url + '&download';
+						var params = {
+							c: image.etag,
+							requesttoken: oc_requesttoken
+						};
+						url = Gallery.utility.buildGalleryUrl('files/download', '/' + image.fileId,
+							params);
 					}
 					var a = $('<a/>').addClass('image').attr('href', url).attr('data-path',
 						image.path);
@@ -113,4 +117,4 @@
 	};
 
 	window.GalleryImage = GalleryImage;
-})(jQuery, Gallery);
+})(jQuery, Gallery, oc_requesttoken);
