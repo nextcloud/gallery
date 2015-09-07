@@ -9,15 +9,16 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\Gallery\Service;
-include_once 'ServiceTest.php';
+
 
 /**
  * Class ConfigServiceTest
  *
  * @package OCA\Gallery\Controller
  */
-class ConfigServiceTest extends ServiceTest {
+class ConfigServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var ConfigService */
 	protected $service;

@@ -7,12 +7,12 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2015
  */
 
 namespace OCA\Gallery\Service;
 
 /**
- * Thrown when the service does not have access to a node
+ * Thrown when the service ran into an internal server error
  */
-class ForbiddenServiceException extends ServiceException {}
+class InternalServerErrorServiceException extends ServiceException {}

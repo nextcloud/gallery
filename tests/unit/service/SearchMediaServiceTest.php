@@ -9,15 +9,15 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\Gallery\Service;
-include_once 'ServiceTest.php';
 
 /**
  * Class SearchMediaServiceTest
  *
  * @package OCA\Gallery\Controller
  */
-class SearchMediaServiceTest extends ServiceTest {
+class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var SearchMediaService */
 	protected $service;
@@ -84,6 +84,13 @@ class SearchMediaServiceTest extends ServiceTest {
 			'home::user', 10101, [$folder1, $folder2], $isReadable, $mounted, $mount, $query,
 			$queryResult
 		);
+		$folder5 = $this->mockFolder(
+			'home::user', 987234, [
+			$this->mockJpgFile(998877),
+			$this->mockJpgFile(998876),
+			$this->mockNoMediaFile(998875)
+		], $isReadable, $mounted, $mount, '.nomedia', true
+		);
 
 		// 2 folders and 3 files, everything is reachable
 		$config1 = [
@@ -94,7 +101,7 @@ class SearchMediaServiceTest extends ServiceTest {
 			$this->mockJpgFile(99999)
 
 		];
-		// 2 deepfolder and 3 files. Should return the all the files
+		// 2 deepfolder and 3 files. Should return all the files
 		$config2 = [
 			$folder3,
 			$folder3,
@@ -110,6 +117,14 @@ class SearchMediaServiceTest extends ServiceTest {
 			$this->mockJpgFile(88888),
 			$this->mockJpgFile(99999)
 		];
+		// 1 blacklisted folder and 3 files
+		$config4 = [
+			$folder5,
+			$this->mockJpgFile(77777),
+			$this->mockJpgFile(88888),
+			$this->mockJpgFile(99999)
+
+		];
 		$topFolder1 = $this->mockFolder(
 			'home::user', 909090, $config1, $isReadable, $mounted, $mount, $query, $queryResult
 		);
@@ -119,11 +134,15 @@ class SearchMediaServiceTest extends ServiceTest {
 		$topFolder3 = $this->mockFolder(
 			'home::user', 909090, $config3, $isReadable, $mounted, $mount, $query, $queryResult
 		);
+		$topFolder4 = $this->mockFolder(
+			'home::user', 909090, $config4, $isReadable, $mounted, $mount, $query, $queryResult
+		);
 
 		return [
 			[$topFolder1, 9],
 			[$topFolder2, 9],
-			[$topFolder3, 6]
+			[$topFolder3, 6],
+			[$topFolder4, 3]
 		];
 	}
 
@@ -154,7 +173,7 @@ class SearchMediaServiceTest extends ServiceTest {
 		$storageId = 'home::user';
 		$isReadable = false;
 		$file = $this->mockFile($fileId, $storageId, $isReadable);
-		$this->mockGetResourceFromId($fileId, $file);
+		$this->mockGetResourceFromId($this->environment, $fileId, $file);
 
 		$this->service->getResourceFromId($fileId);
 	}

@@ -24,7 +24,6 @@ use OCA\Gallery\Service\SearchFolderService;
 use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\SearchMediaService;
 use OCA\Gallery\Service\DownloadService;
-use OCA\Gallery\Service\ServiceException;
 
 /**
  * Trait Files
@@ -35,25 +34,15 @@ trait Files {
 
 	use PathManipulation;
 
-	/**
-	 * @var SearchFolderService
-	 */
+	/** @var SearchFolderService */
 	private $searchFolderService;
-	/**
-	 * @var ConfigService
-	 */
+	/** @var ConfigService */
 	private $configService;
-	/**
-	 * @var SearchMediaService
-	 */
+	/** @var SearchMediaService */
 	private $searchMediaService;
-	/**
-	 * @var DownloadService
-	 */
+	/** @var DownloadService */
 	private $downloadService;
-	/**
-	 * @var ILogger
-	 */
+	/** @var ILogger */
 	private $logger;
 
 	/**
@@ -143,37 +132,15 @@ trait Files {
 	 * @return array|false
 	 */
 	private function getDownload($fileId, $filename) {
-		$download = false;
-		$file = $this->getFile($fileId);
-		if ($file) {
-			$download = $this->downloadService->downloadFile($file);
+		/** @type File $file */
+		$file = $this->downloadService->getResourceFromId($fileId);
+		$download = $this->downloadService->downloadFile($file);
+		if (is_null($filename)) {
+			$filename = $file->getName();
 		}
-		if ($download) {
-			if (is_null($filename)) {
-				$filename = $file->getName();
-			}
-			$download['name'] = $filename;
-		}
+		$download['name'] = $filename;
 
 		return $download;
-	}
-
-	/**
-	 * Retrieves the file based on the given ID
-	 *
-	 * @param int $fileId
-	 *
-	 * @return File
-	 */
-	private function getFile($fileId) {
-		try {
-			/** @type File $file */
-			$file = $this->downloadService->getResourceFromId($fileId);
-		} catch (ServiceException $exception) {
-			$file = false;
-		}
-
-		return $file;
 	}
 
 }

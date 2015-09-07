@@ -173,19 +173,18 @@ class Environment {
 	 *
 	 * @return File|Folder
 	 *
-	 * @throws EnvironmentException
+	 * @throws NotFoundEnvException
 	 */
 	public function getNodeFromUserFolder($path) {
-		$node = false;
 		$folder = $this->userFolder;
 		if ($folder === null) {
-			$this->logAndThrowNotFound("Could not access the user's folder");
+			throw new NotFoundEnvException("Could not access the user's folder");
 		} else {
 			try {
 				$node = $folder->get($path);
 			} catch (NotFoundException $exception) {
 				$message = 'Could not find anything at: ' . $exception->getMessage();
-				$this->logAndThrowNotFound($message);
+				throw new NotFoundEnvException($message);
 			}
 		}
 
@@ -199,12 +198,12 @@ class Environment {
 	 *
 	 * @return Node
 	 *
-	 * @throws EnvironmentException
+	 * @throws NotFoundEnvException
 	 */
 	public function getResourceFromId($resourceId) {
 		$resourcesArray = $this->userFolder->getById($resourceId);
 		if ($resourcesArray[0] === null) {
-			$this->logAndThrowNotFound('Could not locate file linked to ID: ' . $resourceId);
+			throw new NotFoundEnvException('Could not locate file linked to ID: ' . $resourceId);
 		}
 
 		return $resourcesArray[0];
@@ -223,17 +222,17 @@ class Environment {
 	 * Returns the virtual root where the user lands after logging in or when following a link
 	 *
 	 * @return Folder
-	 *
-	 * @throws EnvironmentException
+	 * @throws NotFoundEnvException
 	 */
 	public function getVirtualRootFolder() {
 		$rootFolder = $this->userFolder;
 		if (!empty($this->sharedNodeId)) {
 			$node = $this->getSharedNode();
-			if ($node->getType() === 'dir') {
+			$nodeType = $node->getType();
+			if ($nodeType === 'dir') {
 				$rootFolder = $node;
 			} else {
-				$this->logAndThrowNotFound($node->getPath() . ' is not a folder');
+				throw new NotFoundEnvException($node->getPath() . ' is not a folder');
 			}
 		}
 
@@ -253,6 +252,7 @@ class Environment {
 	 * Returns the name of the user sharing files publicly
 	 *
 	 * @return string
+	 * @throws NotFoundEnvException
 	 */
 	public function getDisplayName() {
 		$user = null;
@@ -262,7 +262,7 @@ class Environment {
 			$user = $this->userManager->get($userId);
 		}
 		if ($user === null) {
-			$this->logAndThrowNotFound('Could not find user');
+			throw new NotFoundEnvException('Could not find user');
 		}
 
 		return $user->getDisplayName();
@@ -320,9 +320,10 @@ class Environment {
 	 */
 	public function getPathFromVirtualRoot($node) {
 		$path = $node->getPath();
+		$nodeType = $node->getType();
 
-		if ($node->getType() === 'dir') {
-			// Needed because fromRootToFolder always ends with a slash
+		// Needed because fromRootToFolder always ends with a slash
+		if ($nodeType === 'dir') {
 			$path .= '/';
 		}
 
@@ -368,18 +369,6 @@ class Environment {
 		$origShareRelPath = str_replace($folderPath, '', $fullPath);
 
 		return $origShareRelPath;
-	}
-
-	/**
-	 * Logs the error and raises an exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws NotFoundEnvException
-	 */
-	private function logAndThrowNotFound($message) {
-		$this->logger->error($message . ' (404)');
-		throw new NotFoundEnvException($message);
 	}
 
 }

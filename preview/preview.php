@@ -172,7 +172,6 @@ class Preview {
 	 * @return \OC_Image
 	 */
 	private function getPreviewFromCore($keepAspect) {
-		//$this->logger->debug("[PreviewService] Fetching the preview");
 		list($maxX, $maxY) = $this->dims;
 
 		$this->preview->setMaxX($maxX);
@@ -181,12 +180,8 @@ class Preview {
 		$this->preview->setKeepAspect($keepAspect);
 
 		//$this->logger->debug("[PreviewService] preview {preview}", ['preview' => $this->preview]);
-		try {
-			// Can generate encryption Exceptions...
-			$previewData = $this->preview->getPreview();
-		} catch (\Exception $exception) {
-			return null;
-		}
+
+		$previewData = $this->preview->getPreview();
 
 		return $previewData;
 	}

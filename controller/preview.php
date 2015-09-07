@@ -33,29 +33,19 @@ use OCA\Gallery\Service\DownloadService;
  */
 trait Preview {
 
-	/**
-	 * @var IURLGenerator
-	 */
+	use HttpError;
+
+	/** @var IURLGenerator */
 	private $urlGenerator;
-	/**
-	 * @var ThumbnailService
-	 */
+	/**  @var ThumbnailService */
 	private $thumbnailService;
-	/**
-	 * @var PreviewService
-	 */
+	/**  @var PreviewService */
 	private $previewService;
-	/**
-	 * @var DownloadService
-	 */
+	/** @var DownloadService */
 	private $downloadService;
-	/**
-	 * @var ILogger
-	 */
+	/** @var ILogger */
 	private $logger;
-	/**
-	 * @type bool
-	 */
+	/** @type bool */
 	private $download = false;
 
 	/**
@@ -93,9 +83,7 @@ trait Preview {
 				$fileId, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		if ($preview === null) {
-			if ($status !== Http::STATUS_NOT_FOUND) {
-				$preview = ['preview' => null, 'mimetype' => $file->getMimeType()];
-			}
+			$preview = $this->prepareEmptyThumbnail($file, $status);
 		} else {
 			if ($type === 'preview') {
 				$preview['preview'] =
@@ -123,24 +111,40 @@ trait Preview {
 	private function getData(
 		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
 	) {
+		/** @type File $file */
+		$file = $this->getFile($fileId);
 		try {
-			/** @type File $file */
-			$file = $this->previewService->getResourceFromId($fileId);
 			if (!is_null($file)) {
 				$data = $this->getPreviewData(
 					$file, $animatedPreview, $width, $height, $keepAspect, $base64Encode
 				);
 			} else {
-				// Uncaught problem, should never reach this point...
 				$data = $this->getErrorData(Http::STATUS_NOT_FOUND);
 			}
 		} catch (ServiceException $exception) {
-			$file = null;
 			$data = $this->getExceptionData($exception);
 		}
 		array_unshift($data, $file);
 
 		return $data;
+	}
+
+	/**
+	 * Returns the file of which a preview will be generated
+	 *
+	 * @param $fileId
+	 *
+	 * @return File|null
+	 */
+	private function getFile($fileId) {
+		try {
+			/** @type File $file */
+			$file = $this->previewService->getResourceFromId($fileId);
+		} catch (ServiceException $exception) {
+			$file = null;
+		}
+
+		return $file;
 	}
 
 	/**
@@ -167,9 +171,7 @@ trait Preview {
 			$preview = $this->downloadService->downloadFile($file, $base64Encode);
 		}
 		if (!$preview) {
-			$type = 'error';
-			$status = Http::STATUS_INTERNAL_SERVER_ERROR;
-			$preview = null;
+			list($preview, $status, $type) = $this->getErrorData();
 		}
 
 		return [$preview, $status, $type];
@@ -182,7 +184,7 @@ trait Preview {
 	 *
 	 * @return array<null|int|string>
 	 */
-	private function getErrorData($status) {
+	private function getErrorData($status = Http::STATUS_INTERNAL_SERVER_ERROR) {
 		return [null, $status, 'error'];
 	}
 
@@ -194,13 +196,32 @@ trait Preview {
 	 * @return array<null|int|string>
 	 */
 	private function getExceptionData($exception) {
-		if ($exception instanceof NotFoundServiceException) {
-			$status = Http::STATUS_NOT_FOUND;
-		} else {
-			$status = Http::STATUS_INTERNAL_SERVER_ERROR;
+		$code = $this->getHttpStatusCode($exception);
+
+		return $this->getErrorData($code);
+	}
+
+	/**
+	 * Prepares an empty Thumbnail array to send back
+	 *
+	 * When we can't even get the file information, we send an empty mimeType
+	 *
+	 * @param File $file
+	 * @param int $status
+	 *
+	 * @return array<string,null|string>
+	 */
+	private function prepareEmptyThumbnail($file, $status) {
+		$thumbnail = [];
+		if ($status !== Http::STATUS_NOT_FOUND) {
+			$mimeType = '';
+			if ($file) {
+				$mimeType = $file->getMimeType();
+			}
+			$thumbnail = ['preview' => null, 'mimetype' => $mimeType];
 		}
 
-		return $this->getErrorData($status);
+		return $thumbnail;
 	}
 
 }

@@ -29,7 +29,7 @@ use OCA\Gallery\Service\PreviewService;
 class ConfigController extends Controller {
 
 	use Config;
-	use JsonHttpError;
+	use HttpError;
 
 	/**
 	 * Constructor
@@ -67,7 +67,7 @@ class ConfigController extends Controller {
 		try {
 			return $this->getConfig($extramediatypes);
 		} catch (\Exception $exception) {
-			return $this->error($exception);
+			return $this->jsonError($exception);
 		}
 	}
 

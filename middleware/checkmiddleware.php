@@ -31,21 +31,13 @@ use OCP\AppFramework\Middleware;
  */
 abstract class CheckMiddleware extends Middleware {
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	protected $appName;
-	/**
-	 * @var IRequest
-	 */
+	/** @var IRequest */
 	protected $request;
-	/**
-	 * @var IURLGenerator
-	 */
+	/** @var IURLGenerator */
 	private $urlGenerator;
-	/**
-	 * @var ILogger
-	 */
+	/** @var ILogger */
 	protected $logger;
 
 	/***
@@ -86,19 +78,6 @@ abstract class CheckMiddleware extends Middleware {
 		}
 
 		throw $exception;
-	}
-
-	/**
-	 * Logs the error and raises an exception
-	 *
-	 * @param string $message
-	 * @param int $code
-	 *
-	 * @throws CheckException
-	 */
-	protected function logAndThrow($message, $code) {
-		$this->logger->error($message . ' (' . $code . ')');
-		throw new CheckException($message, $code);
 	}
 
 	/**

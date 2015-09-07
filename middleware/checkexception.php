@@ -13,6 +13,8 @@
 
 namespace OCA\Gallery\Middleware;
 
+use OCP\Util;
+
 /**
  * Thrown when one of the tests in the "check" middlewares fails
  *
@@ -27,6 +29,7 @@ class CheckException extends \Exception {
 	 * @param int $code the HTTP status code
 	 */
 	public function __construct($msg, $code = 0) {
+		Util::writeLog('gallery', 'Exception' . $msg . ' (' . $code . ')', Util::ERROR);
 		parent::__construct($msg, $code);
 	}
 
