@@ -147,8 +147,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn($filename);
 		$file->method('getMimeType')
 			 ->willReturn('image/jpeg');
-
-		return $file;
 	}
 
 	private function mockSvgFileMethods($file) {
@@ -159,8 +157,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn($filename);
 		$file->method('getMimeType')
 			 ->willReturn('image/svg+xml');
-
-		return $file;
 	}
 
 	private function mockAnimatedGifFileMethods($file) {
@@ -173,9 +169,7 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn('image/gif');
 		$file->method('fopen')
 			 ->with('rb')
-			 ->willReturn(fopen(__DIR__ . '/../_data/' . $filename, 'rb'));
-
-		return $file;
+			 ->willReturn(fopen(__DIR__ . '/../_data/' . $filename, 'rb'));;
 	}
 
 	private function mockNoMediaFileMethods($file) {
@@ -186,8 +180,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn($filename);
 		$file->method('getMimeType')
 			 ->willReturn('image/jpeg');
-
-		return $file;
 	}
 
 	protected function mockBadFile() {
