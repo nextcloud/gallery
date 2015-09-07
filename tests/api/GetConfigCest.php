@@ -121,7 +121,7 @@ class GetConfigCest {
 				'features' => [
 					[
 						'error' => [
-							'message' => 'Problem while parsing the configuration file</br></br>Config location: /'
+							'message' => 'Problem while reading or parsing the configuration file. Config location: /'
 						]
 
 					]

@@ -19,11 +19,13 @@
 	</transformations>
 	<files>
 		<directory>appinfo</directory>
+		<directory>config</directory>
 		<directory>controller</directory>
 		<directory>environment</directory>
 		<directory>http</directory>
 		<directory>middleware</directory>
 		<directory>preview</directory>
 		<directory>service</directory>
+		<directory>utility</directory>
 	</files>
 </phpdoc>

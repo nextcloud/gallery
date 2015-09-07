@@ -25,6 +25,7 @@ use OCP\IContainer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 
+use OCA\Gallery\Config\ConfigParser;
 use OCA\Gallery\Controller\PageController;
 use OCA\Gallery\Controller\ConfigController;
 use OCA\Gallery\Controller\ConfigPublicController;
@@ -39,7 +40,6 @@ use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Preview\Preview;
 use OCA\Gallery\Service\SearchFolderService;
 use OCA\Gallery\Service\ConfigService;
-use OCA\Gallery\Service\ConfigParser;
 use OCA\Gallery\Service\SearchMediaService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
