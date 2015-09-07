@@ -19,6 +19,7 @@ use OCP\IContainer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 
+use OCA\GalleryPlus\Config\ConfigParser;
 use OCA\GalleryPlus\Controller\PageController;
 use OCA\GalleryPlus\Controller\ConfigController;
 use OCA\GalleryPlus\Controller\ConfigPublicController;
@@ -33,7 +34,6 @@ use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
-use OCA\GalleryPlus\Service\ConfigParser;
 use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;

@@ -10,9 +10,10 @@
  * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Service;
+namespace OCA\GalleryPlus\Config;
 
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 use OCP\Files\Folder;
 use OCP\Files\File;
@@ -20,15 +21,15 @@ use OCP\Files\File;
 /**
  * Parses configuration files
  *
- * @package OCA\GalleryPlus\Service
+ * @package OCA\GalleryPlus\Config
  */
 class ConfigParser {
 
 	/**
 	 * Returns a parsed global configuration if one was found in the root folder
 	 *
-	 * @param Folder $folder
-	 * @param string $configName
+	 * @param Folder $folder the current folder
+	 * @param string $configName name of the configuration file
 	 *
 	 * @return null|array
 	 */
@@ -36,7 +37,7 @@ class ConfigParser {
 		$featuresList = [];
 		$parsedConfig = $this->parseConfig($folder, $configName);
 		$key = 'features';
-		if (array_key_exists('features', $parsedConfig)) {
+		if (array_key_exists($key, $parsedConfig)) {
 			$featuresList = $parsedConfig[$key];
 		}
 
@@ -46,31 +47,34 @@ class ConfigParser {
 	/**
 	 * Returns a parsed configuration if one was found in the current folder
 	 *
-	 * @param Folder $folder
-	 * @param string $configName
-	 * @param array $currentConfig
-	 * @param array <string,bool> $configItems
-	 * @param int $level
+	 * @param Folder $folder the current folder
+	 * @param string $configName name of the configuration file
+	 * @param array $currentConfig the configuration collected so far
+	 * @param array <string,bool> $completionStatus determines if we already have all we need for a
+	 *     config sub-section
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return array <null|array,array<string,bool>>
+	 * @throws ConfigException
 	 */
-	public function getFolderConfig($folder, $configName, $currentConfig, $configItems, $level) {
+	public function getFolderConfig($folder, $configName, $currentConfig, $completionStatus, $level
+	) {
 		$parsedConfig = $this->parseConfig($folder, $configName);
-		list($config, $configItems) =
-			$this->buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level);
+		list($config, $completionStatus) =
+			$this->buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level);
 
-		return [$config, $configItems];
+		return [$config, $completionStatus];
 	}
 
 	/**
 	 * Returns a parsed configuration
 	 *
-	 * @param Folder $folder
+	 * @param Folder $folder the current folder
 	 * @param string $configName
 	 *
 	 * @return array|string[]
 	 *
-	 * @throws ServiceException
+	 * @throws ConfigException
 	 */
 	private function parseConfig($folder, $configName) {
 		try {
@@ -78,15 +82,16 @@ class ConfigParser {
 			$configFile = $folder->get($configName);
 			$rawConfig = $configFile->getContent();
 			$saneConfig = $this->bomFixer($rawConfig);
-			$parsedConfig = Yaml::parse($saneConfig);
+			$yaml = new Parser();
+			$parsedConfig = $yaml->parse($saneConfig);
+
 			//\OC::$server->getLogger()->debug("rawConfig : {path}", ['path' => $rawConfig]);
 
-		} catch (\Exception $exception) {
-			$errorMessage = "Problem while parsing the configuration file";
-			throw new ServiceException($errorMessage);
+			return $parsedConfig;
+		} catch (\Exception  $exception) {
+			$errorMessage = "Problem while reading or parsing the configuration file";
+			throw new ConfigException($errorMessage);
 		}
-
-		return $parsedConfig;
 	}
 
 	/**
@@ -110,35 +115,35 @@ class ConfigParser {
 	/**
 	 * Returns either the local config or one merged with a config containing sorting information
 	 *
-	 * @param array $currentConfig
-	 * @param array $parsedConfig
-	 * @param array <string,bool> $configItems
-	 * @param int $level
+	 * @param array $currentConfig the configuration collected so far
+	 * @param array $parsedConfig the configuration collected in the current folder
+	 * @param array <string,bool> $completionStatus determines if we already have all we need for a
+	 *     config sub-section
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
-	 * @return array<null|array,array<string,bool>>
+	 * @return array <null|array,array<string,bool>>
 	 */
-	private function buildAlbumConfig($currentConfig, $parsedConfig, $configItems, $level) {
-		foreach ($configItems as $key => $complete) {
+	private function buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level) {
+		foreach ($completionStatus as $key => $complete) {
 			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
 				$parsedConfigItem = $parsedConfig[$key];
 				if ($this->isConfigUsable($parsedConfigItem, $level)) {
 					list($configItem, $itemComplete) =
 						$this->addConfigItem($key, $parsedConfigItem, $level);
 					$currentConfig = array_merge($currentConfig, $configItem);
-					$configItems[$key] = $itemComplete;
+					$completionStatus[$key] = $itemComplete;
 				}
-
 			}
 		}
 
-		return [$currentConfig, $configItems];
+		return [$currentConfig, $completionStatus];
 	}
 
 	/**
 	 * Determines if we already have everything we need for this configuration sub-section
 	 *
-	 * @param string $key
-	 * @param array $parsedConfig
+	 * @param string $key the configuration sub-section identifier
+	 * @param array $parsedConfig the configuration for that sub-section
 	 * @param bool $complete
 	 *
 	 * @return bool
@@ -150,8 +155,12 @@ class ConfigParser {
 	/**
 	 * Determines if we can use this configuration sub-section
 	 *
-	 * @param array $parsedConfigItem
-	 * @param int $level
+	 * It's possible in two cases:
+	 *    * the configuration was collected from the currently opened folder
+	 *    * the configuration was collected in a parent folder and is inheritable
+	 *
+	 * @param array $parsedConfigItem the configuration for a sub-section
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return bool
 	 */
@@ -164,9 +173,9 @@ class ConfigParser {
 	/**
 	 * Adds a config sub-section to the global config
 	 *
-	 * @param string $key
-	 * @param array $parsedConfigItem
-	 * @param int $level
+	 * @param string $key the configuration sub-section identifier
+	 * @param array $parsedConfigItem the configuration for a sub-section
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return array<null|array<string,string>,bool>
 	 */
@@ -186,7 +195,7 @@ class ConfigParser {
 	/**
 	 * Determines if we can use a configuration sub-section found in parent folders
 	 *
-	 * @param array $parsedConfigItem
+	 * @param array $parsedConfigItem the configuration for a sub-section
 	 *
 	 * @return bool
 	 */
@@ -201,7 +210,6 @@ class ConfigParser {
 		}
 
 		return $inherit;
-
 	}
 
 }
