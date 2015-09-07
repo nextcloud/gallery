@@ -168,8 +168,6 @@ class PreviewService extends Service {
 			if ($preview && $base64Encode) {
 				$preview['preview'] = $this->encode($preview['preview']);
 			}
-
-			return $preview;
 		} catch (\Exception $exception) {
 			$this->logAndThrowInternalError('Preview generation has failed');
 		}
