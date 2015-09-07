@@ -12,12 +12,12 @@
 
 namespace OCA\Gallery\Environment;
 
-use Exception;
+use OCP\Util;
 
 /**
- * Thrown when the service cannot reply to a request
+ * Thrown when the Environment runs into a problem
  */
-class EnvironmentException extends Exception {
+class EnvironmentException extends \Exception {
 
 	/**
 	 * Constructor
@@ -25,6 +25,7 @@ class EnvironmentException extends Exception {
 	 * @param string $msg the message contained in the exception
 	 */
 	public function __construct($msg) {
+		Util::writeLog('gallery', 'Exception' . $msg, Util::ERROR);
 		parent::__construct($msg);
 	}
 }
