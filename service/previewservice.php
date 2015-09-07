@@ -265,11 +265,7 @@ class PreviewService extends Service {
 		$gifSupport = $this->isMimeSupported('image/gif');
 		$animatedGif = $this->isGifAnimated($file);
 
-		if (!$gifSupport || ($animatedGif && $animatedPreview)) {
-			return false;
-		}
-
-		return true;
+		return $gifSupport && !($animatedGif && $animatedPreview);
 	}
 
 	/**
