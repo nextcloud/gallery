@@ -132,7 +132,7 @@ trait Preview {
 	 *
 	 * @param $fileId
 	 *
-	 * @return File
+	 * @return File|null
 	 */
 	private function getFile($fileId) {
 		try {
@@ -169,8 +169,7 @@ trait Preview {
 			$preview = $this->downloadService->downloadFile($file, $base64Encode);
 		}
 		if (!$preview) {
-			list($preview, $status, $type) =
-				$this->getErrorData(Http::STATUS_INTERNAL_SERVER_ERROR);
+			list($preview, $status, $type) = $this->getErrorData();
 		}
 
 		return [$preview, $status, $type];
@@ -183,7 +182,7 @@ trait Preview {
 	 *
 	 * @return array<null|int|string>
 	 */
-	private function getErrorData($status) {
+	private function getErrorData($status = Http::STATUS_INTERNAL_SERVER_ERROR) {
 		return [null, $status, 'error'];
 	}
 
