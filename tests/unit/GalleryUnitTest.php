@@ -132,6 +132,13 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		return $file;
 	}
 
+	protected function mockNoMediaFile($fileId) {
+		$file = $this->mockFile($fileId);
+		$this->mockNoMediaFileMethods($file);
+
+		return $file;
+	}
+
 	private function mockJpgFileMethods($file) {
 		$filename = 'testimage.jpg';
 		$file->method('getContent')
@@ -167,6 +174,18 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		$file->method('fopen')
 			 ->with('rb')
 			 ->willReturn(fopen(__DIR__ . '/../_data/' . $filename, 'rb'));
+
+		return $file;
+	}
+
+	private function mockNoMediaFileMethods($file) {
+		$filename = '.nomedia';
+		$file->method('getContent')
+			 ->willReturn(file_get_contents(__DIR__ . '/../_data/' . $filename));
+		$file->method('getName')
+			 ->willReturn($filename);
+		$file->method('getMimeType')
+			 ->willReturn('image/jpeg');
 
 		return $file;
 	}

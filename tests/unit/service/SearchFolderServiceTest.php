@@ -94,24 +94,23 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 	public function providesSendExternalFolderData() {
 		return [
 			['shared::99999'],
-			['home::user']
+			['home::user'] // Throws an exception
 		];
 	}
 
 	/**
 	 * @dataProvider providesSendExternalFolderData
+	 *
+	 * @param $storageId
 	 */
 	public function testSendExternalFolder($storageId) {
 		$expectedException =
-			new \OCA\Gallery\Service\ForbiddenServiceException('Album is private or unavailable');
+			new ForbiddenServiceException('Album is private or unavailable');
 		$path = '';
 		$nodeId = 94875;
 		$files = [];
 		$shared = $this->mockFolder('shared::12345', $nodeId, $files);
-		$rootNodeId = 91919191;
-		$rootFiles = [$shared];
-		$sharedRoot = $this->mockFolder($storageId, $rootNodeId, $rootFiles);
-		$this->mockGetVirtualRootFolderOfSharedFolder($sharedRoot);
+		$this->mockGetVirtualRootFolderOfSharedFolder($storageId, $shared);
 
 		$locationHasChanged = false;
 		$folder = [$path, $shared, $locationHasChanged];
@@ -125,7 +124,7 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 	}
 
 	public function providesNodesData() {
-		$exception = new \OCA\Gallery\Service\NotFoundServiceException('Boom');
+		$exception = new NotFoundServiceException('Boom');
 
 		return [
 			[0, $exception],
@@ -156,7 +155,7 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 
 	public function providesRecoverFromGetNodesData() {
 		$caughtException = new \Exception('Nasty');
-		$newException = new \OCA\Gallery\Service\NotFoundServiceException('Boom');
+		$newException = new NotFoundServiceException('Boom');
 
 		return [
 			[0, $caughtException, $newException],
@@ -168,7 +167,7 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 	 * @dataProvider providesRecoverFromGetNodesData
 	 *
 	 * @param $subDepth
-	 * @param $exception
+	 * @param $caughtException
 	 * @param $nodes
 	 */
 	public function testRecoverFromGetNodesError($subDepth, $caughtException, $nodes) {
@@ -202,7 +201,7 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 		$this->assertFalse($response);
 	}
 
-	public function providesIsPreviewAllowedData() {
+	public function providesIsAllowedAndAvailableWithMountedFolderData() {
 		return [
 			// Mounted, so looking at options
 			[true, true, true],
@@ -214,13 +213,13 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 	}
 
 	/**
-	 * @dataProvider providesIsPreviewAllowedData
+	 * @dataProvider providesIsAllowedAndAvailableWithMountedFolderData
 	 *
 	 * @param bool $mounted
 	 * @param bool $previewsAllowedOnMountedShare
 	 * @param bool $expectedResult
 	 */
-	public function testIsAllowedWithMountedFolder(
+	public function testIsAllowedAndAvailableWithMountedFolder(
 		$mounted, $previewsAllowedOnMountedShare, $expectedResult
 	) {
 		$nodeId = 12345;
@@ -231,7 +230,40 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 			'webdav::user@domain.com/dav', $nodeId, $files, $isReadable, $mounted, $mount
 		);
 
-		$response = self::invokePrivate($this->service, 'isAllowed', [$node]);
+		$response = self::invokePrivate($this->service, 'isAllowedAndAvailable', [$node]);
+
+		$this->assertSame($expectedResult, $response);
+	}
+
+	public function providesIsAllowedAndAvailableData() {
+		return [
+			['shared::99999', false, true],
+			['shared::99999', true, true],
+			['home::user', false, false],
+			['home::user', true, true],
+		];
+	}
+
+	/**
+	 * @dataProvider providesIsAllowedAndAvailableData
+	 *
+	 * @param string $rootStorageId
+	 * @param bool $externalSharesAllowed
+	 * @param bool $expectedResult
+	 */
+	public function testIsAllowedAndAvailable(
+		$rootStorageId, $externalSharesAllowed, $expectedResult
+	) {
+		$nodeId = 12345;
+		$files = [];
+		$isReadable = true;
+		$shared = $this->mockFolder('shared::99999', $nodeId, $files, $isReadable);
+		$this->mockGetVirtualRootFolderOfSharedFolder($rootStorageId, $shared);
+
+		$features = $externalSharesAllowed ? ['external_shares'] : [];
+		self::invokePrivate($this->service, 'features', [$features]);
+
+		$response = self::invokePrivate($this->service, 'isAllowedAndAvailable', [$shared]);
 
 		$this->assertSame($expectedResult, $response);
 	}
@@ -304,10 +336,13 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 		return $folder;
 	}
 
-	private function mockGetVirtualRootFolderOfSharedFolder($folder) {
+	private function mockGetVirtualRootFolderOfSharedFolder($storageId, $shared) {
+		$rootNodeId = 91919191;
+		$rootFiles = [$shared];
+		$sharedRoot = $this->mockFolder($storageId, $rootNodeId, $rootFiles);
 		$this->environment->expects($this->once())
 						  ->method('getVirtualRootFolder')
-						  ->willReturn($folder);
+						  ->willReturn($sharedRoot);
 
 	}
 
