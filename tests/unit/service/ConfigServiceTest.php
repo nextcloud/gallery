@@ -12,6 +12,8 @@
 
 namespace OCA\Gallery\Service;
 
+use OCA\Gallery\Config\ConfigParser;
+use OCA\Gallery\Config\ConfigException;
 
 /**
  * Class ConfigServiceTest
@@ -31,7 +33,7 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 	public function setUp() {
 		parent::setUp();
 
-		$this->configParser = $this->getMockBuilder('\OCA\Gallery\Service\ConfigParser')
+		$this->configParser = $this->getMockBuilder('\OCA\Gallery\Config\ConfigParser')
 								   ->disableOriginalConstructor()
 								   ->getMock();
 		$this->service = new ConfigService (
@@ -51,9 +53,9 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 		$configItems = ['information' => false, 'sorting' => false]; // Default in the class
 		$level = 0;
 		$configPath = 'Some/folder';
-		$exception = new ServiceException('Boom');
+		$exception = new ConfigException('Boom');
 		$result =
-			[[['error' => ['message' => 'Boom' . "</br></br>Config location: /$configPath"]]]];
+			[[['error' => ['message' => 'Boom' . ". Config location: /$configPath"]]]];
 
 		$this->mockGetPathFromVirtualRoot($folder, $configPath);
 		$this->mockGetFolderConfigWithBrokenSetup(
