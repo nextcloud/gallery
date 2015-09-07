@@ -154,12 +154,12 @@ class PreviewService extends Service {
 	 * @param bool $keepAspect
 	 * @param bool $base64Encode
 	 *
-	 * @return array<string,\OC_Image|string>|false preview data
+	 * @return array <string,\OC_Image|string>|false preview data
+	 * @throws InternalServerErrorServiceException
 	 */
 	public function createPreview(
 		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
 	) {
-		$preview = false;
 		try {
 			$userId = $this->environment->getUserId();
 			$imagePathFromFolder = $this->environment->getPathFromUserFolder($file);
@@ -168,11 +168,11 @@ class PreviewService extends Service {
 			if ($preview && $base64Encode) {
 				$preview['preview'] = $this->encode($preview['preview']);
 			}
-		} catch (\Exception $exception) {
-			$this->logAndThrowInternalError('Preview generation has failed');
-		}
 
-		return $preview;
+			return $preview;
+		} catch (\Exception $exception) {
+			throw new InternalServerErrorServiceException('Preview generation has failed');
+		}
 	}
 
 	/**
@@ -183,19 +183,21 @@ class PreviewService extends Service {
 	 * @param bool $base64Encode
 	 *
 	 * @return \OC_Image|string
+	 * @throws InternalServerErrorServiceException
 	 */
 	public function previewValidator($square, $base64Encode) {
-		$preview = false;
 		try {
 			$preview = $this->previewManager->previewValidator($square);
 			if ($base64Encode) {
 				$preview = $this->encode($preview);
 			}
-		} catch (\Exception $exception) {
-			$this->logAndThrowInternalError('There was an error while trying to fix the preview');
-		}
 
-		return $preview;
+			return $preview;
+		} catch (\Exception $exception) {
+			throw new InternalServerErrorServiceException(
+				'There was an error while trying to fix the preview'
+			);
+		}
 	}
 
 	/**
@@ -287,6 +289,7 @@ class PreviewService extends Service {
 	 * @param File $file
 	 *
 	 * @return bool
+	 * @throws InternalServerErrorServiceException
 	 */
 	private function isGifAnimated($file) {
 		$count = 0;
@@ -300,7 +303,9 @@ class PreviewService extends Service {
 			}
 			fclose($fileHandle);
 		} catch (\Exception $exception) {
-			$this->logAndThrowInternalError('Something went wrong when trying to read a GIF file');
+			throw new InternalServerErrorServiceException(
+				'Something went wrong when trying to read a GIF file'
+			);
 		}
 
 		return $count > 1;
