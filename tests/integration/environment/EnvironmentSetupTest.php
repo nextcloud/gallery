@@ -140,7 +140,7 @@ class EnvironmentSetupTest extends GalleryIntegrationTest {
 	/**
 	 * You can pick any folder from $dataSetup->fileHierarchy
 	 */
-	public function testGetPathFromVirtualRootAsALoggedInUser() {
+	public function testGetPathToFileFromVirtualRootAsALoggedInUser() {
 		$environment = $this->setUserBasedEnv();
 
 		$path = 'folder1/' . $this->sharedFolderName . '/testimage.gif';
@@ -149,11 +149,20 @@ class EnvironmentSetupTest extends GalleryIntegrationTest {
 		$this->assertEquals($path, $result);
 	}
 
-	public function testGetPathFromVirtualRootAsATokenUser() {
+	public function testGetPathToFileFromVirtualRootAsATokenUser() {
 		$environment = $this->setTokenBasedEnv($this->sharedFolderToken);
 
 		$path = 'shared1.1/testimage.png';
 		$result = $environment->getPathFromVirtualRoot($this->sharedFolder->get($path));
+
+		$this->assertEquals($path, $result);
+	}
+
+	public function testGetPathToFolderFromVirtualRootAsALoggedInUser() {
+		$environment = $this->setUserBasedEnv();
+
+		$path = 'folder1/' . $this->sharedFolderName;
+		$result = $environment->getPathFromVirtualRoot($this->userFolder->get($path));
 
 		$this->assertEquals($path, $result);
 	}

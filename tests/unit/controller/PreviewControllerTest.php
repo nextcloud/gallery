@@ -182,8 +182,9 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$this->mockGetThumbnailSpecs($square, $scale, $thumbnailSpecs);
 
 		/** @type File $file */
-		list($file) = $this->mockGetDataWithBrokenPreview(
-			$thumbnailId, $width, $height, $aspect, $animatedPreview, $base64Encode
+		$file = $this->mockJpgFile($thumbnailId);
+		$this->mockGetDataWithBrokenPreview(
+			$thumbnailId, $file, $width, $height, $aspect, $animatedPreview, $base64Encode
 		);
 
 		list($preview, $status) = self::invokePrivate(
@@ -242,12 +243,24 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$exception = new NotFoundServiceException('Not found');
 		$this->mockGetResourceFromIdWithBadFile($this->previewService, $fileId, $exception);
 
-		$errorResponse = new JSONResponse(
-			[
-				'message' => "I'm truly sorry, but we were unable to generate a preview for this file",
-				'success' => false
-			], Http::STATUS_NOT_FOUND
-		);
+		$errorResponse = $this->jsonErrorMessage(Http::STATUS_NOT_FOUND);
+
+		$response = $this->controller->getPreview($fileId, $width, $height);
+
+		$this->assertEquals($errorResponse->getStatus(), $response->getStatus());
+		$this->assertEquals($errorResponse->getData()['success'], $response->getData()['success']);
+	}
+
+	public function testGetPreviewWithBrokenGif() {
+		$fileId = 1234;
+		$width = 1024;
+		$height = 768;
+
+		/** @type File $file */
+		$file = $this->mockAnimatedGifFile($fileId);
+		$this->mockGetDataWithEmptyPreview($fileId, $file, $width, $height);
+
+		$errorResponse = $this->jsonErrorMessage(Http::STATUS_INTERNAL_SERVER_ERROR);
 
 		$response = $this->controller->getPreview($fileId, $width, $height);
 
@@ -285,6 +298,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	 * Mocks Preview->getData
 	 *
 	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param File $file
 	 * @param int $width
 	 * @param int $height
 	 * @param bool $keepAspect
@@ -294,16 +308,38 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	 * @return array
 	 */
 	private function mockGetDataWithBrokenPreview(
-		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
+		$fileId, $file, $width, $height, $keepAspect = true, $animatedPreview = true,
+		$base64Encode = false
 	) {
-		$file = $this->mockJpgFile($fileId);
 		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
 
 		$this->mockIsPreviewRequired($file, $animatedPreview, true);
 
 		$this->mockCreatePreviewThrowsException($file, $width, $height, $keepAspect, $base64Encode);
+	}
 
-		return [$file];
+	/**
+	 * Mocks Preview->getData
+	 *
+	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param File $file
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $keepAspect
+	 * @param bool $animatedPreview
+	 * @param bool $base64Encode
+	 *
+	 * @return array
+	 */
+	private function mockGetDataWithEmptyPreview(
+		$fileId, $file, $width, $height, $keepAspect = true, $animatedPreview = true,
+		$base64Encode = false
+	) {
+		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
+
+		$this->mockIsPreviewRequired($file, $animatedPreview, true);
+
+		$this->mockCreatePreview($file, $width, $height, $keepAspect, $base64Encode, null);
 	}
 
 	/**
@@ -472,6 +508,15 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 							 )
 							 ->willReturn($base64EncodedPreview);
 
+	}
+
+	private function jsonErrorMessage($code) {
+		return new JSONResponse(
+			[
+				'message' => "I'm truly sorry, but we were unable to generate a preview for this file",
+				'success' => false
+			], $code
+		);
 	}
 
 }

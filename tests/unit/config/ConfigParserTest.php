@@ -56,21 +56,24 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 		];
 
 		return [
-			[$emptyConfig, []],
-			[$noFeatures, []],
-			[$emptyFeatures, []],
-			[$features, $featureList],
+			[$emptyConfig, false, []],
+			[$noFeatures, false, []],
+			[$emptyFeatures, false, []],
+			[$emptyFeatures, true, []],
+			[$features, false, $featureList],
+			[$features, true, $featureList],
 		];
 	}
 
 	/**
 	 * @dataProvider providesGetFeaturesListData
 	 *
-	 * @param $config
-	 * @param $expectedResult
+	 * @param array $config
+	 * @param bool $bom BOM in utf-8 files
+	 * @param array $expectedResult
 	 */
-	public function testGetFeaturesList($config, $expectedResult) {
-		$folder = $this->mockFolderWithConfig($config);
+	public function testGetFeaturesList($config, $bom, $expectedResult) {
+		$folder = $this->mockFolderWithConfig($config, $bom);
 
 		$response = $this->configParser->getFeaturesList($folder, $this->configName);
 
@@ -195,11 +198,13 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 		$this->assertEquals($expectedResult, $response);
 	}
 
-	private function mockFolderWithConfig($config) {
+	private function mockFolderWithConfig($config, $bom = false) {
 		$file = $this->mockFile(212121);
 		$yaml = new Dumper();
+		$content = $yaml->dump($config);
+		$content = $bom ? chr(239) . chr(187) . chr(191) . $content : $content;
 		$file->method('getContent')
-			 ->willReturn($yaml->dump($config));
+			 ->willReturn($content);
 		$folder = $this->mockFolder('home::user', 121212, [$file]);
 		$folder->method('get')
 			   ->with($this->configName)
