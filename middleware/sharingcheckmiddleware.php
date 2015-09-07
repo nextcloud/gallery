@@ -29,13 +29,9 @@ use OCP\AppFramework\Utility\IControllerMethodReflector;
  */
 class SharingCheckMiddleware extends CheckMiddleware {
 
-	/**
-	 * @var IConfig
-	 * */
+	/** @var IConfig */
 	private $config;
-	/**
-	 * @var IControllerMethodReflector
-	 */
+	/** @var IControllerMethodReflector */
 	protected $reflector;
 
 	/***
@@ -85,8 +81,8 @@ class SharingCheckMiddleware extends CheckMiddleware {
 
 		$sharingEnabled = $this->isSharingEnabled();
 		$isPublicPage = $this->reflector->hasAnnotation('PublicPage');
-		if ($isPublicPage  && !$sharingEnabled) {
-			$this->logAndThrow("'Sharing is disabled'", Http::STATUS_SERVICE_UNAVAILABLE);
+		if ($isPublicPage && !$sharingEnabled) {
+			throw new CheckException("'Sharing is disabled'", Http::STATUS_SERVICE_UNAVAILABLE);
 		}
 	}
 
