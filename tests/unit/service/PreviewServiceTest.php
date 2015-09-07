@@ -185,6 +185,19 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 		$this->service->isPreviewRequired($file, $animatedPreview);
 	}
 
+	/**
+	 * @expectedException \OCA\GalleryPlus\Service\InternalServerErrorServiceException
+	 */
+	public function testCreatePreviewWithBrokenSystem() {
+		/** @type File $file */
+		$file = $this->mockJpgFile(12345);
+		$this->mockGetUserIdFails();
+
+		$this->service->createPreview(
+			$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
+		);
+	}
+
 	public function providesPreviewValidatorData() {
 		return [
 			[true, true],
@@ -310,4 +323,9 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 							 ->willThrowException(new \Exception('Boom'));
 	}
 
+	private function mockGetUserIdFails() {
+		$this->environment->expects($this->once())
+						  ->method('getUserId')
+						  ->willThrowException(new \Exception('Boom'));
+	}
 }
