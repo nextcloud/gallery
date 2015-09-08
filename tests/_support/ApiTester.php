@@ -20,12 +20,11 @@ class ApiTester extends \Codeception\Actor {
 	use _generated\ApiTesterActions;
 
 	/**
-	 * Define custom actions here
+	 * Makes sure the response we get is the expected file
 	 *
 	 * @param array $file
 	 * @param string $filename
 	 */
-
 	public function downloadAFile($file, $filename = null) {
 		$I = $this;
 		if (!$filename) {
@@ -38,5 +37,18 @@ class ApiTester extends \Codeception\Actor {
 			'Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $filename . '; filename="'
 								   . $filename . '"'
 		);
+	}
+
+	/**
+	 * Compares the dimensions of the downloaded image to the expected dimensions
+	 *
+	 * @param int $width
+	 * @param int $height
+	 */
+	public function checkImageSize($width, $height) {
+		$I = $this;
+		$image = imagecreatefromstring($I->grabResponse());
+		$I->assertEquals($width, imagesx($image));
+		$I->assertEquals($height, imagesy($image));
 	}
 }

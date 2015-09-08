@@ -1,6 +1,7 @@
 class_name: ApiTester
 modules:
     enabled:
+        - Asserts
         - \Helper\Api
         - \Helper\DataSetup
         - REST:
