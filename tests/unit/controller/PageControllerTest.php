@@ -12,17 +12,16 @@
 
 namespace OCA\Gallery\Controller;
 
-
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\ISession;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Environment\Environment;
-use OCA\Gallery\Service\DownloadService;
 
 /**
  * @package OCA\Gallery\Controller
@@ -39,6 +38,8 @@ class PageControllerTest extends \Test\TestCase {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
+	/** @var ISession */
+	protected $session;
 	/** @var PageController */
 	protected $controller;
 
@@ -60,12 +61,16 @@ class PageControllerTest extends \Test\TestCase {
 		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
 								->disableOriginalConstructor()
 								->getMock();
+		$this->session = $this->getMockBuilder('\OCP\ISession')
+							  ->disableOriginalConstructor()
+							  ->getMock();
 		$this->controller = new PageController(
 			$this->appName,
 			$this->request,
 			$this->environment,
 			$this->urlGenerator,
-			$this->appConfig
+			$this->appConfig,
+			$this->session
 		);
 	}
 
@@ -167,8 +172,9 @@ class PageControllerTest extends \Test\TestCase {
 		];
 		$template = new TemplateResponse($this->appName, 'index', $params, 'guest');
 		$template->setStatus($code);
+		$this->mockSessionGet('galleryErrorMessage', $message);
 
-		$response = $this->controller->errorPage($message, $code);
+		$response = $this->controller->errorPage($code);
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
@@ -231,6 +237,19 @@ class PageControllerTest extends \Test\TestCase {
 							   ]
 						   )
 						   ->willReturn($url);
+	}
+
+	/**
+	 * Needs to be called at least once by testDownloadWithWrongId() or the tests will fail
+	 *
+	 * @param $key
+	 * @param $value
+	 */
+	private function mockSessionGet($key, $value) {
+		$this->session->expects($this->once())
+					  ->method('get')
+					  ->with($key)
+					  ->willReturn($value);
 	}
 
 }

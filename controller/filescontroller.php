@@ -14,6 +14,7 @@ namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
@@ -38,6 +39,8 @@ class FilesController extends Controller {
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
+	/** @var ISession */
+	private $session;
 
 	/**
 	 * Constructor
@@ -49,6 +52,7 @@ class FilesController extends Controller {
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
 	 * @param DownloadService $downloadService
+	 * @param ISession $session
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -59,6 +63,7 @@ class FilesController extends Controller {
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
 		DownloadService $downloadService,
+		ISession $session,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
@@ -68,6 +73,7 @@ class FilesController extends Controller {
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
 		$this->downloadService = $downloadService;
+		$this->session = $session;
 		$this->logger = $logger;
 	}
 
@@ -114,7 +120,9 @@ class FilesController extends Controller {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
+			return $this->htmlError(
+				$this->session, $this->urlGenerator, $this->appName, $exception
+			);
 		}
 
 		return new ImageResponse($download);

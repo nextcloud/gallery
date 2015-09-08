@@ -41,6 +41,7 @@ class FilesPublicController extends FilesController {
 	/**
 	 * @PublicPage
 	 * @NoCSRFRequired
+	 * @UseSession
 	 *
 	 * Sends the file matching the fileId
 	 *
