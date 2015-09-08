@@ -14,10 +14,10 @@
 
 namespace OCA\Gallery\Environment;
 
-use OCP\IServerContainer;
 use OCP\IUserManager;
 use OCP\Share;
 use OCP\ILogger;
+use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
 use OCP\Files\Node;
 use OCP\Files\File;
@@ -25,8 +25,6 @@ use OCP\Files\NotFoundException;
 
 /**
  * Builds the environment so that the services have access to the files and folders' owner
- *
- * @todo remove the serverContainer once OCP\IUserManager has a getUserFolder() method
  *
  * @package OCA\Gallery\Environment
  */
@@ -61,9 +59,9 @@ class Environment {
 	 */
 	private $sharedNodeId;
 	/**
-	 * @var IServerContainer
+	 * @var IRootFolder
 	 */
-	private $serverContainer;
+	private $rootFolder;
 	/**
 	 * @var ILogger
 	 */
@@ -95,7 +93,7 @@ class Environment {
 	 * @param string|null $userId
 	 * @param Folder|null $userFolder
 	 * @param IUserManager $userManager
-	 * @param IServerContainer $serverContainer
+	 * @param IRootFolder $rootFolder
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -103,14 +101,14 @@ class Environment {
 		$userId,
 		$userFolder,
 		IUserManager $userManager,
-		IServerContainer $serverContainer,
+		IRootFolder $rootFolder,
 		ILogger $logger
 	) {
 		$this->appName = $appName;
 		$this->userId = $userId;
 		$this->userFolder = $userFolder;
 		$this->userManager = $userManager;
-		$this->serverContainer = $serverContainer;
+		$this->rootFolder = $rootFolder;
 		$this->logger = $logger;
 	}
 
@@ -123,10 +121,7 @@ class Environment {
 		// Resolves reshares down to the last real share
 		$rootLinkItem = Share::resolveReShare($linkItem);
 		$origShareOwner = $rootLinkItem['uid_owner'];
-		$this->userFolder = $this->serverContainer->getUserFolder($origShareOwner);
-		// TODO: Replace with this in 8.2 (https://github.com/owncloud/core/pull/16965)
-		// You get root by calling getRootFolder() on the server container
-		//$this->userFolder = $this->root->getUserFolder($origShareOwner);
+		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwner);
 
 		// This is actually the node ID
 		$this->sharedNodeId = $linkItem['file_source'];
