@@ -1,4 +1,4 @@
-/* global Gallery, marked */
+/* global Gallery, marked, DOMPurify */
 (function ($, t, Gallery) {
 	"use strict";
 	/**
@@ -41,9 +41,9 @@
 								thisInfoBox._addContent(data);
 							}
 						).fail(function () {
-								thisInfoBox._addContent(t('gallery',
-									'Could not load the description'));
-							});
+							thisInfoBox._addContent(t('gallery',
+								'Could not load the description'));
+						});
 					} else {
 						this._addContent(this.albumInfo.description);
 					}
@@ -63,10 +63,10 @@
 		 */
 		_addContent: function (content) {
 			try {
-				content = marked(content, {
+				content = DOMPurify.sanitize(marked(content, {
 					gfm: false,
 					sanitize: true
-				});
+				}));
 			} catch (exception) {
 				content = t('gallery',
 					'Could not load the description: ' + exception.message);
@@ -104,10 +104,10 @@
 
 				if (!$.isEmptyObject(this.albumInfo.copyright)) {
 					try {
-						copyright = marked(this.albumInfo.copyright, {
+						copyright = DOMPurify.sanitize(marked(this.albumInfo.copyright, {
 							gfm: false,
 							sanitize: true
-						});
+						}));
 					} catch (exception) {
 						copyright =
 							t('gallery',
