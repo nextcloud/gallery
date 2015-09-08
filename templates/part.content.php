@@ -22,6 +22,7 @@ script(
 		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
 		'vendor/marked/marked.min',
+		'vendor/dompurify/purify',
 		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
