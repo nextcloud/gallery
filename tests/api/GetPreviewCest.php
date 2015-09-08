@@ -40,16 +40,38 @@ class GetPreviewCest {
 		$I->connectToTheApi($this->apiUrl . '/9999999/1920/1080', 'the preview API');
 	}
 
-	public function getPreview(\Step\Api\User $I) {
+	public function getPreviewOfPng(\Step\Api\User $I) {
 		$I->am('an app');
-		$I->wantTo('get the preview of a file');
+		$I->wantTo('get the preview of a PNG file');
+
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$data = $I->getFilesDataForFolder('folder2');
+		$file = $data['testimage.png'];
+		$url = $this->apiUrl . '/' . $file['id'] . '/64/64';
+		$I->sendGET($url);
+		$I->downloadAFile($file, 'testimage.png');
+		$I->checkImageSize(64, 64);
+	}
+
+	/**
+	 * That's a different code path because the file is animated
+	 *
+	 * @todo maybe
+	 *
+	 * @param \Step\Api\User $I
+	 */
+	public function getPreviewOfAnimatedGif(\Step\Api\User $I) {
+		$I->am('an app');
+		$I->wantTo('get the preview of an animated GIF file');
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$data = $I->getFilesDataForFolder('');
+		// 89x72 gif
 		$file = $data['animated.gif'];
-		$url = $this->apiUrl . '/' . $file['id'] . '/1920/1080';
+		$url = $this->apiUrl . '/' . $file['id'] . '/64/64';
 		$I->sendGET($url);
 		$I->downloadAFile($file, 'animated.gif');
+		$I->checkImageSize(89, 72);
 	}
 
 	public function emptyResponse(\Step\Api\User $I) {
