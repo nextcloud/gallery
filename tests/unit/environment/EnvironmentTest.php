@@ -12,11 +12,9 @@
 
 namespace OCA\GalleryPlus\Environment;
 
-use OCP\IServerContainer;
 use OCP\IUserManager;
 use OCP\ILogger;
 use OCP\Files\IRootFolder;
-use OCP\Files\Folder;
 
 use OCP\AppFramework\IAppContainer;
 
@@ -37,8 +35,6 @@ class EnvironmentTest extends \Test\TestCase {
 	private $rootFolder;
 	/** @var IUserManager */
 	private $userManager;
-	/** @var IServerContainer */
-	private $serverContainer;
 	/** @var ILogger */
 	private $logger;
 	/** @var Environment */
@@ -52,12 +48,10 @@ class EnvironmentTest extends \Test\TestCase {
 
 		$app = new Application();
 		$this->container = $app->getContainer();
-		$this->rootFolder = $this->container->getServer()
-											->getRootFolder();
 		$this->userManager = $this->getMockBuilder('\OCP\IUserManager')
 								  ->disableOriginalConstructor()
 								  ->getMock();
-		$this->serverContainer = $this->getMockBuilder('OCP\IServerContainer')
+		$this->rootFolder = $this->getMockBuilder('OCP\Files\IRootFolder')
 									  ->disableOriginalConstructor()
 									  ->getMock();
 		$this->logger = $this->getMockBuilder('\OCP\ILogger')
@@ -96,7 +90,7 @@ class EnvironmentTest extends \Test\TestCase {
 			$userId,
 			$userFolder,
 			$this->userManager,
-			$this->serverContainer,
+			$this->rootFolder,
 			$this->logger
 		);
 	}
