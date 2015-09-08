@@ -84,6 +84,22 @@ class GetThumbnailsCest {
 		$I->seeResponseContains('"fileid":"99999","status":404');
 	}
 
+	public function getThumbnailOfBrokenFile(\Step\Api\User $I) {
+		$I->am('an app');
+		$I->wantTo(
+			'receive an event with a 500 code when trying to get the thumbnail of a broken file'
+		);
+		$I->getUserCredentialsAndUseHttpAuthentication();
+		$I->haveHttpHeader('Accept', 'text/event-stream');
+		$data = $I->getFilesDataForFolder('');
+		$id = $data['testimage-corrupt.jpg']['id'];
+		$this->params['ids'] = $id;
+		$I->sendGET($this->apiUrl, $this->params);
+		$I->seeResponseCodeIs(200);
+		$I->seeHttpHeader('Content-type', 'text/event-stream;charset=UTF-8');
+		$I->seeResponseContains('"fileid":"' . $id . '","status":500');
+	}
+
 	/**
 	 * @param \Step\Api\User $I
 	 * @param array $params
