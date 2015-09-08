@@ -10,6 +10,7 @@
 		this.infoContentContainer = $('.album-info-container');
 		this.infoContentSpinner = this.infoContentContainer.children('.album-info-loader');
 		this.infoContentElement = this.infoContentContainer.children('.album-info-content');
+		this._initCustomSanitizer();
 	};
 
 	InfoBox.prototype = {
@@ -17,6 +18,7 @@
 		infoContentSpinner: null,
 		infoContentElement: null,
 		albumInfo: null,
+		allowedTags: null,
 
 		/**
 		 * Shows an information box to the user
@@ -66,7 +68,9 @@
 				content = DOMPurify.sanitize(marked(content, {
 					gfm: false,
 					sanitize: true
-				}));
+				}), {
+					ALLOWED_TAGS: this.allowedTags
+				});
 			} catch (exception) {
 				content = t('gallery',
 					'Could not load the description: ' + exception.message);
@@ -107,7 +111,9 @@
 						copyright = DOMPurify.sanitize(marked(this.albumInfo.copyright, {
 							gfm: false,
 							sanitize: true
-						}));
+						}), {
+							ALLOWED_TAGS: this.allowedTags
+						});
 					} catch (exception) {
 						copyright =
 							t('gallery',
@@ -121,6 +127,7 @@
 					this._addCopyrightLink(copyright);
 				} else {
 					this.infoContentElement.append(copyright);
+					this.infoContentElement.find('a').attr("target", "_blank");
 				}
 			}
 		},
@@ -145,6 +152,54 @@
 				target: "_blank"
 			});
 			this.infoContentElement.append(copyrightLink);
+		},
+
+		/**
+		 * Adds custom tags and rules to DomPurify
+		 *
+		 * @link https://github.com/cure53/DOMPurify/blob/master/demos/hooks-scheme-whitelist.html
+		 * @private
+		 */
+		_initCustomSanitizer: function () {
+			this.allowedTags =
+				['p', 'b', 'em', 'i', 'pre', 'sup', 'sub', 'strong', 'strike', 'br', 'hr',
+					'h1', 'h2', 'h3', 'li', 'ul', 'ol', 'a', 'img', 'blockquote', 'code'
+				];
+
+			// allowed URI schemes
+			var whitelist = ['http', 'https'];
+
+			// build fitting regex
+			var regex = new RegExp('^(' + whitelist.join('|') + '):', 'gim');
+
+			// Add a hook to enforce URI scheme whitelist
+			DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+
+				// build an anchor to map URLs to
+				var anchor = document.createElement('a');
+
+				// check all href attributes for validity
+				if (node.hasAttribute('href')) {
+					anchor.href = node.getAttribute('href');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('href');
+					}
+				}
+				// check all action attributes for validity
+				if (node.hasAttribute('action')) {
+					anchor.href = node.getAttribute('action');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('action');
+					}
+				}
+				// check all xlink:href attributes for validity
+				if (node.hasAttribute('xlink:href')) {
+					anchor.href = node.getAttribute('xlink:href');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('xlink:href');
+					}
+				}
+			});
 		}
 	};
 
