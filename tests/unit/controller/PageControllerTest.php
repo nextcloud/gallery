@@ -12,17 +12,16 @@
 
 namespace OCA\GalleryPlus\Controller;
 
-
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\ISession;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Service\DownloadService;
 
 /**
  * @package OCA\GalleryPlus\Controller
@@ -39,6 +38,8 @@ class PageControllerTest extends \Test\TestCase {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
+	/** @var ISession */
+	protected $session;
 	/** @var PageController */
 	protected $controller;
 
@@ -60,24 +61,31 @@ class PageControllerTest extends \Test\TestCase {
 		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
 								->disableOriginalConstructor()
 								->getMock();
+		$this->session = $this->getMockBuilder('\OCP\ISession')
+							  ->disableOriginalConstructor()
+							  ->getMock();
 		$this->controller = new PageController(
 			$this->appName,
 			$this->request,
 			$this->environment,
 			$this->urlGenerator,
-			$this->appConfig
+			$this->appConfig,
+			$this->session
 		);
 	}
 
 
 	public function testIndex() {
 		$params = ['appName' => $this->appName];
+		// Not available on <8.2
+		//$template = new TemplateResponse($this->appName, 'index', $params);
 
 		$response = $this->controller->index();
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
+		//$this->assertEquals($template->getStatus(), $response->getStatus());
 	}
 
 	public function testCspForImgContainsData() {
@@ -97,10 +105,14 @@ class PageControllerTest extends \Test\TestCase {
 	}
 
 	public function testSlideshow() {
+		// Not available on <8.2
+		//$template = new TemplateResponse($this->appName, 'slideshow', [], 'blank');
+
 		$response = $this->controller->slideshow();
 
 		$this->assertEquals('slideshow', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
+		//$this->assertEquals($template->render(), $response->render());
 	}
 
 	public function testPublicIndexWithFolderToken() {
@@ -126,11 +138,15 @@ class PageControllerTest extends \Test\TestCase {
 		$this->mockGetSharePassword($password);
 		$this->mockGetAppValue($server2ServerSharingEnabled);
 
+		// Not available on <8.2
+		//$template = new TemplateResponse($this->appName, 'public', $params, 'public');
+
 		$response = $this->controller->publicIndex($token, null);
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('public', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
+		//$this->assertEquals($template->getStatus(), $response->getStatus());
 	}
 
 	public function testPublicIndexWithFileToken() {
@@ -157,12 +173,17 @@ class PageControllerTest extends \Test\TestCase {
 			'message' => $message,
 			'code'    => $code,
 		];
+		// Not available on <8.2
+		//$template = new TemplateResponse($this->appName, 'index', $params, 'guest');
+		//$template->setStatus($code);
+		$this->mockSessionGet('galleryErrorMessage', $message);
 
-		$response = $this->controller->errorPage($message, $code);
+		$response = $this->controller->errorPage($code);
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
+		//$this->assertEquals($template->getStatus(), $response->getStatus());
 	}
 
 	private function mockGetSharedNode($nodeType, $nodeId) {
@@ -220,6 +241,19 @@ class PageControllerTest extends \Test\TestCase {
 							   ]
 						   )
 						   ->willReturn($url);
+	}
+
+	/**
+	 * Needs to be called at least once by testDownloadWithWrongId() or the tests will fail
+	 *
+	 * @param $key
+	 * @param $value
+	 */
+	private function mockSessionGet($key, $value) {
+		$this->session->expects($this->once())
+					  ->method('get')
+					  ->with($key)
+					  ->willReturn($value);
 	}
 
 }

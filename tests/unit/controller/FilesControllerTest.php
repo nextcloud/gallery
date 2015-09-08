@@ -15,6 +15,7 @@ namespace OCA\GalleryPlus\Controller;
 use OCA\GalleryPlus\Service\ServiceException;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\IAppContainer;
@@ -57,6 +58,10 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 	protected $searchMediaService;
 	/** @var DownloadService */
 	protected $downloadService;
+	/** @var ISession */
+	protected $session;
+	/** @var ISession */
+	protected $sessionValue = null;
 	/** @var ILogger */
 	protected $logger;
 
@@ -90,6 +95,9 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$this->downloadService = $this->getMockBuilder('\OCA\GalleryPlus\Service\DownloadService')
 									  ->disableOriginalConstructor()
 									  ->getMock();
+		$this->session = $this->getMockBuilder('\OCP\ISession')
+							  ->disableOriginalConstructor()
+							  ->getMock();
 		$this->logger = $this->getMockBuilder('\OCP\ILogger')
 							 ->disableOriginalConstructor()
 							 ->getMock();
@@ -101,6 +109,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 			$this->configService,
 			$this->searchMediaService,
 			$this->downloadService,
+			$this->session,
 			$this->logger
 		);
 	}
@@ -131,6 +140,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$redirect = new RedirectResponse(
 			$this->urlGenerator->linkToRoute($this->appName . '.page.error_page')
 		);
+		$this->mockSessionSet('galleryErrorMessage', $exception->getMessage());
 
 		$response = $this->controller->download($fileId, $filename);
 
@@ -356,4 +366,20 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 								 )
 								 ->willReturn($answer);
 	}
+
+	/**
+	 * Needs to be called at least once by testDownloadWithWrongId() or the tests will fail
+	 *
+	 * @param $key
+	 * @param $value
+	 */
+	private function mockSessionSet($key, $value) {
+		$this->session->expects($this->once())
+					  ->method('set')
+					  ->with(
+						  $key,
+						  $value
+					  );
+	}
+
 }

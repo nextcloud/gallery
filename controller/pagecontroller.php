@@ -17,6 +17,7 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
+use OCP\ISession;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -25,7 +26,6 @@ use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Http\ImageResponse;
-use OCA\GalleryPlus\Service\DownloadService;
 
 /**
  * Generates templates for the landing page from within ownCloud, the public
@@ -35,18 +35,14 @@ use OCA\GalleryPlus\Service\DownloadService;
  */
 class PageController extends Controller {
 
-	/**
-	 * @var Environment
-	 */
+	/** @var Environment */
 	private $environment;
-	/**
-	 * @var IURLGenerator
-	 */
+	/** @var IURLGenerator */
 	private $urlGenerator;
-	/**
-	 * @var IConfig
-	 */
+	/** @var IConfig */
 	private $appConfig;
+	/** @var ISession */
+	private $session;
 
 	/**
 	 * Constructor
@@ -56,19 +52,22 @@ class PageController extends Controller {
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
+	 * @param ISession $session
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		Environment $environment,
 		IURLGenerator $urlGenerator,
-		IConfig $appConfig
+		IConfig $appConfig,
+		ISession $session
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
+		$this->session = $session;
 	}
 
 	/**
@@ -104,7 +103,7 @@ class PageController extends Controller {
 			// Will render the page using the template found in templates/index.php
 			$response = new TemplateResponse($appName, 'index', $params);
 			$this->addContentSecurityToResponse($response);
-			
+
 			return $response;
 		}
 	}
@@ -128,7 +127,7 @@ class PageController extends Controller {
 			$url = $this->urlGenerator->linkToRoute(
 				$this->appName . '.files_public.download',
 				[
-					'token' => $token,
+					'token'    => $token,
 					'fileId'   => $node->getId(),
 					'filename' => $filename
 				]
@@ -142,16 +141,18 @@ class PageController extends Controller {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 * @Guest
+	 * @UseSession
 	 *
 	 * Generates an error page based on the error code
 	 *
-	 * @param string $message
 	 * @param int $code
 	 *
 	 * @return TemplateResponse
 	 */
-	public function errorPage($message, $code) {
+	public function errorPage($code) {
 		$appName = $this->appName;
+		$message = $this->session->get('galleryErrorMessage');
+		$this->session->remove('galleryErrorMessage');
 		$params = [
 			'appName' => $appName,
 			'message' => $message,
