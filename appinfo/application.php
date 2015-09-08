@@ -206,11 +206,6 @@ class Application extends App {
 		 * Core
 		 */
 		$container->registerService(
-			'OCP\IServerContainer', function (IAppContainer $c) {
-			return $c->getServer();
-		}
-		);
-		$container->registerService(
 			'EventSource', function (IAppContainer $c) {
 			return new EventSource();
 		}
@@ -264,7 +259,7 @@ class Application extends App {
 				$c->query('UserId'),
 				$c->query('UserFolder'),
 				$c->query('OCP\IUserManager'),
-				$c->query('OCP\IServerContainer'),
+				$c->query('OCP\Files\IRootFolder'),
 				$c->query('Logger')
 			);
 		}
