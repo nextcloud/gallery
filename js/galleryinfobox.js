@@ -59,7 +59,10 @@
 		 */
 		_addContent: function (content) {
 			try {
-				content = marked(content);
+				content = marked(content, {
+					gfm: false,
+					sanitize: true
+				});
 			} catch (exception) {
 				content = t('gallery',
 					'Could not load the description: ' + exception.message);
@@ -97,7 +100,10 @@
 
 				if (!$.isEmptyObject(this.albumInfo.copyright)) {
 					try {
-						copyright = marked(this.albumInfo.copyright);
+						copyright = marked(this.albumInfo.copyright, {
+							gfm: false,
+							sanitize: true
+						});
 					} catch (exception) {
 						copyright =
 							t('gallery',
