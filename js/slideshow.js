@@ -94,7 +94,6 @@
 			this.active = true;
 			this.container.show();
 			this.container.css('background-position', 'center');
-			$('html').css('overflow-y', 'hidden');
 			this._hideImage();
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
@@ -187,7 +186,6 @@
 		 * Stops the slideshow
 		 */
 		stop: function () {
-			$('html').css('overflow-y', 'scroll');
 			this.active = false;
 			this.images = null;
 			this._hideImage();
