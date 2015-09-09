@@ -62,7 +62,7 @@
 			var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
 			var targetHeight = 200 * scaleRatio;
 			targetHeight = targetHeight.toFixed(3);
-			var row = $('<div/>').addClass('row loading');
+			var row = $('<div/>').addClass('row');
 			/**
 			 * @param {*} row
 			 * @param {GalleryImage[]|Album[]} items
