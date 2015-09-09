@@ -84,7 +84,7 @@ style(
 		</div>
 	</div>
 </header>
-<div class="content-wrapper">
+<div id="content-wrapper">
 	<div id="content" class="app-<?php p($_['appName']) ?>"
 		 data-albumname="<?php p($_['albumName']) ?>">
 		<div id="app">
@@ -121,9 +121,10 @@ style(
 				 data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>">
 			</div>
 			<div id="emptycontent" class="hidden"></div>
+			<footer>
+				<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
+			</footer>
 		</div>
 	</div>
 </div>
-<footer>
-	<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
-</footer>
+
