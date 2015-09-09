@@ -121,6 +121,7 @@ style(
 				 data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>">
 			</div>
 			<div id="emptycontent" class="hidden"></div>
+			<div id="loading-indicator" class="loading"></div>
 			<footer>
 				<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
 			</footer>
