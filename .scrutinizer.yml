@@ -24,6 +24,7 @@ tools:
     php_sim: true
     php_pdepend: true
     php_analyzer: true
+    external_code_coverage: false
 
 checks:
     php:
