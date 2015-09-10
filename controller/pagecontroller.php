@@ -102,7 +102,13 @@ class PageController extends Controller {
 			$params = ['appName' => $appName];
 
 			// Will render the page using the template found in templates/index.php
-			return new TemplateResponse($appName, 'index', $params);
+			$response = new TemplateResponse($appName, 'index', $params);
+			$response->addHeader(
+				'Content-Security-Policy',
+				"default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src *; img-src * data:; font-src 'self' data:; media-src *; connect-src *"
+			);
+
+			return $response;
 		}
 	}
 
@@ -125,7 +131,7 @@ class PageController extends Controller {
 			$url = $this->urlGenerator->linkToRoute(
 				$this->appName . '.files_public.download',
 				[
-					'token' => $token,
+					'token'    => $token,
 					'fileId'   => $node->getId(),
 					'filename' => $filename
 				]
@@ -197,7 +203,13 @@ class PageController extends Controller {
 		];
 
 		// Will render the page using the template found in templates/public.php
-		return new TemplateResponse($this->appName, 'public', $params, 'public');
+		$response = new TemplateResponse($this->appName, 'public', $params, 'public');
+		$response->addHeader(
+			'Content-Security-Policy',
+			"default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src *; img-src * data:; font-src 'self' data:; media-src *; connect-src *"
+		);
+
+		return $response;
 	}
 
 	/**
