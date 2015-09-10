@@ -23,6 +23,6 @@ OC_App::loadApps(['authentication']);
 OC_App::loadApps(['filesystem', 'logging']);
 
 // Load this app
-OC_App::loadApp('gallery');
+OC_App::loadApp('galleryplus');
 
 OC_Hook::clear();

@@ -47,6 +47,6 @@ class AppTest extends GalleryIntegrationTest {
 	}
 
 	public function testNavigationEntry() {
-		$this->assertCount(1, \OC_App::getAppNavigationEntries('gallery'));
+		$this->assertCount(1, \OC_App::getAppNavigationEntries('galleryplus'));
 	}
 }
