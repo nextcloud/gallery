@@ -4,19 +4,11 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - 7
-  - hhvm
 
 env:
   global:
     - CORE_BRANCH=stable8
     - APP_NAME=galleryplus
-    - GH_REF: github.com/interfasys/galleryplus.git
-    - secure: "dc7Xn4XKenoqsO3pNIogOjlji3UeFQ9btysy+kM/6RWgC/wBHuUwmFPoCvrFJgs+BBsV8MXCvJyT0qsGfUZ25FqFK8CgoqRsyuocT1ewRhk/KZSmAVGe1mSsTMc1SUTtbcadUDe8WBa3tXcjs1ejWCpR46JyESCC5tq1WswJpbilXrYpQ+1WslOCWXxPeZKYRLLFyQ8Echlz5fP3SGNUdSo2ycDF0sbBH5jNsHXPce8FZaUOnFSPWOF7nbCgGSTIvskq5HjC6q/2dfj9Ir2PVNFI2i/jF1fTwgwZU8mHp8nSZCTFhdP30q3aKt/hyx6IKFF3K4rYut0mncpVY1mlST8Rl7VWecSQoBdgtJAH6cgJU+D1pYcboSNSZBiwX64Dzp0MTjOHtsqzUYinqGlMO0gYHcPt7EOytiAO46QSVMRaOGcaqnt5yT0NTVOiYcoV7X3KhztFN/Yl4SAjZjSDSS7XShgAPtxF+ye5B6N0q3fcOOY5lCNbarXuEedFMAD6K5/J4E7znK5OyPTGbk1Nyjbd3M4WDKgnUk4w5r95DzgIN+uqONXe8HCMKsoZhob3PQ64vp0o52FF37ey4SITYMRTKRFi53GkzsS4hpZUbUqqzyIpTO5QyLYHPPEh4tUVB2KRVx1V8yrKRdsMTdyOPcwjgc0vQteAXOtk94LsPCY="
-    # Codacy credentials
-    - secure: "JS+oBSHTeqiEf0bWn2LL15Dhb8O6Ne34hke6dDuCu5lJgMyDpEwezvCW5wuMy8xfyjDobWytxxDI+pB86UfyVMMuHI/RWYqtzmevjdUamS9JAU1kgsFcfL0XXMzgPsqykeIQdyxj0zkqLawJHetNtnENA3zYc9WyzmmM0b/0MSPr+AHtlejuFjSdpG0X3/PBCiU9mZqZScq8dwjE4PvFEdd1med2VLpsbl8d+V8M9nRTX/8d2sNzWk9k0jgerWyRT3FgGoGuVFFuePZR4XA8mcEnsXmsQ/AbvV+fZFKFcj2HZCJZqCkqhyY6x3JGqVMNk8uYmP9B4vINL+0ociAxfGM4099yv220Z76pGNE+/vGpSfHygx8BYd0KwSd0oJr5dxdik9OcN6DtsUjLVLr90LO1Z+R4FVQxuCo5oNfRL0kd8Ab84Dtir+jyOQWxWOKr38j/QPyo9Sb6HcICPMp/GpT+aPjxV737SM4OCr+FbJbkHfuQxy7qt0NOTe52apWAzTJHitHPKHN/A0PqMuoKU+IVx3QTkAg/ziQPY76XgNagrtvPSkv3iAPpbnrxLYTiX5skW6Na60YKBfYtCZwG8++FXQ767QXzB+SOTTRaob+VQ9XiBqU3vxu27/1hmXbnkWGgFCy9O6pk23BwRM4eILIzFNQz8Bt1iD118Vh+0MA="
-    # Code Climate credentials
-    - secure: "JC+cjv2o0cfFPlqd64sJKB9zZXaPrKtmoJdc+GZU3e4F1R/BCe0suMI9KOWhHHAkNH39tpA0oD6dcyJ0No8Eec3U5+if6nuXyIS0VhnCt2F86sjAE1CPD3qk8NCmvcQJVMVn8Lq8+HzcoK8hTB6QHyu8my6KQWvTCMRL6a3A/sOEBhwV3j/3owcMLvX6/TZkO0Y47nqkqwK+541BneWQ4sIud+PC82fronHRi783ohCj9LSm/Pzn+j7AkIF7olHjhOVV6J5ClsoQEYfgyxyjXSw7l6zhgAcT+r/4wY+ckc2x3Kleds0HvU5Fl3UXGOG3MpZWvhPTOc7o3E4M4qYwP9szKCXK+R6+BEhEp6jKem+3OoMDI75tUap5VKJQp8XKdnQyju2mDEj8gACllltw1TZJ0LxX4Rt+5hTVJcj3izmXu35bvVXIgCZC3Iwul3E0YnGvu4CtdT/uGHRWOifipCQyVMZAe74Syw0Iq/v79wymbZTOchmmzGeWzx79yeFkSbEN98p2nN0p7cS5/OULMgx1QyPqN9C7doeqUrVGgVU4wWlvnI0o2PSRz8485FtqXLIv7JET5oKeNYzWtW3aavLOn24ZOkJGOLsscIEzn70P1fTEPGNTq3PCcOCFmS+LEk5e3wxU/RdwihZMET4m1fxfsryW3eprz6ddJ6bpUf8="
   matrix:
     - DB=sqlite
 
@@ -54,12 +46,6 @@ before_install:
 script:
   # Test lint
   - php vendor/bin/parallel-lint --exclude travis --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
-  # Generate API documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/phpdoc run; fi"
-  # Generate Wiki documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then git submodule update --init; fi"
-  # Send documentation to Github Pages
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
 
 matrix:
   include:
@@ -67,7 +53,4 @@ matrix:
       env: DB=mysql
     - php: 5.4
       env: DB=pgsql
-  allow_failures:
-    - php: hhvm
-    - php: 7
   fast_finish: true
