@@ -32,9 +32,9 @@ return [
 		],
 		// Landing page for public galleries. If a filename is given the file is downloaded
 		[
-			'name' => 'page#public_index',
-			'url'  => '/s/{token}/{filename}',
-			'verb' => 'GET',
+			'name'     => 'page#public_index',
+			'url'      => '/s/{token}/{filename}',
+			'verb'     => 'GET',
 			'defaults' => ['filename' => null]
 		],
 		// Landing page after password entry, for public galleries
@@ -67,15 +67,22 @@ return [
 		 */
 		// Gallery config, as well as supported media types
 		[
-			'name' => 'config#get_config',
+			'name' => 'config#get',
 			'url'  => '/config',
 			'verb' => 'GET'
 		],
-		// All the images of which a preview can be generated
+		// The list of images of which previews can be generated
 		[
-			'name' => 'files#get_files',
-			'url'  => '/files',
+			'name' => 'files#get_list',
+			'url'  => '/files/list',
 			'verb' => 'GET'
+		],
+		// File download
+		[
+			'name'     => 'files#download',
+			'url'      => '/files/download/{fileId}',
+			'verb'     => 'GET',
+			'defaults' => ['fileId' => null]
 		],
 		// Batch creation of thumbnails
 		[
@@ -93,30 +100,70 @@ return [
 		 * Public services
 		 */
 		[
-			'name' => 'public_config#get_config',
+			'name' => 'config_public#get',
 			'url'  => '/config.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_files#get_files',
-			'url'  => '/files.public',
+			'name' => 'files_public#get_list',
+			'url'  => '/files.public/list',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_preview#get_thumbnails',
+			'name'     => 'files_public#download',
+			'url'      => '/files.public/download/{fileId}',
+			'verb'     => 'GET',
+			'defaults' => ['fileId' => null]
+		],
+		[
+			'name' => 'preview_public#get_thumbnails',
 			'url'  => '/thumbnails.public',
 			'verb' => 'GET'
 		],
 		[
-			'name' => 'public_preview#get_preview',
+			'name' => 'preview_public#get_preview',
 			'url'  => '/preview.public/{fileId}',
 			'verb' => 'GET'
 		],
-		// API, for later
-		/*[
-			 'name' => 'api#get_types',
-			 'url'  => '/api/1.0/types',
-			 'verb' => 'GET'
-		 ],*/
+		/**
+		 * API
+		 */
+		[
+			'name'         => 'config_api#preflighted_cors', // Valid for all API end points
+			'url'          => '/api/{path}',
+			'verb'         => 'OPTIONS',
+			'requirements' => ['path' => '.+']
+		],
+		[
+			'name' => 'config_api#get',
+			'url'  => '/api/config',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'files_api#get_list',
+			'url'  => '/api/files/list',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'files_api#download',
+			'url'  => '/api/files/download/{fileId}',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'preview_api#get_thumbnails',
+			'url'  => '/api/thumbnails',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'preview_api#get_preview',
+			'url'  => '/api/preview/{fileId}/{width}/{height}',
+			'verb' => 'GET'
+		],
+		[
+			// For embeddable galleries
+			'name' => 'preview_api#show_gallery',
+			'url'  => '/api/gallery/{folderId}',
+			'verb' => 'GET'
+		],
 	]
 ];

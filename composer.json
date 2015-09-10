@@ -26,5 +26,10 @@
   "require": {
     "php": ">=5.4.0",
     "symfony/yaml": "~2.6"
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "^2.8",
+	"jakub-onderka/php-parallel-lint": "0.*",
+	"jakub-onderka/php-console-highlighter": "0.*"
   }
 }

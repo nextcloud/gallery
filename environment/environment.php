@@ -84,9 +84,9 @@ class Environment {
 	 */
 	private $folderName;
 	/**
-	 * @var string
+	 * @var string|null
 	 */
-	private $shareWith;
+	private $sharePassword;
 
 	/***
 	 * Constructor
@@ -134,7 +134,7 @@ class Environment {
 
 		$this->folderName = $linkItem['file_target'];
 		$this->userId = $rootLinkItem['uid_owner'];
-		$this->shareWith = $linkItem['share_with'];
+		$this->sharePassword = $linkItem['share_with'];
 	}
 
 	/**
@@ -149,44 +149,42 @@ class Environment {
 	}
 
 	/**
-	 * Returns the resource located at the given path
-	 *
-	 * The path starts from the user's files folder because we'll query that folder to get the
-	 * information we need. The resource is either a File or a Folder
+	 * Returns the Node based on a path starting from the virtual root
 	 *
 	 * @param string $subPath
 	 *
 	 * @return File|Folder
 	 */
-	public function getResourceFromPath($subPath) {
+	public function getNodeFromVirtualRoot($subPath) {
 		$relativePath = $this->getRelativePath($this->fromRootToFolder);
 		$path = $relativePath . '/' . $subPath;
-		$node = $this->getNode($path);
+		$node = $this->getNodeFromUserFolder($path);
 
 		return $this->getResourceFromId($node->getId());
 	}
 
 	/**
-	 * Returns the Node based on the current user's files folder and a given
-	 * path
+	 * Returns the Node based on a path starting from the files' owner user folder
+	 *
+	 * When logged in, this is the current user's user folder
+	 * When visiting a link, this is the sharer's user folder
 	 *
 	 * @param string $path
 	 *
 	 * @return File|Folder
 	 *
-	 * @throws EnvironmentException
+	 * @throws NotFoundEnvException
 	 */
-	public function getNode($path) {
-		$node = false;
+	public function getNodeFromUserFolder($path) {
 		$folder = $this->userFolder;
 		if ($folder === null) {
-			$this->logAndThrowNotFound("Could not access the user's folder");
+			throw new NotFoundEnvException("Could not access the user's folder");
 		} else {
 			try {
 				$node = $folder->get($path);
 			} catch (NotFoundException $exception) {
 				$message = 'Could not find anything at: ' . $exception->getMessage();
-				$this->logAndThrowNotFound($message);
+				throw new NotFoundEnvException($message);
 			}
 		}
 
@@ -200,12 +198,12 @@ class Environment {
 	 *
 	 * @return Node
 	 *
-	 * @throws EnvironmentException
+	 * @throws NotFoundEnvException
 	 */
 	public function getResourceFromId($resourceId) {
 		$resourcesArray = $this->userFolder->getById($resourceId);
 		if ($resourcesArray[0] === null) {
-			$this->logAndThrowNotFound('Could not locate file linked to ID: ' . $resourceId);
+			throw new NotFoundEnvException('Could not locate file linked to ID: ' . $resourceId);
 		}
 
 		return $resourcesArray[0];
@@ -224,17 +222,17 @@ class Environment {
 	 * Returns the virtual root where the user lands after logging in or when following a link
 	 *
 	 * @return Folder
-	 *
-	 * @throws EnvironmentException
+	 * @throws NotFoundEnvException
 	 */
 	public function getVirtualRootFolder() {
 		$rootFolder = $this->userFolder;
 		if (!empty($this->sharedNodeId)) {
 			$node = $this->getSharedNode();
-			if ($node->getType() === 'dir') {
+			$nodeType = $node->getType();
+			if ($nodeType === 'dir') {
 				$rootFolder = $node;
 			} else {
-				$this->logAndThrowNotFound($node->getPath() . ' is not a folder');
+				throw new NotFoundEnvException($node->getPath() . ' is not a folder');
 			}
 		}
 
@@ -254,6 +252,7 @@ class Environment {
 	 * Returns the name of the user sharing files publicly
 	 *
 	 * @return string
+	 * @throws NotFoundEnvException
 	 */
 	public function getDisplayName() {
 		$user = null;
@@ -263,7 +262,7 @@ class Environment {
 			$user = $this->userManager->get($userId);
 		}
 		if ($user === null) {
-			$this->logAndThrowNotFound('Could not find user');
+			throw new NotFoundEnvException('Could not find user');
 		}
 
 		return $user->getDisplayName();
@@ -279,12 +278,12 @@ class Environment {
 	}
 
 	/**
-	 * Returns if the share is protected (share_with === true)
+	 * Returns the password for the share, if there is one
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function isShareProtected() {
-		return $this->shareWith;
+	public function getSharePassword() {
+		return $this->sharePassword;
 	}
 
 	/**
@@ -321,9 +320,10 @@ class Environment {
 	 */
 	public function getPathFromVirtualRoot($node) {
 		$path = $node->getPath();
+		$nodeType = $node->getType();
 
-		if ($node->getType() === 'dir') {
-			// Needed because fromRootToFolder always ends with a slash
+		// Needed because fromRootToFolder always ends with a slash
+		if ($nodeType === 'dir') {
 			$path .= '/';
 		}
 
@@ -369,18 +369,6 @@ class Environment {
 		$origShareRelPath = str_replace($folderPath, '', $fullPath);
 
 		return $origShareRelPath;
-	}
-
-	/**
-	 * Logs the error and raises an exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws NotFoundEnvException
-	 */
-	private function logAndThrowNotFound($message) {
-		$this->logger->error($message . ' (404)');
-		throw new NotFoundEnvException($message);
 	}
 
 }

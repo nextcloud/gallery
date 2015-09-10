@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2014-2015
  */
 
 namespace OCA\GalleryPlus\Controller;
@@ -16,7 +16,7 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\ILogger;
 
-use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Http\ImageResponse;
@@ -27,11 +27,11 @@ use OCA\GalleryPlus\Service\DownloadService;
 use OCA\GalleryPlus\Service\ServiceException;
 
 /**
- * Class FilesController
+ * Class FilesApiController
  *
  * @package OCA\GalleryPlus\Controller
  */
-class FilesController extends Controller {
+class FilesApiController extends ApiController {
 
 	use Files;
 	use HttpError;
@@ -73,15 +73,12 @@ class FilesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * Returns a list of all media files available to the authenticated user
 	 *
-	 *    * Authentication can be via a login/password or a token/(password)
-	 *    * For private galleries, it returns all media files, with the full path from the root
-	 *     folder For public galleries, the path starts from the folder the link gives access to
-	 *     (virtual root)
-	 *    * An exception is only caught in case something really wrong happens. As we don't test
-	 *     files before including them in the list, we may return some bad apples
+	 * @see FilesController::getList()
 	 *
 	 * @param string $location a path representing the current album in the app
 	 * @param string $features the list of supported features
@@ -102,6 +99,8 @@ class FilesController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * Sends the file matching the fileId
 	 *

@@ -19,24 +19,28 @@ use OCP\IContainer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 
+use OCA\GalleryPlus\Config\ConfigParser;
 use OCA\GalleryPlus\Controller\PageController;
 use OCA\GalleryPlus\Controller\ConfigController;
+use OCA\GalleryPlus\Controller\ConfigPublicController;
+use OCA\GalleryPlus\Controller\ConfigApiController;
 use OCA\GalleryPlus\Controller\FilesController;
+use OCA\GalleryPlus\Controller\FilesPublicController;
+use OCA\GalleryPlus\Controller\FilesApiController;
 use OCA\GalleryPlus\Controller\PreviewController;
-use OCA\GalleryPlus\Controller\PublicConfigController;
-use OCA\GalleryPlus\Controller\PublicFilesController;
-use OCA\GalleryPlus\Controller\PublicPreviewController;
+use OCA\GalleryPlus\Controller\PreviewPublicController;
+use OCA\GalleryPlus\Controller\PreviewApiController;
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Preview\Preview;
 use OCA\GalleryPlus\Service\SearchFolderService;
 use OCA\GalleryPlus\Service\ConfigService;
-use OCA\GalleryPlus\Service\ConfigParser;
 use OCA\GalleryPlus\Service\SearchMediaService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
 use OCA\GalleryPlus\Middleware\SharingCheckMiddleware;
 use OCA\GalleryPlus\Middleware\EnvCheckMiddleware;
+use OCA\GalleryPlus\Utility\EventSource;
 
 use OCA\OcUtility\AppInfo\Application as OcUtility;
 use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
@@ -68,7 +72,6 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('Environment'),
 				$c->query('OCP\IURLGenerator'),
-				$c->query('DownloadService'),
 				$c->query('OCP\IConfig')
 			);
 		}
@@ -85,8 +88,19 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'PublicConfigController', function (IContainer $c) {
-			return new PublicConfigController(
+			'ConfigPublicController', function (IContainer $c) {
+			return new ConfigPublicController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ConfigService'),
+				$c->query('PreviewService'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'ConfigApiController', function (IContainer $c) {
+			return new ConfigApiController(
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
@@ -100,21 +114,39 @@ class Application extends App {
 			return new FilesController(
 				$c->query('AppName'),
 				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
 				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
+				$c->query('DownloadService'),
 				$c->query('Logger')
 			);
 		}
 		);
 		$container->registerService(
-			'PublicFilesController', function (IContainer $c) {
-			return new PublicFilesController(
+			'FilesPublicController', function (IContainer $c) {
+			return new FilesPublicController(
 				$c->query('AppName'),
 				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
 				$c->query('SearchFolderService'),
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
+				$c->query('DownloadService'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'FilesApiController', function (IContainer $c) {
+			return new FilesApiController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
+				$c->query('SearchFolderService'),
+				$c->query('ConfigService'),
+				$c->query('SearchMediaService'),
+				$c->query('DownloadService'),
 				$c->query('Logger')
 			);
 		}
@@ -128,21 +160,35 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
 		);
 		$container->registerService(
-			'PublicPreviewController', function (IContainer $c) {
-			return new PublicPreviewController(
+			'PreviewPublicController', function (IContainer $c) {
+			return new PreviewPublicController(
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
-				$c->query('OCP\IEventSource'),
+				$c->query('EventSource'),
+				$c->query('Logger')
+			);
+		}
+		);
+		$container->registerService(
+			'PreviewApiController', function (IContainer $c) {
+			return new PreviewApiController(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('OCP\IURLGenerator'),
+				$c->query('ThumbnailService'),
+				$c->query('PreviewService'),
+				$c->query('DownloadService'),
+				$c->query('EventSource'),
 				$c->query('Logger')
 			);
 		}
@@ -157,9 +203,8 @@ class Application extends App {
 		}
 		);
 		$container->registerService(
-			'OCP\IEventSource', function (IAppContainer $c) {
-			return $c->getServer()
-					 ->createEventSource();
+			'EventSource', function (IAppContainer $c) {
+			return new EventSource();
 		}
 		);
 		$container->registerService(

@@ -1,5 +1,5 @@
-/* global Gallery, Thumbnails */
-(function ($, Gallery) {
+/* global oc_requesttoken, Gallery, Thumbnails */
+(function ($, Gallery, oc_requesttoken) {
 	"use strict";
 	/**
 	 * Creates a new image object to store information about a media file
@@ -88,14 +88,18 @@
 					var url = '#' + encodeURIComponent(image.path);
 
 					if (!image.thumbnail.valid) {
-						url = Gallery.utility.getPreviewUrl(image.fileId, image.etag);
-						url = url + '&download';
+						var params = {
+							c: image.etag,
+							requesttoken: oc_requesttoken
+						};
+						url = Gallery.utility.buildGalleryUrl('files/download', '/' + image.fileId,
+							params);
 					}
 					var a = $('<a/>').addClass('image').attr('href', url).attr('data-path',
 						image.path);
 
 					var imageLabel = $('<span/>').addClass('image-label');
-					var imageTitle = $('<span/>').addClass('title').html(
+					var imageTitle = $('<span/>').addClass('title').text(
 						OC.basename(image.path));
 					imageLabel.append(imageTitle);
 					a.hover(function () {
@@ -113,4 +117,4 @@
 	};
 
 	window.GalleryImage = GalleryImage;
-})(jQuery, Gallery);
+})(jQuery, Gallery, oc_requesttoken);

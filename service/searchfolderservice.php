@@ -17,7 +17,11 @@ use OCP\Files\Folder;
 use OCA\GalleryPlus\Environment\NotFoundEnvException;
 
 /**
- * Contains various methods to retrieve information from the filesystem
+ * Looks for the folder to use, based on the request made by the client
+ *
+ * This is to make sure we were not:
+ *    * given a file
+ *    * given a folder name with a typo
  *
  * @package OCA\GalleryPlus\Service
  */
@@ -63,7 +67,7 @@ class SearchFolderService extends FilesService {
 		$node = null;
 		$location = $this->validateLocation($location, $depth);
 		try {
-			$node = $this->environment->getResourceFromPath($location);
+			$node = $this->environment->getNodeFromVirtualRoot($location);
 			if ($node->getType() === 'file') {
 				$node = $node->getParent();
 			}
@@ -120,16 +124,14 @@ class SearchFolderService extends FilesService {
 	 * @param bool $locationHasChanged
 	 *
 	 * @return array <string,Folder,bool>
-	 *
-	 * @throws NotFoundServiceException
+	 * @throws ForbiddenServiceException|NotFoundServiceException
 	 */
 	private function sendFolder($path, $node, $locationHasChanged) {
 		if (is_null($node)) {
 			// Something very wrong has just happened
-			$this->logAndThrowNotFound('Oh Nooooes!');
-		}
-		if (!$this->isAllowedAndAvailable($node)) {
-			$this->logAndThrowForbidden('Album is private or unavailable');
+			throw new NotFoundServiceException('Oh Nooooes!');
+		} elseif (!$this->isAllowedAndAvailable($node)) {
+			throw new ForbiddenServiceException('Album is private or unavailable');
 		}
 
 		return [$path, $node, $locationHasChanged];

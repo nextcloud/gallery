@@ -1,23 +1,21 @@
 <?php
 /**
- * ownCloud - galleryplus
+ * owncloud - galleryplus
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2015
  */
 
-namespace OCA\GalleryPlus\Service;
-
-use OCP\Util;
+namespace OCA\GalleryPlus\Config;
 
 /**
- * Thrown when the service cannot reply to a request
+ * Thrown when the configuration parser cannot parse a file
  */
-class ServiceException extends \Exception {
+class ConfigException extends \Exception {
 
 	/**
 	 * Constructor
@@ -25,7 +23,6 @@ class ServiceException extends \Exception {
 	 * @param string $msg the message contained in the exception
 	 */
 	public function __construct($msg) {
-		Util::writeLog('galleryplus', 'Exception' . $msg, Util::ERROR);
 		parent::__construct($msg);
 	}
 }

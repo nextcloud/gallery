@@ -5,20 +5,26 @@ imports:
 filter:
     excluded_paths:
         - 'appinfo/application.php'
+        - 'appinfo/info.xml'
         - 'l10n/*'
-        - 'js/jquery*'
-        - 'js/bigshot*'
         - 'vendor/*'
         - 'js/vendor/*'
         - 'templates/*'
         - 'css/*'
         - 'img/*'
+        - 'tests/*'
+        - 'build/*'
+        - 'documentation/*'
+        - 'controller/configapicontroller.php'
+        - 'controller/filesapicontroller.php'
+        - 'controller/previewapicontroller.php'
 
 tools:
     sensiolabs_security_checker: true
     php_sim: true
     php_pdepend: true
     php_analyzer: true
+    external_code_coverage: false
 
 checks:
     php:

@@ -31,21 +31,13 @@ use OCP\AppFramework\Middleware;
  */
 abstract class CheckMiddleware extends Middleware {
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	protected $appName;
-	/**
-	 * @var IRequest
-	 */
+	/** @var IRequest */
 	protected $request;
-	/**
-	 * @var IURLGenerator
-	 */
+	/** @var IURLGenerator */
 	private $urlGenerator;
-	/**
-	 * @var ILogger
-	 */
+	/** @var ILogger */
 	protected $logger;
 
 	/***
@@ -89,19 +81,6 @@ abstract class CheckMiddleware extends Middleware {
 	}
 
 	/**
-	 * Logs the error and raises an exception
-	 *
-	 * @param string $message
-	 * @param int $code
-	 *
-	 * @throws CheckException
-	 */
-	protected function logAndThrow($message, $code) {
-		$this->logger->error($message . ' (' . $code . ')');
-		throw new CheckException($message, $code);
-	}
-
-	/**
 	 * Decides which type of response to send
 	 *
 	 * @param string $message
@@ -112,7 +91,7 @@ abstract class CheckMiddleware extends Middleware {
 	private function computeResponse($message, $code) {
 		$acceptHtml = stripos($this->request->getHeader('Accept'), 'html');
 		if ($acceptHtml === false) {
-			$response = $this->sendJsonResponse($acceptHtml, $code);
+			$response = $this->sendJsonResponse($message, $code);
 		} else {
 			$response = $this->sendHtmlResponse($message, $code);
 		}

@@ -13,6 +13,6 @@
 namespace OCA\GalleryPlus\Service;
 
 /**
- * Thrown when the service cannot reply to a request
+ * Thrown when the service does not have access to a node
  */
 class ForbiddenServiceException extends ServiceException {}

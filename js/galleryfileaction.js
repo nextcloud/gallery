@@ -88,7 +88,12 @@
 						requesttoken: oc_requesttoken
 					};
 					imageUrl = galleryFileAction.buildGalleryUrl('preview', '/' + file.id, params);
-					downloadUrl = imageUrl + '&download';
+					params = {
+						c: file.etag,
+						requesttoken: oc_requesttoken
+					};
+					downloadUrl =
+						galleryFileAction.buildGalleryUrl('files/download', '/' + file.id, params);
 
 					images.push({
 						name: file.name,
@@ -170,7 +175,7 @@ $(document).ready(function () {
 
 	// Retrieve the config as well as the list of supported media types.
 	// The list of media files is retrieved when the user clicks on a row
-	var url = window.galleryFileAction.buildGalleryUrl('config', '', {slideshow: 1});
+	var url = window.galleryFileAction.buildGalleryUrl('config', '', {extramediatypes: 1});
 	$.getJSON(url).then(function (config) {
 		if (!$.isEmptyObject(config.features)) {
 			window.galleryFileAction.config = config.features;

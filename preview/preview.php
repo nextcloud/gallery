@@ -104,8 +104,7 @@ class Preview {
 	 * Returns a preview based on OC's preview class and our custom methods
 	 *
 	 * We check that the preview returned by the Preview class can be used by
-	 * the browser. If not, we send the mime icon and change the status code so
-	 * that the client knows that the process has failed.
+	 * the browser. If not, we send "false" to the controller
 	 *
 	 * @fixme setKeepAspect is missing from public interface.
 	 *     https://github.com/owncloud/core/issues/12772
@@ -173,7 +172,6 @@ class Preview {
 	 * @return \OC_Image
 	 */
 	private function getPreviewFromCore($keepAspect) {
-		//$this->logger->debug("[PreviewService] Fetching the preview");
 		list($maxX, $maxY) = $this->dims;
 
 		$this->preview->setMaxX($maxX);
@@ -182,12 +180,8 @@ class Preview {
 		$this->preview->setKeepAspect($keepAspect);
 
 		//$this->logger->debug("[PreviewService] preview {preview}", ['preview' => $this->preview]);
-		try {
-			// Can generate encryption Exceptions...
-			$previewData = $this->preview->getPreview();
-		} catch (\Exception $exception) {
-			return null;
-		}
+
+		$previewData = $this->preview->getPreview();
 
 		return $previewData;
 	}
@@ -195,7 +189,7 @@ class Preview {
 	/**
 	 * Makes a preview fit in the asked dimension and, if required, fills the empty space
 	 *
-	 * @param \OC_Image $previewData
+	 * @param \OCP\IImage $previewData
 	 * @param int $previewWidth
 	 * @param int $previewHeight
 	 * @param int $maxWidth
@@ -221,7 +215,7 @@ class Preview {
 	/**
 	 * Makes a preview fit in the asked dimension and, if required, fills the empty space
 	 *
-	 * @param \OC_Image $previewData
+	 * @param \OCP\IImage $previewData
 	 * @param int $previewWidth
 	 * @param int $previewHeight
 	 * @param int $maxWidth
@@ -253,7 +247,7 @@ class Preview {
 	/**
 	 * Mixes a transparent background with a resized foreground preview
 	 *
-	 * @param \OC_Image $previewData
+	 * @param \OCP\IImage $previewData
 	 * @param int $previewWidth
 	 * @param int $previewHeight
 	 * @param int $newWidth
@@ -296,7 +290,7 @@ class Preview {
 	 * @param int $maxWidth
 	 * @param int $maxHeight
 	 *
-	 * @return array
+	 * @return array<int,double>
 	 */
 	private function calculateNewDimensions($previewWidth, $previewHeight, $maxWidth, $maxHeight) {
 		if (($previewWidth / $previewHeight) >= ($maxWidth / $maxHeight)) {
@@ -322,22 +316,22 @@ class Preview {
 	 *
 	 * @param resource $fixedPreview
 	 *
-	 * @return \OC_Image
+	 * @return \OCP\IImage
 	 */
 	private function fixPreviewCache($fixedPreview) {
 		$owner = $this->userId;
 		$file = $this->file;
 		$preview = $this->preview;
 		$fixedPreviewObject = new Image($fixedPreview);
-		$previewData = $preview->getPreview();
-
 		// Get the location where the broken thumbnail is stored
 		$thumbnailFolder = $this->dataDir . '/' . $owner . '/';
 		$thumbnail = $thumbnailFolder . $preview->isCached($file->getId());
 
 		// Caching it for next time
 		if ($fixedPreviewObject->save($thumbnail)) {
-			$previewData = $fixedPreviewObject->data();
+			$previewData = $fixedPreviewObject;
+		} else {
+			$previewData = $preview->getPreview();
 		}
 
 		return $previewData;

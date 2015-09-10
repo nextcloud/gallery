@@ -17,7 +17,6 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
-use OCP\Files\File;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -26,7 +25,6 @@ use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Http\ImageResponse;
-use OCA\GalleryPlus\Service\ServiceException;
 use OCA\GalleryPlus\Service\DownloadService;
 
 /**
@@ -46,10 +44,6 @@ class PageController extends Controller {
 	 */
 	private $urlGenerator;
 	/**
-	 * @var DownloadService
-	 */
-	private $downloadService;
-	/**
 	 * @var IConfig
 	 */
 	private $appConfig;
@@ -61,7 +55,6 @@ class PageController extends Controller {
 	 * @param IRequest $request
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
-	 * @param DownloadService $downloadService
 	 * @param IConfig $appConfig
 	 */
 	public function __construct(
@@ -69,14 +62,12 @@ class PageController extends Controller {
 		IRequest $request,
 		Environment $environment,
 		IURLGenerator $urlGenerator,
-		DownloadService $downloadService,
 		IConfig $appConfig
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
-		$this->downloadService = $downloadService;
 		$this->appConfig = $appConfig;
 	}
 
@@ -111,7 +102,13 @@ class PageController extends Controller {
 			$params = ['appName' => $appName];
 
 			// Will render the page using the template found in templates/index.php
-			return new TemplateResponse($appName, 'index', $params);
+			$response = new TemplateResponse($appName, 'index', $params);
+			$response->addHeader(
+				'Content-Security-Policy',
+				"default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src *; img-src * data:; font-src 'self' data:; media-src *; connect-src *"
+			);
+
+			return $response;
 		}
 	}
 
@@ -119,7 +116,7 @@ class PageController extends Controller {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 *
-	 * Shows the albums and pictures or download the single file the token gives access to
+	 * Shows the albums and pictures or redirects to the download location the token gives access to
 	 *
 	 * @param string $token
 	 * @param null|string $filename
@@ -131,7 +128,16 @@ class PageController extends Controller {
 		if ($node->getType() === 'dir') {
 			return $this->showPublicPage($token);
 		} else {
-			return $this->downloadFile($node, $filename);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.files_public.download',
+				[
+					'token'    => $token,
+					'fileId'   => $node->getId(),
+					'filename' => $filename
+				]
+			);
+
+			return new RedirectResponse($url);
 		}
 	}
 
@@ -197,52 +203,28 @@ class PageController extends Controller {
 		];
 
 		// Will render the page using the template found in templates/public.php
-		return new TemplateResponse($this->appName, 'public', $params, 'public');
-	}
+		$response = new TemplateResponse($this->appName, 'public', $params, 'public');
+		$response->addHeader(
+			'Content-Security-Policy',
+			"default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-src *; img-src * data:; font-src 'self' data:; media-src *; connect-src *"
+		);
 
-	/**
-	 * Downloads the file associated with a token
-	 *
-	 * @param File $file
-	 * @param string|null $filename
-	 *
-	 * @return ImageResponse|RedirectResponse
-	 */
-	private function downloadFile($file, $filename) {
-		try {
-			$download = $this->downloadService->downloadFile($file);
-			if (is_null($filename)) {
-				$filename = $file->getName();
-			}
-			$download['name'] = $filename;
-
-			return new ImageResponse($download);
-		} catch (ServiceException $exception) {
-			$url = $this->urlGenerator->linkToRoute(
-				$this->appName . '.page.error_page',
-				[
-					'message' => $exception->getMessage(),
-					'code'    => Http::STATUS_NOT_FOUND
-				]
-			);
-
-			return new RedirectResponse($url);
-		}
+		return $response;
 	}
 
 	/**
 	 * Determines if we can add external shared to this instance
 	 *
-	 * @return array
+	 * @return array<bool,string>
 	 */
 	private function getServer2ServerProperties() {
 		$server2ServerSharing = $this->appConfig->getAppValue(
 			'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
 		);
 		$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
-		$protected = $this->environment->isShareProtected();
-		$protected = ($protected) ? 'true' : 'false';
+		$password = $this->environment->getSharePassword();
+		$passwordProtected = ($password) ? 'true' : 'false';
 
-		return [$server2ServerSharing, $protected];
+		return [$server2ServerSharing, $passwordProtected];
 	}
 }

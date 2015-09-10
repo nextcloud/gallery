@@ -42,8 +42,6 @@ abstract class FilesService extends Service {
 	 * @param int $subDepth
 	 *
 	 * @return array
-	 *
-	 * @throws NotFoundServiceException
 	 */
 	protected function getNodes($folder, $subDepth) {
 		try {
@@ -153,12 +151,11 @@ abstract class FilesService extends Service {
 	 * @param \Exception $exception
 	 *
 	 * @return array
-	 *
 	 * @throws NotFoundServiceException
 	 */
 	private function recoverFromGetNodesError($subDepth, $exception) {
 		if ($subDepth === 0) {
-			$this->logAndThrowNotFound($exception->getMessage());
+			throw new NotFoundServiceException($exception->getMessage());
 		}
 
 		return [];

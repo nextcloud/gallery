@@ -13,14 +13,14 @@
 namespace OCA\GalleryPlus\Controller;
 
 /**
- * Class PublicPreviewController
+ * Class PreviewPublicController
  *
  * Note: Type casting only works if the "@param" parameters are also included in this class as
  * their not yet inherited
  *
  * @package OCA\GalleryPlus\Controller
  */
-class PublicPreviewController extends PreviewController {
+class PreviewPublicController extends PreviewController {
 
 	/**
 	 * @PublicPage
@@ -35,7 +35,7 @@ class PublicPreviewController extends PreviewController {
 	 *
 	 * @param string $ids the ID of the files of which we need thumbnail previews of
 	 * @param bool $square
-	 * @param bool $scale
+	 * @param float $scale
 	 */
 	public function getThumbnails($ids, $square, $scale) {
 		return parent::getThumbnails($ids, $square, $scale);
@@ -55,10 +55,9 @@ class PublicPreviewController extends PreviewController {
 	 * @param int $fileId the ID of the file of which we need a large preview of
 	 * @param int $width
 	 * @param int $height
-	 * @param string|null $download
 	 */
-	public function getPreview($fileId, $width, $height, $download) {
-		return parent::getPreview($fileId, $width, $height, $download);
+	public function getPreview($fileId, $width, $height) {
+		return parent::getPreview($fileId, $width, $height);
 	}
 
 }

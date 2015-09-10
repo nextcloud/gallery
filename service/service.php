@@ -59,52 +59,22 @@ abstract class Service {
 	 *
 	 * @param int $nodeId ID of the resource to locate
 	 *
-	 * @return Node|null
-	 *
+	 * @return Node
 	 * @throws NotFoundServiceException
 	 */
 	public function getResourceFromId($nodeId) {
-		$node = null;
 		try {
 			$node = $this->environment->getResourceFromId($nodeId);
 
 			// Making extra sure that we can actually do something with the file
-			if ($node->getMimetype() && $node->isReadable()) {
-				return $node;
-			} else {
-				$this->logAndThrowNotFound("Can't access the file");
+			if (!$node->getMimetype() || !$node->isReadable()) {
+				throw new NotFoundServiceException("Can't access the file");
 			}
+
+			return $node;
 		} catch (\Exception $exception) {
-			$this->logAndThrowNotFound($exception->getMessage());
+			throw new NotFoundServiceException($exception->getMessage());
 		}
-
-		return null;
-	}
-	
-	/**
-	 * Logs the error and raises a "Not found" type exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws NotFoundServiceException
-	 */
-	protected function logAndThrowNotFound($message) {
-		$this->logger->error($message . ' (404)');
-
-		throw new NotFoundServiceException($message);
-	}
-
-	/**
-	 * Logs the error and raises a "Forbidden" type exception
-	 *
-	 * @param string $message
-	 *
-	 * @throws ForbiddenServiceException
-	 */
-	protected function logAndThrowForbidden($message) {
-		$this->logger->error($message . ' (403)');
-
-		throw new ForbiddenServiceException($message);
 	}
 
 }

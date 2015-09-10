@@ -151,15 +151,7 @@ div.crumb.last a{
 
 #gallery a.album .album-label,
 #gallery a.image .image-label {
-	background: #333; /* Old browsers */
-	background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0, 0, 0, 0)), color-stop(100%,rgba(0, 0, 0, .6))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .6) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .6) 100%); /* Opera11.10+ */
-	background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .6) 100%); /* IE10+ */
-	background: linear-gradient(top, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, .6) 100%); /* W3C */
-
-	text-shadow: 0px 0px 1px rgba(0, 0, 0, .5);
+	background: rgba(0,0,0,0.4);
 }
 
 #gallery a.image .image-label .title {
