@@ -442,13 +442,6 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$linkItem]);
 	}
 
-	/**
-	 * @expectedException \OCA\GalleryPlus\Middleware\CheckException
-	 */
-	public function testNoTokenFound() {
-		self::invokePrivate($this->middleware, 'noTokenFound');
-	}
-
 	public function testAfterExceptionWithCheckExceptionAndHtmlAcceptAnd401Code() {
 		$message = 'fail';
 		$code = Http::STATUS_UNAUTHORIZED;

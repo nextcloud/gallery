@@ -9,15 +9,15 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\GalleryPlus\Service;
-include_once 'ServiceTest.php';
 
 /**
  * Class SearchMediaServiceTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class SearchMediaServiceTest extends ServiceTest {
+class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var SearchMediaService */
 	protected $service;
@@ -78,11 +78,32 @@ class SearchMediaServiceTest extends ServiceTest {
 		], $isReadable, $mounted, $mount, $query, $queryResult
 		);
 		$folder3 = $this->mockFolder(
-			'home::user', 10101, [$folder1], $isReadable, $mounted, $mount, $query, $queryResult
+			'home::user', 101010, [$folder1], $isReadable, $mounted, $mount, $query, $queryResult
 		);
 		$folder4 = $this->mockFolder(
-			'home::user', 10101, [$folder1, $folder2], $isReadable, $mounted, $mount, $query,
+			'home::user', 101010, [$folder1, $folder2], $isReadable, $mounted, $mount, $query,
 			$queryResult
+		);
+		$folder5 = $this->mockFolder(
+			'home::user', 987234, [
+			$this->mockJpgFile(998877),
+			$this->mockJpgFile(998876),
+			$this->mockNoMediaFile(998875)
+		], $isReadable, $mounted, $mount, '.nomedia', true
+		);
+		$folder6 = $this->mockFolder(
+			'webdav::user@domain.com/dav', 545454, [
+			$this->mockJpgFile(11111)
+		], $isReadable, true, $mount, $query, $queryResult
+		);
+		$folder7 = $this->mockFolder(
+			'home::user', 545454, [
+			$this->mockJpgFile(1),
+			$this->mockJpgFile(2),
+			$this->mockJpgFile(3),
+			$this->mockJpgFile(4),
+			$this->mockJpgFile(5),
+		], $isReadable, $mounted, $mount, $query, $queryResult
 		);
 
 		// 2 folders and 3 files, everything is reachable
@@ -94,7 +115,7 @@ class SearchMediaServiceTest extends ServiceTest {
 			$this->mockJpgFile(99999)
 
 		];
-		// 2 deepfolder and 3 files. Should return the all the files
+		// 2 deepfolder and 3 files. Should return all the files
 		$config2 = [
 			$folder3,
 			$folder3,
@@ -110,6 +131,32 @@ class SearchMediaServiceTest extends ServiceTest {
 			$this->mockJpgFile(88888),
 			$this->mockJpgFile(99999)
 		];
+		// 1 blacklisted folder and 3 files
+		$config4 = [
+			$folder5,
+			$this->mockJpgFile(77777),
+			$this->mockJpgFile(88888),
+			$this->mockJpgFile(99999)
+
+		];
+		// 1 standard folder, 1 external share and 3 files
+		$config5 = [
+			$folder1,
+			$folder6,
+			$this->mockJpgFile(77777),
+			$this->mockJpgFile(88888),
+			$this->mockJpgFile(99999)
+
+		];
+		// 1 standard folder (3), 1 deep folder and 3 files
+		$config6 = [
+			$folder1,
+			$folder7,
+			$this->mockJpgFile(77777),
+			$this->mockJpgFile(88888),
+			$this->mockJpgFile(99999)
+
+		];
 		$topFolder1 = $this->mockFolder(
 			'home::user', 909090, $config1, $isReadable, $mounted, $mount, $query, $queryResult
 		);
@@ -119,11 +166,23 @@ class SearchMediaServiceTest extends ServiceTest {
 		$topFolder3 = $this->mockFolder(
 			'home::user', 909090, $config3, $isReadable, $mounted, $mount, $query, $queryResult
 		);
+		$topFolder4 = $this->mockFolder(
+			'home::user', 909090, $config4, $isReadable, $mounted, $mount, $query, $queryResult
+		);
+		$topFolder5 = $this->mockFolder(
+			'home::user', 909090, $config5, $isReadable, $mounted, $mount, $query, $queryResult
+		);
+		$topFolder6 = $this->mockFolder(
+			'home::user', 909090, $config6, $isReadable, $mounted, $mount, $query, $queryResult
+		);
 
 		return [
 			[$topFolder1, 9],
 			[$topFolder2, 9],
-			[$topFolder3, 6]
+			[$topFolder3, 6],
+			[$topFolder4, 3],
+			[$topFolder5, 6],
+			[$topFolder6, 10]
 		];
 	}
 
@@ -154,7 +213,7 @@ class SearchMediaServiceTest extends ServiceTest {
 		$storageId = 'home::user';
 		$isReadable = false;
 		$file = $this->mockFile($fileId, $storageId, $isReadable);
-		$this->mockGetResourceFromId($fileId, $file);
+		$this->mockGetResourceFromId($this->environment, $fileId, $file);
 
 		$this->service->getResourceFromId($fileId);
 	}

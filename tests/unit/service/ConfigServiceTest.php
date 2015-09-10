@@ -9,15 +9,18 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\GalleryPlus\Service;
-include_once 'ServiceTest.php';
+
+use OCA\GalleryPlus\Config\ConfigParser;
+use OCA\GalleryPlus\Config\ConfigException;
 
 /**
  * Class ConfigServiceTest
  *
  * @package OCA\GalleryPlus\Controller
  */
-class ConfigServiceTest extends ServiceTest {
+class ConfigServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var ConfigService */
 	protected $service;
@@ -30,7 +33,7 @@ class ConfigServiceTest extends ServiceTest {
 	public function setUp() {
 		parent::setUp();
 
-		$this->configParser = $this->getMockBuilder('\OCA\GalleryPlus\Service\ConfigParser')
+		$this->configParser = $this->getMockBuilder('\OCA\GalleryPlus\Config\ConfigParser')
 								   ->disableOriginalConstructor()
 								   ->getMock();
 		$this->service = new ConfigService (
@@ -50,9 +53,9 @@ class ConfigServiceTest extends ServiceTest {
 		$configItems = ['information' => false, 'sorting' => false]; // Default in the class
 		$level = 0;
 		$configPath = 'Some/folder';
-		$exception = new ServiceException('Boom');
+		$exception = new ConfigException('Boom');
 		$result =
-			[[['error' => ['message' => 'Boom' . "</br></br>Config location: /$configPath"]]]];
+			[[['error' => ['message' => 'Boom' . ". Config location: /$configPath"]]]];
 
 		$this->mockGetPathFromVirtualRoot($folder, $configPath);
 		$this->mockGetFolderConfigWithBrokenSetup(

@@ -132,14 +132,18 @@ class GetFilesCest {
 		$params['location'] = 'folder4';
 
 		$I->am('an app');
-		$I->wantTo('get the list of files of a folder which contains the .nomedia file'
+		$I->wantTo(
+			'get the list of files of a folder which contains the .nomedia file'
 		);
 
 		$I->getUserCredentialsAndUseHttpAuthentication();
 		$I->sendGET($this->apiUrl, $params);
-		$I->seeResponseCodeIs(403);
+		$statusCode = 403;
+		$I->seeResponseCodeIs($statusCode);
 		$I->seeResponseIsJson();
-		$I->seeResponseContainsJson(['message' => 'Album is private or unavailable']);
+		$I->seeResponseContainsJson(
+			['message' => 'Album is private or unavailable (' . $statusCode . ')']
+		);
 	}
 
 }

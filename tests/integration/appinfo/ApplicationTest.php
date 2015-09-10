@@ -32,52 +32,28 @@ use OCA\GalleryPlus\Controller\PreviewApiController;
  */
 class ApplicationTest extends GalleryIntegrationTest {
 
-	public function testConfigController() {
-		$controller = $this->container->query(
-			'ConfigController'
-		);
-
-		$this->assertTrue($controller instanceof ConfigController);
+	public function providesServiceData() {
+		return [
+			['ConfigController', 'OCA\GalleryPlus\Controller\ConfigController'],
+			['ConfigPublicController', 'OCA\GalleryPlus\Controller\ConfigPublicController'],
+			['FilesController', 'OCA\GalleryPlus\Controller\FilesController'],
+			['FilesPublicController', 'OCA\GalleryPlus\Controller\FilesPublicController'],
+			['PreviewController', 'OCA\GalleryPlus\Controller\PreviewController'],
+			['PreviewPublicController', 'OCA\GalleryPlus\Controller\PreviewPublicController'],
+			['L10N', '\OC_L10N']
+		];
 	}
 
-	public function testConfigPublicController() {
-		$controller = $this->container->query(
-			'ConfigPublicController'
-		);
+	/**
+	 * @dataProvider providesServiceData
+	 *
+	 * @param string $registeredService
+	 * @param string $expectedClass
+	 */
+	public function testContainerQuery($registeredService, $expectedClass) {
+		$service = $this->container->query($registeredService);
 
-		$this->assertTrue($controller instanceof ConfigPublicController);
-	}
-
-	public function testFilesController() {
-		$controller = $this->container->query(
-			'FilesController'
-		);
-
-		$this->assertTrue($controller instanceof FilesController);
-	}
-
-	public function testFilesPublicController() {
-		$controller = $this->container->query(
-			'FilesPublicController'
-		);
-
-		$this->assertTrue($controller instanceof FilesPublicController);
-	}
-
-	public function testPreviewController() {
-		$controller = $this->container->query(
-			'PreviewController'
-		);
-
-		$this->assertTrue($controller instanceof PreviewController);
-	}
-
-	public function testPreviewPublicController() {
-		$controller = $this->container->query(
-			'PreviewPublicController'
-		);
-
-		$this->assertTrue($controller instanceof PreviewPublicController);
+		$this->assertTrue($service instanceof $expectedClass);
 	}
 
 	public function testToken() {

@@ -9,12 +9,14 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
 use OCP\ILogger;
 
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http;
 
 use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\PreviewService;
@@ -177,8 +179,10 @@ class ConfigControllerTest extends \Test\TestCase {
 		$this->configService->expects($this->any())
 							->method('getFeaturesList')
 							->willThrowException(new ServiceException($exceptionMessage));
+		// Default status code when something breaks
+		$status = Http::STATUS_INTERNAL_SERVER_ERROR;
 		$errorMessage = [
-			'message' => $exceptionMessage,
+			'message' => $exceptionMessage  . ' (' . $status . ')',
 			'success' => false
 		];
 		/** @type JSONResponse $response */

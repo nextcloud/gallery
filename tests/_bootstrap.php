@@ -14,11 +14,13 @@ use Codeception\Util\Autoload;
 
 define('PHPUNIT_RUN', 1);
 
+// Add core
 require_once __DIR__ . '/../../../lib/base.php';
+
+// Give access to core tests to Codeception
 Autoload::addNamespace('Test', '/../../../tests/lib');
 
+// Load all apps
+OC_App::loadApps();
 
-// load minimum set of apps
-OC_App::loadApps(array('authentication'));
-OC_App::loadApps(array('filesystem', 'logging'));
 OC_Hook::clear();

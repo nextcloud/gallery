@@ -9,8 +9,8 @@
  *
  * @copyright Olivier Paroz 2015
  */
+
 namespace OCA\GalleryPlus\Service;
-include_once 'ServiceTest.php';
 
 use OCP\Files\File;
 
@@ -19,7 +19,7 @@ use OCP\Files\File;
  *
  * @package OCA\GalleryPlus\Controller
  */
-class DownloadServiceTest extends ServiceTest {
+class DownloadServiceTest extends \Test\GalleryUnitTest {
 
 	use Base64Encode;
 
@@ -69,12 +69,13 @@ class DownloadServiceTest extends ServiceTest {
 		$this->assertSame($download['preview'], $downloadResponse['preview']);
 	}
 
+	/**
+	 * @expectedException \OCA\GalleryPlus\Service\NotFoundServiceException
+	 */
 	public function testDownloadNonExistentFile() {
 		$file = $this->mockBadFile(12345);
 
-		$downloadResponse = $this->service->downloadFile($file);
-
-		$this->assertFalse($downloadResponse);
+		$this->service->downloadFile($file);
 	}
 
 }

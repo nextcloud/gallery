@@ -23,6 +23,7 @@ coverage:
     enabled: true
     include:
         - appinfo/*.php
+        - config/*
         - controller/*
         - environment/*
         - http/*

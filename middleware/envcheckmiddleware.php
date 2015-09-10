@@ -27,7 +27,6 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
 
 use OCA\GalleryPlus\Environment\Environment;
-use OCA\GalleryPlus\Service\ServiceException;
 
 /**
  * Checks that we have a valid token linked to a valid resource and that the
@@ -39,21 +38,13 @@ use OCA\GalleryPlus\Service\ServiceException;
  */
 class EnvCheckMiddleware extends CheckMiddleware {
 
-	/**
-	 * @var IHasher
-	 * */
+	/** @var IHasher */
 	private $hasher;
-	/**
-	 * @var ISession
-	 * */
+	/** @var ISession */
 	private $session;
-	/**
-	 * @var Environment
-	 */
+	/** @var Environment */
 	private $environment;
-	/**
-	 * @var IControllerMethodReflector
-	 */
+	/** @var IControllerMethodReflector */
 	protected $reflector;
 
 	/***
@@ -120,13 +111,16 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	/**
 	 * Checks that we have a token and an optional password giving access to a
 	 * valid resource. Sets the token based environment after that
+	 *
+	 * @throws CheckException
 	 */
 	private function validateAndSetTokenBasedEnv() {
 		$token = $this->request->getParam('token');
 		if (!$token) {
-			$this->noTokenFound();
-		} else { // We have a token
-			// Let's see if it's linked to a valid resource
+			throw new CheckException(
+				"Can't access a public resource without a token", Http::STATUS_NOT_FOUND
+			);
+		} else {
 			$linkItem = $this->getLinkItem($token);
 			$password = $this->request->getParam('password');
 			// Let's see if the user needs to provide a password
@@ -134,17 +128,6 @@ class EnvCheckMiddleware extends CheckMiddleware {
 
 			$this->environment->setTokenBasedEnv($linkItem);
 		}
-	}
-
-	/**
-	 * Throws an exception because no token was provided
-	 *
-	 * @throws CheckException
-	 */
-	private function noTokenFound() {
-		$this->logAndThrow(
-			"Can't access a public resource without a token", Http::STATUS_NOT_FOUND
-		);
 	}
 
 	/**
@@ -178,6 +161,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * Makes sure that the token exists
 	 *
 	 * @param array|bool $linkItem
+	 *
+	 * @throws CheckException
 	 */
 	private function checkLinkItemExists($linkItem) {
 		if ($linkItem === false
@@ -185,7 +170,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 				&& $linkItem['item_type'] !== 'folder')
 		) {
 			$message = 'Passed token parameter is not valid';
-			$this->logAndThrow($message, Http::STATUS_BAD_REQUEST);
+			throw new CheckException($message, Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -194,6 +179,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @param array|bool $linkItem
 	 * @param string $token
+	 *
+	 * @throws CheckException
 	 */
 	private function checkLinkItemIsValid($linkItem, $token) {
 		if (!isset($linkItem['uid_owner'])
@@ -202,7 +189,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 			$message =
 				'Passed token seems to be valid, but it does not contain all necessary information . ("'
 				. $token . '")';
-			$this->logAndThrow($message, Http::STATUS_NOT_FOUND);
+			throw new CheckException($message, Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -210,11 +197,13 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * Makes sure an item type was set for that token
 	 *
 	 * @param array|bool $linkItem
+	 *
+	 * @throws CheckException
 	 */
 	private function checkItemType($linkItem) {
 		if (!isset($linkItem['item_type'])) {
 			$message = 'No item type set for share id: ' . $linkItem['id'];
-			$this->logAndThrow($message, Http::STATUS_NOT_FOUND);
+			throw new CheckException($message, Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -258,13 +247,13 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @return bool true if authorized, an exception is raised otherwise
 	 *
-	 * @throws ServiceException
+	 * @throws CheckException
 	 */
 	private function authenticate($linkItem, $password) {
 		if ((int)$linkItem['share_type'] === Share::SHARE_TYPE_LINK) {
 			$this->checkPassword($linkItem, $password);
 		} else {
-			$this->logAndThrow(
+			throw new CheckException(
 				'Unknown share type ' . $linkItem['share_type'] . ' for share id '
 				. $linkItem['id'], Http::STATUS_NOT_FOUND
 			);
@@ -279,7 +268,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * @param array|bool $linkItem
 	 * @param string $password
 	 *
-	 * @throws ServiceException
+	 * @throws CheckException
 	 */
 	private function checkPassword($linkItem, $password) {
 		$newHash = '';
@@ -292,7 +281,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 			}
 			// @codeCoverageIgnoreEnd
 		} else {
-			$this->logAndThrow("Wrong password", Http::STATUS_UNAUTHORIZED);
+			throw new CheckException("Wrong password", Http::STATUS_UNAUTHORIZED);
 		}
 	}
 
@@ -302,14 +291,14 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @param array|bool $linkItem
 	 *
-	 * @throws ServiceException
+	 * @throws CheckException
 	 */
 	private function checkSession($linkItem) {
 		// Not authenticated ?
 		if (!$this->session->exists('public_link_authenticated')
 			|| $this->session->get('public_link_authenticated') !== $linkItem['id']
 		) {
-			$this->logAndThrow("Missing password", Http::STATUS_UNAUTHORIZED);
+			throw new CheckException("Missing password", Http::STATUS_UNAUTHORIZED);
 		}
 	}
 

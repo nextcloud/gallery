@@ -19,33 +19,38 @@ use OCP\Util;
 $app = new Application();
 $c = $app->getContainer();
 $appName = $c->query('AppName');
-$urlGenerator = $c->query('OCP\IURLGenerator');
-$l = $c->query('L10N');
 
 /**
  * Menu entry in ownCloud
  */
-$navConfig = [
-	'id'    => $appName,
-
-	// Sorting weight for the navigation. The higher the number, the higher
-	// will it be listed in the navigation
-	'order' => 3,
-
-	// The route that will be shown on startup when called from within ownCloud
-	// Public links are using another route, see appinfo/routes.php
-	'href'  => $urlGenerator->linkToRoute($appName . '.page.index'),
-
-	// The icon that will be shown in the navigation
-	// This file needs to exist in img/
-	'icon'  => $urlGenerator->imagePath($appName, 'app.svg'),
-
-	// The title of the application. This will be used in the
-	// navigation or on the settings page
-	'name'  => $l->t('Gallery+')
-];
 $c->query('OCP\INavigationManager')
-  ->add($navConfig);
+  ->add(
+	  function () use ($c, $appName) {
+		  $urlGenerator = $c->query('OCP\IURLGenerator');
+		  $l10n = $c->query('OCP\IL10N');
+
+		  return [
+			  'id'    => $appName,
+
+			  // Sorting weight for the navigation. The higher the number, the higher
+			  // will it be listed in the navigation
+			  'order' => 3,
+
+			  // The route that will be shown on startup when called from within ownCloud
+			  // Public links are using another route, see appinfo/routes.php
+			  'href'  => $urlGenerator->linkToRoute($appName . '.page.index'),
+
+			  // The icon that will be shown in the navigation
+			  // This file needs to exist in img/
+			  'icon'  => $urlGenerator->imagePath($appName, 'app.svg'),
+
+			  // The title of the application. This will be used in the
+			  // navigation or on the settings page
+			  'name'  => $l10n->t('Gallery+')
+		  ];
+	  }
+  );
+
 
 /**
  * Loading translations
@@ -61,6 +66,7 @@ if (isset($request->server['REQUEST_URI']) && !\OCP\App::isEnabled('gallery')) {
 	if (preg_match('%index.php/apps/files(/.*)?%', $url)
 		|| preg_match('%index.php/s/(/.*)?%', $url)
 	) {
+		// @codeCoverageIgnoreStart
 		/**
 		 * Scripts for the Files app
 		 */
@@ -78,4 +84,4 @@ if (isset($request->server['REQUEST_URI']) && !\OCP\App::isEnabled('gallery')) {
 		Util::addStyle($appName, 'slideshow');
 		Util::addStyle($appName, 'gallerybutton');
 	}
-}
+}// @codeCoverageIgnoreEnd

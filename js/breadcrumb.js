@@ -44,7 +44,7 @@
 			this._clear();
 			var albumName = $('#content').data('albumname');
 			if (!albumName) {
-				albumName = t('gallery', 'Pictures');
+				albumName = t('gallery', 'Gallery');
 			}
 			path = '';
 			crumbs = this.albumPath.split('/');

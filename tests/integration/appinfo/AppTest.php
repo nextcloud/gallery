@@ -45,4 +45,8 @@ class AppTest extends GalleryIntegrationTest {
 
 		$this->assertSame('7', $appData['dependencies']['php']['@attributes']['max-version']);
 	}
+
+	public function testNavigationEntry() {
+		$this->assertCount(1, \OC_App::getAppNavigationEntries('galleryplus'));
+	}
 }

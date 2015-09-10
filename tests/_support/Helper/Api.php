@@ -51,6 +51,18 @@ class Api extends \Codeception\Module {
 		return $sharedFile;
 	}
 
+	/**
+	 * @return mixed
+	 * @throws \Codeception\Exception\ModuleException
+	 */
+	public function getSharedFolder() {
+		$sharedFolder['folder'] = $this->getModule('\Helper\DataSetup')->sharedFolder;
+		$sharedFolder['token'] = $this->getModule('\Helper\DataSetup')->sharedFolderToken;
+		$sharedFolder['password'] = $this->getModule('\Helper\DataSetup')->passwordForFolderShare;
+
+		return $sharedFolder;
+	}
+
 	public function createBrokenConfig() {
 		$this->getModule('\Helper\DataSetup')
 			 ->createBrokenConfig();

@@ -15,6 +15,8 @@ namespace OCA\GalleryPlus\Service;
 use OCP\Files\Folder;
 use OCP\ILogger;
 
+use OCA\GalleryPlus\Config\ConfigParser;
+use OCA\GalleryPlus\Config\ConfigException;
 use OCA\GalleryPlus\Environment\Environment;
 
 /**
@@ -38,7 +40,7 @@ class ConfigService extends FilesService {
 	/**
 	 * @var array <string,bool>
 	 */
-	private $configItems = ['information' => false, 'sorting' => false];
+	private $completionStatus = ['information' => false, 'sorting' => false];
 	/**
 	 * @var ConfigParser
 	 */
@@ -76,7 +78,7 @@ class ConfigService extends FilesService {
 			try {
 				$featuresList =
 					$this->configParser->getFeaturesList($rootFolder, $this->configName);
-			} catch (ServiceException $exception) {
+			} catch (ConfigException $exception) {
 				$featuresList = $this->buildErrorMessage($exception, $rootFolder);
 			}
 		}
@@ -92,12 +94,11 @@ class ConfigService extends FilesService {
 	 *    * permissions
 	 *    * ID
 	 *
-	 * @param Folder $folderNode
-	 * @param string $folderPathFromRoot
-	 * @param array $features
+	 * @param Folder $folderNode the current folder
+	 * @param string $folderPathFromRoot path from the current folder to the virtual root
+	 * @param array $features the list of features retrieved fro the configuration file
 	 *
 	 * @return array|null
-	 *
 	 * @throws ForbiddenServiceException
 	 */
 	public function getAlbumInfo($folderNode, $folderPathFromRoot, $features) {
@@ -105,7 +106,7 @@ class ConfigService extends FilesService {
 		list ($albumConfig, $privateAlbum) =
 			$this->getAlbumConfig($folderNode, $this->privacyChecker, $this->configName);
 		if ($privateAlbum) {
-			$this->logAndThrowForbidden('Album is private or unavailable');
+			throw new ForbiddenServiceException('Album is private or unavailable');
 		}
 		$albumInfo = [
 			'path'        => $folderPathFromRoot,
@@ -122,7 +123,7 @@ class ConfigService extends FilesService {
 	/**
 	 * Determines if we have a configuration file to work with
 	 *
-	 * @param Folder $rootFolder
+	 * @param Folder $rootFolder the virtual root folder
 	 *
 	 * @return bool
 	 */
@@ -136,11 +137,11 @@ class ConfigService extends FilesService {
 	 * Goes through all the parent folders until either we're told the album is private or we've
 	 * reached the root folder
 	 *
-	 * @param Folder $folder
-	 * @param string $privacyChecker
-	 * @param string $configName
-	 * @param int $level
-	 * @param array $config
+	 * @param Folder $folder the current folder
+	 * @param string $privacyChecker name of the file which blacklists folders
+	 * @param string $configName name of the configuration file
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
+	 * @param array $config the configuration collected so far
 	 *
 	 * @return array<null|array,bool>
 	 */
@@ -170,20 +171,20 @@ class ConfigService extends FilesService {
 	 * Returns a parsed configuration if one was found in the current folder or generates an error
 	 * message to send back
 	 *
-	 * @param Folder $folder
-	 * @param string $configName
-	 * @param array $config
-	 * @param int $level
+	 * @param Folder $folder the current folder
+	 * @param string $configName name of the configuration file
+	 * @param array $config the configuration collected so far
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return array
 	 */
 	private function buildFolderConfig($folder, $configName, $config, $level) {
 		try {
-			list($config, $configItems) = $this->configParser->getFolderConfig(
-				$folder, $configName, $config, $this->configItems, $level
+			list($config, $completionStatus) = $this->configParser->getFolderConfig(
+				$folder, $configName, $config, $this->completionStatus, $level
 			);
-			$this->configItems = $configItems;
-		} catch (ServiceException $exception) {
+			$this->completionStatus = $completionStatus;
+		} catch (ConfigException $exception) {
 			$config = $this->buildErrorMessage($exception, $folder);
 		}
 
@@ -193,24 +194,24 @@ class ConfigService extends FilesService {
 	/**
 	 * Builds the error message to send back when there is an error
 	 *
-	 * @fixme Missing translation and should not contain HTML
+	 * @fixme Missing translation
 	 *
-	 * @param ServiceException $exception
-	 * @param Folder $folder
+	 * @param ConfigException $exception
+	 * @param Folder $folder the current folder
 	 *
 	 * @return array<array<string,string>,bool>
 	 */
 	private function buildErrorMessage($exception, $folder) {
 		$configPath = $this->environment->getPathFromVirtualRoot($folder);
-		$errorMessage = $exception->getMessage() . "</br></br>Config location: /$configPath";
+		$errorMessage = $exception->getMessage() . ". Config location: /$configPath";
 		$this->logger->error($errorMessage);
 		$config = ['error' => ['message' => $errorMessage]];
 
-		$configItems = $this->configItems;
-		foreach ($configItems as $key) {
-			$configItems[$key] = true;
+		$completionStatus = $this->completionStatus;
+		foreach ($completionStatus as $key) {
+			$completionStatus[$key] = true;
 		}
-		$this->configItems = $configItems;
+		$this->completionStatus = $completionStatus;
 
 		return [$config];
 	}
@@ -243,13 +244,13 @@ class ConfigService extends FilesService {
 	/**
 	 * Looks for an album configuration in the parent folder
 	 *
-	 * We will look up to the real root folder, not the virtual root of a shared folder
+	 * We will look up to the virtual root of a shared folder, for privacy reasons
 	 *
-	 * @param Folder $folder
-	 * @param string $privacyChecker
-	 * @param string $configName
-	 * @param int $level
-	 * @param array $config
+	 * @param Folder $folder the current folder
+	 * @param string $privacyChecker name of the file which blacklists folders
+	 * @param string $configName name of the configuration file
+	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
+	 * @param array $config the configuration collected so far
 	 *
 	 * @return array<null|array,bool>
 	 */

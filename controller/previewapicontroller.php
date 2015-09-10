@@ -35,11 +35,8 @@ use OCA\GalleryPlus\Utility\EventSource;
 class PreviewApiController extends ApiController {
 
 	use Preview;
-	use JsonHttpError;
 
-	/**
-	 * @var EventSource
-	 */
+	/**  @var EventSource */
 	private $eventSource;
 
 	/**
@@ -103,7 +100,8 @@ class PreviewApiController extends ApiController {
 		$this->eventSource->close();
 
 		$this->exitController();
-	}
+		// @codeCoverageIgnoreStart
+	} // @codeCoverageIgnoreEnd
 
 	/**
 	 * @NoAdminRequired
