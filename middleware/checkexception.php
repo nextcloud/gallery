@@ -29,7 +29,7 @@ class CheckException extends \Exception {
 	 * @param int $code the HTTP status code
 	 */
 	public function __construct($msg, $code = 0) {
-		Util::writeLog('galleryplus', 'Exception' . $msg . ' (' . $code . ')', Util::ERROR);
+		Util::writeLog('galleryplus', 'Exception: ' . $msg . ' (' . $code . ')', Util::ERROR);
 		parent::__construct($msg, $code);
 	}
 
