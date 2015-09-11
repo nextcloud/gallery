@@ -25,7 +25,7 @@ class ServiceException extends \Exception {
 	 * @param string $msg the message contained in the exception
 	 */
 	public function __construct($msg) {
-		Util::writeLog('gallery', 'Exception' . $msg, Util::ERROR);
+		Util::writeLog('gallery', 'Exception: ' . $msg, Util::ERROR);
 		parent::__construct($msg);
 	}
 }
