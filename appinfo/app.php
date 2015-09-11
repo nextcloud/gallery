@@ -62,8 +62,8 @@ Util::addTranslations('gallery');
 $request = $c->query('Request');
 if (isset($request->server['REQUEST_URI'])) {
 	$url = $request->server['REQUEST_URI'];
-	if (preg_match('%index.php/apps/files(/.*)?%', $url)
-		|| preg_match('%index.php/s/(/.*)?%', $url)
+	if (preg_match('%index\.php/apps/files(/.*)?%', $url)
+		|| preg_match('%index\.php/s/\b(.*)\b(?<!/authenticate)$%', $url)
 	) {
 		// @codeCoverageIgnoreStart
 		/**
