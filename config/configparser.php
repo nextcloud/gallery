@@ -38,7 +38,7 @@ class ConfigParser {
 		$parsedConfig = $this->parseConfig($folder, $configName);
 		$key = 'features';
 		if (array_key_exists($key, $parsedConfig)) {
-			$featuresList = $parsedConfig[$key];
+			$featuresList = $this->parseFeatures($parsedConfig[$key]);
 		}
 
 		return $featuresList;
@@ -95,6 +95,27 @@ class ConfigParser {
 	}
 
 	/**
+	 * Returns only the features which have been enabled
+	 *
+	 * @param array <string,string> $featuresList the list of features collected from the
+	 *     configuration file
+	 *
+	 * @return array
+	 */
+	private function parseFeatures($featuresList) {
+		$parsedFeatures = $featuresList;
+		if (!empty($parsedFeatures)) {
+			$parsedFeatures = array_filter(
+				$featuresList, function ($feature) {
+				return $feature === 'yes';
+			}
+			);
+		}
+
+		return $parsedFeatures;
+	}
+
+	/**
 	 * Removes the BOM from a file
 	 *
 	 * http://us.php.net/manual/en/function.pack.php#104151
@@ -125,7 +146,9 @@ class ConfigParser {
 	 */
 	private function buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level) {
 		foreach ($completionStatus as $key => $complete) {
-			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
+			if (!empty($parsedConfig[$key])
+				&& !$this->isConfigItemComplete($key, $parsedConfig, $complete)
+			) {
 				$parsedConfigItem = $parsedConfig[$key];
 				if ($this->isConfigUsable($parsedConfigItem, $level)) {
 					list($configItem, $itemComplete) =
