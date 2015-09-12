@@ -19,6 +19,7 @@
 		onStop: null,
 		zoomablePreview: null,
 		active: false,
+		backgroundToggle: false,
 
 		/**
 		 * Initialises the slideshow
@@ -28,9 +29,9 @@
 		 * @param {Array} features
 		 */
 		init: function (autoPlay, interval, features) {
-			// FIXME: This should come from the configuration
-			/**@param {int} maxScale*/
-			this.maxScale = 1;
+			if (features.indexOf('background_colour_toggle') > -1) {
+				this.backgroundToggle = true;
+			}
 
 			return $.when(this._getSlideshowTemplate()).then(function ($tmpl) {
 				// Move the slideshow outside the content so we can hide the content
@@ -114,8 +115,10 @@
 					img.setAttribute('alt', image.name);
 					$(img).css('position', 'absolute');
 					$(img).css('background-color', backgroundColour);
-					var $border = 30 / window.devicePixelRatio;
-					$(img).css('outline', $border + 'px solid ' + backgroundColour);
+					if (this.backgroundToggle === true) {
+						var $border = 30 / window.devicePixelRatio;
+						$(img).css('outline', $border + 'px solid ' + backgroundColour);
+					}
 
 					// We cannot use nice things on IE8
 					if ($('html').is('.ie8')) {
@@ -220,10 +223,14 @@
 			// Grey #363636
 			if (hex === "#000000") {
 				container.css('background-color', '#FFF');
-				container.css('outline', $border + 'px solid #FFF');
+				if (this.backgroundToggle === true) {
+					container.css('outline', $border + 'px solid #FFF');
+				}
 			} else {
 				container.css('background-color', '#000');
-				container.css('outline', $border + 'px solid #000');
+				if (this.backgroundToggle === true) {
+					container.css('outline', $border + 'px solid #000');
+				}
 			}
 		},
 
