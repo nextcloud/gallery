@@ -58,13 +58,13 @@
 		update: function (images, autoPlay) {
 			this.images = images;
 			this.active = true;
-			this.container.find('.pause').hide();
+			this.hideButton('.pause');
 
 			// Hide prev/next and play buttons when we only have one pic
 			this.container.find('.next, .previous, .play').toggle(this.images.length > 1);
 
 			// Hide the toggle background button until we have something to show
-			this.container.find('.changeBackground').hide();
+			this.hideButton('.changeBackground');
 
 			if (autoPlay) {
 				this._play();
@@ -113,8 +113,35 @@
 		 */
 		showBackgroundToggle: function () {
 			if (this.backgroundToggle) {
-				this.container.children('.changeBackground').show();
+				this.showButton('.changeBackground');
 			}
+		},
+
+		/**
+		 * Shows a button which has been hidden
+		 */
+		showButton: function (button) {
+			if (this.backgroundToggle) {
+				this.container.find(button).show();
+			}
+		},
+
+		/**
+		 * Hides a button
+		 *
+		 * @param button
+		 */
+		hideButton: function (button) {
+			this.container.find(button).hide();
+		},
+
+		/**
+		 * Removes a button
+		 *
+		 * @param button
+		 */
+		removeButton: function (button) {
+			this.container.find(button).remove();
 		},
 
 		/**
@@ -138,13 +165,17 @@
 		 * @private
 		 */
 		_specialButtonSetup: function (makeCallBack) {
-			this.container.children('.downloadImage').click(makeCallBack(this._getImageDownload));
+			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
+			this.container.find('.menu').width = 52;
 			if (this.backgroundToggle) {
-				this.container.children('.changeBackground').click(
+				this.container.find('.changeBackground').click(
 					makeCallBack(this._toggleBackground));
+				this.container.find('.menu').width += 52;
 			} else {
-				this.container.children('.changeBackground').hide();
+				this.hideButton('.changeBackground');
 			}
+
+
 		},
 
 		/**
