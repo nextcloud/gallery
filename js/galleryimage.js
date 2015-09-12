@@ -92,7 +92,7 @@
 							c: image.etag,
 							requesttoken: oc_requesttoken
 						};
-						url = Gallery.utility.buildGalleryUrl('files', '/download' + image.fileId,
+						url = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
 							params);
 					}
 					var a = $('<a/>').addClass('image').attr('href', url).attr('data-path',
