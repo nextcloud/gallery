@@ -327,7 +327,7 @@
 					c: image.etag,
 					requesttoken: oc_requesttoken
 				};
-				var downloadUrl = Gallery.utility.buildGalleryUrl('files', '/download' + image.fileId,
+				var downloadUrl = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
 					params);
 
 				return {
