@@ -112,7 +112,7 @@
 						requesttoken: oc_requesttoken
 					};
 					downloadUrl =
-						galleryFileAction.buildGalleryUrl('files', '/download' + file.id, params);
+						galleryFileAction.buildGalleryUrl('files', '/download/' + file.id, params);
 
 					images.push({
 						name: file.name,
