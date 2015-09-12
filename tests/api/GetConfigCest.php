@@ -23,10 +23,14 @@ class GetConfigCest {
 	private $params = [
 		'extramediatypes' => false
 	];
-	private $features = [
+	/**
+	 * Has to match what is in the dataSetup configuration
+	 *
+	 * @var array
+	 */
+	private $parsedFeatures = [
 		'features' => [
 			'external_shares' => 'yes',
-			'native_svg'      => 'no',
 		]
 	];
 	private $mediaTypes = [
@@ -71,7 +75,7 @@ class GetConfigCest {
 		 * Warning: Needs to match what is in the test config
 		 * If we automate the detection, we're dependant on the results created by a 3rd party lib
 		 */
-		$I->seeResponseContainsJson($this->features);
+		$I->seeResponseContainsJson($this->parsedFeatures);
 		/**
 		 * TODO Replace with JSONPath once the library is fixed
 		 */
@@ -145,7 +149,7 @@ class GetConfigCest {
 		$I->expectTo('see the same config as in getConfig()');
 
 		$this->tryToGetAValidConfig($I);
-		$I->seeResponseContainsJson($this->features);
+		$I->seeResponseContainsJson($this->parsedFeatures);
 		$I->seeResponseContainsJson($this->mediaTypes);
 
 		$I->fixMyConfigFile();

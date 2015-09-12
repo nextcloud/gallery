@@ -14,7 +14,7 @@
 
 	Config.prototype = {
 		galleryFeatures: [],
-		mediaTypes: {},
+		mediaTypes: [],
 		cachedMediaTypesString: '',
 		albumPermissions: null,
 		albumInfo: null,
@@ -76,7 +76,7 @@
 			if (!$.isEmptyObject(configFeatures)) {
 				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
 					feature = keys[i];
-					if (configFeatures[feature] === 'yes' && this._validateFeature(feature)) {
+					if (this._validateFeature(feature)) {
 						features.push(feature);
 					}
 				}
