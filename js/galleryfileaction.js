@@ -2,7 +2,7 @@
 (function ($, OC, OCA, oc_requesttoken) {
 	"use strict";
 	var galleryFileAction = {
-		config: null,
+		features: [],
 		mediaTypes: {},
 		scrollContainer: null,
 		slideShow: null,
@@ -49,6 +49,25 @@
 					galleryFileAction.onView);
 				OCA.Files.fileActions.setDefault(keys[i], 'View');
 			}
+		},
+
+		/**
+		 * Prepares the features array
+		 *
+		 * @param configFeatures
+		 * @returns {Array}
+		 */
+		buildFeaturesList: function (configFeatures) {
+			var features = [];
+			var feature = null;
+			if (!$.isEmptyObject(configFeatures)) {
+				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
+					feature = keys[i];
+					features.push(feature);
+				}
+			}
+
+			window.galleryFileAction.features = features;
 		},
 
 		/**
@@ -114,10 +133,15 @@
 
 			if ($.isEmptyObject(galleryFileAction.slideShow)) {
 				galleryFileAction.slideShow = new SlideShow();
-				$.when(galleryFileAction.slideShow.init(false, null))
-					.then(function () {
-						galleryFileAction._startSlideshow(images, start);
-					});
+				$.when(galleryFileAction.slideShow.init(
+					false,
+					null,
+					window.galleryFileAction.features
+				)).then(function () {
+					// Don't show the download button on the "Files" slideshow
+					galleryFileAction.slideShow.removeButton('.downloadImage');
+					galleryFileAction._startSlideshow(images, start);
+				});
 			} else {
 				galleryFileAction._startSlideshow(images, start);
 			}
@@ -177,9 +201,7 @@ $(document).ready(function () {
 	// The list of media files is retrieved when the user clicks on a row
 	var url = window.galleryFileAction.buildGalleryUrl('config', '', {extramediatypes: 1});
 	$.getJSON(url).then(function (config) {
-		if (!$.isEmptyObject(config.features)) {
-			window.galleryFileAction.config = config.features;
-		}
+		window.galleryFileAction.buildFeaturesList(config.features);
 		window.galleryFileAction.register(config.mediatypes);
 	});
 });
