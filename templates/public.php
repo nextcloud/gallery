@@ -75,7 +75,7 @@ style(
 				<?php } ?>
 				<a id="download" class="button">
 					<img class="svg" src="<?php print_unescaped(
-						image_path($_['appName'], "download.svg")
+						image_path('core', 'actions/download.svg')
 					); ?>" alt=""/>
 						<span id="download-text"><?php p($l->t('Download')) ?>
 						</span>
