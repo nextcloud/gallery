@@ -54,11 +54,6 @@
 					OC.Util.replaceSVG(this.$el);
 				}
 
-				// Don't show the download button on the "Files" slideshow
-				if (OCA.Files) {
-					this.container.find('.downloadImage').hide();
-				}
-
 				// Only modern browsers can manipulate history
 				if (history && history.pushState) {
 					// Stop the slideshow when backing out.
@@ -245,7 +240,7 @@
 			}
 			this.container.find('.notification').html(message);
 			this.container.find('.notification').show();
-			this.container.find('.changeBackground').hide();
+			this.controls.hideButton('.changeBackground');
 		},
 
 		/**
@@ -254,6 +249,15 @@
 		hideErrorNotification: function () {
 			this.container.find('.notification').hide();
 			this.container.find('.notification').html('');
+		},
+
+		/**
+		 * Removes a specific button from the interface
+		 *
+		 * @param button
+		 */
+		removeButton: function (button) {
+			this.controls.removeButton(button);
 		},
 
 		/**
