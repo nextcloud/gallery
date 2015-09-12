@@ -25,8 +25,9 @@
 		 *
 		 * @param {bool} autoPlay
 		 * @param {number} interval
+		 * @param {Array} features
 		 */
-		init: function (autoPlay, interval) {
+		init: function (autoPlay, interval, features) {
 			// FIXME: This should come from the configuration
 			/**@param {int} maxScale*/
 			this.maxScale = 1;
@@ -38,7 +39,12 @@
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
 				this.controls =
-					new SlideShow.Controls(this, this.container, this.zoomablePreview, interval);
+					new SlideShow.Controls(
+						this,
+						this.container,
+						this.zoomablePreview,
+						interval,
+						features);
 				this.controls.init();
 
 				this._initControlsAutoFader();
@@ -97,7 +103,7 @@
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
 				this.container.css('background-position', '-10000px 0');
-				this.container.find('.changeBackground').show();
+				this.controls.showBackgroundToggle();
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
@@ -338,52 +344,52 @@
 				var self = this;
 				var url = OC.generateUrl('apps/gallery/slideshow', null);
 				$.get(url, function (tmpl) {
-					var template = $(tmpl);
-					var tmplButton;
-					var buttonsArray = [
-						{
-							el: '.next',
-							trans: t('gallery', 'Next')
-						},
-						{
-							el: '.play',
-							trans: t('gallery', 'Play')
-						},
-						{
-							el: '.pause',
-							trans: t('gallery', 'Pause')
-						},
-						{
-							el: '.previous',
-							trans: t('gallery', 'Previous')
-						},
-						{
-							el: '.exit',
-							trans: t('gallery', 'Close')
-						},
-						{
-							el: '.downloadImage',
-							trans: t('gallery', 'Download'),
-							toolTip: true
-						},
-						{
-							el: '.changeBackground',
-							trans: t('gallery', 'Toggle background'),
-							toolTip: true
-						}
-					];
-					for (var i = 0; i < buttonsArray.length; i++) {
-						var button = buttonsArray[i];
+						var template = $(tmpl);
+						var tmplButton;
+						var buttonsArray = [
+							{
+								el: '.next',
+								trans: t('gallery', 'Next')
+							},
+							{
+								el: '.play',
+								trans: t('gallery', 'Play')
+							},
+							{
+								el: '.pause',
+								trans: t('gallery', 'Pause')
+							},
+							{
+								el: '.previous',
+								trans: t('gallery', 'Previous')
+							},
+							{
+								el: '.exit',
+								trans: t('gallery', 'Close')
+							},
+							{
+								el: '.downloadImage',
+								trans: t('gallery', 'Download'),
+								toolTip: true
+							},
+							{
+								el: '.changeBackground',
+								trans: t('gallery', 'Toggle background'),
+								toolTip: true
+							}
+						];
+						for (var i = 0; i < buttonsArray.length; i++) {
+							var button = buttonsArray[i];
 
-						tmplButton = template.find(button.el);
-						tmplButton.val(button.trans);
-						if (button.toolTip) {
-							tmplButton.attr("title", button.trans);
+							tmplButton = template.find(button.el);
+							tmplButton.val(button.trans);
+							if (button.toolTip) {
+								tmplButton.attr("title", button.trans);
+							}
 						}
-					}
-					self.$slideshowTemplate = template;
-					defer.resolve(self.$slideshowTemplate);
-				})
+						self.$slideshowTemplate = template;
+						defer.resolve(self.$slideshowTemplate);
+					})
 					.fail(function () {
 						defer.reject();
 					});

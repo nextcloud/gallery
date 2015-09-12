@@ -8,15 +8,18 @@
 	 * @param {*} container
 	 * @param {Object} zoomablePreview
 	 * @param {number} interval
+	 * @param {Array} features
 	 * @constructor
 	 */
-	var Controls = function (slideshow, container, zoomablePreview, interval) {
+	var Controls = function (slideshow, container, zoomablePreview, interval, features) {
 		this.slideshow = slideshow;
 		this.container = container;
 		this.zoomablePreview = zoomablePreview;
 		this.progressBar = container.find('.progress');
 		this.interval = interval || 5000;
-
+		if (features.indexOf('background_colour_toggle') > -1) {
+			this.backgroundToggle = true;
+		}
 	};
 
 	Controls.prototype = {
@@ -25,6 +28,7 @@
 		playTimeout: 0,
 		playing: false,
 		active: false,
+		backgroundToggle: false,
 
 		/**
 		 * Initialises the controls
@@ -105,6 +109,15 @@
 		},
 
 		/**
+		 * Shows the background colour switcher, if activated in the configuration
+		 */
+		showBackgroundToggle: function () {
+			if (this.backgroundToggle) {
+				this.container.children('.changeBackground').show();
+			}
+		},
+
+		/**
 		 * Sets up the button based navigation
 		 *
 		 * @param {Function} makeCallBack
@@ -126,7 +139,12 @@
 		 */
 		_specialButtonSetup: function (makeCallBack) {
 			this.container.children('.downloadImage').click(makeCallBack(this._getImageDownload));
-			this.container.children('.changeBackground').click(makeCallBack(this._toggleBackground));
+			if (this.backgroundToggle) {
+				this.container.children('.changeBackground').click(
+					makeCallBack(this._toggleBackground));
+			} else {
+				this.container.children('.changeBackground').hide();
+			}
 		},
 
 		/**
@@ -294,7 +312,7 @@
 			if (history && history.replaceState) {
 				// We simulate a click on the back button in order to be consistent
 				window.history.back();
-			} else{
+			} else {
 				// For ancient browsers supported in core
 				this.stop();
 			}
