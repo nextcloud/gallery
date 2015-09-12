@@ -27,7 +27,12 @@ $(document).ready(function () {
 				var currentLocation = window.location.href.split('#')[1] || '';
 				Gallery.getFiles(currentLocation).then(function () {
 					Gallery.activeSlideShow = new SlideShow();
-					$.when(Gallery.activeSlideShow.init(false, null))
+					$.when(
+							Gallery.activeSlideShow.init(
+								false,
+								null,
+								Gallery.config.galleryFeatures
+							))
 						.then(function () {
 							window.onhashchange();
 						});
