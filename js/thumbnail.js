@@ -145,6 +145,9 @@ function Thumbnail (fileId, square) {
 								//OC.MimeType.getIconUrl(preview.mimetype);
 								var icon = OC.Util.replaceSVGIcon(
 									Gallery.config.mediaTypes[preview.mimetype]);
+								if (Gallery.ieVersion !== false) {
+									icon = icon.substr(0, icon.lastIndexOf(".")) + ".png";
+								}
 								thumb.image.src = icon;
 							}
 						}
