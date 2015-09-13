@@ -184,6 +184,7 @@
 		 * 	descriptionLink: string,
 		 * 	copyright: string,
 		 * 	copyrightLink: string,
+		 * 	background: string,
 		 * 	filePath: string,
 		 * 	inherit: bool,
 		 * 	level: number
@@ -198,6 +199,7 @@
 			 * 	description_link: string,
 			 * 	copyright: string,
 			 * 	copyright_link: string,
+			 * 	background: string,
 			 * 	inherit: bool,
 			 * 	level: number
 			 * }}
@@ -223,6 +225,7 @@
 					descriptionLink: albumInfo.description_link,
 					copyright: albumInfo.copyright,
 					copyrightLink: albumInfo.copyright_link,
+					background: albumInfo.background,
 					filePath: docPath,
 					inherit: albumInfo.inherit,
 					level: albumInfo.level
