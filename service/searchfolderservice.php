@@ -30,12 +30,7 @@ class SearchFolderService extends FilesService {
 	 * @var int
 	 */
 	protected $virtualRootLevel = null;
-
-	/**
-	 * @var string[]
-	 */
-	protected $features;
-
+	
 	/**
 	 * This returns what we think is the current folder node based on a given path
 	 *
