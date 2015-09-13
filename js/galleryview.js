@@ -1,4 +1,4 @@
-/* global Gallery */
+/* global Gallery, Spinner */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 	/**
@@ -9,12 +9,20 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
+		this.spinnerDiv = $('#loading-indicator').get(0);
+		var spinnerOptions = {
+			color: '#999',
+			hwaccel: true
+		};
+		this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 	};
 
 	View.prototype = {
 		element: null,
 		breadcrumb: null,
 		requestId: -1,
+		spinnerDiv: 0,
+		spinner: null,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -83,7 +91,7 @@
 			}
 
 			this.clear();
-			$('#loading-indicator').show();
+			this.spinner.spin(this.spinnerDiv);
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -164,7 +172,7 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
-					$('#loading-indicator').hide();
+					view.spinner.stop(view.spinnerDiv);
 					return;
 				}
 
@@ -200,11 +208,11 @@
 
 							// No more rows to load at the moment
 							view.loadVisibleRows.loading = null;
-							$('#loading-indicator').hide();
+							view.spinner.stop(view.spinnerDiv);
 						}, function () {
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
-							$('#loading-indicator').hide();
+							view.spinner.stop(view.spinnerDiv);
 						});
 					}
 					// This is the safest way to do things
