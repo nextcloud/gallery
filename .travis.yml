@@ -69,6 +69,7 @@ before_install:
   # Composer
   - cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME
   - composer self-update
+  - composer config github-oauth.github.com ${GH_TOKEN}
   - composer install -o --prefer-dist --no-interaction
 
 before_script:
