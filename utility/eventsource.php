@@ -25,6 +25,7 @@ namespace OCA\GalleryPlus\Utility;
  * Wrapper for server side events (http://en.wikipedia.org/wiki/Server-sent_events)
  *
  * This version is tailored for the Gallery app, do not use elsewhere!
+ * @link https://github.com/owncloud/core/blob/master/lib/private/eventsource.php
  *
  * @todo Replace with a library
  *
@@ -64,9 +65,7 @@ class EventSource implements \OCP\IEventSource {
 	 * @throws \BadMethodCallException
 	 */
 	public function send($type, $data = null) {
-		if ($data && !preg_match('/^[A-Za-z0-9_]+$/', $type)) {
-			throw new \BadMethodCallException('Type needs to be alphanumeric (' . $type . ')');
-		}
+		$this->validateMessage($type, $data);
 		$this->init();
 		if (is_null($data)) {
 			$data = $type;
@@ -91,5 +90,17 @@ class EventSource implements \OCP\IEventSource {
 		$this->send(
 			'__internal__', 'close'
 		);
+	}
+
+	/**
+	 * Makes sure we have a message we can use
+	 *
+	 * @param string $type
+	 * @param mixed $data
+	 */
+	private function validateMessage($type, $data) {
+		if ($data && !preg_match('/^[A-Za-z0-9_]+$/', $type)) {
+			throw new \BadMethodCallException('Type needs to be alphanumeric (' . $type . ')');
+		}
 	}
 }
