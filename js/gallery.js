@@ -272,7 +272,6 @@
 		showLoading: function () {
 			$('#emptycontent').addClass('hidden');
 			$('#controls').removeClass('hidden');
-			$('#content').addClass('icon-loading');
 		},
 
 		/**
@@ -281,7 +280,6 @@
 		showNormal: function () {
 			$('#emptycontent').addClass('hidden');
 			$('#controls').removeClass('hidden');
-			$('#content').removeClass('icon-loading');
 		},
 
 		/**

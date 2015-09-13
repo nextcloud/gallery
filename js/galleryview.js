@@ -83,6 +83,7 @@
 			}
 
 			this.clear();
+			$('#loading-indicator').show();
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -100,8 +101,7 @@
 			// Loading rows without blocking the execution of the rest of the script
 			setTimeout(function () {
 				this.loadVisibleRows.activeIndex = 0;
-				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
-					Gallery.currentAlbum);
+				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
 			}.bind(this), 0);
 		},
 
@@ -164,6 +164,7 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
+					$('#loading-indicator').hide();
 					return;
 				}
 
@@ -181,10 +182,6 @@
 					if (view.requestId === row.requestId) {
 						return row.getDom().then(function (dom) {
 
-							// defer removal of loading class to trigger CSS3 animation
-							_.defer(function () {
-								dom.removeClass('loading');
-							});
 							if (Gallery.currentAlbum !== path) {
 								view.loadVisibleRows.loading = null;
 								return; //throw away the row if the user has navigated away in the
@@ -203,9 +200,11 @@
 
 							// No more rows to load at the moment
 							view.loadVisibleRows.loading = null;
+							$('#loading-indicator').hide();
 						}, function () {
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
+							$('#loading-indicator').hide();
 						});
 					}
 					// This is the safest way to do things

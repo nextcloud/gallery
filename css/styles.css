@@ -18,7 +18,7 @@ body:after {
 	float: left;
 }
 
-div.crumb.last a{
+div.crumb.last a {
 	cursor: default;
 }
 
@@ -32,9 +32,10 @@ div.crumb.last a{
 	padding: 8px;
 	border-radius: 3px 0 0 3px;
 	margin-left: 3px;
-	margin-right:0;
+	margin-right: 0;
 	border-right: 0;
 }
+
 #controls .button.right-sort-button {
 	float: left;
 	display: inline;
@@ -47,7 +48,7 @@ div.crumb.last a{
 	background-color: rgb(230, 230, 230);
 }
 
-#controls .sort-inactive img{
+#controls .sort-inactive img {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
 	filter: alpha(opacity=25);
 	opacity: 0.25;
@@ -97,7 +98,7 @@ div.crumb.last a{
 #gallery.hascontrols {
 	overflow: hidden;
 	text-align: justify;
-	top: 44px;
+	top: 40px;
 	padding-bottom: 100px;
 }
 
@@ -157,7 +158,7 @@ div.crumb.last a{
 
 #gallery a.album .album-label,
 #gallery a.image .image-label {
-	background: rgba(0,0,0,0.4);
+	background: rgba(0, 0, 0, 0.4);
 }
 
 #gallery a.image .image-label .title {
@@ -253,15 +254,6 @@ div.crumb.last a{
 	border-bottom-right-radius: 0;
 }
 
-#loading {
-	font-size: 16px;
-	color: #888;
-	position: absolute;
-	text-align: center;
-	top: 30%;
-	width: 100%;
-}
-
 /*Original ribbon design by Comatosed
 http://www.bypeople.com/author/comatosed/*/
 .ribbon {
@@ -311,4 +303,10 @@ http://www.bypeople.com/author/comatosed/*/
 
 .ribbon.black:after {
 	border-color: #bbb #bbb transparent #bbb;
+}
+
+#loading-indicator {
+	height: 32px;
+	width: 100%;
+	margin-bottom: 50px;
 }
