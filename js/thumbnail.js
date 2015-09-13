@@ -140,7 +140,12 @@ function Thumbnail (fileId, square) {
 									'data:' + preview.mimetype + ';base64,' + preview.preview;
 							} else {
 								thumb.valid = false;
-								thumb.image.src = Gallery.config.mediaTypes[preview.mimetype];
+
+								// In 8.2, use this directly
+								//OC.MimeType.getIconUrl(preview.mimetype);
+								var icon = OC.Util.replaceSVGIcon(
+									Gallery.config.mediaTypes[preview.mimetype]);
+								thumb.image.src = icon;
 							}
 						}
 					});
