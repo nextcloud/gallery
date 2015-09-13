@@ -72,7 +72,7 @@ class ConfigParser {
 	 * @param Folder $folder the current folder
 	 * @param string $configName
 	 *
-	 * @return array|string[]
+	 * @return array
 	 *
 	 * @throws ConfigException
 	 */
