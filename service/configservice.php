@@ -378,17 +378,4 @@ class ConfigService extends FilesService {
 		);
 	}
 
-	/**
-	 * Returns the path to the SVG icon of the media type
-	 *
-	 * @param string $mimeType
-	 *
-	 * @return string
-	 */
-	private function getSvgIconPath($mimeType) {
-		$pathToIcon = Template::mimetype_icon($mimeType);
-
-		return substr($pathToIcon, 0, -3) . 'svg';
-	}
-
 }
