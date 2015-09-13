@@ -26,7 +26,8 @@ script(
 		'slideshow',
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
-		'vendor/image-scale/image-scale.min'
+		'vendor/image-scale/image-scale.min',
+		'vendor/spin.js/spin.min'
 	]
 );
 style(
@@ -80,5 +81,5 @@ style(
 </div>
 <div id="gallery" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
-<div id="loading-indicator" class="loading"></div>
+<div id="loading-indicator"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
