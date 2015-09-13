@@ -19,7 +19,7 @@ class Anonymous extends \ApiTester {
 		$I->am('an app');
 		$I->wantTo('connect to ' . $description . ' without credentials');
 		$I->sendGET($apiUrl);
-		$I->seeResponseCodeIs(500);
+		$I->seeResponseCodeIs(401);
 	}
 
 }
