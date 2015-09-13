@@ -6,7 +6,7 @@ body {
 
 #content {
 	height: initial;
-	min-height: calc( 100vh - 120px );
+	min-height: calc(100vh - 120px);
 	overflow: hidden;
 }
 
@@ -58,4 +58,9 @@ body {
 	width: 100%;
 	margin-top: 100px;
 	margin-bottom: 0;
+}
+
+#body-public footer {
+	position: relative;
+	margin-top: inherit;
 }
