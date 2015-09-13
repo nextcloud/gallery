@@ -1,4 +1,4 @@
-/* global Gallery, marked */
+/* global Gallery, marked, Spinner */
 (function ($, t, Gallery) {
 	"use strict";
 	/**
@@ -8,11 +8,19 @@
 	 */
 	var InfoBox = function () {
 		this.infoContentElement = $('.album-info-content');
+		this.spinnerDiv = this.infoContentElement.get(0);
+		var spinnerOptions = {
+			color: '#999',
+			hwaccel: true
+		};
+		this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 	};
 
 	InfoBox.prototype = {
 		infoContentElement: null,
 		albumInfo: null,
+		spinnerDiv: 0,
+		spinner: null,
 
 		/**
 		 * Shows an information box to the user
@@ -24,8 +32,8 @@
 				this.albumInfo = Gallery.config.albumInfo;
 
 				if (!this.albumInfo.infoLoaded) {
-					this.infoContentElement.addClass('icon-loading');
 					this.infoContentElement.empty();
+					this.spinner.spin(this.spinnerDiv);
 					this.infoContentElement.height(100);
 					this.infoContentElement.slideDown();
 					if (!$.isEmptyObject(this.albumInfo.descriptionLink)) {
@@ -37,9 +45,9 @@
 								thisInfoBox._addContent(data);
 							}
 						).fail(function () {
-								thisInfoBox._addContent(t('gallery',
-									'Could not load the description'));
-							});
+							thisInfoBox._addContent(t('gallery',
+								'Could not load the description'));
+						});
 					} else {
 						this._addContent(this.albumInfo.description);
 					}
@@ -75,7 +83,7 @@
 		 * @private
 		 */
 		_adjustHeight: function () {
-			this.infoContentElement.removeClass('icon-loading');
+			this.spinner.stop(this.spinnerDiv);
 			var newHeight = this.infoContentElement[0].scrollHeight;
 			this.infoContentElement.animate({
 				height: newHeight + 40

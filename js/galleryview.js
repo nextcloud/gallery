@@ -43,8 +43,10 @@
 				this.clear();
 				if (albumPath === '') {
 					Gallery.showEmpty();
+					this.spinner.stop(this.spinnerDiv);
 				} else {
 					Gallery.showEmptyFolder();
+					this.spinner.stop(this.spinnerDiv);
 					Gallery.currentAlbum = albumPath;
 					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
