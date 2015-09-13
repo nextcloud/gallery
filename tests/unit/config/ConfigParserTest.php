@@ -52,7 +52,7 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 			'native_svg'      => "yes",
 		];
 		$parsedFeatureList = [
-			'native_svg'      => "yes",
+			'native_svg'
 		];
 		$features = [
 			'features' => $featureList

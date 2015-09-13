@@ -29,9 +29,7 @@ class GetConfigCest {
 	 * @var array
 	 */
 	private $parsedFeatures = [
-		'features' => [
-			'external_shares' => 'yes',
-		]
+		'features' => ['external_shares']
 	];
 	private $mediaTypes = [
 		"mediatypes" => [

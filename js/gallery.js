@@ -59,7 +59,7 @@
 			var params = {
 				location: currentLocation,
 				mediatypes: Gallery.config.getMediaTypes(),
-				features: Gallery.config.galleryFeatures,
+				features: Gallery.config.getFeatures(),
 				etag: albumEtag
 			};
 			// Only use the folder as a GET parameter and not as part of the URL

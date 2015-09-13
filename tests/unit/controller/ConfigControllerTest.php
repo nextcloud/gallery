@@ -89,21 +89,14 @@ class ConfigControllerTest extends \Test\TestCase {
 		$noFeatures = [];
 
 		$features = [
-			'external_shares'   => 'yes',
-			'toggle_background' => 'yes',
-		];
-
-		// This is to make sure that we also catch the case where it's set to no
-		$featuresWithDisabledSvg = [
-			'external_shares'   => 'yes',
-			'toggle_background' => 'yes',
-			'native_svg'        => 'no',
+			'external_shares',
+			'background_colour_toggle',
 		];
 
 		$featuresWithSvg = array_merge(
 			$features,
 			[
-				'native_svg' => 'yes',
+				'native_svg'
 			]
 		);
 
@@ -132,7 +125,6 @@ class ConfigControllerTest extends \Test\TestCase {
 		return [
 			[$noFeatures, $this->baseMimeTypes, false, false],
 			[$noFeatures, $slideshowMimes, false, true],
-			[$featuresWithDisabledSvg, $this->baseMimeTypes, false, false],
 			[$features, $this->baseMimeTypes, false, false],
 			[$features, $slideshowMimes, false, true],
 			[$featuresWithSvg, $baseMimeTypesWithSvg, true, false],
