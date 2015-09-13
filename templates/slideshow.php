@@ -1,4 +1,4 @@
-<div id="slideshow" class="icon-loading-dark">
+<div id="slideshow">
 	<input type="button" class="svg next icon-view-next"/>
 	<input type="button" class="svg play icon-view-play"/>
 	<input type="button" class="svg pause icon-view-pause"/>
