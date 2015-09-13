@@ -96,15 +96,16 @@
 		_setMediaTypes: function (mediaTypes) {
 			var supportedMediaTypes = [];
 			var mediaType = null;
-			var mediaTypesString = '';
-			for (var i = 0, keys = Object.keys(mediaTypes); i < keys.length; i++) {
-				mediaType = keys[i];
-				if (this._validateMediaType(mediaType)) {
-					mediaTypesString += mediaType + ';';
-					supportedMediaTypes[mediaType] = mediaTypes[mediaType];
+			var i, mediaTypesLength = mediaTypes.length;
+			if (mediaTypesLength) {
+				for (i = 0; i < mediaTypesLength; i++) {
+					mediaType = mediaTypes[i];
+					if (this._validateMediaType(mediaType)) {
+						supportedMediaTypes.push(mediaType);
+					}
 				}
 			}
-			this.cachedMediaTypesString = mediaTypesString.slice(0, -1);
+			this.cachedMediaTypesString = supportedMediaTypes.join(';');
 
 			return supportedMediaTypes;
 		},
@@ -114,7 +115,7 @@
 		 *
 		 * @param {string} feature
 		 *
-		 * @returns {bool}
+		 * @returns {boolean}
 		 * @private
 		 */
 		_validateFeature: function (feature) {
@@ -131,7 +132,7 @@
 		 *
 		 * @param {string} mediaType
 		 *
-		 * @returns {bool}
+		 * @returns {boolean}
 		 * @private
 		 */
 		_validateMediaType: function (mediaType) {

@@ -103,7 +103,7 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 
 		$response = $this->service->getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport);
 
-		$this->assertSame($expectedResult, array_keys($response));
+		$this->assertSame($expectedResult, $response);
 	}
 
 	public function providesIsPreviewRequiredData() {
@@ -246,13 +246,7 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 			'image/gif'
 		];
 
-		$supportedMimesWithSvg = array_merge(
-			$supportedMimes,
-			[
-				// The method returns the path, but only checks for the key
-				'image/svg+xml' => '/core/img/filetypes/image.png',
-			]
-		);
+		$supportedMimesWithSvg = array_merge($supportedMimes, ['image/svg+xml']);
 
 		return [
 			[$supportedMimes, true, $supportedMimesWithSvg],

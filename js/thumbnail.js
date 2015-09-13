@@ -140,7 +140,7 @@ function Thumbnail (fileId, square) {
 									'data:' + preview.mimetype + ';base64,' + preview.preview;
 							} else {
 								thumb.valid = false;
-								thumb.image.src = Gallery.config.mediaTypes[preview.mimetype];
+								thumb.image.src = OC.MimeType.getIconUrl(preview.mimetype);
 							}
 						}
 					});

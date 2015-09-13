@@ -13,7 +13,6 @@
 namespace OCA\Gallery\Service;
 
 use OCP\Files\File;
-use OCP\Template;
 use OCP\ILogger;
 
 use OCA\Gallery\Environment\Environment;
@@ -96,9 +95,8 @@ class PreviewService extends Service {
 		foreach ($wantedMimes as $wantedMime) {
 			// Let's see if a preview of files of that media type can be generated
 			if ($this->isMimeSupported($wantedMime)) {
-				$pathToIcon = Template::mimetype_icon($wantedMime);
-				$supportedMimes[$wantedMime] =
-					$pathToIcon; // We add it to the list of supported media types
+				// We store the media type
+				$supportedMimes[] = $wantedMime;
 			}
 		}
 		$supportedMimes = $this->addSvgSupport($supportedMimes, $nativeSvgSupport);
@@ -213,7 +211,7 @@ class PreviewService extends Service {
 	 */
 	private function addSvgSupport($supportedMimes, $nativeSvgSupport) {
 		if (!in_array('image/svg+xml', $supportedMimes) && $nativeSvgSupport) {
-			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
+			$supportedMimes[] = 'image/svg+xml';
 		}
 
 		return $supportedMimes;
