@@ -166,9 +166,7 @@ function Thumbnail (fileId, square) {
 		 * @private
 		 */
 		_getMimeIcon: function (mimeType) {
-			// On <8.2, we can't use OC.MimeType.getIconUrl(mimeType)
-			var icon = OC.Util.replaceSVGIcon(
-				Gallery.config.mediaTypes[mimeType]);
+			var icon = OC.MimeType.getIconUrl(mimeType);
 			if (Gallery.ieVersion !== false) {
 				icon = icon.substr(0, icon.lastIndexOf(".")) + ".png";
 			}
