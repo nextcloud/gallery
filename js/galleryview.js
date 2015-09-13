@@ -53,6 +53,7 @@
 					$('#save #save-button').click(Gallery.showSaveForm);
 					$('.save-form').submit(Gallery.saveForm);
 				}
+				this._setBackgroundColour();
 				this.viewAlbum(albumPath);
 			}
 		},
@@ -234,8 +235,9 @@
 
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
-			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
-				currentSort.order));
+			Gallery.albumMap[Gallery.currentAlbum].images.sort(
+				Gallery.utility.sortBy(currentSort.type,
+					currentSort.order));
 			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
 				currentSort.albumOrder));
 		},
@@ -279,6 +281,21 @@
 				if (albumInfo.inherit !== 'yes' || albumInfo.level === 0) {
 					infoButton.find('span').delay(1000).slideDown();
 				}
+			}
+		},
+
+		/**
+		 * Sets the background colour of the photowall
+		 *
+		 * @private
+		 */
+		_setBackgroundColour: function () {
+			var wrapper = $('#content-wrapper');
+			var albumInfo = Gallery.config.albumInfo;
+			if (!$.isEmptyObject(albumInfo) && albumInfo.background) {
+				wrapper.css('background-color', '#' + albumInfo.background);
+			} else {
+				wrapper.css('background-color', '#fff');
 			}
 		}
 	};
