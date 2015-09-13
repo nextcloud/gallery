@@ -55,7 +55,7 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 		$configPath = 'Some/folder';
 		$exception = new ConfigException('Boom');
 		$result =
-			[[['error' => ['message' => 'Boom' . ". Config location: /$configPath"]]]];
+			[['error' => ['message' => 'Boom' . ". Config location: /$configPath"]]];
 
 		$this->mockGetPathFromVirtualRoot($folder, $configPath);
 		$this->mockGetFolderConfigWithBrokenSetup(

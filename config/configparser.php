@@ -72,7 +72,7 @@ class ConfigParser {
 	 * @param Folder $folder the current folder
 	 * @param string $configName
 	 *
-	 * @return array|string[]
+	 * @return array
 	 *
 	 * @throws ConfigException
 	 */
@@ -146,8 +146,7 @@ class ConfigParser {
 	 */
 	private function buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level) {
 		foreach ($completionStatus as $key => $complete) {
-			if (!empty($parsedConfig[$key])
-				&& !$this->isConfigItemComplete($key, $parsedConfig, $complete)
+			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)
 			) {
 				$parsedConfigItem = $parsedConfig[$key];
 				if ($this->isConfigUsable($parsedConfigItem, $level)) {
@@ -172,7 +171,9 @@ class ConfigParser {
 	 * @return bool
 	 */
 	private function isConfigItemComplete($key, $parsedConfig, $complete) {
-		return !(!$complete && array_key_exists($key, $parsedConfig));
+		return !(!$complete
+				 && array_key_exists($key, $parsedConfig)
+				 && !empty($parsedConfig[$key]));
 	}
 
 	/**
