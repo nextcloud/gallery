@@ -14,6 +14,7 @@
 
 	Config.prototype = {
 		galleryFeatures: [],
+		cachedFeaturesString: '',
 		mediaTypes: [],
 		cachedMediaTypesString: '',
 		albumPermissions: null,
@@ -21,6 +22,15 @@
 		albumSorting: null,
 		albumError: false,
 		infoLoaded: false,
+
+		/**
+		 * Returns the list of supported features in a string
+		 *
+		 * @returns {string}
+		 */
+		getFeatures: function () {
+			return this.cachedFeaturesString;
+		},
 
 		/**
 		 * Returns the list of supported media types in a string
@@ -73,14 +83,16 @@
 		_setGalleryFeatures: function (configFeatures) {
 			var features = [];
 			var feature = null;
-			if (!$.isEmptyObject(configFeatures)) {
-				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
-					feature = keys[i];
+			var i, configFeaturesLength = configFeatures.length;
+			if (configFeaturesLength) {
+				for (i = 0; i < configFeaturesLength; i++) {
+					feature = configFeatures[i];
 					if (this._worksInCurrentBrowser(feature, 'native_svg')) {
 						features.push(feature);
 					}
 				}
 			}
+			this.cachedFeaturesString = features.join(';');
 
 			return features;
 		},
