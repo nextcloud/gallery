@@ -11,7 +11,7 @@ A media gallery for ownCloud which includes previews for all media types support
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This branch brings new features and bug fixes from the master branch of `owncloud/gallery` to ownCloud 8.1.x**
+**This branch brings new features and bug fixes from the master branch of `owncloud/gallery` to ownCloud 9.0.x**
 
 ![Screenshot](https://oc8demo.interfacloud.com/index.php/apps/galleryplus/s/GYFcC2YvieDhrnu/51282.jpg)
 ## Featuring
