@@ -85,7 +85,7 @@ class PreviewService extends Service {
 	 * @param bool $extraMediaTypes
 	 * @param bool $nativeSvgSupport
 	 *
-	 * @return \string[] all supported media types
+	 * @return string[] all supported media types
 	 */
 	public function getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport) {
 		$supportedMimes = [];
@@ -209,7 +209,7 @@ class PreviewService extends Service {
 	 * @param string[] $supportedMimes
 	 * @param bool $nativeSvgSupport
 	 *
-	 * @return \string[]
+	 * @return string[]
 	 */
 	private function addSvgSupport($supportedMimes, $nativeSvgSupport) {
 		if (!in_array('image/svg+xml', $supportedMimes) && $nativeSvgSupport) {
