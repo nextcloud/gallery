@@ -252,6 +252,7 @@ div.crumb.last a {
 	right: 0;
 	margin-right: 0;
 	border-bottom-right-radius: 0;
+	left: auto;
 }
 
 /*Original ribbon design by Comatosed
