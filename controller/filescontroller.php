@@ -91,7 +91,7 @@ class FilesController extends Controller {
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
 	public function getList($location, $features, $etag, $mediatypes) {
-		$featuresArray = explode(',', $features);
+		$featuresArray = explode(';', $features);
 		$mediaTypesArray = explode(';', $mediatypes);
 		try {
 			return $this->getFiles($location, $featuresArray, $etag, $mediaTypesArray);

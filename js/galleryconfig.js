@@ -14,6 +14,7 @@
 
 	Config.prototype = {
 		galleryFeatures: [],
+		cachedFeaturesString: '',
 		mediaTypes: [],
 		cachedMediaTypesString: '',
 		albumPermissions: null,
@@ -21,6 +22,15 @@
 		albumSorting: null,
 		albumError: false,
 		infoLoaded: false,
+
+		/**
+		 * Returns the list of supported features in a string
+		 *
+		 * @returns {string}
+		 */
+		getFeatures: function () {
+			return this.cachedFeaturesString;
+		},
 
 		/**
 		 * Returns the list of supported media types in a string
@@ -73,14 +83,16 @@
 		_setGalleryFeatures: function (configFeatures) {
 			var features = [];
 			var feature = null;
-			if (!$.isEmptyObject(configFeatures)) {
-				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
-					feature = keys[i];
-					if (this._validateFeature(feature)) {
+			var i, configFeaturesLength = configFeatures.length;
+			if (configFeaturesLength) {
+				for (i = 0; i < configFeaturesLength; i++) {
+					feature = configFeatures[i];
+					if (this._worksInCurrentBrowser(feature, 'native_svg')) {
 						features.push(feature);
 					}
 				}
 			}
+			this.cachedFeaturesString = features.join(';');
 
 			return features;
 		},
@@ -100,7 +112,7 @@
 			if (mediaTypesLength) {
 				for (i = 0; i < mediaTypesLength; i++) {
 					mediaType = mediaTypes[i];
-					if (this._validateMediaType(mediaType)) {
+					if (this._worksInCurrentBrowser(mediaType, 'image/svg+xml')) {
 						supportedMediaTypes.push(mediaType);
 					}
 				}
@@ -111,33 +123,17 @@
 		},
 
 		/**
-		 * Determines if we can accept the feature in this browser environment
+		 * Determines if we can accept a specific config element in Internet Explorer
 		 *
 		 * @param {string} feature
+		 * @param {string} validationRule
 		 *
 		 * @returns {boolean}
 		 * @private
 		 */
-		_validateFeature: function (feature) {
+		_worksInCurrentBrowser: function (feature, validationRule) {
 			var isAcceptable = true;
-			if (feature === 'native_svg' && Gallery.ieVersion !== false) {
-				isAcceptable = false;
-			}
-
-			return isAcceptable;
-		},
-
-		/**
-		 * Determines if we can accept the media type in this browser environment
-		 *
-		 * @param {string} mediaType
-		 *
-		 * @returns {boolean}
-		 * @private
-		 */
-		_validateMediaType: function (mediaType) {
-			var isAcceptable = true;
-			if (mediaType === 'image/svg+xml' && Gallery.ieVersion !== false) {
+			if (feature === validationRule && Gallery.ieVersion !== false) {
 				isAcceptable = false;
 			}
 

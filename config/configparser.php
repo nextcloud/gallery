@@ -105,11 +105,7 @@ class ConfigParser {
 	private function parseFeatures($featuresList) {
 		$parsedFeatures = $featuresList;
 		if (!empty($parsedFeatures)) {
-			$parsedFeatures = array_filter(
-				$featuresList, function ($feature) {
-				return $feature === 'yes';
-			}
-			);
+			$parsedFeatures = array_keys($featuresList, 'yes');
 		}
 
 		return $parsedFeatures;

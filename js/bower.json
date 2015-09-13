@@ -17,6 +17,7 @@
   "dependencies": {
     "eventsource-polyfill": "~0.*",
     "marked": "~0.*",
-    "github-markdown-css": "~2.*"
+    "github-markdown-css": "~2.*",
+    "spin.js": "~2.3.2"
   }
 }

@@ -98,7 +98,7 @@ div.crumb.last a {
 #gallery.hascontrols {
 	overflow: hidden;
 	text-align: justify;
-	top: 40px;
+	top: 45px;
 	padding-bottom: 100px;
 }
 
@@ -252,6 +252,7 @@ div.crumb.last a {
 	right: 0;
 	margin-right: 0;
 	border-bottom-right-radius: 0;
+	left: auto;
 }
 
 /*Original ribbon design by Comatosed
@@ -309,4 +310,6 @@ http://www.bypeople.com/author/comatosed/*/
 	height: 32px;
 	width: 100%;
 	margin-bottom: 50px;
+	position: relative;
+	mix-blend-mode: difference;
 }
