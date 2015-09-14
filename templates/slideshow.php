@@ -7,9 +7,11 @@
 
 	<div class="menu">
 		<input type="button" class="menuItem svg downloadImage icon-view-download hidden"/>
-		<input type="button" class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
+		<input type="button"
+			   class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
 	</div>
 	<div class="progress icon-view-pause"/>
+	<div class="name"><div class="title"></div></div>
 	<div class="notification"></div>
 	<div class="bigshotContainer"></div>
 </div>
