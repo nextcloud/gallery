@@ -108,7 +108,7 @@
 			return this.loadImage(this.images[index]).then(function (img) {
 				this.spinner.stop(this.spinnerDiv);
 				this.container.css('background-position', '-10000px 0');
-				this.controls.showBackgroundToggle();
+				this.controls.showActionButtons();
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
@@ -313,6 +313,7 @@
 		_hideImage: function () {
 			this.zoomablePreviewContainer.empty();
 			this.spinner.spin(this.spinnerDiv);
+			this.controls.hideActionButtons();
 		},
 
 		/**
