@@ -324,18 +324,13 @@
 		},
 
 		/**
-		 * Shows a new image in the slideshow and preloads the next in the list
-		 *
-		 * @todo move to Slideshow
+		 * Asks the slideshow for the next image
 		 *
 		 * @param {number} imageId
 		 * @private
 		 */
 		_updateSlideshow: function (imageId) {
-			this.slideshow.show(this.current).then(function () {
-				// Preloads the next image in the list
-				this.slideshow.loadImage(this.images[imageId]);
-			}.bind(this));
+			this.slideshow.next(this.current, this.images[imageId]);
 		},
 
 		/**
