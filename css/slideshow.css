@@ -117,6 +117,7 @@
 }
 
 #slideshow > .progress {
+	z-index: 1100;
 	position: fixed;
 	bottom: 13px;
 	right: 13px;
