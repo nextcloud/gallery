@@ -63,8 +63,8 @@
 			// Hide prev/next and play buttons when we only have one pic
 			this.container.find('.next, .previous, .play').toggle(this.images.length > 1);
 
-			// Hide the toggle background button until we have something to show
-			this.hideButton('.changeBackground');
+			// Hide the action buttons until we have something to show
+			this.hideActionButtons();
 
 			if (autoPlay) {
 				this._play();
@@ -109,21 +109,26 @@
 		},
 
 		/**
-		 * Shows the background colour switcher, if activated in the configuration
+		 * Shows the action buttons
 		 */
-		showBackgroundToggle: function () {
-			if (this.backgroundToggle) {
-				this.showButton('.changeBackground');
-			}
+		showActionButtons: function () {
+			this._showBackgroundToggle();
+			this.showButton('.downloadImage');
+		},
+
+		/**
+		 * Hides the action buttons
+		 */
+		hideActionButtons: function () {
+			this.hideButton('.changeBackground');
+			this.hideButton('.downloadImage');
 		},
 
 		/**
 		 * Shows a button which has been hidden
 		 */
 		showButton: function (button) {
-			if (this.backgroundToggle) {
-				this.container.find(button).show();
-			}
+			this.container.find(button).removeClass('hidden');
 		},
 
 		/**
@@ -132,7 +137,7 @@
 		 * @param button
 		 */
 		hideButton: function (button) {
-			this.container.find(button).hide();
+			this.container.find(button).addClass('hidden');
 		},
 
 		/**
@@ -176,6 +181,15 @@
 			}
 
 
+		},
+
+		/**
+		 * Shows the background colour switcher, if activated in the configuration
+		 */
+		_showBackgroundToggle: function () {
+			if (this.backgroundToggle) {
+				this.showButton('.changeBackground');
+			}
 		},
 
 		/**
