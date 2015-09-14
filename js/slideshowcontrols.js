@@ -80,11 +80,13 @@
 		 * @param {number} currentImageId
 		 */
 		show: function (currentImageId) {
+			var currentImage = this.images[currentImageId];
 			this.current = currentImageId;
 			this.errorLoadingImage = false;
 			if (this.playing) {
 				this._setTimeout();
 			}
+			this._setName(currentImage.name);
 		},
 
 		/**
@@ -162,7 +164,7 @@
 			this.container.children('.next').click(makeCallBack(this._next));
 			this.container.children('.previous').click(makeCallBack(this._previous));
 			this.container.children('.exit').click(makeCallBack(this._exit));
-			this.container.find('.pause, .play').click(makeCallBack(this._playPauseToggle));
+			this.container.children('.pause, .play').click(makeCallBack(this._playPauseToggle));
 		},
 
 		/**
@@ -324,6 +326,8 @@
 		/**
 		 * Shows a new image in the slideshow and preloads the next in the list
 		 *
+		 * @todo move to Slideshow
+		 *
 		 * @param {number} imageId
 		 * @private
 		 */
@@ -397,8 +401,17 @@
 		 */
 		_toggleBackground: function () {
 			this.slideshow.toggleBackground();
-		}
+		},
 
+		/**
+		 * Shows the filename of the current image
+		 * @param {string} imageName
+		 * @private
+		 */
+		_setName: function (imageName) {
+			var nameElement = this.container.find('.title');
+			nameElement.text(imageName);
+		}
 	};
 
 	SlideShow.Controls = Controls;
