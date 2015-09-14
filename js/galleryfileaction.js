@@ -54,16 +54,18 @@
 		/**
 		 * Prepares the features array
 		 *
+		 * This is duplicated from a method found in galleryconfig. It's done that way in order to
+		 * avoid having to load the whole utility class in the Files app
+		 *
 		 * @param configFeatures
 		 * @returns {Array}
 		 */
 		buildFeaturesList: function (configFeatures) {
 			var features = [];
-			var feature = null;
-			if (!$.isEmptyObject(configFeatures)) {
-				for (var i = 0, keys = Object.keys(configFeatures); i < keys.length; i++) {
-					feature = keys[i];
-					features.push(feature);
+			var i, configFeaturesLength = configFeatures.length;
+			if (configFeaturesLength) {
+				for (i = 0; i < configFeaturesLength; i++) {
+					features.push(configFeatures[i]);
 				}
 			}
 
