@@ -114,13 +114,6 @@
 	margin-top: -21px;
 }
 
-#slideshow > .play {
-}
-
-#slideshow > .pause {
-	display: none;
-}
-
 #slideshow > .progress {
 	position: fixed;
 	bottom: 13px;
