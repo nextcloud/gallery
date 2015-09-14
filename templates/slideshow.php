@@ -6,8 +6,8 @@
 	<input type="button" class="svg exit icon-view-close"/>
 
 	<div class="menu">
-		<input type="button" class="menuItem svg downloadImage icon-view-download"/>
-		<input type="button" class="menuItem svg changeBackground icon-view-toggle-background"/>
+		<input type="button" class="menuItem svg downloadImage icon-view-download hidden"/>
+		<input type="button" class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
 	</div>
 	<div class="progress icon-view-pause"/>
 	<div class="notification"></div>
