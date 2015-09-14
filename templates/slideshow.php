@@ -1,7 +1,7 @@
 <div id="slideshow">
 	<input type="button" class="svg next icon-view-next"/>
 	<input type="button" class="svg play icon-view-play"/>
-	<input type="button" class="svg pause icon-view-pause"/>
+	<input type="button" class="svg pause icon-view-pause hidden"/>
 	<input type="button" class="svg previous icon-view-previous"/>
 	<input type="button" class="svg exit icon-view-close"/>
 
