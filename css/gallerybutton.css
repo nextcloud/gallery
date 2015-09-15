@@ -5,11 +5,31 @@
 
 #controls .button.view-switcher {
 	float: right;
-	margin-right: 4px;
 	margin-top: 5px;
 	font-weight: normal;
 	width: 40px;
-	padding: 8px 11px;
+	padding: 6px 11px;
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+#controls .button.view-switcher img{
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity: .3;
+}
+
+#controls .button.view-switcher.gallery {
+	float: none;
+	margin-right: 4px;
+	padding: 7px 11px;
+	background-color: rgba(240, 240, 240, .9);
+}
+
+#controls .button.view-switcher.gallery img{
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	opacity: .5;
 }
 
 #controls .button.sorting {
@@ -62,6 +82,12 @@
 #controls .disabled-button:focus,
 #controls .disabled-button a:focus,
 #controls .disabled-button.loading {
+	background-color: rgba(255, 255, 255, .9);
+	color: #111;
+	border: 1px solid rgba(240, 240, 240, .9);
+}
+
+#controls .button.view-switcher:hover {
 	background-color: rgba(255, 255, 255, .9);
 	color: #111;
 	border: 1px solid rgba(240, 240, 240, .9);

@@ -43,8 +43,8 @@ style(
 ?>
 <div id="controls">
 	<div id='breadcrumbs'></div>
-	<!-- sorting buttons -->
 	<div class="left">
+		<!-- sorting buttons -->
 		<div id="sort-date-button" class="button sorting right-switch-button">
 			<div class="flipper">
 				<img class="svg asc front" src="<?php print_unescaped(
@@ -66,7 +66,6 @@ style(
 			</div>
 		</div>
 	</div>
-	<!-- toggle for opening the current album as file list -->
 	<span class="right">
 		<!-- sharing button -->
 		<div id="share-button" class="button">
@@ -85,16 +84,12 @@ style(
 			); ?>" alt="<?php p($l->t('Album information')); ?>"/>
 		</div>
 		<div class="album-info-content markdown-body"></div>
-	<div class="button view-switcher right-switch-button disabled-button">
-		<img class="svg" src="<?php print_unescaped(
-			image_path('core', 'actions/toggle-pictures.svg')
-		); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
-	</div>
-	<div id="filelist-button" class="button view-switcher left-switch-button inactive-button">
-		<img class="svg" src="<?php print_unescaped(
-			image_path('core', 'actions/toggle-filelist.svg')
-		); ?>" alt="<?php p($l->t('File list')); ?>"/>
-	</div>
+		<!-- button for opening the current album as file list -->
+		<div id="filelist-button" class="button view-switcher gallery">
+			<img class="svg" src="<?php print_unescaped(
+				image_path('core', 'actions/toggle-filelist.svg')
+			); ?>" alt="<?php p($l->t('File list')); ?>"/>
+		</div>
 	</span>
 </div>
 <div id="gallery" class="hascontrols"></div>
