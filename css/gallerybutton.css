@@ -1,15 +1,14 @@
 /* toggle for opening shared picture view as file list */
 #openAsFileListButton {
 	float: right;
+	margin-right: 4px;
 	margin-top: 5px;
 	font-weight: normal;
-	background-color: transparent;
-	border: none;
 }
 
 #openAsFileListButton img {
 	vertical-align: text-top;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-	filter: alpha(opacity=30);
-	opacity: .3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	opacity: .5;
 }
