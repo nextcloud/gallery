@@ -15,6 +15,7 @@
 		zoomablePreviewContainer: null,
 		controls: null,
 		imageCache: {},
+		/** {Image} */
 		currentImage: null,
 		errorLoadingImage: false,
 		onStop: null,
@@ -190,6 +191,19 @@
 				}
 			}
 			return this.imageCache[url];
+		},
+
+		/**
+		 * Shows a new image in the slideshow and preloads the next in the list
+		 *
+		 * @param {number} current
+		 * @param {Object} next
+		 */
+		next: function (current, next) {
+			this.show(current).then(function () {
+				// Preloads the next image in the list
+				this.loadImage(next);
+			}.bind(this));
 		},
 
 		/**

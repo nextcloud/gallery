@@ -47,7 +47,8 @@
 
 #slideshow.inactive > input,
 #slideshow.inactive > .progress,
-#slideshow.inactive > .menu input {
+#slideshow.inactive > .menu input,
+#slideshow.inactive > .name {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	filter: alpha(opacity=0);
 	opacity: 0;
@@ -84,7 +85,8 @@
 }
 
 #slideshow > input:hover,
-#slideshow > .menu input:hover {
+#slideshow > .menu input:hover,
+#slideshow.inactive > .name:hover {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
 	filter: alpha(opacity=75);
 	opacity: .75;
@@ -114,14 +116,8 @@
 	margin-top: -21px;
 }
 
-#slideshow > .play {
-}
-
-#slideshow > .pause {
-	display: none;
-}
-
 #slideshow > .progress {
+	z-index: 1100;
 	position: fixed;
 	bottom: 13px;
 	right: 13px;
@@ -156,6 +152,28 @@
 	background-repeat: no-repeat;
 	background-color: transparent;
 	margin-right: 10px;
+}
+
+#slideshow > .name {
+	position: fixed;
+	bottom: 18px;
+	z-index: 1099;
+	width: 100%;
+}
+
+#slideshow > .name .title {
+	padding: 0px 50px;
+	text-align: center;
+	color: #FFF;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: normal;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	opacity: .5;
 }
 
 #slideshow > .notification {

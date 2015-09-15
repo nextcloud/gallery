@@ -40,6 +40,7 @@
 						return;
 					}
 					evt.stopPropagation();
+					evt.preventDefault();
 					handler.call(this);
 				}.bind(this);
 			}.bind(this);
@@ -58,7 +59,9 @@
 		update: function (images, autoPlay) {
 			this.images = images;
 			this.active = true;
+			this.showButton('.play');
 			this.hideButton('.pause');
+			this.playing = false;
 
 			// Hide prev/next and play buttons when we only have one pic
 			this.container.find('.next, .previous, .play').toggle(this.images.length > 1);
@@ -67,7 +70,7 @@
 			this.hideActionButtons();
 
 			if (autoPlay) {
-				this._play();
+				this._playPauseToggle();
 			}
 		},
 
@@ -77,11 +80,13 @@
 		 * @param {number} currentImageId
 		 */
 		show: function (currentImageId) {
+			var currentImage = this.images[currentImageId];
 			this.current = currentImageId;
 			this.errorLoadingImage = false;
 			if (this.playing) {
 				this._setTimeout();
 			}
+			this._setName(currentImage.name);
 		},
 
 		/**
@@ -159,8 +164,7 @@
 			this.container.children('.next').click(makeCallBack(this._next));
 			this.container.children('.previous').click(makeCallBack(this._previous));
 			this.container.children('.exit').click(makeCallBack(this._exit));
-			this.container.children('.pause').click(makeCallBack(this._pause));
-			this.container.children('.play').click(makeCallBack(this._play));
+			this.container.children('.pause, .play').click(makeCallBack(this._playPauseToggle));
 		},
 
 		/**
@@ -214,7 +218,7 @@
 				} else if (evt.keyCode === rightKey) {
 					makeCallBack(this._next)(evt);
 				} else if (evt.keyCode === spaceKey) {
-					makeCallBack(this._play)(evt);
+					makeCallBack(this._playPauseToggle)(evt);
 				} else if (evt.keyCode === fKey) {
 					makeCallBack(this._fullScreenToggle)(evt);
 				} else if (this._hasKeyBeenPressed(evt, zoomOutKeys)) {
@@ -272,34 +276,20 @@
 		},
 
 		/**
-		 * Starts the timed slideshow
+		 * Starts/stops autoplay and shows/hides the play/pause buttons
 		 *
 		 * @private
 		 */
-		_play: function () {
-			this.playing = true;
-			this._playPauseButtonToggle();
-			this._setTimeout();
-		},
+		_playPauseToggle: function () {
+			if (this.playing === true) {
+				this.playing = false;
+				this._clearTimeout();
+			} else {
+				this.playing = true;
+				this._setTimeout();
+			}
 
-		/**
-		 * Pauses the timed slideshow
-		 *
-		 * @private
-		 */
-		_pause: function () {
-			this.playing = false;
-			this._playPauseButtonToggle();
-			this._clearTimeout();
-		},
-
-		/**
-		 * Shows the play or pause button depending on circumstances
-		 *
-		 * @private
-		 */
-		_playPauseButtonToggle: function () {
-			this.container.find('.play, .pause').toggle();
+			this.container.find('.play, .pause').toggleClass('hidden');
 		},
 
 		/**
@@ -334,16 +324,13 @@
 		},
 
 		/**
-		 * Shows a new image in the slideshow and preloads the next in the list
+		 * Asks the slideshow for the next image
 		 *
 		 * @param {number} imageId
 		 * @private
 		 */
 		_updateSlideshow: function (imageId) {
-			this.slideshow.show(this.current).then(function () {
-				// Preloads the next image in the list
-				this.slideshow.loadImage(this.images[imageId]);
-			}.bind(this));
+			this.slideshow.next(this.current, this.images[imageId]);
 		},
 
 		/**
@@ -409,8 +396,17 @@
 		 */
 		_toggleBackground: function () {
 			this.slideshow.toggleBackground();
-		}
+		},
 
+		/**
+		 * Shows the filename of the current image
+		 * @param {string} imageName
+		 * @private
+		 */
+		_setName: function (imageName) {
+			var nameElement = this.container.find('.title');
+			nameElement.text(imageName);
+		}
 	};
 
 	SlideShow.Controls = Controls;
