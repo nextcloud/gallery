@@ -38,7 +38,8 @@ style(
 		'public',
 		'gallerybutton',
 		'github-markdown',
-		'slideshow'
+		'slideshow',
+		'gallerybutton'
 	]
 );
 
@@ -103,21 +104,28 @@ style(
 		<div id="app">
 			<div id="controls">
 				<div id="breadcrumbs"></div>
-				<!-- toggle for opening shared picture view as file list -->
-				<div id="openAsFileListButton" class="button">
-					<img class="svg" src="<?php print_unescaped(
-						image_path('core', 'actions/toggle-filelist.svg')
-					); ?>" alt="<?php p($l->t('File list')); ?>"/>
-				</div>
-				<div id="sort-name-button" class="button left-sort-button">
-					<img class="svg" src="<?php print_unescaped(
-						image_path($_['appName'], 'nameasc.svg')
-					); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
-				</div>
-				<div id="sort-date-button" class="button right-sort-button">
-					<img class="svg" src="<?php print_unescaped(
-						image_path($_['appName'], 'dateasc.svg')
-					); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+				<!-- sorting buttons -->
+				<div class="left">
+					<div id="sort-date-button" class="button sorting right-switch-button">
+						<div class="flipper">
+							<img class="svg asc front" src="<?php print_unescaped(
+								image_path($_['appName'], 'dateasc.svg')
+							); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+							<img class="svg des back" src="<?php print_unescaped(
+								image_path($_['appName'], 'datedes.svg')
+							); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+						</div>
+					</div>
+					<div id="sort-name-button" class="button sorting left-switch-button">
+						<div class="flipper">
+							<img class="svg asc front" src="<?php print_unescaped(
+								image_path($_['appName'], 'nameasc.svg')
+							); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+							<img class="svg des back" src="<?php print_unescaped(
+								image_path($_['appName'], 'namedes.svg')
+							); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+						</div>
+					</div>
 				</div>
 				<span class="right">
 					<div id="album-info-button" class="button">
@@ -127,6 +135,12 @@ style(
 						); ?>" alt="<?php p($l->t('Album information')); ?>"/>
 					</div>
 					<div class="album-info-content markdown-body"></div>
+					<!-- toggle for opening the current album as file list -->
+					<div id="filelist-button" class="button view-switcher gallery">
+						<img class="svg" src="<?php print_unescaped(
+							image_path('core', 'actions/toggle-filelist.svg')
+						); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
+					</div>
 				</span>
 			</div>
 			<div id="gallery" class="hascontrols"

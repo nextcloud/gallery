@@ -54,6 +54,7 @@
 			} else {
 				// Only do it when the app is initialised
 				if (this.requestId === -1) {
+					$('#filelist-button').click(Gallery.switchToFilesView);
 					$('#download').click(Gallery.download);
 					$('#share-button').click(Gallery.share);
 					Gallery.infoBox = new Gallery.InfoBox();
@@ -118,30 +119,16 @@
 		/**
 		 * Manages the sorting interface
 		 *
-		 * @param {string} sortType
-		 * @param {string} sortOrder
+		 * @param {string} sortType name or date
+		 * @param {string} sortOrder asc or des
 		 */
 		sortControlsSetup: function (sortType, sortOrder) {
-			var sortNameButton = $('#sort-name-button');
-			var sortDateButton = $('#sort-date-button');
-			// namedes, dateasc etc.
-			var icon = sortType + sortOrder;
-
-			var setButton = function (button, icon, active) {
-				button.removeClass('sort-inactive');
-				if (!active) {
-					button.addClass('sort-inactive');
-				}
-				button.find('img').attr('src', OC.imagePath(Gallery.appName, icon));
-			};
-
-			if (sortType === 'name') {
-				setButton(sortNameButton, icon, true);
-				setButton(sortDateButton, 'dateasc', false); // default icon
-			} else {
-				setButton(sortDateButton, icon, true);
-				setButton(sortNameButton, 'nameasc', false); // default icon
+			var reverseSortType = 'date';
+			if (sortType === 'date') {
+				reverseSortType = 'name';
 			}
+			this._setSortButton(sortType, sortOrder, true);
+			this._setSortButton(reverseSortType, 'asc', false); // default icon
 		},
 
 		/**
@@ -305,6 +292,47 @@
 				wrapper.css('background-color', albumInfo.background);
 			} else {
 				wrapper.css('background-color', '#fff');
+			}
+		},
+
+		/**
+		 * Picks the image which matches the sort order
+		 *
+		 * @param {string} sortType name or date
+		 * @param {string} sortOrder asc or des
+		 * @param {bool} active determines if we're setting up the active sort button
+		 * @private
+		 */
+		_setSortButton: function (sortType, sortOrder, active) {
+			var button = $('#sort-' + sortType + '-button');
+			// Removing all the classes which control the image in the button
+			button.removeClass('active-button');
+			button.find('img').removeClass('front');
+			button.find('img').removeClass('back');
+
+			// We need to determine the reverse order in order to send that image to the back
+			var reverseSortOrder = 'des';
+			if (sortOrder === 'des') {
+				reverseSortOrder = 'asc';
+			}
+
+			// We assign the proper order to the button images
+			button.find('img.' + sortOrder).addClass('front');
+			button.find('img.' + reverseSortOrder).addClass('back');
+
+			// The active button needs a hover action for the flip effect
+			if (active) {
+				button.addClass('active-button');
+				if (button.is(":hover")) {
+					button.removeClass('hover');
+				}
+				// We can't use a toggle here
+				button.hover(function () {
+						$(this).addClass('hover');
+					},
+					function () {
+						$(this).removeClass('hover');
+					});
 			}
 		}
 	};
