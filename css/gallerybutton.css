@@ -32,6 +32,7 @@
 	float: right;
 	display: inline;
 	border-radius: 0 3px 3px 0;
+	margin-left: -1px;
 }
 
 #share-button img,
