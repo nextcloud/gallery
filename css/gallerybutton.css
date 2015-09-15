@@ -19,13 +19,15 @@
 	perspective: 1000px;
 }
 
-#controls .button.left-switch-button {
+#controls .button.left-switch-button,
+#controls .button.left-switch-button:hover {
 	float: right;
 	display: inline;
 	border-radius: 3px 0 0 3px;
 	margin-left: 3px;
 	margin-right: 0;
 	border-right: 0;
+	border-right: 1px solid rgba(216, 216, 216, 0.9);
 }
 
 #controls .button.right-switch-button {
@@ -46,7 +48,8 @@
 
 #controls .disabled-button {
 	pointer-events: none;
-	background-color: rgb(230, 230, 230);
+	background-color: rgba(230, 230, 230, .9);
+	border: 1px solid rgba(230, 230, 230, .9);
 }
 
 #controls .disabled-button img {
@@ -55,13 +58,27 @@
 	opacity: 0.25;
 }
 
-#controls .button.sorting.active-button,
 #controls .disabled-button:hover,
 #controls .disabled-button:focus,
 #controls .disabled-button a:focus,
 #controls .disabled-button.loading {
-	background-color: rgba(255, 255, 255, .95);
+	background-color: rgba(255, 255, 255, .9);
 	color: #111;
+	border: 1px solid rgba(240, 240, 240, .9);
+}
+
+#controls .button.sorting.active-button {
+	background-color: rgba(255, 255, 255, .9);
+	color: #111;
+	border: 1px solid rgba(240, 240, 240, .9);
+	border-right-color: rgba(216, 216, 216, 0.9);
+}
+
+#controls .button.sorting.active-button:hover {
+	background-color: rgba(255, 255, 255, .9);
+	color: #111;
+	border: 1px solid rgba(240, 240, 240, .9);
+	border-right-color: rgba(216, 216, 216, 0.9);
 }
 
 /* Original Flip CSS by David Walsh
@@ -89,7 +106,6 @@ http://davidwalsh.name/css-flip*/
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 	backface-visibility: hidden;
-
 
 	-webkit-transform-style: preserve-3d;
 	-moz-transform-style: preserve-3d;
