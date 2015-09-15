@@ -154,7 +154,7 @@
 			event.stopPropagation();
 		
 			var subUrl = '';
-			var params = {path: '/' + encodeURIComponent(Gallery.currentAlbum)};
+			var params = {path: '/' + Gallery.currentAlbum};
 			if (Gallery.token) {
 				params.token = Gallery.token;
 				subUrl = 's/{token}?path={path}';
