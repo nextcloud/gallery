@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Membatalkan pratinjau. Tidak dapat menemukan berkas.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Tidak ditemukan instalasi ownCloud (7 atau lebih tinggi) pada {remote}",
     "Invalid ownCloud url" : "URL ownCloud tidak sah",
-    "Picture view" : "Tampilan gambar",
     "Could not load the description" : "Tidak dapat memuat deskripsi",
     "Could not load the description: " : "Tidak dapat memuat deskripsi:",
     "Copyright" : "Hak cipta",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Berbagi ini dilindungi sandi",
     "The password is wrong. Try again." : "Sandi salah. Coba lagi",
     "Password" : "Kata Sandi",
-    "File list" : "Daftar berkas",
-    "Sort by name" : "Urutkan berdasarkan nama",
     "Sort by date" : "Urutkan berdasarkan tanggal",
-    "Album information" : "Informasi album",
+    "Sort by name" : "Urutkan berdasarkan nama",
     "Share" : "Bagikan",
+    "Album information" : "Informasi album",
+    "File list" : "Daftar berkas",
     "Sorry, this file could not be found." : "Maaf, berkas ini tidak akan ditemukan.",
     "Reasons might be:" : "Alasan yang mungkin:",
     "the wrong file ID was provided" : "ID berkas yang diberikan salah",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "tautan telah kadaluarsa",
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
-    "Add to your ownCloud" : "Tambahkan ke ownCloud Anda"
+    "Add to your ownCloud" : "Tambahkan ke ownCloud Anda",
+    "Picture view" : "Tampilan gambar"
 },
 "nplurals=1; plural=0;");
