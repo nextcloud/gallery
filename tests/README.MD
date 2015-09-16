@@ -4,6 +4,8 @@ Read more about automated testing in [the wiki](https://github.com/owncloud/gall
 
 ## Requirements
 
+* PHP tidy enabled
+* PHP imagick extension
 * `core` cloned via git
 * `core` submodule initialised
 * `core` has to be installed
