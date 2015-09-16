@@ -6,7 +6,6 @@
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
     "Invalid ownCloud url" : "Virheellinen ownCloud-osoite",
-    "Picture view" : "Kuvanäkymä",
     "Could not load the description" : "Kuvauksen lataaminen epäonnistui",
     "Could not load the description: " : "Kuvauksen lataaminen epäonnistui:",
     "Copyright" : "Tekijänoikeus",
@@ -31,11 +30,11 @@
     "This share is password-protected" : "Tämä jako on suojattu salasanalla",
     "The password is wrong. Try again." : "Väärä salasana. Yritä uudelleen.",
     "Password" : "Salasana",
-    "File list" : "Tiedostoluettelo",
-    "Sort by name" : "Järjestä nimen mukaan",
     "Sort by date" : "Järjestä päiväyksen mukaan",
-    "Album information" : "Albumin tiedot",
+    "Sort by name" : "Järjestä nimen mukaan",
     "Share" : "Jaa",
+    "Album information" : "Albumin tiedot",
+    "File list" : "Tiedostoluettelo",
     "Sorry, this file could not be found." : "Valitettavasti tiedostoa ei löytynyt.",
     "Reasons might be:" : "Mahdollisia syitä:",
     "the wrong file ID was provided" : "väärä tiedostotunniste",
@@ -54,6 +53,7 @@
     "the link has expired" : "linkki on vanhentunut",
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
-    "Add to your ownCloud" : "Lisää ownCloudiisi"
+    "Add to your ownCloud" : "Lisää ownCloudiisi",
+    "Picture view" : "Kuvanäkymä"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
