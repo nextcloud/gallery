@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Предпросмотр отменен. Не удалось найти файл",
     "No ownCloud installation (7 or higher) found at {remote}" : "На удаленном ресурсе {remote} не установлен ownCloud версии 7 или выше",
     "Invalid ownCloud url" : "Неверный адрес ownCloud",
-    "Picture view" : "Просмотр изображения",
     "Could not load the description" : "Не удалось загрузить описание",
     "Could not load the description: " : "Не удалось загрузить описание:",
     "Copyright" : "Авторские права защищены",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Общий ресурс защищен паролем",
     "The password is wrong. Try again." : "Неверный пароль. Попробуйте еще раз.",
     "Password" : "Пароль",
-    "File list" : "Список файлов",
-    "Sort by name" : "Сортировать по имени",
     "Sort by date" : "Сортировать по дате",
-    "Album information" : "Информация об альбоме",
+    "Sort by name" : "Сортировать по имени",
     "Share" : "Открыть доступ",
+    "Album information" : "Информация об альбоме",
+    "File list" : "Список файлов",
     "Sorry, this file could not be found." : "К сожалению, файл не найден.",
     "Reasons might be:" : "Причиной может быть:",
     "the wrong file ID was provided" : "предоставлен ошибочный ID файла",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "срок действия ссылки истек",
     "sharing is disabled" : "общий доступ отключён",
     "For more information, please ask the person who has sent you this link." : "Для получения более подробной информации, пожалуйста, обратитесь к человеку, который послал вам эту ссылку.",
-    "Add to your ownCloud" : "Добавить в свой ownCloud"
+    "Add to your ownCloud" : "Добавить в свой ownCloud",
+    "Picture view" : "Просмотр изображения"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

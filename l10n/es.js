@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
     "No ownCloud installation (7 or higher) found at {remote}" : "No se encontró una instalación de ownCloud (7 o mayor) en {remote}",
     "Invalid ownCloud url" : "URL de ownCloud inválida",
-    "Picture view" : "Vista de imágenes",
     "Could not load the description" : "No se pudo cargar la descripción",
     "Could not load the description: " : "No se pudo cargar la descripción:",
     "Copyright" : "Derechos de Autor",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Este elemento compartido está protegido por contraseña",
     "The password is wrong. Try again." : "La contraseña introducida es errónea. Inténtelo de nuevo.",
     "Password" : "Contraseña",
-    "File list" : "Lista de archivos",
-    "Sort by name" : "Ordenar por nombre",
     "Sort by date" : "Ordenar por fecha",
-    "Album information" : "Información del álbum",
+    "Sort by name" : "Ordenar por nombre",
     "Share" : "Compartir",
+    "Album information" : "Información del álbum",
+    "File list" : "Lista de archivos",
     "Sorry, this file could not be found." : "Lo sentimos, este archivo no se pudo encontrar.",
     "Reasons might be:" : "Las causas podrían ser:",
     "the wrong file ID was provided" : "Se proporcionó el archivo de ID incorrecto",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "el enlace ha expirado",
     "sharing is disabled" : "compartir está desactivado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, contacte a la persona que le envió el enlace.",
-    "Add to your ownCloud" : "Agregue su propio ownCloud"
+    "Add to your ownCloud" : "Agregue su propio ownCloud",
+    "Picture view" : "Vista de imágenes"
 },
 "nplurals=2; plural=(n != 1);");

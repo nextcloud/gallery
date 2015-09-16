@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Avbryter visning. Fant ikke filen",
     "No ownCloud installation (7 or higher) found at {remote}" : "Ingen ownCloud-installasjon (7 eller høyere) funnet på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-url",
-    "Picture view" : "Bildevisning",
     "Could not load the description" : "Klarte ikke å laste inn beskrivelsen",
     "Could not load the description: " : "Klarte ikke å laste inn beskrivelsen:",
     "Copyright" : "Opphavsrett",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Denne delingen er passordbeskyttet",
     "The password is wrong. Try again." : "Passordet er feil. Prøv på nytt.",
     "Password" : "Passord",
-    "File list" : "Filliste",
-    "Sort by name" : "Sorter på navn",
     "Sort by date" : "Sorter på dato",
-    "Album information" : "Album-informasjon",
+    "Sort by name" : "Sorter på navn",
     "Share" : "Del",
+    "Album information" : "Album-informasjon",
+    "File list" : "Filliste",
     "Sorry, this file could not be found." : "Beklager, denne filen ble ikke funnet.",
     "Reasons might be:" : "Mulige årsaker:",
     "the wrong file ID was provided" : "feil fil-ID ble angitt",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "lenken er utløpt",
     "sharing is disabled" : "deling er deaktivert",
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
-    "Add to your ownCloud" : "Legg til i din ownCloud"
+    "Add to your ownCloud" : "Legg til i din ownCloud",
+    "Picture view" : "Bildevisning"
 },
 "nplurals=2; plural=(n != 1);");
