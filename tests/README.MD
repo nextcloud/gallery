@@ -30,7 +30,7 @@ Go to Gallery's root directory and type:
 
 That's it. You can check that it's properly "installed" by typing:
 
-`# php codecept.phar -- version`
+`# php codecept.phar --version`
 
 #### Installing via Composer
 
@@ -39,6 +39,8 @@ The first step is to [install composer](https://getcomposer.org/doc/00-intro.md)
 
 This usually works well:
 
+As root
+
 `# curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer`
 
 Next you'll need to add a Github token to composer so that you can easily download as many dependencies as you need.
@@ -46,6 +48,8 @@ Next you'll need to add a Github token to composer so that you can easily downlo
 1. Generate a personal token in your Github profile. You don't need to associate any Github permissions to this token.
 
 2. Type the following command: `# composer config --global github-oauth.github.com <your-token> `
+
+As the www user
 
 You can now install all the packages needed to test the app:
 
