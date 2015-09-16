@@ -190,3 +190,22 @@ Don't forget to kill the phantomjs when you're done.
 ### Notes
 
 If you want to get more details about what is going on during your tests, simply add `-vvv` or `--debug` at the end of the command line
+
+### Troubleshooting
+
+#### Files can't be deleted during API test
+
+If you start getting some strange errors about files which can't be deleted when running the API tests or if some the responses don't match what is expected, it could be because there is already an instance of the phpbuiltinserver running.
+This can happen when a fatal error has happened during a previous run and Codeception wasn't able to shut down the server.
+
+Get the process ID
+
+`# ps aux | grep phpbuiltinserver`
+
+Kill the process
+
+`# kill -9 <process id>`
+
+#### Accessing the built in server's logs
+
+Look for them in the `tests/_output` folder, along with a summary of the failed tests
