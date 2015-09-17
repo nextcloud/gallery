@@ -19,6 +19,7 @@ use OCP\ILogger;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Http\ImageResponse;
 use OCA\Gallery\Service\SearchFolderService;
@@ -107,7 +108,6 @@ class FilesApiController extends ApiController {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @CORS
-	 * @UseSession
 	 *
 	 * Sends the file matching the fileId
 	 *
@@ -124,9 +124,12 @@ class FilesApiController extends ApiController {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError(
-				$this->session, $this->urlGenerator, $this->appName, $exception
+			$code = $this->getHttpStatusCode($exception);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page', ['code' => $code]
 			);
+
+			return new RedirectResponse($url);
 		}
 
 		return new ImageResponse($download);

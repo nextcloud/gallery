@@ -19,6 +19,7 @@ use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Http\ImageResponse;
 use OCA\Gallery\Service\SearchFolderService;
@@ -120,9 +121,12 @@ class FilesController extends Controller {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError(
-				$this->session, $this->urlGenerator, $this->appName, $exception
+			$code = $this->getHttpStatusCode($exception);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page', ['code' => $code]
 			);
+
+			return new RedirectResponse($url);
 		}
 
 		return new ImageResponse($download);

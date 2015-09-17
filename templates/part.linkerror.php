@@ -22,10 +22,14 @@ style(
 			<li><?php p($l->t('the link has expired')); ?></li>
 			<li><?php p($l->t('sharing is disabled')); ?></li>
 		</ul>
+		<?php if (isset($_['message'])): ?>
 		</br>
 		<p><?php p($l->t('Here is the error message returned by the server: ')); ?>
 			<strong><?php p($_['message'] . ' (' . $_['code'] . ')'); ?></strong></p>
+		<?php endif; ?>
 		</br>
-		<p><?php p($l->t('For more information, please ask the person who has sent you this link.')); ?></p>
+		<p><?php p(
+				$l->t('For more information, please ask the person who has sent you this link.')
+			); ?></p>
 	</li>
 </ul>
