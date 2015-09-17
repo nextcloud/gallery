@@ -8,6 +8,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Anteprima interrotta. Impossibile trovare il file",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nessuna installazione di ownCloud (7 o superiore) trovata su {remote}",
     "Invalid ownCloud url" : "URL di ownCloud non valido",
+    "Gallery view" : "Galleria",
     "Could not load the description" : "Impossibile caricare la descrizione",
     "Could not load the description: " : "Impossibile caricare la descrizione:",
     "Copyright" : "Copyright",

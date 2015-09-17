@@ -8,6 +8,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Forlader forhåndsvisning. Kunne ikke finde filen",
     "No ownCloud installation (7 or higher) found at {remote}" : "Der er ingen ownCloud-installation (7 eller højere) på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-URL",
+    "Gallery view" : "Galleri visning",
     "Could not load the description" : "Kunne ikke indlæse beskrivelsen",
     "Could not load the description: " : "Kunne ikke indlæse beskrivelsen:",
     "Copyright" : "Ophavsret",
