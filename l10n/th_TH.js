@@ -8,6 +8,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "กำลังยกเลิกการแสดงตัวอย่าง ไม่สามารถค้นหาไฟล์",
     "No ownCloud installation (7 or higher) found at {remote}" : "ไม่มีการติดตั้ง ownCloud (7 หรือสูงกว่า) พบได้ที่ {remote}",
     "Invalid ownCloud url" : "URL ownCloud ไม่ถูกต้อง",
+    "Gallery view" : "ดูแกลอรี่",
     "Could not load the description" : "ไม่สามารถโหลดคำอธิบาย",
     "Could not load the description: " : "ไม่สามารถโหลดคำอธิบาย",
     "Copyright" : "ลิขสิทธิ์",
