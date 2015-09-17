@@ -140,7 +140,6 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$redirect = new RedirectResponse(
 			$this->urlGenerator->linkToRoute($this->appName . '.page.error_page')
 		);
-		$this->mockSessionSet('galleryErrorMessage', $exception->getMessage());
 
 		$response = $this->controller->download($fileId, $filename);
 
