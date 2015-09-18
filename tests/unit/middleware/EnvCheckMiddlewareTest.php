@@ -44,9 +44,9 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	private $appName = 'gallery';
 	/** @var IRequest */
 	private $request;
-	/** @var IHasher    * */
+	/** @var IHasher */
 	private $hasher;
-	/** @var ISession     * */
+	/** @var ISession */
 	private $session;
 	/** @var Environment */
 	private $environment;
@@ -165,7 +165,9 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	public function testBeforeControllerWithPublicNotationAndToken() {
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
 
-		$this->mockGetTokenAndPasswordParams($this->sharedFolderToken, $this->passwordForFolderShare);
+		$this->mockGetTokenAndPasswordParams(
+			$this->sharedFolderToken, $this->passwordForFolderShare
+		);
 		$linkItem = Share::getShareByToken($this->sharedFolderToken, false);
 
 		$this->mockHasherVerify($this->passwordForFolderShare, $linkItem['share_with'], true);
@@ -461,7 +463,7 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$code = Http::STATUS_NOT_FOUND;
 		$exception = new CheckException($message, $code);
 
-		$template = $this->mockHtml404Response($message, $code);
+		$template = $this->mockHtml404Response($code);
 
 		$response =
 			$this->middleware->afterException($this->controller, 'authenticate', $exception);
@@ -542,10 +544,10 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		return new TemplateResponse($this->appName, 'authenticate', [], 'guest');
 	}
 
-	private function mockHtml404Response($message, $code) {
+	private function mockHtml404Response($code) {
 		$this->mockAcceptHeader('html');
 		$redirectUrl = 'http://newroute.com';
-		$this->mockUrlToErrorPage($message, $code, $redirectUrl);
+		$this->mockUrlToErrorPage($code, $redirectUrl);
 
 		return new RedirectResponse($redirectUrl);
 	}
@@ -584,20 +586,13 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	/**
 	 * Mocks IURLGenerator->linkToRoute()
 	 *
-	 * @param string $message
 	 * @param int $code
 	 * @param string $url
 	 */
-	private function mockUrlToErrorPage($message, $code, $url) {
+	private function mockUrlToErrorPage($code, $url) {
 		$this->urlGenerator->expects($this->once())
 						   ->method('linkToRoute')
-						   ->with(
-							   $this->appName . '.page.error_page',
-							   [
-								   'message' => $message,
-								   'code'    => $code
-							   ]
-						   )
+						   ->with($this->appName . '.page.error_page', ['code' => $code])
 						   ->willReturn($url);
 	}
 

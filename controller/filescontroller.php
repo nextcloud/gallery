@@ -14,10 +14,12 @@ namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Http\ImageResponse;
 use OCA\Gallery\Service\SearchFolderService;
@@ -38,6 +40,8 @@ class FilesController extends Controller {
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
+	/** @var ISession */
+	private $session;
 
 	/**
 	 * Constructor
@@ -49,6 +53,7 @@ class FilesController extends Controller {
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
 	 * @param DownloadService $downloadService
+	 * @param ISession $session
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -59,6 +64,7 @@ class FilesController extends Controller {
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
 		DownloadService $downloadService,
+		ISession $session,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
@@ -68,6 +74,7 @@ class FilesController extends Controller {
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
 		$this->downloadService = $downloadService;
+		$this->session = $session;
 		$this->logger = $logger;
 	}
 
@@ -114,7 +121,12 @@ class FilesController extends Controller {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
+			$code = $this->getHttpStatusCode($exception);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page', ['code' => $code]
+			);
+
+			return new RedirectResponse($url);
 		}
 
 		return new ImageResponse($download);
