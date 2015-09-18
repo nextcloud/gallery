@@ -117,10 +117,11 @@ class PreviewApiController extends ApiController {
 	 * @param int $fileId the ID of the file of which we need a large preview of
 	 * @param int $width
 	 * @param int $height
+	 * @param bool $nativesvg This is a GET parameter, so no camelCase
 	 *
 	 * @return ImageResponse|Http\JSONResponse
 	 */
-	public function getPreview($fileId, $width, $height) {
+	public function getPreview($fileId, $width, $height, $nativesvg = false) {
 		/** @type File $file */
 		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
 
@@ -133,6 +134,11 @@ class PreviewApiController extends ApiController {
 			);
 		}
 		$preview['name'] = $file->getName();
+
+		// That's the only exception out of all the image media types we serve
+		if ($preview['mimetype'] === 'image/svg+xml' && !$nativesvg) {
+			$preview['mimetype'] = 'text/plain';
+		}
 
 		return new ImageResponse($preview, $status);
 	}
