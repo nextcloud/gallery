@@ -27,6 +27,7 @@ class PreviewApiControllerTest extends PreviewControllerTest {
 			$this->appName,
 			$this->request,
 			$this->urlGenerator,
+			$this->configService,
 			$this->thumbnailService,
 			$this->previewService,
 			$this->downloadService,

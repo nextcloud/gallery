@@ -77,7 +77,6 @@ class ConfigControllerTest extends \Test\TestCase {
 			$this->appName,
 			$this->request,
 			$this->configService,
-			$this->previewService,
 			$this->logger
 		);
 	}
@@ -202,7 +201,7 @@ class ConfigControllerTest extends \Test\TestCase {
 	 * @param $mimeTypes
 	 */
 	private function mockSupportedMediaTypes($slideshow, $nativeSvgSupport, $mimeTypes) {
-		$this->previewService->expects($this->any())
+		$this->configService->expects($this->any())
 							 ->method('getSupportedMediaTypes')
 							 ->with(
 								 $this->equalTo($slideshow),

@@ -18,6 +18,7 @@ use OCP\ILogger;
 use OCA\Gallery\Config\ConfigParser;
 use OCA\Gallery\Config\ConfigException;
 use OCA\Gallery\Environment\Environment;
+use OCA\Gallery\Preview\Preview;
 
 /**
  * Finds configurations files and returns a configuration array
@@ -45,6 +46,35 @@ class ConfigService extends FilesService {
 	 * @var ConfigParser
 	 */
 	private $configParser;
+	/** @var Preview */
+	private $previewManager;
+	/**
+	 * @todo This hard-coded array could be replaced by admin settings
+	 *
+	 * @var string[]
+	 */
+	private $baseMimeTypes = [
+		'image/png',
+		'image/jpeg',
+		'image/gif',
+		'image/x-xbitmap',
+		'image/bmp',
+		'image/tiff',
+		'image/x-dcraw',
+		'application/x-photoshop',
+		'application/illustrator',
+		'application/postscript',
+	];
+	/**
+	 * These types are useful for files preview in the files app, but
+	 * not for the gallery side
+	 *
+	 * @var string[]
+	 */
+	private $slideshowMimeTypes = [
+		'application/font-sfnt',
+		'application/x-font',
+	];
 
 	/**
 	 * Constructor
@@ -52,17 +82,20 @@ class ConfigService extends FilesService {
 	 * @param string $appName
 	 * @param Environment $environment
 	 * @param ConfigParser $configParser
+	 * @param Preview $previewManager
 	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		Environment $environment,
 		ConfigParser $configParser,
+		Preview $previewManager,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $environment, $logger);
 
 		$this->configParser = $configParser;
+		$this->previewManager = $previewManager;
 	}
 
 	/**
@@ -84,6 +117,36 @@ class ConfigService extends FilesService {
 		}
 
 		return $featuresList;
+	}
+
+	/**
+	 * This builds and returns a list of all supported media types
+	 *
+	 * @todo Native SVG could be disabled via admin settings
+	 *
+	 * @param bool $extraMediaTypes
+	 * @param bool $nativeSvgSupport
+	 *
+	 * @return string[] all supported media types
+	 */
+	public function getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport) {
+		$supportedMimes = [];
+		$wantedMimes = $this->baseMimeTypes;
+		if ($extraMediaTypes) {
+			$wantedMimes = array_merge($wantedMimes, $this->slideshowMimeTypes);
+		}
+		foreach ($wantedMimes as $wantedMime) {
+			// Let's see if a preview of files of that media type can be generated
+			if ($this->isMimeSupported($wantedMime)) {
+				// We store the media type
+				$supportedMimes[] = $wantedMime;
+			}
+		}
+		$supportedMimes = $this->addSvgSupport($supportedMimes, $nativeSvgSupport);
+
+		//$this->logger->debug("Supported Mimes: {mimes}", ['mimes' => $supportedMimes]);
+
+		return $supportedMimes;
 	}
 
 	/**
@@ -121,6 +184,19 @@ class ConfigService extends FilesService {
 	}
 
 	/**
+	 * Throws an exception if the media type of the file is not part of what the app allows
+	 *
+	 * @param $mimeType
+	 *
+	 * @throws ForbiddenServiceException
+	 */
+	public function validateMimeType($mimeType) {
+		if (!in_array($mimeType, $this->getSupportedMediaTypes(true, true))) {
+			throw new ForbiddenServiceException('Media type not allowed');
+		}
+	}
+
+	/**
 	 * Determines if we have a configuration file to work with
 	 *
 	 * @param Folder $rootFolder the virtual root folder
@@ -129,6 +205,44 @@ class ConfigService extends FilesService {
 	 */
 	private function configExists($rootFolder) {
 		return $rootFolder && $rootFolder->nodeExists($this->configName);
+	}
+
+	/**
+	 * Adds the SVG media type if it's not already there
+	 *
+	 * If it's enabled, but doesn't work, an exception will be raised when trying to generate a
+	 * preview. If it's disabled, we support it via the browser's native support
+	 *
+	 * @param string[] $supportedMimes
+	 * @param bool $nativeSvgSupport
+	 *
+	 * @return string[]
+	 */
+	private function addSvgSupport($supportedMimes, $nativeSvgSupport) {
+		if (!in_array('image/svg+xml', $supportedMimes) && $nativeSvgSupport) {
+			$supportedMimes[] = 'image/svg+xml';
+		}
+
+		return $supportedMimes;
+	}
+
+	/**
+	 * Returns true if the passed mime type is supported
+	 *
+	 * In case of a failure, we just return that the media type is not supported
+	 *
+	 * @param string $mimeType
+	 *
+	 * @return boolean
+	 */
+	private function isMimeSupported($mimeType = '*') {
+		try {
+			return $this->previewManager->isMimeSupported($mimeType);
+		} catch (\Exception $exception) {
+			unset($exception);
+
+			return false;
+		}
 	}
 
 	/**

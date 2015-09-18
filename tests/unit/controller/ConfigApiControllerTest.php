@@ -27,7 +27,6 @@ class ConfigApiControllerTest extends ConfigControllerTest {
 			$this->appName,
 			$this->request,
 			$this->configService,
-			$this->previewService,
 			$this->logger
 		);
 	}

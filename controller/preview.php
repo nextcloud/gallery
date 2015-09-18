@@ -22,6 +22,7 @@ use OCP\AppFramework\Http;
 
 use OCA\Gallery\Service\ServiceException;
 use OCA\Gallery\Service\NotFoundServiceException;
+use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
@@ -37,6 +38,8 @@ trait Preview {
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
+	/** @var ConfigService */
+	private $configService;
 	/**  @var ThumbnailService */
 	private $thumbnailService;
 	/**  @var PreviewService */
@@ -112,14 +115,14 @@ trait Preview {
 		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
 	) {
 		/** @type File $file */
-		$file = $this->getFile($fileId);
+		list($file, $status) = $this->getFile($fileId);
 		try {
 			if (!is_null($file)) {
 				$data = $this->getPreviewData(
 					$file, $animatedPreview, $width, $height, $keepAspect, $base64Encode
 				);
 			} else {
-				$data = $this->getErrorData(Http::STATUS_NOT_FOUND);
+				$data = $this->getErrorData($status);
 			}
 		} catch (ServiceException $exception) {
 			$data = $this->getExceptionData($exception);
@@ -137,14 +140,17 @@ trait Preview {
 	 * @return array<File|int|null>
 	 */
 	private function getFile($fileId) {
+		$status = Http::STATUS_OK;
 		try {
 			/** @type File $file */
 			$file = $this->previewService->getResourceFromId($fileId);
+			$this->configService->validateMimeType($file->getMimeType());
 		} catch (ServiceException $exception) {
 			$file = null;
+			$status = $this->getHttpStatusCode($exception);
 		}
 
-		return $file;
+		return [$file, $status];
 	}
 
 	/**

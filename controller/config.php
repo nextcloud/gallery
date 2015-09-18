@@ -17,7 +17,6 @@ use OCP\ILogger;
 use OCP\AppFramework\Http;
 
 use OCA\Gallery\Service\ConfigService;
-use OCA\Gallery\Service\PreviewService;
 
 /**
  * Trait Config
@@ -30,10 +29,6 @@ trait Config {
 	 * @var ConfigService
 	 */
 	private $configService;
-	/**
-	 * @var PreviewService
-	 */
-	private $previewService;
 	/**
 	 * @var ILogger
 	 */
@@ -55,7 +50,7 @@ trait Config {
 
 		$nativeSvgSupport = $this->isNativeSvgActivated($features);
 		$mediaTypes =
-			$this->previewService->getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport);
+			$this->configService->getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport);
 
 		return ['features' => $features, 'mediatypes' => $mediaTypes];
 	}
