@@ -1,4 +1,4 @@
-/* global Gallery, marked, DOMPurify */
+/* global Gallery, commonmark, DOMPurify */
 (function ($, t, Gallery) {
 	"use strict";
 	/**
@@ -8,12 +8,16 @@
 	 */
 	var InfoBox = function () {
 		this.infoContentElement = $('.album-info-content');
+		this.markdownReader = new commonmark.Parser();
+		this.htmlWriter = new commonmark.HtmlRenderer();
 		this._initCustomSanitizer();
 	};
 
 	InfoBox.prototype = {
 		infoContentElement: null,
 		albumInfo: null,
+		markdownReader: null,
+		htmlWriter: null,
 		allowedTags: null,
 
 		/**
@@ -61,12 +65,7 @@
 		 */
 		_addContent: function (content) {
 			try {
-				content = DOMPurify.sanitize(marked(content, {
-					gfm: false,
-					sanitize: true
-				}), {
-					ALLOWED_TAGS: this.allowedTags
-				});
+				content = this._parseMarkdown(content);
 			} catch (exception) {
 				content = t('gallery',
 					'Could not load the description: ' + exception.message);
@@ -75,6 +74,21 @@
 			this.infoContentElement.find('a').attr("target", "_blank");
 			this._showCopyright();
 			this._adjustHeight();
+		},
+
+		/**
+		 * Parses markdown content and sanitizes the HTML
+		 *
+		 * @param {string} content
+		 * @private
+		 */
+		_parseMarkdown: function (content) {
+			return DOMPurify.sanitize(this.htmlWriter.render(this.markdownReader.parse(content), {
+				smart: true,
+				safe: true
+			}), {
+				ALLOWED_TAGS: this.allowedTags
+			});
 		},
 
 		/**
@@ -104,12 +118,7 @@
 
 				if (!$.isEmptyObject(this.albumInfo.copyright)) {
 					try {
-						copyright = DOMPurify.sanitize(marked(this.albumInfo.copyright, {
-							gfm: false,
-							sanitize: true
-						}), {
-							ALLOWED_TAGS: this.allowedTags
-						});
+						copyright = this._parseMarkdown(this.albumInfo.copyright);
 					} catch (exception) {
 						copyright =
 							t('gallery',
