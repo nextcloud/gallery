@@ -126,6 +126,11 @@ class FilesController extends Controller {
 			return $response;
 		}
 
+		// That's the only exception out of all the image media types we serve
+		if ($download['mimetype'] === 'image/svg+xml') {
+			$download['mimetype'] = 'text/plain';
+		}
+
 		return new ImageResponse($download);
 	}
 
