@@ -33,10 +33,10 @@ class GetConfigCest {
 	];
 	private $mediaTypes = [
 		"mediatypes" => [
-			"image/png"              => "/core/img/filetypes/image.png",
-			"image/jpeg"             => "/core/img/filetypes/image.png",
-			"image/gif"              => "/core/img/filetypes/image.png",
-			"application/postscript" => "/core/img/filetypes/image-vector.png"
+			"image/png"              => "/core/img/filetypes/image.svg",
+			"image/jpeg"             => "/core/img/filetypes/image.svg",
+			"image/gif"              => "/core/img/filetypes/image.svg",
+			"application/postscript" => "/core/img/filetypes/image-vector.svg"
 		]
 	];
 
@@ -97,8 +97,8 @@ class GetConfigCest {
 		 * TODO Replace with JSONPath once the library is fixed
 		 */
 		$mediaTypes = $this->mediaTypes;
-		$mediaTypes['mediatypes'] = ["application/font-sfnt"  => "/core/img/filetypes/font.png"];
-		$mediaTypes['mediatypes'] = ["application/x-font"     => "/core/img/filetypes/font.png"];
+		$mediaTypes['mediatypes'] = ["application/font-sfnt"  => "/core/img/filetypes/font.svg"];
+		$mediaTypes['mediatypes'] = ["application/x-font"     => "/core/img/filetypes/font.svg"];
 		$I->seeResponseContainsJson($mediaTypes);
 	}
 
