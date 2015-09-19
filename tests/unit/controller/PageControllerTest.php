@@ -16,6 +16,7 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\ISession;
+use OCP\App\IAppManager;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -40,6 +41,8 @@ class PageControllerTest extends \Test\TestCase {
 	private $appConfig;
 	/** @var ISession */
 	protected $session;
+	/** @var IAppManager */
+	private $appManager;
 	/** @var PageController */
 	protected $controller;
 
@@ -64,13 +67,17 @@ class PageControllerTest extends \Test\TestCase {
 		$this->session = $this->getMockBuilder('\OCP\ISession')
 							  ->disableOriginalConstructor()
 							  ->getMock();
+		$this->appManager = $this->getMockBuilder('\OCP\App\IAppManager')
+								 ->disableOriginalConstructor()
+								 ->getMock();
 		$this->controller = new PageController(
 			$this->appName,
 			$this->request,
 			$this->environment,
 			$this->urlGenerator,
 			$this->appConfig,
-			$this->session
+			$this->session,
+			$this->appManager
 		);
 	}
 
@@ -102,6 +109,22 @@ class PageControllerTest extends \Test\TestCase {
 		$this->assertContains(
 			"font-src 'self' data:", $response->getHeaders()['Content-Security-Policy']
 		);
+	}
+
+	public function testIndexWithIncompatibleAppInstalled() {
+		$message = 'Say good-bye to Pictures';
+		$this->mockSession('galleryErrorMessage', $message);
+		$redirectUrl = '/index.php/app/error';
+		$this->mockUrlToErrorPage(Http::STATUS_INTERNAL_SERVER_ERROR, $redirectUrl);
+
+		$this->mockBadAppEnabled('gallery');
+
+		/** @type RedirectResponse $response */
+		$response = $this->controller->index();
+
+		$this->assertEquals($redirectUrl, $response->getRedirectURL());
+		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals($message, $this->session->get('galleryErrorMessage'));
 	}
 
 	public function testSlideshow() {
@@ -176,7 +199,7 @@ class PageControllerTest extends \Test\TestCase {
 		// Not available on <8.2
 		//$template = new TemplateResponse($this->appName, 'index', $params, 'guest');
 		//$template->setStatus($code);
-		$this->mockSessionGet('galleryErrorMessage', $message);
+		$this->mockSession('galleryErrorMessage', $message);
 
 		$response = $this->controller->errorPage($code);
 
@@ -243,17 +266,40 @@ class PageControllerTest extends \Test\TestCase {
 						   ->willReturn($url);
 	}
 
+	private function mockBadAppEnabled($app) {
+		$this->appManager->expects($this->once())
+						 ->method('isInstalled')
+						 ->with($app)
+						 ->willReturn(true);
+	}
+
 	/**
 	 * Needs to be called at least once by testDownloadWithWrongId() or the tests will fail
 	 *
 	 * @param $key
 	 * @param $value
 	 */
-	private function mockSessionGet($key, $value) {
-		$this->session->expects($this->once())
-					  ->method('get')
+	private function mockSession($key, $value) {
+		$this->session->method('set')
 					  ->with($key)
 					  ->willReturn($value);
+
+		$this->session->method('get')
+					  ->with($key)
+					  ->willReturn($value);
+	}
+
+	/**
+	 * Mocks IURLGenerator->linkToRoute()
+	 *
+	 * @param int $code
+	 * @param string $url
+	 */
+	private function mockUrlToErrorPage($code, $url) {
+		$this->urlGenerator->expects($this->once())
+						   ->method('linkToRoute')
+						   ->with($this->appName . '.page.error_page', ['code' => $code])
+						   ->willReturn($url);
 	}
 
 }
