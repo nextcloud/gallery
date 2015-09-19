@@ -154,7 +154,7 @@
 			event.stopPropagation();
 		
 			var subUrl = '';
-			var params = {path: '/' + encodeURIComponent(Gallery.currentAlbum)};
+			var params = {path: '/' + Gallery.currentAlbum};
 			if (Gallery.token) {
 				params.token = Gallery.token;
 				subUrl = 's/{token}?path={path}';
@@ -269,6 +269,7 @@
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
+			$('#content').removeClass('icon-loading');
 		},
 
 		/**
@@ -280,6 +281,7 @@
 				"I am sorry, but I could not find any media files at this location.");
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
+			$('#content').removeClass('icon-loading');
 			$('#album-info-button').hide();
 			$('#share-button').hide();
 			$('#sort-name-button').hide();
