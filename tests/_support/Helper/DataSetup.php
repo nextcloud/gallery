@@ -220,7 +220,7 @@ class DataSetup extends \Codeception\Module {
 
 	public function restoreValidConfig() {
 		$userFolder = $this->server->getUserFolder($this->userId);
-		$this->addFile($userFolder, $this->userId . '-' . 'gallery.cnf', 'gallery.cnf');
+		$this->addFile($userFolder, $this->userId . '-gallery.cnf', 'gallery.cnf');
 	}
 
 	/**
@@ -316,7 +316,8 @@ class DataSetup extends \Codeception\Module {
 		$this->createStructure($userFolder, $structure);
 
 		// Add configuration. This will break if the config filename or the userId is changed
-		$this->addFile($userFolder, $userId . '-' . 'gallery.cnf', 'gallery.cnf');
+		$this->addFile($userFolder, $userId . '-gallery.cnf', 'gallery.cnf');
+		$this->addFile($userFolder->get('folder2'), 'sorting-gallery.cnf', 'gallery.cnf');
 	}
 
 	/**

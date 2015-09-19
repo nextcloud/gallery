@@ -8,15 +8,18 @@
 	 * @param {*} container
 	 * @param {Object} zoomablePreview
 	 * @param {number} interval
+	 * @param {Array} features
 	 * @constructor
 	 */
-	var Controls = function (slideshow, container, zoomablePreview, interval) {
+	var Controls = function (slideshow, container, zoomablePreview, interval, features) {
 		this.slideshow = slideshow;
 		this.container = container;
 		this.zoomablePreview = zoomablePreview;
 		this.progressBar = container.find('.progress');
 		this.interval = interval || 5000;
-
+		if (features.indexOf('background_colour_toggle') > -1) {
+			this.backgroundToggle = true;
+		}
 	};
 
 	Controls.prototype = {
@@ -25,6 +28,7 @@
 		playTimeout: 0,
 		playing: false,
 		active: false,
+		backgroundToggle: false,
 
 		/**
 		 * Initialises the controls
@@ -54,13 +58,13 @@
 		update: function (images, autoPlay) {
 			this.images = images;
 			this.active = true;
-			this.container.find('.pause').hide();
+			this.hideButton('.pause');
 
 			// Hide prev/next and play buttons when we only have one pic
 			this.container.find('.next, .previous, .play').toggle(this.images.length > 1);
 
-			// Hide the toggle background button until we have something to show
-			this.container.find('.changeBackground').hide();
+			// Hide the action buttons until we have something to show
+			this.hideActionButtons();
 
 			if (autoPlay) {
 				this._play();
@@ -105,6 +109,47 @@
 		},
 
 		/**
+		 * Shows the action buttons
+		 */
+		showActionButtons: function () {
+			this._showBackgroundToggle();
+			this.showButton('.downloadImage');
+		},
+
+		/**
+		 * Hides the action buttons
+		 */
+		hideActionButtons: function () {
+			this.hideButton('.changeBackground');
+			this.hideButton('.downloadImage');
+		},
+
+		/**
+		 * Shows a button which has been hidden
+		 */
+		showButton: function (button) {
+			this.container.find(button).removeClass('hidden');
+		},
+
+		/**
+		 * Hides a button
+		 *
+		 * @param button
+		 */
+		hideButton: function (button) {
+			this.container.find(button).addClass('hidden');
+		},
+
+		/**
+		 * Removes a button
+		 *
+		 * @param button
+		 */
+		removeButton: function (button) {
+			this.container.find(button).remove();
+		},
+
+		/**
 		 * Sets up the button based navigation
 		 *
 		 * @param {Function} makeCallBack
@@ -125,8 +170,26 @@
 		 * @private
 		 */
 		_specialButtonSetup: function (makeCallBack) {
-			this.container.children('.downloadImage').click(makeCallBack(this._getImageDownload));
-			this.container.children('.changeBackground').click(makeCallBack(this._toggleBackground));
+			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
+			this.container.find('.menu').width = 52;
+			if (this.backgroundToggle) {
+				this.container.find('.changeBackground').click(
+					makeCallBack(this._toggleBackground));
+				this.container.find('.menu').width += 52;
+			} else {
+				this.hideButton('.changeBackground');
+			}
+
+
+		},
+
+		/**
+		 * Shows the background colour switcher, if activated in the configuration
+		 */
+		_showBackgroundToggle: function () {
+			if (this.backgroundToggle) {
+				this.showButton('.changeBackground');
+			}
 		},
 
 		/**
@@ -294,7 +357,7 @@
 			if (history && history.replaceState) {
 				// We simulate a click on the back button in order to be consistent
 				window.history.back();
-			} else{
+			} else {
 				// For ancient browsers supported in core
 				this.stop();
 			}

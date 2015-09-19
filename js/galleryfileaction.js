@@ -2,7 +2,7 @@
 (function ($, OC, OCA, oc_requesttoken) {
 	"use strict";
 	var galleryFileAction = {
-		config: null,
+		features: [],
 		mediaTypes: {},
 		scrollContainer: null,
 		slideShow: null,
@@ -52,6 +52,27 @@
 		},
 
 		/**
+		 * Prepares the features array
+		 *
+		 * This is duplicated from a method found in galleryconfig. It's done that way in order to
+		 * avoid having to load the whole utility class in the Files app
+		 *
+		 * @param configFeatures
+		 * @returns {Array}
+		 */
+		buildFeaturesList: function (configFeatures) {
+			var features = [];
+			var i, configFeaturesLength = configFeatures.length;
+			if (configFeaturesLength) {
+				for (i = 0; i < configFeaturesLength; i++) {
+					features.push(configFeatures[i]);
+				}
+			}
+
+			window.galleryFileAction.features = features;
+		},
+
+		/**
 		 * Builds an array containing all the images we can show in the slideshow
 		 *
 		 * @param {string} filename
@@ -93,7 +114,7 @@
 						requesttoken: oc_requesttoken
 					};
 					downloadUrl =
-						galleryFileAction.buildGalleryUrl('files/download', '/' + file.id, params);
+						galleryFileAction.buildGalleryUrl('files', '/download/' + file.id, params);
 
 					images.push({
 						name: file.name,
@@ -114,10 +135,15 @@
 
 			if ($.isEmptyObject(galleryFileAction.slideShow)) {
 				galleryFileAction.slideShow = new SlideShow();
-				$.when(galleryFileAction.slideShow.init(false, null))
-					.then(function () {
-						galleryFileAction._startSlideshow(images, start);
-					});
+				$.when(galleryFileAction.slideShow.init(
+					false,
+					null,
+					window.galleryFileAction.features
+				)).then(function () {
+					// Don't show the download button on the "Files" slideshow
+					galleryFileAction.slideShow.removeButton('.downloadImage');
+					galleryFileAction._startSlideshow(images, start);
+				});
 			} else {
 				galleryFileAction._startSlideshow(images, start);
 			}
@@ -177,9 +203,7 @@ $(document).ready(function () {
 	// The list of media files is retrieved when the user clicks on a row
 	var url = window.galleryFileAction.buildGalleryUrl('config', '', {extramediatypes: 1});
 	$.getJSON(url).then(function (config) {
-		if (!$.isEmptyObject(config.features)) {
-			window.galleryFileAction.config = config.features;
-		}
+		window.galleryFileAction.buildFeaturesList(config.features);
 		window.galleryFileAction.register(config.mediatypes);
 	});
 });

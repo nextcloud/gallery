@@ -51,6 +51,9 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 			'external_shares' => "no",
 			'native_svg'      => "yes",
 		];
+		$parsedFeatureList = [
+			'native_svg'
+		];
 		$features = [
 			'features' => $featureList
 		];
@@ -60,8 +63,8 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 			[$noFeatures, false, []],
 			[$emptyFeatures, false, []],
 			[$emptyFeatures, true, []],
-			[$features, false, $featureList],
-			[$features, true, $featureList],
+			[$features, false, $parsedFeatureList],
+			[$features, true, $parsedFeatureList],
 		];
 	}
 

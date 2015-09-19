@@ -1,4 +1,4 @@
-/* global Gallery */
+/* global Gallery, Spinner */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 	/**
@@ -9,12 +9,20 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
+		this.spinnerDiv = $('#loading-indicator').get(0);
+		var spinnerOptions = {
+			color: '#999',
+			hwaccel: true
+		};
+		this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 	};
 
 	View.prototype = {
 		element: null,
 		breadcrumb: null,
 		requestId: -1,
+		spinnerDiv: 0,
+		spinner: null,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -35,8 +43,10 @@
 				this.clear();
 				if (albumPath === '') {
 					Gallery.showEmpty();
+					this.spinner.stop(this.spinnerDiv);
 				} else {
 					Gallery.showEmptyFolder();
+					this.spinner.stop(this.spinnerDiv);
 					Gallery.currentAlbum = albumPath;
 					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
@@ -53,6 +63,7 @@
 					$('#save #save-button').click(Gallery.showSaveForm);
 					$('.save-form').submit(Gallery.saveForm);
 				}
+				this._setBackgroundColour();
 				this.viewAlbum(albumPath);
 			}
 		},
@@ -82,6 +93,7 @@
 			}
 
 			this.clear();
+			this.spinner.spin(this.spinnerDiv);
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -99,8 +111,7 @@
 			// Loading rows without blocking the execution of the rest of the script
 			setTimeout(function () {
 				this.loadVisibleRows.activeIndex = 0;
-				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
-					Gallery.currentAlbum);
+				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
 			}.bind(this), 0);
 		},
 
@@ -163,6 +174,7 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
+					view.spinner.stop(view.spinnerDiv);
 					return;
 				}
 
@@ -180,10 +192,6 @@
 					if (view.requestId === row.requestId) {
 						return row.getDom().then(function (dom) {
 
-							// defer removal of loading class to trigger CSS3 animation
-							_.defer(function () {
-								dom.removeClass('loading');
-							});
 							if (Gallery.currentAlbum !== path) {
 								view.loadVisibleRows.loading = null;
 								return; //throw away the row if the user has navigated away in the
@@ -202,9 +210,11 @@
 
 							// No more rows to load at the moment
 							view.loadVisibleRows.loading = null;
+							view.spinner.stop(view.spinnerDiv);
 						}, function () {
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
+							view.spinner.stop(view.spinnerDiv);
 						});
 					}
 					// This is the safest way to do things
@@ -234,8 +244,9 @@
 
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
-			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
-				currentSort.order));
+			Gallery.albumMap[Gallery.currentAlbum].images.sort(
+				Gallery.utility.sortBy(currentSort.type,
+					currentSort.order));
 			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
 				currentSort.albumOrder));
 		},
@@ -279,6 +290,21 @@
 				if (albumInfo.inherit !== 'yes' || albumInfo.level === 0) {
 					infoButton.find('span').delay(1000).slideDown();
 				}
+			}
+		},
+
+		/**
+		 * Sets the background colour of the photowall
+		 *
+		 * @private
+		 */
+		_setBackgroundColour: function () {
+			var wrapper = $('#content-wrapper');
+			var albumInfo = Gallery.config.albumInfo;
+			if (!$.isEmptyObject(albumInfo) && albumInfo.background) {
+				wrapper.css('background-color', albumInfo.background);
+			} else {
+				wrapper.css('background-color', '#fff');
 			}
 		}
 	};

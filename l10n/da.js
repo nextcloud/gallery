@@ -21,7 +21,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "installér venligst én af følgende alternativer",
     "Configuration error" : "Konfigurationsfejl",
     "Error loading slideshow template" : "Fejl ved indlæsning af skabelon for diasshow",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fejl!</strong> Kunne ikke oprette en forhåndsvisning af denne fil.<br>",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fejl!</strong> Kunne ikke generere en forhåndsvisning af denne fil.<br>",
     "<strong>Error!</strong> Your browser can't display SVG files.<br>" : "<strong>Fejl!</strong> Din browser kan ikke vise SVG-filer.<br>",
     "Next" : "Næste",
     "Play" : "Afspil",

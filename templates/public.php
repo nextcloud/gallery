@@ -26,7 +26,8 @@ script(
 		'slideshow',
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
-		'vendor/image-scale/image-scale.min'
+		'vendor/image-scale/image-scale.min',
+		'vendor/spin.js/spin.min'
 	]
 );
 style(
@@ -56,11 +57,11 @@ style(
 		<div class="header-appname-container">
 			<h1 class="header-appname">
 				<?php
-					if (\OCP\App::isEnabled('enterprise_key')) {
-						print_unescaped($theme->getHTMLName());
-					} else {
-						p($theme->getName());
-					}
+				if (\OCP\App::isEnabled('enterprise_key')) {
+					print_unescaped($theme->getHTMLName());
+				} else {
+					p($theme->getName());
+				}
 				?>
 			</h1>
 		</div>
@@ -87,7 +88,7 @@ style(
 				<?php } ?>
 				<a id="download" class="button">
 					<img class="svg" src="<?php print_unescaped(
-						image_path($_['appName'], "download.svg")
+						image_path('core', 'actions/download.svg')
 					); ?>" alt=""/>
 						<span id="download-text"><?php p($l->t('Download')) ?>
 						</span>
@@ -96,7 +97,7 @@ style(
 		</div>
 	</div>
 </header>
-<div class="content-wrapper">
+<div id="content-wrapper">
 	<div id="content" class="app-<?php p($_['appName']) ?>"
 		 data-albumname="<?php p($_['albumName']) ?>">
 		<div id="app">
@@ -133,9 +134,11 @@ style(
 				 data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>">
 			</div>
 			<div id="emptycontent" class="hidden"></div>
+			<div id="loading-indicator"></div>
+			<footer>
+				<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
+			</footer>
 		</div>
 	</div>
 </div>
-<footer>
-	<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
-</footer>
+

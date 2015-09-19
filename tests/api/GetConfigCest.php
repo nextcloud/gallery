@@ -23,18 +23,20 @@ class GetConfigCest {
 	private $params = [
 		'extramediatypes' => false
 	];
-	private $features = [
-		'features' => [
-			'external_shares' => 'yes',
-			'native_svg'      => 'no',
-		]
+	/**
+	 * Has to match what is in the dataSetup configuration
+	 *
+	 * @var array
+	 */
+	private $parsedFeatures = [
+		'features' => ['external_shares']
 	];
 	private $mediaTypes = [
 		"mediatypes" => [
-			"image/png"              => "/core/img/filetypes/image.png",
-			"image/jpeg"             => "/core/img/filetypes/image.png",
-			"image/gif"              => "/core/img/filetypes/image.png",
-			"application/postscript" => "/core/img/filetypes/image-vector.png"
+			"image/png"              => "/core/img/filetypes/image.svg",
+			"image/jpeg"             => "/core/img/filetypes/image.svg",
+			"image/gif"              => "/core/img/filetypes/image.svg",
+			"application/postscript" => "/core/img/filetypes/image-vector.svg"
 		]
 	];
 
@@ -71,7 +73,7 @@ class GetConfigCest {
 		 * Warning: Needs to match what is in the test config
 		 * If we automate the detection, we're dependant on the results created by a 3rd party lib
 		 */
-		$I->seeResponseContainsJson($this->features);
+		$I->seeResponseContainsJson($this->parsedFeatures);
 		/**
 		 * TODO Replace with JSONPath once the library is fixed
 		 */
@@ -95,8 +97,8 @@ class GetConfigCest {
 		 * TODO Replace with JSONPath once the library is fixed
 		 */
 		$mediaTypes = $this->mediaTypes;
-		$mediaTypes['mediatypes'] = ["application/font-sfnt"  => "/core/img/filetypes/font.png"];
-		$mediaTypes['mediatypes'] = ["application/x-font"     => "/core/img/filetypes/font.png"];
+		$mediaTypes['mediatypes'] = ["application/font-sfnt"  => "/core/img/filetypes/font.svg"];
+		$mediaTypes['mediatypes'] = ["application/x-font"     => "/core/img/filetypes/font.svg"];
 		$I->seeResponseContainsJson($mediaTypes);
 	}
 
@@ -145,7 +147,7 @@ class GetConfigCest {
 		$I->expectTo('see the same config as in getConfig()');
 
 		$this->tryToGetAValidConfig($I);
-		$I->seeResponseContainsJson($this->features);
+		$I->seeResponseContainsJson($this->parsedFeatures);
 		$I->seeResponseContainsJson($this->mediaTypes);
 
 		$I->fixMyConfigFile();
