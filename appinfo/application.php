@@ -80,7 +80,8 @@ class Application extends App {
 				$c->query('Environment'),
 				$c->query('OCP\IURLGenerator'),
 				$c->query('OCP\IConfig'),
-				$c->query('Session')
+				$c->query('Session'),
+				$c->query('OCP\App\IAppManager')
 			);
 		}
 		);
