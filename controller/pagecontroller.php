@@ -18,6 +18,7 @@ use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\ISession;
+use OCP\App\IAppManager;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -35,6 +36,8 @@ use OCA\GalleryPlus\Http\ImageResponse;
  */
 class PageController extends Controller {
 
+	use HttpError;
+
 	/** @var Environment */
 	private $environment;
 	/** @var IURLGenerator */
@@ -43,6 +46,8 @@ class PageController extends Controller {
 	private $appConfig;
 	/** @var ISession */
 	private $session;
+	/** @var IAppManager */
+	private $appManager;
 
 	/**
 	 * Constructor
@@ -53,6 +58,7 @@ class PageController extends Controller {
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
 	 * @param ISession $session
+	 * @param IAppManager $appManager
 	 */
 	public function __construct(
 		$appName,
@@ -60,7 +66,8 @@ class PageController extends Controller {
 		Environment $environment,
 		IURLGenerator $urlGenerator,
 		IConfig $appConfig,
-		ISession $session
+		ISession $session,
+		IAppManager $appManager
 	) {
 		parent::__construct($appName, $request);
 
@@ -68,11 +75,13 @@ class PageController extends Controller {
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
 		$this->session = $session;
+		$this->appManager = $appManager;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @UseSession
 	 *
 	 * Shows the albums and pictures at the root folder or a message if
 	 * there are no pictures.
@@ -86,16 +95,13 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$appName = $this->appName;
-		if (\OCP\App::isEnabled('gallery')) {
-			$url = $this->urlGenerator->linkToRoute(
-				$appName . '.page.error_page',
-				[
-					'message' => "You need to disable the Pictures app before being able to use the Gallery+ app",
-					'code'    => Http::STATUS_INTERNAL_SERVER_ERROR
-				]
-			);
+		if ($this->appManager->isInstalled('gallery')) {
+			$message =
+				'You need to disable the Pictures app before being able to use the Gallery+ app';
 
-			return new RedirectResponse($url);
+			return $this->htmlError(
+				$this->session, $this->urlGenerator, $appName, new \Exception($message)
+			);
 		} else {
 			// Parameters sent to the template
 			$params = ['appName' => $appName];
