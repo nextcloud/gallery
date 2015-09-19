@@ -58,10 +58,6 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 	protected $searchMediaService;
 	/** @var DownloadService */
 	protected $downloadService;
-	/** @var ISession */
-	protected $session;
-	/** @var ISession */
-	protected $sessionValue = null;
 	/** @var ILogger */
 	protected $logger;
 
@@ -95,9 +91,6 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$this->downloadService = $this->getMockBuilder('\OCA\GalleryPlus\Service\DownloadService')
 									  ->disableOriginalConstructor()
 									  ->getMock();
-		$this->session = $this->getMockBuilder('\OCP\ISession')
-							  ->disableOriginalConstructor()
-							  ->getMock();
 		$this->logger = $this->getMockBuilder('\OCP\ILogger')
 							 ->disableOriginalConstructor()
 							 ->getMock();
@@ -109,7 +102,6 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 			$this->configService,
 			$this->searchMediaService,
 			$this->downloadService,
-			$this->session,
 			$this->logger
 		);
 	}
@@ -364,21 +356,6 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 									 $features
 								 )
 								 ->willReturn($answer);
-	}
-
-	/**
-	 * Needs to be called at least once by testDownloadWithWrongId() or the tests will fail
-	 *
-	 * @param $key
-	 * @param $value
-	 */
-	private function mockSessionSet($key, $value) {
-		$this->session->expects($this->once())
-					  ->method('set')
-					  ->with(
-						  $key,
-						  $value
-					  );
 	}
 
 }

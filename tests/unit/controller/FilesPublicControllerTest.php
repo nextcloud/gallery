@@ -31,7 +31,6 @@ class FilesPublicControllerTest extends FilesControllerTest {
 			$this->configService,
 			$this->searchMediaService,
 			$this->downloadService,
-			$this->session,
 			$this->logger
 		);
 	}
