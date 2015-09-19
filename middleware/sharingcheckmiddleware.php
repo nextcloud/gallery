@@ -18,7 +18,6 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\ILogger;
 use OCP\IURLGenerator;
-use OCP\ISession;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
@@ -43,7 +42,6 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	 * @param IConfig $appConfig
 	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
-	 * @param ISession $session
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -52,14 +50,12 @@ class SharingCheckMiddleware extends CheckMiddleware {
 		IConfig $appConfig,
 		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		ISession $session,
 		ILogger $logger
 	) {
 		parent::__construct(
 			$appName,
 			$request,
 			$urlGenerator,
-			$session,
 			$logger
 		);
 

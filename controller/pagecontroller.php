@@ -17,7 +17,6 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
-use OCP\ISession;
 use OCP\App\IAppManager;
 
 use OCP\AppFramework\Controller;
@@ -44,8 +43,6 @@ class PageController extends Controller {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
-	/** @var ISession */
-	private $session;
 	/** @var IAppManager */
 	private $appManager;
 
@@ -57,7 +54,6 @@ class PageController extends Controller {
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
-	 * @param ISession $session
 	 * @param IAppManager $appManager
 	 */
 	public function __construct(
@@ -66,7 +62,6 @@ class PageController extends Controller {
 		Environment $environment,
 		IURLGenerator $urlGenerator,
 		IConfig $appConfig,
-		ISession $session,
 		IAppManager $appManager
 	) {
 		parent::__construct($appName, $request);
@@ -74,14 +69,12 @@ class PageController extends Controller {
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
-		$this->session = $session;
 		$this->appManager = $appManager;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @UseSession
 	 *
 	 * Shows the albums and pictures at the root folder or a message if
 	 * there are no pictures.
@@ -99,9 +92,7 @@ class PageController extends Controller {
 			$message =
 				'You need to disable the Pictures app before being able to use the Gallery+ app';
 
-			return $this->htmlError(
-				$this->session, $this->urlGenerator, $appName, new \Exception($message)
-			);
+			return $this->htmlError($this->urlGenerator, $appName, new \Exception($message));
 		} else {
 			// Parameters sent to the template
 			$params = ['appName' => $appName];
@@ -150,7 +141,6 @@ class PageController extends Controller {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 * @Guest
-	 * @UseSession
 	 *
 	 * Generates an error page based on the error code
 	 *
@@ -160,8 +150,7 @@ class PageController extends Controller {
 	 */
 	public function errorPage($code) {
 		$appName = $this->appName;
-		$message = $this->session->get('galleryErrorMessage');
-		$this->session->remove('galleryErrorMessage');
+		$message = $this->request->getCookie('galleryErrorMessage');
 		$params = [
 			'appName' => $appName,
 			'message' => $message,
@@ -170,6 +159,7 @@ class PageController extends Controller {
 
 		$errorTemplate = new TemplateResponse($appName, 'index', $params, 'guest');
 		$errorTemplate->setStatus($code);
+		$errorTemplate->invalidateCookie('galleryErrorMessage');
 
 		return $errorTemplate;
 	}
