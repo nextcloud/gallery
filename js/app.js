@@ -54,19 +54,20 @@ $(document).ready(function () {
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
-			// This section redraws the photowall
+			var infoContentElement = $('.album-info-content');
+			// This section redraws the photowall and limits the width of dropdowns
 			if (windowWidth !== $(window).width()) {
 				if ($('#emptycontent').is(':hidden')) {
 					Gallery.view.viewAlbum(Gallery.currentAlbum);
 				}
 				Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+				infoContentElement.css('max-width', $(window).width());
 
 				windowWidth = $(window).width();
 			}
 			// This makes sure dropdowns will not be hidden after a window resize
 			if (windowHeight !== $(window).height()) {
 				Gallery.resetContentHeight();
-				var infoContentElement = $('.album-info-content');
 				infoContentElement.css('max-height',
 					$(window).height() - Gallery.browserToolbarHeight);
 
