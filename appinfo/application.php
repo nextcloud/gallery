@@ -127,7 +127,6 @@ class Application extends App {
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('DownloadService'),
-				$c->query('Session'),
 				$c->query('Logger')
 			);
 		}
@@ -142,7 +141,6 @@ class Application extends App {
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('DownloadService'),
-				$c->query('Session'),
 				$c->query('Logger')
 			);
 		}
@@ -157,7 +155,6 @@ class Application extends App {
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('DownloadService'),
-				$c->query('Session'),
 				$c->query('Logger')
 			);
 		}
