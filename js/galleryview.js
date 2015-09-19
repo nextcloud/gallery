@@ -1,4 +1,4 @@
-/* global Gallery, Spinner */
+/* global Gallery */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 	/**
@@ -9,20 +9,12 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
-		this.spinnerDiv = $('#loading-indicator').get(0);
-		var spinnerOptions = {
-			color: '#999',
-			hwaccel: true
-		};
-		this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 	};
 
 	View.prototype = {
 		element: null,
 		breadcrumb: null,
 		requestId: -1,
-		spinnerDiv: 0,
-		spinner: null,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -43,10 +35,8 @@
 				this.clear();
 				if (albumPath === '') {
 					Gallery.showEmpty();
-					this.spinner.stop(this.spinnerDiv);
 				} else {
 					Gallery.showEmptyFolder();
-					this.spinner.stop(this.spinnerDiv);
 					Gallery.currentAlbum = albumPath;
 					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
@@ -54,6 +44,7 @@
 			} else {
 				// Only do it when the app is initialised
 				if (this.requestId === -1) {
+					$('#filelist-button').click(Gallery.switchToFilesView);
 					$('#download').click(Gallery.download);
 					$('#share-button').click(Gallery.share);
 					Gallery.infoBox = new Gallery.InfoBox();
@@ -93,7 +84,7 @@
 			}
 
 			this.clear();
-			this.spinner.spin(this.spinnerDiv);
+			$('#loading-indicator').show();
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -118,30 +109,16 @@
 		/**
 		 * Manages the sorting interface
 		 *
-		 * @param {string} sortType
-		 * @param {string} sortOrder
+		 * @param {string} sortType name or date
+		 * @param {string} sortOrder asc or des
 		 */
 		sortControlsSetup: function (sortType, sortOrder) {
-			var sortNameButton = $('#sort-name-button');
-			var sortDateButton = $('#sort-date-button');
-			// namedes, dateasc etc.
-			var icon = sortType + sortOrder;
-
-			var setButton = function (button, icon, active) {
-				button.removeClass('sort-inactive');
-				if (!active) {
-					button.addClass('sort-inactive');
-				}
-				button.find('img').attr('src', OC.imagePath(Gallery.appName, icon));
-			};
-
-			if (sortType === 'name') {
-				setButton(sortNameButton, icon, true);
-				setButton(sortDateButton, 'dateasc', false); // default icon
-			} else {
-				setButton(sortDateButton, icon, true);
-				setButton(sortNameButton, 'nameasc', false); // default icon
+			var reverseSortType = 'date';
+			if (sortType === 'date') {
+				reverseSortType = 'name';
 			}
+			this._setSortButton(sortType, sortOrder, true);
+			this._setSortButton(reverseSortType, 'asc', false); // default icon
 		},
 
 		/**
@@ -174,7 +151,7 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
-					view.spinner.stop(view.spinnerDiv);
+					$('#loading-indicator').hide();
 					return;
 				}
 
@@ -210,11 +187,11 @@
 
 							// No more rows to load at the moment
 							view.loadVisibleRows.loading = null;
-							view.spinner.stop(view.spinnerDiv);
+							$('#loading-indicator').hide();
 						}, function () {
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
-							view.spinner.stop(view.spinnerDiv);
+							$('#loading-indicator').hide();
 						});
 					}
 					// This is the safest way to do things
@@ -305,6 +282,47 @@
 				wrapper.css('background-color', albumInfo.background);
 			} else {
 				wrapper.css('background-color', '#fff');
+			}
+		},
+
+		/**
+		 * Picks the image which matches the sort order
+		 *
+		 * @param {string} sortType name or date
+		 * @param {string} sortOrder asc or des
+		 * @param {bool} active determines if we're setting up the active sort button
+		 * @private
+		 */
+		_setSortButton: function (sortType, sortOrder, active) {
+			var button = $('#sort-' + sortType + '-button');
+			// Removing all the classes which control the image in the button
+			button.removeClass('active-button');
+			button.find('img').removeClass('front');
+			button.find('img').removeClass('back');
+
+			// We need to determine the reverse order in order to send that image to the back
+			var reverseSortOrder = 'des';
+			if (sortOrder === 'des') {
+				reverseSortOrder = 'asc';
+			}
+
+			// We assign the proper order to the button images
+			button.find('img.' + sortOrder).addClass('front');
+			button.find('img.' + reverseSortOrder).addClass('back');
+
+			// The active button needs a hover action for the flip effect
+			if (active) {
+				button.addClass('active-button');
+				if (button.is(":hover")) {
+					button.removeClass('hover');
+				}
+				// We can't use a toggle here
+				button.hover(function () {
+						$(this).addClass('hover');
+					},
+					function () {
+						$(this).removeClass('hover');
+					});
 			}
 		}
 	};

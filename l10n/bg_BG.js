@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Отказан е прегледа. Не можах да намеря файла",
     "No ownCloud installation (7 or higher) found at {remote}" : "Не е открита ownCloud ( 7 или по-висока ) инсталация на {remote}.",
     "Invalid ownCloud url" : "Невалиден ownCloud интернет адрес.",
-    "Picture view" : "Албум със снимки",
     "Could not load the description" : "Неможе да зареди описанието",
     "Could not load the description: " : "Неможе да зареди описанието:",
     "Copyright" : "Авторско право",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Тази зона е защитена с парола.",
     "The password is wrong. Try again." : "Грешна парола. Опитай отново.",
     "Password" : "Парола",
-    "File list" : "Списък с файлове",
-    "Sort by name" : "Сортирай по име",
     "Sort by date" : "Сортирай по дата",
-    "Album information" : "Информация за албума",
+    "Sort by name" : "Сортирай по име",
     "Share" : "Сподели",
+    "Album information" : "Информация за албума",
+    "File list" : "Списък с файлове",
     "Sorry, this file could not be found." : "За съжаление този файл не може да бъде намерен.",
     "Reasons might be:" : "Причините може да са:",
     "the wrong file ID was provided" : "предоставен е грешен ID на файл",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "тази връзка е изтекла",
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
-    "Add to your ownCloud" : "Добави към своя ownCloud"
+    "Add to your ownCloud" : "Добави към своя ownCloud",
+    "Picture view" : "Албум със снимки"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,4 +1,3 @@
-/* global Spinner */
 (function ($, OC, OCA, t) {
 	"use strict";
 	/**
@@ -15,14 +14,13 @@
 		zoomablePreviewContainer: null,
 		controls: null,
 		imageCache: {},
+		/** {Image} */
 		currentImage: null,
 		errorLoadingImage: false,
 		onStop: null,
 		zoomablePreview: null,
 		active: false,
 		backgroundToggle: false,
-		spinnerDiv: 0,
-		spinner: null,
 
 		/**
 		 * Initialises the slideshow
@@ -40,12 +38,6 @@
 				// Move the slideshow outside the content so we can hide the content
 				$('body').append($tmpl);
 				this.container = $('#slideshow');
-				this.spinnerDiv = this.container.get(0);
-				var spinnerOptions = {
-					color: '#999',
-					hwaccel: true
-				};
-				this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
 				this.controls =
@@ -106,7 +98,6 @@
 			this._hideImage();
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
-				this.spinner.stop(this.spinnerDiv);
 				this.container.css('background-position', '-10000px 0');
 				this.controls.showActionButtons();
 
@@ -190,6 +181,19 @@
 				}
 			}
 			return this.imageCache[url];
+		},
+
+		/**
+		 * Shows a new image in the slideshow and preloads the next in the list
+		 *
+		 * @param {number} current
+		 * @param {Object} next
+		 */
+		next: function (current, next) {
+			this.show(current).then(function () {
+				// Preloads the next image in the list
+				this.loadImage(next);
+			}.bind(this));
 		},
 
 		/**
@@ -312,7 +316,6 @@
 		 */
 		_hideImage: function () {
 			this.zoomablePreviewContainer.empty();
-			this.spinner.spin(this.spinnerDiv);
 			this.controls.hideActionButtons();
 		},
 

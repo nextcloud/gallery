@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Eelvaate tühistamine. Faili ei leitud",
     "No ownCloud installation (7 or higher) found at {remote}" : "Saidilt {remote} ei leitud ownCloudi (7 või uuem) ",
     "Invalid ownCloud url" : "Vigane ownCloud url",
-    "Picture view" : "Pildi vaade",
     "Could not load the description" : "Kirjelduse laadimine ebaõnnestus",
     "Could not load the description: " : "Kirjelduse laadimine ebaõnnestus:",
     "Copyright" : "Autoriõigused",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "See jagamine on parooliga kaitstud",
     "The password is wrong. Try again." : "Parool on vale. Proovi uuesti.",
     "Password" : "Parool",
-    "File list" : "Failide nimekiri",
-    "Sort by name" : "Sorteeri nime järgi",
     "Sort by date" : "Sorteeri kuupäeva järgi",
-    "Album information" : "Albumi info",
+    "Sort by name" : "Sorteeri nime järgi",
     "Share" : "Jaga",
+    "Album information" : "Albumi info",
+    "File list" : "Failide nimekiri",
     "Sorry, this file could not be found." : "Vabandust, seda faili ei leitud.",
     "Reasons might be:" : "Põhjused võivad olla:",
     "the wrong file ID was provided" : "sisestati vale faili ID",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "link on aegunud",
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
-    "Add to your ownCloud" : "Lisa oma ownCloudi"
+    "Add to your ownCloud" : "Lisa oma ownCloudi",
+    "Picture view" : "Pildi vaade"
 },
 "nplurals=2; plural=(n != 1);");

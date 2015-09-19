@@ -4,6 +4,8 @@ Read more about automated testing in [the wiki](https://github.com/owncloud/gall
 
 ## Requirements
 
+* PHP tidy enabled
+* PHP imagick extension
 * `core` cloned via git
 * `core` submodule initialised
 * `core` has to be installed
@@ -31,7 +33,7 @@ Go to Gallery's root directory and type:
 
 That's it. You can check that it's properly "installed" by typing:
 
-`# php codecept.phar -- version`
+`# php codecept.phar --version`
 
 #### Installing via Composer
 
@@ -40,6 +42,8 @@ The first step is to [install composer](https://getcomposer.org/doc/00-intro.md)
 
 This usually works well:
 
+As root
+
 `# curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer`
 
 Next you'll need to add a Github token to composer so that you can easily download as many dependencies as you need.
@@ -47,6 +51,8 @@ Next you'll need to add a Github token to composer so that you can easily downlo
 1. Generate a personal token in your Github profile. You don't need to associate any Github permissions to this token.
 
 2. Type the following command: `# composer config --global github-oauth.github.com <your-token> `
+
+As the www user
 
 You can now install all the packages needed to test the app:
 
@@ -185,3 +191,22 @@ Don't forget to kill the phantomjs when you're done.
 ### Notes
 
 If you want to get more details about what is going on during your tests, simply add `-vvv` or `--debug` at the end of the command line
+
+### Troubleshooting
+
+#### Files can't be deleted during API test
+
+If you start getting some strange errors about files which can't be deleted when running the API tests or if some the responses don't match what is expected, it could be because there is already an instance of the phpbuiltinserver running.
+This can happen when a fatal error has happened during a previous run and Codeception wasn't able to shut down the server.
+
+Get the process ID
+
+`# ps aux | grep phpbuiltinserver`
+
+Kill the process
+
+`# kill -9 <process id>`
+
+#### Accessing the built in server's logs
+
+Look for them in the `tests/_output` folder, along with a summary of the failed tests

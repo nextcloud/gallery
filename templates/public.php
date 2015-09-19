@@ -26,8 +26,7 @@ script(
 		'slideshow',
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
-		'vendor/image-scale/image-scale.min',
-		'vendor/spin.js/spin.min'
+		'vendor/image-scale/image-scale.min'
 	]
 );
 style(
@@ -38,7 +37,8 @@ style(
 		'public',
 		'gallerybutton',
 		'github-markdown',
-		'slideshow'
+		'slideshow',
+		'gallerybutton'
 	]
 );
 
@@ -103,21 +103,37 @@ style(
 		<div id="app">
 			<div id="controls">
 				<div id="breadcrumbs"></div>
-				<!-- toggle for opening shared picture view as file list -->
-				<div id="openAsFileListButton" class="button">
+				<!-- toggle for opening the current album as file list -->
+				<div class="button view-switcher right-switch-button disabled-button">
+					<img class="svg" src="<?php print_unescaped(
+						image_path('core', 'actions/toggle-pictures.svg')
+					); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
+				</div>
+				<div id="filelist-button"
+					 class="button view-switcher left-switch-button inactive-button ">
 					<img class="svg" src="<?php print_unescaped(
 						image_path('core', 'actions/toggle-filelist.svg')
 					); ?>" alt="<?php p($l->t('File list')); ?>"/>
 				</div>
-				<div id="sort-name-button" class="button left-sort-button">
-					<img class="svg" src="<?php print_unescaped(
-						image_path($_['appName'], 'nameasc.svg')
-					); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+				<div id="sort-date-button" class="button sorting right-switch-button">
+					<div class="flipper">
+						<img class="svg asc front" src="<?php print_unescaped(
+							image_path($_['appName'], 'dateasc.svg')
+						); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+						<img class="svg des back" src="<?php print_unescaped(
+							image_path($_['appName'], 'datedes.svg')
+						); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+					</div>
 				</div>
-				<div id="sort-date-button" class="button right-sort-button">
-					<img class="svg" src="<?php print_unescaped(
-						image_path($_['appName'], 'dateasc.svg')
-					); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+				<div id="sort-name-button" class="button sorting left-switch-button">
+					<div class="flipper">
+						<img class="svg asc front" src="<?php print_unescaped(
+							image_path($_['appName'], 'nameasc.svg')
+						); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+						<img class="svg des back" src="<?php print_unescaped(
+							image_path($_['appName'], 'namedes.svg')
+						); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
+					</div>
 				</div>
 				<span class="right">
 					<div id="album-info-button" class="button">
@@ -134,7 +150,7 @@ style(
 				 data-token="<?php isset($_['token']) ? p($_['token']) : p(false) ?>">
 			</div>
 			<div id="emptycontent" class="hidden"></div>
-			<div id="loading-indicator"></div>
+			<div id="loading-indicator" class="loading"></div>
 			<footer>
 				<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
 			</footer>

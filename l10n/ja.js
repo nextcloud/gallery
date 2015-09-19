@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote} にはownCloud (7以上)がインストールされていません",
     "Invalid ownCloud url" : "無効なownCloud URL です",
-    "Picture view" : "ピクチャービュー",
     "Could not load the description" : "説明を読み出せませんでした",
     "Could not load the description: " : "説明を読み出せませんでした：",
     "Copyright" : "著作権",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "この共有はパスワードで保護されています",
     "The password is wrong. Try again." : "パスワードが間違っています。再試行してください。",
     "Password" : "パスワード",
-    "File list" : "ファイルリスト",
-    "Sort by name" : "名前で整列",
     "Sort by date" : "日付で整列",
-    "Album information" : "アルバム情報",
+    "Sort by name" : "名前で整列",
     "Share" : "共有",
+    "Album information" : "アルバム情報",
+    "File list" : "ファイルリスト",
     "Sorry, this file could not be found." : "申し訳ありません、このファイルは見つかりませんでした。",
     "Reasons might be:" : "理由は以下の通りと考えられます：",
     "the wrong file ID was provided" : "間違ったファイルIDが提供されました",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "リンクの期限が切れました",
     "sharing is disabled" : "共有は無効になっています",
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
-    "Add to your ownCloud" : "ownCloud に追加"
+    "Add to your ownCloud" : "ownCloud に追加",
+    "Picture view" : "ピクチャービュー"
 },
 "nplurals=1; plural=0;");

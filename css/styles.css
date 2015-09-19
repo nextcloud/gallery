@@ -24,47 +24,19 @@ div.crumb.last a {
 
 #controls .button {
 	margin-top: 5px;
+	width: 40px;
 }
 
-#controls .button.left-sort-button {
-	float: left;
-	display: inline;
-	padding: 8px;
-	border-radius: 3px 0 0 3px;
-	margin-left: 3px;
-	margin-right: 0;
-	border-right: 0;
-}
-
-#controls .button.right-sort-button {
-	float: left;
-	display: inline;
-	padding: 8px 9px 8px 8px;
-	border-radius: 0 3px 3px 0;
-	margin-left: -1px;
-}
-
-.sort-inactive {
-	background-color: rgb(230, 230, 230);
-}
-
-#controls .sort-inactive img {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
-	filter: alpha(opacity=25);
-	opacity: 0.25;
-}
-
-#share-button img,
-#sort-name-button img,
-#sort-date-button img {
-	vertical-align: -3px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	filter: alpha(opacity=60);
-	opacity: 0.6;
+#controls > .right {
+	float: right;
 }
 
 #album-info-button {
 	position: relative;
+}
+
+#album-info-button img {
+	vertical-align: -3px;
 }
 
 .album-info-content {
@@ -232,10 +204,6 @@ div.crumb.last a {
 	opacity: 0;
 }
 
-#controls > .right {
-	float: right;
-}
-
 #gallery > h2 {
 	background: #f7f7f7;
 	height: 2.8em;
@@ -310,6 +278,4 @@ http://www.bypeople.com/author/comatosed/*/
 	height: 32px;
 	width: 100%;
 	margin-bottom: 50px;
-	position: relative;
-	mix-blend-mode: difference;
 }

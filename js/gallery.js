@@ -144,6 +144,28 @@
 			// Refresh the view
 			Gallery.view.viewAlbum(Gallery.currentAlbum);
 		},
+		
+		/**
+		 * Switches to the Files view
+		 *
+		 * @param event
+		 */
+		switchToFilesView: function (event) {
+			event.stopPropagation();
+		
+			var subUrl = '';
+			var params = {path: '/' + Gallery.currentAlbum};
+			if (Gallery.token) {
+				params.token = Gallery.token;
+				subUrl = 's/{token}?path={path}';
+			} else {
+				subUrl = 'apps/files?dir={path}';
+			}
+			
+			var button = $('#filelist-button');
+			button.addClass('loading');
+			OC.redirect(OC.generateUrl(subUrl, params));
+		},
 
 		/**
 		 * Populates the share dialog with the needed information
@@ -247,6 +269,7 @@
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
+			$('#content').removeClass('icon-loading');
 		},
 
 		/**
@@ -258,6 +281,7 @@
 				"I am sorry, but I could not find any media files at this location.");
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
+			$('#content').removeClass('icon-loading');
 			$('#album-info-button').hide();
 			$('#share-button').hide();
 			$('#sort-name-button').hide();

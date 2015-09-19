@@ -16,8 +16,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 // A production environment will not have xdebug enabled and
 // a development environment should have the dev packages installed
-if (extension_loaded('xdebug')) {
-	include_once __DIR__ . '/../c3.php';
+$c3 = __DIR__ . '/../c3.php';
+if (extension_loaded('xdebug') && file_exists($c3)) {
+	include_once $c3;
 }
 
 use OCP\IContainer;
@@ -78,7 +79,8 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('Environment'),
 				$c->query('OCP\IURLGenerator'),
-				$c->query('OCP\IConfig')
+				$c->query('OCP\IConfig'),
+				$c->query('Session')
 			);
 		}
 		);
@@ -125,6 +127,7 @@ class Application extends App {
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('DownloadService'),
+				$c->query('Session'),
 				$c->query('Logger')
 			);
 		}
@@ -139,6 +142,7 @@ class Application extends App {
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('DownloadService'),
+				$c->query('Session'),
 				$c->query('Logger')
 			);
 		}
@@ -153,6 +157,7 @@ class Application extends App {
 				$c->query('ConfigService'),
 				$c->query('SearchMediaService'),
 				$c->query('DownloadService'),
+				$c->query('Session'),
 				$c->query('Logger')
 			);
 		}
@@ -379,6 +384,7 @@ class Application extends App {
 					$c->query('OCP\IConfig'),
 					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
 					$c->query('OCP\IURLGenerator'),
+					$c->query('Session'),
 					$c->query('Logger')
 				);
 			}

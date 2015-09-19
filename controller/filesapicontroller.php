@@ -14,10 +14,12 @@ namespace OCA\GalleryPlus\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\SearchFolderService;
@@ -38,6 +40,8 @@ class FilesApiController extends ApiController {
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
+	/** @var ISession */
+	private $session;
 
 	/**
 	 * Constructor
@@ -49,6 +53,7 @@ class FilesApiController extends ApiController {
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
 	 * @param DownloadService $downloadService
+	 * @param ISession $session
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -59,6 +64,7 @@ class FilesApiController extends ApiController {
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
 		DownloadService $downloadService,
+		ISession $session,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
@@ -68,6 +74,7 @@ class FilesApiController extends ApiController {
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
 		$this->downloadService = $downloadService;
+		$this->session = $session;
 		$this->logger = $logger;
 	}
 
@@ -104,6 +111,10 @@ class FilesApiController extends ApiController {
 	 *
 	 * Sends the file matching the fileId
 	 *
+	 * In case of error we send an HTML error page
+	 * We need to keep the session open in order to be able to send the error message to the error
+	 *     page
+	 *
 	 * @param int $fileId the ID of the file we want to download
 	 * @param string|null $filename
 	 *
@@ -113,7 +124,12 @@ class FilesApiController extends ApiController {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
+			$code = $this->getHttpStatusCode($exception);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page', ['code' => $code]
+			);
+
+			return new RedirectResponse($url);
 		}
 
 		return new ImageResponse($download);
