@@ -269,7 +269,7 @@
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
-			$('#content').removeClass('icon-loading');
+			$('#loading-indicator').hide();
 		},
 
 		/**
@@ -281,7 +281,7 @@
 				"I am sorry, but I could not find any media files at this location.");
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
-			$('#content').removeClass('icon-loading');
+			$('#loading-indicator').hide();
 			$('#album-info-button').hide();
 			$('#share-button').hide();
 			$('#sort-name-button').hide();
