@@ -5,15 +5,13 @@
 [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9/mini.png)](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9)
 
-Fork of the official Gallery app for ownCloud which brings current features and more to older versions of ownCloud.
- 
-This branch currently targets ownCloud 8.1.
- 
-### What is Gallery?
+[![Code Coverage](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=master)
 
 A media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
+
+**This branch brings new features and bug fixes from `owncloud/master` to ownCloud 8.1.x**
 
 ![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
 ## Featuring
