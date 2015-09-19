@@ -15,7 +15,6 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\ISession;
 use OCP\App\IAppManager;
 
 use OCP\AppFramework\Http;
@@ -39,8 +38,6 @@ class PageControllerTest extends \Test\TestCase {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
-	/** @var ISession */
-	protected $session;
 	/** @var IAppManager */
 	private $appManager;
 	/** @var PageController */
@@ -64,9 +61,6 @@ class PageControllerTest extends \Test\TestCase {
 		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
 								->disableOriginalConstructor()
 								->getMock();
-		$this->session = $this->getMockBuilder('\OCP\ISession')
-							  ->disableOriginalConstructor()
-							  ->getMock();
 		$this->appManager = $this->getMockBuilder('\OCP\App\IAppManager')
 								 ->disableOriginalConstructor()
 								 ->getMock();
@@ -76,7 +70,6 @@ class PageControllerTest extends \Test\TestCase {
 			$this->environment,
 			$this->urlGenerator,
 			$this->appConfig,
-			$this->session,
 			$this->appManager
 		);
 	}
@@ -112,8 +105,8 @@ class PageControllerTest extends \Test\TestCase {
 	}
 
 	public function testIndexWithIncompatibleAppInstalled() {
-		$message = 'Say good-bye to Pictures';
-		$this->mockSession('galleryErrorMessage', $message);
+		// Message defined in the method itself
+		$message = 'You need to disable the Pictures app before being able to use the Gallery+ app';
 		$redirectUrl = '/index.php/app/error';
 		$this->mockUrlToErrorPage(Http::STATUS_INTERNAL_SERVER_ERROR, $redirectUrl);
 
@@ -124,7 +117,7 @@ class PageControllerTest extends \Test\TestCase {
 
 		$this->assertEquals($redirectUrl, $response->getRedirectURL());
 		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
-		$this->assertEquals($message, $this->session->get('galleryErrorMessage'));
+		$this->assertEquals($message, $response->getCookies()['galleryErrorMessage']['value']);
 	}
 
 	public function testSlideshow() {
@@ -191,22 +184,15 @@ class PageControllerTest extends \Test\TestCase {
 	public function testErrorPage() {
 		$message = 'Not found!';
 		$code = Http::STATUS_NOT_FOUND;
-		$params = [
-			'appName' => $this->appName,
-			'message' => $message,
-			'code'    => $code,
-		];
-		// Not available on <8.2
-		//$template = new TemplateResponse($this->appName, 'index', $params, 'guest');
-		//$template->setStatus($code);
-		$this->mockSession('galleryErrorMessage', $message);
+
+		$this->mockCookieGet('galleryErrorMessage', $message);
 
 		$response = $this->controller->errorPage($code);
 
-		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
-		//$this->assertEquals($template->getStatus(), $response->getStatus());
+		$this->assertEquals($code, $response->getStatus());
+		$this->assertContains($message, $response->getParams()['message']);
 	}
 
 	private function mockGetSharedNode($nodeType, $nodeId) {
@@ -279,12 +265,9 @@ class PageControllerTest extends \Test\TestCase {
 	 * @param $key
 	 * @param $value
 	 */
-	private function mockSession($key, $value) {
-		$this->session->method('set')
-					  ->with($key)
-					  ->willReturn($value);
-
-		$this->session->method('get')
+	private function mockCookieGet($key, $value) {
+		$this->request->expects($this->once())
+					  ->method('getCookie')
 					  ->with($key)
 					  ->willReturn($value);
 	}

@@ -17,7 +17,6 @@ namespace OCA\GalleryPlus\Controller;
 use Exception;
 
 use OCP\IURLGenerator;
-use OCP\ISession;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
@@ -54,22 +53,23 @@ trait HttpError {
 	}
 
 	/**
-	 * @param ISession $session
 	 * @param IURLGenerator $urlGenerator
 	 * @param string $appName
 	 * @param \Exception $exception
 	 *
 	 * @return RedirectResponse
 	 */
-	public function htmlError($session, $urlGenerator, $appName, Exception $exception) {
+	public function htmlError($urlGenerator, $appName, Exception $exception) {
 		$message = $exception->getMessage();
 		$code = $this->getHttpStatusCode($exception);
-		$session->set('galleryErrorMessage', $message);
 		$url = $urlGenerator->linkToRoute(
 			$appName . '.page.error_page', ['code' => $code]
 		);
 
-		return new RedirectResponse($url);
+		$response = new RedirectResponse($url);
+		$response->addCookie('galleryErrorMessage', $message);
+
+		return $response;
 	}
 
 	/**
