@@ -21,7 +21,6 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\ILogger;
 use OCP\IURLGenerator;
-use OCP\ISession;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -45,8 +44,6 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 	protected $reflector;
 	/** @var IURLGenerator */
 	private $urlGenerator;
-	/** @var ISession */
-	private $session;
 	/** @var ILogger */
 	protected $logger;
 	/** @var Controller */
@@ -71,9 +68,6 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 		$this->urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
 								   ->disableOriginalConstructor()
 								   ->getMock();
-		$this->session = $this->getMockBuilder('\OCP\ISession')
-							  ->disableOriginalConstructor()
-							  ->getMock();
 		$this->logger = $this->getMockBuilder('\OCP\ILogger')
 							 ->disableOriginalConstructor()
 							 ->getMock();
@@ -87,7 +81,6 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 			$this->config,
 			$this->reflector,
 			$this->urlGenerator,
-			$this->session,
 			$this->logger
 		);
 	}

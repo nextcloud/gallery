@@ -90,50 +90,23 @@ class HttpErrorTest extends \Test\TestCase {
 	 * @param String $status
 	 */
 	public function testHtmlError($exception, $message, $status) {
-		$session = $this->mockISession();
 		$urlGenerator = $this->mockIURLGenerator();
-		$this->mockSession($session, 'galleryErrorMessage', $message);
 		$redirectUrl = '/index.php/app/error';
 		$this->mockUrlToErrorPage($urlGenerator, $status, $redirectUrl);
 
 		$httpError = $this->getMockForTrait('\OCA\Gallery\Controller\HttpError');
 
 		/** @type RedirectResponse $response */
-		$response = $httpError->htmlError($session, $urlGenerator, $this->appName, $exception);
+		$response = $httpError->htmlError($urlGenerator, $this->appName, $exception);
 		$this->assertEquals($redirectUrl, $response->getRedirectURL());
 		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
-		$this->assertEquals($message, $session->get('galleryErrorMessage'));
-	}
-
-	private function mockISession() {
-		return $this->getMockBuilder('\OCP\ISession')
-					->disableOriginalConstructor()
-					->getMock();
+		$this->assertEquals($message, $response->getCookies()['galleryErrorMessage']['value']);
 	}
 
 	private function mockIURLGenerator() {
 		return $this->getMockBuilder('\OCP\IURLGenerator')
 					->disableOriginalConstructor()
 					->getMock();
-	}
-
-	/**
-	 * Needs to be called at least once by testDownloadWithWrongId() or the tests will fail
-	 *
-	 * @param $session
-	 * @param $key
-	 * @param $value
-	 */
-	private function mockSession($session, $key, $value) {
-		$session->expects($this->once())
-				->method('set')
-				->with($key)
-				->willReturn($value);
-
-		$session->expects($this->once())
-				->method('get')
-				->with($key)
-				->willReturn($value);
 	}
 
 	/**

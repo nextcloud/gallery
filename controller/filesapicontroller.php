@@ -14,7 +14,6 @@ namespace OCA\Gallery\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\ApiController;
@@ -40,8 +39,6 @@ class FilesApiController extends ApiController {
 
 	/** @var IURLGenerator */
 	private $urlGenerator;
-	/** @var ISession */
-	private $session;
 
 	/**
 	 * Constructor
@@ -53,7 +50,6 @@ class FilesApiController extends ApiController {
 	 * @param ConfigService $configService
 	 * @param SearchMediaService $searchMediaService
 	 * @param DownloadService $downloadService
-	 * @param ISession $session
 	 * @param ILogger $logger
 	 */
 	public function __construct(
@@ -64,7 +60,6 @@ class FilesApiController extends ApiController {
 		ConfigService $configService,
 		SearchMediaService $searchMediaService,
 		DownloadService $downloadService,
-		ISession $session,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
@@ -74,7 +69,6 @@ class FilesApiController extends ApiController {
 		$this->configService = $configService;
 		$this->searchMediaService = $searchMediaService;
 		$this->downloadService = $downloadService;
-		$this->session = $session;
 		$this->logger = $logger;
 	}
 
@@ -129,6 +123,7 @@ class FilesApiController extends ApiController {
 				$this->appName . '.page.error_page', ['code' => $code]
 			);
 
+			// Don't set a cookie for the error message, we don't want it in the API
 			return new RedirectResponse($url);
 		}
 

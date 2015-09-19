@@ -17,7 +17,6 @@ namespace OCA\Gallery\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
-use OCP\ISession;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -41,8 +40,6 @@ class PageController extends Controller {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
-	/** @var ISession */
-	private $session;
 
 	/**
 	 * Constructor
@@ -52,22 +49,19 @@ class PageController extends Controller {
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
-	 * @param ISession $session
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		Environment $environment,
 		IURLGenerator $urlGenerator,
-		IConfig $appConfig,
-		ISession $session
+		IConfig $appConfig
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
-		$this->session = $session;
 	}
 
 	/**
@@ -130,7 +124,6 @@ class PageController extends Controller {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 * @Guest
-	 * @UseSession
 	 *
 	 * Generates an error page based on the error code
 	 *
@@ -140,8 +133,7 @@ class PageController extends Controller {
 	 */
 	public function errorPage($code) {
 		$appName = $this->appName;
-		$message = $this->session->get('galleryErrorMessage');
-		$this->session->remove('galleryErrorMessage');
+		$message = $this->request->getCookie('galleryErrorMessage');
 		$params = [
 			'appName' => $appName,
 			'message' => $message,
@@ -150,6 +142,7 @@ class PageController extends Controller {
 
 		$errorTemplate = new TemplateResponse($appName, 'index', $params, 'guest');
 		$errorTemplate->setStatus($code);
+		$errorTemplate->invalidateCookie('galleryErrorMessage');
 
 		return $errorTemplate;
 	}

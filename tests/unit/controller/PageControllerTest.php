@@ -15,7 +15,6 @@ namespace OCA\Gallery\Controller;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\ISession;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -38,8 +37,6 @@ class PageControllerTest extends \Test\TestCase {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
-	/** @var ISession */
-	protected $session;
 	/** @var PageController */
 	protected $controller;
 
@@ -61,16 +58,12 @@ class PageControllerTest extends \Test\TestCase {
 		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
 								->disableOriginalConstructor()
 								->getMock();
-		$this->session = $this->getMockBuilder('\OCP\ISession')
-							  ->disableOriginalConstructor()
-							  ->getMock();
 		$this->controller = new PageController(
 			$this->appName,
 			$this->request,
 			$this->environment,
 			$this->urlGenerator,
-			$this->appConfig,
-			$this->session
+			$this->appConfig
 		);
 	}
 
@@ -165,21 +158,15 @@ class PageControllerTest extends \Test\TestCase {
 	public function testErrorPage() {
 		$message = 'Not found!';
 		$code = Http::STATUS_NOT_FOUND;
-		$params = [
-			'appName' => $this->appName,
-			'message' => $message,
-			'code'    => $code,
-		];
-		$template = new TemplateResponse($this->appName, 'index', $params, 'guest');
-		$template->setStatus($code);
-		$this->mockSessionGet('galleryErrorMessage', $message);
+
+		$this->mockCookieGet('galleryErrorMessage', $message);
 
 		$response = $this->controller->errorPage($code);
 
-		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('index', $response->getTemplateName());
 		$this->assertTrue($response instanceof TemplateResponse);
-		$this->assertEquals($template->getStatus(), $response->getStatus());
+		$this->assertEquals($code, $response->getStatus());
+		$this->assertContains($message, $response->getParams()['message']);
 	}
 
 	private function mockGetSharedNode($nodeType, $nodeId) {
@@ -245,9 +232,9 @@ class PageControllerTest extends \Test\TestCase {
 	 * @param $key
 	 * @param $value
 	 */
-	private function mockSessionGet($key, $value) {
-		$this->session->expects($this->once())
-					  ->method('get')
+	private function mockCookieGet($key, $value) {
+		$this->request->expects($this->once())
+					  ->method('getCookie')
 					  ->with($key)
 					  ->willReturn($value);
 	}
