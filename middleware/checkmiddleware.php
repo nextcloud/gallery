@@ -16,7 +16,6 @@ namespace OCA\Gallery\Middleware;
 
 use OCP\IURLGenerator;
 use OCP\IRequest;
-use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\Http\JSONResponse;
@@ -38,8 +37,6 @@ abstract class CheckMiddleware extends Middleware {
 	protected $request;
 	/** @var IURLGenerator */
 	private $urlGenerator;
-	/** @var ISession */
-	protected $session;
 	/** @var ILogger */
 	protected $logger;
 
@@ -49,20 +46,17 @@ abstract class CheckMiddleware extends Middleware {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
-	 * @param ISession $session
 	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		IURLGenerator $urlGenerator,
-		ISession $session,
 		ILogger $logger
 	) {
 		$this->appName = $appName;
 		$this->request = $request;
 		$this->urlGenerator = $urlGenerator;
-		$this->session = $session;
 		$this->logger = $logger;
 	}
 
@@ -154,12 +148,14 @@ abstract class CheckMiddleware extends Middleware {
 	 * @return RedirectResponse
 	 */
 	private function redirectToErrorPage($message, $code) {
-		$this->session->set('galleryErrorMessage', $message);
 		$url = $this->urlGenerator->linkToRoute(
 			$this->appName . '.page.error_page', ['code' => $code]
 		);
 
-		return new RedirectResponse($url);
+		$response = new RedirectResponse($url);
+		$response->addCookie('galleryErrorMessage', $message);
+
+		return $response;
 	}
 
 	/**

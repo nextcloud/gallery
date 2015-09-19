@@ -40,6 +40,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 
 	/** @var IHasher */
 	private $hasher;
+	/** @var ISession */
+	private $session;
 	/** @var Environment */
 	private $environment;
 	/** @var IControllerMethodReflector */
@@ -71,11 +73,11 @@ class EnvCheckMiddleware extends CheckMiddleware {
 			$appName,
 			$request,
 			$urlGenerator,
-			$session,
 			$logger
 		);
 
 		$this->hasher = $hasher;
+		$this->session = $session;
 		$this->environment = $environment;
 		$this->reflector = $reflector;
 	}

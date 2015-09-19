@@ -463,12 +463,15 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$code = Http::STATUS_NOT_FOUND;
 		$exception = new CheckException($message, $code);
 
-		$template = $this->mockHtml404Response($code);
+		$redirectUrl = '/app/error/route';
+		$this->mockHtml404Response($redirectUrl, $code);
 
 		$response =
 			$this->middleware->afterException($this->controller, 'authenticate', $exception);
 
-		$this->assertEquals($template, $response);
+		$this->assertEquals($redirectUrl, $response->getRedirectURL());
+		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals($message, $response->getCookies()['galleryErrorMessage']['value']);
 	}
 
 	public function testAfterExceptionWithCheckExceptionAndJsonAccept() {
@@ -544,12 +547,9 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		return new TemplateResponse($this->appName, 'authenticate', [], 'guest');
 	}
 
-	private function mockHtml404Response($code) {
+	private function mockHtml404Response($redirectUrl, $code) {
 		$this->mockAcceptHeader('html');
-		$redirectUrl = 'http://newroute.com';
 		$this->mockUrlToErrorPage($code, $redirectUrl);
-
-		return new RedirectResponse($redirectUrl);
 	}
 
 	private function mockJsonResponse($message, $code) {

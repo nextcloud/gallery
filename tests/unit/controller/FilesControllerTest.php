@@ -15,7 +15,6 @@ namespace OCA\Gallery\Controller;
 use OCA\Gallery\Service\ServiceException;
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\ISession;
 use OCP\ILogger;
 
 use OCP\AppFramework\IAppContainer;
@@ -125,17 +124,22 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 	public function testDownloadWithWrongId() {
 		$fileId = 99999;
 		$filename = null;
+		$status = Http::STATUS_NOT_FOUND;
 
 		$exception = new NotFoundServiceException('Not found');
 		$this->mockGetResourceFromIdWithBadFile($this->downloadService, $fileId, $exception);
 
-		$redirect = new RedirectResponse(
-			$this->urlGenerator->linkToRoute($this->appName . '.page.error_page')
-		);
+		$redirectUrl = '/index.php/app/error';
+		$this->mockUrlToErrorPage($status, $redirectUrl);
 
+		/** @type RedirectResponse $response */
 		$response = $this->controller->download($fileId, $filename);
 
-		$this->assertEquals($redirect->getRedirectURL(), $response->getRedirectURL());
+		$this->assertEquals($redirectUrl, $response->getRedirectURL());
+		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals(
+			$exception->getMessage(), $response->getCookies()['galleryErrorMessage']['value']
+		);
 	}
 
 	public function testGetFilesWithWorkingSetup() {
@@ -235,6 +239,19 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$response = $this->getReducedPath($file['path'], $folderPathFromRoot);
 
 		$this->assertEquals($fixedPath, $response);
+	}
+
+	/**
+	 * Mocks IURLGenerator->linkToRoute()
+	 *
+	 * @param int $code
+	 * @param string $url
+	 */
+	protected function mockUrlToErrorPage($code, $url) {
+		$this->urlGenerator->expects($this->once())
+						   ->method('linkToRoute')
+						   ->with($this->appName . '.page.error_page', ['code' => $code])
+						   ->willReturn($url);
 	}
 
 	/**

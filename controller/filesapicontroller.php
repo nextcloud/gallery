@@ -123,6 +123,7 @@ class FilesApiController extends ApiController {
 				$this->appName . '.page.error_page', ['code' => $code]
 			);
 
+			// Don't set a cookie for the error message, we don't want it in the API
 			return new RedirectResponse($url);
 		}
 

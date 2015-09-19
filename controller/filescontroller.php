@@ -120,7 +120,10 @@ class FilesController extends Controller {
 				$this->appName . '.page.error_page', ['code' => $code]
 			);
 
-			return new RedirectResponse($url);
+			$response = new RedirectResponse($url);
+			$response->addCookie('galleryErrorMessage', $exception->getMessage());
+
+			return $response;
 		}
 
 		return new ImageResponse($download);
