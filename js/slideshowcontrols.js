@@ -90,9 +90,10 @@
 		},
 
 		/**
-		 * Stops the timed slideshow
+		 * Stops and hides the slideshow
 		 */
 		stop: function () {
+			this._setName('');
 			this.playing = false;
 			this.slideshow.stop();
 			this.zoomablePreview.stop();
