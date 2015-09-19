@@ -1,4 +1,4 @@
-/* global Gallery, Spinner */
+/* global Gallery */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 	/**
@@ -9,20 +9,12 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
-		this.spinnerDiv = $('#loading-indicator').get(0);
-		var spinnerOptions = {
-			color: '#999',
-			hwaccel: true
-		};
-		this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 	};
 
 	View.prototype = {
 		element: null,
 		breadcrumb: null,
 		requestId: -1,
-		spinnerDiv: 0,
-		spinner: null,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -43,10 +35,8 @@
 				this.clear();
 				if (albumPath === '') {
 					Gallery.showEmpty();
-					this.spinner.stop(this.spinnerDiv);
 				} else {
 					Gallery.showEmptyFolder();
-					this.spinner.stop(this.spinnerDiv);
 					Gallery.currentAlbum = albumPath;
 					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
@@ -94,7 +84,7 @@
 			}
 
 			this.clear();
-			this.spinner.spin(this.spinnerDiv);
+			$('#loading-indicator').show();
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -161,7 +151,7 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
-					view.spinner.stop(view.spinnerDiv);
+					$('#loading-indicator').hide();
 					return;
 				}
 
@@ -197,11 +187,11 @@
 
 							// No more rows to load at the moment
 							view.loadVisibleRows.loading = null;
-							view.spinner.stop(view.spinnerDiv);
+							$('#loading-indicator').hide();
 						}, function () {
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
-							view.spinner.stop(view.spinnerDiv);
+							$('#loading-indicator').hide();
 						});
 					}
 					// This is the safest way to do things
