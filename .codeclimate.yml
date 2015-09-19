@@ -22,7 +22,17 @@ engines:
         enabled: false
       Generic WhiteSpace DisallowTabIndent NonIndentTabsUsed:
         enabled: false
+      Generic WhiteSpace ScopeIndent Incorrect:
+        enabled: false
+      Generic WhiteSpace ScopeIndent IncorrectExact:
+        enabled: false
       Squiz Functions MultiLineFunctionDeclaration BraceOnSameLine:
+        enabled: false
+      Squiz Functions MultiLineFunctionDeclaration OneParamPerLine:
+        enabled: false
+      Squiz ControlStructures ControlSignature NewlineAfterOpenBrace:
+        enabled: false
+      Squiz WhiteSpace ScopeClosingBrace ContentBefore:
         enabled: false
       PSR2 Classes ClassDeclaration OpenBraceNewLine:
         enabled: false
@@ -34,8 +44,12 @@ engines:
         enabled: false
       PSR2 Methods FunctionCallSignature CloseBracketLine:
         enabled: false
-      Squiz Functions MultiLineFunctionDeclaration OneParamPerLine:
+      PSR2 Methods FunctionCallSignature ContentAfterOpenBracket:
         enabled: false
+      PSR2 Methods FunctionCallSignature SpaceBeforeCloseBracket:
+        enabled: false
+      PSR2 Namespaces UseDeclaration SpaceAfterLastUse:
+              enabled: false
   eslint:
     enabled: true
     checks:
@@ -56,6 +70,7 @@ engines:
 ratings:
   paths:
     - appinfo/app.php
+    - config/**
     - controller/**
     - environment/**
     - http/**
@@ -63,15 +78,23 @@ ratings:
     - middleware/**
     - preview/**
     - service/**
+    - utility/**
 
 # You can globally exclude files from being analyzed by any engine using the
 # exclude_paths key.
 
 exclude_paths:
+  - '.*'
+  - '.*/*'
   - '.*/**/*'
+  - '*.xml'
+  - '*.yml'
+  - '*.lock'
+  - '*.json'
   - 'appinfo/application.php'
   - 'appinfo/routes.php'
   - 'l10n/**/*'
+  - 'l10n/.**/*'
   - 'vendor/**/*'
   - 'js/vendor/**/*'
   - 'templates/**/*'
