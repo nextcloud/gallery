@@ -38,6 +38,7 @@ engines:
         enabled: false
   eslint:
     enabled: true
+    checks:
       quotes:
         enabled: false
       no-underscore-dangle:
