@@ -1,4 +1,3 @@
-/* global Spinner */
 (function ($, OC, OCA, t) {
 	"use strict";
 	/**
@@ -22,8 +21,6 @@
 		zoomablePreview: null,
 		active: false,
 		backgroundToggle: false,
-		spinnerDiv: 0,
-		spinner: null,
 
 		/**
 		 * Initialises the slideshow
@@ -41,12 +38,6 @@
 				// Move the slideshow outside the content so we can hide the content
 				$('body').append($tmpl);
 				this.container = $('#slideshow');
-				this.spinnerDiv = this.container.get(0);
-				var spinnerOptions = {
-					color: '#999',
-					hwaccel: true
-				};
-				this.spinner = new Spinner(spinnerOptions).spin(this.spinnerDiv);
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
 				this.controls =
@@ -107,7 +98,6 @@
 			this._hideImage();
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
-				this.spinner.stop(this.spinnerDiv);
 				this.container.css('background-position', '-10000px 0');
 				this.controls.showActionButtons();
 
@@ -326,7 +316,6 @@
 		 */
 		_hideImage: function () {
 			this.zoomablePreviewContainer.empty();
-			this.spinner.spin(this.spinnerDiv);
 			this.controls.hideActionButtons();
 		},
 
