@@ -20,14 +20,28 @@ engines:
     checks:
       Generic WhiteSpace DisallowTabIndent TabsUsed:
         enabled: false
+      Generic WhiteSpace DisallowTabIndent NonIndentTabsUsed:
+        enabled: false
       Squiz Functions MultiLineFunctionDeclaration BraceOnSameLine:
+        enabled: false
+      PSR2 Classes ClassDeclaration OpenBraceNewLine:
         enabled: false
       PSR2 Classes ClassDeclaration CloseBraceAfterBody:
         enabled: false
       PSR2 Methods FunctionCallSignature MultipleArguments:
         enabled: false
+      PSR2 Methods FunctionCallSignature Indent:
+        enabled: false
+      PSR2 Methods FunctionCallSignature CloseBracketLine:
+        enabled: false
+      Squiz Functions MultiLineFunctionDeclaration OneParamPerLine:
+        enabled: false
   eslint:
     enabled: true
+      quotes:
+        enabled: false
+      no-underscore-dangle:
+        enabled: false
   csslint:
     enabled: true
 
@@ -53,6 +67,7 @@ ratings:
 # exclude_paths key.
 
 exclude_paths:
+  - '.*/**/*'
   - 'appinfo/application.php'
   - 'appinfo/routes.php'
   - 'l10n/**/*'
@@ -61,6 +76,7 @@ exclude_paths:
   - 'templates/**/*'
   - 'css/**/*'
   - 'img/**/*'
+  - 'patches/**/*'
   - 'tests/**/*'
   - 'build/**/*'
   - 'documentation/**/*'
