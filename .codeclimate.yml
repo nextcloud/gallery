@@ -20,14 +20,43 @@ engines:
     checks:
       Generic WhiteSpace DisallowTabIndent TabsUsed:
         enabled: false
+      Generic WhiteSpace DisallowTabIndent NonIndentTabsUsed:
+        enabled: false
+      Generic WhiteSpace ScopeIndent Incorrect:
+        enabled: false
+      Generic WhiteSpace ScopeIndent IncorrectExact:
+        enabled: false
       Squiz Functions MultiLineFunctionDeclaration BraceOnSameLine:
+        enabled: false
+      Squiz Functions MultiLineFunctionDeclaration OneParamPerLine:
+        enabled: false
+      Squiz ControlStructures ControlSignature NewlineAfterOpenBrace:
+        enabled: false
+      Squiz WhiteSpace ScopeClosingBrace ContentBefore:
+        enabled: false
+      PSR2 Classes ClassDeclaration OpenBraceNewLine:
         enabled: false
       PSR2 Classes ClassDeclaration CloseBraceAfterBody:
         enabled: false
       PSR2 Methods FunctionCallSignature MultipleArguments:
         enabled: false
+      PSR2 Methods FunctionCallSignature Indent:
+        enabled: false
+      PSR2 Methods FunctionCallSignature CloseBracketLine:
+        enabled: false
+      PSR2 Methods FunctionCallSignature ContentAfterOpenBracket:
+        enabled: false
+      PSR2 Methods FunctionCallSignature SpaceBeforeCloseBracket:
+        enabled: false
+      PSR2 Namespaces UseDeclaration SpaceAfterLastUse:
+              enabled: false
   eslint:
     enabled: true
+    checks:
+      quotes:
+        enabled: false
+      no-underscore-dangle:
+        enabled: false
   csslint:
     enabled: true
 
@@ -41,6 +70,7 @@ engines:
 ratings:
   paths:
     - appinfo/app.php
+    - config/**
     - controller/**
     - environment/**
     - http/**
@@ -48,19 +78,29 @@ ratings:
     - middleware/**
     - preview/**
     - service/**
+    - utility/**
 
 # You can globally exclude files from being analyzed by any engine using the
 # exclude_paths key.
 
 exclude_paths:
+  - '.*'
+  - '.*/*'
+  - '.*/**/*'
+  - '*.xml'
+  - '*.yml'
+  - '*.lock'
+  - '*.json'
   - 'appinfo/application.php'
   - 'appinfo/routes.php'
   - 'l10n/**/*'
+  - 'l10n/.**/*'
   - 'vendor/**/*'
   - 'js/vendor/**/*'
   - 'templates/**/*'
   - 'css/**/*'
   - 'img/**/*'
+  - 'patches/**/*'
   - 'tests/**/*'
   - 'build/**/*'
   - 'documentation/**/*'
