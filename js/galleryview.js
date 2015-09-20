@@ -44,6 +44,7 @@
 			} else {
 				// Only do it when the app is initialised
 				if (this.requestId === -1) {
+					$('#filelist-button').click(Gallery.switchToFilesView);
 					$('#download').click(Gallery.download);
 					$('#share-button').click(Gallery.share);
 					Gallery.infoBox = new Gallery.InfoBox();
@@ -53,6 +54,7 @@
 					$('#save #save-button').click(Gallery.showSaveForm);
 					$('.save-form').submit(Gallery.saveForm);
 				}
+				this._setBackgroundColour();
 				this.viewAlbum(albumPath);
 			}
 		},
@@ -82,6 +84,7 @@
 			}
 
 			this.clear();
+			$('#loading-indicator').show();
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -99,38 +102,23 @@
 			// Loading rows without blocking the execution of the rest of the script
 			setTimeout(function () {
 				this.loadVisibleRows.activeIndex = 0;
-				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
-					Gallery.currentAlbum);
+				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
 			}.bind(this), 0);
 		},
 
 		/**
 		 * Manages the sorting interface
 		 *
-		 * @param {string} sortType
-		 * @param {string} sortOrder
+		 * @param {string} sortType name or date
+		 * @param {string} sortOrder asc or des
 		 */
 		sortControlsSetup: function (sortType, sortOrder) {
-			var sortNameButton = $('#sort-name-button');
-			var sortDateButton = $('#sort-date-button');
-			// namedes, dateasc etc.
-			var icon = sortType + sortOrder;
-
-			var setButton = function (button, icon, active) {
-				button.removeClass('sort-inactive');
-				if (!active) {
-					button.addClass('sort-inactive');
-				}
-				button.find('img').attr('src', OC.imagePath(Gallery.appName, icon));
-			};
-
-			if (sortType === 'name') {
-				setButton(sortNameButton, icon, true);
-				setButton(sortDateButton, 'dateasc', false); // default icon
-			} else {
-				setButton(sortDateButton, icon, true);
-				setButton(sortNameButton, 'nameasc', false); // default icon
+			var reverseSortType = 'date';
+			if (sortType === 'date') {
+				reverseSortType = 'name';
 			}
+			this._setSortButton(sortType, sortOrder, true);
+			this._setSortButton(reverseSortType, 'asc', false); // default icon
 		},
 
 		/**
@@ -163,6 +151,7 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
+					$('#loading-indicator').hide();
 					return;
 				}
 
@@ -180,10 +169,6 @@
 					if (view.requestId === row.requestId) {
 						return row.getDom().then(function (dom) {
 
-							// defer removal of loading class to trigger CSS3 animation
-							_.defer(function () {
-								dom.removeClass('loading');
-							});
 							if (Gallery.currentAlbum !== path) {
 								view.loadVisibleRows.loading = null;
 								return; //throw away the row if the user has navigated away in the
@@ -202,9 +187,11 @@
 
 							// No more rows to load at the moment
 							view.loadVisibleRows.loading = null;
+							$('#loading-indicator').hide();
 						}, function () {
 							// Something went wrong, so kill the loader
 							view.loadVisibleRows.loading = null;
+							$('#loading-indicator').hide();
 						});
 					}
 					// This is the safest way to do things
@@ -234,8 +221,9 @@
 
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
-			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(currentSort.type,
-				currentSort.order));
+			Gallery.albumMap[Gallery.currentAlbum].images.sort(
+				Gallery.utility.sortBy(currentSort.type,
+					currentSort.order));
 			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
 				currentSort.albumOrder));
 		},
@@ -279,6 +267,62 @@
 				if (albumInfo.inherit !== 'yes' || albumInfo.level === 0) {
 					infoButton.find('span').delay(1000).slideDown();
 				}
+			}
+		},
+
+		/**
+		 * Sets the background colour of the photowall
+		 *
+		 * @private
+		 */
+		_setBackgroundColour: function () {
+			var wrapper = $('#content-wrapper');
+			var albumInfo = Gallery.config.albumInfo;
+			if (!$.isEmptyObject(albumInfo) && albumInfo.background) {
+				wrapper.css('background-color', albumInfo.background);
+			} else {
+				wrapper.css('background-color', '#fff');
+			}
+		},
+
+		/**
+		 * Picks the image which matches the sort order
+		 *
+		 * @param {string} sortType name or date
+		 * @param {string} sortOrder asc or des
+		 * @param {bool} active determines if we're setting up the active sort button
+		 * @private
+		 */
+		_setSortButton: function (sortType, sortOrder, active) {
+			var button = $('#sort-' + sortType + '-button');
+			// Removing all the classes which control the image in the button
+			button.removeClass('active-button');
+			button.find('img').removeClass('front');
+			button.find('img').removeClass('back');
+
+			// We need to determine the reverse order in order to send that image to the back
+			var reverseSortOrder = 'des';
+			if (sortOrder === 'des') {
+				reverseSortOrder = 'asc';
+			}
+
+			// We assign the proper order to the button images
+			button.find('img.' + sortOrder).addClass('front');
+			button.find('img.' + reverseSortOrder).addClass('back');
+
+			// The active button needs a hover action for the flip effect
+			if (active) {
+				button.addClass('active-button');
+				if (button.is(":hover")) {
+					button.removeClass('hover');
+				}
+				// We can't use a toggle here
+				button.hover(function () {
+						$(this).addClass('hover');
+					},
+					function () {
+						$(this).removeClass('hover');
+					});
 			}
 		}
 	};

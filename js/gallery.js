@@ -59,7 +59,7 @@
 			var params = {
 				location: currentLocation,
 				mediatypes: Gallery.config.getMediaTypes(),
-				features: Gallery.config.galleryFeatures,
+				features: Gallery.config.getFeatures(),
 				etag: albumEtag
 			};
 			// Only use the folder as a GET parameter and not as part of the URL
@@ -143,6 +143,28 @@
 
 			// Refresh the view
 			Gallery.view.viewAlbum(Gallery.currentAlbum);
+		},
+		
+		/**
+		 * Switches to the Files view
+		 *
+		 * @param event
+		 */
+		switchToFilesView: function (event) {
+			event.stopPropagation();
+		
+			var subUrl = '';
+			var params = {path: '/' + Gallery.currentAlbum};
+			if (Gallery.token) {
+				params.token = Gallery.token;
+				subUrl = 's/{token}?path={path}';
+			} else {
+				subUrl = 'apps/files?dir={path}';
+			}
+			
+			var button = $('#filelist-button');
+			button.addClass('loading');
+			OC.redirect(OC.generateUrl(subUrl, params));
 		},
 
 		/**
@@ -247,7 +269,7 @@
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
-			$('#content').removeClass('icon-loading');
+			$('#loading-indicator').hide();
 		},
 
 		/**
@@ -259,7 +281,7 @@
 				"I am sorry, but I could not find any media files at this location.");
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
-			$('#content').removeClass('icon-loading');
+			$('#loading-indicator').hide();
 			$('#album-info-button').hide();
 			$('#share-button').hide();
 			$('#sort-name-button').hide();
@@ -272,7 +294,6 @@
 		showLoading: function () {
 			$('#emptycontent').addClass('hidden');
 			$('#controls').removeClass('hidden');
-			$('#content').addClass('icon-loading');
 		},
 
 		/**
@@ -281,7 +302,6 @@
 		showNormal: function () {
 			$('#emptycontent').addClass('hidden');
 			$('#controls').removeClass('hidden');
-			$('#content').removeClass('icon-loading');
 		},
 
 		/**
@@ -327,7 +347,7 @@
 					c: image.etag,
 					requesttoken: oc_requesttoken
 				};
-				var downloadUrl = Gallery.utility.buildGalleryUrl('files/download', '/' + image.fileId,
+				var downloadUrl = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
 					params);
 
 				return {

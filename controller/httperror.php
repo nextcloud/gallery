@@ -62,16 +62,14 @@ trait HttpError {
 	public function htmlError($urlGenerator, $appName, Exception $exception) {
 		$message = $exception->getMessage();
 		$code = $this->getHttpStatusCode($exception);
-
 		$url = $urlGenerator->linkToRoute(
-			$appName . '.page.error_page',
-			[
-				'message' => $message,
-				'code'    => $code
-			]
+			$appName . '.page.error_page', ['code' => $code]
 		);
 
-		return new RedirectResponse($url);
+		$response = new RedirectResponse($url);
+		$response->addCookie('galleryErrorMessage', $message);
+
+		return $response;
 	}
 
 	/**

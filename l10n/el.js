@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Ακύρωση προεπισκόπησης. Αδυναμία εύρεσης αρχείου",
     "No ownCloud installation (7 or higher) found at {remote}" : "Δεν βρέθηκε εγκατάστση ownCloud (7 ή νεώτερη) στο {remote}",
     "Invalid ownCloud url" : "Άκυρη url ownCloud ",
-    "Picture view" : "Προβολή εικονιδίων",
     "Could not load the description" : "Αδυναμία φόρτωσης περιγραφής",
     "Could not load the description: " : "Αδυναμία φόρτωσης της περιγραφής:",
     "Copyright" : "Copyright",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Αυτός ο κοινόχρηστος φάκελος προστατεύεται με κωδικό",
     "The password is wrong. Try again." : "Εσφαλμένος κωδικός πρόσβασης. Προσπαθήστε ξανά.",
     "Password" : "Κωδικός πρόσβασης",
-    "File list" : "Λίστα αρχείων",
-    "Sort by name" : "Ταξινόμηση κατά όνομα",
     "Sort by date" : "Ταξινόμηση κατά ημερομηνία",
-    "Album information" : "Πληροφορίες λευκώματος",
+    "Sort by name" : "Ταξινόμηση κατά όνομα",
     "Share" : "Διαμοιρασμός",
+    "Album information" : "Πληροφορίες λευκώματος",
+    "File list" : "Λίστα αρχείων",
     "Sorry, this file could not be found." : "Συγγνώμη, αυτό το αρχείο δεν βρέθηκε.",
     "Reasons might be:" : "Οι λόγοι μπορεί να είναι:",
     "the wrong file ID was provided" : "δόθηκε λάθος ID αρχείου",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "ο σύνδεσμος έληξε",
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
-    "Add to your ownCloud" : "Προσθήκη στο ownCloud σου"
+    "Add to your ownCloud" : "Προσθήκη στο ownCloud σου",
+    "Picture view" : "Προβολή εικονιδίων"
 },
 "nplurals=2; plural=(n != 1);");

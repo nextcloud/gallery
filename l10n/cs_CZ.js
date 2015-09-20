@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nebyla nalezena instalace ownCloud (7 nebo vyšší) na {remote}",
     "Invalid ownCloud url" : "Neplatná ownCloud url",
-    "Picture view" : "Zobrazení obrázku",
     "Could not load the description" : "Nezdařilo se načíst popis",
     "Could not load the description: " : "Nezdařilo se načíst popis:",
     "Copyright" : "Autorská práva",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Toto sdílení je chráněno heslem",
     "The password is wrong. Try again." : "Heslo není správné. Zkuste to znovu.",
     "Password" : "Heslo",
-    "File list" : "Seznam souborů",
-    "Sort by name" : "Řadit podle jména",
     "Sort by date" : "Řadit podle data",
-    "Album information" : "Informace o albu",
+    "Sort by name" : "Řadit podle jména",
     "Share" : "Sdílet",
+    "Album information" : "Informace o albu",
+    "File list" : "Seznam souborů",
     "Sorry, this file could not be found." : "Omlouváme se, tento soubor se nepodařilo nalézt.",
     "Reasons might be:" : "Možné důvody:",
     "the wrong file ID was provided" : "bylo zadáno neplatné ID souboru",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "platnost odkazu vypršela",
     "sharing is disabled" : "sdílení je zakázané",
     "For more information, please ask the person who has sent you this link." : "Pro více informací kontaktujte osobu, která vám zaslala tento odkaz.",
-    "Add to your ownCloud" : "Přidat do svého ownCloudu"
+    "Add to your ownCloud" : "Přidat do svého ownCloudu",
+    "Picture view" : "Zobrazení obrázku"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

@@ -17,6 +17,7 @@ namespace OCA\GalleryPlus\Controller;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
+use OCP\App\IAppManager;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -25,7 +26,6 @@ use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Environment\Environment;
 use OCA\GalleryPlus\Http\ImageResponse;
-use OCA\GalleryPlus\Service\DownloadService;
 
 /**
  * Generates templates for the landing page from within ownCloud, the public
@@ -35,18 +35,16 @@ use OCA\GalleryPlus\Service\DownloadService;
  */
 class PageController extends Controller {
 
-	/**
-	 * @var Environment
-	 */
+	use HttpError;
+
+	/** @var Environment */
 	private $environment;
-	/**
-	 * @var IURLGenerator
-	 */
+	/** @var IURLGenerator */
 	private $urlGenerator;
-	/**
-	 * @var IConfig
-	 */
+	/** @var IConfig */
 	private $appConfig;
+	/** @var IAppManager */
+	private $appManager;
 
 	/**
 	 * Constructor
@@ -56,19 +54,22 @@ class PageController extends Controller {
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
+	 * @param IAppManager $appManager
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		Environment $environment,
 		IURLGenerator $urlGenerator,
-		IConfig $appConfig
+		IConfig $appConfig,
+		IAppManager $appManager
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
+		$this->appManager = $appManager;
 	}
 
 	/**
@@ -87,16 +88,11 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$appName = $this->appName;
-		if (\OCP\App::isEnabled('gallery')) {
-			$url = $this->urlGenerator->linkToRoute(
-				$appName . '.page.error_page',
-				[
-					'message' => "You need to disable the Pictures app before being able to use the Gallery+ app",
-					'code'    => Http::STATUS_INTERNAL_SERVER_ERROR
-				]
-			);
+		if ($this->appManager->isInstalled('gallery')) {
+			$message =
+				'You need to disable the Pictures app before being able to use the Gallery+ app';
 
-			return new RedirectResponse($url);
+			return $this->htmlError($this->urlGenerator, $appName, new \Exception($message));
 		} else {
 			// Parameters sent to the template
 			$params = ['appName' => $appName];
@@ -148,13 +144,13 @@ class PageController extends Controller {
 	 *
 	 * Generates an error page based on the error code
 	 *
-	 * @param string $message
 	 * @param int $code
 	 *
 	 * @return TemplateResponse
 	 */
-	public function errorPage($message, $code) {
+	public function errorPage($code) {
 		$appName = $this->appName;
+		$message = $this->request->getCookie('galleryErrorMessage');
 		$params = [
 			'appName' => $appName,
 			'message' => $message,
@@ -163,6 +159,7 @@ class PageController extends Controller {
 
 		$errorTemplate = new TemplateResponse($appName, 'index', $params, 'guest');
 		$errorTemplate->setStatus($code);
+		$errorTemplate->invalidateCookie('galleryErrorMessage');
 
 		return $errorTemplate;
 	}

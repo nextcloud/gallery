@@ -85,7 +85,7 @@ class PreviewService extends Service {
 	 * @param bool $extraMediaTypes
 	 * @param bool $nativeSvgSupport
 	 *
-	 * @return \string[] all supported media types
+	 * @return string[] all supported media types
 	 */
 	public function getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport) {
 		$supportedMimes = [];
@@ -97,8 +97,8 @@ class PreviewService extends Service {
 			// Let's see if a preview of files of that media type can be generated
 			if ($this->isMimeSupported($wantedMime)) {
 				$pathToIcon = Template::mimetype_icon($wantedMime);
-				$supportedMimes[$wantedMime] =
-					$pathToIcon; // We add it to the list of supported media types
+				// We store the media type and the path to its SVG icon
+				$supportedMimes[$wantedMime] = substr($pathToIcon, 0, -3) . 'svg';
 			}
 		}
 		$supportedMimes = $this->addSvgSupport($supportedMimes, $nativeSvgSupport);
@@ -209,7 +209,7 @@ class PreviewService extends Service {
 	 * @param string[] $supportedMimes
 	 * @param bool $nativeSvgSupport
 	 *
-	 * @return \string[]
+	 * @return string[]
 	 */
 	private function addSvgSupport($supportedMimes, $nativeSvgSupport) {
 		if (!in_array('image/svg+xml', $supportedMimes) && $nativeSvgSupport) {

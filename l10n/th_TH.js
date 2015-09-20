@@ -8,7 +8,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "กำลังยกเลิกการแสดงตัวอย่าง ไม่สามารถค้นหาไฟล์",
     "No ownCloud installation (7 or higher) found at {remote}" : "ไม่มีการติดตั้ง ownCloud (7 หรือสูงกว่า) พบได้ที่ {remote}",
     "Invalid ownCloud url" : "URL ownCloud ไม่ถูกต้อง",
-    "Picture view" : "ดูรูปภาพ",
+    "Gallery view" : "ดูแกลอรี่",
     "Could not load the description" : "ไม่สามารถโหลดคำอธิบาย",
     "Could not load the description: " : "ไม่สามารถโหลดคำอธิบาย",
     "Copyright" : "ลิขสิทธิ์",
@@ -33,11 +33,11 @@ OC.L10N.register(
     "This share is password-protected" : "นี้แชร์การป้องกันด้วยรหัสผ่าน",
     "The password is wrong. Try again." : "รหัสผ่านที่ไม่ถูกต้อง กรุณาลองอีกครั้ง",
     "Password" : "รหัสผ่าน",
-    "File list" : "รายชื่อไฟล์",
-    "Sort by name" : "เรียงตามชื่อ",
     "Sort by date" : "เรียงตามวันที่",
-    "Album information" : "ข้อมูลอัลบั้ม",
+    "Sort by name" : "เรียงตามชื่อ",
     "Share" : "แชร์",
+    "Album information" : "ข้อมูลอัลบั้ม",
+    "File list" : "รายชื่อไฟล์",
     "Sorry, this file could not be found." : "ขออภัยไม่พบไฟล์นี้",
     "Reasons might be:" : "เหตุผลอาจจะ:",
     "the wrong file ID was provided" : "ระบุไอดีไฟล์ผิด",
@@ -56,6 +56,7 @@ OC.L10N.register(
     "the link has expired" : "ลิงค์หมดอายุ",
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
-    "Add to your ownCloud" : "เพิ่มลงใน ownCloud ของคุณ"
+    "Add to your ownCloud" : "เพิ่มลงใน ownCloud ของคุณ",
+    "Picture view" : "ดูรูปภาพ"
 },
 "nplurals=1; plural=0;");

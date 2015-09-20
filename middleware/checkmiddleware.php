@@ -149,14 +149,13 @@ abstract class CheckMiddleware extends Middleware {
 	 */
 	private function redirectToErrorPage($message, $code) {
 		$url = $this->urlGenerator->linkToRoute(
-			$this->appName . '.page.error_page',
-			[
-				'message' => $message,
-				'code'    => $code
-			]
+			$this->appName . '.page.error_page', ['code' => $code]
 		);
 
-		return new RedirectResponse($url);
+		$response = new RedirectResponse($url);
+		$response->addCookie('galleryErrorMessage', $message);
+
+		return $response;
 	}
 
 	/**

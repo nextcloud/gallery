@@ -8,7 +8,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Önizleme iptal ediliyor. Dosya bulunamadı",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote} üzerinde ownCloud (7 veya daha üstü) kurulumu bulunamadı",
     "Invalid ownCloud url" : "Geçersiz ownCloud adresi",
-    "Picture view" : "Resim görünümü",
     "Could not load the description" : "Açıklama yüklenemedi",
     "Could not load the description: " : "Açıklama yüklenemedi :",
     "Copyright" : "Telif hakkı",
@@ -33,11 +32,11 @@ OC.L10N.register(
     "This share is password-protected" : "Bu paylaşım parola korumalı",
     "The password is wrong. Try again." : "Parola hatalı. Yeniden deneyin.",
     "Password" : "Parola",
-    "File list" : "Dosya listesi",
-    "Sort by name" : "Ada göre sırala",
     "Sort by date" : "Tarihe göre sırala",
-    "Album information" : "Albüm bilgisi",
+    "Sort by name" : "Ada göre sırala",
     "Share" : "Paylaş",
+    "Album information" : "Albüm bilgisi",
+    "File list" : "Dosya listesi",
     "Sorry, this file could not be found." : "Üzgünüm, bu dosya bulunamadı.",
     "Reasons might be:" : "Sebepleri şunlar olabilir:",
     "the wrong file ID was provided" : "hatalı dosya kimliği girilmiş",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "the link has expired" : "bağlantı zamanı geçmiş",
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Daha fazla bilgi için size bu bağlantıyı veren kişiyle bağlantıya geçin.",
-    "Add to your ownCloud" : "ownCloud'ınıza Ekleyin"
+    "Add to your ownCloud" : "ownCloud'ınıza Ekleyin",
+    "Picture view" : "Resim görünümü"
 },
 "nplurals=2; plural=(n > 1);");

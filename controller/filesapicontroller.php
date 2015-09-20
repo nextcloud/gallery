@@ -18,6 +18,7 @@ use OCP\ILogger;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\SearchFolderService;
@@ -88,7 +89,7 @@ class FilesApiController extends ApiController {
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
 	public function getList($location, $features, $etag, $mediatypes) {
-		$featuresArray = explode(',', $features);
+		$featuresArray = explode(';', $features);
 		$mediaTypesArray = explode(';', $mediatypes);
 		try {
 			return $this->getFiles($location, $featuresArray, $etag, $mediaTypesArray);
@@ -104,6 +105,10 @@ class FilesApiController extends ApiController {
 	 *
 	 * Sends the file matching the fileId
 	 *
+	 * In case of error we send an HTML error page
+	 * We need to keep the session open in order to be able to send the error message to the error
+	 *     page
+	 *
 	 * @param int $fileId the ID of the file we want to download
 	 * @param string|null $filename
 	 *
@@ -113,7 +118,13 @@ class FilesApiController extends ApiController {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
+			$code = $this->getHttpStatusCode($exception);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page', ['code' => $code]
+			);
+
+			// Don't set a cookie for the error message, we don't want it in the API
+			return new RedirectResponse($url);
 		}
 
 		return new ImageResponse($download);

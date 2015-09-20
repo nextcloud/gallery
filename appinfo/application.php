@@ -72,7 +72,8 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('Environment'),
 				$c->query('OCP\IURLGenerator'),
-				$c->query('OCP\IConfig')
+				$c->query('OCP\IConfig'),
+				$c->query('OCP\App\IAppManager')
 			);
 		}
 		);

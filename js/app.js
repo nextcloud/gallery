@@ -27,25 +27,18 @@ $(document).ready(function () {
 				var currentLocation = window.location.href.split('#')[1] || '';
 				Gallery.getFiles(currentLocation).then(function () {
 					Gallery.activeSlideShow = new SlideShow();
-					$.when(Gallery.activeSlideShow.init(false, null))
+					$.when(
+							Gallery.activeSlideShow.init(
+								false,
+								null,
+								Gallery.config.galleryFeatures
+							))
 						.then(function () {
 							window.onhashchange();
 						});
 
 				});
 			});
-
-		$('#openAsFileListButton').click(function () {
-			var subUrl = '';
-			var params = {path: '/' + encodeURIComponent(Gallery.currentAlbum)};
-			if (Gallery.token) {
-				params.token = Gallery.token;
-				subUrl = 's/{token}?path={path}';
-			} else {
-				subUrl = 'apps/files?dir={path}';
-			}
-			OC.redirect(OC.generateUrl(subUrl, params));
-		});
 
 		$(document).click(function () {
 			$('.album-info-content').slideUp();
@@ -61,19 +54,20 @@ $(document).ready(function () {
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
-			// This section redraws the photowall
+			var infoContentElement = $('.album-info-content');
+			// This section redraws the photowall and limits the width of dropdowns
 			if (windowWidth !== $(window).width()) {
 				if ($('#emptycontent').is(':hidden')) {
 					Gallery.view.viewAlbum(Gallery.currentAlbum);
 				}
 				Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+				infoContentElement.css('max-width', $(window).width());
 
 				windowWidth = $(window).width();
 			}
 			// This makes sure dropdowns will not be hidden after a window resize
 			if (windowHeight !== $(window).height()) {
 				Gallery.resetContentHeight();
-				var infoContentElement = $('.album-info-content');
 				infoContentElement.css('max-height',
 					$(window).height() - Gallery.browserToolbarHeight);
 

@@ -14,22 +14,25 @@
 		zoomablePreviewContainer: null,
 		controls: null,
 		imageCache: {},
+		/** {Image} */
 		currentImage: null,
 		errorLoadingImage: false,
 		onStop: null,
 		zoomablePreview: null,
 		active: false,
+		backgroundToggle: false,
 
 		/**
 		 * Initialises the slideshow
 		 *
 		 * @param {bool} autoPlay
 		 * @param {number} interval
+		 * @param {Array} features
 		 */
-		init: function (autoPlay, interval) {
-			// FIXME: This should come from the configuration
-			/**@param {int} maxScale*/
-			this.maxScale = 1;
+		init: function (autoPlay, interval, features) {
+			if (features.indexOf('background_colour_toggle') > -1) {
+				this.backgroundToggle = true;
+			}
 
 			return $.when(this._getSlideshowTemplate()).then(function ($tmpl) {
 				// Move the slideshow outside the content so we can hide the content
@@ -38,7 +41,12 @@
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
 				this.controls =
-					new SlideShow.Controls(this, this.container, this.zoomablePreview, interval);
+					new SlideShow.Controls(
+						this,
+						this.container,
+						this.zoomablePreview,
+						interval,
+						features);
 				this.controls.init();
 
 				this._initControlsAutoFader();
@@ -46,11 +54,6 @@
 				// Replace all Owncloud svg images with png images for ancient browsers
 				if (!OC.Util.hasSVGSupport()) {
 					OC.Util.replaceSVG(this.$el);
-				}
-
-				// Don't show the download button on the "Files" slideshow
-				if (OCA.Files) {
-					this.container.find('.downloadImage').hide();
 				}
 
 				// Only modern browsers can manipulate history
@@ -92,12 +95,11 @@
 			this.active = true;
 			this.container.show();
 			this.container.css('background-position', 'center');
-			$('html').css('overflow-y', 'hidden');
 			this._hideImage();
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
 				this.container.css('background-position', '-10000px 0');
-				this.container.find('.changeBackground').show();
+				this.controls.showActionButtons();
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
@@ -113,8 +115,10 @@
 					img.setAttribute('alt', image.name);
 					$(img).css('position', 'absolute');
 					$(img).css('background-color', backgroundColour);
-					var $border = 30 / window.devicePixelRatio;
-					$(img).css('outline', $border + 'px solid ' + backgroundColour);
+					if (this.backgroundToggle === true) {
+						var $border = 30 / window.devicePixelRatio;
+						$(img).css('outline', $border + 'px solid ' + backgroundColour);
+					}
 
 					// We cannot use nice things on IE8
 					if ($('html').is('.ie8')) {
@@ -180,10 +184,22 @@
 		},
 
 		/**
+		 * Shows a new image in the slideshow and preloads the next in the list
+		 *
+		 * @param {number} current
+		 * @param {Object} next
+		 */
+		next: function (current, next) {
+			this.show(current).then(function () {
+				// Preloads the next image in the list
+				this.loadImage(next);
+			}.bind(this));
+		},
+
+		/**
 		 * Stops the slideshow
 		 */
 		stop: function () {
-			$('html').css('overflow-y', 'scroll');
 			this.active = false;
 			this.images = null;
 			this._hideImage();
@@ -219,10 +235,14 @@
 			// Grey #363636
 			if (hex === "#000000") {
 				container.css('background-color', '#FFF');
-				container.css('outline', $border + 'px solid #FFF');
+				if (this.backgroundToggle === true) {
+					container.css('outline', $border + 'px solid #FFF');
+				}
 			} else {
 				container.css('background-color', '#000');
-				container.css('outline', $border + 'px solid #000');
+				if (this.backgroundToggle === true) {
+					container.css('outline', $border + 'px solid #000');
+				}
 			}
 		},
 
@@ -239,7 +259,7 @@
 			}
 			this.container.find('.notification').html(message);
 			this.container.find('.notification').show();
-			this.container.find('.changeBackground').hide();
+			this.controls.hideButton('.changeBackground');
 		},
 
 		/**
@@ -248,6 +268,15 @@
 		hideErrorNotification: function () {
 			this.container.find('.notification').hide();
 			this.container.find('.notification').html('');
+		},
+
+		/**
+		 * Removes a specific button from the interface
+		 *
+		 * @param button
+		 */
+		removeButton: function (button) {
+			this.controls.removeButton(button);
 		},
 
 		/**
@@ -287,6 +316,7 @@
 		 */
 		_hideImage: function () {
 			this.zoomablePreviewContainer.empty();
+			this.controls.hideActionButtons();
 		},
 
 		/**
@@ -338,52 +368,52 @@
 				var self = this;
 				var url = OC.generateUrl('apps/galleryplus/slideshow', null);
 				$.get(url, function (tmpl) {
-					var template = $(tmpl);
-					var tmplButton;
-					var buttonsArray = [
-						{
-							el: '.next',
-							trans: t('gallery', 'Next')
-						},
-						{
-							el: '.play',
-							trans: t('gallery', 'Play')
-						},
-						{
-							el: '.pause',
-							trans: t('gallery', 'Pause')
-						},
-						{
-							el: '.previous',
-							trans: t('gallery', 'Previous')
-						},
-						{
-							el: '.exit',
-							trans: t('gallery', 'Close')
-						},
-						{
-							el: '.downloadImage',
-							trans: t('gallery', 'Download'),
-							toolTip: true
-						},
-						{
-							el: '.changeBackground',
-							trans: t('gallery', 'Toggle background'),
-							toolTip: true
-						}
-					];
-					for (var i = 0; i < buttonsArray.length; i++) {
-						var button = buttonsArray[i];
+						var template = $(tmpl);
+						var tmplButton;
+						var buttonsArray = [
+							{
+								el: '.next',
+								trans: t('gallery', 'Next')
+							},
+							{
+								el: '.play',
+								trans: t('gallery', 'Play')
+							},
+							{
+								el: '.pause',
+								trans: t('gallery', 'Pause')
+							},
+							{
+								el: '.previous',
+								trans: t('gallery', 'Previous')
+							},
+							{
+								el: '.exit',
+								trans: t('gallery', 'Close')
+							},
+							{
+								el: '.downloadImage',
+								trans: t('gallery', 'Download'),
+								toolTip: true
+							},
+							{
+								el: '.changeBackground',
+								trans: t('gallery', 'Toggle background'),
+								toolTip: true
+							}
+						];
+						for (var i = 0; i < buttonsArray.length; i++) {
+							var button = buttonsArray[i];
 
-						tmplButton = template.find(button.el);
-						tmplButton.val(button.trans);
-						if (button.toolTip) {
-							tmplButton.attr("title", button.trans);
+							tmplButton = template.find(button.el);
+							tmplButton.val(button.trans);
+							if (button.toolTip) {
+								tmplButton.attr("title", button.trans);
+							}
 						}
-					}
-					self.$slideshowTemplate = template;
-					defer.resolve(self.$slideshowTemplate);
-				})
+						self.$slideshowTemplate = template;
+						defer.resolve(self.$slideshowTemplate);
+					})
 					.fail(function () {
 						defer.reject();
 					});

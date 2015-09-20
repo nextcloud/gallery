@@ -154,7 +154,7 @@ class ConfigService extends FilesService {
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
-			list($config) = $this->buildFolderConfig($folder, $configName, $config, $level);
+			$config = $this->buildFolderConfig($folder, $configName, $config, $level);
 		}
 		if (!$isRootFolder) {
 			return $this->getParentConfig(
@@ -188,7 +188,7 @@ class ConfigService extends FilesService {
 			$config = $this->buildErrorMessage($exception, $folder);
 		}
 
-		return [$config];
+		return $config;
 	}
 
 	/**

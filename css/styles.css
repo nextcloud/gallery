@@ -18,52 +18,25 @@ body:after {
 	float: left;
 }
 
-div.crumb.last a{
+div.crumb.last a {
 	cursor: default;
 }
 
 #controls .button {
 	margin-top: 5px;
+	width: 40px;
 }
 
-#controls .button.left-sort-button {
-	float: left;
-	display: inline;
-	padding: 8px;
-	border-radius: 3px 0 0 3px;
-	margin-left: 3px;
-	margin-right:0;
-	border-right: 0;
-}
-#controls .button.right-sort-button {
-	float: left;
-	display: inline;
-	padding: 8px 9px 8px 8px;
-	border-radius: 0 3px 3px 0;
-	margin-left: -1px;
-}
-
-.sort-inactive {
-	background-color: rgb(230, 230, 230);
-}
-
-#controls .sort-inactive img{
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
-	filter: alpha(opacity=25);
-	opacity: 0.25;
-}
-
-#share-button img,
-#sort-name-button img,
-#sort-date-button img {
-	vertical-align: -3px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	filter: alpha(opacity=60);
-	opacity: 0.6;
+#controls > .right {
+	float: right;
 }
 
 #album-info-button {
 	position: relative;
+}
+
+#album-info-button img {
+	vertical-align: -3px;
 }
 
 .album-info-content {
@@ -85,13 +58,19 @@ div.crumb.last a{
 }
 
 #content-wrapper {
+	background-color: #fff;
 	overflow-x: auto;
+	-webkit-transition: background-color 1s linear;
+	-moz-transition: background-color 1s linear;
+	-o-transition: background-color 1s linear;
+	-ms-transition: background-color 1s linear;
+	transition: background-color 1s linear;
 }
 
 #gallery.hascontrols {
 	overflow: hidden;
 	text-align: justify;
-	top: 44px;
+	top: 45px;
 	padding-bottom: 100px;
 }
 
@@ -151,7 +130,7 @@ div.crumb.last a{
 
 #gallery a.album .album-label,
 #gallery a.image .image-label {
-	background: rgba(0,0,0,0.4);
+	background: rgba(0, 0, 0, 0.4);
 }
 
 #gallery a.image .image-label .title {
@@ -225,10 +204,6 @@ div.crumb.last a{
 	opacity: 0;
 }
 
-#controls > .right {
-	float: right;
-}
-
 #gallery > h2 {
 	background: #f7f7f7;
 	height: 2.8em;
@@ -245,15 +220,7 @@ div.crumb.last a{
 	right: 0;
 	margin-right: 0;
 	border-bottom-right-radius: 0;
-}
-
-#loading {
-	font-size: 16px;
-	color: #888;
-	position: absolute;
-	text-align: center;
-	top: 30%;
-	width: 100%;
+	left: auto;
 }
 
 /*Original ribbon design by Comatosed
@@ -305,4 +272,10 @@ http://www.bypeople.com/author/comatosed/*/
 
 .ribbon.black:after {
 	border-color: #bbb #bbb transparent #bbb;
+}
+
+#loading-indicator {
+	height: 32px;
+	width: 100%;
+	margin-bottom: 50px;
 }

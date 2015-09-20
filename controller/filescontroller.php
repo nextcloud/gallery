@@ -18,6 +18,7 @@ use OCP\ILogger;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
 use OCA\GalleryPlus\Service\SearchFolderService;
@@ -91,7 +92,7 @@ class FilesController extends Controller {
 	 * @return array <string,array<string,string|int>>|Http\JSONResponse
 	 */
 	public function getList($location, $features, $etag, $mediatypes) {
-		$featuresArray = explode(',', $features);
+		$featuresArray = explode(';', $features);
 		$mediaTypesArray = explode(';', $mediatypes);
 		try {
 			return $this->getFiles($location, $featuresArray, $etag, $mediaTypesArray);
@@ -114,7 +115,15 @@ class FilesController extends Controller {
 		try {
 			$download = $this->getDownload($fileId, $filename);
 		} catch (ServiceException $exception) {
-			return $this->htmlError($this->urlGenerator, $this->appName, $exception);
+			$code = $this->getHttpStatusCode($exception);
+			$url = $this->urlGenerator->linkToRoute(
+				$this->appName . '.page.error_page', ['code' => $code]
+			);
+
+			$response = new RedirectResponse($url);
+			$response->addCookie('galleryErrorMessage', $exception->getMessage());
+
+			return $response;
 		}
 
 		return new ImageResponse($download);

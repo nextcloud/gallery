@@ -38,7 +38,7 @@ class ConfigParser {
 		$parsedConfig = $this->parseConfig($folder, $configName);
 		$key = 'features';
 		if (array_key_exists($key, $parsedConfig)) {
-			$featuresList = $parsedConfig[$key];
+			$featuresList = $this->parseFeatures($parsedConfig[$key]);
 		}
 
 		return $featuresList;
@@ -72,7 +72,7 @@ class ConfigParser {
 	 * @param Folder $folder the current folder
 	 * @param string $configName
 	 *
-	 * @return array|string[]
+	 * @return array
 	 *
 	 * @throws ConfigException
 	 */
@@ -92,6 +92,23 @@ class ConfigParser {
 			$errorMessage = "Problem while reading or parsing the configuration file";
 			throw new ConfigException($errorMessage);
 		}
+	}
+
+	/**
+	 * Returns only the features which have been enabled
+	 *
+	 * @param array <string,string> $featuresList the list of features collected from the
+	 *     configuration file
+	 *
+	 * @return array
+	 */
+	private function parseFeatures($featuresList) {
+		$parsedFeatures = $featuresList;
+		if (!empty($parsedFeatures)) {
+			$parsedFeatures = array_keys($featuresList, 'yes');
+		}
+
+		return $parsedFeatures;
 	}
 
 	/**
@@ -125,7 +142,8 @@ class ConfigParser {
 	 */
 	private function buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level) {
 		foreach ($completionStatus as $key => $complete) {
-			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
+			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)
+			) {
 				$parsedConfigItem = $parsedConfig[$key];
 				if ($this->isConfigUsable($parsedConfigItem, $level)) {
 					list($configItem, $itemComplete) =
@@ -149,7 +167,9 @@ class ConfigParser {
 	 * @return bool
 	 */
 	private function isConfigItemComplete($key, $parsedConfig, $complete) {
-		return !(!$complete && array_key_exists($key, $parsedConfig));
+		return !(!$complete
+				 && array_key_exists($key, $parsedConfig)
+				 && !empty($parsedConfig[$key]));
 	}
 
 	/**
