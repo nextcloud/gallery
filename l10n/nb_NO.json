@@ -6,6 +6,7 @@
     "Aborting preview. Could not find the file" : "Avbryter visning. Fant ikke filen",
     "No ownCloud installation (7 or higher) found at {remote}" : "Ingen ownCloud-installasjon (7 eller høyere) funnet på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-url",
+    "Gallery view" : "Gallerivisning",
     "Could not load the description" : "Klarte ikke å laste inn beskrivelsen",
     "Could not load the description: " : "Klarte ikke å laste inn beskrivelsen:",
     "Copyright" : "Opphavsrett",
