@@ -99,23 +99,23 @@
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
 				this.container.css('background-position', '-10000px 0');
-				this.controls.showActionButtons();
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
 					var image = this.images[index];
+					var transparent = this._isTransparent(image.mimeType);
+					this.controls.showActionButtons(transparent);
 					this.errorLoadingImage = false;
 					this.currentImage = img;
 
-					var backgroundColour = '#fff';
-					if (image.mimeType === 'image/jpeg' ||
-						image.mimeType === 'image/x-dcraw') {
-						backgroundColour = '#000';
+					var backgroundColour = '#000';
+					if (transparent) {
+						backgroundColour = '#fff';
 					}
 					img.setAttribute('alt', image.name);
 					$(img).css('position', 'absolute');
 					$(img).css('background-color', backgroundColour);
-					if (this.backgroundToggle === true) {
+					if (transparent && this.backgroundToggle === true) {
 						var $border = 30 / window.devicePixelRatio;
 						$(img).css('outline', $border + 'px solid ' + backgroundColour);
 					}
@@ -295,6 +295,24 @@
 				clearTimeout(inactiveTimeout);
 				inactiveTimeout = setTimeout(inactiveCallback, 3000);
 			}.bind(this));
+		},
+
+		/**
+		 * Simplest way to detect if image is transparent.
+		 *
+		 * That's very inaccurate since it doesn't include images which support transparency
+		 *
+		 * @param mimeType
+		 * @returns {boolean}
+		 * @private
+		 */
+		_isTransparent: function (mimeType) {
+			// TODO: Include fonts
+			return !(mimeType === 'image/jpeg'
+				|| mimeType === 'image/x-dcraw'
+				|| mimeType === 'application/font-sfnt'
+				|| mimeType === 'application/x-font'
+			);
 		},
 
 		/**
