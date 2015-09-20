@@ -117,8 +117,10 @@
 		/**
 		 * Shows the action buttons
 		 */
-		showActionButtons: function () {
-			this._showBackgroundToggle();
+		showActionButtons: function (transparent) {
+			if (transparent) {
+				this._showBackgroundToggle();
+			}
 			this.showButton('.downloadImage');
 		},
 
