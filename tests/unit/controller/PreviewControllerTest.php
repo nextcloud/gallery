@@ -23,6 +23,7 @@ use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\AppInfo\Application;
 use OCA\GalleryPlus\Http\ImageResponse;
+use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
@@ -47,6 +48,8 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	protected $controller;
 	/** @var IURLGenerator */
 	protected $urlGenerator;
+	/** @var ConfigService */
+	protected $configService;
 	/** @var ThumbnailService */
 	protected $thumbnailService;
 	/** @var PreviewService */
@@ -75,6 +78,9 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$this->urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
 								   ->disableOriginalConstructor()
 								   ->getMock();
+		$this->configService = $this->getMockBuilder('\OCA\GalleryPlus\Service\ConfigService')
+									->disableOriginalConstructor()
+									->getMock();
 		$this->thumbnailService = $this->getMockBuilder('\OCA\GalleryPlus\Service\ThumbnailService')
 									   ->disableOriginalConstructor()
 									   ->getMock();
@@ -94,6 +100,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 			$this->appName,
 			$this->request,
 			$this->urlGenerator,
+			$this->configService,
 			$this->thumbnailService,
 			$this->previewService,
 			$this->downloadService,
@@ -109,6 +116,9 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$square = true;
 		$scale = 2.5;
 		$thumbnailId = 1234;
+
+		$file = $this->mockJpgFile($thumbnailId);
+		$this->mockGetResourceFromId($this->previewService, $thumbnailId, $file);
 
 		$this->controller->getThumbnails($thumbnailId, $square, $scale);
 	}
