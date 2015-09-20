@@ -134,7 +134,7 @@ trait Preview {
 	 *
 	 * @param $fileId
 	 *
-	 * @return File|null
+	 * @return array<File|int|null>
 	 */
 	private function getFile($fileId) {
 		try {
