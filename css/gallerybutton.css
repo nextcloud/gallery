@@ -25,7 +25,7 @@
 	border-radius: 3px 0 0 3px;
 	margin-left: 3px;
 	margin-right: 0;
-	border-right: 0;
+	border-right-color: rgb(213, 213, 213);
 }
 
 #controls .button.right-switch-button {
