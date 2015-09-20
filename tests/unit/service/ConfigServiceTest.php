@@ -110,6 +110,19 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 		$this->assertSame($expectedResult, array_keys($response));
 	}
 
+	public function testGetSupportedMediaTypesWithBrokenPreviewSystem() {
+		// We only support 1 media type: GIF
+		self::invokePrivate($this->service, 'baseMimeTypes', [['image/gif']]);
+
+		// Unfortunately, the GIF preview is broken
+		$this->mockIsMimeSupportedWithBrokenSystem('image/gif');
+
+		$response = $this->service->getSupportedMediaTypes(false, false);
+
+		// 1-1 = 0
+		$this->assertEmpty($response);
+	}
+
 	public function providesValidateMimeTypeData() {
 		return [
 			['image/png'],
@@ -270,22 +283,6 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 		];
 	}
 
-	private function mockIsMimeSupported($mimeSupported) {
-		$map = [
-			['image/png', true],
-			['image/jpeg', true],
-			['application/postscript', true],
-			['application/font-sfnt', true],
-			['application/x-font', true],
-			['image/svg+xml', $mimeSupported],
-			['image/gif', $mimeSupported]
-		];
-		$this->previewManager->method('isMimeSupported')
-							 ->will(
-								 $this->returnValueMap($map)
-							 );
-	}
-
 	/**
 	 * @dataProvider providesValidatesInfoConfigData
 	 *
@@ -305,6 +302,29 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 		$response = self::invokePrivate($this->service, 'validatesInfoConfig', [$albumConfig]);
 
 		$this->assertSame($modifiedAlbumConfig, $response);
+	}
+
+	private function mockIsMimeSupported($mimeSupported) {
+		$map = [
+			['image/png', true],
+			['image/jpeg', true],
+			['application/postscript', true],
+			['application/font-sfnt', true],
+			['application/x-font', true],
+			['image/svg+xml', $mimeSupported],
+			['image/gif', $mimeSupported]
+		];
+		$this->previewManager->method('isMimeSupported')
+							 ->will(
+								 $this->returnValueMap($map)
+							 );
+	}
+
+	private function mockIsMimeSupportedWithBrokenSystem($mimeType) {
+		$this->previewManager->expects($this->once())
+							 ->method('isMimeSupported')
+							 ->with($mimeType)
+							 ->willThrowException(new \Exception('Boom'));
 	}
 
 	private function mockGetFolderConfigWithBrokenSetup(
