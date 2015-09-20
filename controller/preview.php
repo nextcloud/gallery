@@ -132,7 +132,7 @@ trait Preview {
 	/**
 	 * Returns the file of which a preview will be generated
 	 *
-	 * @param $fileId
+	 * @param int $fileId
 	 *
 	 * @return array<File|int|null>
 	 */
@@ -191,7 +191,7 @@ trait Preview {
 	/**
 	 * Returns an error array
 	 *
-	 * @param $exception
+	 * @param ServiceException $exception
 	 *
 	 * @return array<null|int|string>
 	 */
