@@ -132,7 +132,7 @@ function Thumbnail (fileId, square) {
 							};
 							thumb.image.onerror = function () {
 								thumb.valid = false;
-								thumb.loadingDeferred.resolve(null);
+								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
 							};
 
 							if (thumb.status === 200) {
@@ -140,22 +140,35 @@ function Thumbnail (fileId, square) {
 									'data:' + preview.mimetype + ';base64,' + preview.preview;
 							} else {
 								thumb.valid = false;
-
-								// In 8.2, use this directly
-								//OC.MimeType.getIconUrl(preview.mimetype);
-								var icon = OC.Util.replaceSVGIcon(
-									Gallery.config.mediaTypes[preview.mimetype]);
-								if (Gallery.ieVersion !== false) {
-									icon = icon.substr(0, icon.lastIndexOf(".")) + ".png";
-								}
-								thumb.image.src = icon;
+								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
 							}
 						}
 					});
 			}
 
 			return batch;
+		},
+
+		/**
+		 * Returns the link to the media type icon
+		 *
+		 * Modern browsers get an SVG, older ones a PNG
+		 *
+		 * @param mimeType
+		 *
+		 * @returns {*|string}
+		 * @private
+		 */
+		_getMimeIcon: function (mimeType) {
+			// On <8.2, we can't use OC.MimeType.getIconUrl(mimeType)
+			var icon = OC.Util.replaceSVGIcon(
+				Gallery.config.mediaTypes[mimeType]);
+			if (Gallery.ieVersion !== false) {
+				icon = icon.substr(0, icon.lastIndexOf(".")) + ".png";
+			}
+			return icon;
 		}
+
 	};
 
 	window.Thumbnails = Thumbnails;

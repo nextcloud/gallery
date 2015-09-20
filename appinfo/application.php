@@ -90,7 +90,6 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
-				$c->query('PreviewService'),
 				$c->query('Logger')
 			);
 		}
@@ -101,7 +100,6 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
-				$c->query('PreviewService'),
 				$c->query('Logger')
 			);
 		}
@@ -112,7 +110,6 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ConfigService'),
-				$c->query('PreviewService'),
 				$c->query('Logger')
 			);
 		}
@@ -165,6 +162,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
+				$c->query('ConfigService'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
@@ -179,6 +177,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
+				$c->query('ConfigService'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
@@ -193,6 +192,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('OCP\IURLGenerator'),
+				$c->query('ConfigService'),
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
@@ -331,6 +331,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Environment'),
 				$c->query('ConfigParser'),
+				$c->query('CustomPreviewManager'),
 				$c->query('Logger')
 			);
 		}

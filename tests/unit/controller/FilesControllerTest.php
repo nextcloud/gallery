@@ -15,6 +15,7 @@ namespace OCA\GalleryPlus\Controller;
 use OCA\GalleryPlus\Service\ServiceException;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\Files\File;
 use OCP\ILogger;
 
 use OCP\AppFramework\IAppContainer;
@@ -105,18 +106,35 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		);
 	}
 
-	public function testDownload() {
-		$fileId = 1234;
-		$filename = null;
+	/**
+	 * @return array
+	 */
+	public function providesTestDownloadData() {
+		return [
+			[1234, $this->mockJpgFile(1234), 'image/jpeg'],
+			[4567, $this->mockSvgFile(4567), 'text/plain']
+		];
+	}
 
-		$download = $this->mockGetDownload($fileId, $filename);
+	/**
+	 * @dataProvider providesTestDownloadData
+	 *
+	 * @param int $fileId
+	 * @param File $file
+	 * @param string $expectedMimeType
+	 *
+	 * @internal param string $type
+	 */
+	public function testDownload($fileId, $file, $expectedMimeType) {
+		$filename = null;
+		$download = $this->mockGetDownload($fileId, $file, $filename);
 
 		/** @type ImageResponse $response */
 		$response = $this->controller->download($fileId, $filename);
 
 		$this->assertEquals(Http::STATUS_OK, $response->getStatus());
 		$this->assertEquals(
-			$download['mimetype'] . '; charset=utf-8', $response->getHeaders()['Content-type']
+			$expectedMimeType . '; charset=utf-8', $response->getHeaders()['Content-type']
 		);
 		$this->assertEquals($download['preview'], $response->render());
 	}
@@ -262,9 +280,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 	 *
 	 * @return array
 	 */
-	private function mockGetDownload($fileId, $filename) {
-		$file = $this->mockFile($fileId);
-
+	private function mockGetDownload($fileId, $file, $filename) {
 		$this->mockGetResourceFromId($this->downloadService, $fileId, $file);
 
 		$download = $this->mockDownloadData($file, $filename);

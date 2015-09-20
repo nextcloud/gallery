@@ -1,4 +1,4 @@
-/* global Gallery, marked */
+/* global Gallery, commonmark, DOMPurify */
 (function ($, t, Gallery) {
 	"use strict";
 	/**
@@ -8,11 +8,17 @@
 	 */
 	var InfoBox = function () {
 		this.infoContentElement = $('.album-info-content');
+		this.markdownReader = new commonmark.Parser();
+		this.htmlWriter = new commonmark.HtmlRenderer();
+		this._initCustomSanitizer();
 	};
 
 	InfoBox.prototype = {
 		infoContentElement: null,
 		albumInfo: null,
+		markdownReader: null,
+		htmlWriter: null,
+		allowedTags: null,
 
 		/**
 		 * Shows an information box to the user
@@ -37,9 +43,9 @@
 								thisInfoBox._addContent(data);
 							}
 						).fail(function () {
-								thisInfoBox._addContent(t('gallery',
-									'Could not load the description'));
-							});
+							thisInfoBox._addContent(t('gallery',
+								'Could not load the description'));
+						});
 					} else {
 						this._addContent(this.albumInfo.description);
 					}
@@ -59,7 +65,7 @@
 		 */
 		_addContent: function (content) {
 			try {
-				content = marked(content);
+				content = this._parseMarkdown(content);
 			} catch (exception) {
 				content = t('gallery',
 					'Could not load the description: ' + exception.message);
@@ -68,6 +74,21 @@
 			this.infoContentElement.find('a').attr("target", "_blank");
 			this._showCopyright();
 			this._adjustHeight();
+		},
+
+		/**
+		 * Parses markdown content and sanitizes the HTML
+		 *
+		 * @param {string} content
+		 * @private
+		 */
+		_parseMarkdown: function (content) {
+			return DOMPurify.sanitize(this.htmlWriter.render(this.markdownReader.parse(content), {
+				smart: true,
+				safe: true
+			}), {
+				ALLOWED_TAGS: this.allowedTags
+			});
 		},
 
 		/**
@@ -97,7 +118,7 @@
 
 				if (!$.isEmptyObject(this.albumInfo.copyright)) {
 					try {
-						copyright = marked(this.albumInfo.copyright);
+						copyright = this._parseMarkdown(this.albumInfo.copyright);
 					} catch (exception) {
 						copyright =
 							t('gallery',
@@ -111,6 +132,7 @@
 					this._addCopyrightLink(copyright);
 				} else {
 					this.infoContentElement.append(copyright);
+					this.infoContentElement.find('a').attr("target", "_blank");
 				}
 			}
 		},
@@ -135,6 +157,54 @@
 				target: "_blank"
 			});
 			this.infoContentElement.append(copyrightLink);
+		},
+
+		/**
+		 * Adds custom tags and rules to DomPurify
+		 *
+		 * @link https://github.com/cure53/DOMPurify/blob/master/demos/hooks-scheme-whitelist.html
+		 * @private
+		 */
+		_initCustomSanitizer: function () {
+			this.allowedTags =
+				['p', 'b', 'em', 'i', 'pre', 'sup', 'sub', 'strong', 'strike', 'br', 'hr',
+					'h1', 'h2', 'h3', 'li', 'ul', 'ol', 'a', 'img', 'blockquote', 'code'
+				];
+
+			// allowed URI schemes
+			var whitelist = ['http', 'https'];
+
+			// build fitting regex
+			var regex = new RegExp('^(' + whitelist.join('|') + '):', 'gim');
+
+			// Add a hook to enforce URI scheme whitelist
+			DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+
+				// build an anchor to map URLs to
+				var anchor = document.createElement('a');
+
+				// check all href attributes for validity
+				if (node.hasAttribute('href')) {
+					anchor.href = node.getAttribute('href');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('href');
+					}
+				}
+				// check all action attributes for validity
+				if (node.hasAttribute('action')) {
+					anchor.href = node.getAttribute('action');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('action');
+					}
+				}
+				// check all xlink:href attributes for validity
+				if (node.hasAttribute('xlink:href')) {
+					anchor.href = node.getAttribute('xlink:href');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('xlink:href');
+					}
+				}
+			});
 		}
 	};
 
