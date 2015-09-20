@@ -22,6 +22,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\GalleryPlus\Http\ImageResponse;
+use OCA\GalleryPlus\Service\ConfigService;
 use OCA\GalleryPlus\Service\ThumbnailService;
 use OCA\GalleryPlus\Service\PreviewService;
 use OCA\GalleryPlus\Service\DownloadService;
@@ -45,6 +46,7 @@ class PreviewController extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
+	 * @param ConfigService $configService
 	 * @param ThumbnailService $thumbnailService
 	 * @param PreviewService $previewService
 	 * @param DownloadService $downloadService
@@ -55,6 +57,7 @@ class PreviewController extends Controller {
 		$appName,
 		IRequest $request,
 		IURLGenerator $urlGenerator,
+		ConfigService $configService,
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
 		DownloadService $downloadService,
@@ -64,6 +67,7 @@ class PreviewController extends Controller {
 		parent::__construct($appName, $request);
 
 		$this->urlGenerator = $urlGenerator;
+		$this->configService = $configService;
 		$this->thumbnailService = $thumbnailService;
 		$this->previewService = $previewService;
 		$this->downloadService = $downloadService;
