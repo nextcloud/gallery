@@ -13,7 +13,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 
 **This branch brings new features and bug fixes from the master branch of `owncloud/gallery` to ownCloud 8.1.x**
 
-![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
+![Screenshot](https://oc8demo.interfacloud.com/index.php/apps/galleryplus/s/GYFcC2YvieDhrnu/51282.jpg)
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
 * Large, zoomable previews which can be shown in fullscreen mode
