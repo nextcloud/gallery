@@ -39,7 +39,7 @@ div.crumb.last a {
 	vertical-align: -3px;
 }
 
-.album-info-content {
+.album-info-container {
 	background-color: #eee;
 	border-bottom-left-radius: 5px;
 	box-shadow: 0 1px 1px #777;
@@ -51,6 +51,16 @@ div.crumb.last a {
 	right: 0;
 	padding: 16px;
 	overflow-y: auto;
+}
+
+.album-info-loader {
+	top: 50%;
+	left: 50%;
+	z-index: -100;
+	position: absolute !important;
+	width: 32px;
+	height: 32px;
+	background-size: 32px 32px;
 }
 
 .album-info-content ul {

@@ -251,9 +251,9 @@
 		_infoButtonSetup: function () {
 			var infoButton = $('#album-info-button');
 			infoButton.find('span').hide();
-			var infoContentElement = $('.album-info-content');
-			infoContentElement.slideUp();
-			infoContentElement.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
+			var infoContentContainer = $('.album-info-container');
+			infoContentContainer.slideUp();
+			infoContentContainer.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
 			var albumInfo = Gallery.config.albumInfo;
 			if (Gallery.config.albumError) {
 				infoButton.hide();
