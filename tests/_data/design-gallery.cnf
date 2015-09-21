@@ -1,0 +1,5 @@
+---
+# Gallery configuration file
+design:
+  background: "f3088d"
+  inherit: yes

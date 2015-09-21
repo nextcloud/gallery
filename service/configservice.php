@@ -42,7 +42,7 @@ class ConfigService extends FilesService {
 	/**
 	 * @var array <string,bool>
 	 */
-	private $completionStatus = ['information' => false, 'sorting' => false];
+	private $completionStatus = ['design' => false, 'information' => false, 'sorting' => false];
 	/**
 	 * @var ConfigParser
 	 */
