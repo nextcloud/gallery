@@ -198,8 +198,11 @@
 }
 
 .icon-loading-dark {
-	position: absolute;
+	position: absolute !important;
 	top: 50%;
-	width: 100%;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 32px;
 	height: 32px;
 }
