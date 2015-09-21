@@ -253,15 +253,14 @@
 			infoButton.find('span').hide();
 			var infoContentContainer = $('.album-info-container');
 			infoContentContainer.slideUp();
-			infoContentContainer.css('max-height',
-				$(window).height() - Gallery.browserToolbarHeight);
+			infoContentContainer.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
 			var albumInfo = Gallery.config.albumInfo;
 			if (Gallery.config.albumError) {
 				infoButton.hide();
 				var text = '<strong>' + t('gallery', 'Configuration error') + '</strong></br>' +
 					Gallery.config.albumError.message + '</br></br>';
 				Gallery.utility.showHtmlNotification(text, 7);
-			} else if (this._isInfoContentEmpty(albumInfo)) {
+			} else if ($.isEmptyObject(albumInfo)) {
 				infoButton.hide();
 			} else {
 				infoButton.show();
@@ -269,23 +268,6 @@
 					infoButton.find('span').delay(1000).slideDown();
 				}
 			}
-		},
-
-		/**
-		 * Determines if the info box is empty
-		 *
-		 * @param albumInfo
-		 * @returns {bool}
-		 * @private
-		 */
-		_isInfoContentEmpty: function (albumInfo) {
-			return $.isEmptyObject(albumInfo)
-				|| (
-					!albumInfo.description
-					&& !albumInfo.descriptionLink
-					&& !albumInfo.copyright
-					&& !albumInfo.copyrightLink
-				);
 		},
 
 		/**
