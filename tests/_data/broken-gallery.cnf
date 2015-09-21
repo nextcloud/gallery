@@ -1,5 +1,8 @@
 ---
 # Gallery configuration file
+features:
+  external_shares yes
+  native_svg: no
 information:
   description: This is the official **Gallery** sample folder
   Contribute to this project [on Github](https://github.com/owncloud/gallery)
@@ -9,6 +12,3 @@ sorting:
   type: date
   order: des
   inherit: yes
-features:
-  external_shares: yes
-  native_svg: no

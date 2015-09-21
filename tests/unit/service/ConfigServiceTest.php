@@ -50,7 +50,8 @@ class ConfigServiceTest extends \Test\GalleryUnitTest {
 		$folder = $this->mockFolder('home::user', $nodeId, $files);
 		$configName = 'gallery.cnf';
 		$config = [];
-		$configItems = ['information' => false, 'sorting' => false]; // Default in the class
+		// Default in the class
+		$configItems = ['design' => false, 'information' => false, 'sorting' => false];
 		$level = 0;
 		$configPath = 'Some/folder';
 		$exception = new ConfigException('Boom');
