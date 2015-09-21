@@ -54,7 +54,7 @@ $(document).ready(function () {
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
-			var infoContentContainer = $('.album-info-content');
+			var infoContentContainer = $('.album-info-container');
 			// This section redraws the photowall and limits the width of dropdowns
 			if (windowWidth !== $(window).width()) {
 				if ($('#emptycontent').is(':hidden')) {
