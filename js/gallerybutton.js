@@ -60,18 +60,19 @@ $(document).ready(function () {
 			// Toggle for opening files list as gallery view
 			GalleryButton.button =
 				$('<div id="gallery-button" class="button view-switcher right-switch-button inactive-button">' +
+					'<div id="button-loading"></div>' +
 					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') +
 					'"' +
-					'alt="' + t('gallery', 'Picture view') + '"/>' +
+					'alt="' + t('gallery', 'Gallery view') + '"/>' +
 					'</div>' +
 					'<div class="button view-switcher left-switch-button disabled-button">' +
 					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-filelist.svg') +
 					'"' +
-					'alt="' + t('gallery', 'Picture view') + '"/>' +
+					'alt="' + t('gallery', 'Files view') + '"/>' +
 					'</div>');
 
 			GalleryButton.button.click(function () {
-				$(this).addClass('loading');
+				$(this).children('#button-loading').addClass('loading');
 				window.location.href = GalleryButton.url;
 			});
 

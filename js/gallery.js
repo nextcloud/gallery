@@ -163,7 +163,7 @@
 			}
 			
 			var button = $('#filelist-button');
-			button.addClass('loading');
+			button.children('#button-loading').addClass('loading');
 			OC.redirect(OC.generateUrl(subUrl, params));
 		},
 
@@ -174,7 +174,7 @@
 		 */
 		share: function (event) {
 			// Clicking on share button does not trigger automatic slide-up
-			$('.album-info-content').slideUp();
+			$('.album-info-container').slideUp();
 
 			if (!OC.Share.droppedDown) {
 				event.preventDefault();

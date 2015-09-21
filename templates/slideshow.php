@@ -1,4 +1,5 @@
-<div id="slideshow" class="icon-loading-dark">
+<div id="slideshow">
+	<div class="icon-loading-dark"></div>
 	<input type="button" class="svg next icon-view-next"/>
 	<input type="button" class="svg play icon-view-play"/>
 	<input type="button" class="svg pause icon-view-pause hidden"/>
@@ -11,7 +12,9 @@
 			   class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
 	</div>
 	<div class="progress icon-view-pause"/>
-	<div class="name"><div class="title"></div></div>
+	<div class="name">
+		<div class="title"></div>
+	</div>
 	<div class="notification"></div>
 	<div class="bigshotContainer"></div>
 </div>

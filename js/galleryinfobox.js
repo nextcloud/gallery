@@ -7,13 +7,17 @@
 	 * @constructor
 	 */
 	var InfoBox = function () {
-		this.infoContentElement = $('.album-info-content');
+		this.infoContentContainer = $('.album-info-container');
+		this.infoContentSpinner = this.infoContentContainer.children('.album-info-loader');
+		this.infoContentElement = this.infoContentContainer.children('.album-info-content');
 		this.markdownReader = new commonmark.Parser();
 		this.htmlWriter = new commonmark.HtmlRenderer();
 		this._initCustomSanitizer();
 	};
 
 	InfoBox.prototype = {
+		infoContentContainer: null,
+		infoContentSpinner: null,
 		infoContentElement: null,
 		albumInfo: null,
 		markdownReader: null,
@@ -24,16 +28,16 @@
 		 * Shows an information box to the user
 		 */
 		showInfo: function () {
-			if (this.infoContentElement.is(':visible')) {
-				this.infoContentElement.slideUp();
+			if (this.infoContentContainer.is(':visible')) {
+				this.infoContentContainer.slideUp();
 			} else {
 				this.albumInfo = Gallery.config.albumInfo;
 
 				if (!this.albumInfo.infoLoaded) {
-					this.infoContentElement.addClass('icon-loading');
+					this.infoContentSpinner.addClass('icon-loading');
 					this.infoContentElement.empty();
 					this.infoContentElement.height(100);
-					this.infoContentElement.slideDown();
+					this.infoContentContainer.slideDown();
 					if (!$.isEmptyObject(this.albumInfo.descriptionLink)) {
 						var path = '/' + this.albumInfo.filePath;
 						var file = this.albumInfo.descriptionLink;
@@ -51,7 +55,7 @@
 					}
 					Gallery.config.infoLoaded = true;
 				} else {
-					this.infoContentElement.slideDown();
+					this.infoContentContainer.slideDown();
 				}
 				this.infoContentElement.scrollTop(0);
 			}
@@ -96,7 +100,7 @@
 		 * @private
 		 */
 		_adjustHeight: function () {
-			this.infoContentElement.removeClass('icon-loading');
+			this.infoContentSpinner.removeClass('icon-loading');
 			var newHeight = this.infoContentElement[0].scrollHeight;
 			this.infoContentElement.animate({
 				height: newHeight + 40

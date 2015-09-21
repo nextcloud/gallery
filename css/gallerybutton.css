@@ -90,7 +90,6 @@ http://davidwalsh.name/css-flip*/
 	-moz-backface-visibility: hidden;
 	backface-visibility: hidden;
 
-
 	-webkit-transform-style: preserve-3d;
 	-moz-transform-style: preserve-3d;
 	transform-style: preserve-3d;
@@ -126,4 +125,13 @@ http://davidwalsh.name/css-flip*/
 	-webkit-transform: rotateX(180deg);
 	-moz-transform: rotateX(180deg);
 	transform: rotateX(180deg);
+}
+
+#button-loading {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	background-size: 24px 24px;
+	margin-left: -4px;
+	margin-top: -3px;
 }
