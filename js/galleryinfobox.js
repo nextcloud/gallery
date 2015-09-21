@@ -57,7 +57,7 @@
 				} else {
 					this.infoContentContainer.slideDown();
 				}
-				this.infoContentElement.scrollTop(0);
+				this.infoContentContainer.scrollTop(0);
 			}
 		},
 
@@ -101,11 +101,11 @@
 		 */
 		_adjustHeight: function () {
 			this.infoContentSpinner.removeClass('icon-loading');
-			var newHeight = this.infoContentElement[0].scrollHeight;
-			this.infoContentElement.animate({
+			var newHeight = this.infoContentContainer[0].scrollHeight;
+			this.infoContentContainer.animate({
 				height: newHeight + 40
 			}, 500);
-			this.infoContentElement.scrollTop(0);
+			this.infoContentContainer.scrollTop(0);
 		},
 
 		/**
