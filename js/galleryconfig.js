@@ -20,6 +20,7 @@
 		albumPermissions: null,
 		albumInfo: null,
 		albumSorting: null,
+		albumDesign: null,
 		albumError: false,
 		infoLoaded: false,
 
@@ -48,7 +49,8 @@
 		 * 	fileid: number,
 		 * 	permissions: number,
 		 * 	path: string,
-		 * 	etag: string
+		 * 	etag: string,
+		 * 	design,
 		 * 	information,
 		 * 	sorting,
 		 * 	error: string
@@ -58,6 +60,7 @@
 			this.albumPermissions = this._setAlbumPermissions(albumConfig);
 			this.albumInfo = this._setAlbumInfo(albumConfig);
 			this.albumSorting = this._setAlbumSorting(albumConfig);
+			this.albumDesign = this._setAlbumDesign(albumConfig);
 			this.albumError = albumConfig.error;
 		},
 
@@ -147,7 +150,8 @@
 		 * 	fileid: number,
 		 * 	permissions: number,
 		 * 	path: string,
-		 * 	etag: string
+		 * 	etag: string,
+		 * 	design,
 		 * 	information,
 		 * 	sorting,
 		 * 	error: string
@@ -170,7 +174,8 @@
 		 * 	fileid: number,
 		 * 	permissions: number,
 		 * 	path: string,
-		 * 	etag: string
+		 * 	etag: string,
+		 * 	design,
 		 * 	information,
 		 * 	sorting,
 		 * 	error: string
@@ -181,7 +186,6 @@
 		 * 	descriptionLink: string,
 		 * 	copyright: string,
 		 * 	copyrightLink: string,
-		 * 	background: string,
 		 * 	filePath: string,
 		 * 	inherit: bool,
 		 * 	level: number
@@ -196,7 +200,6 @@
 			 * 	description_link: string,
 			 * 	copyright: string,
 			 * 	copyright_link: string,
-			 * 	background: string,
 			 * 	inherit: bool,
 			 * 	level: number
 			 * }}
@@ -222,10 +225,50 @@
 					descriptionLink: albumInfo.description_link,
 					copyright: albumInfo.copyright,
 					copyrightLink: albumInfo.copyright_link,
-					background: albumInfo.background,
 					filePath: docPath,
 					inherit: albumInfo.inherit,
-					level: albumInfo.level
+					level: level
+				};
+			}
+
+			return params;
+		},
+
+		/**
+		 * Saves the description and copyright information for the current album
+		 *
+		 * @param {{
+		 * 	fileid: number,
+		 * 	permissions: number,
+		 * 	path: string,
+		 * 	etag: string,
+		 * 	design,
+		 * 	information,
+		 * 	sorting,
+		 * 	error: string
+		 * }} albumConfig
+		 *
+		 * @returns {null||{
+		 * 	background: string,
+		 * 	inherit: bool,
+		 * 	level: number
+		 * }}
+		 * @private
+		 */
+		_setAlbumDesign: function (albumConfig) {
+			/**@type {{
+			 * 	background: string,
+			 * 	inherit: bool,
+			 * 	level: number
+			 * }}
+			 */
+			var albumDesign = albumConfig.design;
+			var params = null;
+			if (!$.isEmptyObject(albumDesign)) {
+				params = {
+					background: albumDesign.background,
+					inherit: albumDesign.inherit,
+					level: albumDesign.level
 				};
 			}
 
@@ -239,7 +282,8 @@
 		 * 	fileid: number,
 		 * 	permissions: number,
 		 * 	path: string,
-		 * 	etag: string
+		 * 	etag: string,
+		 * 	design,
 		 * 	information,
 		 * 	sorting,
 		 * 	error: string
