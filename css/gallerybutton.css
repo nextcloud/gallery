@@ -164,6 +164,15 @@ http://davidwalsh.name/css-flip*/
 	transform: rotateX(180deg);
 }
 
+#button-loading {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	background-size: 24px 24px;
+	margin-left: -4px;
+	margin-top: -3px;
+}
+
 #controls .button.sorting.active-button.hover .front {
 	-webkit-transform: rotateX(180deg);
 	-moz-transform: rotateX(180deg);

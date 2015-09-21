@@ -41,7 +41,7 @@ $(document).ready(function () {
 			});
 
 		$(document).click(function () {
-			$('.album-info-content').slideUp();
+			$('.album-info-container').slideUp();
 		});
 
 		// This block loads new rows
@@ -54,21 +54,21 @@ $(document).ready(function () {
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 		$(window).resize(_.throttle(function () {
-			var infoContentElement = $('.album-info-content');
+			var infoContentContainer = $('.album-info-content');
 			// This section redraws the photowall and limits the width of dropdowns
 			if (windowWidth !== $(window).width()) {
 				if ($('#emptycontent').is(':hidden')) {
 					Gallery.view.viewAlbum(Gallery.currentAlbum);
 				}
 				Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
-				infoContentElement.css('max-width', $(window).width());
+				infoContentContainer.css('max-width', $(window).width());
 
 				windowWidth = $(window).width();
 			}
 			// This makes sure dropdowns will not be hidden after a window resize
 			if (windowHeight !== $(window).height()) {
 				Gallery.resetContentHeight();
-				infoContentElement.css('max-height',
+				infoContentContainer.css('max-height',
 					$(window).height() - Gallery.browserToolbarHeight);
 
 				windowHeight = $(window).height();

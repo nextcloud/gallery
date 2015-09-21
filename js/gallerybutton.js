@@ -60,13 +60,14 @@ $(document).ready(function () {
 			// Button for opening files list as gallery view
 			GalleryButton.button =
 				$('<div id="gallery-button" class="button view-switcher">' +
+						'<div id="button-loading"></div>' +
 					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') +
 					'"' +
 					'alt="' + t('gallery', 'Gallery view') + '"/>' +
 					'</div>');
 
 			GalleryButton.button.click(function () {
-				$(this).addClass('loading');
+				$(this).children('#button-loading').addClass('loading');
 				window.location.href = GalleryButton.url;
 			});
 

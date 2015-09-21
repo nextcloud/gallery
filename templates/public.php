@@ -133,9 +133,13 @@ style(
 							image_path('core', 'actions/info.svg')
 						); ?>" alt="<?php p($l->t('Album information')); ?>"/>
 					</div>
-					<div class="album-info-content markdown-body"></div>
+					<div class="album-info-container">
+						<div class="album-info-loader"></div>
+						<div class="album-info-content markdown-body"></div>
+					</div>
 					<!-- toggle for opening the current album as file list -->
 					<div id="filelist-button" class="button view-switcher gallery">
+						<div id="button-loading"></div>
 						<img class="svg" src="<?php print_unescaped(
 							image_path('core', 'actions/toggle-filelist.svg')
 						); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
