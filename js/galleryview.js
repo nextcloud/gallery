@@ -32,6 +32,10 @@
 		 */
 		init: function (albumPath) {
 			if ($.isEmptyObject(Gallery.imageMap)) {
+				if (this.requestId === -1) {
+					$('#filelist-button').click(Gallery.switchToFilesView);
+					this.requestId = Math.random();
+				}
 				this.clear();
 				if (albumPath === '') {
 					Gallery.showEmpty();
@@ -253,7 +257,8 @@
 			infoButton.find('span').hide();
 			var infoContentContainer = $('.album-info-container');
 			infoContentContainer.slideUp();
-			infoContentContainer.css('max-height', $(window).height() - Gallery.browserToolbarHeight);
+			infoContentContainer.css('max-height',
+				$(window).height() - Gallery.browserToolbarHeight);
 			var albumInfo = Gallery.config.albumInfo;
 			if (Gallery.config.albumError) {
 				infoButton.hide();
