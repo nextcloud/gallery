@@ -280,8 +280,11 @@
 		 */
 		showEmptyFolder: function () {
 			var emptyContentElement = $('#emptycontent');
-			var message = t('gallery',
-				"I am sorry, but I could not find any media files at this location.");
+			var message = '<div class="icon-gallery"></div>';
+			message += '<h2>' + t('gallery',
+				'Nothing in here') + '</h2>';
+			message += '<p>' + t('gallery',
+				'No media files found in this folder') + '</p>';
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#loading-indicator').hide();
