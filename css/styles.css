@@ -289,3 +289,7 @@ http://www.bypeople.com/author/comatosed/*/
 	width: 100%;
 	margin-bottom: 50px;
 }
+
+.icon-gallery {
+	background-image: url('../img/gallery-dark.svg');
+}
