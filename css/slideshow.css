@@ -93,16 +93,19 @@
 }
 
 #slideshow > .next, #slideshow > .previous {
-	top: 50%;
-	margin-top: -21px;
+	height: 100%;
+	top: 0;
+	margin-top: 0;
 }
-
 #slideshow > .next {
+	width: 80%;
 	right: 0;
+	background-position: right 10px center;
 }
-
 #slideshow > .previous {
+	width: 20%;
 	left: 0;
+	background-position: 10px center;
 }
 
 #slideshow > .exit {
