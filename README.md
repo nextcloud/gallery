@@ -61,7 +61,7 @@ May not look as nice, but should work
 ### Server requirements
 
 #### Required
-* ownCloud >= 8.1
+* ownCloud >= 8.2
 * [See ownCloud's requirements](https://doc.owncloud.org/server/8.1/admin_manual/installation/source_installation.html#prerequisites)
 
 #### Recommended
