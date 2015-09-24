@@ -41,7 +41,7 @@ class ThumbnailService {
 	 * @return array<double|boolean>
 	 */
 	public function getThumbnailSpecs($square, $scale) {
-		$height = 200 * $scale;
+		$height = ceil(200 * $scale);
 		if ($square) {
 			$width = $height;
 		} else {
