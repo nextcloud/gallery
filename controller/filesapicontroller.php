@@ -127,6 +127,11 @@ class FilesApiController extends ApiController {
 			return new RedirectResponse($url);
 		}
 
+		// That's the only exception out of all the image media types
+		if ($download['mimetype'] === 'image/svg+xml') {
+			$download['mimetype'] = 'text/plain';
+		}
+
 		return new ImageResponse($download);
 	}
 

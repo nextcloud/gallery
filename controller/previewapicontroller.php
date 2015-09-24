@@ -22,6 +22,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\Gallery\Http\ImageResponse;
+use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
@@ -45,6 +46,7 @@ class PreviewApiController extends ApiController {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
+	 * @param ConfigService $configService
 	 * @param ThumbnailService $thumbnailService
 	 * @param PreviewService $previewService
 	 * @param DownloadService $downloadService
@@ -55,6 +57,7 @@ class PreviewApiController extends ApiController {
 		$appName,
 		IRequest $request,
 		IURLGenerator $urlGenerator,
+		ConfigService $configService,
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
 		DownloadService $downloadService,
@@ -64,6 +67,7 @@ class PreviewApiController extends ApiController {
 		parent::__construct($appName, $request);
 
 		$this->urlGenerator = $urlGenerator;
+		$this->configService = $configService;
 		$this->thumbnailService = $thumbnailService;
 		$this->previewService = $previewService;
 		$this->downloadService = $downloadService;
@@ -113,10 +117,11 @@ class PreviewApiController extends ApiController {
 	 * @param int $fileId the ID of the file of which we need a large preview of
 	 * @param int $width
 	 * @param int $height
+	 * @param bool $nativesvg This is a GET parameter, so no camelCase
 	 *
 	 * @return ImageResponse|Http\JSONResponse
 	 */
-	public function getPreview($fileId, $width, $height) {
+	public function getPreview($fileId, $width, $height, $nativesvg = false) {
 		/** @type File $file */
 		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
 
@@ -129,6 +134,11 @@ class PreviewApiController extends ApiController {
 			);
 		}
 		$preview['name'] = $file->getName();
+
+		// That's the only exception out of all the image media types we serve
+		if ($preview['mimetype'] === 'image/svg+xml' && !$nativesvg) {
+			$preview['mimetype'] = 'text/plain';
+		}
 
 		return new ImageResponse($preview, $status);
 	}

@@ -19,7 +19,6 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 
 use OCA\Gallery\Service\ConfigService;
-use OCA\Gallery\Service\PreviewService;
 
 /**
  * Class ConfigController
@@ -37,20 +36,17 @@ class ConfigController extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param ConfigService $configService
-	 * @param PreviewService $previewService
 	 * @param ILogger $logger
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		ConfigService $configService,
-		PreviewService $previewService,
 		ILogger $logger
 	) {
 		parent::__construct($appName, $request);
 
 		$this->configService = $configService;
-		$this->previewService = $previewService;
 		$this->logger = $logger;
 	}
 

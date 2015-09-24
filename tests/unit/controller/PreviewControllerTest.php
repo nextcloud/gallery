@@ -23,6 +23,7 @@ use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\Gallery\AppInfo\Application;
 use OCA\Gallery\Http\ImageResponse;
+use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
@@ -47,6 +48,8 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	protected $controller;
 	/** @var IURLGenerator */
 	protected $urlGenerator;
+	/** @var ConfigService */
+	protected $configService;
 	/** @var ThumbnailService */
 	protected $thumbnailService;
 	/** @var PreviewService */
@@ -75,6 +78,9 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$this->urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
 								   ->disableOriginalConstructor()
 								   ->getMock();
+		$this->configService = $this->getMockBuilder('\OCA\Gallery\Service\ConfigService')
+									->disableOriginalConstructor()
+									->getMock();
 		$this->thumbnailService = $this->getMockBuilder('\OCA\Gallery\Service\ThumbnailService')
 									   ->disableOriginalConstructor()
 									   ->getMock();
@@ -94,6 +100,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 			$this->appName,
 			$this->request,
 			$this->urlGenerator,
+			$this->configService,
 			$this->thumbnailService,
 			$this->previewService,
 			$this->downloadService,
@@ -109,6 +116,9 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$square = true;
 		$scale = 2.5;
 		$thumbnailId = 1234;
+
+		$file = $this->mockJpgFile($thumbnailId);
+		$this->mockGetResourceFromId($this->previewService, $thumbnailId, $file);
 
 		$this->controller->getThumbnails($thumbnailId, $square, $scale);
 	}
@@ -147,10 +157,11 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 			$base64Encode
 		];
 		$this->mockGetThumbnailSpecs($square, $scale, $thumbnailSpecs);
-
-		list($file, $mockedPreview) =
+		/** @type File $file */
+		$file = $this->mockJpgFile($thumbnailId);
+		$mockedPreview =
 			$this->mockGetData(
-				$thumbnailId, $width, $height, $aspect, $animatedPreview, $base64Encode
+				$thumbnailId, $file, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 
 		$this->mockPreviewValidator($square, $base64Encode, $mockedPreview['preview']);
@@ -221,7 +232,8 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$height = 768;
 
 		/** @type File $file */
-		list($file, $preview) = $this->mockGetData($fileId, $width, $height);
+		$file = $this->mockJpgFile($fileId);
+		$preview = $this->mockGetData($fileId, $file, $width, $height);
 		$preview['name'] = $file->getName();
 
 		/** @type ImageResponse $response */
@@ -272,26 +284,34 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	 * Mocks Preview->getData
 	 *
 	 * @param int $fileId the ID of the file of which we need a large preview of
+	 * @param File $file
 	 * @param int $width
 	 * @param int $height
 	 * @param bool $keepAspect
 	 * @param bool $animatedPreview
 	 * @param bool $base64Encode
+	 * @param bool $previewRequired
 	 *
 	 * @return array
 	 */
-	private function mockGetData(
-		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
+	protected function mockGetData(
+		$fileId, $file, $width, $height, $keepAspect = true, $animatedPreview = true,
+		$base64Encode = false, $previewRequired = true
 	) {
-		$file = $this->mockJpgFile($fileId);
 		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
 
-		$this->mockIsPreviewRequired($file, $animatedPreview, true);
-		$previewData = $this->mockPreviewData($file);
+		$this->mockIsPreviewRequired($file, $animatedPreview, $previewRequired);
+		$previewData = $this->mockPreviewData($file, $previewRequired);
 
-		$this->mockCreatePreview($file, $width, $height, $keepAspect, $base64Encode, $previewData);
+		if ($previewRequired) {
+			$this->mockCreatePreview(
+				$file, $width, $height, $keepAspect, $base64Encode, $previewData
+			);
+		} else {
+			$this->mockDownloadFile($file, $base64Encode, $previewData);
+		}
 
-		return [$file, $previewData];
+		return $previewData;
 	}
 
 	/**
@@ -389,14 +409,17 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	}
 
 	/**
-	 * @param object|\PHPUnit_Framework_MockObject_MockObject $file
+	 * @param File $file
+	 * @param bool $previewRequired
 	 *
-	 * @return array<string,mixed>
+	 * @return array <string,mixed>
 	 */
-	private function mockPreviewData($file) {
+	private function mockPreviewData($file, $previewRequired) {
+		$mimeType = $previewRequired ? 'image/png' : $file->getMimeType();
+
 		$preview = [
 			'preview'  => $file->getContent(), // Not a real preview, but it's not important
-			'mimetype' => 'image/png', //Most previews are PNGs
+			'mimetype' => $mimeType,
 		];
 
 		return $preview;
@@ -460,6 +483,21 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 								 $this->equalTo($base64Encode)
 							 )
 							 ->willthrowException($exception);
+	}
+
+	/**
+	 * @param $file
+	 * @param $base64Encode
+	 * @param $preview
+	 */
+	private function mockDownloadFile($file, $base64Encode, $preview) {
+		$this->downloadService->expects($this->once())
+							  ->method('downloadFile')
+							  ->with(
+								  $this->equalTo($file),
+								  $this->equalTo($base64Encode)
+							  )
+							  ->willReturn($preview);
 	}
 
 	/**

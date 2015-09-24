@@ -48,64 +48,6 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 		);
 	}
 
-	public function providesGetSupportedMediaTypesData() {
-		$baseMimeTypes = [
-			'image/jpeg',
-		];
-
-		$slideshowMimes = array_merge(
-			$baseMimeTypes,
-			[
-				'application/font-sfnt',
-				'application/x-font',
-			]
-		);
-
-		$baseMimeTypesWithSvg = array_merge(
-			$baseMimeTypes,
-			[
-				'image/svg+xml',
-			]
-		);
-
-		$slideshowMimesWithSvg = array_merge(
-			$slideshowMimes,
-			[
-				'image/svg+xml',
-			]
-		);
-
-		return [
-			[$baseMimeTypes, false, false, $baseMimeTypes],
-			[$baseMimeTypes, false, true, $baseMimeTypesWithSvg],
-			[$baseMimeTypes, true, true, $slideshowMimesWithSvg],
-			[$baseMimeTypes, true, false, $slideshowMimes],
-		];
-	}
-
-	/**
-	 * @dataProvider providesGetSupportedMediaTypesData
-	 *
-	 * @param $baseMimeTypes
-	 * @param $extraMediaTypes
-	 * @param $nativeSvgSupport
-	 * @param $expectedResult
-	 */
-	public function testGetSupportedMediaTypes(
-		$baseMimeTypes, $extraMediaTypes, $nativeSvgSupport, $expectedResult
-	) {
-
-		$this->assertSame(
-			$baseMimeTypes, self::invokePrivate($this->service, 'baseMimeTypes', [$baseMimeTypes])
-		);
-
-		$this->mockIsMimeSupported($nativeSvgSupport);
-
-		$response = $this->service->getSupportedMediaTypes($extraMediaTypes, $nativeSvgSupport);
-
-		$this->assertSame($expectedResult, $response);
-	}
-
 	public function providesIsPreviewRequiredData() {
 		return [
 			[true],
@@ -237,40 +179,6 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 
 		$this->service->previewValidator($square, $base64Encode);
 	}
-
-
-	public function providesAddSvgSupportData() {
-		$supportedMimes = [
-			'image/png',
-			'image/jpeg',
-			'image/gif'
-		];
-
-		$supportedMimesWithSvg = array_merge($supportedMimes, ['image/svg+xml']);
-
-		return [
-			[$supportedMimes, true, $supportedMimesWithSvg],
-			[$supportedMimes, false, $supportedMimes],
-			[$supportedMimesWithSvg, true, $supportedMimesWithSvg],
-			[$supportedMimesWithSvg, false, $supportedMimesWithSvg],
-		];
-	}
-
-	/**
-	 * @dataProvider providesAddSvgSupportData
-	 *
-	 * @param array $supportedMimes
-	 * @param bool $nativeSvgSupport
-	 * @param array $expectedResult
-	 */
-	public function testAddSvgSupport($supportedMimes, $nativeSvgSupport, $expectedResult) {
-		$response = self::invokePrivate(
-			$this->service, 'addSvgSupport', [$supportedMimes, $nativeSvgSupport]
-		);
-
-		$this->assertSame($expectedResult, $response);
-	}
-
 
 	private function mockIsMimeSupported($mimeSupported) {
 		$map = [

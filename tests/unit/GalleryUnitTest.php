@@ -13,6 +13,8 @@
 namespace Test;
 
 use OCP\ILogger;
+use OCP\Files\File;
+use OCP\Files\Folder;
 
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Service\ServiceException;
@@ -52,7 +54,7 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 *
 	 * @param object $mockedObject
 	 * @param int $fileId
-	 * @param \PHPUnit_Framework_MockObject_MockObject $answer
+	 * @param File|Folder $answer
 	 */
 	protected function mockGetResourceFromId($mockedObject, $fileId, $answer) {
 		$mockedObject->expects($this->once())
