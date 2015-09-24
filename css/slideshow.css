@@ -162,17 +162,17 @@
 }
 
 #slideshow > .name .title {
-	padding: 0 50px;
+	padding: 0 50px 3px;
 	text-align: center;
-	color: #FFF;
+	color: #fff;
+	text-shadow: 0 0 10px #333;
 	font-size: 18px;
 	line-height: normal;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=50);
-	opacity: .5;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+	opacity: .75;
 }
 
 #slideshow > .notification {
