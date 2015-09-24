@@ -144,7 +144,7 @@
 			// Refresh the view
 			Gallery.view.viewAlbum(Gallery.currentAlbum);
 		},
-		
+
 		/**
 		 * Switches to the Files view
 		 *
@@ -152,7 +152,7 @@
 		 */
 		switchToFilesView: function (event) {
 			event.stopPropagation();
-		
+
 			var subUrl = '';
 			var params = {path: '/' + Gallery.currentAlbum};
 			if (Gallery.token) {
@@ -161,7 +161,7 @@
 			} else {
 				subUrl = 'apps/files?dir={path}';
 			}
-			
+
 			var button = $('#filelist-button');
 			button.children('#button-loading').addClass('loading');
 			OC.redirect(OC.generateUrl(subUrl, params));
@@ -264,8 +264,11 @@
 		 */
 		showEmpty: function () {
 			var emptyContentElement = $('#emptycontent');
-			var message = t('gallery',
-				"No pictures found! If you upload pictures in the files app, they will be displayed here.");
+			var message = '<div class="icon-gallery"></div>';
+			message += '<h2>' + t('gallery',
+				'No pictures found') + '</h2>';
+			message += '<p>' + t('gallery',
+				'Upload pictures in the files app to display them here') + '</p>';
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
@@ -277,8 +280,11 @@
 		 */
 		showEmptyFolder: function () {
 			var emptyContentElement = $('#emptycontent');
-			var message = t('gallery',
-				"I am sorry, but I could not find any media files at this location.");
+			var message = '<div class="icon-gallery"></div>';
+			message += '<h2>' + t('gallery',
+				'Nothing in here') + '</h2>';
+			message += '<p>' + t('gallery',
+				'No media files found in this folder') + '</p>';
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#loading-indicator').hide();
