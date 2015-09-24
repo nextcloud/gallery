@@ -140,46 +140,6 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 		);
 	}
 
-	public function providesPreviewValidatorData() {
-		return [
-			[true, true],
-			[true, false],
-			[false, true],
-			[false, false]
-		];
-	}
-
-	/**
-	 * @dataProvider providesPreviewValidatorData
-	 *
-	 * @param bool $square
-	 * @param bool $base64Encode
-	 */
-	public function testPreviewValidator($square, $base64Encode) {
-		$file = $this->mockJpgFile(1234);
-		$this->mockPreviewValidator($file);
-		$preview = $file->getContent();
-
-		if ($base64Encode) {
-			$preview = base64_encode($preview);
-		}
-
-		$response = $this->service->previewValidator($square, $base64Encode);
-
-		$this->assertSame($preview, $response);
-	}
-
-	/**
-	 * @expectedException \OCA\Gallery\Service\InternalServerErrorServiceException
-	 */
-	public function testPreviewValidatorWithBrokenSetup() {
-		$square = true;
-		$base64Encode = true;
-		$this->mockPreviewValidatorWithBrokenSystem();
-
-		$this->service->previewValidator($square, $base64Encode);
-	}
-
 	private function mockIsMimeSupported($mimeSupported) {
 		$map = [
 			['image/jpeg', true],
@@ -209,20 +169,6 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 			 ->willThrowException(new \Exception('Boom'));
 
 		return $file;
-	}
-
-	private function mockPreviewValidator($preview) {
-		$this->previewManager->expects($this->once())
-							 ->method('previewValidator')
-							 ->with($this->anything())
-							 ->willReturn($preview->getContent());
-	}
-
-	private function mockPreviewValidatorWithBrokenSystem() {
-		$this->previewManager->expects($this->once())
-							 ->method('previewValidator')
-							 ->with($this->anything())
-							 ->willThrowException(new \Exception('Boom'));
 	}
 
 	private function mockGetUserIdFails() {
