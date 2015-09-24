@@ -153,7 +153,7 @@ class Preview {
 		$previewWidth = $previewData->width();
 		$previewHeight = $previewData->height();
 
-		if ($previewWidth !== $maxWidth || $previewHeight !== $maxHeight) {
+		if ($previewWidth > $maxWidth || $previewHeight > $maxHeight) {
 			$previewData = $this->fixPreview(
 				$previewData, $previewWidth, $previewHeight, $maxWidth, $maxHeight, $square
 			);
