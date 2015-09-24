@@ -21,7 +21,7 @@
      * Version label, exposed for easier checks
      * if DOMPurify is up to date or not
      */
-    DOMPurify.version = '0.6.5';
+    DOMPurify.version = '0.6.7';
 
     if (!window || !window.document || window.document.nodeType !== 9) {
         // not running in a browser, provide a factory function
@@ -38,6 +38,7 @@
     var NamedNodeMap = window.NamedNodeMap || window.MozNamedAttrMap;
     var Text = window.Text;
     var Comment = window.Comment;
+    var DOMParser = window.DOMParser;
 
     // As per issue #47, the web-components registry is inherited by a
     // new document created via createHTMLDocument. As per the spec
@@ -48,7 +49,6 @@
     if (typeof HTMLTemplateElement === 'function') {
         document = document.createElement('template').content.ownerDocument;
     }
-    var implementation = document.implementation;
     var createNodeIterator = document.createNodeIterator;
     var getElementsByTagName = document.getElementsByTagName;
     var createDocumentFragment = document.createDocumentFragment;
@@ -60,8 +60,7 @@
      * Expose whether this browser supports running the full DOMPurify.
      */
     DOMPurify.isSupported =
-        typeof implementation.createHTMLDocument !== 'undefined' &&
-        document.documentMode !== 9;
+        typeof DOMParser !== 'undefined' && document.documentMode !== 9;
 
     /* Add properties to a lookup table */
     var _addToSet = function(set, array) {
@@ -302,13 +301,9 @@
      * @return a DOM, filled with the dirty markup
      */
     var _initDocument = function(dirty) {
-        /* Create new document to parse markup to */
-        var doc = implementation.createHTMLDocument('');
 
-        /* Set content */
-        var body = doc.body;
-        body.parentNode.removeChild(body.parentNode.firstElementChild);
-        body.outerHTML = dirty;
+        /* Create a HTML document using DOMParser */
+        var doc = new DOMParser().parseFromString(dirty, "text/html");
 
         /* Work on whole document or just its body */
         return getElementsByTagName.call(doc,
@@ -593,10 +588,17 @@
 
         /* Get node iterator */
         var currentNode;
+        var oldNode;
         var nodeIterator = _createIterator(body);
 
         /* Now start iterating over the created document */
         while ( (currentNode = nodeIterator.nextNode()) ) {
+
+            /* Fix IE's strange behavior with manipulated textNodes #89 */
+            if (currentNode.nodeType === 3 && currentNode === oldNode) {
+                continue;
+            }
+
             /* Sanitize tags and elements */
             if (_sanitizeElements(currentNode)) {
                 continue;
@@ -609,6 +611,8 @@
 
             /* Check attributes, sanitize if necessary */
             _sanitizeAttributes(currentNode);
+
+            oldNode = currentNode;
         }
 
         /* Return sanitized string or DOM */
