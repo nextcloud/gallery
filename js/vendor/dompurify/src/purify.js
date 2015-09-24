@@ -21,7 +21,7 @@
      * Version label, exposed for easier checks
      * if DOMPurify is up to date or not
      */
-    DOMPurify.version = '0.6.7';
+    DOMPurify.version = '0.7.0';
 
     if (!window || !window.document || window.document.nodeType !== 9) {
         // not running in a browser, provide a factory function
@@ -49,6 +49,7 @@
     if (typeof HTMLTemplateElement === 'function') {
         document = document.createElement('template').content.ownerDocument;
     }
+    var implementation = document.implementation;
     var createNodeIterator = document.createNodeIterator;
     var getElementsByTagName = document.getElementsByTagName;
     var createDocumentFragment = document.createDocumentFragment;
@@ -60,7 +61,8 @@
      * Expose whether this browser supports running the full DOMPurify.
      */
     DOMPurify.isSupported =
-        typeof DOMParser !== 'undefined' && document.documentMode !== 9;
+        typeof implementation.createHTMLDocument !== 'undefined' &&
+        document.documentMode !== 9;
 
     /* Add properties to a lookup table */
     var _addToSet = function(set, array) {
@@ -301,13 +303,29 @@
      * @return a DOM, filled with the dirty markup
      */
     var _initDocument = function(dirty) {
-
         /* Create a HTML document using DOMParser */
-        var doc = new DOMParser().parseFromString(dirty, "text/html");
+        var doc, body;
+        try {
+            doc = new DOMParser().parseFromString(dirty, "text/html");
+        } catch (e) {}
+
+        /* Some browsers throw, some browsers return null for the code above
+           DOMParser with text/html support is only in very recent browsers. */
+        if (!doc){
+            doc = implementation.createHTMLDocument('');
+            body = doc.body;
+            body.parentNode.removeChild(body.parentNode.firstElementChild);
+            body.outerHTML = dirty;
+        }
 
         /* Work on whole document or just its body */
-        return getElementsByTagName.call(doc,
-            WHOLE_DOCUMENT ? 'html' : 'body')[0];
+        if (typeof doc.getElementsByTagName === 'function'){
+            return doc.getElementsByTagName(
+                WHOLE_DOCUMENT ? 'html' : 'body')[0];
+        } else {
+            return getElementsByTagName.call(doc,
+                WHOLE_DOCUMENT ? 'html' : 'body')[0];
+        }
     };
 
     /**
@@ -422,12 +440,12 @@
         if (!attributes) { return; }
 
         var hookEvent = {
-                attrName: '',
-                attrValue: '',
-                keepAttr: true
-            },
-            l = attributes.length,
-            attr, name, value, lcName, idAttr;
+            attrName: '',
+            attrValue: '',
+            keepAttr: true
+        };
+        var l = attributes.length;
+        var attr, name, value, lcName, idAttr;
 
         /* Go backwards over all attributes; safely remove bad ones */
         while (l--) {
@@ -562,6 +580,10 @@
      * @param {Object} configuration object
      */
     DOMPurify.sanitize = function(dirty, cfg) {
+        if (!dirty) {
+            dirty = '';
+        }
+
         /* Check we can run. Otherwise fall back or ignore */
         if (!DOMPurify.isSupported) {
             if (typeof window.toStaticHTML === 'function' && typeof dirty === 'string') {
