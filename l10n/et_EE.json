@@ -1,8 +1,6 @@
 { "translations": {
     "Gallery" : "Galerii",
     "Pictures" : "Pildid",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Pilte ei leitud! Kui sa laadid üles pilte failirakenduseda, siis näidatakse neid siin.",
-    "I am sorry, but I could not find any media files at this location." : "Vabandust, aga sellest kohast ei leitud mingeid meediafaile.",
     "Aborting preview. Could not find the file" : "Eelvaate tühistamine. Faili ei leitud",
     "No ownCloud installation (7 or higher) found at {remote}" : "Saidilt {remote} ei leitud ownCloudi (7 või uuem) ",
     "Invalid ownCloud url" : "Vigane ownCloud url",

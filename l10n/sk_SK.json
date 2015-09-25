@@ -1,8 +1,6 @@
 { "translations": {
     "Gallery" : "Galéria",
     "Pictures" : "Obrázky",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Nenájdené žiadne obrázky! Ak nejaké nahráte, budú zobrazené tu.",
-    "I am sorry, but I could not find any media files at this location." : "Ľutujem, na danom umietnení nemožno nájsť žiadne médiá.",
     "Aborting preview. Could not find the file" : "Ruším náhľad. Súbor nemožno nájsť.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nebola nájdená inštalácia ownCloudu (7 alebo vyššia) {remote}",
     "Invalid ownCloud url" : "Chybná ownCloud url",

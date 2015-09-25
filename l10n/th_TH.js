@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "แกลอรี่",
     "Pictures" : "รูปภาพ",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "ไม่พบรูปภาพ! หากคุณอัพโหลดรูปภาพในแอพฯ มันจะแสดงที่นี่",
-    "I am sorry, but I could not find any media files at this location." : "ขอโทษนะ แต่ฉันไม่สามารถหาไฟล์สื่อใดๆ ในตำแหน่งนี้",
     "Aborting preview. Could not find the file" : "กำลังยกเลิกการแสดงตัวอย่าง ไม่สามารถค้นหาไฟล์",
     "No ownCloud installation (7 or higher) found at {remote}" : "ไม่มีการติดตั้ง ownCloud (7 หรือสูงกว่า) พบได้ที่ {remote}",
     "Invalid ownCloud url" : "URL ownCloud ไม่ถูกต้อง",

@@ -1,8 +1,6 @@
 { "translations": {
     "Gallery" : "갤러리",
     "Pictures" : "사진",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "사진이 없습니다! 파일 앱에서 올린 사진이 여기에 표시됩니다.",
-    "I am sorry, but I could not find any media files at this location." : "죄송합니다. 이 위치에서 미디어 파일을 찾을 수 없습니다.",
     "Aborting preview. Could not find the file" : "미리 보기를 중단합니다. 파일을 찾을 수 없음",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote}에 ownCloud 7 이상이 설치되어 있지 않음",
     "Invalid ownCloud url" : "잘못된 ownCloud URL",
