@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Galleria",
     "Pictures" : "Kuvat",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Kuvia ei löytynyt! Jos lähetät kuvia tiedostosovelluksen kautta, kuvat näytetään täällä.",
-    "I am sorry, but I could not find any media files at this location." : "Valitettavasti tästä sijainnista ei löytynyt yhtäkään mediatiedostoa.",
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
     "Invalid ownCloud url" : "Virheellinen ownCloud-osoite",

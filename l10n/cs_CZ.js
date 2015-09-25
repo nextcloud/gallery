@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Galerie",
     "Pictures" : "Obrázky",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Nebyly nalezeny žádné obrázky! Pokud nahrajete soubory s obrázky, budou zobrazeny zde.",
-    "I am sorry, but I could not find any media files at this location." : "Je nám líto, ale v tomto umístění nebyly nalezeny žádné mediální soubory.",
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nebyla nalezena instalace ownCloud (7 nebo vyšší) na {remote}",
     "Invalid ownCloud url" : "Neplatná ownCloud url",

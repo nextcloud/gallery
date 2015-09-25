@@ -1,8 +1,6 @@
 { "translations": {
     "Gallery" : "Галерия",
     "Pictures" : "Снимки",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Няма открити снимки! Ако качиш снимки в програмата файлове, те ще бъдат показани тук.",
-    "I am sorry, but I could not find any media files at this location." : "Съжалявам, но немога да намеря медия файлове на това място.",
     "Aborting preview. Could not find the file" : "Отказан е прегледа. Не можах да намеря файла",
     "No ownCloud installation (7 or higher) found at {remote}" : "Не е открита ownCloud ( 7 или по-висока ) инсталация на {remote}.",
     "Invalid ownCloud url" : "Невалиден ownCloud интернет адрес.",
