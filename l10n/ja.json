@@ -1,8 +1,6 @@
 { "translations": {
     "Gallery" : "ギャラリー",
     "Pictures" : "画像",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "画像が見つかりませんでした！ファイルアプリでアップロードした画像は、ここに表示されます。",
-    "I am sorry, but I could not find any media files at this location." : "申し訳ありません、この場所にはどのメディアのファイルも見つかりませんでした。",
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote} にはownCloud (7以上)がインストールされていません",
     "Invalid ownCloud url" : "無効なownCloud URL です",

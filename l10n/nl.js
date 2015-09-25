@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Album",
     "Pictures" : "Afbeeldingen",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Geen afbeeldingen gevonden! Als u afbeeldingen upload in de bestandsapp, worden ze hier getoond.",
-    "I am sorry, but I could not find any media files at this location." : "Het spijt me maar i kon geen mediabestanden vinden op deze locatie.",
     "Aborting preview. Could not find the file" : "Voorvertoning afgebroken. Kon het bestand niet vinden",
     "No ownCloud installation (7 or higher) found at {remote}" : "Geen recente ownCloud installatie (7 of hoger) gevonden op {remote}",
     "Invalid ownCloud url" : "Ongeldige ownCloud url",

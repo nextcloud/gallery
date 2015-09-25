@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Galéria",
     "Pictures" : "Képek",
-    "No pictures found! If you upload pictures in the files app, they will be displayed here." : "Nincsenek képek! Ha a „Fájlkezelő” alkalmazással képeket töltesz fel, akkor azok itt megtekinthetők lesznek.",
-    "I am sorry, but I could not find any media files at this location." : "Elnézést, de sajnos ezen a helyen egyetlen média fájlt sem találtunk.",
     "Aborting preview. Could not find the file" : "Előnézet megszakítása. Nem található a fájl",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nem található ownCloud telepítés (7 vagy nagyobb verzió) itt:  {remote}",
     "Invalid ownCloud url" : "Érvénytelen ownCloud webcím",
