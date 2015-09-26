@@ -59,9 +59,11 @@ $(document).ready(function () {
 			if (windowWidth !== $(window).width()) {
 				if ($('#emptycontent').is(':hidden')) {
 					Gallery.view.viewAlbum(Gallery.currentAlbum);
+					infoContentContainer.css('max-width', $(window).width());
 				}
-				Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
-				infoContentContainer.css('max-width', $(window).width());
+				if(Gallery.currentAlbum) {
+					Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+				}
 
 				windowWidth = $(window).width();
 			}
