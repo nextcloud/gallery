@@ -230,6 +230,8 @@
 			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 			this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 
+			$('#sort-name-button').show();
+			$('#sort-date-button').show();
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(
