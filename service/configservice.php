@@ -139,9 +139,8 @@ class ConfigService extends FilesService {
 		foreach ($wantedMimes as $wantedMime) {
 			// Let's see if a preview of files of that media type can be generated
 			if ($this->isMimeSupported($wantedMime)) {
-				$pathToIcon = Template::mimetype_icon($wantedMime);
 				// We store the media type and the path to its SVG icon
-				$supportedMimes[$wantedMime] = substr($pathToIcon, 0, -3) . 'svg';
+				$supportedMimes[$wantedMime] = $this->getSvgIconPath($wantedMime);
 			}
 		}
 		$supportedMimes = $this->addSvgSupport($supportedMimes, $nativeSvgSupport);
@@ -150,6 +149,7 @@ class ConfigService extends FilesService {
 
 		return $supportedMimes;
 	}
+
 	/**
 	 * Returns information about the currently selected folder
 	 *
@@ -221,7 +221,7 @@ class ConfigService extends FilesService {
 	 */
 	private function addSvgSupport($supportedMimes, $nativeSvgSupport) {
 		if (!in_array('image/svg+xml', $supportedMimes) && $nativeSvgSupport) {
-			$supportedMimes['image/svg+xml'] = Template::mimetype_icon('image/svg+xml');
+			$supportedMimes['image/svg+xml'] = $this->getSvgIconPath('image/svg+xml');
 		}
 
 		return $supportedMimes;
@@ -376,6 +376,19 @@ class ConfigService extends FilesService {
 		return $this->getAlbumConfig(
 			$parentFolder, $privacyChecker, $configName, $level, $config
 		);
+	}
+
+	/**
+	 * Returns the path to the SVG icon of the media type
+	 *
+	 * @param string $mimeType
+	 *
+	 * @return string
+	 */
+	private function getSvgIconPath($mimeType) {
+		$pathToIcon = Template::mimetype_icon($mimeType);
+
+		return substr($pathToIcon, 0, -3) . 'svg';
 	}
 
 }
