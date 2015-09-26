@@ -72,11 +72,11 @@
 		},
 
 		/**
-		 * Returns the token allowing access to files
+		 * Returns the token allowing access to files shared via link
 		 *
 		 * @returns {string}
 		 */
-		getRequestToken: function () {
+		getPublicToken: function () {
 			var element = $('#gallery');
 			var token;
 
