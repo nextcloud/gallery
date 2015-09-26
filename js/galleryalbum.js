@@ -128,12 +128,12 @@
 		 * @param {GalleryImage} image
 		 * @param {number} targetHeight Each row has a specific height
 		 * @param {number} calcWidth Album width
-		 * @param {object} a
+		 * @param {jQuery} imageHolder
 		 *
 		 * @returns {$.Deferred<Thumbnail>}
 		 * @private
 		 */
-		_getOneImage: function (image, targetHeight, calcWidth, a) {
+		_getOneImage: function (image, targetHeight, calcWidth, imageHolder) {
 			// img is a Thumbnail.image, true means square thumbnails
 			return image.getThumbnail(true).then(function (img) {
 				if (image.thumbnail.valid) {
@@ -146,11 +146,9 @@
 					// Adjust the size because of the margins around pictures
 					backgroundHeight -= 2;
 
-					var croppedDiv = $('<div class="cropped">');
-					croppedDiv.css("background-image", "url('" + img.src + "')");
-					croppedDiv.css("height", backgroundHeight);
-					croppedDiv.css("width", backgroundWidth);
-					a.append(croppedDiv);
+					imageHolder.css("background-image", "url('" + img.src + "')");
+					imageHolder.css("height", backgroundHeight);
+					imageHolder.css("width", backgroundWidth);
 				}
 			});
 		},
@@ -181,7 +179,11 @@
 				}
 				targetWidth = targetWidth.toFixed(3);
 
-				thumbsArray.push(this._getOneImage(images[i], targetHeight, targetWidth, a));
+				// Append the div first in order to not lose the order of images
+				var imageHolder = $('<div class="cropped">');
+				a.append(imageHolder);
+				thumbsArray.push(
+					this._getOneImage(images[i], targetHeight, targetWidth, imageHolder));
 			}
 
 			var labelWidth = (targetHeight - 0.01);
