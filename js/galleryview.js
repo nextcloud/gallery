@@ -79,7 +79,7 @@
 		/**
 		 * Sets up the controls and starts loading the gallery rows
 		 *
-		 * @param {string} albumPath
+		 * @param {string|null} albumPath
 		 */
 		viewAlbum: function (albumPath) {
 			albumPath = albumPath || '';
