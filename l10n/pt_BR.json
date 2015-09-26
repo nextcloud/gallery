@@ -1,6 +1,10 @@
 { "translations": {
     "Gallery" : "Galeria",
     "Pictures" : "Imagens",
+    "No pictures found" : "Nenhuma foto encontrada",
+    "Upload pictures in the files app to display them here" : "Fotos enviadas com o aplicativo de arquivos para serem exibidas aqui",
+    "Nothing in here" : "Nada aqui",
+    "No media files found in this folder" : "Não há arquivos de mídia encontrados nesta pasta",
     "Aborting preview. Could not find the file" : "Anulando visualização. Não foi possível encontrar o arquivo",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nenhuma instalação ownCloud (7 ou superior) foi encontrada em {remote}",
     "Invalid ownCloud url" : "Url invalida para ownCloud",

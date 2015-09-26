@@ -1,6 +1,10 @@
 { "translations": {
     "Gallery" : "Galleria",
     "Pictures" : "Kuvat",
+    "No pictures found" : "Kuvia ei löytynyt",
+    "Upload pictures in the files app to display them here" : "Lähetä kuvia tiedostosovelluksen kautta. Sen jälkeen kuvat näkyvät täällä",
+    "Nothing in here" : "Tyhjää täynnä",
+    "No media files found in this folder" : "Tästä kansiosta ei löytynyt mediatiedostoja",
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
     "Invalid ownCloud url" : "Virheellinen ownCloud-osoite",

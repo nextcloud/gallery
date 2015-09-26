@@ -3,6 +3,10 @@ OC.L10N.register(
     {
     "Gallery" : "Galleria",
     "Pictures" : "Immagini",
+    "No pictures found" : "Nessuna immagine trovata",
+    "Upload pictures in the files app to display them here" : "Carica le immagini nell'applicazione dei file per visualizzarle qui.",
+    "Nothing in here" : "Qui non c'è niente",
+    "No media files found in this folder" : "Nessun file multimediale trovato in questa cartella",
     "Aborting preview. Could not find the file" : "Anteprima interrotta. Impossibile trovare il file",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nessuna installazione di ownCloud (7 o superiore) trovata su {remote}",
     "Invalid ownCloud url" : "URL di ownCloud non valido",
