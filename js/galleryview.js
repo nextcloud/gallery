@@ -41,14 +41,17 @@
 					Gallery.showEmpty();
 				} else {
 					Gallery.showEmptyFolder();
+					this.hideButtons();
 					Gallery.currentAlbum = albumPath;
 					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
 					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+					Gallery.config.albumDesign = null;
 				}
 			} else {
-				this._setBackgroundColour();
 				this.viewAlbum(albumPath);
 			}
+
+			this._setBackgroundColour();
 		},
 
 		/**
@@ -196,6 +199,14 @@
 				this.loadVisibleRows.loading = showRows(album);
 				return this.loadVisibleRows.loading;
 			}
+		},
+
+		hideButtons: function () {
+			$('#loading-indicator').hide();
+			$('#album-info-button').hide();
+			$('#share-button').hide();
+			$('#sort-name-button').hide();
+			$('#sort-date-button').hide();
 		},
 
 		/**

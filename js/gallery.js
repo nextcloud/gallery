@@ -287,11 +287,6 @@
 				'No media files found in this folder') + '</p>';
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
-			$('#loading-indicator').hide();
-			$('#album-info-button').hide();
-			$('#share-button').hide();
-			$('#sort-name-button').hide();
-			$('#sort-date-button').hide();
 		},
 
 		/**
