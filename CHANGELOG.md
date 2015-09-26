@@ -1,3 +1,9 @@
+owncloud-galleryplus (14.1.0)
+* [security] Update DomPurify to fix a vulnerability in Firefox and to fix browser problems (@oparoz)
+* Fix problems with sub-album thumbnails on HighDPI screens owncloud/gallery#377 (@oparoz)
+* Fix ordering of thumbnails in sub-albums owncloud/gallery#382(@oparoz)
+* Update the "no pictures found" landing page to be in line with Files owncloud/gallery#290 (@jancborchardt)
+
 owncloud-galleryplus (14.0.0)
 * [security] Sanitize markdown descriptions owncloud/gallery#295 (@oparoz/@LukasReschke)
 * [security] Send SVGs as text files on download endpoints owncloud/gallery#347 (@oparoz/@LukasReschke)
