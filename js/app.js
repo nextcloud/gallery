@@ -4,7 +4,7 @@ $(document).ready(function () {
 	Gallery.hideSearch();
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
-	Gallery.token = Gallery.utility.getRequestToken();
+	Gallery.token = Gallery.utility.getPublicToken();
 	Gallery.ieVersion = Gallery.utility.getIeVersion();
 
 	// The first thing to do is to detect if we're on IE
