@@ -31,11 +31,11 @@
 		 * @param {string} albumPath
 		 */
 		init: function (albumPath) {
+			// Only do it when the app is initialised
+			if (this.requestId === -1) {
+				this._initButtons();
+			}
 			if ($.isEmptyObject(Gallery.imageMap)) {
-				if (this.requestId === -1) {
-					$('#filelist-button').click(Gallery.switchToFilesView);
-					this.requestId = Math.random();
-				}
 				this.clear();
 				if (albumPath === '') {
 					Gallery.showEmpty();
@@ -46,18 +46,6 @@
 					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 				}
 			} else {
-				// Only do it when the app is initialised
-				if (this.requestId === -1) {
-					$('#filelist-button').click(Gallery.switchToFilesView);
-					$('#download').click(Gallery.download);
-					$('#share-button').click(Gallery.share);
-					Gallery.infoBox = new Gallery.InfoBox();
-					$('#album-info-button').click(Gallery.showInfo);
-					$('#sort-name-button').click(Gallery.sorter);
-					$('#sort-date-button').click(Gallery.sorter);
-					$('#save #save-button').click(Gallery.showSaveForm);
-					$('.save-form').submit(Gallery.saveForm);
-				}
 				this._setBackgroundColour();
 				this.viewAlbum(albumPath);
 			}
@@ -208,6 +196,25 @@
 				this.loadVisibleRows.loading = showRows(album);
 				return this.loadVisibleRows.loading;
 			}
+		},
+
+		/**
+		 * Adds all the click handlers to buttons the first time they appear in the interface
+		 *
+		 * @private
+		 */
+		_initButtons: function () {
+			$('#filelist-button').click(Gallery.switchToFilesView);
+			$('#download').click(Gallery.download);
+			$('#share-button').click(Gallery.share);
+			Gallery.infoBox = new Gallery.InfoBox();
+			$('#album-info-button').click(Gallery.showInfo);
+			$('#sort-name-button').click(Gallery.sorter);
+			$('#sort-date-button').click(Gallery.sorter);
+			$('#save #save-button').click(Gallery.showSaveForm);
+			$('.save-form').submit(Gallery.saveForm);
+
+			this.requestId = Math.random();
 		},
 
 		/**
