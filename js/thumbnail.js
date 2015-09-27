@@ -1,4 +1,4 @@
-/* global $, Gallery */
+/* global $, DOMPurify, Gallery */
 /**
  * A thumbnail is the actual image attached to the GalleryImage object
  *
@@ -136,8 +136,14 @@ function Thumbnail (fileId, square) {
 							};
 
 							if (thumb.status === 200) {
+								var imageData = preview.preview;
+								if (preview.mimetype === 'image/svg+xml') {
+									var pureSvg = DOMPurify.sanitize(window.atob(imageData));
+									imageData = window.btoa(pureSvg);
+								}
 								thumb.image.src =
-									'data:' + preview.mimetype + ';base64,' + preview.preview;
+									'data:' + preview.mimetype + ';base64,' +
+									imageData;
 							} else {
 								thumb.valid = false;
 								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
