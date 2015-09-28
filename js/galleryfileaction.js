@@ -37,6 +37,10 @@
 		register: function (mediaTypes) {
 			//console.log("enabledPreviewProviders: ", mediaTypes);
 			if (mediaTypes) {
+				// Remove SVG if the user is using an insecure browser (IE8-9)
+				if (window.galleryFileAction.features.indexOf('native_svg') > -1 && !window.btoa) {
+					mediaTypes.splice(mediaTypes.indexOf('image/svg+xml'), 1);
+				}
 				galleryFileAction.mediaTypes = mediaTypes;
 			}
 
