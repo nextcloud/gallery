@@ -9,6 +9,7 @@ script(
 	$_['appName'],
 	[
 		'app',
+		'share',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
@@ -28,12 +29,14 @@ script(
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
 		'vendor/image-scale/image-scale.min'
+
 	]
 );
 style(
 	$_['appName'],
 	[
 		'styles',
+		'share',
 		'mobile',
 		'github-markdown',
 		'slideshow',
