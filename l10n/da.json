@@ -1,6 +1,10 @@
 { "translations": {
     "Gallery" : "Galleri",
     "Pictures" : "Billeder",
+    "No pictures found" : "Ingen billeder fundet",
+    "Upload pictures in the files app to display them here" : "Upload billeder i fil-app'en for at få dem vist her",
+    "Nothing in here" : "Her er tomt",
+    "No media files found in this folder" : "Ingen mediefiler in denne mappe",
     "Aborting preview. Could not find the file" : "Forlader forhåndsvisning. Kunne ikke finde filen",
     "No ownCloud installation (7 or higher) found at {remote}" : "Der er ingen ownCloud-installation (7 eller højere) på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-URL",
