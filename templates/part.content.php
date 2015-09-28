@@ -9,7 +9,7 @@ script(
 	$_['appName'],
 	[
 		'app',
-		'share',
+		'vendor/owncloud/share',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
