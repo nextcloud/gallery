@@ -142,8 +142,7 @@ function Thumbnail (fileId, square) {
 									imageData = window.btoa(pureSvg);
 								}
 								thumb.image.src =
-									'data:' + preview.mimetype + ';base64,' +
-									imageData;
+									'data:' + preview.mimetype + ';base64,' + imageData;
 							} else {
 								thumb.valid = false;
 								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
