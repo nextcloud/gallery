@@ -351,7 +351,7 @@
 				if (link && linksAllowed) {
 					html += '<div id="link" class="linkShare">';
 					html += '<span class="icon-loading-small hidden"></span>';
-					html += '<input type="checkbox" name="linkCheckbox" id="linkCheckbox" value="1" /><label for="linkCheckbox">'+t('core', 'Share link')+'</label>';
+					html += '<input type="checkbox" class="checkbox checkbox--right" name="linkCheckbox" id="linkCheckbox" value="1" /><label for="linkCheckbox">'+t('core', 'Share link')+'</label>';
 					html += '<br />';
 
 					var defaultExpireMessage = '';
@@ -361,7 +361,7 @@
 
 					html += '<label for="linkText" class="hidden-visually">'+t('core', 'Link')+'</label>';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
-					html += '<input type="checkbox" name="showPassword" id="showPassword" value="1" style="display:none;" /><label for="showPassword" style="display:none;">'+t('core', 'Password protect')+'</label>';
+					html += '<input type="checkbox" class="checkbox checkbox--right" name="showPassword" id="showPassword" value="1" style="display:none;" /><label for="showPassword" style="display:none;">'+t('core', 'Password protect')+'</label>';
 					html += '<div id="linkPass">';
 					html += '<label for="linkPassText" class="hidden-visually">'+t('core', 'Password')+'</label>';
 					html += '<input id="linkPassText" type="password" placeholder="'+t('core', 'Choose a password for the public link')+'" />';
@@ -371,7 +371,7 @@
 					if (itemType === 'folder' && (possiblePermissions & OC.PERMISSION_CREATE) && publicUploadEnabled === 'yes') {
 						html += '<div id="allowPublicUploadWrapper" style="display:none;">';
 						html += '<span class="icon-loading-small hidden"></span>';
-						html += '<input type="checkbox" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' + ((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
+						html += '<input type="checkbox" class="checkbox checkbox--right" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' + ((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
 						html += '<label for="sharingDialogAllowPublicUpload">' + t('core', 'Allow editing') + '</label>';
 						html += '</div>';
 					}
@@ -386,7 +386,7 @@
 				}
 
 				html += '<div id="expiration">';
-				html += '<input type="checkbox" name="expirationCheckbox" id="expirationCheckbox" value="1" /><label for="expirationCheckbox">'+t('core', 'Set expiration date')+'</label>';
+				html += '<input type="checkbox" class="checkbox checkbox--right" name="expirationCheckbox" id="expirationCheckbox" value="1" /><label for="expirationCheckbox">'+t('core', 'Set expiration date')+'</label>';
 				html += '<label for="expirationDate" class="hidden-visually">'+t('core', 'Expiration')+'</label>';
 				html += '<input id="expirationDate" type="text" placeholder="'+t('core', 'Expiration date')+'" style="display:none; width:90%;" />';
 				html += '<em id="defaultExpireMessage">'+defaultExpireMessage+'</em>';
@@ -631,26 +631,26 @@
 					if (mailSend === '1') {
 						checked = 'checked';
 					}
-					html += '<label><input type="checkbox" name="mailNotification" class="mailNotification" ' + checked + ' />'+t('core', 'notify by email')+'</label> ';
+					html += '<label><input type="checkbox" class="checkbox checkbox--right" name="mailNotification" class="mailNotification" ' + checked + ' />'+t('core', 'notify by email')+'</label> ';
 				}
 				if (oc_appconfig.core.resharingAllowed && (possiblePermissions & OC.PERMISSION_SHARE)) {
-					html += '<label><input id="canShare-'+escapeHTML(shareWith)+'" type="checkbox" name="share" class="permissions" '+shareChecked+' data-permissions="'+OC.PERMISSION_SHARE+'" />'+t('core', 'can share')+'</label>';
+					html += '<label><input id="canShare-'+escapeHTML(shareWith)+'" type="checkbox" class="checkbox checkbox--right" name="share" class="permissions" '+shareChecked+' data-permissions="'+OC.PERMISSION_SHARE+'" />'+t('core', 'can share')+'</label>';
 				}
 				if (possiblePermissions & OC.PERMISSION_CREATE || possiblePermissions & OC.PERMISSION_UPDATE || possiblePermissions & OC.PERMISSION_DELETE) {
-					html += '<label><input id="canEdit-'+escapeHTML(shareWith)+'" type="checkbox" name="edit" class="permissions" '+editChecked+' />'+t('core', 'can edit')+'</label>';
+					html += '<label><input id="canEdit-'+escapeHTML(shareWith)+'" type="checkbox" class="checkbox checkbox--right" name="edit" class="permissions" '+editChecked+' />'+t('core', 'can edit')+'</label>';
 				}
 				if (shareType !== OC.Share.SHARE_TYPE_REMOTE) {
 					showCrudsButton = '<a href="#" class="showCruds"><img class="svg" alt="'+t('core', 'access control')+'" src="'+OC.imagePath('core', 'actions/triangle-s')+'"/></a>';
 				}
 				html += '<div class="cruds" style="display:none;">';
 				if (possiblePermissions & OC.PERMISSION_CREATE) {
-					html += '<label><input id="canCreate-' + escapeHTML(shareWith) + '" type="checkbox" name="create" class="permissions" ' + createChecked + ' data-permissions="' + OC.PERMISSION_CREATE + '"/>' + t('core', 'create') + '</label>';
+					html += '<label><input id="canCreate-' + escapeHTML(shareWith) + '" type="checkbox" class="checkbox checkbox--right" name="create" class="permissions" ' + createChecked + ' data-permissions="' + OC.PERMISSION_CREATE + '"/>' + t('core', 'create') + '</label>';
 				}
 				if (possiblePermissions & OC.PERMISSION_UPDATE) {
-					html += '<label><input id="canUpdate-' + escapeHTML(shareWith) + '" type="checkbox" name="update" class="permissions" ' + updateChecked + ' data-permissions="' + OC.PERMISSION_UPDATE + '"/>' + t('core', 'change') + '</label>';
+					html += '<label><input id="canUpdate-' + escapeHTML(shareWith) + '" type="checkbox" class="checkbox checkbox--right" name="update" class="permissions" ' + updateChecked + ' data-permissions="' + OC.PERMISSION_UPDATE + '"/>' + t('core', 'change') + '</label>';
 				}
 				if (possiblePermissions & OC.PERMISSION_DELETE) {
-					html += '<label><input id="canDelete-' + escapeHTML(shareWith) + '" type="checkbox" name="delete" class="permissions" ' + deleteChecked + ' data-permissions="' + OC.PERMISSION_DELETE + '"/>' + t('core', 'delete') + '</label>';
+					html += '<label><input id="canDelete-' + escapeHTML(shareWith) + '" type="checkbox" class="checkbox checkbox--right" name="delete" class="permissions" ' + deleteChecked + ' data-permissions="' + OC.PERMISSION_DELETE + '"/>' + t('core', 'delete') + '</label>';
 				}
 				html += '</div>';
 				html += '</li>';
