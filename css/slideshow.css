@@ -165,7 +165,7 @@
 	padding: 0 50px 3px;
 	text-align: center;
 	color: #fff;
-	text-shadow: 0 0 10px #333;
+	text-shadow: 1px 1px 4px #333, 1px -1px 4px #333, -1px 1px 4px #333,-1px -1px 4px #333;
 	font-size: 18px;
 	line-height: normal;
 	text-overflow: ellipsis;
