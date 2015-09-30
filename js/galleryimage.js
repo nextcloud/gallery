@@ -21,7 +21,7 @@
 		this.etag = etag;
 		this.thumbnail = null;
 		this.domDef = null;
-		this.domHeigth = null;
+		this.domHeight = null;
 	};
 
 	GalleryImage.prototype = {
@@ -76,8 +76,8 @@
 		 */
 		getDom: function (targetHeight) {
 			var image = this;
-			if (this.domDef === null || this.domHeigth !== targetHeight) {
-				this.domHeigth = targetHeight;
+			if (this.domDef === null || this.domHeight !== targetHeight) {
+				this.domHeight = targetHeight;
 				// img is a Thumbnail.image
 				this.domDef = this.getThumbnail(false).then(function (img) {
 					$(img).css({
