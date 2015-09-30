@@ -225,14 +225,6 @@ div.crumb.last a {
 	padding-left: 2em;
 }
 
-#dropdown {
-	top: 43px;
-	right: 0;
-	margin-right: 0;
-	border-bottom-right-radius: 0;
-	left: auto;
-}
-
 /*Original ribbon design by Comatosed
 http://www.bypeople.com/author/comatosed/*/
 .ribbon {
