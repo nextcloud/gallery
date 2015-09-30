@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Gallery" : "Galería",
     "Pictures" : "Imágenes",
+    "No pictures found" : "Ninguna imagen encontrada",
+    "Nothing in here" : "No hay nada aquí",
     "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
     "No ownCloud installation (7 or higher) found at {remote}" : "No se encontró una instalación de ownCloud (7 o mayor) en {remote}",
     "Invalid ownCloud url" : "URL de ownCloud inválida",
