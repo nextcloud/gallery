@@ -361,7 +361,7 @@
 
 					html += '<label for="linkText" class="hidden-visually">'+t('core', 'Link')+'</label>';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
-					html += '<input type="checkbox" class="checkbox checkbox--right" name="showPassword" id="showPassword" value="1" style="display:none;" /><label for="showPassword" style="display:none;">'+t('core', 'Password protect')+'</label>';
+					html += '<input type="checkbox" class="checkbox checkbox--right" name="showPassword" id="showPassword" value="1" /><label for="showPassword" style="display:none;">'+t('core', 'Password protect')+'</label>';
 					html += '<div id="linkPass">';
 					html += '<label for="linkPassText" class="hidden-visually">'+t('core', 'Password')+'</label>';
 					html += '<input id="linkPassText" type="password" placeholder="'+t('core', 'Choose a password for the public link')+'" />';
@@ -716,7 +716,6 @@
 			$('#linkText').slideDown(OC.menuSpeed);
 			$('#linkText').css('display','block');
 			if (oc_appconfig.core.enforcePasswordForPublicLink === false || password === null) {
-				$('#showPassword').show();
 				$('#showPassword+label').show();
 			}
 			if (password != null) {
@@ -732,7 +731,6 @@
 		hideLink:function() {
 			$('#linkText').slideUp(OC.menuSpeed);
 			$('#defaultExpireMessage').hide();
-			$('#showPassword').hide();
 			$('#showPassword+label').hide();
 			$('#linkPass').slideUp(OC.menuSpeed);
 			$('#emailPrivateLink #email').hide();
