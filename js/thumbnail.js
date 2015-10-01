@@ -1,4 +1,4 @@
-/* global $, Gallery */
+/* global $, DOMPurify, Gallery */
 /**
  * A thumbnail is the actual image attached to the GalleryImage object
  *
@@ -136,8 +136,13 @@ function Thumbnail (fileId, square) {
 							};
 
 							if (thumb.status === 200) {
+								var imageData = preview.preview;
+								if (preview.mimetype === 'image/svg+xml') {
+									var pureSvg = DOMPurify.sanitize(window.atob(imageData));
+									imageData = window.btoa(pureSvg);
+								}
 								thumb.image.src =
-									'data:' + preview.mimetype + ';base64,' + preview.preview;
+									'data:' + preview.mimetype + ';base64,' + imageData;
 							} else {
 								thumb.valid = false;
 								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
@@ -153,7 +158,7 @@ function Thumbnail (fileId, square) {
 		 * Returns the link to the media type icon
 		 *
 		 * Modern browsers get an SVG, older ones a PNG
-		 * 
+		 *
 		 * @param mimeType
 		 *
 		 * @returns {*|string}
