@@ -1,6 +1,10 @@
 { "translations": {
     "Gallery" : "Galéria",
     "Pictures" : "Képek",
+    "No pictures found" : "Nincsenek képek",
+    "Upload pictures in the files app to display them here" : "Tölts fel képeket az alkalmazással, hogy itt megjelenjenek",
+    "Nothing in here" : "Itt nincs semmi",
+    "No media files found in this folder" : "Ebben a mappában nincsenek média fájlok",
     "Aborting preview. Could not find the file" : "Előnézet megszakítása. Nem található a fájl",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nem található ownCloud telepítés (7 vagy nagyobb verzió) itt:  {remote}",
     "Invalid ownCloud url" : "Érvénytelen ownCloud webcím",
