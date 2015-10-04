@@ -59,6 +59,7 @@
 		 */
 		getNextRow: function (width) {
 			var numberOfThumbnailsToPreload = 6;
+			var buffer = 5;
 
 			/**
 			 * Add images to the row until it's full
