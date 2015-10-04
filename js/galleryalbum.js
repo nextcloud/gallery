@@ -72,7 +72,8 @@
 			 * @returns {$.Deferred<Gallery.Row>}
 			 */
 			var addRowElements = function (album, row, images) {
-				if ((album.viewedItems + 5) > album.preloadOffset) {
+				if ((album.viewedItems + buffer) > album.preloadOffset &&
+					(album.preloadOffset < images.length)) {
 					album._preload(numberOfThumbnailsToPreload);
 				}
 
