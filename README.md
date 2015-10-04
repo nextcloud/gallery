@@ -7,7 +7,7 @@ Media gallery for ownCloud which includes previews for all media types supported
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This version is for ownCloud 8.2. If you need the same app for older versions of ownCloud. Use Gallery+ from the app store.**
+**This version is for ownCloud 8.2. If you need the same app for older versions of ownCloud. Use [Gallery+](https://apps.owncloud.com/content/show.php/Gallery?content=169116) from the app store.**
 
 ![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
 ## Featuring
