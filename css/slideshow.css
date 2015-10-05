@@ -90,6 +90,7 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
 	filter: alpha(opacity=75);
 	opacity: .75;
+	transition: opacity 300ms;
 }
 
 #slideshow > .next, #slideshow > .previous {
