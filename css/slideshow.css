@@ -46,10 +46,8 @@
 }
 
 #slideshow.inactive > input,
-#slideshow.inactive > input:hover,
 #slideshow.inactive > .progress,
 #slideshow.inactive > .menu input,
-#slideshow.inactive > .menu input:hover,
 #slideshow.inactive > .name {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	filter: alpha(opacity=0);
@@ -92,7 +90,6 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
 	filter: alpha(opacity=75);
 	opacity: .75;
-	transition: opacity 300ms;
 }
 
 #slideshow > .next, #slideshow > .previous {
