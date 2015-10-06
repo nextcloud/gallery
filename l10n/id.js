@@ -3,6 +3,10 @@ OC.L10N.register(
     {
     "Gallery" : "Galeri",
     "Pictures" : "Gambar",
+    "No pictures found" : "Gambar tidak dtemukan",
+    "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
+    "Nothing in here" : "Tidak ada apapun disini",
+    "No media files found in this folder" : "Berkas media tidak ditemukan didalam folder ini",
     "Aborting preview. Could not find the file" : "Membatalkan pratinjau. Tidak dapat menemukan berkas.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Tidak ditemukan instalasi ownCloud (7 atau lebih tinggi) pada {remote}",
     "Invalid ownCloud url" : "URL ownCloud tidak sah",
