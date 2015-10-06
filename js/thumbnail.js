@@ -70,9 +70,9 @@ function Thumbnail (fileId, square) {
 				};
 
 				if (type === -1) {
-					icon = 'folder.svg';
+					icon = 'filetypes/folder';
 				}
-				thumb.image.src = OC.imagePath(Gallery.appName, icon);
+				thumb.image.src = OC.imagePath('core', icon);
 
 				Thumbnails.squareMap[type] = thumb;
 			}
