@@ -151,15 +151,15 @@
 		/**
 		 * Builds the album representation by placing 1 to 4 images on a grid
 		 *
-		 * @param {array<GalleryImage>} images
+		 * @param {Array<GalleryImage>} images
 		 * @param {number} targetHeight Each row has a specific height
 		 * @param {object} a
 		 *
-		 * @returns {$.Deferred<array>}
+		 * @returns {$.Deferred<Array>}
 		 * @private
 		 */
 		_getFourImages: function (images, targetHeight, a) {
-			var calcWidth = targetHeight / 2;
+			var calcWidth = targetHeight;
 			var targetWidth;
 			var imagesCount = images.length;
 			var def = new $.Deferred();
@@ -169,10 +169,14 @@
 
 			for (var i = 0; i < imagesCount; i++) {
 				targetWidth = calcWidth;
-				if (imagesCount === 2 || (imagesCount === 3 && i === 0)) {
-					targetWidth = calcWidth * 2;
+				// One picture filling the album
+				if (imagesCount === 1){
+					targetHeight = 2 * targetHeight;
 				}
-				targetWidth = targetWidth.toFixed(3);
+				// 2 bottom pictures out of 3, or 4 pictures have the size of a quarter of the album
+				if ((imagesCount === 3 && i !== 0) || imagesCount === 4) {
+					targetWidth = calcWidth / 2;
+				}
 
 				// Append the div first in order to not lose the order of images
 				var imageHolder = $('<div class="cropped">');
@@ -220,19 +224,15 @@
 		_fillSubAlbum: function (targetHeight, a) {
 			var album = this;
 
-			if (this.images.length > 1) {
+			if (this.images.length >= 1) {
 				this._getFourImages(this.images, targetHeight, a).fail(function (validImages) {
 					album.images = validImages;
 					album._fillSubAlbum(targetHeight, a);
 				});
-			} else if (this.images.length === 1) {
-				this._getOneImage(this.images[0], 2 * targetHeight, targetHeight,
-					a).fail(function () {
-					album.images = [];
-					album._showFolder(targetHeight, a);
-				});
 			} else {
-				this._showFolder(targetHeight, a);
+				var imageHolder = $('<div class="cropped">');
+				a.append(imageHolder);
+				this._showFolder(targetHeight, imageHolder);
 			}
 		},
 
@@ -240,17 +240,17 @@
 		 * Shows a folder icon in the album since we couldn't get any proper thumbnail
 		 *
 		 * @param {number} targetHeight
-		 * @param a
+		 * @param imageHolder
 		 * @private
 		 */
-		_showFolder: function (targetHeight, a) {
+		_showFolder: function (targetHeight, imageHolder) {
 			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/svg+xml',
 				Gallery.token);
 			var thumb = Thumbnails.getStandardIcon(-1);
 			image.thumbnail = thumb;
 			this.images.push(image);
 			thumb.loadingDeferred.done(function (img) {
-				a.append(img);
+				imageHolder.append(img);
 				img.height = (targetHeight - 2);
 				img.width = (targetHeight) - 2;
 			});
