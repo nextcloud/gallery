@@ -244,7 +244,7 @@
 		 * @private
 		 */
 		_showFolder: function (targetHeight, a) {
-			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/png',
+			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/svg+xml',
 				Gallery.token);
 			var thumb = Thumbnails.getStandardIcon(-1);
 			image.thumbnail = thumb;
