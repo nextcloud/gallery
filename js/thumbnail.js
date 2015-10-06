@@ -132,7 +132,8 @@ function Thumbnail (fileId, square) {
 							};
 							thumb.image.onerror = function () {
 								thumb.valid = false;
-								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
+								var icon = Thumbnails._getMimeIcon(preview.mimetype);
+								setTimeout(function(){ thumb.image.src = icon; }, 0);
 							};
 
 							if (thumb.status === 200) {
