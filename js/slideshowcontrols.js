@@ -168,6 +168,7 @@
 			this.container.children('.previous').click(makeCallBack(this._previous));
 			this.container.children('.exit').click(makeCallBack(this._exit));
 			this.container.children('.pause, .play').click(makeCallBack(this._playPauseToggle));
+			this.progressBar.click(makeCallBack(this._playPauseToggle));
 		},
 
 		/**
