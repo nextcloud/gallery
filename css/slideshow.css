@@ -46,8 +46,10 @@
 }
 
 #slideshow.inactive > input,
+#slideshow.inactive > input:hover,
 #slideshow.inactive > .progress,
 #slideshow.inactive > .menu input,
+#slideshow.inactive > .menu input:hover,
 #slideshow.inactive > .name {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	filter: alpha(opacity=0);
@@ -90,19 +92,23 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
 	filter: alpha(opacity=75);
 	opacity: .75;
+	transition: opacity 300ms;
 }
 
 #slideshow > .next, #slideshow > .previous {
-	top: 50%;
-	margin-top: -21px;
+	height: 100%;
+	top: 0;
+	margin-top: 0;
 }
-
 #slideshow > .next {
+	width: 80%;
 	right: 0;
+	background-position: right 10px center;
 }
-
 #slideshow > .previous {
+	width: 20%;
 	left: 0;
+	background-position: 10px center;
 }
 
 #slideshow > .exit {
