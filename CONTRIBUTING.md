@@ -1,16 +1,15 @@
 ## Bugs 
 
-### Short version
+### In short
 
-* Make sure you have installed and configured both ownCloud and Gallery
-* Make sure your issue was not reported before and that it isn't a [known issue](https://github.com/owncloud/gallery/blob/master/README.md#known-issues)
+* Make sure you have properly installed and configured both ownCloud and Gallery
+* Make sure your issue was not [reported](https://github.com/owncloud/gallery/issues) before and that it isn't a [known issue](https://github.com/owncloud/gallery/wiki/Known-issues)
 * Use the [**issue template**](https://raw.githubusercontent.com/owncloud/core/master/issue_template.md) when reporting issues.
 
-### Long version
+### Detailed explanation
 
-* Read the section in the README about [server and browser requirements](https://github.com/owncloud/gallery/blob/master/README.md#requirements)
-* Make sure you have disabled the original Pictures app
-* Read the [known issue](https://github.com/owncloud/gallery/blob/master/README.md#known-issues) section in the README
+* Read the section in the wiki about [server and browser requirements](https://github.com/owncloud/gallery/wiki/Requirements)
+* Read the [known issue](https://github.com/owncloud/gallery/wiki/Known-issues) section in the wiki
 * Get the latest version of the app from [the releases page](https://github.com/owncloud/gallery/releases)
 * [Check if they have already been reported](https://github.com/owncloud/gallery/issues)
 * Please search the existing issues first, it is likely that your issue was already reported or even fixed.
@@ -20,6 +19,26 @@
 * Report the issue using the [ownCloud template](https://raw.githubusercontent.com/owncloud/core/master/issue_template.md), it includes all the information we need to track down the issue.
 
 Help us maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
+
+### When reporting bugs
+
+* Enable debug mode by putting this at the bottom of **config/config.php**
+
+```
+DEFINE('DEBUG', true);
+```
+
+* Turn on debug level debug by adding **`loglevel" => 0,`** to your **config/config.php** and reproduce the problem
+* Check **data/owncloud.log**
+
+Please provide the following details so that your problem can be fixed:
+
+* **Owncloud log** (data/owncloud.log)
+* **Browser log** (Hit F12 to gain access)
+* ownCloud version
+* App version
+* Browser version
+* PHP version
 
 ## Contributing to Source Code
 
