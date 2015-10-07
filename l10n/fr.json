@@ -1,7 +1,7 @@
 { "translations": {
     "Gallery" : "Galerie",
     "Pictures" : "Images",
-    "No pictures found" : "Aucune photo trouvée",
+    "No pictures found" : "Aucune image trouvée",
     "Upload pictures in the files app to display them here" : "Ajoutez des photos dans l'application Fichiers pour qu'elles s’affichent ici",
     "Nothing in here" : "Il n'y a rien ici",
     "No media files found in this folder" : "Aucun fichier média trouvé dans ce dossier",
