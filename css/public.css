@@ -4,6 +4,10 @@ body {
 	width: 100%;
 }
 
+#content {
+	height: initial;
+}
+
 /* within #save */
 #save .save-form {
 	position: relative;
