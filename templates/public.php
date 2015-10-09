@@ -159,10 +159,10 @@ style(
 			</div>
 			<div id="emptycontent" class="hidden"></div>
 			<div id="loading-indicator" class="loading"></div>
-			<footer>
-				<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
-			</footer>
 		</div>
 	</div>
+	<footer>
+		<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
+	</footer>
 </div>
 
