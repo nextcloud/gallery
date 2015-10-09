@@ -197,7 +197,7 @@
 	height: 100%;
 }
 
-.icon-loading-dark {
+#slideshow .icon-loading-dark {
 	position: absolute !important;
 	top: 50%;
 	left: 0;
