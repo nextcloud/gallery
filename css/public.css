@@ -4,6 +4,12 @@ body {
 	width: 100%;
 }
 
+#content {
+	height: initial;
+	min-height: calc( 100vh - 120px );
+	overflow: hidden;
+}
+
 /* within #save */
 #save .save-form {
 	position: relative;

@@ -306,14 +306,6 @@
 		},
 
 		/**
-		 * Resets the height of the content div so that the spinner can be centred
-		 */
-		resetContentHeight: function () {
-			// 200 is the space required for the footer and the browser toolbar
-			$('#content').css("min-height", $(window).height() - 200);
-		},
-
-		/**
 		 * Creates a new slideshow using the images found in the current folder
 		 *
 		 * @param {Array} images

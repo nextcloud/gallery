@@ -16,9 +16,6 @@ $(document).ready(function () {
 			Gallery.utility.showIeWarning(Gallery.ieVersion);
 		}
 
-		// Needed to centre the spinner in some browsers
-		Gallery.resetContentHeight();
-
 		// Get the config, the files and initialise the slideshow
 		Gallery.showLoading();
 		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
@@ -69,7 +66,6 @@ $(document).ready(function () {
 			}
 			// This makes sure dropdowns will not be hidden after a window resize
 			if (windowHeight !== $(window).height()) {
-				Gallery.resetContentHeight();
 				infoContentContainer.css('max-height',
 					$(window).height() - Gallery.browserToolbarHeight);
 
