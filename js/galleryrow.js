@@ -85,12 +85,12 @@
 			this.domDef.width(this.width * scaleRatio);
 
 			// Resizes and scales all photowall elements to make them fit within the window's width
-			this.domDef.find('.item-container').each(function () {
+			this.domDef.find('a').each(function () {
 				// Necessary since DOM elements are not resized when CSS transform is used
 				$(this).css('width', $(this).data('width') * scaleRatio)
 					.css('height', $(this).data('height') * scaleRatio);
-				// This scales the anchors inside the item-container divs
-				$(this).children('a').css('transform-origin', 'left top')
+				// This scales the containers inside the anchors
+				$(this).children('.container').css('transform-origin', 'left top')
 					.css('-webkit-transform-origin', 'left top')
 					.css('-ms-transform-origin', 'left top')
 					.css('transform', 'scale(' + scaleRatio + ')')

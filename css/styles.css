@@ -87,11 +87,11 @@ div.crumb.last a {
 	margin-top: 2px;
 }
 
-#gallery .row .item-container:first-child {
+#gallery .row a:first-child {
 	margin-left: 4px;
 }
 
-#gallery .row > .item-container {
+#gallery .row > a {
 	position: relative;
 	display: inline-block;
 	height: auto;
@@ -100,8 +100,13 @@ div.crumb.last a {
 	vertical-align: top;
 }
 
-#gallery .row > .album-container > .album-loader,
-#gallery .row > .image-container > .image-loader{
+#gallery .row > a .container {
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+#gallery .row > a > .album-loader,
+#gallery .row > a > .image-loader {
 	position: absolute;
 	z-index: 11;
 	top: 0;
@@ -110,7 +115,7 @@ div.crumb.last a {
 	right: 0;
 }
 
-#gallery .item-container .album-label {
+#gallery .row > a > .album-label {
 	color: #fff;
 	position: absolute;
 	left: 0;
@@ -126,7 +131,7 @@ div.crumb.last a {
 	z-index: 11;
 }
 
-#gallery .item-container .image-label {
+#gallery .row > a > .image-label {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -139,12 +144,12 @@ div.crumb.last a {
 	word-break: break-all;
 }
 
-#gallery .item-container .album-label,
-#gallery .item-container .image-label {
+#gallery .row > a > .album-label,
+#gallery .row > a > .image-label {
 	background: rgba(0, 0, 0, 0.4);
 }
 
-#gallery .item-container .image-label .title {
+#gallery .row > a > .image-label .title {
 	display: inline-block;
 	color: #fff;
 	text-align: center;
@@ -156,12 +161,12 @@ div.crumb.last a {
 	text-overflow: ellipsis;
 }
 
-#gallery .item-container .image-label .title:hover {
+#gallery .row > a > .image-label .title:hover {
 	overflow: visible;
 	white-space: normal;
 }
 
-#gallery a.album > img {
+#gallery .row > a > .album > img {
 	max-width: 200px;
 	max-height: 200px;
 	position: relative;
@@ -169,27 +174,13 @@ div.crumb.last a {
 	margin: 1px;
 }
 
-#gallery a {
-	display: inline-block;
-	margin: 0;
-	position: relative;
-	vertical-align: top;
-	*display: inline;
-	zoom: 1;
-}
-
 /* make focus visible for keyboard users */
-#gallery a:focus,
-#gallery a.album:focus {
+#gallery .row > a:focus,
+#gallery .row > a > .album:focus {
 	opacity: .5;
 }
 
-#gallery a {
-	-webkit-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
-}
-
-#gallery a.image > img {
+#gallery .row > a .image > img {
 	max-height: 200px;
 }
 
@@ -200,7 +191,7 @@ div.crumb.last a {
 	transition: opacity 500ms;
 }
 
-#gallery a.album .cropped {
+#gallery .row > a .album .cropped {
 	position: relative;
 	float: left;
 	margin: 1px;
@@ -208,8 +199,8 @@ div.crumb.last a {
 	background-size: cover;
 }
 
-#gallery a.album .icon-loading,
-#gallery .image-container .icon-loading {
+#gallery .row > a .album .icon-loading,
+#gallery .row > a .icon-loading {
 	margin: auto;
 	position: absolute;
 	top: 0;

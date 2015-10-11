@@ -3,14 +3,14 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<div class="item-container album-container" ' +
-		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
-		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
+		'<a style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'data-width="{{targetWidth}}" data-height="{{targetHeight}}"' +
+		'href="{{targetPath}}">' +
 		'	<div class="album-loader loading"></div>' +
 		'	<span class="album-label">{{label}}</span>' +
-		'	<a class="album" href="{{targetPath}}" ' +
-		'	style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ></a>' +
-		'</div>';
+		'	<div class="album container" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" >' +
+		'	</div>' +
+		'</a>';
 
 	/**
 	 * Creates a new album object to store information about an album
@@ -70,7 +70,7 @@
 				this.domDef = $(albumElement);
 				this.loader = this.domDef.children('.album-loader');
 				this.loader.hide();
-				this.domDef.click(this._showLoader.bind(this));
+				this.domDef.click(this._openAlbum.bind(this));
 
 				// Define a if you don't want to set the style in the template
 				//a.width(targetHeight);
@@ -146,13 +146,14 @@
 		},
 
 		/**
-		 * Shows a loading animation
+		 * Call when the album is clicked on.
 		 *
 		 * @param event
 		 * @private
 		 */
-		_showLoader: function (event) {
+		_openAlbum: function (event) {
 			event.stopPropagation();
+			// show loading animation
 			this.loader.show();
 		},
 
@@ -268,16 +269,16 @@
 		 */
 		_fillSubAlbum: function (targetHeight) {
 			var album = this;
-			var a = this.domDef.children('a');
+			var subAlbum = this.domDef.children('.album');
 
 			if (this.images.length >= 1) {
-				this._getFourImages(this.images, targetHeight, a).fail(function (validImages) {
+				this._getFourImages(this.images, targetHeight, subAlbum).fail(function (validImages) {
 					album.images = validImages;
-					album._fillSubAlbum(targetHeight, a);
+					album._fillSubAlbum(targetHeight, subAlbum);
 				});
 			} else {
 				var imageHolder = $('<div class="cropped">');
-				a.append(imageHolder);
+				subAlbum.append(imageHolder);
 				this._showFolder(targetHeight, imageHolder);
 			}
 		},
