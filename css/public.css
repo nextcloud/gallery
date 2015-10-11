@@ -48,10 +48,3 @@ body {
 #gallery.hascontrols {
 	padding-bottom: 0;
 }
-
-#loading-indicator {
-	height: 32px;
-	width: 100%;
-	margin-top: 100px;
-	margin-bottom: 0;
-}
