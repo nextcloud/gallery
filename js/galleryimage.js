@@ -37,7 +37,7 @@
 		/**
 		 * Returns a reference to a loading Thumbnail.image
 		 *
-		 * @param {bool} square
+		 * @param {boolean} square
 		 *
 		 * @returns {jQuery.Deferred<Thumbnail.image>}
 		 */
