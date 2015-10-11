@@ -306,7 +306,6 @@
 		 * @private
 		 */
 		_isTransparent: function (mimeType) {
-			// TODO: Include fonts
 			return !(mimeType === 'image/jpeg'
 				|| mimeType === 'image/x-dcraw'
 				|| mimeType === 'application/font-sfnt'
