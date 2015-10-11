@@ -153,46 +153,41 @@
 
 				// Everything is still in sync, since no deferred calls have been placed yet
 
-				return album.getNextRow($(window).width()).then(function (row) {
+				var row = album.getRow($(window).width(), view.requestId);
+				var rowDom = row.getDom();
+				view.element.append(rowDom);
 
+				return album.fillNextRow(row).then(function () {
 					/**
 					 * At this stage, the row has a width and contains references to images based
 					 * on
 					 * information available when making the request, but this information may have
 					 * changed while we were receiving thumbnails for the row
 					 */
-
 					if (view.requestId === row.requestId) {
-						return row.getDom().then(function (dom) {
-
-							if (Gallery.currentAlbum !== path) {
-								view.loadVisibleRows.loading = null;
-								return; //throw away the row if the user has navigated away in the
-										// meantime
-							}
-							if (view.element.length === 1) {
-								Gallery.showNormal();
-							}
-
-							view.element.append(dom);
-
-							if (album.viewedItems < album.subAlbums.length + album.images.length &&
-								view.element.height() < targetHeight) {
-								return showRows(album);
-							}
-
-							// No more rows to load at the moment
+						if (Gallery.currentAlbum !== path) {
 							view.loadVisibleRows.loading = null;
-							$('#loading-indicator').hide();
-						}, function () {
-							// Something went wrong, so kill the loader
-							view.loadVisibleRows.loading = null;
-							$('#loading-indicator').hide();
-						});
+							return; //throw away the row if the user has navigated away in the
+									// meantime
+						}
+						if (view.element.length === 1) {
+							Gallery.showNormal();
+						}
+						if (album.viewedItems < album.subAlbums.length + album.images.length &&
+							view.element.height() < targetHeight) {
+							return showRows(album);
+						}
+						// No more rows to load at the moment
+						view.loadVisibleRows.loading = null;
+						$('#loading-indicator').hide();
+					} else {
+						// This is the safest way to do things
+						view.viewAlbum(Gallery.currentAlbum);
 					}
-					// This is the safest way to do things
-					view.viewAlbum(Gallery.currentAlbum);
-
+				}, function () {
+					// Something went wrong, so kill the loader
+					view.loadVisibleRows.loading = null;
+					$('#loading-indicator').hide();
 				});
 			};
 			if (this.element.height() < targetHeight) {
