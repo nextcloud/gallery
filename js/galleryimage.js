@@ -3,14 +3,13 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<div class="item-container image-container" ' +
-		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;">' +
+		'<a style="width: {{targetWidth}}px; height: {{targetHeight}}px;" href="">' +
 		'	<div class="image-loader loading"></div>' +
 		'	<span class="image-label">' +
 		'		<span class="title">{{label}}</span>' +
 		'	</span>' +
-		'	<a class="image" href="" data-path="{{path}}"></a>' +
-		'</div>';
+		'	<div class="image container" data-path="{{path}}"></div>' +
+		'</a>';
 
 	/**
 	 * Creates a new image object to store information about a media file
@@ -119,9 +118,8 @@
 					.attr('data-height', targetHeight);
 
 				var url = this._getLink();
-				var a = this.domDef.children('a');
-				a.attr('href', url)
-					.attr('data-path', this.path);
+				var image = this.domDef.children('.image');
+				this.domDef.attr('href', url);
 
 				// This will stretch wide images to make them reach targetHeight
 				$(img).css({
@@ -129,7 +127,9 @@
 					'height': targetHeight
 				});
 				img.alt = encodeURI(this.path);
-				a.append(img);
+				image.append(img);
+
+				this.domDef.click(this._openImage.bind(this));
 			}
 		},
 
@@ -168,6 +168,17 @@
 			}
 
 			return url;
+		},
+
+		/**
+		 * Call when the image is clicked on.
+		 *
+		 * @param event
+		 * @private
+		 */
+		_openImage: function (event) {
+			event.stopPropagation();
+			// click function for future use.
 		}
 	};
 
