@@ -100,7 +100,8 @@ div.crumb.last a {
 	vertical-align: top;
 }
 
-#gallery .row > .album-container > .album-loader {
+#gallery .row > .album-container > .album-loader,
+#gallery .row > .image-container > .image-loader{
 	position: absolute;
 	z-index: 11;
 	top: 0;
