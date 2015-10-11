@@ -279,12 +279,6 @@ http://www.bypeople.com/author/comatosed/*/
 	border-color: #bbb #bbb transparent #bbb;
 }
 
-#loading-indicator {
-	height: 32px;
-	width: 100%;
-	margin-bottom: 50px;
-}
-
 .icon-gallery {
 	background-image: url('../img/gallery-dark.svg');
 }

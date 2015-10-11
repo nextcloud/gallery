@@ -260,7 +260,6 @@
 			emptyContentElement.html(message);
 			emptyContentElement.removeClass('hidden');
 			$('#controls').addClass('hidden');
-			$('#loading-indicator').hide();
 		},
 
 		/**
