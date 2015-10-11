@@ -80,7 +80,6 @@
 			}
 
 			this.clear();
-			$('#loading-indicator').show();
 
 			if (albumPath !== Gallery.currentAlbum) {
 				this.loadVisibleRows.loading = false;
@@ -147,7 +146,6 @@
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
-					$('#loading-indicator').hide();
 					return;
 				}
 
@@ -179,7 +177,6 @@
 						}
 						// No more rows to load at the moment
 						view.loadVisibleRows.loading = null;
-						$('#loading-indicator').hide();
 					} else {
 						// This is the safest way to do things
 						view.viewAlbum(Gallery.currentAlbum);
@@ -187,7 +184,6 @@
 				}, function () {
 					// Something went wrong, so kill the loader
 					view.loadVisibleRows.loading = null;
-					$('#loading-indicator').hide();
 				});
 			};
 			if (this.element.height() < targetHeight) {
@@ -198,7 +194,6 @@
 		},
 
 		hideButtons: function () {
-			$('#loading-indicator').hide();
 			$('#album-info-button').hide();
 			$('#share-button').hide();
 			$('#sort-name-button').hide();

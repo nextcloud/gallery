@@ -99,5 +99,4 @@ style(
 </div>
 <div id="gallery" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
-<div id="loading-indicator" class="loading"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
