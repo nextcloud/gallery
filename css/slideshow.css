@@ -165,7 +165,7 @@
 	padding: 0 50px 3px;
 	text-align: center;
 	color: #fff;
-	text-shadow: 1px 1px 4px #333, 1px -1px 4px #333, -1px 1px 4px #333,-1px -1px 4px #333;
+	text-shadow: 1px 1px 4px #333, 1px -1px 4px #333, -1px 1px 4px #333, -1px -1px 4px #333;
 	font-size: 18px;
 	line-height: normal;
 	text-overflow: ellipsis;
@@ -183,13 +183,15 @@
 	border: 0;
 	padding: 1px 8px;
 	display: none;
-	position: relative;
+	position: absolute;
 	top: 0;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
 	filter: alpha(opacity=90);
 	opacity: .9;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
 
 #slideshow > .bigshotContainer {
