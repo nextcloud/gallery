@@ -38,7 +38,6 @@
 	height: 52px;
 	position: absolute;
 	z-index: 1100;
-	filter: alpha(opacity=50);
 	opacity: .5;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -48,7 +47,6 @@
 #slideshow.inactive > .progress,
 #slideshow.inactive > .menu input,
 #slideshow.inactive > .name {
-	filter: alpha(opacity=0);
 	opacity: 0;
 	/* slow fadeout, fadein will be 300ms again*/
 	-webkit-transition: opacity 3s;
@@ -85,7 +83,6 @@
 #slideshow > input:hover,
 #slideshow > .menu input:hover,
 #slideshow.inactive > .name:hover {
-	filter: alpha(opacity=75);
 	opacity: .75;
 }
 
@@ -122,7 +119,6 @@
 	right: 13px;
 	background-position: 0 100%;
 	width: 32px;
-	filter: alpha(opacity=50);
 	opacity: .5;
 	height: 0;
 	min-height: 0;
@@ -143,7 +139,6 @@
 	box-shadow: none;
 	width: 52px;
 	height: 52px;
-	filter: alpha(opacity=50);
 	opacity: .5;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -168,7 +163,6 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	filter: alpha(opacity=75);
 	opacity: .75;
 }
 
@@ -184,7 +178,6 @@
 	top: 0;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
-	filter: alpha(opacity=90);
 	opacity: .9;
 	left: 50%;
 	transform: translate(-50%, 0);

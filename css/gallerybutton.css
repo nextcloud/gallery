@@ -14,7 +14,6 @@
 }
 
 #controls .button.view-switcher img{
-	filter: alpha(opacity=30);
 	opacity: .3;
 }
 
@@ -26,7 +25,6 @@
 }
 
 #controls .button.view-switcher.gallery img{
-	filter: alpha(opacity=50);
 	opacity: .5;
 }
 
@@ -59,7 +57,6 @@
 .button.left-switch-button img,
 .button.right-switch-button img {
 	vertical-align: -3px;
-	filter: alpha(opacity=60);
 	opacity: 0.6;
 }
 
@@ -70,7 +67,6 @@
 }
 
 #controls .disabled-button img {
-	filter: alpha(opacity=25);
 	opacity: 0.25;
 }
 
