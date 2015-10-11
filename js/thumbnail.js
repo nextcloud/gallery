@@ -3,7 +3,7 @@
  * A thumbnail is the actual image attached to the GalleryImage object
  *
  * @param {number} fileId
- * @param {bool} square
+ * @param {boolean} square
  * @constructor
  */
 function Thumbnail (fileId, square) {
@@ -28,7 +28,7 @@ function Thumbnail (fileId, square) {
 		 * Retrieves the thumbnail linked to the given fileID
 		 *
 		 * @param {number} fileId
-		 * @param {bool} square
+		 * @param {boolean} square
 		 *
 		 * @returns {Thumbnail}
 		 */
@@ -84,7 +84,7 @@ function Thumbnail (fileId, square) {
 		 * Loads thumbnails in batch, using EventSource
 		 *
 		 * @param {Array} ids
-		 * @param {bool} square
+		 * @param {boolean} square
 		 *
 		 * @returns {{}}
 		 */

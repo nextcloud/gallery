@@ -310,7 +310,7 @@
 		 *
 		 * @param {Array} images
 		 * @param {string} startImage
-		 * @param {bool} autoPlay
+		 * @param {boolean} autoPlay
 		 *
 		 * @returns {boolean}
 		 */
@@ -498,7 +498,7 @@
 		 * @param {string}token
 		 * @param {string}owner
 		 * @param {string}name
-		 * @param {bool} isProtected
+		 * @param {boolean} isProtected
 		 * @private
 		 */
 		_saveToOwnCloud: function (remote, token, owner, name, isProtected) {

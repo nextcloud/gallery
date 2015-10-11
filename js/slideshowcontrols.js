@@ -54,7 +54,7 @@
 		 * Updates the controls
 		 *
 		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
-		 * @param {bool} autoPlay
+		 * @param {boolean} autoPlay
 		 */
 		update: function (images, autoPlay) {
 			this.images = images;
@@ -107,7 +107,7 @@
 		 * Updates the private variables in case of problems loading an image
 		 *
 		 * @param {Array} images
-		 * @param {bool} errorLoadingImage
+		 * @param {boolean} errorLoadingImage
 		 */
 		updateControls: function (images, errorLoadingImage) {
 			this.images = images;
