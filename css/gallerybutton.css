@@ -39,7 +39,6 @@
 .button.left-switch-button img,
 .button.right-switch-button img {
 	vertical-align: -3px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
 	opacity: 0.6;
 }
@@ -50,7 +49,6 @@
 }
 
 #controls .disabled-button img {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
 	filter: alpha(opacity=25);
 	opacity: 0.25;
 }
