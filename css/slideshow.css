@@ -132,8 +132,7 @@
 #slideshow > .menu {
 	position: relative;
 	z-index: 1100;
-	display: table;
-	margin: 0 auto;
+	right: 50px;
 }
 
 #slideshow .menu .menuItem {
