@@ -183,13 +183,18 @@ div.crumb.last a {
 	opacity: .5;
 }
 
+#gallery a {
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
 #gallery a.image > img {
 	max-height: 200px;
 }
 
 #gallery .cropped,
 #gallery .row {
-	opacity: 1;
+	opacity: 0.5;
 	-webkit-transition: opacity 500ms;
 	transition: opacity 500ms;
 }
@@ -200,6 +205,16 @@ div.crumb.last a {
 	margin: 1px;
 	background-position: center;
 	background-size: cover;
+}
+
+#gallery a.album .icon-loading,
+#gallery .image-container .icon-loading {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
 
 #gallery > h2 {

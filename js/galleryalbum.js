@@ -8,7 +8,8 @@
 		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
 		'	<div class="album-loader loading"></div>' +
 		'	<span class="album-label">{{label}}</span>' +
-		'	<a class="album" href="{{targetPath}}"></a>' +
+		'	<a class="album" href="{{targetPath}}" ' +
+		'	style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ></a>' +
 		'</div>';
 
 	/**
@@ -33,9 +34,22 @@
 
 	Album.prototype = {
 		/**
-		 * Creates the album, which will include between 1 and 4 images
+		 * Returns a new album row
 		 *
-		 *    * Each album is also a link to open that folder
+		 * @param {number} width
+		 * @param requestId
+		 *
+		 * @returns {Gallery.Row}
+		 */
+		getRow: function (width, requestId) {
+			return new Gallery.Row(width, requestId);
+		},
+
+		/**
+		 * Creates the DOM element for the album and return it immediately so as to not block the
+		 * rendering of the rest of the interface
+		 *
+		 *    * Each album also contains a link to open that folder
 		 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
 		 *        natural size of 200x200
 		 *    * Thumbnails are checked first in order to make sure that we have something to show
@@ -45,35 +59,40 @@
 		 * @return {$} The album to be placed on the row
 		 */
 		getDom: function (targetHeight) {
-			var album = this;
-			return $.Deferred().resolve(function () {
-				if (!album._template) {
-					album._template = Handlebars.compile(TEMPLATE);
-				}
-				var template = album._template({
+			if (this.domDef === null) {
+				var template = Handlebars.compile(TEMPLATE);
+				var albumElement = template({
 					targetHeight: targetHeight,
 					targetWidth: targetHeight,
-					label: album.name,
-					targetPath: '#' + encodeURIComponent(album.path)
+					label: this.name,
+					targetPath: '#' + encodeURIComponent(this.path)
 				});
-				album.domDef = $(template);
-				album.loader = album.domDef.children('.album-loader');
-				album.loader.hide();
-				album.domDef.click(album._showLoader.bind(album));
+				this.domDef = $(albumElement);
+				this.loader = this.domDef.children('.album-loader');
+				this.loader.hide();
+				this.domDef.click(this._showLoader.bind(this));
 
-				album._fillSubAlbum(targetHeight);
+				// Define a if you don't want to set the style in the template
+				//a.width(targetHeight);
+				//a.height(targetHeight);
 
-				return album.domDef;
-			});
+				this._fillSubAlbum(targetHeight);
+			} else {
+				this.loader.hide();
+			}
+
+			return this.domDef;
 		},
 
 		/**
 		 * Fills the row with albums and images
 		 *
-		 * @param {number} width
+		 * @param {Gallery.Row} row The row to append elements to
+		 *
 		 * @returns {$.Deferred<Gallery.Row>}
 		 */
-		getNextRow: function (width) {
+		fillNextRow: function (row) {
+			var def = new $.Deferred();
 			var numberOfThumbnailsToPreload = 6;
 			var buffer = 5;
 
@@ -100,12 +119,13 @@
 					if (more && album.viewedItems < images.length) {
 						return addRowElements(album, row, images);
 					}
-					return row;
+					row.fit();
+					def.resolve(row);
 				});
 			};
 			var items = this.subAlbums.concat(this.images);
-			var row = new Gallery.Row(width, this.requestId);
-			return addRowElements(this, row, items);
+			addRowElements(this, row, items);
+			return def.promise();
 		},
 
 		/**
@@ -160,12 +180,16 @@
 
 			imageHolder.css("height", backgroundHeight)
 				.css("width", backgroundWidth);
+			var spinner = $('<div class="icon-loading">');
+			imageHolder.append(spinner);
 
 			// img is a Thumbnail.image, true means square thumbnails
 			return image.getThumbnail(true).then(function (img) {
 				if (image.thumbnail.valid) {
 					img.alt = '';
-					imageHolder.css("background-image", "url('" + img.src + "')");
+					spinner.remove();
+					imageHolder.css("background-image", "url('" + img.src + "')")
+						.css('opacity', 1);
 				}
 			});
 		},
@@ -272,9 +296,10 @@
 			image.thumbnail = thumb;
 			this.images.push(image);
 			thumb.loadingDeferred.done(function (img) {
-				imageHolder.append(img);
 				img.height = (targetHeight - 2);
 				img.width = (targetHeight) - 2;
+				imageHolder.append(img);
+				imageHolder.css('opacity', 1);
 			});
 		},
 
