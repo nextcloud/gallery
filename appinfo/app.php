@@ -63,8 +63,8 @@ Util::addTranslations('galleryplus');
 $request = $c->query('Request');
 if (isset($request->server['REQUEST_URI']) && !\OCP\App::isEnabled('gallery')) {
 	$url = $request->server['REQUEST_URI'];
-	if (preg_match('%index\.php/apps/files(/.*)?%', $url)
-		|| preg_match('%index\.php/s/\b(.*)\b(?<!/authenticate)$%', $url)
+	if (preg_match('%/apps/files(/.*)?%', $url)
+		|| preg_match('%^((?!/apps/).)*/s/\b(.*)\b(?<!/authenticate)$%', $url)
 	) {
 		// @codeCoverageIgnoreStart
 		/**
