@@ -26,29 +26,34 @@
 		 *
 		 *    * Each album is also a link to open that folder
 		 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
-		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
+		 *        natural size of 200x200
 		 *    * Thumbnails are checked first in order to make sure that we have something to show
 		 *
 		 * @param {number} targetHeight Each row has a specific height
 		 *
-		 * @return {a} The album to be placed on the row
+		 * @return {$} The album to be placed on the row
 		 */
 		getDom: function (targetHeight) {
 			var album = this;
-
-			return this._getThumbnail().then(function () {
-				var a = $('<a/>').addClass('album').attr('href',
-					'#' + encodeURIComponent(album.path));
-
-				a.append($('<span/>').addClass('album-label').text(album.name));
-
-				a.width(targetHeight);
-				a.height(targetHeight);
-
+			this.domDef = $.Deferred().resolve(function () {
+				var container = $('<div/>')
+					.addClass('item-container album-container')
+					.attr('data-width', targetHeight)
+					.attr('data-height', targetHeight);
+				var label = $('<span/>')
+					.addClass('album-label').text(album.name);
+				container.append(label);
+				var a = $('<a/>')
+					.addClass('album')
+					.attr('href', '#' + encodeURIComponent(album.path));
+				container.width(targetHeight);
+				container.height(targetHeight);
+				container.append(a);
 				album._fillSubAlbum(targetHeight, a);
 
-				return a;
+				return container;
 			});
+			return this.domDef;
 		},
 
 		/**
@@ -110,19 +115,6 @@
 		},
 
 		/**
-		 * Returns the first thumbnail it finds
-		 *
-		 * @returns {*}
-		 * @private
-		 */
-		_getThumbnail: function () {
-			if (this.images.length) {
-				return this.images[0].getThumbnail(true);
-			}
-			return this.subAlbums[0]._getThumbnail();
-		},
-
-		/**
 		 * Retrieves a thumbnail and adds it to the album representation
 		 *
 		 * Only attaches valid thumbnails to the album
@@ -136,21 +128,22 @@
 		 * @private
 		 */
 		_getOneImage: function (image, targetHeight, calcWidth, imageHolder) {
+			var backgroundHeight, backgroundWidth;
+
+			backgroundHeight = (targetHeight / 2);
+			backgroundWidth = calcWidth - 2.01;
+
+			// Adjust the size because of the margins around pictures
+			backgroundHeight -= 2;
+
+			imageHolder.css("height", backgroundHeight)
+				.css("width", backgroundWidth);
+
 			// img is a Thumbnail.image, true means square thumbnails
 			return image.getThumbnail(true).then(function (img) {
 				if (image.thumbnail.valid) {
-					var backgroundHeight, backgroundWidth;
 					img.alt = '';
-
-					backgroundHeight = (targetHeight / 2);
-					backgroundWidth = calcWidth - 2.01;
-
-					// Adjust the size because of the margins around pictures
-					backgroundHeight -= 2;
-
 					imageHolder.css("background-image", "url('" + img.src + "')");
-					imageHolder.css("height", backgroundHeight);
-					imageHolder.css("width", backgroundWidth);
 				}
 			});
 		},
@@ -188,9 +181,6 @@
 					this._getOneImage(images[i], targetHeight, targetWidth, imageHolder));
 			}
 
-			var labelWidth = (targetHeight - 0.01);
-			a.find('.album-label').width(labelWidth);
-
 			// This technique allows us to wait for all objects to be resolved before making a
 			// decision
 			$.when.apply($, thumbsArray).done(function () {
@@ -206,7 +196,7 @@
 				// At least one thumbnail could not be retrieved
 				if (fail) {
 					// Clean up the album
-					a.children().not('.album-label').remove();
+					a.children().remove();
 					// Send back the list of images which have thumbnails
 					def.reject(validImages);
 				}
@@ -238,9 +228,9 @@
 			} else if (this.images.length === 1) {
 				this._getOneImage(this.images[0], 2 * targetHeight, targetHeight,
 					a).fail(function () {
-						album.images = [];
-						album._showFolder(targetHeight, a);
-					});
+					album.images = [];
+					album._showFolder(targetHeight, a);
+				});
 			} else {
 				this._showFolder(targetHeight, a);
 			}
