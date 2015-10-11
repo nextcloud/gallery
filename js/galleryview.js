@@ -315,7 +315,7 @@
 		 *
 		 * @param {string} sortType name or date
 		 * @param {string} sortOrder asc or des
-		 * @param {bool} active determines if we're setting up the active sort button
+		 * @param {boolean} active determines if we're setting up the active sort button
 		 * @private
 		 */
 		_setSortButton: function (sortType, sortOrder, active) {
