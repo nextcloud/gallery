@@ -121,16 +121,7 @@
 						$(img).css('outline', $border + 'px solid ' + backgroundColour);
 					}
 
-					// We cannot use nice things on IE8
-					if ($('html').is('.ie8')) {
-						$(img).addClass('scale')
-							.attr('data-scale', 'best-fit-down')
-							.attr('data-align', 'center');
-						this.zoomablePreviewContainer.append(img);
-						$(img).imageScale();
-					} else {
-						this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
-					}
+					this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
 
 					this._setUrl(image.path);
 					this.controls.show(currentImageId);
