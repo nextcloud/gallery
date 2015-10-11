@@ -198,6 +198,10 @@ $(document).ready(function () {
 		return true;
 	}
 
+	if ($('html').is('.ie8')) {
+		return true; //deactivate in IE8
+	}
+
 	window.galleryFileAction.scrollContainer = $('#app-content');
 	if ($('#isPublic').val()) {
 		window.galleryFileAction.scrollContainer = $(window);
