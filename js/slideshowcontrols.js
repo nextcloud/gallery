@@ -301,6 +301,7 @@
 		 * @private
 		 */
 		_next: function () {
+			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
 
@@ -318,6 +319,7 @@
 		 * @private
 		 */
 		_previous: function () {
+			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
 
