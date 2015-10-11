@@ -37,14 +37,12 @@ body {
 	border: none;
 	margin: 2px 4px !important;
 	right: 0;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 	opacity: .5;
 }
 
 #save-button-confirm:hover,
 #save-button-confirm:focus {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity=100);
 	opacity: 1;
 }
