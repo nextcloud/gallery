@@ -1,6 +1,16 @@
-/* global Gallery, Thumbnails, GalleryImage */
+/* global Handlebars, Gallery, Thumbnails, GalleryImage */
 (function ($, Gallery) {
 	"use strict";
+
+	var TEMPLATE =
+		'<div class="item-container album-container" ' +
+		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
+		'	<div class="album-loader loading"></div>' +
+		'	<span class="album-label">{{label}}</span>' +
+		'	<a class="album" href="{{targetPath}}"></a>' +
+		'</div>';
+
 	/**
 	 * Creates a new album object to store information about an album
 	 *
@@ -17,6 +27,7 @@
 		this.viewedItems = 0;
 		this.name = name;
 		this.domDef = null;
+		this.loader = null;
 		this.preloadOffset = 0;
 	};
 
@@ -35,25 +46,25 @@
 		 */
 		getDom: function (targetHeight) {
 			var album = this;
-			this.domDef = $.Deferred().resolve(function () {
-				var container = $('<div/>')
-					.addClass('item-container album-container')
-					.attr('data-width', targetHeight)
-					.attr('data-height', targetHeight);
-				var label = $('<span/>')
-					.addClass('album-label').text(album.name);
-				container.append(label);
-				var a = $('<a/>')
-					.addClass('album')
-					.attr('href', '#' + encodeURIComponent(album.path));
-				container.width(targetHeight);
-				container.height(targetHeight);
-				container.append(a);
-				album._fillSubAlbum(targetHeight, a);
+			return $.Deferred().resolve(function () {
+				if (!album._template) {
+					album._template = Handlebars.compile(TEMPLATE);
+				}
+				var template = album._template({
+					targetHeight: targetHeight,
+					targetWidth: targetHeight,
+					label: album.name,
+					targetPath: '#' + encodeURIComponent(album.path)
+				});
+				album.domDef = $(template);
+				album.loader = album.domDef.children('.album-loader');
+				album.loader.hide();
+				album.domDef.click(album._showLoader.bind(album));
 
-				return container;
+				album._fillSubAlbum(targetHeight);
+
+				return album.domDef;
 			});
-			return this.domDef;
 		},
 
 		/**
@@ -115,6 +126,17 @@
 		},
 
 		/**
+		 * Shows a loading animation
+		 *
+		 * @param event
+		 * @private
+		 */
+		_showLoader: function (event) {
+			event.stopPropagation();
+			this.loader.show();
+		},
+
+		/**
 		 * Retrieves a thumbnail and adds it to the album representation
 		 *
 		 * Only attaches valid thumbnails to the album
@@ -170,7 +192,7 @@
 			for (var i = 0; i < imagesCount; i++) {
 				targetWidth = calcWidth;
 				// One picture filling the album
-				if (imagesCount === 1){
+				if (imagesCount === 1) {
 					targetHeight = 2 * targetHeight;
 				}
 				// 2 bottom pictures out of 3, or 4 pictures have the size of a quarter of the album
@@ -218,11 +240,11 @@
 		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
 		 *
 		 * @param {number} targetHeight
-		 * @param a
 		 * @private
 		 */
-		_fillSubAlbum: function (targetHeight, a) {
+		_fillSubAlbum: function (targetHeight) {
 			var album = this;
+			var a = this.domDef.children('a');
 
 			if (this.images.length >= 1) {
 				this._getFourImages(this.images, targetHeight, a).fail(function (validImages) {
