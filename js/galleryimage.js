@@ -1,6 +1,17 @@
-/* global oc_requesttoken, Gallery, Thumbnails */
+/* global Handlebars, oc_requesttoken, Gallery, Thumbnails */
 (function ($, Gallery, oc_requesttoken) {
 	"use strict";
+
+	var TEMPLATE =
+		'<div class="item-container image-container" ' +
+		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
+		'	<span class="image-label">' +
+		'		<span class="title">{{label}}</span>' +
+		'	</span>' +
+		'	<a class="image" href="{{targetPath}}" data-path="{{path}}"></a>' +
+		'</div>';
+
 	/**
 	 * Creates a new image object to store information about a media file
 	 *
@@ -81,57 +92,47 @@
 			if (this.domDef === null || this.domHeight !== targetHeight) {
 				this.domHeight = targetHeight;
 				// img is a Thumbnail.image
-				this.domDef = this.getThumbnail(false).then(function (img) {
-					var container = $('<div/>')
-						.addClass('item-container image-container')
-						.css('width', targetHeight * image.thumbnail.ratio)
-						.css('height', targetHeight);
-					image._addLabel(container);
-
+				return this.getThumbnail(false).then(function (img) {
+					if (!image._template) {
+						image._template = Handlebars.compile(TEMPLATE);
+					}
 					var newWidth = Math.round(targetHeight * image.thumbnail.ratio);
-					container.attr('data-width', newWidth)
-						.attr('data-height', targetHeight);
-
 					var url = image._getLink();
-					var a = $('<a/>')
-						.addClass('image')
-						.attr('href', url)
-						.attr('data-path', image.path);
-
+					var template = image._template({
+						targetHeight: targetHeight,
+						targetWidth: newWidth,
+						label: OC.basename(image.path),
+						targetPath: url,
+						path: image.path
+					});
+					image.domDef = $(template);
+					image._addLabel();
 					// This will stretch wide images to make them reach targetHeight
 					$(img).css({
-						'width': targetHeight * image.thumbnail.ratio,
+						'width': newWidth,
 						'height': targetHeight
 					});
 					img.alt = encodeURI(image.path);
-					a.append(img);
-					container.append(a);
+					image.domDef.children('a').append(img);
 
-					return container;
+					return image.domDef;
 				});
 			}
-			return this.domDef;
+			return $.Deferred().resolve(this.domDef);
 		},
 
 		/**
 		 * Adds a label to the album
 		 *
-		 * @param container
 		 * @private
 		 */
-		_addLabel: function (container) {
-			var imageLabel = $('<span/>')
-				.addClass('image-label');
-			var imageTitle = $('<span/>')
-				.addClass('title').text(
-					OC.basename(this.path));
-			imageLabel.append(imageTitle);
-			container.hover(function () {
+		_addLabel: function () {
+			var imageLabel = this.domDef.children('.image-label');
+			this.domDef.hover(function () {
 				imageLabel.slideToggle(OC.menuSpeed);
 			}, function () {
 				imageLabel.slideToggle(OC.menuSpeed);
 			});
-			container.append(imageLabel);
 		},
 
 		/**
