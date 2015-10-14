@@ -63,7 +63,7 @@
 		 */
 		getDom: function () {
 			var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
-			var targetHeight = 4 + (this.targetHeight * scaleRatio);
+			var targetHeight = this.targetHeight * scaleRatio;
 			targetHeight = targetHeight.toFixed(3);
 			var row = $('<div/>').addClass('row');
 			/**
