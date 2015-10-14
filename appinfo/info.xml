@@ -30,12 +30,12 @@
 	</description>
 	<licence>AGPL</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
-	<version>14.2.0</version>
+	<version>14.3.0</version>
 	<namespace>Gallery</namespace>
 	<category>Multimedia</category>
 	<dependencies>
 		<php min-version="5.4" max-version="7"/>
-		<owncloud min-version="8.2" max-version="8.2.99"/>
+		<owncloud min-version="8.2" max-version="9.0.99"/>
 	</dependencies>
 	<default_enable />
 	<shipped>true</shipped>
