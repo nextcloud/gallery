@@ -1,117 +1,114 @@
-/* global Gallery */
+/* global Handlebars, Gallery */
 (function ($, OC, t, Gallery) {
 	"use strict";
+
+	var TEMPLATE =
+		'{{#each crumbs}}' +
+		'	<div class="crumb {{cssClass}}" data-dir="{{dir}}">' +
+		'	{{#if link}}' +
+		'		<a href="{{link}}">' +
+		'		{{#if img}}' +
+		'			{{#with img}}' +
+		'			<img title="{{title}}" src="{{imageSrc}}">' +
+		'			{{/with}}' +
+		'		{{else}}' +
+		'			{{name}}' +
+		'		{{/if}}' +
+		'		</a>' +
+		'	{{else}}' +
+		'		<span>{{name}}</span>' +
+		'	{{/if}}' +
+		'	</div>' +
+		'{{/each}}';
+
 	/**
 	 * Breadcrumbs that represent the path to the current album
 	 *
-	 * @todo We could speed things up when the window is resized by caching the size of crumbs and
-	 *     resizing the breadcrumb based on those values instead of rebuilding it from scratch
-	 *
-	 * @param {string} albumPath
 	 * @constructor
 	 */
-	var Breadcrumb = function (albumPath) {
+	var Breadcrumb = function () {
 		this.breadcrumbsElement = $('#breadcrumbs');
-		this.albumPath = albumPath;
 	};
 
 	Breadcrumb.prototype = {
+		breadcrumbs: [],
 		breadcrumbsElement: null,
+		ellipsis: null,
 		albumPath: null,
 		availableWidth: 0,
 
 		/**
-		 * Defines the maximum available width in which we can build the breadcrumb and builds it
+		 * Initialises the breadcrumbs for the current album
+		 *
+		 * @param {string} albumPath
+		 * @param {int} availableWidth
+		 */
+		init: function (albumPath, availableWidth) {
+			this.albumPath = albumPath;
+			this.availableWidth = availableWidth;
+			this.breadcrumbs = [];
+			if (!this._template) {
+				this._template = Handlebars.compile(TEMPLATE);
+			}
+			this._build();
+			this._resize(this.availableWidth);
+		},
+
+		/**
+		 * Defines the maximum available width in which we can build the breadcrumb and resizes it
 		 *
 		 * @param {int} availableWidth
 		 */
 		setMaxWidth: function (availableWidth) {
-			if (this.availableWidth !== availableWidth) {
+			if (this.availableWidth > availableWidth || this.ellipsis.is(":visible")) {
 				this.availableWidth = availableWidth;
-				this._build();
+				this._resize(this.availableWidth);
 			}
 		},
 
 		/**
-		 * Builds the breadcrumb
+		 * Builds the breadcrumbs array
 		 *
-		 * Shortens it when the path is too long
 		 * @private
 		 */
 		_build: function () {
-			var i, crumbs, path, currentAlbum, crumbElement;
-			var breadcrumbs = [];
-			this._clear();
+			var i, crumbs, name, path, currentAlbum;
 			var albumName = $('#content').data('albumname');
 			if (!albumName) {
-				albumName = t('gallery', 'Pictures');
+				albumName = t('gallery', 'Gallery');
 			}
 			path = '';
+			name = '';
 			crumbs = this.albumPath.split('/');
 			currentAlbum = crumbs.pop();
 
-			if (currentAlbum) {
-				// We first push the current folder
-				crumbElement = this._push(currentAlbum, false);
-				crumbElement.addClass('last');
+			// This adds the home button
+			this._addHome(albumName, currentAlbum);
+			// We always add a hidden ellipsis
+			this._pushCrumb('...', '', null, 'ellipsis');
 
-				// This builds the breadcrumbs
+			if (currentAlbum) {
+				// This builds the crumbs between home and the current folder
 				var crumbsLength = crumbs.length;
 				if (crumbsLength > 0) {
+					// We add all albums to the breadcrumbs array
 					for (i = 0; i < crumbsLength; i++) {
 						if (crumbs[i]) {
+							name = crumbs[i];
 							if (path) {
 								path += '/' + crumbs[i];
 							} else {
 								path += crumbs[i];
 							}
-							breadcrumbs.push({
-								name: crumbs[i],
-								path: path
-							});
+							this._pushCrumb(name, path, null, '');
 						}
 					}
-					this._addCrumbs(breadcrumbs);
 				}
+				// We finally push the current folder
+				this._pushCrumb(currentAlbum, '', null, 'last');
 			}
-			// This adds the home button
-			this._addHome(albumName, currentAlbum);
-		},
 
-		/**
-		 * Clears the breadcrumbs and its tooltip
-		 */
-		_clear: function () {
-			this.breadcrumbsElement.children().remove();
-		},
-
-		/**
-		 * Adds an element to the breadcrumb
-		 *
-		 * @param {string} name
-		 * @param {string|bool} link
-		 * @param img
-		 * @private
-		 */
-		_push: function (name, link, img) {
-			var crumb = $('<div/>');
-			crumb.addClass('crumb');
-			if (link !== false) {
-				link = '#' + encodeURIComponent(link);
-				var crumbLink = $('<a/>');
-				crumbLink.attr('href', link);
-				if (img) {
-					crumbLink.append(img);
-				} else {
-					crumbLink.text(name);
-				}
-				crumb.append(crumbLink);
-			} else {
-				crumb.html($('<span/>').text(name));
-			}
-			this.breadcrumbsElement.prepend(crumb);
-
-			return crumb;
+			this._render();
 		},
 
 		/**
@@ -122,48 +119,101 @@
 		 * @private
 		 */
 		_addHome: function (albumName, currentAlbum) {
-			var crumbImg = $('<img/>');
-			crumbImg.attr('src', OC.imagePath('core', 'places/home'));
-			crumbImg.attr('title', albumName);
-			var crumbElement = this._push('', '', crumbImg);
+			var crumbImg = {
+				imageSrc: OC.imagePath('core', 'places/home'),
+				title: albumName
+			};
+			var cssClass = 'home';
 			if (!currentAlbum) {
-				crumbElement.addClass('last');
+				cssClass += ' last';
 			}
+
+			this._pushCrumb('', '', crumbImg, cssClass);
 		},
 
 		/**
-		 * Adds all the elements located in between the home button and the last folder
+		 * Pushes crumb objects to the breadcrumbs array
 		 *
-		 * Shrinks the breadcrumb if there is not enough room
-		 *
-		 * @param {Array} crumbs
+		 * @param {string} name
+		 * @param {string|boolean} link
+		 * @param {Object} img
+		 * @param {string} cssClass
 		 * @private
 		 */
-		_addCrumbs: function (crumbs) {
-			var i, crumbElement;
+		_pushCrumb: function (name, link, img, cssClass) {
+			this.breadcrumbs.push({
+				name: name,
+				dir: link,
+				link: '#' + encodeURIComponent(link),
+				img: img,
+				cssClass: cssClass
+			});
+		},
+
+		/**
+		 * Renders the full breadcrumb based on crumbs we have collected
+		 *
+		 * @private
+		 */
+		_render: function () {
+			this.breadcrumbsElement.children().remove();
+
+			var breadcrumbs = this._template({
+				crumbs: this.breadcrumbs
+			});
+
+			this.breadcrumbsElement.append(breadcrumbs);
+		},
+
+		/**
+		 * Alters the breadcrumb to make it fit within the asked dimensions
+		 *
+		 * @param {int} availableWidth
+		 *
+		 * @private
+		 */
+		_resize: function (availableWidth) {
+			var crumbs = this.breadcrumbsElement.children();
 			var shorten = false;
 			var ellipsisPath = '';
+			var self = this;
+
+			// Hide everything first, so that we can check the width after adding each crumb
+			crumbs.hide();
 
 			// We go through the array in reverse order
-			for (i = crumbs.length; i >= 0; i--) {
-				if (crumbs[i]) {
-					crumbElement =
-						this._push(crumbs[i].name, crumbs[i].path);
-					if (shorten) {
-						crumbElement.hide();
-					}
-					// If we've reached the maximum width, we start hiding crumbs
-					if (this.breadcrumbsElement.width() > this.availableWidth) {
-						shorten = true;
-						crumbElement.hide();
-						ellipsisPath = crumbs[i].path;
-					}
+			var crumbsElement = crumbs.get().reverse();
+			$(crumbsElement).each(function () {
+				if ($(this).hasClass('home')) {
+					$(this).show();
+					return;
 				}
-			}
-			// If we had to hide crumbs, we'll add a pay to go to the parent folder
+				if ($(this).hasClass('ellipsis')) {
+					self.ellipsis = $(this);
+					return;
+				}
+				if (!shorten) {
+					$(this).show();
+				}
+
+				// If we've reached the maximum width, we start hiding crumbs
+				if (self.breadcrumbsElement.width() > availableWidth) {
+					shorten = true;
+					$(this).hide();
+					ellipsisPath = $(this).data('dir');
+				}
+			});
+
+			// If we had to hide crumbs, we add a way to go to the parent folder
 			if (shorten) {
-				crumbElement = this._push('...', ellipsisPath);
-				crumbElement.attr('title', ellipsisPath).tooltip({
+				this.ellipsis.show();
+
+				if (!ellipsisPath) {
+					ellipsisPath = OC.dirname(this.albumPath);
+				}
+
+				this.ellipsis.children('a').attr('href', '#' + encodeURIComponent(ellipsisPath));
+				this.ellipsis.attr('data-original-title', ellipsisPath).tooltip({
 					fade: true,
 					placement: 'bottom',
 					delay: {
