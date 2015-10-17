@@ -1,3 +1,4 @@
+/* global DOMPurify */
 (function ($, OC, OCA, t) {
 	"use strict";
 	/**
@@ -172,9 +173,7 @@
 						this.imageCache[url].reject(url);
 					}
 				}.bind(this);
-				if (mimeType === 'image/svg+xml' &&
-					!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image",
-						"1.1")) {
+				if (mimeType === 'image/svg+xml') {
 					image.src = this._getSVG(url);
 				} else {
 					image.src = url;
@@ -349,26 +348,17 @@
 		 */
 		_getSVG: function (source) {
 			var svgPreview = null;
-			if (window.btoa) {
+			// DOMPurify only works with IE10+ and we load SVGs in the IMG tag
+			if (window.btoa &&
+				document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image",
+					"1.1")) {
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open("GET", source, false);
 				xmlHttp.send(null);
 				if (xmlHttp.status === 200) {
-					if (xmlHttp.responseXML) {
-						// Has to be base64 encoded for Firefox
-						svgPreview =
-							"data:image/svg+xml;base64," + window.btoa(xmlHttp.responseText);
-					} else {
-						svgPreview = source;
-					}
+					var pureSvg = DOMPurify.sanitize(xmlHttp.responseText);
+					svgPreview = "data:image/svg+xml;base64," + window.btoa(pureSvg);
 				}
-			} else {
-				// This is exclusively for IE8
-				var message = t('gallery',
-					"<strong>Error!</strong> Your browser can't display SVG files.<br>" +
-					"Please use a more modern alternative");
-				this.showErrorNotification(message);
-				svgPreview = '/core/img/filetypes/image-vector.png';
 			}
 
 			return svgPreview;

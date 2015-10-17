@@ -1,4 +1,4 @@
-/* global $, Gallery */
+/* global $, DOMPurify, Gallery */
 /**
  * A thumbnail is the actual image attached to the GalleryImage object
  *
@@ -132,12 +132,18 @@ function Thumbnail (fileId, square) {
 							};
 							thumb.image.onerror = function () {
 								thumb.valid = false;
-								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
+								var icon = Thumbnails._getMimeIcon(preview.mimetype);
+								setTimeout(function(){ thumb.image.src = icon; }, 0);
 							};
 
 							if (thumb.status === 200) {
+								var imageData = preview.preview;
+								if (preview.mimetype === 'image/svg+xml') {
+									var pureSvg = DOMPurify.sanitize(window.atob(imageData));
+									imageData = window.btoa(pureSvg);
+								}
 								thumb.image.src =
-									'data:' + preview.mimetype + ';base64,' + preview.preview;
+									'data:' + preview.mimetype + ';base64,' + imageData;
 							} else {
 								thumb.valid = false;
 								thumb.image.src = Thumbnails._getMimeIcon(preview.mimetype);
@@ -160,9 +166,7 @@ function Thumbnail (fileId, square) {
 		 * @private
 		 */
 		_getMimeIcon: function (mimeType) {
-			// On <8.2, we can't use OC.MimeType.getIconUrl(mimeType)
-			var icon = OC.Util.replaceSVGIcon(
-				Gallery.config.mediaTypes[mimeType]);
+			var icon = OC.MimeType.getIconUrl(mimeType);
 			if (Gallery.ieVersion !== false) {
 				icon = icon.substr(0, icon.lastIndexOf(".")) + ".png";
 			}

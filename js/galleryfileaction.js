@@ -37,17 +37,20 @@
 		register: function (mediaTypes) {
 			//console.log("enabledPreviewProviders: ", mediaTypes);
 			if (mediaTypes) {
+				// Remove SVG if the user is using an insecure browser (IE8-9)
+				if (window.galleryFileAction.features.indexOf('native_svg') > -1 && !window.btoa) {
+					mediaTypes.splice(mediaTypes.indexOf('image/svg+xml'), 1);
+				}
 				galleryFileAction.mediaTypes = mediaTypes;
 			}
-
+			var i, mediaTypesLength = mediaTypes.length;
 			// We only want to create slideshows for supported media types
-			for (var i = 0, keys = Object.keys(galleryFileAction.mediaTypes); i <
-			keys.length; i++) {
+			for (i = 0; i < mediaTypesLength; i++) {
 				// Each click handler gets the same function and images array and
 				// is responsible to load the slideshow
-				OCA.Files.fileActions.register(keys[i], 'View', OC.PERMISSION_READ, '',
+				OCA.Files.fileActions.register(mediaTypes[i], 'View', OC.PERMISSION_READ, '',
 					galleryFileAction.onView);
-				OCA.Files.fileActions.setDefault(keys[i], 'View');
+				OCA.Files.fileActions.setDefault(mediaTypes[i], 'View');
 			}
 		},
 
@@ -100,7 +103,7 @@
 				var file = files[i];
 				// We only add images to the slideshow if we think we'll be able
 				// to generate previews for this media type
-				if (galleryFileAction.mediaTypes[file.mimetype]) {
+				if (galleryFileAction.mediaTypes.indexOf(file.mimetype) > -1) {
 					/* jshint camelcase: false */
 					var params = {
 						width: longEdge,

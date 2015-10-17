@@ -78,10 +78,13 @@ div.crumb.last a {
 }
 
 #gallery.hascontrols {
+	position: relative;
 	overflow: hidden;
 	text-align: justify;
 	top: 45px;
 	padding-bottom: 100px;
+	margin-bottom: 45px;
+	margin-top: 0;
 }
 
 #gallery .row {
@@ -223,14 +226,6 @@ div.crumb.last a {
 	font-weight: bold;
 	padding: 0.5em;
 	padding-left: 2em;
-}
-
-#dropdown {
-	top: 43px;
-	right: 0;
-	margin-right: 0;
-	border-bottom-right-radius: 0;
-	left: auto;
 }
 
 /*Original ribbon design by Comatosed

@@ -26,8 +26,7 @@ script(
 		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
-		'slideshowzoomablepreview',
-		'vendor/image-scale/image-scale.min'
+		'slideshowzoomablepreview'
 	]
 );
 style(
@@ -159,10 +158,10 @@ style(
 			</div>
 			<div id="emptycontent" class="hidden"></div>
 			<div id="loading-indicator" class="loading"></div>
-			<footer>
-				<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
-			</footer>
 		</div>
 	</div>
+	<footer>
+		<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
+	</footer>
 </div>
 

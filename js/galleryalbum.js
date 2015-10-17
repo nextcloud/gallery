@@ -59,6 +59,7 @@
 		 */
 		getNextRow: function (width) {
 			var numberOfThumbnailsToPreload = 6;
+			var buffer = 5;
 
 			/**
 			 * Add images to the row until it's full
@@ -72,7 +73,8 @@
 			 * @returns {$.Deferred<Gallery.Row>}
 			 */
 			var addRowElements = function (album, row, images) {
-				if ((album.viewedItems + 5) > album.preloadOffset) {
+				if ((album.viewedItems + buffer) > album.preloadOffset &&
+					(album.preloadOffset < images.length)) {
 					album._preload(numberOfThumbnailsToPreload);
 				}
 

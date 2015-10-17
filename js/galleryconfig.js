@@ -111,16 +111,16 @@
 		_setMediaTypes: function (mediaTypes) {
 			var supportedMediaTypes = [];
 			var mediaType = null;
-			var mediaTypesString = '';
-			for (var i = 0, keys = Object.keys(mediaTypes); i < keys.length; i++) {
-				mediaType = keys[i];
-				if (this._worksInCurrentBrowser(mediaType, 'image/svg+xml')) {
-					mediaTypesString += mediaType + ';';
-					supportedMediaTypes[mediaType] = mediaTypes[mediaType];
+			var i, mediaTypesLength = mediaTypes.length;
+			if (mediaTypesLength) {
+				for (i = 0; i < mediaTypesLength; i++) {
+					mediaType = mediaTypes[i];
+					if (this._worksInCurrentBrowser(mediaType, 'image/svg+xml')) {
+						supportedMediaTypes.push(mediaType);
+					}
 				}
 			}
-
-			this.cachedMediaTypesString = mediaTypesString.slice(0, -1);
+			this.cachedMediaTypesString = supportedMediaTypes.join(';');
 
 			return supportedMediaTypes;
 		},

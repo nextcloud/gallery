@@ -9,6 +9,7 @@ script(
 	$_['appName'],
 	[
 		'app',
+		'vendor/owncloud/share',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
@@ -26,14 +27,14 @@ script(
 		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
-		'slideshowzoomablepreview',
-		'vendor/image-scale/image-scale.min'
+		'slideshowzoomablepreview'
 	]
 );
 style(
 	$_['appName'],
 	[
 		'styles',
+		'share',
 		'mobile',
 		'github-markdown',
 		'slideshow',
