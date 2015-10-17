@@ -106,7 +106,7 @@ class PageControllerTest extends \Test\TestCase {
 
 	public function testIndexWithIncompatibleAppInstalled() {
 		// Message defined in the method itself
-		$message = 'You need to disable the Pictures app before being able to use the Gallery+ app';
+		$message = 'You need to disable the Gallery app before being able to use the Gallery+ app';
 		$redirectUrl = '/index.php/app/error';
 		$this->mockUrlToErrorPage(Http::STATUS_INTERNAL_SERVER_ERROR, $redirectUrl);
 
