@@ -90,7 +90,7 @@ class PageController extends Controller {
 		$appName = $this->appName;
 		if ($this->appManager->isInstalled('gallery')) {
 			$message =
-				'You need to disable the Pictures app before being able to use the Gallery+ app';
+				'You need to disable the Gallery app before being able to use the Gallery+ app';
 
 			return $this->htmlError($this->urlGenerator, $appName, new \Exception($message));
 		} else {

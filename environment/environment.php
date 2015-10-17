@@ -26,7 +26,7 @@ use OCP\Files\NotFoundException;
 /**
  * Builds the environment so that the services have access to the files and folders' owner
  *
- * @package OCA\Gallery\Environment
+ * @package OCA\GalleryPlus\Environment
  */
 class Environment {
 
