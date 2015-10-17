@@ -117,7 +117,7 @@ In your terminal go into the **owncloud/apps/** directory and then run the follo
 $ git clone https://github.com/interfasys/galleryplus.git
 ```
 
-Now you can activate it in the apps menu. It's called Gallery
+Now you can activate it in the apps menu. It's called Gallery+
 
 To update the app go inside you **owncloud/apps/galleryplus/** directory and type:
 ```

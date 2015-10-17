@@ -27,7 +27,7 @@ If using the phar, you'll be limited to unit and integration testing because it 
 
 #### Using the phar package
 
-Go to Gallery's root directory and type:
+Go to Gallery+'s root directory and type:
 
 `# wget http://codeception.com/codecept.phar .`
 
@@ -171,7 +171,7 @@ class PageCrudCest
 ?>
 ```
 
-I invite you to read the official documentation in order to understand the BDD style syntax used by Codeception and to discover all the useful commands you're going to be able to fire in order to test Gallery:
+I invite you to read the official documentation in order to understand the BDD style syntax used by Codeception and to discover all the useful commands you're going to be able to fire in order to test Gallery+:
 
 * [Testing WebServices](http://codeception.com/docs/10-WebServices)
 * [Acceptance Testing](http://codeception.com/docs/03-AcceptanceTests)

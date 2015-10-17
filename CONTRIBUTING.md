@@ -3,7 +3,7 @@
 ### In short
 
 * Make sure you have properly installed and configured both ownCloud and Gallery+
-* Make sure your issue was not reported before [here](https://github.com/owncloud/gallery/issues) or [here](https://github.com/interfasys/galleryplus/issues) before and that it isn't a [known issue](https://github.com/owncloud/gallery/wiki/Known-issues)
+* Make sure your issue was not reported [here](https://github.com/owncloud/gallery/issues) or [here](https://github.com/interfasys/galleryplus/issues) before and that it isn't a [known issue](https://github.com/owncloud/gallery/wiki/Known-issues)
 * Use the [**issue template**](https://raw.githubusercontent.com/owncloud/core/master/issue_template.md) when reporting issues.
 
 ### Detailed explanation
