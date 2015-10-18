@@ -9,6 +9,7 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
+		this.breadcrumb = new Gallery.Breadcrumb();
 	};
 
 	View.prototype = {
@@ -43,8 +44,8 @@
 					Gallery.showEmptyFolder();
 					this.hideButtons();
 					Gallery.currentAlbum = albumPath;
-					this.breadcrumb = new Gallery.Breadcrumb(albumPath);
-					this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+					var availableWidth = $(window).width() - Gallery.buttonsWidth;
+					this.breadcrumb.init(albumPath, availableWidth);
 					Gallery.config.albumDesign = null;
 				}
 			} else {
@@ -229,7 +230,7 @@
 		},
 
 		/**
-		 * Sets up all the buttons of the interface
+		 * Sets up all the buttons of the interface and the breadcrumbs
 		 *
 		 * @param {string} albumPath
 		 * @private
@@ -238,8 +239,8 @@
 			this._shareButtonSetup(albumPath);
 			this._infoButtonSetup();
 
-			this.breadcrumb = new Gallery.Breadcrumb(albumPath);
-			this.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
+			var availableWidth = $(window).width() - Gallery.buttonsWidth;
+			this.breadcrumb.init(albumPath, availableWidth);
 
 			$('#sort-name-button').show();
 			$('#sort-date-button').show();
@@ -315,7 +316,7 @@
 		 *
 		 * @param {string} sortType name or date
 		 * @param {string} sortOrder asc or des
-		 * @param {bool} active determines if we're setting up the active sort button
+		 * @param {boolean} active determines if we're setting up the active sort button
 		 * @private
 		 */
 		_setSortButton: function (sortType, sortOrder, active) {

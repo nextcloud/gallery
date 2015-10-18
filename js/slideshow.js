@@ -26,7 +26,7 @@
 		/**
 		 * Initialises the slideshow
 		 *
-		 * @param {bool} autoPlay
+		 * @param {boolean} autoPlay
 		 * @param {number} interval
 		 * @param {Array} features
 		 */
@@ -76,7 +76,7 @@
 		 * Refreshes the slideshow's data
 		 *
 		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
-		 * @param {bool} autoPlay
+		 * @param {boolean} autoPlay
 		 */
 		setImages: function (images, autoPlay) {
 			this._hideImage();
@@ -306,7 +306,6 @@
 		 * @private
 		 */
 		_isTransparent: function (mimeType) {
-			// TODO: Include fonts
 			return !(mimeType === 'image/jpeg'
 				|| mimeType === 'image/x-dcraw'
 				|| mimeType === 'application/font-sfnt'

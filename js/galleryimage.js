@@ -1,6 +1,17 @@
-/* global oc_requesttoken, Gallery, Thumbnails */
+/* global Handlebars, oc_requesttoken, Gallery, Thumbnails */
 (function ($, Gallery, oc_requesttoken) {
 	"use strict";
+
+	var TEMPLATE =
+		'<div class="item-container image-container" ' +
+		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
+		'	<span class="image-label">' +
+		'		<span class="title">{{label}}</span>' +
+		'	</span>' +
+		'	<a class="image" href="{{targetPath}}" data-path="{{path}}"></a>' +
+		'</div>';
+
 	/**
 	 * Creates a new image object to store information about a media file
 	 *
@@ -37,7 +48,7 @@
 		/**
 		 * Returns a reference to a loading Thumbnail.image
 		 *
-		 * @param {bool} square
+		 * @param {boolean} square
 		 *
 		 * @returns {jQuery.Deferred<Thumbnail.image>}
 		 */
@@ -58,15 +69,17 @@
 		getThumbnailWidth: function () {
 			// img is a Thumbnail.image
 			return this.getThumbnail(false).then(function (img) {
+				var width = 0;
 				if (img) {
-					return img.originalWidth;
+					width = img.originalWidth;
 				}
-				return 0;
+
+				return width;
 			});
 		},
 
 		/**
-		 * Creates the a and img element in the DOM
+		 * Creates the container, the a and img elements in the DOM
 		 *
 		 * Each image is also a link to start the full screen slideshow
 		 *
@@ -79,40 +92,70 @@
 			if (this.domDef === null || this.domHeight !== targetHeight) {
 				this.domHeight = targetHeight;
 				// img is a Thumbnail.image
-				this.domDef = this.getThumbnail(false).then(function (img) {
+				return this.getThumbnail(false).then(function (img) {
+					if (!image._template) {
+						image._template = Handlebars.compile(TEMPLATE);
+					}
+					var newWidth = Math.round(targetHeight * image.thumbnail.ratio);
+					var url = image._getLink();
+					var template = image._template({
+						targetHeight: targetHeight,
+						targetWidth: newWidth,
+						label: OC.basename(image.path),
+						targetPath: url,
+						path: image.path
+					});
+					image.domDef = $(template);
+					image._addLabel();
+					// This will stretch wide images to make them reach targetHeight
 					$(img).css({
-						'height': targetHeight,
-						'width': targetHeight * image.thumbnail.ratio
+						'width': newWidth,
+						'height': targetHeight
 					});
 					img.alt = encodeURI(image.path);
-					var url = '#' + encodeURIComponent(image.path);
+					image.domDef.children('a').append(img);
 
-					if (!image.thumbnail.valid) {
-						var params = {
-							c: image.etag,
-							requesttoken: oc_requesttoken
-						};
-						url = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
-							params);
-					}
-					var a = $('<a/>').addClass('image').attr('href', url).attr('data-path',
-						image.path);
-
-					var imageLabel = $('<span/>').addClass('image-label');
-					var imageTitle = $('<span/>').addClass('title').text(
-						OC.basename(image.path));
-					imageLabel.append(imageTitle);
-					a.hover(function () {
-						imageLabel.slideToggle(OC.menuSpeed);
-					}, function () {
-						imageLabel.slideToggle(OC.menuSpeed);
-					});
-					a.append(imageLabel);
-					a.append(img);
-					return a;
+					return image.domDef;
 				});
 			}
-			return this.domDef;
+			return $.Deferred().resolve(this.domDef);
+		},
+
+		/**
+		 * Adds a label to the album
+		 *
+		 * @private
+		 */
+		_addLabel: function () {
+			var imageLabel = this.domDef.children('.image-label');
+			this.domDef.hover(function () {
+				imageLabel.slideToggle(OC.menuSpeed);
+			}, function () {
+				imageLabel.slideToggle(OC.menuSpeed);
+			});
+		},
+
+		/**
+		 * Generates the link for the click action of the image
+		 *
+		 * @returns {string}
+		 * @private
+		 */
+		_getLink: function () {
+			var url = '#' + encodeURIComponent(this.path);
+			if (!this.thumbnail.valid) {
+				var params = {
+					c: this.etag,
+					requesttoken: oc_requesttoken
+				};
+				url = Gallery.utility.buildGalleryUrl(
+					'files',
+					'/download/' + this.fileId,
+					params
+				);
+			}
+
+			return url;
 		}
 	};
 

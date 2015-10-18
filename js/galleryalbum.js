@@ -1,6 +1,16 @@
-/* global Gallery, Thumbnails, GalleryImage */
+/* global Handlebars, Gallery, Thumbnails, GalleryImage */
 (function ($, Gallery) {
 	"use strict";
+
+	var TEMPLATE =
+		'<div class="item-container album-container" ' +
+		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
+		'	<div class="album-loader loading"></div>' +
+		'	<span class="album-label">{{label}}</span>' +
+		'	<a class="album" href="{{targetPath}}"></a>' +
+		'</div>';
+
 	/**
 	 * Creates a new album object to store information about an album
 	 *
@@ -17,6 +27,7 @@
 		this.viewedItems = 0;
 		this.name = name;
 		this.domDef = null;
+		this.loader = null;
 		this.preloadOffset = 0;
 	};
 
@@ -26,28 +37,33 @@
 		 *
 		 *    * Each album is also a link to open that folder
 		 *    * An album has a natural size of 200x200 and is comprised of 4 thumbnails which have a
-		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
+		 *        natural size of 200x200
 		 *    * Thumbnails are checked first in order to make sure that we have something to show
 		 *
 		 * @param {number} targetHeight Each row has a specific height
 		 *
-		 * @return {a} The album to be placed on the row
+		 * @return {$} The album to be placed on the row
 		 */
 		getDom: function (targetHeight) {
 			var album = this;
+			return $.Deferred().resolve(function () {
+				if (!album._template) {
+					album._template = Handlebars.compile(TEMPLATE);
+				}
+				var template = album._template({
+					targetHeight: targetHeight,
+					targetWidth: targetHeight,
+					label: album.name,
+					targetPath: '#' + encodeURIComponent(album.path)
+				});
+				album.domDef = $(template);
+				album.loader = album.domDef.children('.album-loader');
+				album.loader.hide();
+				album.domDef.click(album._showLoader.bind(album));
 
-			return this._getThumbnail().then(function () {
-				var a = $('<a/>').addClass('album').attr('href',
-					'#' + encodeURIComponent(album.path));
+				album._fillSubAlbum(targetHeight);
 
-				a.append($('<span/>').addClass('album-label').text(album.name));
-
-				a.width(targetHeight);
-				a.height(targetHeight);
-
-				album._fillSubAlbum(targetHeight, a);
-
-				return a;
+				return album.domDef;
 			});
 		},
 
@@ -110,16 +126,14 @@
 		},
 
 		/**
-		 * Returns the first thumbnail it finds
+		 * Shows a loading animation
 		 *
-		 * @returns {*}
+		 * @param event
 		 * @private
 		 */
-		_getThumbnail: function () {
-			if (this.images.length) {
-				return this.images[0].getThumbnail(true);
-			}
-			return this.subAlbums[0]._getThumbnail();
+		_showLoader: function (event) {
+			event.stopPropagation();
+			this.loader.show();
 		},
 
 		/**
@@ -136,21 +150,22 @@
 		 * @private
 		 */
 		_getOneImage: function (image, targetHeight, calcWidth, imageHolder) {
+			var backgroundHeight, backgroundWidth;
+
+			backgroundHeight = (targetHeight / 2);
+			backgroundWidth = calcWidth - 2.01;
+
+			// Adjust the size because of the margins around pictures
+			backgroundHeight -= 2;
+
+			imageHolder.css("height", backgroundHeight)
+				.css("width", backgroundWidth);
+
 			// img is a Thumbnail.image, true means square thumbnails
 			return image.getThumbnail(true).then(function (img) {
 				if (image.thumbnail.valid) {
-					var backgroundHeight, backgroundWidth;
 					img.alt = '';
-
-					backgroundHeight = (targetHeight / 2);
-					backgroundWidth = calcWidth - 2.01;
-
-					// Adjust the size because of the margins around pictures
-					backgroundHeight -= 2;
-
 					imageHolder.css("background-image", "url('" + img.src + "')");
-					imageHolder.css("height", backgroundHeight);
-					imageHolder.css("width", backgroundWidth);
 				}
 			});
 		},
@@ -158,15 +173,15 @@
 		/**
 		 * Builds the album representation by placing 1 to 4 images on a grid
 		 *
-		 * @param {array<GalleryImage>} images
+		 * @param {Array<GalleryImage>} images
 		 * @param {number} targetHeight Each row has a specific height
 		 * @param {object} a
 		 *
-		 * @returns {$.Deferred<array>}
+		 * @returns {$.Deferred<Array>}
 		 * @private
 		 */
 		_getFourImages: function (images, targetHeight, a) {
-			var calcWidth = targetHeight / 2;
+			var calcWidth = targetHeight;
 			var targetWidth;
 			var imagesCount = images.length;
 			var def = new $.Deferred();
@@ -176,10 +191,14 @@
 
 			for (var i = 0; i < imagesCount; i++) {
 				targetWidth = calcWidth;
-				if (imagesCount === 2 || (imagesCount === 3 && i === 0)) {
-					targetWidth = calcWidth * 2;
+				// One picture filling the album
+				if (imagesCount === 1) {
+					targetHeight = 2 * targetHeight;
 				}
-				targetWidth = targetWidth.toFixed(3);
+				// 2 bottom pictures out of 3, or 4 pictures have the size of a quarter of the album
+				if ((imagesCount === 3 && i !== 0) || imagesCount === 4) {
+					targetWidth = calcWidth / 2;
+				}
 
 				// Append the div first in order to not lose the order of images
 				var imageHolder = $('<div class="cropped">');
@@ -187,9 +206,6 @@
 				thumbsArray.push(
 					this._getOneImage(images[i], targetHeight, targetWidth, imageHolder));
 			}
-
-			var labelWidth = (targetHeight - 0.01);
-			a.find('.album-label').width(labelWidth);
 
 			// This technique allows us to wait for all objects to be resolved before making a
 			// decision
@@ -206,7 +222,7 @@
 				// At least one thumbnail could not be retrieved
 				if (fail) {
 					// Clean up the album
-					a.children().not('.album-label').remove();
+					a.children().remove();
 					// Send back the list of images which have thumbnails
 					def.reject(validImages);
 				}
@@ -224,25 +240,21 @@
 		 * natural size of 200x200 The whole thing gets resized to match the targetHeight
 		 *
 		 * @param {number} targetHeight
-		 * @param a
 		 * @private
 		 */
-		_fillSubAlbum: function (targetHeight, a) {
+		_fillSubAlbum: function (targetHeight) {
 			var album = this;
+			var a = this.domDef.children('a');
 
-			if (this.images.length > 1) {
+			if (this.images.length >= 1) {
 				this._getFourImages(this.images, targetHeight, a).fail(function (validImages) {
 					album.images = validImages;
 					album._fillSubAlbum(targetHeight, a);
 				});
-			} else if (this.images.length === 1) {
-				this._getOneImage(this.images[0], 2 * targetHeight, targetHeight,
-					a).fail(function () {
-						album.images = [];
-						album._showFolder(targetHeight, a);
-					});
 			} else {
-				this._showFolder(targetHeight, a);
+				var imageHolder = $('<div class="cropped">');
+				a.append(imageHolder);
+				this._showFolder(targetHeight, imageHolder);
 			}
 		},
 
@@ -250,17 +262,17 @@
 		 * Shows a folder icon in the album since we couldn't get any proper thumbnail
 		 *
 		 * @param {number} targetHeight
-		 * @param a
+		 * @param imageHolder
 		 * @private
 		 */
-		_showFolder: function (targetHeight, a) {
-			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/png',
+		_showFolder: function (targetHeight, imageHolder) {
+			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/svg+xml',
 				Gallery.token);
 			var thumb = Thumbnails.getStandardIcon(-1);
 			image.thumbnail = thumb;
 			this.images.push(image);
 			thumb.loadingDeferred.done(function (img) {
-				a.append(img);
+				imageHolder.append(img);
 				img.height = (targetHeight - 2);
 				img.width = (targetHeight) - 2;
 			});

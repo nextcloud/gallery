@@ -38,7 +38,6 @@
 	height: 52px;
 	position: absolute;
 	z-index: 1100;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 	opacity: .5;
 	background-position: center center;
@@ -49,7 +48,6 @@
 #slideshow.inactive > .progress,
 #slideshow.inactive > .menu input,
 #slideshow.inactive > .name {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	filter: alpha(opacity=0);
 	opacity: 0;
 	/* slow fadeout, fadein will be 300ms again*/
@@ -87,7 +85,6 @@
 #slideshow > input:hover,
 #slideshow > .menu input:hover,
 #slideshow.inactive > .name:hover {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
 	filter: alpha(opacity=75);
 	opacity: .75;
 }
@@ -123,11 +120,11 @@
 	right: 13px;
 	background-position: 0 100%;
 	width: 32px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 	opacity: .5;
 	height: 0;
 	min-height: 0;
+	cursor: pointer;
 }
 
 #slideshow > .menu {
@@ -145,7 +142,6 @@
 	box-shadow: none;
 	width: 52px;
 	height: 52px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 	opacity: .5;
 	background-position: center center;
@@ -165,13 +161,13 @@
 	padding: 0 50px 3px;
 	text-align: center;
 	color: #fff;
-	text-shadow: 1px 1px 4px #333, 1px -1px 4px #333, -1px 1px 4px #333,-1px -1px 4px #333;
+	text-shadow: 1px 1px 4px #333, 1px -1px 4px #333, -1px 1px 4px #333, -1px -1px 4px #333;
 	font-size: 18px;
 	line-height: normal;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+	filter: alpha(opacity=75);
 	opacity: .75;
 }
 
@@ -183,13 +179,14 @@
 	border: 0;
 	padding: 1px 8px;
 	display: none;
-	position: relative;
+	position: absolute;
 	top: 0;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
 	filter: alpha(opacity=90);
 	opacity: .9;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
 
 #slideshow > .bigshotContainer {

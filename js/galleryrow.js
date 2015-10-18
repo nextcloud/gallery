@@ -11,11 +11,13 @@
 	var Row = function (targetWidth, requestId) {
 		this.targetWidth = targetWidth;
 		this.items = [];
-		this.width = 8; // 4px margin to start with
+		this.width = 4; // 4px margin to start with
 		this.requestId = requestId;
+		this.domDef = null;
 	};
 
 	Row.prototype = {
+		targetHeight: 200, // standard row height
 		/**
 		 * Adds sub-albums and images to the row until it's full
 		 *
@@ -28,7 +30,7 @@
 			var fileNotFoundStatus = 404;
 			var def = new $.Deferred();
 
-			var appendDom = function (width) {
+			var validateRowWidth = function (width) {
 				row.items.push(element);
 				row.width += width + 4; // add 4px for the margin
 				def.resolve(!row._isFull());
@@ -36,12 +38,13 @@
 
 			// No need to use getThumbnailWidth() for albums, the width is always 200
 			if (element instanceof Album) {
-				var width = 200;
-				appendDom(width);
+				var width = row.targetHeight;
+				validateRowWidth(width);
 			} else {
+				// We can't calculate the total width if we don't have the width of the thumbnail
 				element.getThumbnailWidth().then(function (width) {
 					if (element.thumbnail.status !== fileNotFoundStatus) {
-						appendDom(width);
+						validateRowWidth(width);
 					} else {
 						def.resolve(true);
 					}
@@ -60,7 +63,7 @@
 		 */
 		getDom: function () {
 			var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
-			var targetHeight = 200 * scaleRatio;
+			var targetHeight = this.targetHeight * scaleRatio;
 			targetHeight = targetHeight.toFixed(3);
 			var row = $('<div/>').addClass('row');
 			/**

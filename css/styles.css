@@ -1,12 +1,4 @@
-/** Only available in OC8 */
-.hidden-visually {
-	position: absolute;
-	left: -10000px;
-	top: auto;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-}
+/* IE 8 is not supported in the photowall */
 
 /** Preloading icons */
 body:after {
@@ -71,9 +63,6 @@ div.crumb.last a {
 	background-color: #fff;
 	overflow-x: auto;
 	-webkit-transition: background-color 1s linear;
-	-moz-transition: background-color 1s linear;
-	-o-transition: background-color 1s linear;
-	-ms-transition: background-color 1s linear;
 	transition: background-color 1s linear;
 }
 
@@ -97,22 +86,29 @@ div.crumb.last a {
 	margin-top: 2px;
 }
 
-#gallery .row a:first-child {
+#gallery .row .item-container:first-child {
 	margin-left: 4px;
 }
 
-#gallery .row a:last-child {
-	margin-right: 4px;
-}
-
-#gallery .row a {
+#gallery .row > .item-container {
+	position: relative;
 	display: inline-block;
 	height: auto;
 	padding: 0;
 	margin: 2px;
+	vertical-align: top;
 }
 
-#gallery a.album .album-label {
+#gallery .row > .album-container > .album-loader {
+	position: absolute;
+	z-index: 11;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#gallery .item-container .album-label {
 	color: #fff;
 	position: absolute;
 	left: 0;
@@ -128,7 +124,7 @@ div.crumb.last a {
 	z-index: 11;
 }
 
-#gallery a.image .image-label {
+#gallery .item-container .image-label {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -141,12 +137,12 @@ div.crumb.last a {
 	word-break: break-all;
 }
 
-#gallery a.album .album-label,
-#gallery a.image .image-label {
+#gallery .item-container .album-label,
+#gallery .item-container .image-label {
 	background: rgba(0, 0, 0, 0.4);
 }
 
-#gallery a.image .image-label .title {
+#gallery .item-container .image-label .title {
 	display: inline-block;
 	color: #fff;
 	text-align: center;
@@ -158,7 +154,7 @@ div.crumb.last a {
 	text-overflow: ellipsis;
 }
 
-#gallery a.image .image-label .title:hover {
+#gallery .item-container .image-label .title:hover {
 	overflow: visible;
 	white-space: normal;
 }
@@ -166,6 +162,9 @@ div.crumb.last a {
 #gallery a.album > img {
 	max-width: 200px;
 	max-height: 200px;
+	position: relative;
+	float: left;
+	margin: 1px;
 }
 
 #gallery a {
@@ -185,23 +184,13 @@ div.crumb.last a {
 
 #gallery a.image > img {
 	max-height: 200px;
-	width: auto;
 }
 
-#gallery a.album,
+#gallery .cropped,
 #gallery .row {
 	opacity: 1;
-	transition: opacity 500ms;
-	-moz-transition: opacity 500ms;
-	-o-transition: opacity 500ms;
-	-ms-transition: opacity 500ms;
 	-webkit-transition: opacity 500ms;
-}
-
-#gallery a.album img {
-	position: relative;
-	float: left;
-	margin: 1px;
+	transition: opacity 500ms;
 }
 
 #gallery a.album .cropped {
@@ -210,11 +199,6 @@ div.crumb.last a {
 	margin: 1px;
 	background-position: center;
 	background-size: cover;
-}
-
-#gallery a.album.loading,
-#gallery .row.loading {
-	opacity: 0;
 }
 
 #gallery > h2 {
