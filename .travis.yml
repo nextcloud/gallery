@@ -23,6 +23,7 @@ env:
 branches:
   only:
     - master
+    - /^stable\d+(\.\d+)?$/
 
 cache:
   directories:
