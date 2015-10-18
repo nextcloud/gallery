@@ -54,7 +54,7 @@ OC.L10N.register(
     "Set expiration date" : "만료 날짜 설정",
     "Expiration" : "만료",
     "Expiration date" : "만료 날짜",
-    "An error occured. Please try again" : "오류가 발생하였습니다. 다시 시도하십시오.",
+    "An error occured. Please try again" : "오류가 발생했습니다. 다시 시도하십시오.",
     "Adding user..." : "사용자 추가 중...",
     "group" : "그룹",
     "remote" : "원격",
