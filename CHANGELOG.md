@@ -1,3 +1,16 @@
+owncloud-gallery (14.3.0)
+* Add visual feedback when clicking on albums owncloud/gallery#416(@oparoz)
+* Protect app from bad JPEGs owncloud/gallery#420(@oparoz)
+* Fix empty album presentation when images can't be processed (@oparoz)
+* More efficient breadcrumbs (@oparoz)
+* A few minor visual glitches (@oparoz)
+
+owncloud-gallery (14.2.0)
+* [security] Purify SVGs owncloud/gallery#373(@oparoz)
+* Restore sharing on 8.2 owncloud/gallery#359(@PVince81 @icewind1991 @oparoz)
+* Fix empty page for public galleries owncloud/gallery#414 owncloud/gallery#418(@henni @oparoz)
+* Fix displaying album icon on Chrome owncloud/gallery#397(@oparoz)
+
 owncloud-galleryplus (14.1.0)
 * [security] Update DomPurify to fix a vulnerability in Firefox and to fix browser problems (@oparoz)
 * Fix problems with sub-album thumbnails on HighDPI screens owncloud/gallery#377 (@oparoz)
