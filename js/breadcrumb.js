@@ -156,6 +156,7 @@
 		 * @private
 		 */
 		_render: function () {
+			$('.tipsy:last').remove();
 			this.breadcrumbsElement.children().remove();
 
 			var breadcrumbs = this._template({
@@ -213,7 +214,7 @@
 				}
 
 				this.ellipsis.children('a').attr('href', '#' + encodeURIComponent(ellipsisPath));
-				this.ellipsis.attr('data-original-title', ellipsisPath).tipsy({
+				this.ellipsis.attr('title', ellipsisPath).tipsy({
 					fade: true,
 					gravity: 'nw',
 					delayOut: 5
