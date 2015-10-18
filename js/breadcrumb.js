@@ -215,8 +215,10 @@
 				this.ellipsis.children('a').attr('href', '#' + encodeURIComponent(ellipsisPath));
 				this.ellipsis.attr('data-original-title', ellipsisPath).tooltip({
 					fade: true,
-					gravity: 'nw',
-					delayOut: 5
+					placement: 'bottom',
+					delay: {
+						hide: 5
+					}
 				});
 			}
 		}
