@@ -37,7 +37,7 @@
 		/**
 		 * Returns a reference to a loading Thumbnail.image
 		 *
-		 * @param {bool} square
+		 * @param {boolean} square
 		 *
 		 * @returns {jQuery.Deferred<Thumbnail.image>}
 		 */
@@ -58,15 +58,17 @@
 		getThumbnailWidth: function () {
 			// img is a Thumbnail.image
 			return this.getThumbnail(false).then(function (img) {
+				var width = 0;
 				if (img) {
-					return img.originalWidth;
+					width = img.originalWidth;
 				}
-				return 0;
+
+				return width;
 			});
 		},
 
 		/**
-		 * Creates the a and img element in the DOM
+		 * Creates the container, the a and img elements in the DOM
 		 *
 		 * Each image is also a link to start the full screen slideshow
 		 *
@@ -80,39 +82,79 @@
 				this.domHeight = targetHeight;
 				// img is a Thumbnail.image
 				this.domDef = this.getThumbnail(false).then(function (img) {
+					var container = $('<div/>')
+						.addClass('item-container image-container')
+						.css('width', targetHeight * image.thumbnail.ratio)
+						.css('height', targetHeight);
+					image._addLabel(container);
+
+					var newWidth = Math.round(targetHeight * image.thumbnail.ratio);
+					container.attr('data-width', newWidth)
+						.attr('data-height', targetHeight);
+
+					var url = image._getLink();
+					var a = $('<a/>')
+						.addClass('image')
+						.attr('href', url)
+						.attr('data-path', image.path);
+
+					// This will stretch wide images to make them reach targetHeight
 					$(img).css({
-						'height': targetHeight,
-						'width': targetHeight * image.thumbnail.ratio
+						'width': targetHeight * image.thumbnail.ratio,
+						'height': targetHeight
 					});
 					img.alt = encodeURI(image.path);
-					var url = '#' + encodeURIComponent(image.path);
-
-					if (!image.thumbnail.valid) {
-						var params = {
-							c: image.etag,
-							requesttoken: oc_requesttoken
-						};
-						url = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
-							params);
-					}
-					var a = $('<a/>').addClass('image').attr('href', url).attr('data-path',
-						image.path);
-
-					var imageLabel = $('<span/>').addClass('image-label');
-					var imageTitle = $('<span/>').addClass('title').text(
-						OC.basename(image.path));
-					imageLabel.append(imageTitle);
-					a.hover(function () {
-						imageLabel.slideToggle(OC.menuSpeed);
-					}, function () {
-						imageLabel.slideToggle(OC.menuSpeed);
-					});
-					a.append(imageLabel);
 					a.append(img);
-					return a;
+					container.append(a);
+
+					return container;
 				});
 			}
 			return this.domDef;
+		},
+
+		/**
+		 * Adds a label to the album
+		 *
+		 * @param container
+		 * @private
+		 */
+		_addLabel: function (container) {
+			var imageLabel = $('<span/>')
+				.addClass('image-label');
+			var imageTitle = $('<span/>')
+				.addClass('title').text(
+					OC.basename(this.path));
+			imageLabel.append(imageTitle);
+			container.hover(function () {
+				imageLabel.slideToggle(OC.menuSpeed);
+			}, function () {
+				imageLabel.slideToggle(OC.menuSpeed);
+			});
+			container.append(imageLabel);
+		},
+
+		/**
+		 * Generates the link for the click action of the image
+		 *
+		 * @returns {string}
+		 * @private
+		 */
+		_getLink: function () {
+			var url = '#' + encodeURIComponent(this.path);
+			if (!this.thumbnail.valid) {
+				var params = {
+					c: this.etag,
+					requesttoken: oc_requesttoken
+				};
+				url = Gallery.utility.buildGalleryUrl(
+					'files',
+					'/download/' + this.fileId,
+					params
+				);
+			}
+
+			return url;
 		}
 	};
 

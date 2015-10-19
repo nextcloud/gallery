@@ -54,7 +54,7 @@
 		 * Updates the controls
 		 *
 		 * @param {{name:string, url: string, path: string, fallBack: string}[]} images
-		 * @param {bool} autoPlay
+		 * @param {boolean} autoPlay
 		 */
 		update: function (images, autoPlay) {
 			this.images = images;
@@ -107,7 +107,7 @@
 		 * Updates the private variables in case of problems loading an image
 		 *
 		 * @param {Array} images
-		 * @param {bool} errorLoadingImage
+		 * @param {boolean} errorLoadingImage
 		 */
 		updateControls: function (images, errorLoadingImage) {
 			this.images = images;
@@ -168,6 +168,7 @@
 			this.container.children('.previous').click(makeCallBack(this._previous));
 			this.container.children('.exit').click(makeCallBack(this._exit));
 			this.container.children('.pause, .play').click(makeCallBack(this._playPauseToggle));
+			this.progressBar.click(makeCallBack(this._playPauseToggle));
 		},
 
 		/**
@@ -301,6 +302,7 @@
 		 * @private
 		 */
 		_next: function () {
+			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
 
@@ -318,6 +320,7 @@
 		 * @private
 		 */
 		_previous: function () {
+			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
 
