@@ -3,6 +3,9 @@ OC.L10N.register(
     {
     "Gallery" : "ギャラリー",
     "Pictures" : "画像",
+    "No pictures found" : "画像が見つかりませんでした",
+    "Nothing in here" : "ここには何もありません",
+    "No media files found in this folder" : "このフォルダーにはメディアファイルがありません",
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote} にはownCloud (7以上)がインストールされていません",
     "Invalid ownCloud url" : "無効なownCloud URL です",
