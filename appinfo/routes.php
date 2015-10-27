@@ -99,7 +99,7 @@ return [
 		// exif of picture
                 [
                         'name' => 'files#exif',
-                        'url'  => '/files/exif',
+                        'url'  => '/files/exif/{fileId}',
                         'verb' => 'GET'
                 ],
 		/**
@@ -131,6 +131,12 @@ return [
 			'url'  => '/preview.public/{fileId}',
 			'verb' => 'GET'
 		],
+		// exif of picture
+                [
+                        'name' => 'files_public#exif',
+                        'url'  => '/files.public/exif/{fileId}',
+                        'verb' => 'GET'
+                ],
 		/**
 		 * API
 		 */

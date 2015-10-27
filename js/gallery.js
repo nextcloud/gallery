@@ -297,7 +297,7 @@
 				return {
 					name: name,
 					path: image.path,
-					file: image.fileId,
+					fileId: image.fileId,
 					mimeType: image.mimeType,
 					permissions: image.permissions,
 					url: previewUrl,

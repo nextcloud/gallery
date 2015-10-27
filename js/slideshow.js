@@ -113,25 +113,26 @@
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
+				    if (this.images[index].mimeType === 'image/jpeg' || this.images[index].mimeType === 'image/tiff'){
                                         // check if not in cache
                                         if (this.images[index].desc===undefined){
-                                            var params={location:this.images[index].path}
-                                            var url=OC.generateUrl('apps/gallery/files/exif?location={location}', params);
+                                            var params={fileid:this.images[index].fileId}
+                                            var url=OC.generateUrl('apps/gallery/files/exif/{fileid}', params);
                                             $.getJSON(url).then(function(data){
                                                 console.log(data);
-                                                var d;
+                                                var desc;
                                                 if (data){
                                                     // IPTC:Description (Picasa, Photoshop, Lightroom)
                                                     if (data['iptc']&&data['iptc']['APP13']&&data['iptc']['APP13']['2#120']){
-                                                        d=data['iptc']['APP13']['2#120'][0];
+                                                        desc=data['iptc']['APP13']['2#120'][0];
                                                     }
                                                     // EXIF:Description (old camera model)
-                                                    if (!d){
+                                                    if (!desc){
                                                         if (data['exif']&&data['exif']['ImageDescription'])
-                                                        d=data['exif']['ImageDescription'];
+                                                        desc=data['exif']['ImageDescription'];
                                                     }
-                                                    if (d){
-                                                        this.images[index].desc=d;
+                                                    if (desc){
+                                                        this.images[index].desc=desc;
                                                         this.controls.show(currentImageId);
                                                         this._initControlsAutoFader();
                                                         this.container.removeClass('inactive');
@@ -144,6 +145,7 @@
                                                     this.controls.show(currentImageId);
                                                     this._initControlsAutoFader();
                                                     this.container.removeClass('inactive');
+                                        }
                                         }
 					var image = this.images[index];
 					var transparent = this._isTransparent(image.mimeType);
