@@ -96,6 +96,12 @@ return [
 			'url'  => '/preview/{fileId}',
 			'verb' => 'GET'
 		],
+		// exif of picture
+                [
+                        'name' => 'files#exif',
+                        'url'  => '/files/exif',
+                        'verb' => 'GET'
+                ],
 		/**
 		 * Public services
 		 */

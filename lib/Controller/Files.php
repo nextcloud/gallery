@@ -45,6 +45,30 @@ trait Files {
 	/** @var ILogger */
 	private $logger;
 
+        /**
+         * @NoAdminRequired
+         *
+         * Returns a exif of picture
+         *
+         * @param string $location a path picture
+         * @return array
+         */
+        public function exif($location){
+            $filename=\OC\Files\Filesystem::getLocalFile($location);
+            $exif = false;
+	    $iptc = false;
+	    if (is_callable('exif_read_data')) {
+		$exif=@exif_read_data($filename);
+	    }
+            getimagesize($filename,$info);
+            if (is_array($info)){
+		foreach($info as $k => $i){
+		    $iptc[$k]=iptcparse($i);
+		}
+	    }
+            return ['exif'=>$exif,'iptc'=>$iptc];
+        }
+
 	/**
 	 * @NoAdminRequired
 	 *

@@ -97,7 +97,12 @@
 			if (this.playing) {
 				this._setTimeout();
 			}
-			this._setName(currentImage.name);
+			// check exif descr
+                        if (currentImage.desc){
+                            this._setName(currentImage.desc);
+                        }else{
+                            this._setName(currentImage.name);
+                        }
 		},
 
 		/**

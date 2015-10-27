@@ -113,6 +113,38 @@
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
+                                        // check if not in cache
+                                        if (this.images[index].desc===undefined){
+                                            var params={location:this.images[index].path}
+                                            var url=OC.generateUrl('apps/gallery/files/exif?location={location}', params);
+                                            $.getJSON(url).then(function(data){
+                                                console.log(data);
+                                                var d;
+                                                if (data){
+                                                    // IPTC:Description (Picasa, Photoshop, Lightroom)
+                                                    if (data['iptc']&&data['iptc']['APP13']&&data['iptc']['APP13']['2#120']){
+                                                        d=data['iptc']['APP13']['2#120'][0];
+                                                    }
+                                                    // EXIF:Description (old camera model)
+                                                    if (!d){
+                                                        if (data['exif']&&data['exif']['ImageDescription'])
+                                                        d=data['exif']['ImageDescription'];
+                                                    }
+                                                    if (d){
+                                                        this.images[index].desc=d;
+                                                        this.controls.show(currentImageId);
+                                                        this._initControlsAutoFader();
+                                                        this.container.removeClass('inactive');
+                                                    }else{
+                                                        this.images[index].desc='';
+                                                    }
+                                                }
+                                            }.bind(this));
+                                        }else if (this.images[index].desc){
+                                                    this.controls.show(currentImageId);
+                                                    this._initControlsAutoFader();
+                                                    this.container.removeClass('inactive');
+                                        }
 					var image = this.images[index];
 					var transparent = this._isTransparent(image.mimeType);
 					this.controls.showActionButtons(transparent, Gallery.token, image.permissions);
