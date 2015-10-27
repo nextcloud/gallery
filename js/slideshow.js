@@ -119,7 +119,6 @@
                                             var params={fileid:this.images[index].fileId}
                                             var url=OC.generateUrl('apps/gallery/files/exif/{fileid}', params);
                                             $.getJSON(url).then(function(data){
-                                                console.log(data);
                                                 var desc;
                                                 if (data){
                                                     // IPTC:Description (Picasa, Photoshop, Lightroom)
