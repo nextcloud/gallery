@@ -54,8 +54,10 @@ trait Files {
          * @return array
          */
         public function exif($fileId){
-	    $path=\OC\Files\Filesystem::getPath($fileId);
-	    $filename=\OC\Files\Filesystem::getLocalFile($path);
+	    $file = $this->downloadService->getResourceFromId($fileId);
+	    $path=$file->getInternalPath();
+	    $storage=$file->getStorage();
+	    $filename=$storage->getLocalFile($path);
 	    $exif = false;
 	    $iptc = false;
 	    if (is_callable('exif_read_data')) {
