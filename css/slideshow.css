@@ -90,16 +90,18 @@
 }
 
 #slideshow > .next, #slideshow > .previous {
-	top: 50%;
-	margin-top: -21px;
+	height:100%;
+	width: 25%;
 }
 
 #slideshow > .next {
 	right: 0;
+	background-position: right;
 }
 
 #slideshow > .previous {
 	left: 0;
+	background-position: left;
 }
 
 #slideshow > .exit {
