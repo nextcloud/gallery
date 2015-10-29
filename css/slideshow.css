@@ -134,10 +134,14 @@
 	bottom: 18px;
 	z-index: 1099;
 	width: 100%;
+	height: 75px;
 }
 
 #slideshow > .name .title {
-	padding: 0 50px 3px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding: 0 1% 3px;
 	text-align: center;
 	color: #fff;
 	text-shadow: 1px 1px 4px #333, 1px -1px 4px #333, -1px 1px 4px #333, -1px -1px 4px #333;
@@ -146,6 +150,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	filter: alpha(opacity=75);
 	opacity: .75;
 }
 
