@@ -116,8 +116,11 @@
 				    if (this.images[index].mimeType === 'image/jpeg' || this.images[index].mimeType === 'image/tiff'){
                                         // check if not in cache
                                         if (this.images[index].desc===undefined){
-                                            var params={fileid:this.images[index].fileId}
-                                            var url=OC.generateUrl('apps/gallery/files/exif/{fileid}', params);
+					    if (window.galleryFileAction){
+						var url = window.galleryFileAction.buildGalleryUrl('files', '/exif/'+this.images[index].fileId,{});
+					    }else{
+						var url = window.Gallery.utility.buildGalleryUrl('files', '/exif/'+this.images[index].fileId,{});
+					    }
                                             $.getJSON(url).then(function(data){
                                                 var desc;
                                                 if (data){

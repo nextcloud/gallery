@@ -22,6 +22,18 @@ namespace OCA\Gallery\Controller;
  */
 class FilesPublicController extends FilesController {
 
+        /**
+         * @PublicPage
+         *
+         * Returns a exif of picture
+         *
+         * @param string $location a path picture
+         * @return array
+         */
+        public function exif($fileId){
+		return parent::exif($fileId);
+        }
+
 	/**
 	 * @PublicPage
 	 *
