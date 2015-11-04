@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerie",
-    "Pictures" : "Obrázky",
     "No pictures found" : "Nebyly nalezeny žádné obrázky",
     "Upload pictures in the files app to display them here" : "Pro zobrazení obrázků v tomto náhledu nějaké nahrajte přes aplikaci soubory",
     "Nothing in here" : "Zde zatím nic není",

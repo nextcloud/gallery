@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galéria",
-    "Pictures" : "Obrázky",
     "Aborting preview. Could not find the file" : "Ruším náhľad. Súbor nemožno nájsť.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nebola nájdená inštalácia ownCloudu (7 alebo vyššia) {remote}",
     "Invalid ownCloud url" : "Chybná ownCloud url",

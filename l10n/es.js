@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galería",
-    "Pictures" : "Imágenes",
     "No pictures found" : "Ninguna imagen encontrada",
     "Nothing in here" : "No hay nada aquí",
     "No media files found in this folder" : "No se ha encontrado ningún archivo multimedia en esta carpeta",

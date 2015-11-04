@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeri",
-    "Pictures" : "Foto",
     "No pictures found" : "S’u gjetën foto",
     "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i kartelave që t’i shfaqni këtu",
     "Nothing in here" : "S’ka gjë këtu",

@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeri",
-    "Pictures" : "Resimler",
     "No pictures found" : "Hiç fotoğraf bulunamadı",
     "Upload pictures in the files app to display them here" : "Dosyalar uygulaması ile resim yüklemek, bunları burada gösterecektir.",
     "Nothing in here" : "Burada hiçbir şey yok",

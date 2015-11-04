@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "畫廊",
-    "Pictures" : "圖片",
     "No pictures found" : "未發現照片",
     "Upload pictures in the files app to display them here" : "在這裡顯示從應用程式上傳的圖片",
     "Nothing in here" : "這裡什麼也沒有",
