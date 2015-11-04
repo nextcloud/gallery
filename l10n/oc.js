@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galariá",
-    "Pictures" : "Imatges",
     "No pictures found" : "Cap d'imatge pas trobat",
     "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
     "Nothing in here" : "Pas res aquí dedins",
