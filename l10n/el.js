@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Συλλογή",
-    "Pictures" : "Εικόνες",
     "No pictures found" : "Δεν βρέθηκαν φωτογραφίες",
     "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή αρχείων για να εμφανιστούν εδώ.",
     "Nothing in here" : " Δεν υπάρχει τίποτα εδώ",

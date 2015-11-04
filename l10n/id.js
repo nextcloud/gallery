@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeri",
-    "Pictures" : "Gambar",
     "No pictures found" : "Gambar tidak dtemukan",
     "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
     "Nothing in here" : "Tidak ada apapun disini",
