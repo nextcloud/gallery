@@ -7,7 +7,9 @@
 		'data-width="{{targetWidth}}" data-height="{{targetHeight}}"' +
 		'href="{{targetPath}}">' +
 		'	<div class="album-loader loading"></div>' +
-		'	<span class="album-label">{{label}}</span>' +
+		'	<span class="album-label">' +
+		'		<span class="title">{{label}}</span>' +
+		'	</span>' +
 		'	<div class="album container" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" >' +
 		'	</div>' +
 		'</a>';
