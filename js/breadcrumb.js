@@ -144,7 +144,7 @@
 			this.breadcrumbs.push({
 				name: name,
 				dir: link,
-				link: '#' + encodeURIComponent(link),
+				link: link ? '#' + encodeURIComponent(link) : "",
 				img: img,
 				cssClass: cssClass
 			});
