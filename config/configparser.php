@@ -142,10 +142,9 @@ class ConfigParser {
 	 */
 	private function buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level) {
 		foreach ($completionStatus as $key => $complete) {
-			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)
-			) {
+			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
 				$parsedConfigItem = $parsedConfig[$key];
-				if ($this->isConfigUsable($parsedConfigItem, $level)) {
+				if ($this->isConfigUsable($key, $parsedConfigItem, $level)) {
 					list($configItem, $itemComplete) =
 						$this->addConfigItem($key, $parsedConfigItem, $level);
 					$currentConfig = array_merge($currentConfig, $configItem);
@@ -179,15 +178,22 @@ class ConfigParser {
 	 *    * the configuration was collected from the currently opened folder
 	 *    * the configuration was collected in a parent folder and is inheritable
 	 *
+	 * We also need to make sure that the values contained in the configuration are safe for web use
+	 *
+	 * @param string $key the configuration sub-section identifier
 	 * @param array $parsedConfigItem the configuration for a sub-section
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return bool
 	 */
-	private function isConfigUsable($parsedConfigItem, $level) {
+	private function isConfigUsable($key, $parsedConfigItem, $level) {
 		$inherit = $this->isConfigInheritable($parsedConfigItem);
 
-		return $level === 0 || $inherit;
+		$usable = $level === 0 || $inherit;
+
+		$safe = $this->isConfigSafe($key, $parsedConfigItem);
+
+		return $usable && $safe;
 	}
 
 	/**
@@ -230,6 +236,93 @@ class ConfigParser {
 		}
 
 		return $inherit;
+	}
+
+	/**
+	 * Determines if the content of that sub-section is safe for web use
+	 *
+	 * @param string $key the configuration sub-section identifier
+	 * @param array $parsedConfigItem the configuration for a sub-section
+	 *
+	 * @return bool
+	 */
+	private function isConfigSafe($key, $parsedConfigItem) {
+		$safe = true;
+
+		switch ($key) {
+			case 'sorting':
+				$safe = $this->isSortingTypeSafe($parsedConfigItem, $safe);
+				$safe = $this->isSortingOrderSafe($parsedConfigItem, $safe);
+				break;
+			case 'design':
+				$safe = $this->isDesignColourSafe($parsedConfigItem, $safe);
+				break;
+		}
+
+		return $safe;
+	}
+
+	/**
+	 * Determines if the sorting type found in the config file is safe for web use
+	 *
+	 * @param array $parsedConfigItem the sorting configuration to analyse
+	 * @param bool $safe whether the current config has been deemed safe to use so far
+	 *
+	 * @return bool
+	 */
+	private function isSortingTypeSafe($parsedConfigItem, $safe) {
+		if ($safe && array_key_exists('type', $parsedConfigItem)) {
+			$type = $parsedConfigItem['type'];
+			if ($type === 'date' || $type === 'name') {
+				$safe = true;
+			} else {
+				$safe = false;
+			}
+		}
+
+		return $safe;
+	}
+
+	/**
+	 * Determines if the sorting order found in the config file is safe for web use
+	 *
+	 * @param array $parsedConfigItem the sorting configuration to analyse
+	 * @param bool $safe whether the current config has been deemed safe to use so far
+	 *
+	 * @return bool
+	 */
+	private function isSortingOrderSafe($parsedConfigItem, $safe) {
+		if ($safe && array_key_exists('order', $parsedConfigItem)) {
+			$order = $parsedConfigItem['order'];
+			if ($order === 'des' || $order === 'asc') {
+				$safe = $safe && true;
+			} else {
+				$safe = false;
+			}
+		}
+
+		return $safe;
+	}
+
+	/**
+	 * Determines if the background colour found in the config file is safe for web use
+	 *
+	 * @param array $parsedConfigItem the design configuration to analyse
+	 * @param bool $safe whether the current config has been deemed safe to use so far
+	 *
+	 * @return bool
+	 */
+	private function isDesignColourSafe($parsedConfigItem, $safe) {
+		if (array_key_exists('background', $parsedConfigItem)) {
+			$background = $parsedConfigItem['background'];
+			if (ctype_xdigit(substr($background, 1))) {
+				$safe = true;
+			} else {
+				$safe = false;
+			}
+		}
+
+		return $safe;
 	}
 
 }
