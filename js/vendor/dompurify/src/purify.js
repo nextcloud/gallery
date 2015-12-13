@@ -21,7 +21,7 @@
      * Version label, exposed for easier checks
      * if DOMPurify is up to date or not
      */
-    DOMPurify.version = '0.7.1';
+    DOMPurify.version = '0.7.3';
 
     if (!window || !window.document || window.document.nodeType !== 9) {
         // not running in a browser, provide a factory function
@@ -117,6 +117,13 @@
         'polygon','polyline','radialgradient','rect','stop','switch','symbol',
         'text','textpath','title','tref','tspan','view','vkern',
 
+        // SVG Filters
+        'feBlend','feColorMatrix','feComponentTransfer','feComposite',
+        'feConvolveMatrix','feDiffuseLighting','feDisplacementMap',
+        'feFlood','feFuncA','feFuncB','feFuncG','feFuncR','feGaussianBlur',
+        'feImage','feMerge','feMergeNode','feMorphology','feOffset',
+        'feSpecularLighting','feTile','feTurbulence',
+
         //MathML
         'math','menclose','merror','mfenced','mfrac','mglyph','mi','mlabeledtr',
         'mmuliscripts','mn','mo','mover','mpadded','mphantom','mroot','mrow',
@@ -146,22 +153,31 @@
 
         // SVG
         'accent-height','accumulate','additivive','alignment-baseline',
-        'ascent','azimuth','baseline-shift','bias','clip','clip-path',
-        'clip-rule','color','color-interpolation','color-interpolation-filters',
-        'color-profile','color-rendering','cx','cy','d','dy','dy','direction',
-        'display','divisor','dur','elevation','end','fill','fill-opacity',
-        'fill-rule','filter','flood-color','flood-opacity','font-family',
-        'font-size','font-size-adjust','font-stretch','font-style','font-variant',
-        'font-weight','image-rendering','in','in2','k1','k2','k3','k4','kerning',
-        'letter-spacing','lighting-color','local','marker-end','marker-mid',
-        'marker-start','max','mask','mode','min','offset','operator','opacity',
-        'order','overflow','paint-order','path','points','r','rx','ry','radius',
-        'restart','scale','seed','shape-rendering','stop-color','stop-opacity',
-        'stroke-dasharray','stroke-dashoffset','stroke-linecap','stroke-linejoin',
-        'stroke-miterlimit','stroke-opacity','stroke','stroke-width','transform',
-        'text-anchor','text-decoration','text-rendering','u1','u2','viewbox',
-        'visibility','word-spacing','wrap','writing-mode','x','x1','x2','y',
-        'y1','y2','z',
+        'ascent','attributename','attributetype','azimuth','basefrequency',
+        'baseline-shift','begin','bias','by','clip','clip-path','clip-rule',
+        'color','color-interpolation','color-interpolation-filters','color-profile',
+        'color-rendering','cx','cy','d','dx','dy','diffuseconstant','direction',
+        'display','divisor','dur','edgemode','elevation','end','fill','fill-opacity',
+        'fill-rule','filter','flood-color','flood-opacity','font-family','font-size',
+        'font-size-adjust','font-stretch','font-style','font-variant','font-weight',
+        'fx', 'fy','g1','g2','glyph-name','glyphref','gradientunits','gradienttransform',
+        'image-rendering','in','in2','k','k1','k2','k3','k4','kerning','keypoints',
+        'keysplines','keytimes','lengthadjust','letter-spacing','kernelmatrix',
+        'kernelunitlength','lighting-color','local','marker-end','marker-mid',
+        'marker-start','markerheight','markerunits','markerwidth','maskcontentunits',
+        'maskunits','max','mask','mode','min','numoctaves','offset','operator',
+        'opacity','order','orient','orientation','origin','overflow','paint-order',
+        'path','pathlength','patterncontentunits','patterntransform','patternunits',
+        'points','preservealpha','r','rx','ry','radius','refx','refy','repeatcount',
+        'repeatdur','restart','rotate','scale','seed','shape-rendering','specularconstant',
+        'specularexponent','spreadmethod','stddeviation','stitchtiles','stop-color',
+        'stop-opacity','stroke-dasharray','stroke-dashoffset','stroke-linecap',
+        'stroke-linejoin','stroke-miterlimit','stroke-opacity','stroke','stroke-width',
+        'surfacescale','targetx','targety','transform','text-anchor','text-decoration',
+        'text-rendering','textlength','u1','u2','unicode','values','viewbox',
+        'visibility','vert-adv-y','vert-origin-x','vert-origin-y','word-spacing',
+        'wrap','writing-mode','xchannelselector','ychannelselector','x','x1','x2',
+        'y','y1','y2','z','zoomandpan',
 
         // MathML
         'accent','accentunder','bevelled','close','columnsalign','columnlines',
@@ -189,6 +205,11 @@
 
     /* Output should be safe for jQuery's $() factory? */
     var SAFE_FOR_JQUERY = false;
+
+    /* Output should be safe for common template engines.
+     * This means, DOMPurify removes data attributes, mustaches and ERB
+     */
+    var SAFE_FOR_TEMPLATES = false;
 
     /* Decide if document with <html>... should be returned */
     var WHOLE_DOCUMENT = false;
@@ -248,6 +269,7 @@
             _addToSet({}, cfg.FORBID_ATTR) : {};
         ALLOW_DATA_ATTR     = cfg.ALLOW_DATA_ATTR     !== false; // Default true
         SAFE_FOR_JQUERY     = cfg.SAFE_FOR_JQUERY     ||  false; // Default false
+        SAFE_FOR_TEMPLATES  = cfg.SAFE_FOR_TEMPLATES  ||  false; // Default false
         WHOLE_DOCUMENT      = cfg.WHOLE_DOCUMENT      ||  false; // Default false
         RETURN_DOM          = cfg.RETURN_DOM          ||  false; // Default false
         RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT ||  false; // Default false
@@ -306,7 +328,7 @@
         /* Create a HTML document using DOMParser */
         var doc, body;
         try {
-            doc = new DOMParser().parseFromString(dirty, "text/html");
+            doc = new DOMParser().parseFromString(dirty, 'text/html');
         } catch (e) {}
 
         /* Some browsers throw, some browsers return null for the code above
@@ -367,6 +389,9 @@
         return false;
     };
 
+    var MUSTACHE_EXPR = /\{\{.*|.*\}\}/gm;
+    var ERB_EXPR = /<%.*|.*%>/gm;
+
     /**
      * _sanitizeElements
      *
@@ -408,9 +433,19 @@
             return true;
         }
 
-        /* Finally, convert markup to cover jQuery behavior */
-        if (SAFE_FOR_JQUERY && !currentNode.firstElementChild) {
+        /* Convert markup to cover jQuery behavior */
+        if (SAFE_FOR_JQUERY && !currentNode.firstElementChild &&
+                (!currentNode.content || !currentNode.content.firstElementChild)) {
             currentNode.innerHTML = currentNode.textContent.replace(/</g, '&lt;');
+        }
+
+        /* Sanitize element content to be template-safe */
+        if (SAFE_FOR_TEMPLATES && currentNode.nodeType === 3) {
+            /* Get the element's text content */
+            var content = currentNode.textContent;
+            content = content.replace(MUSTACHE_EXPR, ' ');
+            content = content.replace(ERB_EXPR, ' ');
+            currentNode.textContent = content;
         }
 
         /* Execute a hook if present */
@@ -418,6 +453,11 @@
 
         return false;
     };
+
+    var DATA_ATTR = /^data-[\w.\u00B7-\uFFFF-]/;
+    var IS_SCRIPT_OR_DATA = /^(?:\w+script|data):/i;
+    /* This needs to be extensive thanks to Webkit/Blink's behavior */
+    var ATTR_WHITESPACE = /[\x00-\x20\xA0\u1680\u180E\u2000-\u2029\u205f\u3000]/g;
 
     /**
      * _sanitizeAttributes
@@ -475,6 +515,12 @@
                     currentNode.setAttribute('id', idAttr.value);
                 }
             } else {
+                // This avoids a crash in Safari v9.0 with double-ids.
+                // The trick is to first set the id to be empty and then to
+                // remove the attriubute
+                if (name === 'id') {
+                    currentNode.setAttribute(name, '');
+                }
                 currentNode.removeAttribute(name);
             }
 
@@ -497,7 +543,7 @@
                  /* Allow potentially valid data-* attributes
                     * At least one character after "-" (https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes)
                     * XML-compatible (https://html.spec.whatwg.org/multipage/infrastructure.html#xml-compatible and http://www.w3.org/TR/xml/#d0e804) */
-                 (ALLOW_DATA_ATTR && DATA_ATTR.test(lcName))
+                 (!SAFE_FOR_TEMPLATES && ALLOW_DATA_ATTR && DATA_ATTR.test(lcName))
                 ) &&
                 /* Get rid of script and data URIs */
                 (
@@ -509,6 +555,11 @@
             ) {
                 /* Handle invalid data-* attribute set by try-catching it */
                 try {
+                    /* Sanitize attribute content to be template-safe */
+                    if (SAFE_FOR_TEMPLATES) {
+                        value = value.replace(MUSTACHE_EXPR, ' ');
+                        value = value.replace(ERB_EXPR, ' ');
+                    }
                     currentNode.setAttribute(name, value);
                 } catch (e) {}
             }
@@ -517,10 +568,6 @@
         /* Execute a hook if present */
         _executeHook('afterSanitizeAttributes', currentNode, null);
     };
-    var DATA_ATTR = /^data-[\w.\u00B7-\uFFFF-]/;
-    var IS_SCRIPT_OR_DATA = /^(?:\w+script|data):/i;
-    /* This needs to be extensive thanks to Webkit/Blink's behavior */
-    var ATTR_WHITESPACE = /[\x00-\x20\xA0\u1680\u180E\u2000-\u2029\u205f\u3000]/g;
 
     /**
      * _sanitizeShadowDOM
@@ -580,13 +627,22 @@
      * @param {Object} configuration object
      */
     DOMPurify.sanitize = function(dirty, cfg) {
+        /* Make sure we have a string to sanitize.
+           DO NOT return early, as this will return the wrong type if
+           the user has requested a DOM object rather than a string */
         if (!dirty) {
             dirty = '';
         }
 
+        /* Stringify, in case dirty is an array or other object */
+        if (typeof dirty !== 'string') {
+            dirty = dirty.toString();
+        }
+
         /* Check we can run. Otherwise fall back or ignore */
         if (!DOMPurify.isSupported) {
-            if (typeof window.toStaticHTML === 'function' && typeof dirty === 'string') {
+            if (typeof window.toStaticHTML === 'object' 
+                || typeof window.toStaticHTML === 'function') {
                 return window.toStaticHTML(dirty);
             }
             return dirty;
