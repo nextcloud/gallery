@@ -30,7 +30,7 @@ OC.L10N.register(
     "Close" : "Fechar",
     "Download" : "Baixar",
     "Toggle background" : "Alternância de fundo",
-    "Shared" : "Compartilhados",
+    "Shared" : "Compartilhado",
     "Error" : "Erro",
     "Error while sharing" : "Erro ao compartilhar",
     "Error while unsharing" : "Erro ao descompartilhar",
