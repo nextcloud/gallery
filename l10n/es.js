@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Gallery" : "Galería",
     "No pictures found" : "Ninguna imagen encontrada",
-    "Upload pictures in the files app to display them here" : "Subir fotos en la app archivos para mostrarlos aquí",
+    "Upload pictures in the files app to display them here" : "Suba fotos en la app de archivos para mostrarlos aquí",
     "Nothing in here" : "No hay nada aquí",
     "No media files found in this folder" : "No se ha encontrado ningún archivo multimedia en esta carpeta",
     "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
