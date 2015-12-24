@@ -92,6 +92,7 @@
 					feature = configFeatures[i];
 					if (this._worksInCurrentBrowser(feature, 'native_svg')) {
 						features.push(feature);
+						Gallery.utility.addDomPurifyHooks();
 					}
 				}
 			}
