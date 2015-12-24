@@ -355,8 +355,11 @@
 				xmlHttp.open("GET", source, false);
 				xmlHttp.send(null);
 				if (xmlHttp.status === 200) {
-					var pureSvg = DOMPurify.sanitize(xmlHttp.responseText);
-					svgPreview = "data:image/svg+xml;base64," + window.btoa(pureSvg);
+					var pureSvg = DOMPurify.sanitize(xmlHttp.responseText, {ADD_TAGS: ['filter']});
+					// Remove XML comment garbage left in the purified data
+					var badTag = pureSvg.indexOf(']&gt;');
+					var fixedPureSvg = pureSvg.substring(badTag < 0 ? 0 : 5, pureSvg.length);
+					svgPreview = "data:image/svg+xml;base64," + window.btoa(fixedPureSvg);
 				}
 			}
 
