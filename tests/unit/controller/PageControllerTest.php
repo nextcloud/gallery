@@ -69,7 +69,12 @@ class PageControllerTest extends \Test\TestCase {
 
 
 	public function testIndex() {
-		$params = ['appName' => $this->appName];
+		$url = 'http://owncloud/ajax/upload.php';
+		$this->mockUrlToUploadEndpoint($url);
+		$params = [
+			'appName' => $this->appName,
+			'uploadUrl' => $url
+		];
 		$template = new TemplateResponse($this->appName, 'index', $params);
 
 		$response = $this->controller->index();
@@ -239,4 +244,10 @@ class PageControllerTest extends \Test\TestCase {
 					  ->willReturn($value);
 	}
 
+	private function mockUrlToUploadEndpoint($url) {
+		$this->urlGenerator->expects($this->once())
+						   ->method('linkTo')
+						   ->with('files', 'ajax/upload.php')
+						   ->willReturn($url);
+	}
 }

@@ -202,13 +202,15 @@ class SearchMediaService extends FilesService {
 		$mimeType = $file->getMimetype();
 		$mTime = $file->getMTime();
 		$etag = $file->getEtag();
+		$size = $file->getSize();
 
 		$imageData = [
 			'path'     => $imagePath,
 			'fileid'   => $imageId,
 			'mimetype' => $mimeType,
 			'mtime'    => $mTime,
-			'etag'     => $etag
+			'etag'     => $etag,
+			'size'     => $size
 		];
 
 		$this->images[] = $imageData;

@@ -286,3 +286,16 @@ http://www.bypeople.com/author/comatosed/*/
 .icon-gallery {
 	background-image: url('../img/gallery-dark.svg');
 }
+
+.oc-dialog .fileexists .icon {
+	background-position: center center;
+	background-size: cover !important;
+}
+
+#uploadprogressbar {
+	margin-top: 5px;
+}
+
+.stop.icon-close {
+	margin-top: 5px;
+}

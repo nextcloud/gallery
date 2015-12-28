@@ -205,6 +205,68 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		$this->assertSame($result, sizeof($response));
 	}
 
+	public function providesFolderWithFilesData() {
+		$isReadable = true;
+		$mounted = false;
+		$mount = null;
+		$query = '.nomedia';
+		$queryResult = false;
+
+		$file1 = [
+			'fileid'     => 11111,
+			'storageId'  => 'home::user',
+			'isReadable' => true,
+			'path'       => null,
+			'etag'       => "8603c11cd6c5d739f2c156c38b8db8c4",
+			'size'       => 1024,
+			'mimetype'   => 'image/jpeg'
+		];
+
+
+		$folder1 = $this->mockFolder(
+			'home::user', 545454, [
+			$this->mockJpgFile(
+				$file1['fileid'], $file1['storageId'], $file1['isReadable'], $file1['path'],
+				$file1['etag'], $file1['size']
+			)
+		], $isReadable, $mounted, $mount, $query, $queryResult
+		);
+
+		return [
+			[
+				$folder1, [
+				[
+					'path'     => $file1['path'],
+					'fileid'   => $file1['fileid'],
+					'mimetype' => $file1['mimetype'],
+					'mtime'    => null,
+					'etag'     => $file1['etag'],
+					'size'     => $file1['size']
+				]
+			]
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider providesFolderWithFilesData
+	 *
+	 * @param array $topFolder
+	 * @param int $result
+	 */
+	public function testPropertiesOfGetMediaFiles($topFolder, $result) {
+		$supportedMediaTypes = [
+			'image/png',
+			'image/jpeg',
+			'image/gif'
+		];
+		$features = [];
+
+		$response = $this->service->getMediaFiles($topFolder, $supportedMediaTypes, $features);
+
+		$this->assertSame($result, $response);
+	}
+
 	/**
 	 * @expectedException \OCA\Gallery\Service\NotFoundServiceException
 	 */

@@ -82,7 +82,10 @@ class PageController extends Controller {
 		$appName = $this->appName;
 
 		// Parameters sent to the template
-		$params = ['appName' => $appName];
+		$params = [
+			'appName' => $appName,
+			'uploadUrl' => $this->urlGenerator->linkTo('files', 'ajax/upload.php')
+		];
 
 		// Will render the page using the template found in templates/index.php
 		$response = new TemplateResponse($appName, 'index', $params);

@@ -90,7 +90,7 @@ function Thumbnail (fileId, square) {
 		 */
 		loadBatch: function (ids, square) {
 			var map = (square) ? Thumbnails.squareMap : Thumbnails.map;
-			// Purely here as a precaution
+			// Prevents re-loading thumbnails when resizing the window
 			ids = ids.filter(function (id) {
 				return !map[id];
 			});
