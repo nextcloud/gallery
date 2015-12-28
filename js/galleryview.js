@@ -9,6 +9,7 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
+		this._setupUploader();
 		this.breadcrumb = new Gallery.Breadcrumb();
 	};
 
@@ -82,9 +83,10 @@
 
 			this.clear();
 
-			if (albumPath !== Gallery.currentAlbum) {
+			if (Gallery.albumMap[albumPath].etag !== Gallery.currentEtag) {
 				this.loadVisibleRows.loading = false;
 				Gallery.currentAlbum = albumPath;
+				Gallery.currentEtag = Gallery.albumMap[albumPath].etag;
 				this._setupButtons(albumPath);
 			}
 
@@ -199,6 +201,29 @@
 			$('#share-button').hide();
 			$('#sort-name-button').hide();
 			$('#sort-date-button').hide();
+		},
+
+		/**
+		 * Sets up our custom handlers for folder uploading operations
+		 *
+		 * We only want it to be called for that specific case as all other file uploading
+		 * operations will call Files.highlightFiles
+		 *
+		 * @see OC.Upload.init/file_upload_param.done()
+		 *
+		 * @private
+		 */
+		_setupUploader: function () {
+			$('#file_upload_start').on('fileuploaddone', function (e, data) {
+				if (data.files[0] === data.originalFiles[data.originalFiles.length - 1]
+					&& data.files[0].relativePath) {
+
+					//Ask for a refresh of the photowall
+					Gallery.getFiles(Gallery.currentAlbum).done(function () {
+						Gallery.view.init(Gallery.currentAlbum);
+					});
+				}
+			});
 		},
 
 		/**

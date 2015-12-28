@@ -14,21 +14,23 @@
 	/**
 	 * Creates a new image object to store information about a media file
 	 *
-	 * @param src
-	 * @param path
-	 * @param fileId
-	 * @param mimeType
-	 * @param mTime modification time
-	 * @param etag
+	 * @param {string} src
+	 * @param {string} path
+	 * @param {number} fileId
+	 * @param {string} mimeType
+	 * @param {number} mTime modification time
+	 * @param {string} etag
+	 * @param {number} size
 	 * @constructor
 	 */
-	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag) {
+	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag, size) {
 		this.src = src;
 		this.path = path;
 		this.fileId = fileId;
 		this.mimeType = mimeType;
 		this.mTime = mTime;
 		this.etag = etag;
+		this.size = size;
 		this.thumbnail = null;
 		this.domDef = null;
 		this.spinner = null;

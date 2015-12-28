@@ -93,7 +93,9 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
-	protected function mockFile($fileId, $storageId = 'home::user', $isReadable = true, $path = ''
+	protected function mockFile(
+		$fileId, $storageId = 'home::user', $isReadable = true, $path = '',
+		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024
 	) {
 		$storage = $this->mockGetStorage($storageId);
 		$file = $this->getMockBuilder('OCP\Files\File')
@@ -109,12 +111,19 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn($isReadable);
 		$file->method('getPath')
 			 ->willReturn($path);
+		$file->method('getEtag')
+			 ->willReturn($etag);
+		$file->method('getSize')
+			 ->willReturn($size);
 
 		return $file;
 	}
 
-	protected function mockJpgFile($fileId) {
-		$file = $this->mockFile($fileId);
+	protected function mockJpgFile(
+		$fileId, $storageId = 'home::user', $isReadable = true, $path = '',
+		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024
+	) {
+		$file = $this->mockFile($fileId, $storageId, $isReadable, $path, $etag, $size);
 		$this->mockJpgFileMethods($file);
 
 		return $file;
