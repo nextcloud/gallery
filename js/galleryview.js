@@ -141,7 +141,7 @@
 			// 2 windows worth of rows is the limit from which we need to start loading new rows.
 			// As we scroll down, it grows
 			var targetHeight = ($(window).height() * 2) + scroll;
-			var showRows = function (album) {
+			var showRows = _.throttle(function (album) {
 
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
@@ -185,7 +185,7 @@
 					// Something went wrong, so kill the loader
 					view.loadVisibleRows.loading = null;
 				});
-			};
+			}, 100);
 			if (this.element.height() < targetHeight) {
 				this.loadVisibleRows.loading = true;
 				this.loadVisibleRows.loading = showRows(album);
