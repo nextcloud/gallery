@@ -1,3 +1,14 @@
+owncloud-gallery (15.0.0)
+* Drag and drop files and folders owncloud/gallery#405 (@oparoz)
+* Upload straight from the app owncloud/gallery#25 (@oparoz)
+* Show thumbnails as soon as they're received owncloud/gallery#29 (@oparoz)
+* Add missing options in share dialogue owncloud/gallery#565 owncloud/gallery#213 (@imjalpreet)
+* Add flickr style gradients (@raghunayyar)
+* Full Album Name is now shown on hovering (@imjalpreet)
+* Fix the download button on public pages owncloud/gallery#554 (@imjalpreet)
+* Close the share dialogue when performing another action owncloud/gallery#545 (@viraj96)
+* PHP7 compatibility
+
 owncloud-gallery (14.5.0)
 * Make the slideshow controls work with a light background owncloud/gallery#51 (@jancborchardt @oparoz)
 * Replace feof()/fread() errors when reading some files with error messages owncloud/gallery#395 (@oparoz)
