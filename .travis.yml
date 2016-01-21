@@ -4,9 +4,11 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - 7
-  - hhvm
-
+  - 7.0
+addons:
+  apt:
+    packages:
+      - graphviz
 env:
   global:
     - CORE_BRANCH=master
@@ -25,6 +27,7 @@ cache:
   directories:
     # ${TRAVIS_BUILD_DIR} is /home/travis/build/owncloud/gallery/
     - ${TRAVIS_BUILD_DIR}/travis/php-cache
+    - ${TRAVIS_BUILD_DIR}/travis/lib-cache
     - $HOME/.composer/cache
 
 before_cache:
@@ -32,25 +35,23 @@ before_cache:
   - cp -r ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`
 
 before_install:
+  - php --modules
   # Setup Selenium
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3
-  - wget https://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.0.jar
-  - java -jar selenium-server-standalone-2.47.0.jar -port 4444 >/dev/null 2>&1 & # WARNING - Takes a long time to start up. Keep here
+  - sh -c "if [ ! -e ${TRAVIS_BUILD_DIR}/travis/lib-cache/selenium.jar ]; then wget -O ${TRAVIS_BUILD_DIR}/travis/lib-cache/selenium.jar https://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.0.jar; fi;"
+  - java -jar ${TRAVIS_BUILD_DIR}/travis/lib-cache/selenium.jar -port 4444 >/dev/null 2>&1 & # WARNING - Takes a long time to start up. Keep here
 
   # Ghostdriver does not work on Travis - Download the latest PhantomJS
   #- mkdir travis-phantomjs
-  #- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  #- tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  #- export PATH=$PWD/travis-phantomjs:$PATH
+  #- sh -c "if [ ! -e ${TRAVIS_BUILD_DIR}/travis/lib-cache/phantomjs.tar.bz2 ]; then wget -O ${TRAVIS_BUILD_DIR}/travis/lib-cache/phantomjs.tar.bz2  https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2; fi;"
+  #- tar -xvf ${TRAVIS_BUILD_DIR}/travis/lib-cache/phantomjs.tar.bz2
+  #- export PATH=${TRAVIS_BUILD_DIR}/travis/lib-cache/phantomjs:$PATH
   #- phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
 
-  # Getting dependencies
-  # Graphviz. Disabled on Travis because it requires sudo and will be replaced by proper diagrams
-  #- sudo apt-get -qq update > /dev/null
-  #- sudo apt-get -qq install graphviz > /dev/null
-  #- phpenv rehash > /dev/null
+  # Get rid of Github limits
+  - git config --global github.accesstoken $GH_TOKEN
 
   # Installing ownCloud
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
@@ -58,7 +59,21 @@ before_install:
   - cd ../core
   - php occ app:enable $APP_NAME
 
-  # Sets up the cache
+before_script:
+  # Make sure Webdriver is running
+  - curl http://localhost:4444/wd/hub/status
+  #- phantomjs --version
+
+  # Install the Imagick PHP extension
+  - sh -c "pecl config-set preferred_state beta; echo yes | printf "\n" | pecl install imagick;"
+
+  # Disable xdebug when we don't need coverage to speed up testing
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then phpenv config-rm xdebug.ini; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' != 'mysql' ]; then phpenv config-rm xdebug.ini; fi;"
+  # Always install the latest version of the xdebug PHP extension
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi"
+
+  # Sets up the PHP composer cache
   - sh -c "if [ ! -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum` ]; then mkdir -p ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`; fi;"
   - rm -rf ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor
   - sh -c "if [ -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ]; then cp -r ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`/vendor ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi;"
@@ -67,40 +82,37 @@ before_install:
   - cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME
   - composer self-update
   - composer install -o --prefer-dist --no-interaction
-
-before_script:
-  # Make sure Webdriver is running
-  - curl http://localhost:4444/wd/hub/status
-  #- phantomjs --version
-
-  # Install the Imagick PHP extension
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ]; then printf "\n" | pecl install imagick; fi;"
-  # Disable xdebug when we don't need coverage to speed up testing
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ] && [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then phpenv config-rm xdebug.ini; fi;"
-  # Install a newer xdebug PHP extension for PHP 5.6
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi"
+  - composer show -i
 
 script:
   # Test lint
   - php vendor/bin/parallel-lint --exclude travis --exclude vendor . vendor/composer vendor/symfony/yaml vendor/autoload.php
 
   # Acceptance tests, using Firefox, without code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ]; then php vendor/bin/codecept run acceptance --env firefox; fi;"
+  - php vendor/bin/codecept run acceptance --env firefox
   # Unit, integration and api tests, without code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != 'hhvm' ] && [ '$TRAVIS_PHP_VERSION' != '7' ] && [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then php vendor/bin/codecept run api,integration,unit; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.6' ]; then php vendor/bin/codecept run api,integration,unit; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' != 'mysql' ]; then php vendor/bin/codecept run api,integration,unit; fi;"
 
   # PHP 5.6 ONLY: Unit, integration and api tests with code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/codecept run api,integration,unit --coverage --coverage-xml --coverage-html; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/codecept run api,integration,unit --coverage --coverage-xml --coverage-html; fi;"
+  # We can't use phpdbg only as it doesn't work with the webdriver and we can't use it for some tests only as we can't merge html reports
+  # - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then phpenv config-rm xdebug.ini; phpdbg -qrr vendor/bin/codecept run api,integration,unit --coverage --coverage-xml --coverage-html; fi;"
+
+after_success:
   # Send coverage report to Scrutinizer
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
 
   # Generate API documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/phpdoc run; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
   # Generate Wiki documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then git submodule update --init; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then git submodule update --init; fi"
   # Send documentation to Github Pages
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ] && [ '$DB' = 'mysql' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
+
+after_failure:
+  - cat tests/_output/phpbuiltinserver.errors.txt
 
 matrix:
   include:
@@ -108,6 +120,8 @@ matrix:
       env: DB=mysql
     - php: 5.4
       env: DB=pgsql
-  allow_failures:
-    - php: hhvm
+    - php: 5.6
+      env: DB=mysql
+    - php: 7.0
+      env: DB=mysql
   fast_finish: true
