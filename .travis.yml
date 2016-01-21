@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
       - graphviz
+      - gdb
 env:
   global:
     - CORE_BRANCH=stable8.2
@@ -38,7 +39,10 @@ before_cache:
   - cp -r ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME/vendor ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`
 
 before_install:
+  # Disable opcache on PHP 7.0 as it crashes too easily
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ]; then sed -i '/opcache.so/d' ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;"
   - php --modules
+
   # Setup Selenium
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -55,6 +59,13 @@ before_install:
 
   # Get rid of Github limits
   - git config --global github.accesstoken $GH_TOKEN
+
+  # Make modifications to the environment to allow us to retrieve core dumps
+  # When debugging, make sure you enable sudo by commenting out the first line of this file
+  #- ulimit -c unlimited -S
+  #- cat /proc/sys/kernel/core_pattern
+  #- sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ]; then echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern; fi;"
+  #- cat /proc/sys/kernel/core_pattern
 
   # Installing ownCloud
   - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
@@ -117,6 +128,7 @@ after_success:
 
 after_failure:
   - cat tests/_output/phpbuiltinserver.errors.txt
+  - bash build/after_failure.sh
 
 after_script:
   # Codacy coverage report
