@@ -157,23 +157,10 @@ class PreviewService extends Service {
 	 * @param bool $animatedPreview
 	 *
 	 * @return bool
-	 * @throws InternalServerErrorServiceException
 	 */
 	private function isGifPreviewRequired($file, $animatedPreview) {
 		$gifSupport = $this->isMimeSupported('image/gif');
-		try {
-			$fileHandle = $file->fopen('rb');
-			if ($fileHandle) {
-				$animatedGif = $this->isGifAnimated($fileHandle);
-				fclose($fileHandle);
-			} else {
-				throw new \Exception();
-			}
-		} catch (\Exception $exception) {
-			throw new InternalServerErrorServiceException(
-				'Something went wrong when trying to read' . $file->getPath()
-			);
-		}
+		$animatedGif = $this->isGifAnimated($file);
 
 		return $gifSupport && !($animatedGif && $animatedPreview);
 	}
@@ -192,20 +179,50 @@ class PreviewService extends Service {
 	 *
 	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
 	 *
-	 * @param resource $fileHandle
+	 * @param File $file
 	 *
 	 * @return bool
 	 */
-	private function isGifAnimated($fileHandle) {
+	private function isGifAnimated($file) {
 		$count = 0;
-		while (!feof($fileHandle) && $count < 2) {
-			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-			$count += preg_match_all(
-				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-			);
+		$fileHandle = $this->isFileReadable($file);
+		if ($fileHandle) {
+			while (!feof($fileHandle) && $count < 2) {
+				$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+				$count += preg_match_all(
+					'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
+				);
+			}
+			fclose($fileHandle);
 		}
 
 		return $count > 1;
+	}
+
+	/**
+	 * Determines if we can read the content of the file and returns a file pointer resource
+	 *
+	 * We can't use something like $node->isReadable() as it's too unreliable
+	 * Some storage classes just check for the presence of the file
+	 *
+	 * @param File $file
+	 *
+	 * @return resource
+	 * @throws InternalServerErrorServiceException
+	 */
+	private function isFileReadable($file) {
+		try {
+			$fileHandle = $file->fopen('rb');
+			if (!$fileHandle) {
+				throw new \Exception();
+			}
+		} catch (\Exception $exception) {
+			throw new InternalServerErrorServiceException(
+				'Something went wrong when trying to read' . $file->getPath()
+			);
+		}
+
+		return $fileHandle;
 	}
 
 }
