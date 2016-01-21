@@ -18,6 +18,15 @@ Licence: MIT or AGPL
 * ...
 * ...
 
+## Tests
+
+### Test plan
+<!--
+Add each test which should be performed and give a general description of the context
+You can also link to one or more entries from the "Acceptance tests" section in the wiki
+-->
+
+ 
 ### Tested on
 
 - [ ] Windows/Firefox
@@ -31,6 +40,7 @@ Licence: MIT or AGPL
 ### Check list
 
 - [ ] Code is properly documented
+- [ ] Code is properly formatted
 - [ ] Commits have been squashed
 - [ ] Tests (unit, integration, api and/or acceptance) are included
 - [ ] Documentation (manuals or wiki) has been updated or is not required
