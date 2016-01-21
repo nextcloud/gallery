@@ -92,8 +92,10 @@ class PageController extends Controller {
 			$message =
 				'You need to disable the Gallery app before being able to use the Gallery+ app';
 
-		// Parameters sent to the template
-		$params = $this->getIndexParameters($appName);
+			return $this->htmlError($this->urlGenerator, $appName, new \Exception($message));
+		} else {
+			// Parameters sent to the template
+			$params = $this->getIndexParameters($appName);
 
 			// Will render the page using the template found in templates/index.php
 			$response = new TemplateResponse($appName, 'index', $params);
@@ -196,14 +198,14 @@ class PageController extends Controller {
 
 		// Parameters sent to the index function
 		$params = [
-			'appName' => $appName,
-			'uploadUrl' => $this->urlGenerator->linkTo(
+			'appName'                       => $appName,
+			'uploadUrl'                     => $this->urlGenerator->linkTo(
 				'files', 'ajax/upload.php'
 			),
-			'publicUploadEnabled' => $this->appConfig->getAppValue(
+			'publicUploadEnabled'           => $this->appConfig->getAppValue(
 				'core', 'shareapi_allow_public_upload', 'yes'
 			),
-			'mailNotificationEnabled' => $this->appConfig->getAppValue(
+			'mailNotificationEnabled'       => $this->appConfig->getAppValue(
 				'core', 'shareapi_allow_mail_notification', 'no'
 			),
 			'mailPublicNotificationEnabled' => $this->appConfig->getAppValue(
