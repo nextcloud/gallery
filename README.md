@@ -13,14 +13,15 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 ![Screenshot](https://raw.githubusercontent.com/owncloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
+* Upload and organise images and albums straight from the app
 * Large, zoomable previews which can be shown in fullscreen mode
 * Sort images by name or date added
-* Per album description and copyright statement
-* A la carte features (external shares, native svg, etc.)
+* Per album design, description and copyright statement
+* A la carte features (external shares, browser svg rendering, etc.)
 * Image download straight from the slideshow or the gallery
-* Seamlessly jump between the gallery and the files view
+* Switch to Gallery from any folder in files and vice-versa
 * Ignore folders containing a ".nomedia" file
-* Native SVG support (disabled by default)
+* Browser rendering of SVG images (disabled by default)
 * Mobile support
 
 Checkout the [full changelog](CHANGELOG.md) for more.
@@ -37,7 +38,6 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 ## Contributors
 
 * All the people who have provided patches to [Gallery(+)](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) and [Pictures](https://github.com/owncloud/gallery-old/pulls?q=is%3Apr+is%3Aclosed) over the years
-
 
 ## Requirements
 
@@ -62,7 +62,7 @@ Everything you need to know about bug reporting and contributing [is located her
 Here is a list of steps you might want to take before using the app
 
 ### Supporting more media types
-First, make sure you have installed ImageMagick and its PECL extension.
+First, make sure you have installed ImageMagick and its imagick PECL extension.
 Next add a few new entries to your **config/config.php** configuration file.
 
 ```
@@ -88,7 +88,7 @@ That's it. You should be able to see more media types in your slideshows and gal
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can greatly reduce the loading time of the app.
 
-Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
+Read about it in the [Administration Manual](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
 
 ## Installation
 
@@ -120,4 +120,5 @@ $ git pull --rebase
 ```
 
 ## List of patches
+
 None so far
