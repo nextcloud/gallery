@@ -12,6 +12,8 @@
 
 namespace OCA\Gallery\AppInfo;
 
+ini_set("gd.jpeg_ignore_warning", true);
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // A production environment will not have xdebug enabled and
