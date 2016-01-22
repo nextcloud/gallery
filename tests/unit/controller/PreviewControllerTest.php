@@ -164,8 +164,6 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 				$thumbnailId, $file, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 
-		$this->mockPreviewValidator($square, $base64Encode, $mockedPreview['preview']);
-
 		list($preview, $status) = self::invokePrivate(
 			$this->controller, 'getThumbnail', [$thumbnailId, $square, $scale]
 		);
@@ -529,22 +527,6 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 								   $scale
 							   )
 							   ->willReturn($array);
-
-	}
-
-	/**
-	 * @param $square
-	 * @param $base64Encode
-	 * @param $base64EncodedPreview
-	 */
-	private function mockPreviewValidator($square, $base64Encode, $base64EncodedPreview) {
-		$this->previewService->expects($this->once())
-							 ->method('previewValidator')
-							 ->with(
-								 $square,
-								 $base64Encode
-							 )
-							 ->willReturn($base64EncodedPreview);
 
 	}
 

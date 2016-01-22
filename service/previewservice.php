@@ -117,31 +117,6 @@ class PreviewService extends Service {
 	}
 
 	/**
-	 * Makes sure we return previews of the asked dimensions and fix the cache
-	 * if necessary
-	 *
-	 * @param bool $square
-	 * @param bool $base64Encode
-	 *
-	 * @return \OC_Image|string
-	 * @throws InternalServerErrorServiceException
-	 */
-	public function previewValidator($square, $base64Encode) {
-		try {
-			$preview = $this->previewManager->previewValidator($square);
-			if ($base64Encode) {
-				$preview = $this->encode($preview);
-			}
-
-			return $preview;
-		} catch (\Exception $exception) {
-			throw new InternalServerErrorServiceException(
-				'There was an error while trying to fix the preview'
-			);
-		}
-	}
-
-	/**
 	 * Returns true if the passed mime type is supported
 	 *
 	 * In case of a failure, we just return that the media type is not supported

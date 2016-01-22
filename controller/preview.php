@@ -81,17 +81,12 @@ trait Preview {
 		list($width, $height, $aspect, $animatedPreview, $base64Encode) =
 			$this->thumbnailService->getThumbnailSpecs($square, $scale);
 		/** @type File $file */
-		list($file, $preview, $status, $type) =
+		list($file, $preview, $status) =
 			$this->getData(
 				$fileId, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		if ($preview === null) {
 			$preview = $this->prepareEmptyThumbnail($file, $status);
-		} else {
-			if ($type === 'preview') {
-				$preview['preview'] =
-					$this->previewService->previewValidator($square, $base64Encode);
-			}
 		}
 
 		return [$preview, $status];
@@ -168,19 +163,17 @@ trait Preview {
 	) {
 		$status = Http::STATUS_OK;
 		if ($this->previewService->isPreviewRequired($file, $animatedPreview)) {
-			$type = 'preview';
 			$preview = $this->previewService->createPreview(
 				$file, $width, $height, $keepAspect, $base64Encode
 			);
 		} else {
-			$type = 'download';
 			$preview = $this->downloadService->downloadFile($file, $base64Encode);
 		}
 		if (!$preview) {
-			list($preview, $status, $type) = $this->getErrorData();
+			list($preview, $status) = $this->getErrorData();
 		}
 
-		return [$preview, $status, $type];
+		return [$preview, $status];
 	}
 
 	/**
@@ -188,10 +181,10 @@ trait Preview {
 	 *
 	 * @param $status
 	 *
-	 * @return array<null|int|string>
+	 * @return array<null|int>
 	 */
 	private function getErrorData($status = Http::STATUS_INTERNAL_SERVER_ERROR) {
-		return [null, $status, 'error'];
+		return [null, $status];
 	}
 
 	/**
