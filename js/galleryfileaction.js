@@ -1,4 +1,4 @@
-/* global oc_requesttoken, FileList, SlideShow */
+/* global oc_requesttoken, FileList, Gallery, SlideShow */
 (function ($, OC, OCA, oc_requesttoken) {
 	"use strict";
 	var galleryFileAction = {
@@ -201,6 +201,9 @@ $(document).ready(function () {
 	if ($('#isPublic').val()) {
 		window.galleryFileAction.scrollContainer = $(window);
 	}
+
+	var utility = new Gallery.Utility();
+	utility.addDomPurifyHooks();
 
 	// Retrieve the config as well as the list of supported media types.
 	// The list of media files is retrieved when the user clicks on a row
