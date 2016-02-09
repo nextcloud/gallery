@@ -4,6 +4,15 @@ body {
 	width: 100%;
 }
 
+#content-wrapper {
+	background-color: #fff;
+	overflow-x: auto;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transition: background-color 1s linear;
+	transition: background-color 1s linear;
+}
+
 #content {
 	height: initial;
 	min-height: calc( 100vh - 120px );
