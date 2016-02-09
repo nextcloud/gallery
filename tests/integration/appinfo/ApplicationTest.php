@@ -14,17 +14,6 @@ namespace OCA\GalleryPlus\AppInfo;
 
 use OCA\GalleryPlus\Tests\Integration\GalleryIntegrationTest;
 
-use OCA\GalleryPlus\Controller\PageController;
-use OCA\GalleryPlus\Controller\ConfigController;
-use OCA\GalleryPlus\Controller\ConfigPublicController;
-use OCA\GalleryPlus\Controller\ConfigApiController;
-use OCA\GalleryPlus\Controller\FilesController;
-use OCA\GalleryPlus\Controller\FilesPublicController;
-use OCA\GalleryPlus\Controller\FilesApiController;
-use OCA\GalleryPlus\Controller\PreviewController;
-use OCA\GalleryPlus\Controller\PreviewPublicController;
-use OCA\GalleryPlus\Controller\PreviewApiController;
-
 /**
  * Class ApplicationTest
  *
@@ -40,7 +29,7 @@ class ApplicationTest extends GalleryIntegrationTest {
 			['FilesPublicController', 'OCA\GalleryPlus\Controller\FilesPublicController'],
 			['PreviewController', 'OCA\GalleryPlus\Controller\PreviewController'],
 			['PreviewPublicController', 'OCA\GalleryPlus\Controller\PreviewPublicController'],
-			['L10N', '\OC_L10N']
+			['L10N', '\OCP\IL10N']
 		];
 	}
 
