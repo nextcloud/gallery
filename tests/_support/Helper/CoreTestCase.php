@@ -18,6 +18,8 @@ namespace Helper;
  * This class is created in order to avoid having to stay in sync with the content of these methods
  * in core
  *
+ * @group DB
+ *
  * @package OCA\Gallery\Tests\Helper
  */
 class CoreTestCase extends \Test\TestCase {

@@ -29,7 +29,7 @@ class ApplicationTest extends GalleryIntegrationTest {
 			['FilesPublicController', 'OCA\Gallery\Controller\FilesPublicController'],
 			['PreviewController', 'OCA\Gallery\Controller\PreviewController'],
 			['PreviewPublicController', 'OCA\Gallery\Controller\PreviewPublicController'],
-			['L10N', '\OC_L10N']
+			['L10N', '\OCP\IL10N']
 		];
 	}
 
