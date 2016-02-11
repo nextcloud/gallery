@@ -70,7 +70,6 @@ if (isset($request->server['REQUEST_URI'])) {
 		 * Scripts for the Files app
 		 */
 		Util::addScript($appName, 'vendor/bigshot/bigshot-compressed');
-		Util::addScript($appName, 'vendor/image-scale/image-scale.min');
 		Util::addScript($appName, 'vendor/dompurify/src/purify');
 		Util::addScript($appName, 'galleryutility');
 		Util::addScript($appName, 'galleryfileaction');
