@@ -66,6 +66,7 @@ OC.L10N.register(
     "Warning" : "Предупреждение",
     "This share is password-protected" : "Тази зона е защитена с парола.",
     "The password is wrong. Try again." : "Грешна парола. Опитай отново.",
+    "Add to your ownCloud" : "Добави към своя ownCloud",
     "Sort by date" : "Сортирай по дата",
     "Sort by name" : "Сортирай по име",
     "Album information" : "Информация за албума",
@@ -88,7 +89,6 @@ OC.L10N.register(
     "the link has expired" : "тази връзка е изтекла",
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
-    "Add to your ownCloud" : "Добави към своя ownCloud",
     "Picture view" : "Албум със снимки"
 },
 "nplurals=2; plural=(n != 1);");

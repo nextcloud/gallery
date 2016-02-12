@@ -75,6 +75,7 @@ OC.L10N.register(
     "Warning" : "Atencion",
     "This share is password-protected" : "Aqueste partiment es protegit per un senhal",
     "The password is wrong. Try again." : "Lo senhal es incorrècte. Ensajatz tornamai.",
+    "Add to your ownCloud" : "Apondre a vòstre ownCloud",
     "Sort by date" : "Triar per data",
     "Sort by name" : "Triar per nom",
     "Album information" : "Informacions sus l'album",
@@ -97,7 +98,6 @@ OC.L10N.register(
     "the link has expired" : "lo ligam a expirat",
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
-    "Add to your ownCloud" : "Apondre a vòstre ownCloud",
     "Picture view" : "Visualizacion de l'imatge"
 },
 "nplurals=2; plural=(n > 1);");

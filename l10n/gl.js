@@ -70,6 +70,7 @@ OC.L10N.register(
     "Warning" : "Aviso",
     "This share is password-protected" : "Esta compartición está protexida con contrasinal",
     "The password is wrong. Try again." : "O contrasinal é incorrecto. Ténteo de novo.",
+    "Add to your ownCloud" : "Engadir ao seu ownCloud",
     "Sort by date" : "Ordenar pola data",
     "Sort by name" : "Ordenar polo nome",
     "Album information" : "Información do álbum",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "the link has expired" : "caducou a ligazón",
     "sharing is disabled" : "foi desactivada a compartición",
     "For more information, please ask the person who has sent you this link." : "Para obter máis información, pregúntelle á persoa que lle enviou esta ligazón.",
-    "Add to your ownCloud" : "Engadir ao seu ownCloud",
     "Picture view" : "Ver imaxes"
 },
 "nplurals=2; plural=(n != 1);");

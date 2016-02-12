@@ -75,6 +75,7 @@ OC.L10N.register(
     "Warning" : "Προειδοποίηση",
     "This share is password-protected" : "Αυτός ο κοινόχρηστος φάκελος προστατεύεται με κωδικό",
     "The password is wrong. Try again." : "Εσφαλμένος κωδικός πρόσβασης. Προσπαθήστε ξανά.",
+    "Add to your ownCloud" : "Προσθήκη στο ownCloud σου",
     "Sort by date" : "Ταξινόμηση κατά ημερομηνία",
     "Sort by name" : "Ταξινόμηση κατά όνομα",
     "Album information" : "Πληροφορίες λευκώματος",
@@ -97,7 +98,6 @@ OC.L10N.register(
     "the link has expired" : "ο σύνδεσμος έληξε",
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
-    "Add to your ownCloud" : "Προσθήκη στο ownCloud σου",
     "Picture view" : "Προβολή εικονιδίων"
 },
 "nplurals=2; plural=(n != 1);");
