@@ -75,6 +75,7 @@ OC.L10N.register(
     "Warning" : "Varoitus",
     "This share is password-protected" : "Tämä jako on suojattu salasanalla",
     "The password is wrong. Try again." : "Väärä salasana. Yritä uudelleen.",
+    "Add to your ownCloud" : "Lisää ownCloudiisi",
     "Sort by date" : "Järjestä päiväyksen mukaan",
     "Sort by name" : "Järjestä nimen mukaan",
     "Album information" : "Albumin tiedot",
@@ -97,7 +98,6 @@ OC.L10N.register(
     "the link has expired" : "linkki on vanhentunut",
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
-    "Add to your ownCloud" : "Lisää ownCloudiisi",
     "Picture view" : "Kuvanäkymä"
 },
 "nplurals=2; plural=(n != 1);");
