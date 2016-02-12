@@ -42,6 +42,60 @@ style(
 	]
 );
 ?>
+<div id="notification-container">
+	<div id="notification" style="display: none;"></div>
+</div>
+<header>
+	<div id="header">
+		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>"
+		   title="" id="owncloud">
+			<div class="logo-icon svg">
+			</div>
+		</a>
+
+		<div class="header-appname-container">
+			<h1 class="header-appname">
+				<?php
+				if (\OCP\App::isEnabled('enterprise_key')) {
+					print_unescaped($theme->getHTMLName());
+				} else {
+					p($theme->getName());
+				}
+				?>
+			</h1>
+		</div>
+
+		<div id="logo-claim" style="display:none;"><?php p($theme->getLogoClaim()); ?></div>
+		<div class="header-right">
+			<span id="details">
+				<?php
+				if ($_['server2ServerSharing']) {
+					?>
+					<span id="save" data-protected="<?php p($_['protected']) ?>"
+						  data-owner="<?php p($_['displayName']) ?>"
+						  data-name="<?php p($_['filename']) ?>">
+									<button id="save-button"><?php p(
+											$l->t('Add to your ownCloud')
+										) ?></button>
+									<form class="save-form hidden" action="#">
+										<input type="text" id="remote_address"
+											   placeholder="example.com/owncloud"/>
+										<button id="save-button-confirm"
+												class="icon-confirm svg"></button>
+									</form>
+								</span>
+				<?php } ?>
+				<a id="download" class="button">
+					<img class="svg" src="<?php print_unescaped(
+						image_path('core', 'actions/download.svg')
+					); ?>" alt=""/>
+						<span id="download-text"><?php p($l->t('Download')) ?>
+						</span>
+				</a>
+			</span>
+		</div>
+	</div>
+</header>
 <div id="controls">
 	<div id='breadcrumbs'></div>
 	<div class="left">
@@ -97,7 +151,17 @@ style(
 		</div>
 	</span>
 </div>
-<div id="gallery" class="hascontrols"></div>
-<div id="emptycontent" class="hidden"></div>
-<div id="loading-indicator" class="loading"></div>
-<input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
+<div id="content-wrapper">
+	<div id="content" class="app-<?php p($_['appName']) ?>"
+		 data-albumname="<?php p($_['albumName']) ?>">
+		<div id="app">
+			<div id="gallery" class="hascontrols"></div>
+			<div id="emptycontent" class="hidden"></div>
+			<div id="loading-indicator" class="loading"></div>
+			<input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
+		</div>
+	</div>
+	<footer>
+		<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
+	</footer>
+</div>
