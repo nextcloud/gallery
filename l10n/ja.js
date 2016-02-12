@@ -75,6 +75,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "This share is password-protected" : "この共有はパスワードで保護されています",
     "The password is wrong. Try again." : "パスワードが間違っています。再試行してください。",
+    "Add to your ownCloud" : "ownCloud に追加",
     "Sort by date" : "日付で整列",
     "Sort by name" : "名前で整列",
     "Album information" : "アルバム情報",
@@ -97,7 +98,6 @@ OC.L10N.register(
     "the link has expired" : "リンクの期限が切れました",
     "sharing is disabled" : "共有は無効になっています",
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
-    "Add to your ownCloud" : "ownCloud に追加",
     "Picture view" : "ピクチャービュー"
 },
 "nplurals=1; plural=0;");

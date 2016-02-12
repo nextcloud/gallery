@@ -73,6 +73,7 @@ OC.L10N.register(
     "Warning" : "Hoiatus",
     "This share is password-protected" : "See jagamine on parooliga kaitstud",
     "The password is wrong. Try again." : "Parool on vale. Proovi uuesti.",
+    "Add to your ownCloud" : "Lisa oma ownCloudi",
     "Sort by date" : "Sorteeri kuupäeva järgi",
     "Sort by name" : "Sorteeri nime järgi",
     "Album information" : "Albumi info",
@@ -95,7 +96,6 @@ OC.L10N.register(
     "the link has expired" : "link on aegunud",
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
-    "Add to your ownCloud" : "Lisa oma ownCloudi",
     "Picture view" : "Pildi vaade"
 },
 "nplurals=2; plural=(n != 1);");
