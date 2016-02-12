@@ -75,6 +75,7 @@ OC.L10N.register(
     "Warning" : "Waarschuwing",
     "This share is password-protected" : "Deze share is met een wachtwoord beveiligd",
     "The password is wrong. Try again." : "Wachtwoord ongeldig. Probeer het nogmaals.",
+    "Add to your ownCloud" : "Toevoegen aan uw ownCloud",
     "Sort by date" : "Sorteer op datum",
     "Sort by name" : "Sorteer op naam",
     "Album information" : "Album-informatie",
@@ -97,7 +98,6 @@ OC.L10N.register(
     "the link has expired" : "de link is verlopen",
     "sharing is disabled" : "delen is uitgeschakeld",
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die u deze link heeft gestuurd.",
-    "Add to your ownCloud" : "Toevoegen aan uw ownCloud",
     "Picture view" : "Afbeeldingenoverzicht"
 },
 "nplurals=2; plural=(n != 1);");
