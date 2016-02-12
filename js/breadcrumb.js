@@ -36,6 +36,13 @@
 		ellipsis: null,
 		albumPath: null,
 		availableWidth: 0,
+		onClick: null,
+		droppableOptions: {
+			accept: "#gallery > .row > a",
+			activeClass: 'breadcrumbs-droppable',
+			hoverClass: 'breadcrumbs-droppable-hover',
+			tolerance: 'pointer'
+		},
 
 		/**
 		 * Initialises the breadcrumbs for the current album
@@ -64,6 +71,41 @@
 				this.availableWidth = availableWidth;
 				this._resize(this.availableWidth);
 			}
+		},
+
+		/**
+		 * Processes UI elements dropped on the breadcrumbs
+		 *
+		 * @param event
+		 * @param ui
+		 */
+		onDrop: function (event, ui) {
+			var $item = ui.draggable;
+			var $clone = ui.helper;
+			var $target = $(event.target);
+			if (!$target.is('.crumb')) {
+				$target = $target.closest('.crumb');
+			}
+			var targetPath = $(event.target).data('dir');
+			var dir = Gallery.currentAlbum;
+
+			while (dir.substr(0, 1) === '/') {//remove extra leading /'s
+				dir = dir.substr(1);
+			}
+			dir = '/' + dir;
+			if (dir.substr(-1, 1) !== '/') {
+				dir = dir + '/';
+			}
+			// Do nothing if dragged on current dir
+			if (targetPath === dir || targetPath + '/' === dir) {
+				return;
+			}
+			var filePath = $item.data('path');
+			var fileName = OC.basename(filePath);
+
+			$clone.fadeOut("normal", function () {
+				Gallery.move($item, fileName, filePath, $target, targetPath);
+			});
 		},
 
 		/**
@@ -170,6 +212,9 @@
 			});
 
 			this.breadcrumbsElement.append(breadcrumbs);
+
+			this.droppableOptions.drop = this.onDrop.bind(this);
+			this.breadcrumbsElement.find('.crumb:not(.last)').droppable(this.droppableOptions);
 		},
 
 		/**

@@ -14,6 +14,7 @@
 		activeSlideShow: null,
 		buttonsWidth: 350,
 		browserToolbarHeight: 150,
+		filesClient: OC.Files.getClient(),
 
 		/**
 		 * Refreshes the view and starts the slideshow if required
@@ -314,6 +315,47 @@
 		},
 
 		/**
+		 * Moves files and albums to a new location
+		 *
+		 * @param {jQuery} $item
+		 * @param {string} fileName
+		 * @param {string} filePath
+		 * @param {jQuery} $target
+		 * @param {string} targetPath
+		 */
+		move: function ($item, fileName, filePath, $target, targetPath) {
+			var self = this;
+			var dir = Gallery.currentAlbum;
+
+			if (targetPath.charAt(targetPath.length - 1) !== '/') {
+				// make sure we move the files into the target dir,
+				// not overwrite it
+				targetPath = targetPath + '/';
+			}
+			self.filesClient.move(dir + '/' + fileName, targetPath + fileName)
+				.done(function () {
+					self._removeElement(dir, filePath, $item);
+				})
+				.fail(function (status) {
+					if (status === 412) {
+						// TODO: some day here we should invoke the conflict dialog
+						OC.Notification.showTemporary(
+							t('gallery', 'Could not move "{file}", target exists', {file: fileName})
+						);
+					} else {
+						OC.Notification.showTemporary(
+							t('gallery', 'Could not move "{file}"', {file: fileName})
+						);
+					}
+					$item.fadeTo("normal", 1);
+					$target.children('.album-loader').hide();
+				})
+				.always(function () {
+					// Nothing?
+				});
+		},
+
+		/**
 		 * Builds the album's model
 		 *
 		 * @param {{albuminfo:Object, files:Array}} data
@@ -469,6 +511,45 @@
 						OC.redirect(protocol + '://' + url);
 					}
 				});
+			}
+		},
+
+		/**
+		 * Removes the moved element from the UI and refreshes the view
+		 *
+		 * @param {string} dir
+		 * @param {string}filePath
+		 * @param {jQuery} $item
+		 * @private
+		 */
+		_removeElement: function (dir, filePath, $item) {
+			var images = Gallery.albumMap[Gallery.currentAlbum].images;
+			var albums = Gallery.albumMap[Gallery.currentAlbum].subAlbums;
+			// if still viewing the same directory
+			if (Gallery.currentAlbum === dir) {
+				var removed = false;
+				// We try to see if an image was removed
+				var movedImage = _(images).findIndex({path: filePath});
+				if (movedImage >= 0) {
+					images.splice(movedImage, 1);
+					removed = true;
+				} else {
+					// It wasn't an image, so try to remove an album
+					var movedAlbum = _(albums).findIndex({path: filePath});
+					if (movedAlbum >= 0) {
+						albums.splice(movedAlbum, 1);
+						removed = true;
+					}
+				}
+
+				if (removed) {
+					$item.remove();
+					// Refresh the photowall without checking if new files have arrived in the
+					// current album
+					// TODO On the next visit this album is going to be reloaded, unless we can get
+					// an etag back from the move endpoint
+					Gallery.view.init(Gallery.currentAlbum);
+				}
 			}
 		}
 	};
