@@ -3,12 +3,13 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<a style="width: {{targetWidth}}px; height: {{targetHeight}}px;" href="">' +
+		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'href="" data-path="{{path}}">' +
 		'	<div class="image-loader loading"></div>' +
 		'	<span class="image-label">' +
 		'		<span class="title">{{label}}</span>' +
 		'	</span>' +
-		'	<div class="image container" data-path="{{path}}"></div>' +
+		'	<div class="image container"></div>' +
 		'</a>';
 
 	/**

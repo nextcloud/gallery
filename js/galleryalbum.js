@@ -3,9 +3,9 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<a style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
 		'data-width="{{targetWidth}}" data-height="{{targetHeight}}"' +
-		'href="{{targetPath}}">' +
+		'href="{{targetPath}}" data-dir="{{dir}}" data-path="{{path}}">' +
 		'	<div class="album-loader loading"></div>' +
 		'	<span class="album-label">' +
 		'		<span class="title">{{label}}</span>' +
@@ -35,6 +35,34 @@
 	};
 
 	Album.prototype = {
+		droppableOptions: {
+			accept: '#gallery > .row > a',
+			activeClass: 'album-droppable',
+			hoverClass: 'album-droppable-hover',
+			tolerance: 'pointer'
+		},
+
+		/**
+		 * Processes UI elements dropped on the album
+		 *
+		 * @param event
+		 * @param ui
+		 */
+		onDrop: function (event, ui) {
+			var $item = ui.draggable;
+			var $clone = ui.helper;
+			var $target = $(event.target);
+			var targetPath = $target.data('dir');
+			var filePath = $item.data('path');
+			var fileName = OC.basename(filePath);
+
+			this.loader.show();
+
+			$clone.fadeOut("normal", function () {
+				Gallery.move($item, fileName, filePath, $target, targetPath);
+			});
+		},
+
 		/**
 		 * Returns a new album row
 		 *
@@ -66,6 +94,8 @@
 				var albumElement = template({
 					targetHeight: targetHeight,
 					targetWidth: targetHeight,
+					dir: this.path,
+					path: this.path,
 					label: this.name,
 					targetPath: '#' + encodeURIComponent(this.path)
 				});
@@ -73,6 +103,9 @@
 				this.loader = this.domDef.children('.album-loader');
 				this.loader.hide();
 				this.domDef.click(this._openAlbum.bind(this));
+
+				this.droppableOptions.drop = this.onDrop.bind(this);
+				this.domDef.droppable(this.droppableOptions);
 
 				// Define a if you don't want to set the style in the template
 				//a.width(targetHeight);
