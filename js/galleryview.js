@@ -1,6 +1,9 @@
-/* global Gallery */
+/* global Handlebars, Gallery */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
+
+	var TEMPLATE_ADDBUTTON = '<a href="#" class="button new"><img src="{{iconUrl}}" alt="{{addText}}"></img></a>';
+
 	/**
 	 * Builds and updates the Gallery view
 	 *
@@ -9,6 +12,7 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
+		this._setupUploader();
 		this.breadcrumb = new Gallery.Breadcrumb();
 	};
 
@@ -82,9 +86,10 @@
 
 			this.clear();
 
-			if (albumPath !== Gallery.currentAlbum) {
+			if (Gallery.albumMap[albumPath].etag !== Gallery.currentEtag) {
 				this.loadVisibleRows.loading = false;
 				Gallery.currentAlbum = albumPath;
+				Gallery.currentEtag = Gallery.albumMap[albumPath].etag;
 				this._setupButtons(albumPath);
 			}
 
@@ -202,6 +207,29 @@
 		},
 
 		/**
+		 * Sets up our custom handlers for folder uploading operations
+		 *
+		 * We only want it to be called for that specific case as all other file uploading
+		 * operations will call Files.highlightFiles
+		 *
+		 * @see OC.Upload.init/file_upload_param.done()
+		 *
+		 * @private
+		 */
+		_setupUploader: function () {
+			$('#file_upload_start').on('fileuploaddone', function (e, data) {
+				if (data.files[0] === data.originalFiles[data.originalFiles.length - 1]
+					&& data.files[0].relativePath) {
+
+					//Ask for a refresh of the photowall
+					Gallery.getFiles(Gallery.currentAlbum).done(function () {
+						Gallery.view.init(Gallery.currentAlbum);
+					});
+				}
+			});
+		},
+
+		/**
 		 * Adds all the click handlers to buttons the first time they appear in the interface
 		 *
 		 * @private
@@ -216,6 +244,7 @@
 			$('#sort-date-button').click(Gallery.sorter);
 			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
+			this._renderNewButton();
 
 			this.requestId = Math.random();
 		},
@@ -366,6 +395,60 @@
  					$('#save-button-confirm').prop('disabled', false);
  				}
 			});
+		},
+		
+		/**
+		 * Creates the [+] button allowing users who can't drag and drop to upload files
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_renderNewButton: function () {
+			// if no actions container exist, skip
+			var $actionsContainer = $('.actions');
+			if (!$actionsContainer.length) {
+				return;
+			}
+			if (!this._addButtonTemplate) {
+				this._addButtonTemplate = Handlebars.compile(TEMPLATE_ADDBUTTON);
+			}
+			var $newButton = $(this._addButtonTemplate({
+				addText: t('gallery', 'New'),
+				iconUrl: OC.imagePath('core', 'actions/add')
+			}));
+
+			$actionsContainer.prepend($newButton);
+			$newButton.tooltip({'placement': 'bottom'});
+
+			$newButton.click(_.bind(this._onClickNewButton, this));
+			this._newButton = $newButton;
+		},
+
+		/**
+		 * Creates the click handler for the [+] button
+		 * @param event
+		 * @returns {boolean}
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_onClickNewButton: function (event) {
+			var $target = $(event.target);
+			if (!$target.hasClass('.button')) {
+				$target = $target.closest('.button');
+			}
+			this._newButton.tooltip('hide');
+			event.preventDefault();
+			if ($target.hasClass('disabled')) {
+				return false;
+			}
+			if (!this._newFileMenu) {
+				this._newFileMenu = new Gallery.NewFileMenu();
+				$('body').append(this._newFileMenu.$el);
+			}
+			this._newFileMenu.showAt($target);
+
+			return false;
 		}
 	};
 

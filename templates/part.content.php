@@ -27,9 +27,21 @@ script(
 		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
-		'slideshowzoomablepreview'
+		'slideshowzoomablepreview',
+		'upload-helper',
+		'vendor/owncloud/newfilemenu'
 	]
 );
+script(
+	'files',
+	[
+		'upload',
+		'file-upload',
+		'jquery.fileupload',
+		'jquery.iframe-transport'
+	]
+);
+
 style(
 	$_['appName'],
 	[
@@ -38,7 +50,14 @@ style(
 		'mobile',
 		'github-markdown',
 		'slideshow',
-		'gallerybutton'
+		'gallerybutton',
+		'upload'
+	]
+);
+style(
+	'files',
+	[
+		'upload'
 	]
 );
 ?>
@@ -67,6 +86,17 @@ style(
 			</div>
 		</div>
 	</div>
+	<div class="actions creatable">
+		<div id="uploadprogresswrapper">
+			<div id="uploadprogressbar"></div>
+			<button class="stop icon-close" style="display:none">
+			<span class="hidden-visually">
+				<?php p($l->t('Cancel upload')) ?>
+			</span>
+			</button>
+		</div>
+	</div>
+	<div id="file_action_panel"></div>
 	<span class="right">
 		<!-- sharing button -->
 		<div id="share-button" class="button">
@@ -105,3 +135,7 @@ style(
 <div id="gallery" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
+<div class="hiddenuploadfield">
+	<input type="file" id="file_upload_start" class="hiddenuploadfield" name="files[]"
+		   data-url="<?php print_unescaped($_['uploadUrl']); ?>"/>
+</div>
