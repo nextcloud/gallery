@@ -41,23 +41,22 @@ script(
 		'jquery.iframe-transport'
 	]
 );
-
+style(
+	'files',
+	[
+		'upload'
+	]
+);
 style(
 	$_['appName'],
 	[
 		'styles',
 		'share',
-		'mobile',
 		'github-markdown',
 		'slideshow',
 		'gallerybutton',
-		'upload'
-	]
-);
-style(
-	'files',
-	[
-		'upload'
+		'upload',
+		'mobile',
 	]
 );
 ?>
