@@ -28,7 +28,8 @@ script(
 		'slideshow',
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
-		'upload-helper'
+		'upload-helper',
+		'vendor/owncloud/newfilemenu'
 	]
 );
 script(
@@ -49,7 +50,8 @@ style(
 		'mobile',
 		'github-markdown',
 		'slideshow',
-		'gallerybutton'
+		'gallerybutton',
+		'upload'
 	]
 );
 style(
@@ -84,14 +86,17 @@ style(
 			</div>
 		</div>
 	</div>
-	<div id="uploadprogresswrapper">
-		<div id="uploadprogressbar"></div>
-		<button class="stop icon-close" style="display:none">
+	<div class="actions creatable">
+		<div id="uploadprogresswrapper">
+			<div id="uploadprogressbar"></div>
+			<button class="stop icon-close" style="display:none">
 			<span class="hidden-visually">
 				<?php p($l->t('Cancel upload')) ?>
 			</span>
-		</button>
+			</button>
+		</div>
 	</div>
+	<div id="file_action_panel"></div>
 	<span class="right">
 		<!-- sharing button -->
 		<div id="share-button" class="button">
