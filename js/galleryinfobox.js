@@ -21,7 +21,6 @@
 		albumInfo: null,
 		markdownReader: null,
 		htmlWriter: null,
-		allowedTags: null,
 
 		/**
 		 * Shows an information box to the user
@@ -90,7 +89,9 @@
 				smart: true,
 				safe: true
 			}), {
-				ALLOWED_TAGS: this.allowedTags
+				ALLOWED_TAGS: ['p', 'b', 'em', 'i', 'pre', 'sup', 'sub', 'strong', 'strike', 'br',
+					'hr', 'h1', 'h2', 'h3', 'li', 'ul', 'ol', 'a', 'img', 'blockquote', 'code'
+				]
 			});
 		},
 
