@@ -24,6 +24,15 @@ use OCP\Files\File;
  * @package OCA\Gallery\Config
  */
 class ConfigParser {
+	/** @var ConfigValidator */
+	private $configValidator;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->configValidator = new ConfigValidator();
+	}
 
 	/**
 	 * Returns a parsed global configuration if one was found in the root folder
@@ -142,10 +151,9 @@ class ConfigParser {
 	 */
 	private function buildAlbumConfig($currentConfig, $parsedConfig, $completionStatus, $level) {
 		foreach ($completionStatus as $key => $complete) {
-			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)
-			) {
+			if (!$this->isConfigItemComplete($key, $parsedConfig, $complete)) {
 				$parsedConfigItem = $parsedConfig[$key];
-				if ($this->isConfigUsable($parsedConfigItem, $level)) {
+				if ($this->isConfigUsable($key, $parsedConfigItem, $level)) {
 					list($configItem, $itemComplete) =
 						$this->addConfigItem($key, $parsedConfigItem, $level);
 					$currentConfig = array_merge($currentConfig, $configItem);
@@ -179,15 +187,22 @@ class ConfigParser {
 	 *    * the configuration was collected from the currently opened folder
 	 *    * the configuration was collected in a parent folder and is inheritable
 	 *
+	 * We also need to make sure that the values contained in the configuration are safe for web use
+	 *
+	 * @param string $key the configuration sub-section identifier
 	 * @param array $parsedConfigItem the configuration for a sub-section
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return bool
 	 */
-	private function isConfigUsable($parsedConfigItem, $level) {
+	private function isConfigUsable($key, $parsedConfigItem, $level) {
 		$inherit = $this->isConfigInheritable($parsedConfigItem);
 
-		return $level === 0 || $inherit;
+		$usable = $level === 0 || $inherit;
+
+		$safe = $this->configValidator->isConfigSafe($key, $parsedConfigItem);
+
+		return $usable && $safe;
 	}
 
 	/**
