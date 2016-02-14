@@ -53,12 +53,7 @@ class ConfigValidator {
 	 */
 	private function isSortingTypeSafe($parsedConfigItem, $safe) {
 		if ($safe && array_key_exists('type', $parsedConfigItem)) {
-			$type = $parsedConfigItem['type'];
-			if ($type === 'date' || $type === 'name') {
-				$safe = true;
-			} else {
-				$safe = false;
-			}
+			$safe = $safe && $this->sortingValidator('type', $parsedConfigItem['type']);
 		}
 
 		return $safe;
@@ -74,12 +69,7 @@ class ConfigValidator {
 	 */
 	private function isSortingOrderSafe($parsedConfigItem, $safe) {
 		if ($safe && array_key_exists('order', $parsedConfigItem)) {
-			$order = $parsedConfigItem['order'];
-			if ($order === 'des' || $order === 'asc') {
-				$safe = $safe && true;
-			} else {
-				$safe = false;
-			}
+			$safe = $safe && $this->sortingValidator('order', $parsedConfigItem['order']);
 		}
 
 		return $safe;
@@ -96,14 +86,28 @@ class ConfigValidator {
 	private function isDesignColourSafe($parsedConfigItem, $safe) {
 		if (array_key_exists('background', $parsedConfigItem)) {
 			$background = $parsedConfigItem['background'];
-			if (ctype_xdigit(substr($background, 1))) {
-				$safe = true;
-			} else {
-				$safe = false;
-			}
+			$safe = $safe && ctype_xdigit(substr($background, 1));
 		}
 
 		return $safe;
+	}
+
+	/**
+	 * Validates the parsed sorting values against allowed values
+	 *
+	 * @param string $section the section in the sorting config to be analysed
+	 * @param string $value the value found in that section
+	 *
+	 * @return bool
+	 */
+	private function sortingValidator($section, $value) {
+		if ($section === 'type') {
+			$validValues = ['date', 'name'];
+		} else {
+			$validValues = ['des', 'asc'];
+		}
+
+		return in_array($value, $validValues);
 	}
 
 }
