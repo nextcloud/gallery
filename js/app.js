@@ -1,6 +1,7 @@
 /* global OC, $, _, Gallery, SlideShow */
 $(document).ready(function () {
 	"use strict";
+	$('#controls').insertBefore($('#content-wrapper'));
 	Gallery.hideSearch();
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
