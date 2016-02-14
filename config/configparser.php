@@ -24,6 +24,15 @@ use OCP\Files\File;
  * @package OCA\Gallery\Config
  */
 class ConfigParser {
+	/** @var ConfigValidator */
+	private $configValidator;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->configValidator = new ConfigValidator();
+	}
 
 	/**
 	 * Returns a parsed global configuration if one was found in the root folder
@@ -191,7 +200,7 @@ class ConfigParser {
 
 		$usable = $level === 0 || $inherit;
 
-		$safe = $this->isConfigSafe($key, $parsedConfigItem);
+		$safe = $this->configValidator->isConfigSafe($key, $parsedConfigItem);
 
 		return $usable && $safe;
 	}
@@ -236,93 +245,6 @@ class ConfigParser {
 		}
 
 		return $inherit;
-	}
-
-	/**
-	 * Determines if the content of that sub-section is safe for web use
-	 *
-	 * @param string $key the configuration sub-section identifier
-	 * @param array $parsedConfigItem the configuration for a sub-section
-	 *
-	 * @return bool
-	 */
-	private function isConfigSafe($key, $parsedConfigItem) {
-		$safe = true;
-
-		switch ($key) {
-			case 'sorting':
-				$safe = $this->isSortingTypeSafe($parsedConfigItem, $safe);
-				$safe = $this->isSortingOrderSafe($parsedConfigItem, $safe);
-				break;
-			case 'design':
-				$safe = $this->isDesignColourSafe($parsedConfigItem, $safe);
-				break;
-		}
-
-		return $safe;
-	}
-
-	/**
-	 * Determines if the sorting type found in the config file is safe for web use
-	 *
-	 * @param array $parsedConfigItem the sorting configuration to analyse
-	 * @param bool $safe whether the current config has been deemed safe to use so far
-	 *
-	 * @return bool
-	 */
-	private function isSortingTypeSafe($parsedConfigItem, $safe) {
-		if ($safe && array_key_exists('type', $parsedConfigItem)) {
-			$type = $parsedConfigItem['type'];
-			if ($type === 'date' || $type === 'name') {
-				$safe = true;
-			} else {
-				$safe = false;
-			}
-		}
-
-		return $safe;
-	}
-
-	/**
-	 * Determines if the sorting order found in the config file is safe for web use
-	 *
-	 * @param array $parsedConfigItem the sorting configuration to analyse
-	 * @param bool $safe whether the current config has been deemed safe to use so far
-	 *
-	 * @return bool
-	 */
-	private function isSortingOrderSafe($parsedConfigItem, $safe) {
-		if ($safe && array_key_exists('order', $parsedConfigItem)) {
-			$order = $parsedConfigItem['order'];
-			if ($order === 'des' || $order === 'asc') {
-				$safe = $safe && true;
-			} else {
-				$safe = false;
-			}
-		}
-
-		return $safe;
-	}
-
-	/**
-	 * Determines if the background colour found in the config file is safe for web use
-	 *
-	 * @param array $parsedConfigItem the design configuration to analyse
-	 * @param bool $safe whether the current config has been deemed safe to use so far
-	 *
-	 * @return bool
-	 */
-	private function isDesignColourSafe($parsedConfigItem, $safe) {
-		if (array_key_exists('background', $parsedConfigItem)) {
-			$background = $parsedConfigItem['background'];
-			if (ctype_xdigit(substr($background, 1))) {
-				$safe = true;
-			} else {
-				$safe = false;
-			}
-		}
-
-		return $safe;
 	}
 
 }
