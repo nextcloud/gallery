@@ -217,11 +217,6 @@ window.Gallery = window.Gallery || {};
 		 * Adds hooks to DOMPurify
 		 */
 		addDomPurifyHooks: function () {
-			this.allowedTags =
-				['p', 'b', 'em', 'i', 'pre', 'sup', 'sub', 'strong', 'strike', 'br', 'hr',
-					'h1', 'h2', 'h3', 'li', 'ul', 'ol', 'a', 'img', 'blockquote', 'code'
-				];
-
 			// allowed URI schemes
 			var whitelist = ['http', 'https'];
 

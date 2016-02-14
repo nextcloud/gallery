@@ -85,7 +85,7 @@ class PageController extends Controller {
 		$params = ['appName' => $appName];
 
 		// Will render the page using the template found in templates/index.php
-		$response = new TemplateResponse($appName, 'index', $params, 'public');
+		$response = new TemplateResponse($appName, 'index', $params);
 		$this->addContentSecurityToResponse($response);
 
 		return $response;
