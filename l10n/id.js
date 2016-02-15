@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Peringatan",
     "This share is password-protected" : "Berbagi ini dilindungi sandi",
     "The password is wrong. Try again." : "Sandi salah. Coba lagi",
-    "Add to your ownCloud" : "Tambahkan ke ownCloud Anda",
     "Sort by date" : "Urutkan berdasarkan tanggal",
     "Sort by name" : "Urutkan berdasarkan nama",
     "Album information" : "Informasi album",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "tautan telah kadaluarsa",
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
+    "Add to your ownCloud" : "Tambahkan ke ownCloud Anda",
     "Picture view" : "Tampilan gambar"
 },
 "nplurals=1; plural=0;");
