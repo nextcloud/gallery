@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Figyelmeztetés",
     "This share is password-protected" : "Ez egy jelszóval védett megosztás",
     "The password is wrong. Try again." : "A megadott jelszó nem megfelelő. Próbáld újra!",
-    "Add to your ownCloud" : "Adjuk hozzá a saját ownCloudunkhoz",
     "Sort by date" : "Rendezés dátum szerint",
     "Sort by name" : "Rendezés név szerint",
     "Album information" : "Album információ",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "a hivatkozás lejárt",
     "sharing is disabled" : "letiltásra került a megosztás",
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresd fel azt az embert, aki küldte ezt a hivatkozást.",
+    "Add to your ownCloud" : "Adjuk hozzá a saját ownCloudunkhoz",
     "Picture view" : "Képnézet"
 },
 "nplurals=2; plural=(n != 1);");

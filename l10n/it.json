@@ -73,7 +73,6 @@
     "Warning" : "Avviso",
     "This share is password-protected" : "Questa condivisione è protetta da password",
     "The password is wrong. Try again." : "La password è errata. Prova ancora.",
-    "Add to your ownCloud" : "Aggiungi al tuo ownCloud",
     "Sort by date" : "Ordina per data",
     "Sort by name" : "Ordina per nome",
     "Album information" : "Informazioni sull'album",
@@ -96,6 +95,7 @@
     "the link has expired" : "il collegamento è scaduto",
     "sharing is disabled" : "la condivisione è disabilitata",
     "For more information, please ask the person who has sent you this link." : "Per ulteriori informazioni, chiedi alla persona che ti ha inviato il collegamento.",
+    "Add to your ownCloud" : "Aggiungi al tuo ownCloud",
     "Picture view" : "Vista immagini"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

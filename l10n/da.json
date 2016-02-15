@@ -73,7 +73,6 @@
     "Warning" : "Advarsel",
     "This share is password-protected" : "Delingen er beskyttet af kodeord",
     "The password is wrong. Try again." : "Kodeordet er forkert. Prøv igen.",
-    "Add to your ownCloud" : "Tilføj til din ownCload",
     "Sort by date" : "Sortér efter dato",
     "Sort by name" : "Sortér efter navn",
     "Album information" : "Information om album",
@@ -96,6 +95,7 @@
     "the link has expired" : "linket er udløbet",
     "sharing is disabled" : "deling er deaktiveret",
     "For more information, please ask the person who has sent you this link." : "For mere information, så spørg personen som sendte dig dette link.",
+    "Add to your ownCloud" : "Tilføj til din ownCload",
     "Picture view" : "Billedvisning"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

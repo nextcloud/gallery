@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "คำเตือน",
     "This share is password-protected" : "นี้แชร์การป้องกันด้วยรหัสผ่าน",
     "The password is wrong. Try again." : "รหัสผ่านที่ไม่ถูกต้อง กรุณาลองอีกครั้ง",
-    "Add to your ownCloud" : "เพิ่มลงใน ownCloud ของคุณ",
     "Sort by date" : "เรียงตามวันที่",
     "Sort by name" : "เรียงตามชื่อ",
     "Album information" : "ข้อมูลอัลบั้ม",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "ลิงค์หมดอายุ",
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
+    "Add to your ownCloud" : "เพิ่มลงใน ownCloud ของคุณ",
     "Picture view" : "ดูรูปภาพ"
 },
 "nplurals=1; plural=0;");
