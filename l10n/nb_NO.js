@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Advarsel",
     "This share is password-protected" : "Denne delingen er passordbeskyttet",
     "The password is wrong. Try again." : "Passordet er feil. Prøv på nytt.",
-    "Add to your ownCloud" : "Legg til i din ownCloud",
     "Sort by date" : "Sorter på dato",
     "Sort by name" : "Sorter på navn",
     "Album information" : "Album-informasjon",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "lenken er utløpt",
     "sharing is disabled" : "deling er deaktivert",
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
+    "Add to your ownCloud" : "Legg til i din ownCloud",
     "Picture view" : "Bildevisning"
 },
 "nplurals=2; plural=(n != 1);");

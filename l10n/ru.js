@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Предупреждение",
     "This share is password-protected" : "Общий ресурс защищен паролем",
     "The password is wrong. Try again." : "Неверный пароль. Попробуйте еще раз.",
-    "Add to your ownCloud" : "Добавить в свой ownCloud",
     "Sort by date" : "Сортировать по дате",
     "Sort by name" : "Сортировать по имени",
     "Album information" : "Информация об альбоме",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "срок действия ссылки истек",
     "sharing is disabled" : "общий доступ отключён",
     "For more information, please ask the person who has sent you this link." : "Для получения более подробной информации, пожалуйста, обратитесь к человеку, который послал вам эту ссылку.",
+    "Add to your ownCloud" : "Добавить в свой ownCloud",
     "Picture view" : "Просмотр изображения"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

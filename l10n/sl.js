@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Opozorilo",
     "This share is password-protected" : "To mesto je zaščiteno z geslom.",
     "The password is wrong. Try again." : "Geslo je napačno. Poskusite znova.",
-    "Add to your ownCloud" : "Dodaj v svoj oblak ownCloud",
     "Sort by date" : "Sortiraj po datumu",
     "Sort by name" : "Sortiraj po imenu",
     "Album information" : "Podrobnosti albuma",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "povezava je potekla",
     "sharing is disabled" : "souporaba je onemogočena.",
     "For more information, please ask the person who has sent you this link." : "Za več informacij kontaktirajte osebo, ki vam je to povezavo poslala.",
+    "Add to your ownCloud" : "Dodaj v svoj oblak ownCloud",
     "Picture view" : "Slikovni pogled"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

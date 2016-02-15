@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Precaución",
     "This share is password-protected" : "Este elemento compartido está protegido por contraseña",
     "The password is wrong. Try again." : "La contraseña introducida es errónea. Inténtelo de nuevo.",
-    "Add to your ownCloud" : "Agregue su propio ownCloud",
     "Sort by date" : "Ordenar por fecha",
     "Sort by name" : "Ordenar por nombre",
     "Album information" : "Información del álbum",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "el enlace ha expirado",
     "sharing is disabled" : "compartir está desactivado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, contacte a la persona que le envió el enlace.",
+    "Add to your ownCloud" : "Agregue su propio ownCloud",
     "Picture view" : "Vista de imágenes"
 },
 "nplurals=2; plural=(n != 1);");

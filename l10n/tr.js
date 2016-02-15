@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Uyarı",
     "This share is password-protected" : "Bu paylaşım parola korumalı",
     "The password is wrong. Try again." : "Parola hatalı. Yeniden deneyin.",
-    "Add to your ownCloud" : "ownCloud'ınıza Ekleyin",
     "Sort by date" : "Tarihe göre sırala",
     "Sort by name" : "Ada göre sırala",
     "Album information" : "Albüm bilgisi",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "bağlantı zamanı geçmiş",
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Daha fazla bilgi için size bu bağlantıyı veren kişiyle bağlantıya geçin.",
+    "Add to your ownCloud" : "ownCloud'ınıza Ekleyin",
     "Picture view" : "Resim görünümü"
 },
 "nplurals=2; plural=(n > 1);");
