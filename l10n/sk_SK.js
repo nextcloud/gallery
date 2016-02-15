@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Upozornenie",
     "This share is password-protected" : "Toto zdieľanie je chránené heslom",
     "The password is wrong. Try again." : "Heslo je chybné. Skúste to znova.",
-    "Add to your ownCloud" : "Pridať do svojho ownCloudu",
     "Sort by date" : "Podľa času",
     "Sort by name" : "Podľa mena",
     "Album information" : "Info o albume",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "linka vypršala",
     "sharing is disabled" : "zdieľanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
+    "Add to your ownCloud" : "Pridať do svojho ownCloudu",
     "Picture view" : "Zobrazenie obrázka"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

@@ -75,7 +75,6 @@ OC.L10N.register(
     "Warning" : "Kujdes",
     "This share is password-protected" : "Kjo pjesë është e mbrojtur me fjalëkalim",
     "The password is wrong. Try again." : "Fjalëkalimi është i gabuar. Riprovoni.",
-    "Add to your ownCloud" : "Shtojeni te ownCloud-i juaj",
     "Sort by date" : "Renditi sipas datash",
     "Sort by name" : "Renditi sipas emrash",
     "Album information" : "Të dhëna albumi",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "lidhja ka skaduar",
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër të dhëna, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
+    "Add to your ownCloud" : "Shtojeni te ownCloud-i juaj",
     "Picture view" : "Pamje Foto"
 },
 "nplurals=2; plural=(n != 1);");
