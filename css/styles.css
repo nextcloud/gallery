@@ -113,7 +113,20 @@ a.row-element {
 }
 
 .album-droppable {
-	outline: 5px dashed #000000;
+	transform: scale(0.9);
+}
+
+.album-droppable .album {
+	background: repeating-linear-gradient(
+			45deg,
+			transparent,
+			transparent 20px,
+			rgba(0, 0, 0, .3) 20px,
+			rgba(0, 0, 0, .3) 40px
+	);
+}
+
+.album-droppable .album .cropped {
 	transform: scale(0.9);
 }
 
