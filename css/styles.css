@@ -110,10 +110,16 @@ a.row-element {
 	vertical-align: top;
 	-webkit-transition: transform .2s ease-in-out;
 	transition: transform .2s ease-in-out;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	-webkit-touch-callout:none;
 }
 
 .album-droppable {
 	transform: scale(0.9);
+	-webkit-transform: scale(0.9);
 }
 
 .album-droppable .album {
@@ -128,10 +134,12 @@ a.row-element {
 
 .album-droppable .album .cropped {
 	transform: scale(0.9);
+	-webkit-transform: scale(0.9);
 }
 
 .album-droppable-hover {
 	transform: scale(1.0);
+	-webkit-transform: scale(1.0);
 	-webkit-transition: transform .1s ease-in;
 	transition: transform .1s ease-in;
 }

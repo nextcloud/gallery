@@ -9,6 +9,8 @@ script(
 	$_['appName'],
 	[
 		'app',
+		'vendor/jquery-touch-events/src/1.0.1/jquery.mobile-events.min',
+		'vendor/jquery.ui.touch-punch-custom',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
