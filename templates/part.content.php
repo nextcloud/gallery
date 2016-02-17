@@ -9,7 +9,8 @@ script(
 	$_['appName'],
 	[
 		'app',
-		'vendor/owncloud/share',
+		'vendor/jquery-touch-events/src/1.0.1/jquery.mobile-events.min',
+		'vendor/jquery.ui.touch-punch-custom',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
@@ -22,6 +23,7 @@ script(
 		'thumbnail',
 		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
+		'vendor/owncloud/share',
 		'vendor/commonmark/dist/commonmark.min',
 		'vendor/dompurify/src/purify',
 		'vendor/bigshot/bigshot-compressed',
