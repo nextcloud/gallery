@@ -3,8 +3,8 @@
 ### In short
 
 * Make sure you have properly installed and configured both ownCloud and Gallery+
-* Make sure your issue was not reported [here](https://github.com/owncloud/gallery/issues) or [here](https://github.com/interfasys/galleryplus/issues) before and that it isn't a [known issue](https://github.com/owncloud/gallery/wiki/Known-issues)
-* Use the [**issue template**](https://raw.githubusercontent.com/owncloud/core/master/issue_template.md) when reporting issues.
+* Make sure your issue was not reported [here](https://github.com/owncloud/gallery/issues) or [here](https://github.com/interfasys/galleryplus/issues) before and that it isn't a [known issue](https://github.com/interfasys/galleryplus/wiki/Known-issues)
+* Use the [**issue template**](https://raw.githubusercontent.com/interfasys/galleryplus/master/issue_template.md) when reporting issues.
 
 ### Detailed explanation
 
@@ -16,7 +16,7 @@
   - Click on "issues" in the column on the right and type any word in the top search/command bar.
   - You can also filter by appending e. g. "state:open" or "state:closed" to the search string.
   - More info on [search syntax within GitHub](https://help.github.com/articles/searching-issues)
-* Report the issue using the [ownCloud template](https://raw.githubusercontent.com/owncloud/core/master/issue_template.md), it includes all the information we need to track down the issue.
+* Report the issue using the [ownCloud template](https://raw.githubusercontent.com/interfasys/galleryplus/master/issue_template.md), it includes all the information we need to track down the issue.
 
 Help us maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
 
