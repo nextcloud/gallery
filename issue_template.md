@@ -1,12 +1,12 @@
 <!--
- +Thank you for taking the time to report an issue you've experienced using ownCloud Gallery
- +or to submit a feature request.
- +
- +To make it easier for us to help you, please fill in as much information as possible in
- +one of the forms below.
- +
- +Please choose between the "Bug report" and the "Feature request" form and delete the content of the other one
- +-->
+Thank you for taking the time to report an issue you've experienced using ownCloud Gallery
+or to submit a feature request.
+
+To make it easier for us to help you, please fill in as much information as possible in
+one of the forms below.
+ 
+Please choose between the "Bug report" and the "Feature request" form and delete the content of the other one
+-->
 
 ## Bug report
 
@@ -18,14 +18,14 @@
 
 ### Expected behaviour
 <!--
- +Tell us what should happen
- +Tip: You can leave alone text surrounded by these special markers such as this one, they're invisible
- +-->
+Tell us what should happen
+Tip: You can leave alone text surrounded by these special markers such as this one, they're invisible
+-->
 
 ### Actual behaviour
 <!--
- +Tell us what happens instead
- +-->
+Tell us what happens instead
+-->
 
 
 ### Server configuration
@@ -44,22 +44,22 @@
 
 **List of activated apps:**
 <!--
-+If you have access to your command line run e.g.:
-+# sudo -u www-data php occ app:list`
-+from within your ownCloud installation folder*
-+-->
+If you have access to your command line run e.g.:
+# sudo -u www-data php occ app:list`
+from within your ownCloud installation folder*
+-->
  
 **The content of config/config.php:**
 <!--
-+If you have access to your command line run e.g.:
-+# sudo -u www-data php occ config:list system`
-+from within your ownCloud installation folder
-+
-+or 
-+
-+Insert your config.php content here
-+(Without the database password, passwordsalt and secret)
-+-->
+If you have access to your command line run e.g.:
+# sudo -u www-data php occ config:list system`
+from within your ownCloud installation folder
+
+or 
+
+Insert your config.php content here
+(Without the database password, passwordsalt and secret)
+-->
 
 **Are you using external storage, if yes which one:** local folder, smb share, sftp, etc.
 
@@ -69,13 +69,13 @@
 
 #### Web server error log
 <!--
- +Insert your webserver log here
- +-->
+Insert your webserver log here
+-->
 
 #### ownCloud log (data/owncloud.log)
 <!--
- +Insert your ownCloud log here
- +-->
+Insert your ownCloud log here
+-->
 
 ### Client configuration
 
@@ -85,12 +85,12 @@
 
 #### Browser log
 <!--
-+Insert your browser log here, this could for example include:
-+
-+a) The javascript console log
-+b) The network log 
-+c) ...
-+-->
+Insert your browser log here, this could for example include:
+
+a) The javascript console log
+b) The network log 
+c) ...
+-->
  
 ## Feature request
 
@@ -100,20 +100,18 @@
 
 ### Description
 <!--
- +Please try to give as much information as you can about your request
- +-->
+Please try to give as much information as you can about your request
+-->
 
 ### Benefit / value
-
 <!--
- +Please explain how it could benefit users of the app, other apps or 3rd party services
- +-->
+Please explain how it could benefit users of the app, other apps or 3rd party services
+-->
 
 ### Sponsorship
-
 <!--
- +This greatly accelerates the delivery of a feature
- +-->
+This greatly accelerates the delivery of a feature
+-->
  
 **Are you a developer willing to implement this feature?**: yes/no
 
