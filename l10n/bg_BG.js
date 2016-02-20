@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Галерия",
-    "Pictures" : "Снимки",
     "Aborting preview. Could not find the file" : "Отказан е прегледа. Не можах да намеря файла",
     "No ownCloud installation (7 or higher) found at {remote}" : "Не е открита ownCloud ( 7 или по-висока ) инсталация на {remote}.",
     "Invalid ownCloud url" : "Невалиден ownCloud интернет адрес.",

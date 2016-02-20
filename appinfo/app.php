@@ -71,8 +71,8 @@ if (isset($request->server['REQUEST_URI']) && !\OCP\App::isEnabled('gallery')) {
 		 * Scripts for the Files app
 		 */
 		Util::addScript($appName, 'vendor/bigshot/bigshot-compressed');
-		Util::addScript($appName, 'vendor/image-scale/image-scale.min');
 		Util::addScript($appName, 'vendor/dompurify/src/purify');
+		Util::addScript($appName, 'galleryutility');
 		Util::addScript($appName, 'galleryfileaction');
 		Util::addScript($appName, 'slideshow');
 		Util::addScript($appName, 'slideshowcontrols');

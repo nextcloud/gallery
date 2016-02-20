@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galería",
-    "Pictures" : "Imaxes",
     "Aborting preview. Could not find the file" : "Cancelando a vista previa. Non foi posíbel atopar o ficheiro",
     "No ownCloud installation (7 or higher) found at {remote}" : "Non se atopou unha instalación do ownCloud (7 ou superior) en {remote}",
     "Invalid ownCloud url" : "URL incorrecto do ownCloud",

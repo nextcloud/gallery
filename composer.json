@@ -24,7 +24,7 @@
     "source": "https://github.com/interfasys/galleryplus"
   },
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=5.5.0",
     "symfony/yaml": "~2.6"
   },
   "require-dev": {
@@ -36,13 +36,5 @@
 	"jakub-onderka/php-console-highlighter": "0.*",
     "codeclimate/php-test-reporter": "dev-master",
     "codacy/coverage": "dev-master"
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "Codeception\\c3\\Installer::copyC3ToRoot"
-    ],
-    "post-update-cmd": [
-      "Codeception\\c3\\Installer::copyC3ToRoot"
-    ]
   }
 }

@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "갤러리",
-    "Pictures" : "사진",
     "No pictures found" : "사진을 찾을 수 없음",
     "Upload pictures in the files app to display them here" : "파일 앱에서 사진을 올리면 여기에 표시됩니다",
     "Nothing in here" : "여기에 아무것도 없음",
@@ -54,7 +53,7 @@ OC.L10N.register(
     "Set expiration date" : "만료 날짜 설정",
     "Expiration" : "만료",
     "Expiration date" : "만료 날짜",
-    "An error occured. Please try again" : "오류가 발생하였습니다. 다시 시도하십시오.",
+    "An error occured. Please try again" : "오류가 발생했습니다. 다시 시도하십시오.",
     "Adding user..." : "사용자 추가 중...",
     "group" : "그룹",
     "remote" : "원격",

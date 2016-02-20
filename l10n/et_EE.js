@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerii",
-    "Pictures" : "Pildid",
     "No pictures found" : "Ühtegi pilti ei leitud.",
     "Upload pictures in the files app to display them here" : "Piltide siin näitamiseks laadi need esmalt failide rakendusega siia",
     "Nothing in here" : "Siin pole midagi",

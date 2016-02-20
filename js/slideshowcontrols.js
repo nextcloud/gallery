@@ -169,6 +169,9 @@
 			this.container.children('.exit').click(makeCallBack(this._exit));
 			this.container.children('.pause, .play').click(makeCallBack(this._playPauseToggle));
 			this.progressBar.click(makeCallBack(this._playPauseToggle));
+			this.container.children('.previous, .next, .menu, .name').on('mousewheel DOMMouseScroll',function (evn){
+				this.container.children('.bigshotContainer')[0].dispatchEvent(new WheelEvent(evn.originalEvent.type,evn.originalEvent));
+			}.bind(this));
 		},
 
 		/**

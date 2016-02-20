@@ -38,7 +38,6 @@
 	height: 52px;
 	position: absolute;
 	z-index: 1100;
-	filter: alpha(opacity=50);
 	opacity: .5;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -48,7 +47,6 @@
 #slideshow.inactive > .progress,
 #slideshow.inactive > .menu input,
 #slideshow.inactive > .name {
-	filter: alpha(opacity=0);
 	opacity: 0;
 	/* slow fadeout, fadein will be 300ms again*/
 	-webkit-transition: opacity 3s;
@@ -85,21 +83,22 @@
 #slideshow > input:hover,
 #slideshow > .menu input:hover,
 #slideshow.inactive > .name:hover {
-	filter: alpha(opacity=75);
 	opacity: .75;
 }
 
 #slideshow > .next, #slideshow > .previous {
-	top: 50%;
-	margin-top: -21px;
+	height:100%;
+	width: 25%;
 }
 
 #slideshow > .next {
 	right: 0;
+	background-position: right;
 }
 
 #slideshow > .previous {
 	left: 0;
+	background-position: left;
 }
 
 #slideshow > .exit {
@@ -120,7 +119,6 @@
 	right: 13px;
 	background-position: 0 100%;
 	width: 32px;
-	filter: alpha(opacity=50);
 	opacity: .5;
 	height: 0;
 	min-height: 0;
@@ -130,8 +128,7 @@
 #slideshow > .menu {
 	position: relative;
 	z-index: 1100;
-	display: table;
-	margin: 0 auto;
+	right: 50px;
 }
 
 #slideshow .menu .menuItem {
@@ -142,7 +139,6 @@
 	box-shadow: none;
 	width: 52px;
 	height: 52px;
-	filter: alpha(opacity=50);
 	opacity: .5;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -167,7 +163,6 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	filter: alpha(opacity=75);
 	opacity: .75;
 }
 
@@ -183,7 +178,6 @@
 	top: 0;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
-	filter: alpha(opacity=90);
 	opacity: .9;
 	left: 50%;
 	transform: translate(-50%, 0);

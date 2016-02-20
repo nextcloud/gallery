@@ -12,7 +12,6 @@
 		this.infoContentElement = this.infoContentContainer.children('.album-info-content');
 		this.markdownReader = new commonmark.Parser();
 		this.htmlWriter = new commonmark.HtmlRenderer();
-		this._initCustomSanitizer();
 	};
 
 	InfoBox.prototype = {
@@ -22,7 +21,6 @@
 		albumInfo: null,
 		markdownReader: null,
 		htmlWriter: null,
-		allowedTags: null,
 
 		/**
 		 * Shows an information box to the user
@@ -91,7 +89,9 @@
 				smart: true,
 				safe: true
 			}), {
-				ALLOWED_TAGS: this.allowedTags
+				ALLOWED_TAGS: ['p', 'b', 'em', 'i', 'pre', 'sup', 'sub', 'strong', 'strike', 'br',
+					'hr', 'h1', 'h2', 'h3', 'li', 'ul', 'ol', 'a', 'img', 'blockquote', 'code'
+				]
 			});
 		},
 
@@ -161,54 +161,6 @@
 				target: "_blank"
 			});
 			this.infoContentElement.append(copyrightLink);
-		},
-
-		/**
-		 * Adds custom tags and rules to DomPurify
-		 *
-		 * @link https://github.com/cure53/DOMPurify/blob/master/demos/hooks-scheme-whitelist.html
-		 * @private
-		 */
-		_initCustomSanitizer: function () {
-			this.allowedTags =
-				['p', 'b', 'em', 'i', 'pre', 'sup', 'sub', 'strong', 'strike', 'br', 'hr',
-					'h1', 'h2', 'h3', 'li', 'ul', 'ol', 'a', 'img', 'blockquote', 'code'
-				];
-
-			// allowed URI schemes
-			var whitelist = ['http', 'https'];
-
-			// build fitting regex
-			var regex = new RegExp('^(' + whitelist.join('|') + '):', 'gim');
-
-			// Add a hook to enforce URI scheme whitelist
-			DOMPurify.addHook('afterSanitizeAttributes', function (node) {
-
-				// build an anchor to map URLs to
-				var anchor = document.createElement('a');
-
-				// check all href attributes for validity
-				if (node.hasAttribute('href')) {
-					anchor.href = node.getAttribute('href');
-					if (anchor.protocol && !anchor.protocol.match(regex)) {
-						node.removeAttribute('href');
-					}
-				}
-				// check all action attributes for validity
-				if (node.hasAttribute('action')) {
-					anchor.href = node.getAttribute('action');
-					if (anchor.protocol && !anchor.protocol.match(regex)) {
-						node.removeAttribute('action');
-					}
-				}
-				// check all xlink:href attributes for validity
-				if (node.hasAttribute('xlink:href')) {
-					anchor.href = node.getAttribute('xlink:href');
-					if (anchor.protocol && !anchor.protocol.match(regex)) {
-						node.removeAttribute('xlink:href');
-					}
-				}
-			});
 		}
 	};
 

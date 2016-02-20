@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galéria",
-    "Pictures" : "Képek",
     "No pictures found" : "Nincsenek képek",
     "Upload pictures in the files app to display them here" : "Tölts fel képeket az alkalmazással, hogy itt megjelenjenek",
     "Nothing in here" : "Itt nincs semmi",
