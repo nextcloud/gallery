@@ -116,7 +116,7 @@ class PageControllerTest extends \Test\TestCase {
 		$response = $this->controller->index();
 
 		$this->assertEquals($redirectUrl, $response->getRedirectURL());
-		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals(Http::STATUS_SEE_OTHER, $response->getStatus());
 		$this->assertEquals($message, $response->getCookies()['galleryErrorMessage']['value']);
 	}
 
