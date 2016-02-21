@@ -470,7 +470,7 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 			$this->middleware->afterException($this->controller, 'authenticate', $exception);
 
 		$this->assertEquals($redirectUrl, $response->getRedirectURL());
-		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals(Http::STATUS_SEE_OTHER, $response->getStatus());
 		$this->assertEquals($message, $response->getCookies()['galleryErrorMessage']['value']);
 	}
 

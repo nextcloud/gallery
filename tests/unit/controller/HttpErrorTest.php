@@ -99,7 +99,7 @@ class HttpErrorTest extends \Test\TestCase {
 		/** @type RedirectResponse $response */
 		$response = $httpError->htmlError($urlGenerator, $this->appName, $exception);
 		$this->assertEquals($redirectUrl, $response->getRedirectURL());
-		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals(Http::STATUS_SEE_OTHER, $response->getStatus());
 		$this->assertEquals($message, $response->getCookies()['galleryErrorMessage']['value']);
 	}
 
