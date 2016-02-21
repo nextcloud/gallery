@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeria",
-    "Pictures" : "Imagens",
     "No pictures found" : "Nenhuma foto encontrada",
     "Upload pictures in the files app to display them here" : "Fotos enviadas com o aplicativo de arquivos para serem exibidas aqui",
     "Nothing in here" : "Nada aqui",
@@ -31,7 +30,7 @@ OC.L10N.register(
     "Close" : "Fechar",
     "Download" : "Baixar",
     "Toggle background" : "Alternância de fundo",
-    "Shared" : "Compartilhados",
+    "Shared" : "Compartilhado",
     "Error" : "Erro",
     "Error while sharing" : "Erro ao compartilhar",
     "Error while unsharing" : "Erro ao descompartilhar",

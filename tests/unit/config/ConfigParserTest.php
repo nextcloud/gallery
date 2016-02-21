@@ -96,7 +96,10 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 	}
 
 	public function providesGetFolderConfigData() {
+		// An empty config file
 		$emptyConfig = [];
+
+		// The information section of a standard root config
 		$description = 'My cute description';
 		$copyright = 'Copyright 2004-2016 interfaSys sàrl';
 		$infoList = [
@@ -104,32 +107,48 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 			'copyright_link'   => $copyright,
 			'inherit'          => 'yes'
 		];
-		$information = [
+		$informationConfig = [
 			'information' => $infoList
 		];
 
+		// The sorting section of a standard root config
 		$sortingList = [
 			'type'    => 'name',
 			'order'   => 'des',
 			'inherit' => 'yes'
 		];
-		$sorting = [
+		$sortingConfig = [
 			'sorting' => $sortingList
 		];
-		$standardRootConfig = array_merge($information, $sorting);
-		$standardLevel = 0;
-		$rootLevel = 1;
-		$nothingCompleted = ['information' => false, 'sorting' => false];
-		$sortingCompleted = ['information' => false, 'sorting' => true];
-		$infoCompleted = ['information' => true, 'sorting' => false];
-		$allCompleted = ['information' => true, 'sorting' => true];
 
-		// One config in the current folder only
-		$currentConfigOnlyResult = $standardRootConfig;
-		$currentConfigOnlyResult['information']['level'] = $standardLevel;
-		$currentConfigOnlyResult['sorting']['level'] = $standardLevel;
+		// The standard config, including an information and sorting sub-section
+		$standardConfig = array_merge($informationConfig, $sortingConfig);
 
-		// Sorting with missing type
+		// The level for the current folder is always 0
+		$folderLevel = 0;
+
+		// The level of a parent folder, counted from the current config folder
+		$parentLevel = 1;
+
+		// The completion status only changes if the current folder contains a usable config
+		$nothingCompleted = ['design' => false, 'information' => false, 'sorting' => false];
+		$infoCompleted = ['design' => false, 'information' => true, 'sorting' => false];
+		$sortingCompleted = ['design' => false, 'information' => false, 'sorting' => true];
+		$designCompleted = ['design' => true, 'information' => false, 'sorting' => false];
+		$infoAndSortingCompleted = ['design' => false, 'information' => true, 'sorting' => true];
+		$allCompleted = ['design' => true, 'information' => true, 'sorting' => true];
+
+		// Case 0: Standard config in the current folder only
+		$currentConfigOnlyResult = $standardConfig;
+		$currentConfigOnlyResult['information']['level'] = $folderLevel;
+		$currentConfigOnlyResult['sorting']['level'] = $folderLevel;
+
+		// Case 1: Use standard config from parent folder
+		$parentConfigOnlyResult = $standardConfig;
+		$parentConfigOnlyResult['information']['level'] = $parentLevel;
+		$parentConfigOnlyResult['sorting']['level'] = $parentLevel;
+
+		// Case 2: Sorting with missing type = unusable
 		$brokenSortingConfig = [
 			'sorting' => [
 				'order'   => 'des',
@@ -137,7 +156,7 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 			]
 		];
 
-		// Sorting with different type
+		// Case 3: Use sorting config from folder and info config from parent
 		$dateSortingConfig = [
 			'sorting' => [
 				'type'  => 'date',
@@ -145,8 +164,41 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 			]
 		];
 
-		$dateSortingConfigResult = array_merge($standardRootConfig, $dateSortingConfig);
-		$dateSortingConfigResult['information']['level'] = $rootLevel;
+		$dateSortingConfigResult = array_merge($standardConfig, $dateSortingConfig);
+		$dateSortingConfigResult['information']['level'] = $parentLevel;
+
+		// Case 4: Evil sorting type = unusable
+		$evilDateSortingConfig = [
+			'sorting' => [
+				'type'  => 'date<script>alert(1)</script>',
+				'order' => 'des',
+			]
+		];
+
+		// Case 5: Evil sorting order = unusable
+		$evilSortingOrderConfig = [
+			'sorting' => [
+				'type'  => 'date',
+				'order' => 'des<script>alert(1)</script>',
+			]
+		];
+
+		// Case 6: Setting a background colour
+		$designColourConfig = [
+			'design' => [
+				'background' => '#ff9f00'
+			]
+		];
+
+		$designConfigResult = array_merge($emptyConfig, $designColourConfig);
+		$designConfigResult['design']['level'] = $folderLevel;
+
+		// Case 7: Evil background colour = unusable
+		$evilDesignColourConfig = [
+			'design' => [
+				'background' => '#ff9f00<script>alert(1)</script>'
+			]
+		];
 
 		$infoConfig = [
 			'information' => [
@@ -156,46 +208,68 @@ class ConfigParserTest extends \Test\GalleryUnitTest {
 		];
 
 		// Full information is inherited from root
-		$infoConfigResult = array_merge($standardRootConfig, $infoConfig);
-		$infoConfigResult['sorting']['level'] = $rootLevel;
+		$infoConfigResult = array_merge($standardConfig, $infoConfig);
+		$infoConfigResult['sorting']['level'] = $parentLevel;
 
+		/**
+		 * @param $currentConfig
+		 * @param $completionStatus
+		 * @param $newConfig
+		 * @param $level
+		 * @param $expectedResult
+		 */
 		return [
 			[
-				$emptyConfig, $nothingCompleted, $standardRootConfig, $standardLevel,
-				[$currentConfigOnlyResult, $allCompleted]
-			],
+				$emptyConfig, $nothingCompleted, $standardConfig, $folderLevel,
+				[$currentConfigOnlyResult, $infoAndSortingCompleted]
+			],// case 0
 			[
-				$emptyConfig, $nothingCompleted, $brokenSortingConfig,
-				$standardLevel, [$emptyConfig, $nothingCompleted]
-			],
+				$emptyConfig, $nothingCompleted, $standardConfig, $parentLevel,
+				[$parentConfigOnlyResult, $infoAndSortingCompleted]
+			],// case 1
 			[
-				$dateSortingConfig, $sortingCompleted, $standardRootConfig, $rootLevel,
-				[$dateSortingConfigResult, $allCompleted]
-			],
+				$emptyConfig, $nothingCompleted, $brokenSortingConfig, $folderLevel,
+				[$emptyConfig, $nothingCompleted]
+			],// case 2
 			[
-				$infoConfig, $infoCompleted, $standardRootConfig, $rootLevel,
-				[$infoConfigResult, $allCompleted]
-			],
-
+				$dateSortingConfig, $sortingCompleted, $standardConfig, $parentLevel,
+				[$dateSortingConfigResult, $infoAndSortingCompleted]
+			],// case 3
+			[
+				$emptyConfig, $nothingCompleted, $evilDateSortingConfig, $folderLevel,
+				[$emptyConfig, $nothingCompleted]
+			],// case 4
+			[
+				$emptyConfig, $nothingCompleted, $evilSortingOrderConfig, $folderLevel,
+				[$emptyConfig, $nothingCompleted]
+			],// case 5
+			[
+				$emptyConfig, $nothingCompleted, $designColourConfig, $folderLevel,
+				[$designConfigResult, $designCompleted]
+			],// case 6
+			[
+				$emptyConfig, $nothingCompleted, $evilDesignColourConfig, $folderLevel,
+				[$emptyConfig, $nothingCompleted]
+			]// case 7
 		];
 	}
 
 	/**
 	 * @dataProvider providesGetFolderConfigData
 	 *
-	 * @param $currentConfig
-	 * @param $configItems
-	 * @param $newConfig
-	 * @param $level
-	 * @param $expectedResult
+	 * @param array $currentConfig config collected so far
+	 * @param array $completionStatus which sub-sections were filled so far
+	 * @param array $newConfig config found in the folder we're analysing
+	 * @param int $level level at which the folder we're analysing is at (initial folder or parent)
+	 * @param array $expectedResult
 	 */
 	public function testGetFolderConfig(
-		$currentConfig, $configItems, $newConfig, $level, $expectedResult
+		$currentConfig, $completionStatus, $newConfig, $level, $expectedResult
 	) {
 		$folder = $this->mockFolderWithConfig($newConfig);
 
 		$response = $this->configParser->getFolderConfig(
-			$folder, $this->configName, $currentConfig, $configItems, $level
+			$folder, $this->configName, $currentConfig, $completionStatus, $level
 		);
 
 		$this->assertEquals($expectedResult, $response);

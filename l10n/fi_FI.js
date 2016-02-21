@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galleria",
-    "Pictures" : "Kuvat",
     "No pictures found" : "Kuvia ei löytynyt",
     "Upload pictures in the files app to display them here" : "Lähetä kuvia tiedostosovelluksen kautta. Sen jälkeen kuvat näkyvät täällä",
     "Nothing in here" : "Tyhjää täynnä",

@@ -1,4 +1,8 @@
-/* global oc_requesttoken, Gallery */
+/* global DOMPurify, oc_requesttoken, Gallery */
+
+// The Utility class can also be loaded by the Files app
+window.Gallery = window.Gallery || {};
+
 (function ($, OC, t, oc_requesttoken, Gallery) {
 	"use strict";
 	/**
@@ -207,6 +211,65 @@
 					return a.mTime - b.mTime;
 				};
 			}
+		},
+
+		/**
+		 * Adds hooks to DOMPurify
+		 */
+		addDomPurifyHooks: function () {
+			// allowed URI schemes
+			var whitelist = ['http', 'https'];
+
+			// build fitting regex
+			var regex = new RegExp('^(' + whitelist.join('|') + '):', 'gim');
+
+			DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+				// This hook enforces URI scheme whitelist
+				// @link
+				// https://github.com/cure53/DOMPurify/blob/master/demos/hooks-scheme-whitelist.html
+
+				// build an anchor to map URLs to
+				var anchor = document.createElement('a');
+
+				// check all href attributes for validity
+				if (node.hasAttribute('href')) {
+					anchor.href = node.getAttribute('href');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('href');
+					}
+				}
+				// check all action attributes for validity
+				if (node.hasAttribute('action')) {
+					anchor.href = node.getAttribute('action');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('action');
+					}
+				}
+				// check all xlink:href attributes for validity
+				if (node.hasAttribute('xlink:href')) {
+					anchor.href = node.getAttribute('xlink:href');
+					if (anchor.protocol && !anchor.protocol.match(regex)) {
+						node.removeAttribute('xlink:href');
+					}
+				}
+
+				// This hook restores the proper, standard namespace in SVG files
+				var encodedXmlns, decodedXmlns;
+
+				// Restores namespaces which were put in the DOCTYPE by Illustrator
+				if (node.hasAttribute('xmlns') && node.getAttribute('xmlns') === '&ns_svg;') {
+					encodedXmlns = node.getAttribute('xmlns');
+					decodedXmlns = encodedXmlns.replace('&ns_svg;', 'http://www.w3.org/2000/svg');
+					node.setAttribute('xmlns', decodedXmlns);
+				}
+				if (node.hasAttribute('xmlns:xlink') &&
+					node.getAttribute('xmlns:xlink') === '&ns_xlink;') {
+					encodedXmlns = node.getAttribute('xmlns:xlink');
+					decodedXmlns =
+						encodedXmlns.replace('&ns_xlink;', 'http://www.w3.org/1999/xlink');
+					node.setAttribute('xmlns:xlink', decodedXmlns);
+				}
+			});
 		}
 	};
 

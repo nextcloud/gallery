@@ -141,10 +141,17 @@
 		 * @private
 		 */
 		_pushCrumb: function (name, link, img, cssClass) {
+			var hash = '';
+
+			// Prevent the last crumb from getting a link unless the last crumb is 'home'.
+			if ( cssClass.indexOf('last') === -1 || cssClass.indexOf('home') > -1 ) {
+				hash = '#' + encodeURIComponent(link);
+			}
+
 			this.breadcrumbs.push({
 				name: name,
 				dir: link,
-				link: '#' + encodeURIComponent(link),
+				link: hash,
 				img: img,
 				cssClass: cssClass
 			});
