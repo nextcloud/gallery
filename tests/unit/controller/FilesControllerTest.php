@@ -154,7 +154,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$response = $this->controller->download($fileId, $filename);
 
 		$this->assertEquals($redirectUrl, $response->getRedirectURL());
-		$this->assertEquals(Http::STATUS_TEMPORARY_REDIRECT, $response->getStatus());
+		$this->assertEquals(Http::STATUS_SEE_OTHER, $response->getStatus());
 		$this->assertEquals(
 			$exception->getMessage(), $response->getCookies()['galleryErrorMessage']['value']
 		);
