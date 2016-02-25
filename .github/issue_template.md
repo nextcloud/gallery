@@ -108,6 +108,11 @@ Please try to give as much information as you can about your request
 Please explain how it could benefit users of the app, other apps or 3rd party services
 -->
 
+### Risk / caveats
+<!--
+Please explain the risks and caveats associated with this request
+-->
+
 ### Sponsorship
 <!--
 This greatly accelerates the delivery of a feature
