@@ -60,7 +60,7 @@
 			this.images = images;
 			this.active = true;
 			this.showButton('.play');
-			this.hideButton('.pause');
+			this.hideButton('.pause, .progress');
 			this.playing = false;
 
 			// Hide prev/next and play buttons when we only have one pic
@@ -296,7 +296,7 @@
 				this._setTimeout();
 			}
 
-			this.container.find('.play, .pause').toggleClass('hidden');
+			this.container.find('.play, .pause, .progress').toggleClass('hidden');
 		},
 
 		/**
