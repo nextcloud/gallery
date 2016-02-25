@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32" width="32" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32" width="32" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
  <defs>
-  <filter id="a" style="color-interpolation-filters:sRGB">
-   <feColorMatrix values="180" type="hueRotate" result="color1"/>
-   <feColorMatrix values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 " result="color2"/>
+  <filter id="a" style="color-interpolation-filters:sRGB" height="1.6" width="1.6" y="-.3" x="-.3">
+   <feGaussianBlur stdDeviation="2.5"/>
   </filter>
  </defs>
- <path filter="url(#a)" d="m28.123 8.9726c-1.252-2.1448-2.95-3.8431-5.095-5.0949-2.145-1.2519-4.487-1.8777-7.028-1.8777-2.54 0-4.8826 0.62582-7.0274 1.8777-2.1446 1.2516-3.8428 2.9498-5.0947 5.0949-1.2521 2.1454-1.8779 4.4874-1.8779 7.0274s0.62604 4.8821 1.8777 7.0274c1.2519 2.1446 2.9501 3.8431 5.0951 5.0949 2.1452 1.252 4.4872 1.878 7.0272 1.878s4.8826-0.62582 7.0274-1.8777c2.1446-1.2516 3.8428-2.9501 5.0949-5.0949 1.2516-2.1451 1.8775-4.4877 1.8775-7.0274 0-2.54-0.62582-4.8826-1.8772-7.0274zm-12.123 16.944c-1.7987 0-3.4575-0.44346-4.9766-1.3308-1.519-0.88715-2.7221-2.0907-3.6092-3.6095-0.88738-1.519-1.3308-3.1779-1.3308-4.9766s0.44369-3.4575 1.3308-4.9766c0.88693-1.519 2.0902-2.7223 3.6092-3.6095 1.519-0.88715 3.1779-1.3306 4.9766-1.3306v19.834z"/>
+ <path stroke-linejoin="round" d="m16 6c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm0 2v16c-4.418 0-8-3.582-8-8s3.582-8 8-8z" filter="url(#a)" stroke="#000" stroke-linecap="round" stroke-width="2"/>
+ <path d="m16 6c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm0 2v16c-4.418 0-8-3.582-8-8s3.582-8 8-8z" fill="#fff"/>
 </svg>
