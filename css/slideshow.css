@@ -55,19 +55,8 @@
 	transition: opacity 3s;
 }
 
-#slideshow input.icon-view-download {
-	background-size: 26px 26px;
-	-webkit-background-size: 26px 26px;
-	height: 38px;
-	width: 38px;
-}
-
 #slideshow input.icon-view-toggle-background {
 	background-image: url("../img/toggle.svg");
-	background-size: 26px 26px;
-	-webkit-background-size: 26px 26px;
-	height: 38px;
-	width: 38px;
 }
 
 #slideshow > * {
