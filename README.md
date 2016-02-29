@@ -9,7 +9,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 
 **This version is for ownCloud 9.0. If you need the same app for older versions of ownCloud. Use [Gallery+](https://apps.owncloud.com/content/show.php/Gallery?content=169116) from the app store.**
 
-![Screenshot](https://oc8demo.interfacloud.com/index.php/s/pvetv4RaIbFhDRb/download)
+![Screenshot](https://raw.githubusercontent.com/owncloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
 * Large, zoomable previews which can be shown in fullscreen mode
