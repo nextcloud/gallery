@@ -176,24 +176,12 @@
 			// Clicking on share button does not trigger automatic slide-up
 			$('.album-info-container').slideUp();
 
-			if (!OC.Share.droppedDown) {
+			if (!Gallery.Share.droppedDown) {
 				event.preventDefault();
 				event.stopPropagation();
 
-				(function () {
-					var target = OC.Share.showLink;
-					OC.Share.showLink = function () {
-						var r = target.apply(this, arguments);
-						$('#linkText').val($('#linkText').val().replace('index.php/s/',
-							'index.php/apps/' +
-							Gallery.appName + '/s/'));
-
-						return r;
-					};
-				})();
-
 				var albumPermissions = Gallery.config.albumPermissions;
-				$('a.share').data('item', albumPermissions.fileid).data('link', true)
+				$('a.share').data('path', albumPermissions.path).data('link', true)
 					.data('possible-permissions', albumPermissions.permissions).
 					click();
 				if (!$('#linkCheckbox').is(':checked')) {
