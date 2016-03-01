@@ -1,3 +1,7 @@
+owncloud-gallery (14.5.0)
+* Make the slideshow controls work with a light background owncloud/gallery#51 (@jancborchardt @oparoz)
+* Replace feof()/fread() errors when reading some files with error messages owncloud/gallery#395 (@oparoz)
+
 owncloud-gallery (14.4.0)
 * More gallery.cnf parameter validation owncloud/gallery#477 (@oparoz)
 * Bring back smooth scrolling on mobile owncloud/gallery#524 (@oparoz)
