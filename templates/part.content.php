@@ -9,7 +9,6 @@ script(
 	$_['appName'],
 	[
 		'app',
-		'vendor/owncloud/share',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
@@ -22,6 +21,7 @@ script(
 		'thumbnail',
 		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
+		'vendor/owncloud/share',
 		'vendor/commonmark/dist/commonmark.min',
 		'vendor/dompurify/src/purify',
 		'vendor/bigshot/bigshot-compressed',
