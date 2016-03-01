@@ -293,7 +293,7 @@
 
 				//Get owner avatars
 				if (oc_config.enable_avatars === true && data !== false && data[0] !== false &&
-					!_.isUndefined(data[0].uid_file_owner)) {
+					!_.isUndefined(data[0]) && !_.isUndefined(data[0].uid_file_owner)) {
 					dropDownEl.find(".avatar").avatar(data[0].uid_file_owner, 32);
 				}
 
