@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "skupina",
     "remote" : "vzdálený",
     "Resharing is not allowed" : "Sdílení již sdílené položky není povoleno",
+    "Error while retrieving shares" : "Chyba při otevírání sdílení",
     "Unshare" : "Zrušit sdílení",
     "notify by email" : "upozornit emailem",
     "can share" : "může sdílet",

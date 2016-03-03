@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "קבוצה",
     "remote" : "נשלט מרחוק",
     "Resharing is not allowed" : "אסור לעשות שיתוף מחדש",
+    "Error while retrieving shares" : "שגיאה במהלך שליפת שיתופים",
     "Unshare" : "הסר שיתוף",
     "notify by email" : "קבלת הודעה בדואר אלקטרוני",
     "can share" : "ניתן לשתף",

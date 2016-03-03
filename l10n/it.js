@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "gruppo",
     "remote" : "remota",
     "Resharing is not allowed" : "La ri-condivisione non è consentita",
+    "Error while retrieving shares" : "Errore durante il recupero delle condivisioni",
     "Unshare" : "Rimuovi condivisione",
     "notify by email" : "notifica tramite email",
     "can share" : "può condividere",
