@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "ryhmä",
     "remote" : "etä",
     "Resharing is not allowed" : "Jakaminen uudelleen ei ole salittu",
+    "Error while retrieving shares" : "Virhe jakoja noutaessa",
     "Unshare" : "Peru jakaminen",
     "notify by email" : "ilmoita sähköpostitse",
     "can share" : "jaa",

@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "grup",
     "remote" : "i largët",
     "Resharing is not allowed" : "Nuk lejohen rindarjet",
+    "Error while retrieving shares" : "Gabim teksa merreshin ndarjet",
     "Unshare" : "Hiqja ndarjen",
     "notify by email" : "njoftoje me email",
     "can share" : "mund të ndajë",
