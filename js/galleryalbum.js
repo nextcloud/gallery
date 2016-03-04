@@ -157,6 +157,7 @@
 			event.stopPropagation();
 			// show loading animation
 			this.loader.show();
+			Gallery.Share.hideDropDown();
 		},
 
 		/**
