@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "グループ",
     "remote" : "リモート",
     "Resharing is not allowed" : "再共有は許可されていません",
+    "Error while retrieving shares" : "共有の取得中にエラーが発生",
     "Unshare" : "共有解除",
     "notify by email" : "メールで通知",
     "can share" : "共有可",

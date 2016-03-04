@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "skupina",
     "remote" : "oddaljeno",
     "Resharing is not allowed" : "Nadaljnje omogočanje souporabe ni dovoljeno",
+    "Error while retrieving shares" : "Napaka pri pridobivanju souporabljenih mest",
     "Unshare" : "Prekini souporabo",
     "notify by email" : "obvesti po elektronski pošti",
     "can share" : "lahko omogoči souporabo",
