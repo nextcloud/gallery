@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "Gruppe",
     "remote" : "Entfernte Freigabe",
     "Resharing is not allowed" : "Weiterverteilen ist nicht erlaubt",
+    "Error while retrieving shares" : "Fehler beim Empfangen einer Freigabe",
     "Unshare" : "Freigabe aufheben",
     "notify by email" : "per E-Mail benachrichtigen",
     "can share" : "kann teilen",

@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "groep",
     "remote" : "extern",
     "Resharing is not allowed" : "Verder delen is niet toegestaan",
+    "Error while retrieving shares" : "Fout bij het ontvangen van shares",
     "Unshare" : "Stop met delen",
     "notify by email" : "melden per e-mail",
     "can share" : "kan delen",
