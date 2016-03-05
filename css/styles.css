@@ -116,6 +116,7 @@ div.crumb.last a {
 }
 
 #gallery .row > a > .album-label {
+	display: inline-block;
 	color: #fff;
 	position: absolute;
 	left: 0;
@@ -129,6 +130,7 @@ div.crumb.last a {
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	z-index: 11;
+	word-break: break-all;
 }
 
 #gallery .row > a > .image-label {
