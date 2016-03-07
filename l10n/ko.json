@@ -55,6 +55,7 @@
     "group" : "그룹",
     "remote" : "원격",
     "Resharing is not allowed" : "다시 공유할 수 없습니다",
+    "Error while retrieving shares" : "공유를 가져오는 중 오류 발생",
     "Unshare" : "공유 해제",
     "notify by email" : "이메일로 알림",
     "can share" : "공유 가능",
