@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "grupo",
     "remote" : "remoto",
     "Resharing is not allowed" : "No se permite compartir de nuevo",
+    "Error while retrieving shares" : "Error mientras buscaba compartidos",
     "Unshare" : "Dejar de compartir",
     "notify by email" : "notificar por correo electrónico",
     "can share" : "puede compartir",

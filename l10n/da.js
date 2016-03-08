@@ -57,6 +57,7 @@ OC.L10N.register(
     "group" : "gruppe",
     "remote" : "ekstern",
     "Resharing is not allowed" : "Videredeling ikke tilladt",
+    "Error while retrieving shares" : "Fejl ved hentning af delinger",
     "Unshare" : "Fjern deling",
     "notify by email" : "Giv besked med mail",
     "can share" : "kan dele",
