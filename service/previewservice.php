@@ -213,16 +213,20 @@ class PreviewService extends Service {
 		$count = 0;
 		try {
 			$fileHandle = $file->fopen('rb');
-			while (!feof($fileHandle) && $count < 2) {
-				$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-				$count += preg_match_all(
-					'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-				);
+			if ($fileHandle) {
+				while (!feof($fileHandle) && $count < 2) {
+					$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+					$count += preg_match_all(
+						'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
+					);
+				}
+				fclose($fileHandle);
+			} else {
+				throw new \Exception();
 			}
-			fclose($fileHandle);
 		} catch (\Exception $exception) {
 			throw new InternalServerErrorServiceException(
-				'Something went wrong when trying to read a GIF file'
+				'Something went wrong when trying to read' . $file->getPath()
 			);
 		}
 
