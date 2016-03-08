@@ -9,7 +9,6 @@ script(
 	$_['appName'],
 	[
 		'app',
-		'vendor/owncloud/share',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
@@ -22,6 +21,7 @@ script(
 		'thumbnail',
 		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
+		'vendor/owncloud/share',
 		'vendor/commonmark/dist/commonmark.min',
 		'vendor/dompurify/src/purify',
 		'vendor/bigshot/bigshot-compressed',
@@ -104,5 +104,4 @@ style(
 </div>
 <div id="gallery" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
-<div id="loading-indicator" class="loading"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>

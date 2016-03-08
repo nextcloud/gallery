@@ -107,8 +107,8 @@ window.Gallery = window.Gallery || {};
 		 * @return {string}
 		 */
 		getPreviewUrl: function (fileId, etag) {
-			var width = Math.floor(screen.width * window.devicePixelRatio);
-			var height = Math.floor(screen.height * window.devicePixelRatio);
+			var width = Math.ceil(screen.width * window.devicePixelRatio);
+			var height = Math.ceil(screen.height * window.devicePixelRatio);
 
 			/* Find value of longest edge. */
 			var longEdge = Math.max(width, height);
@@ -170,7 +170,7 @@ window.Gallery = window.Gallery || {};
 
 			if (Gallery.token) {
 				params.token = Gallery.token;
-				subUrl = 's/{token}/download?path={path}&files={files}';
+				subUrl = 's/{token}/download?dir={path}&files={files}';
 			} else {
 				subUrl = 'apps/files/ajax/download.php?dir={path}&files={files}';
 			}
