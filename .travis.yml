@@ -8,7 +8,7 @@ php:
 
 env:
   global:
-    - CORE_BRANCH=stable9
+    - CORE_BRANCH=master
     - APP_NAME=galleryplus
     - GH_REF: github.com/interfasys/galleryplus.git
     - secure: "dc7Xn4XKenoqsO3pNIogOjlji3UeFQ9btysy+kM/6RWgC/wBHuUwmFPoCvrFJgs+BBsV8MXCvJyT0qsGfUZ25FqFK8CgoqRsyuocT1ewRhk/KZSmAVGe1mSsTMc1SUTtbcadUDe8WBa3tXcjs1ejWCpR46JyESCC5tq1WswJpbilXrYpQ+1WslOCWXxPeZKYRLLFyQ8Echlz5fP3SGNUdSo2ycDF0sbBH5jNsHXPce8FZaUOnFSPWOF7nbCgGSTIvskq5HjC6q/2dfj9Ir2PVNFI2i/jF1fTwgwZU8mHp8nSZCTFhdP30q3aKt/hyx6IKFF3K4rYut0mncpVY1mlST8Rl7VWecSQoBdgtJAH6cgJU+D1pYcboSNSZBiwX64Dzp0MTjOHtsqzUYinqGlMO0gYHcPt7EOytiAO46QSVMRaOGcaqnt5yT0NTVOiYcoV7X3KhztFN/Yl4SAjZjSDSS7XShgAPtxF+ye5B6N0q3fcOOY5lCNbarXuEedFMAD6K5/J4E7znK5OyPTGbk1Nyjbd3M4WDKgnUk4w5r95DzgIN+uqONXe8HCMKsoZhob3PQ64vp0o52FF37ey4SITYMRTKRFi53GkzsS4hpZUbUqqzyIpTO5QyLYHPPEh4tUVB2KRVx1V8yrKRdsMTdyOPcwjgc0vQteAXOtk94LsPCY="
