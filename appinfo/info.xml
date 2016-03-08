@@ -36,6 +36,6 @@
 	<ocsid>169116</ocsid>
 	<dependencies>
 		<php min-version="5.5" max-version="7"/>
-		<owncloud min-version="9.0" max-version="9.0.99"/>
+		<owncloud min-version="9.0" max-version="9.1.99"/>
 	</dependencies>
 </info>
