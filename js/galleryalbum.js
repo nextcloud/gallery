@@ -294,7 +294,7 @@
 		 */
 		_showFolder: function (targetHeight, imageHolder) {
 			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/svg+xml',
-				Gallery.token);
+			null,null);
 			var thumb = Thumbnails.getStandardIcon(-1);
 			image.thumbnail = thumb;
 			this.images.push(image);
