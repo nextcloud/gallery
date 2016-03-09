@@ -14,12 +14,16 @@
 		this.loadVisibleRows.loading = false;
 		this._setupUploader();
 		this.breadcrumb = new Gallery.Breadcrumb();
+		this.emptyContentElement = $('#emptycontent');
+		this.controlsElement = $('#controls');
 	};
 
 	View.prototype = {
 		element: null,
 		breadcrumb: null,
 		requestId: -1,
+		emptyContentElement: null,
+		controlsElement: null,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -27,32 +31,23 @@
 		clear: function () {
 			// We want to keep all the events
 			this.element.children().detach();
-			Gallery.showLoading();
+			this.showLoading();
 		},
 
 		/**
 		 * Populates the view if there are images or albums to show
 		 *
 		 * @param {string} albumPath
+		 * @param {string|undefined} errorMessage
 		 */
-		init: function (albumPath) {
+		init: function (albumPath, errorMessage) {
 			// Only do it when the app is initialised
 			if (this.requestId === -1) {
 				this._initButtons();
 				this._blankUrl();
 			}
 			if ($.isEmptyObject(Gallery.imageMap)) {
-				this.clear();
-				if (albumPath === '') {
-					Gallery.showEmpty();
-				} else {
-					Gallery.showEmptyFolder();
-					this.hideButtons();
-					Gallery.currentAlbum = albumPath;
-					var availableWidth = $(window).width() - Gallery.buttonsWidth;
-					this.breadcrumb.init(albumPath, availableWidth);
-					Gallery.config.albumDesign = null;
-				}
+				Gallery.view.showEmptyFolder(albumPath, errorMessage);
 			} else {
 				this.viewAlbum(albumPath);
 			}
@@ -175,7 +170,7 @@
 									// meantime
 						}
 						if (view.element.length === 1) {
-							Gallery.showNormal();
+							view._showNormal();
 						}
 						if (album.viewedItems < album.subAlbums.length + album.images.length &&
 							view.element.height() < targetHeight) {
@@ -199,11 +194,61 @@
 			}
 		},
 
-		hideButtons: function () {
-			$('#album-info-button').hide();
-			$('#share-button').hide();
-			$('#sort-name-button').hide();
-			$('#sort-date-button').hide();
+		/**
+		 * Shows an empty gallery message
+		 *
+		 * @param {string} albumPath
+		 * @param {string|null} errorMessage
+		 */
+		showEmptyFolder: function (albumPath, errorMessage) {
+			var message = '<div class="icon-gallery"></div>';
+			var uploadAllowed = true;
+
+			this.clear();
+
+			if (!_.isUndefined(errorMessage) && errorMessage !== null) {
+				message += '<h2>' + t('gallery',
+						'Album cannot be shown') + '</h2>';
+				message += '<p>' + errorMessage + '</p>';
+				uploadAllowed = false;
+			} else {
+				message += '<h2>' + t('gallery',
+						'No media files found') + '</h2>';
+				// We can't upload yet on the public side
+				if (Gallery.token) {
+					message += '<p>' + t('gallery',
+							'Upload pictures in the files app to display them here') + '</p>';
+				} else {
+					message += '<p>' + t('gallery',
+							'Upload new files via drag and drop or by using the [+] button above') +
+						'</p>';
+				}
+			}
+			this.emptyContentElement.html(message);
+			this.emptyContentElement.removeClass('hidden');
+
+			//Gallery.view.showEmptyFolder();
+			this._hideButtons(uploadAllowed);
+			Gallery.currentAlbum = albumPath;
+			var availableWidth = $(window).width() - Gallery.buttonsWidth;
+			this.breadcrumb.init(albumPath, availableWidth);
+			Gallery.config.albumDesign = null;
+		},
+
+		/**
+		 * Shows the infamous loading spinner
+		 */
+		showLoading: function () {
+			this.emptyContentElement.addClass('hidden');
+			this.controlsElement.removeClass('hidden');
+		},
+
+		/**
+		 * Shows thumbnails
+		 */
+		_showNormal: function () {
+			this.emptyContentElement.addClass('hidden');
+			this.controlsElement.removeClass('hidden');
 		},
 
 		/**
@@ -282,6 +327,27 @@
 					currentSort.order));
 			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
 				currentSort.albumOrder));
+
+			$('#save-button').show();
+			$('#download').show();
+		},
+
+		/**
+		 * Hide buttons in the controls bar
+		 *
+		 * @param uploadAllowed
+		 */
+		_hideButtons: function (uploadAllowed) {
+			$('#album-info-button').hide();
+			$('#share-button').hide();
+			$('#sort-name-button').hide();
+			$('#sort-date-button').hide();
+			$('#save-button').hide();
+			$('#download').hide();
+
+			if (!uploadAllowed) {
+				$('a.button.new').hide();
+			}
 		},
 
 		/**

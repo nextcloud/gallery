@@ -2,7 +2,6 @@
 $(document).ready(function () {
 	"use strict";
 	$('#controls').insertBefore($('#content-wrapper'));
-	Gallery.hideSearch();
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
 	Gallery.token = Gallery.utility.getPublicToken();
@@ -11,14 +10,14 @@ $(document).ready(function () {
 	// The first thing to do is to detect if we're on IE
 	if (Gallery.ieVersion === 'unsupportedIe') {
 		Gallery.utility.showIeWarning(Gallery.ieVersion);
-		Gallery.showEmpty();
+		Gallery.view.showEmptyFolder('', null);
 	} else {
 		if (Gallery.ieVersion === 'oldIe') {
 			Gallery.utility.showIeWarning(Gallery.ieVersion);
 		}
 
 		// Get the config, the files and initialise the slideshow
-		Gallery.showLoading();
+		Gallery.view.showLoading();
 		$.getJSON(Gallery.utility.buildGalleryUrl('config', '', {}))
 			.then(function (config) {
 				Gallery.config = new Gallery.Config(config);
@@ -26,11 +25,11 @@ $(document).ready(function () {
 				Gallery.getFiles(currentLocation).then(function () {
 					Gallery.activeSlideShow = new SlideShow();
 					$.when(
-							Gallery.activeSlideShow.init(
-								false,
-								null,
-								Gallery.config.galleryFeatures
-							))
+						Gallery.activeSlideShow.init(
+							false,
+							null,
+							Gallery.config.galleryFeatures
+						))
 						.then(function () {
 							window.onhashchange();
 						});
@@ -59,7 +58,7 @@ $(document).ready(function () {
 					Gallery.view.viewAlbum(Gallery.currentAlbum);
 					infoContentContainer.css('max-width', $(window).width());
 				}
-				if(Gallery.currentAlbum) {
+				if (Gallery.currentAlbum) {
 					Gallery.view.breadcrumb.setMaxWidth($(window).width() - Gallery.buttonsWidth);
 				}
 

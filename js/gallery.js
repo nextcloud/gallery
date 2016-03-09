@@ -23,7 +23,7 @@
 		 */
 		refresh: function (path, albumPath) {
 			if (Gallery.currentAlbum !== albumPath) {
-				Gallery.view.init(albumPath);
+				Gallery.view.init(albumPath, null);
 			}
 
 			// If the path is mapped, that means that it's an albumPath
@@ -90,11 +90,9 @@
 					Gallery.config.updateAlbumSorting(Gallery.albumMap[albumInfo.path].sorting);
 				}
 
-			}, function () {
-				// Triggered if we couldn't find a working folder
-				Gallery.view.element.empty();
-				Gallery.showEmpty();
-				Gallery.currentAlbum = null;
+			}, function (xhr) {
+				var result = xhr.responseJSON;
+				Gallery.view.init(decodeURIComponent(currentLocation), result.message);
 			});
 		},
 
@@ -131,8 +129,9 @@
 			// Sort the images
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(sortType,
 				sortOrder));
-			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy(albumSortType,
-				albumSortOrder));
+			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(
+				Gallery.utility.sortBy(albumSortType,
+					albumSortOrder));
 
 			// Save the new settings
 			var sortConfig = {
@@ -242,58 +241,6 @@
 		},
 
 		/**
-		 * Hide the search button while we wait for core to fix the templates
-		 */
-		hideSearch: function () {
-			$('form.searchbox').hide();
-		},
-
-		/**
-		 * Shows an empty gallery message
-		 */
-		showEmpty: function () {
-			var emptyContentElement = $('#emptycontent');
-			var message = '<div class="icon-gallery"></div>';
-			message += '<h2>' + t('gallery',
-				'No pictures found') + '</h2>';
-			message += '<p>' + t('gallery',
-				'Upload pictures in the files app to display them here') + '</p>';
-			emptyContentElement.html(message);
-			emptyContentElement.removeClass('hidden');
-			$('#controls').addClass('hidden');
-		},
-
-		/**
-		 * Shows an empty gallery message
-		 */
-		showEmptyFolder: function () {
-			var emptyContentElement = $('#emptycontent');
-			var message = '<div class="icon-gallery"></div>';
-			message += '<h2>' + t('gallery',
-				'Nothing in here') + '</h2>';
-			message += '<p>' + t('gallery',
-				'No media files found in this folder') + '</p>';
-			emptyContentElement.html(message);
-			emptyContentElement.removeClass('hidden');
-		},
-
-		/**
-		 * Shows the infamous loading spinner
-		 */
-		showLoading: function () {
-			$('#emptycontent').addClass('hidden');
-			$('#controls').removeClass('hidden');
-		},
-
-		/**
-		 * Shows thumbnails
-		 */
-		showNormal: function () {
-			$('#emptycontent').addClass('hidden');
-			$('#controls').removeClass('hidden');
-		},
-
-		/**
 		 * Creates a new slideshow using the images found in the current folder
 		 *
 		 * @param {Array} images
@@ -328,7 +275,8 @@
 					c: image.etag,
 					requesttoken: oc_requesttoken
 				};
-				var downloadUrl = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
+				var downloadUrl = Gallery.utility.buildGalleryUrl('files',
+					'/download/' + image.fileId,
 					params);
 
 				return {
@@ -508,15 +456,15 @@
 				// directive
 				$.get(OC.generateUrl('apps/files_sharing/testremote'),
 					{remote: remote}).then(function (protocol) {
-						if (protocol !== 'http' && protocol !== 'https') {
-							OC.dialogs.alert(t('files_sharing',
-									'No ownCloud installation (7 or higher) found at {remote}',
-									{remote: remote}),
-								t('files_sharing', 'Invalid ownCloud url'));
-						} else {
-							OC.redirect(protocol + '://' + url);
-						}
-					});
+					if (protocol !== 'http' && protocol !== 'https') {
+						OC.dialogs.alert(t('files_sharing',
+							'No ownCloud installation (7 or higher) found at {remote}',
+							{remote: remote}),
+							t('files_sharing', 'Invalid ownCloud url'));
+					} else {
+						OC.redirect(protocol + '://' + url);
+					}
+				});
 			}
 		}
 	};

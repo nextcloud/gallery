@@ -142,7 +142,10 @@ class GetFilesCest {
 		$I->seeResponseCodeIs($statusCode);
 		$I->seeResponseIsJson();
 		$I->seeResponseContainsJson(
-			['message' => 'Album is private or unavailable (' . $statusCode . ')']
+			[
+				'message' => 'The owner has placed a restriction or the storage location is unavailable ('
+							 . $statusCode . ')'
+			]
 		);
 	}
 
