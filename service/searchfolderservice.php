@@ -30,7 +30,7 @@ class SearchFolderService extends FilesService {
 	 * @var int
 	 */
 	protected $virtualRootLevel = null;
-	
+
 	/**
 	 * This returns what we think is the current folder node based on a given path
 	 *
@@ -126,7 +126,9 @@ class SearchFolderService extends FilesService {
 			// Something very wrong has just happened
 			throw new NotFoundServiceException('Oh Nooooes!');
 		} elseif (!$this->isAllowedAndAvailable($node)) {
-			throw new ForbiddenServiceException('Album is private or unavailable');
+			throw new ForbiddenServiceException(
+				'The owner has placed a restriction or the storage location is unavailable'
+			);
 		}
 
 		return [$path, $node, $locationHasChanged];
