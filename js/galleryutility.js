@@ -97,6 +97,36 @@ window.Gallery = window.Gallery || {};
 		},
 
 		/**
+		 * Returns the host we can use for WebDAV
+		 * 
+		 * On public galleries, we need to provide the token as authorization
+		 *
+		 * @returns {string}
+		 */
+		getWebdavHost: function () {
+			var host = OC.getHost();
+			if (Gallery.token) {
+				host = Gallery.token + '@' + host;
+			}
+
+			return host;
+		},
+
+		/**
+		 * Returns the WebDAV endpoint we can use for files operations
+		 *
+		 * @returns {string}
+		 */
+		getWebdavRoot: function () {
+			var root = OC.linkToRemoteBase('webdav');
+			if (Gallery.token) {
+				root = root.replace('remote.php', 'public.php');
+			}
+
+			return root;
+		},
+
+		/**
 		 * Builds the URL which will retrieve a large preview of the file
 		 *
 		 * @fixme we cannot get rid of oc_requesttoken parameter as it's missing from the headers
