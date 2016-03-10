@@ -182,8 +182,7 @@
 
 				var albumPermissions = Gallery.config.albumPermissions;
 				$('a.share').data('path', albumPermissions.path).data('link', true)
-					.data('possible-permissions', albumPermissions.permissions).
-					click();
+					.data('possible-permissions', albumPermissions.permissions).click();
 				if (!$('#linkCheckbox').is(':checked')) {
 					$('#linkText').hide();
 				}
@@ -329,6 +328,7 @@
 			var mTime = null;
 			var etag = null;
 			var size = null;
+			var sharedWithUser = null;
 			var albumInfo = data.albuminfo;
 			var currentLocation = albumInfo.path;
 			// This adds a new node to the map for each parent album
@@ -345,8 +345,12 @@
 					mTime = files[i].mtime;
 					etag = files[i].etag;
 					size = files[i].size;
+					sharedWithUser = files[i].sharedWithUser;
 
-					image = new GalleryImage(path, path, fileId, mimeType, mTime, etag, size);
+					image =
+						new GalleryImage(
+							path, path, fileId, mimeType, mTime, etag, size, sharedWithUser
+						);
 
 					// Determines the folder name for the image
 					var dir = OC.dirname(path);

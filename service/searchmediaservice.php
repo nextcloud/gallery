@@ -199,18 +199,20 @@ class SearchMediaService extends FilesService {
 	private function addFileToResults($file) {
 		$imagePath = $this->environment->getPathFromVirtualRoot($file);
 		$imageId = $file->getId();
-		$mimeType = $file->getMimetype();
+		$mimeType = $file->getMimeType();
 		$mTime = $file->getMTime();
 		$etag = $file->getEtag();
 		$size = $file->getSize();
+		$sharedWithUser = $file->isShared();
 
 		$imageData = [
-			'path'     => $imagePath,
-			'fileid'   => $imageId,
-			'mimetype' => $mimeType,
-			'mtime'    => $mTime,
-			'etag'     => $etag,
-			'size'     => $size
+			'path'           => $imagePath,
+			'fileid'         => $imageId,
+			'mimetype'       => $mimeType,
+			'mtime'          => $mTime,
+			'etag'           => $etag,
+			'size'           => $size,
+			'sharedWithUser' => $sharedWithUser
 		];
 
 		$this->images[] = $imageData;

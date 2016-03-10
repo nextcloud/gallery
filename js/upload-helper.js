@@ -79,26 +79,6 @@ var FileList = {
 
 		// In Files, dirs start with a /
 		return '/' + Gallery.currentAlbum;
-	},
-	inList: function (filename) {
-		"use strict";
-
-	},
-	lastAction: function () {
-		"use strict";
-
-	},
-	getUniqueName: function (newname) {
-		"use strict";
-
-	},
-	add: function (fileData, options) {
-		"use strict";
-
-	},
-	checkName: function (name, newname, bool) {
-		"use strict";
-
 	}
 };
 
