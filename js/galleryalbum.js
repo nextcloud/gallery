@@ -52,8 +52,8 @@
 			var $item = ui.draggable;
 			var $clone = ui.helper;
 			var $target = $(event.target);
-			var targetPath = $target.data('dir');
-			var filePath = $item.data('path');
+			var targetPath = $target.data('dir').toString();
+			var filePath = $item.data('path').toString();
 			var fileName = OC.basename(filePath);
 
 			this.loader.show();
