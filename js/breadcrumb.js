@@ -86,7 +86,7 @@
 			if (!$target.is('.crumb')) {
 				$target = $target.closest('.crumb');
 			}
-			var targetPath = $(event.target).data('dir');
+			var targetPath = $(event.target).data('dir').toString();
 			var dir = Gallery.currentAlbum;
 
 			while (dir.substr(0, 1) === '/') {//remove extra leading /'s
@@ -100,7 +100,7 @@
 			if (targetPath === dir || targetPath + '/' === dir) {
 				return;
 			}
-			var filePath = $item.data('path');
+			var filePath = $item.data('path').toString();
 			var fileName = OC.basename(filePath);
 
 			$clone.fadeOut("normal", function () {
