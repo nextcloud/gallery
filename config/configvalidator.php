@@ -32,8 +32,8 @@ class ConfigValidator {
 
 		switch ($key) {
 			case 'sorting':
-				$safe = $this->isSortingTypeSafe($parsedConfigItem, $safe);
-				$safe = $this->isSortingOrderSafe($parsedConfigItem, $safe);
+				$safe = $this->isSortingSafe( 'type',$parsedConfigItem, $safe);
+				$safe = $this->isSortingSafe('order',$parsedConfigItem, $safe);
 				break;
 			case 'design':
 				$safe = $this->isDesignColourSafe($parsedConfigItem, $safe);
@@ -48,32 +48,18 @@ class ConfigValidator {
 	 *
 	 * @param array $parsedConfigItem the sorting configuration to analyse
 	 * @param bool $safe whether the current config has been deemed safe to use so far
-	 *
+	 * @param string key  whether this exist or not 
 	 * @return bool
 	 */
-	private function isSortingTypeSafe($parsedConfigItem, $safe) {
-		if ($safe && array_key_exists('type', $parsedConfigItem)) {
-			$safe = $safe && $this->sortingValidator('type', $parsedConfigItem['type']);
+	private function isSortingSafe($key,$parsedConfigItem, $safe) {
+		if ($safe && array_key_exists($key, $parsedConfigItem)) {
+			$safe = $safe && $this->sortingValidator($key, $parsedConfigItem[ $key ]);
 		}
 
 		return $safe;
 	}
 
-	/**
-	 * Determines if the sorting order found in the config file is safe for web use
-	 *
-	 * @param array $parsedConfigItem the sorting configuration to analyse
-	 * @param bool $safe whether the current config has been deemed safe to use so far
-	 *
-	 * @return bool
-	 */
-	private function isSortingOrderSafe($parsedConfigItem, $safe) {
-		if ($safe && array_key_exists('order', $parsedConfigItem)) {
-			$safe = $safe && $this->sortingValidator('order', $parsedConfigItem['order']);
-		}
-
-		return $safe;
-	}
+	
 
 	/**
 	 * Determines if the background colour found in the config file is safe for web use
