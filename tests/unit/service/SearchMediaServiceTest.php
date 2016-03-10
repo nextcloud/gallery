@@ -12,6 +12,8 @@
 
 namespace OCA\GalleryPlus\Service;
 
+use OCP\Files\Folder;
+
 /**
  * Class SearchMediaServiceTest
  *
@@ -189,7 +191,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 	/**
 	 * @dataProvider providesTopFolderData
 	 *
-	 * @param array $topFolder
+	 * @param Folder $topFolder
 	 * @param int $result
 	 */
 	public function testGetMediaFiles($topFolder, $result) {
@@ -203,6 +205,94 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		$response = $this->service->getMediaFiles($topFolder, $supportedMediaTypes, $features);
 
 		$this->assertSame($result, sizeof($response));
+	}
+
+	public function providesFolderWithFilesData() {
+		$isReadable = true;
+		$mounted = false;
+		$mount = null;
+		$query = '.nomedia';
+		$queryResult = false;
+
+		$file1 = [
+			'fileid'         => 11111,
+			'storageId'      => 'home::user',
+			'isReadable'     => true,
+			'path'           => null,
+			'etag'           => "8603c11cd6c5d739f2c156c38b8db8c4",
+			'size'           => 1024,
+			'sharedWithUser' => false,
+			'mimetype'       => 'image/jpeg'
+		];
+
+		$file2 = [
+			'fileid'         => 22222,
+			'storageId'      => 'webdav::user@domain.com/dav',
+			'isReadable'     => true,
+			'path'           => null,
+			'etag'           => "739f2c156c38b88603c11cd6c5ddb8c4",
+			'size'           => 102410241024,
+			'sharedWithUser' => true,
+			'mimetype'       => 'image/jpeg'
+		];
+
+
+		$folder1 = $this->mockFolder(
+			'home::user', 545454, [
+			$this->mockJpgFile(
+				$file1['fileid'], $file1['storageId'], $file1['isReadable'], $file1['path'],
+				$file1['etag'], $file1['size'], $file1['sharedWithUser']
+			),
+			$this->mockJpgFile(
+				$file2['fileid'], $file2['storageId'], $file2['isReadable'], $file2['path'],
+				$file2['etag'], $file2['size'], $file2['sharedWithUser']
+			)
+		], $isReadable, $mounted, $mount, $query, $queryResult
+		);
+
+		return [
+			[
+				$folder1, [
+				[
+					'path'           => $file1['path'],
+					'fileid'         => $file1['fileid'],
+					'mimetype'       => $file1['mimetype'],
+					'mtime'          => null,
+					'etag'           => $file1['etag'],
+					'size'           => $file1['size'],
+					'sharedWithUser' => $file1['sharedWithUser']
+				],
+				[
+					'path'           => $file2['path'],
+					'fileid'         => $file2['fileid'],
+					'mimetype'       => $file2['mimetype'],
+					'mtime'          => null,
+					'etag'           => $file2['etag'],
+					'size'           => $file2['size'],
+					'sharedWithUser' => $file2['sharedWithUser']
+				]
+			]
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider providesFolderWithFilesData
+	 *
+	 * @param Folder $topFolder
+	 * @param array $result
+	 */
+	public function testPropertiesOfGetMediaFiles($topFolder, $result) {
+		$supportedMediaTypes = [
+			'image/png',
+			'image/jpeg',
+			'image/gif'
+		];
+		$features = [];
+
+		$response = $this->service->getMediaFiles($topFolder, $supportedMediaTypes, $features);
+
+		$this->assertSame($result, $response);
 	}
 
 	/**
