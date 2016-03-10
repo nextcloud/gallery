@@ -32,7 +32,7 @@ class ConfigValidator {
 
 		switch ($key) {
 			case 'sorting':
-				$safe = $this->isSortingSafe( 'type',$parsedConfigItem, $safe);
+				$safe = $this->isSortingSafe('type',$parsedConfigItem, $safe);
 				$safe = $this->isSortingSafe('order',$parsedConfigItem, $safe);
 				break;
 			case 'design':
@@ -45,10 +45,9 @@ class ConfigValidator {
 
 	/**
 	 * Determines if the sorting type found in the config file is safe for web use
-	 *
+	 * @param string  will specify the key to check 'type' or 'order'
 	 * @param array $parsedConfigItem the sorting configuration to analyse
 	 * @param bool $safe whether the current config has been deemed safe to use so far
-	 * @param string key  whether this exist or not 
 	 * @return bool
 	 */
 	private function isSortingSafe($key,$parsedConfigItem, $safe) {
@@ -58,8 +57,6 @@ class ConfigValidator {
 
 		return $safe;
 	}
-
-	
 
 	/**
 	 * Determines if the background colour found in the config file is safe for web use
