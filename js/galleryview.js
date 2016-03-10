@@ -35,6 +35,7 @@
 			// Only do it when the app is initialised
 			if (this.requestId === -1) {
 				this._initButtons();
+				this._blankUrl();
 			}
 			if ($.isEmptyObject(Gallery.imageMap)) {
 				this.clear();
@@ -340,6 +341,20 @@
 						$(this).removeClass('hover');
 					});
 			}
+		},
+		
+		/**
+		 * If no url is entered then do not show the error box.
+		 *
+		 */
+		_blankUrl: function() {
+			$('#remote_address').on("change keyup paste", function() {
+ 				if ($(this).val() === '') {
+ 					$('#save-button-confirm').prop('disabled', true);
+ 				} else {
+ 					$('#save-button-confirm').prop('disabled', false);
+ 				}
+			});
 		}
 	};
 
