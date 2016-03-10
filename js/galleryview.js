@@ -35,7 +35,6 @@
 			// Only do it when the app is initialised
 			if (this.requestId === -1) {
 				this._initButtons();
-				this._blankUrl();
 			}
 			if ($.isEmptyObject(Gallery.imageMap)) {
 				this.clear();
@@ -232,9 +231,20 @@
 
 			var availableWidth = $(window).width() - Gallery.buttonsWidth;
 			this.breadcrumb.init(albumPath, availableWidth);
-
-			$('#sort-name-button').show();
-			$('#sort-date-button').show();
+			var album = Gallery.albumMap[albumPath];
+			var sum = album.images.length + album.subAlbums.length;
+			//If sum of the number of images and subalbums exceeds 1 then show the buttons.
+			if(sum>1)
+			{
+				$('#sort-name-button').show();
+				$('#sort-date-button').show();
+			}
+			//Otherwise do not show buttons.
+			else
+			{
+				$('#sort-name-button').hide();
+				$('#sort-date-button').hide();	
+			}
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(
@@ -341,20 +351,6 @@
 						$(this).removeClass('hover');
 					});
 			}
-		},
-		
-		/**
-		 * If no url is entered then do not show the error box.
-		 *
-		 */
-		_blankUrl: function() {
-			$('#remote_address').on("change keyup paste", function() {
- 				if ($(this).val() === '') {
- 					$('#save-button-confirm').prop('disabled', true);
- 				} else {
- 					$('#save-button-confirm').prop('disabled', false);
- 				}
-			});
 		}
 	};
 

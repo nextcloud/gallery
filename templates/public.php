@@ -82,7 +82,7 @@ style(
 										<input type="text" id="remote_address"
 											   placeholder="example.com/owncloud"/>
 										<button id="save-button-confirm"
-												class="icon-confirm svg" disabled></button>
+												class="icon-confirm svg"></button>
 									</form>
 								</span>
 				<?php } ?>
