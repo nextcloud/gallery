@@ -14,7 +14,7 @@
 		activeSlideShow: null,
 		buttonsWidth: 400,
 		browserToolbarHeight: 150,
-		filesClient: OC.Files.getClient(),
+		filesClient: null,
 
 		/**
 		 * Refreshes the view and starts the slideshow if required
