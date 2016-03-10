@@ -90,12 +90,15 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 * @param string $storageId
 	 * @param bool $isReadable
 	 * @param string $path
+	 * @param string $etag
+	 * @param int $size
+	 * @param bool $isShared
 	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function mockFile(
 		$fileId, $storageId = 'home::user', $isReadable = true, $path = '',
-		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024
+		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024, $isShared = false
 	) {
 		$storage = $this->mockGetStorage($storageId);
 		$file = $this->getMockBuilder('OCP\Files\File')
@@ -115,15 +118,17 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn($etag);
 		$file->method('getSize')
 			 ->willReturn($size);
+		$file->method('isShared')
+			 ->willReturn($isShared);
 
 		return $file;
 	}
 
 	protected function mockJpgFile(
 		$fileId, $storageId = 'home::user', $isReadable = true, $path = '',
-		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024
+		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024, $isShared = false
 	) {
-		$file = $this->mockFile($fileId, $storageId, $isReadable, $path, $etag, $size);
+		$file = $this->mockFile($fileId, $storageId, $isReadable, $path, $etag, $size, $isShared);
 		$this->mockJpgFileMethods($file);
 
 		return $file;

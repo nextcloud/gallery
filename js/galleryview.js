@@ -272,6 +272,23 @@
 					});
 				}
 			});
+
+			// Since 9.0
+			if (OC.Upload) {
+				OC.Upload._isReceivedSharedFile = function (file) {
+					var path = file.name;
+					var sharedWith = false;
+
+					if (Gallery.currentAlbum !== '' && Gallery.currentAlbum !== '/') {
+						path = Gallery.currentAlbum + '/' + path;
+					}
+					if (Gallery.imageMap[path] && Gallery.imageMap[path].sharedWithUser) {
+						sharedWith = true;
+					}
+
+					return sharedWith;
+				};
+			}
 		},
 
 		/**
