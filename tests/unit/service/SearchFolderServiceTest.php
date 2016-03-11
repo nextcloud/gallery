@@ -105,7 +105,9 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 	 */
 	public function testSendExternalFolder($storageId) {
 		$expectedException =
-			new ForbiddenServiceException('Album is private or unavailable');
+			new ForbiddenServiceException(
+				'The owner has placed a restriction or the storage location is unavailable'
+			);
 		$path = '';
 		$nodeId = 94875;
 		$files = [];

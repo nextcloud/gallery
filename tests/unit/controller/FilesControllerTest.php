@@ -169,6 +169,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$folderId = 9876;
 		$folderPermissions = 31;
 		$folderEtag = 9999888877776666;
+		$folderIsShared = false;
 		$files = [
 			['path' => $folderPathFromRoot . '/deep/path.png'],
 			['path' => $folderPathFromRoot . '/testimage.png']
@@ -177,7 +178,8 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 			'path'        => $folderPathFromRoot,
 			'fileid'      => $folderId,
 			'permissions' => $folderPermissions,
-			'etag'        => $folderEtag
+			'etag'        => $folderEtag,
+			'shared'      => $folderIsShared
 		];
 		$locationHasChanged = false;
 		$result = [
@@ -185,7 +187,9 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 			'albuminfo'          => $albumInfo,
 			'locationhaschanged' => $locationHasChanged
 		];
-		$folder = $this->mockGetFolder($folderId, $files, $folderPermissions, $folderEtag);
+		$folder = $this->mockGetFolder(
+			$folderId, $files, $folderPermissions, $folderEtag, $folderIsShared
+		);
 
 		$this->mockGetCurrentFolder(
 			$location, $folderPathFromRoot, [$features], $locationHasChanged, $folder
@@ -351,7 +355,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 								  ->willReturn($answer);
 	}
 
-	private function mockGetFolder($nodeId, $files, $permissions, $etag) {
+	private function mockGetFolder($nodeId, $files, $permissions, $etag, $isShared) {
 		$folder = $this->getMockBuilder('OCP\Files\Folder')
 					   ->disableOriginalConstructor()
 					   ->getMock();
@@ -365,6 +369,8 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 			   ->willReturn($permissions);
 		$folder->method('getEtag')
 			   ->willReturn($etag);
+		$folder->method('isShared')
+			   ->willReturn($isShared);
 
 		return $folder;
 	}
