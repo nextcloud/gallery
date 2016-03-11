@@ -173,20 +173,19 @@
 				// Used later on to determine if the
 				// respective checkbox should be checked or
 				// not.
-				// FIXME public uploading is not supported in Gallery
-				/*var publicUploadEnabled = $('#filestable').data('allow-public-upload');
-				 if (typeof publicUploadEnabled == 'undefined') {
-				 publicUploadEnabled = 'no';
-				 }
-				 var allowPublicUploadStatus = false;
+				var publicUploadEnabled = $('#gallery').data('allow-public-upload');
+				if (typeof publicUploadEnabled == 'undefined') {
+					publicUploadEnabled = 'no';
+				}
+				var allowPublicUploadStatus = false;
 
-				 $.each(data, function (key, value) {
-				 if (value.share_type === self.SHARE_TYPE_LINK) {
-				 allowPublicUploadStatus =
-				 (value.permissions & OC.PERMISSION_CREATE) ? true : false;
-				 return true;
-				 }
-				 });*/
+				$.each(data, function (key, value) {
+					if (value.share_type === self.SHARE_TYPE_LINK) {
+						allowPublicUploadStatus =
+							(value.permissions & OC.PERMISSION_CREATE) ? true : false;
+						return true;
+					}
+				});
 
 				var sharePlaceholder = t('core', 'Share with users or groups …');
 				if (oc_appconfig.core.remoteShareAllowed) {
@@ -244,20 +243,18 @@
 					html += '<span class="icon-loading-small hidden"></span>';
 					html += '</div>';
 
-					// FIXME public uploading is not supported in Gallery
-					/*if (itemType === 'folder' && (possiblePermissions & OC.PERMISSION_CREATE) &&
-					 publicUploadEnabled === 'yes') {
-					 html += '<div id="allowPublicUploadWrapper" style="display:none;">';
-					 html += '<span class="icon-loading-small hidden"></span>';
-					 html +=
-					 '<input type="checkbox" class="checkbox checkbox--right" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' +
-					 ((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
-					 html += '<label for="sharingDialogAllowPublicUpload">' +
-					 t('core', 'Allow editing') + '</label>';
-					 html += '</div>';
-					 }
-					 html += '</div>';
-					 var mailPublicNotificationEnabled = $(
+					if (itemType === 'folder' && (possiblePermissions & OC.PERMISSION_CREATE) &&
+						publicUploadEnabled === 'yes') {
+						html += '<div id="allowPublicUploadWrapper" style="display:none;">';
+						html += '<span class="icon-loading-small hidden"></span>';
+						html +=
+							'<input type="checkbox" class="checkbox checkbox--right" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' +
+							((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
+						html += '<label for="sharingDialogAllowPublicUpload">' +
+						t('core', 'Allow editing') + '</label>';
+						html += '</div>';
+					}
+					 /*var mailPublicNotificationEnabled = $(
 					 'input:hidden[name=mailPublicNotificationEnabled]').val();
 					 if (mailPublicNotificationEnabled === 'yes') {
 					 html += '<form id="emailPrivateLink">';
@@ -1028,38 +1025,38 @@ $(document).ready(function () {
 	});
 
 	// Handle the Allow Public Upload Checkbox
-	// FIXME public uploading is not supported in Gallery
-	/*$(document).on('click', '#sharingDialogAllowPublicUpload', function () {
+	$(document).on('click', '#sharingDialogAllowPublicUpload', function () {
 
-	 // Gather data
-	 var $dropDown = $('#dropdown');
-	 var allowPublicUpload = $(this).is(':checked');
-	 var $button = $(this);
-	 var $loading = $dropDown.find('#allowPublicUploadWrapper .icon-loading-small');
+		// Gather data
+		var $dropDown = $('#dropdown');
+		var shareId = $('#linkCheckbox').data('id');
+		var allowPublicUpload = $(this).is(':checked');
+		var $button = $(this);
+		var $loading = $dropDown.find('#allowPublicUploadWrapper .icon-loading-small');
 
-	 if (!$loading.hasClass('hidden')) {
-	 // already in progress
-	 return false;
-	 }
+		if (!$loading.hasClass('hidden')) {
+			// already in progress
+			return false;
+		}
 
-	 // Update the share information
-	 $button.addClass('hidden');
-	 $button.prop('disabled', true);
-	 $loading.removeClass('hidden');
-	 //(path, shareType, shareWith, publicUpload, password, permissions)
-	 $.ajax({
-	 url: OC.linkToOCS('apps/files_sharing/api/v1', 2) + 'shares/' + shareId +
-	 '?format=json',
-	 type: 'PUT',
-	 data: {
-	 publicUpload: allowPublicUpload
-	 }
-	 }).done(function () {
-	 $loading.addClass('hidden');
-	 $button.removeClass('hidden');
-	 $button.prop('disabled', false);
-	 });
-	 });*/
+		// Update the share information
+		$button.addClass('hidden');
+		$button.prop('disabled', true);
+		$loading.removeClass('hidden');
+		//(path, shareType, shareWith, publicUpload, password, permissions)
+		$.ajax({
+			url: OC.linkToOCS('apps/files_sharing/api/v1', 2) + 'shares/' + shareId +
+			'?format=json',
+			type: 'PUT',
+			data: {
+				publicUpload: allowPublicUpload
+			}
+		}).done(function () {
+			$loading.addClass('hidden');
+			$button.removeClass('hidden');
+			$button.prop('disabled', false);
+		});
+	});
 
 	$(document).on('click', '#dropdown #showPassword', function () {
 		$('#linkPass').slideToggle(OC.menuSpeed);
