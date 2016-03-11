@@ -6,6 +6,12 @@ $(document).ready(function () {
 	Gallery.view = new Gallery.View();
 	Gallery.token = Gallery.utility.getPublicToken();
 	Gallery.ieVersion = Gallery.utility.getIeVersion();
+	Gallery.filesClient = new OC.Files.Client({
+		host: Gallery.utility.getWebdavHost(),
+		port: OC.getPort(),
+		root: Gallery.utility.getWebdavRoot(),
+		useHTTPS: OC.getProtocol() === 'https'
+	});
 
 	// The first thing to do is to detect if we're on IE
 	if (Gallery.ieVersion === 'unsupportedIe') {

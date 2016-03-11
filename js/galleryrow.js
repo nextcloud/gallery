@@ -18,6 +18,45 @@
 
 	Row.prototype = {
 		targetHeight: 200, // standard row height
+		draggableOptions: {
+			revert: 'invalid',
+			revertDuration: 300,
+			opacity: 0.7,
+			distance: 20,
+			zIndex: 1000,
+			cursor: 'move',
+			helper: function (e) {
+				// Capture the original element
+				var original = $(e.target).hasClass("ui-draggable") ? $(e.target) : $(
+					e.target).closest(".ui-draggable");
+
+				// Create a clone 50% smaller and link it to the #content element
+				var clone = original.clone()
+					.css({'transform': 'scale(0.5)'})
+					.appendTo('#content');
+
+				// Remove the labels
+				clone.children('.image-label,.album-label').remove();
+
+				// Centre the mouse pointer
+				$(this).draggable("option", "cursorAt", {
+					left: Math.floor($(this).width() / 2),
+					top: Math.floor($(this).height() / 2)
+				});
+
+				return clone;
+			},
+			start: function (e) {
+				// Disable all mouse interactions when dragging
+				$('#gallery').css({'pointer-events': 'none'});
+				$(e.target).css({opacity: 0.7});
+			},
+			stop: function (e) { // need to put it back on stop
+				$('#gallery').css({'pointer-events': 'all'});
+				$(e.target).css({opacity: 1});
+			}
+		},
+
 		/**
 		 * Adds sub-albums and images to the row until it's full
 		 *
@@ -39,6 +78,7 @@
 
 			itemDom = element.getDom(row.targetHeight);
 			row.domDef.append(itemDom);
+			itemDom.draggable(this.draggableOptions);
 
 			// No need to use getThumbnailWidth() for albums, the width is always 200
 			if (element instanceof Album) {
