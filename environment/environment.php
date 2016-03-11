@@ -115,21 +115,18 @@ class Environment {
 	/**
 	 * Creates the environment based on the linkItem the token links to
 	 *
-	 * @param array $linkItem
+	 * @param \OCP\Share\IShare $linkItem
 	 */
 	public function setTokenBasedEnv($linkItem) {
-		// Resolves reshares down to the last real share
-		$rootLinkItem = Share::resolveReShare($linkItem);
-		$origShareOwner = $rootLinkItem['uid_owner'];
-		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwner);
+		$origShareOwnerId = $linkItem->getShareOwner();
+		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwnerId);
 
-		// This is actually the node ID
-		$this->sharedNodeId = $linkItem['file_source'];
+		$this->sharedNodeId = $linkItem->getNodeId();
 		$this->fromRootToFolder = $this->buildFromRootToFolder($this->sharedNodeId);
 
-		$this->folderName = $linkItem['file_target'];
-		$this->userId = $rootLinkItem['uid_owner'];
-		$this->sharePassword = $linkItem['share_with'];
+		$this->folderName = $linkItem->getTarget();
+		$this->userId = $origShareOwnerId;
+		$this->sharePassword = $linkItem->getSharedWith();
 	}
 
 	/**
