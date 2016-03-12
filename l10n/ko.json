@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "갤러리",
-    "No pictures found" : "사진을 찾을 수 없음",
-    "Upload pictures in the files app to display them here" : "파일 앱에서 사진을 올리면 여기에 표시됩니다",
-    "Nothing in here" : "여기에 아무것도 없음",
-    "No media files found in this folder" : "이 폴더에 미디어 파일 없음",
     "Aborting preview. Could not find the file" : "미리 보기를 중단합니다. 파일을 찾을 수 없음",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote}에 ownCloud 7 이상이 설치되어 있지 않음",
     "Invalid ownCloud url" : "잘못된 ownCloud URL",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "향상된 경험을 위하여 다음 중 하나를 설치하십시오",
     "Your browser is not supported!" : "사용 중인 브라우저는 지원되지 않습니다!",
     "please install one of the following alternatives" : "다음 중 하나를 설치하십시오",
+    "Upload pictures in the files app to display them here" : "파일 앱에서 사진을 올리면 여기에 표시됩니다",
     "Configuration error" : "설정 오류",
     "Error loading slideshow template" : "슬라이드 쇼 템플릿을 불러오는 중 오류 발생",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>오류!</strong> 이 파일의 미리 보기를 생성할 수 없습니다.<br>",

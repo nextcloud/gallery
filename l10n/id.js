@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeri",
-    "No pictures found" : "Gambar tidak dtemukan",
-    "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
-    "Nothing in here" : "Tidak ada apapun disini",
-    "No media files found in this folder" : "Berkas media tidak ditemukan didalam folder ini",
     "Aborting preview. Could not find the file" : "Membatalkan pratinjau. Tidak dapat menemukan berkas.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Tidak ditemukan instalasi ownCloud (7 atau lebih tinggi) pada {remote}",
     "Invalid ownCloud url" : "URL ownCloud tidak sah",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Untuk meningkatkan pengalaman, silakan pasang salah satu alternatif berikut",
     "Your browser is not supported!" : "Peramban Anda tidak didukung!",
     "please install one of the following alternatives" : "silakan pasang salah satu alternatif berikut",
+    "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
     "Configuration error" : "Kesalahan konfigurasi",
     "Error loading slideshow template" : "Kesalahan saat memuat templat slideshow",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Kesalahan!</strong> Tidak dapat menghasilkan pratinjau berkas ini.<br>",

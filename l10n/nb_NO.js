@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galleri",
-    "No pictures found" : "Ingen bilder funnet",
-    "Upload pictures in the files app to display them here" : "Last opp bilder i Filer-appen for å vise dem her",
-    "Nothing in here" : "Ingenting her",
-    "No media files found in this folder" : "Ingen mediafiler funnet i denne mappen",
     "Aborting preview. Could not find the file" : "Avbryter visning. Fant ikke filen",
     "No ownCloud installation (7 or higher) found at {remote}" : "Ingen ownCloud-installasjon (7 eller høyere) funnet på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-url",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "For en forbedret opplevelse, installer ett av følgende alternativer",
     "Your browser is not supported!" : "Nettleseren din støttes ikke!",
     "please install one of the following alternatives" : "vennligst installer ett av følgende alternativer",
+    "Upload pictures in the files app to display them here" : "Last opp bilder i Filer-appen for å vise dem her",
     "Configuration error" : "Konfigurasjonsfeil",
     "Error loading slideshow template" : "Feil ved lasting av mal for lysbildevisning",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Feil!</strong> Klarte ikke å generere forhåndsvisning av denne filen.<br>",

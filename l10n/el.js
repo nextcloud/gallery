@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Συλλογή",
-    "No pictures found" : "Δεν βρέθηκαν εικόνες",
-    "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
-    "Nothing in here" : " Δεν υπάρχει τίποτα εδώ",
-    "No media files found in this folder" : "Δεν βρέθηκαν αρχεία πολυμέσων σε αυτόν το φάκελο",
     "Aborting preview. Could not find the file" : "Ακύρωση προεπισκόπησης. Αδυναμία εύρεσης αρχείου",
     "No ownCloud installation (7 or higher) found at {remote}" : "Δεν βρέθηκε εγκατάσταση ownCloud (έκδοση 7 ή νεώτερη) στο {remote}",
     "Invalid ownCloud url" : "Άκυρη url ownCloud ",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Για βελτιωμένη εμπειρία, παρακαλώ εγκαταστήστε μία από τις ακόλουθες εναλλακτικές",
     "Your browser is not supported!" : "Ο περιηγητής σας δεν υποστηρίζεται!",
     "please install one of the following alternatives" : "παρακαλώ εγκαταστήστε μία από τις ακόλουθες εναλλακτικές",
+    "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
     "Configuration error" : "Σφάλμα ρυθμίσεων",
     "Error loading slideshow template" : "Σφάλμα φόρτωσης προτύπου προβολής διαφανειών",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Σφάλμα!</strong> Αδυναμία δημιουργίας προεπισκόπησης αυτού του αρχείου.<br>",

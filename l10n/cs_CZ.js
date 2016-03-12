@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerie",
-    "No pictures found" : "Nebyly nalezeny žádné obrázky",
-    "Upload pictures in the files app to display them here" : "Pro zobrazení obrázků v tomto náhledu nějaké nahrajte přes aplikaci soubory",
-    "Nothing in here" : "Zde zatím nic není",
-    "No media files found in this folder" : "V tomto adresáři nebyly nalezeny žádné soubory médií",
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nebyla nalezena instalace ownCloud (7 nebo vyšší) na {remote}",
     "Invalid ownCloud url" : "Neplatná ownCloud url",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Pro zlepšení uživatelské přívětivosti prosím nainstalujte jednu z dostupných alternativ",
     "Your browser is not supported!" : "Tento prohlížeč není podporován!",
     "please install one of the following alternatives" : "nainstalujte prosím jednu z následujících alternativ",
+    "Upload pictures in the files app to display them here" : "Pro zobrazení obrázků v tomto náhledu nějaké nahrajte přes aplikaci soubory",
     "Configuration error" : "Chyba konfigurace",
     "Error loading slideshow template" : "Chyba při načítání šablony prezentace",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Chyba!</strong> Náhled tohoto souboru nelze vytvořit.<br>",

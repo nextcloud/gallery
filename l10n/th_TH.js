@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "แกลอรี่",
-    "No pictures found" : "ไม่พบรูปภาพ",
-    "Upload pictures in the files app to display them here" : "อัพโหลดรูปภาพในไฟล์แอพฯเพื่อแสดงพวกเขาที่นี่",
-    "Nothing in here" : "ไม่มีอะไรที่นี่",
-    "No media files found in this folder" : "ไม่มีไฟล์สื่อที่พบในโฟลเดอร์นี้",
     "Aborting preview. Could not find the file" : "กำลังยกเลิกการแสดงตัวอย่าง ไม่สามารถค้นหาไฟล์",
     "No ownCloud installation (7 or higher) found at {remote}" : "ไม่มีการติดตั้ง ownCloud (7 หรือสูงกว่า) พบได้ที่ {remote}",
     "Invalid ownCloud url" : "URL ownCloud ไม่ถูกต้อง",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "เพื่อทางที่ดีขึ้นโปรดติดตั้งหนึ่งในทางเลือกดังต่อไปนี้",
     "Your browser is not supported!" : "เบราว์เซอร์ของคุณไม่ได้รับการสนับสนุน!",
     "please install one of the following alternatives" : "โปรดติดตั้งหนึ่งในทางเลือกดังต่อไปนี้",
+    "Upload pictures in the files app to display them here" : "อัพโหลดรูปภาพในไฟล์แอพฯเพื่อแสดงพวกเขาที่นี่",
     "Configuration error" : "กำหนดค่าผิดพลาด",
     "Error loading slideshow template" : "เกิดข้อผิดพลาดในการโหลดแม่แบบสไลด์โชว์",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>ข้อผิดพลาด!</strong> ไม่สามารถสร้างตัวอย่างของไฟล์นี้<br>",

@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeri",
-    "No pictures found" : "S’u gjetën foto",
-    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i kartelave që t’i shfaqni këtu",
-    "Nothing in here" : "S’ka gjë këtu",
-    "No media files found in this folder" : "S’u gjetën kartela media në këtë dosje",
     "Aborting preview. Could not find the file" : "Po ndërpritet paraparja. S’u gjet dot kartela",
     "No ownCloud installation (7 or higher) found at {remote}" : "Te {remote} s’u gjet instalim ownCloud (7 ose më sipër)",
     "Invalid ownCloud url" : "URL ownCloud e pavlefshme",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Për një punim më të mirë, ju lutemi, instaloni një nga alternativat vijuese",
     "Your browser is not supported!" : "Shfletuesi juaj nuk mbulohet!",
     "please install one of the following alternatives" : "ju lutemi, instaloni një alternativat vijuese",
+    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i kartelave që t’i shfaqni këtu",
     "Configuration error" : "Gabim formësimi",
     "Error loading slideshow template" : "Gabim gjatë ngarkimit të gjedhes për diapozitiva",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Gabim!</strong> S’u prodhua dot një paraparje e kësaj kartele.<br>",

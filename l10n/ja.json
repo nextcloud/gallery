@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "ギャラリー",
-    "No pictures found" : "画像が見つかりませんでした",
-    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。",
-    "Nothing in here" : "ここには何もありません",
-    "No media files found in this folder" : "このフォルダーにはメディアファイルがありません",
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote} にはownCloud (7以上)がインストールされていません",
     "Invalid ownCloud url" : "無効なownCloud URL です",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "改善された体験のため、以下の選択肢のいずれかインストールしてください",
     "Your browser is not supported!" : "あなたのブラウザーはサポートしていません！",
     "please install one of the following alternatives" : "以下の選択肢のいずれかをインストールしてください",
+    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。",
     "Configuration error" : "設定エラー",
     "Error loading slideshow template" : "スライドショーのテンプレートの読み込みエラー",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>エラー！</strong> このファイルのプレビューを生成できませんでした。<br>",
