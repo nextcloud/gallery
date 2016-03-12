@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Myndasafn",
-    "No pictures found" : "Engar myndir fundust",
-    "Upload pictures in the files app to display them here" : "Sendu inn myndir í skráaappinu svo að þær birtist hér",
-    "Nothing in here" : "Ekkert hér",
-    "No media files found in this folder" : "Engar margmiðlunarskrár fundust í þessari möppu",
     "Aborting preview. Could not find the file" : "Hætti forskoðun. Gat ekki fundið skrána",
     "No ownCloud installation (7 or higher) found at {remote}" : "Engin ownCloud uppsetning (útgáfa 7 eða nýrri) fannst á {remote}",
     "Invalid ownCloud url" : "Ógild ownCloud-slóð",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Til að nýta alla eiginleika kerfisins, settu þá upp einn af eftirfarandi valkostum",
     "Your browser is not supported!" : "Það er ekki stuðningur við vafrann þinn!",
     "please install one of the following alternatives" : "settu upp einn af eftirfarandi valkostum",
+    "Upload pictures in the files app to display them here" : "Sendu inn myndir í skráaappinu svo að þær birtist hér",
     "Configuration error" : "Villa í stillingum",
     "Error loading slideshow template" : "Villa við að hlaða inn sniðmáti fyrir skyggnusýningu",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Villa!</strong> Gat ekki útbúið forskoðun fyrir þessa skrá.<br>",

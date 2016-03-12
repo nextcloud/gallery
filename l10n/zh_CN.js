@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "相册",
-    "No pictures found" : "没有找到图片",
-    "Upload pictures in the files app to display them here" : "上传图片文件后您可以在这里查看它们",
-    "Nothing in here" : "无内容",
-    "No media files found in this folder" : "此文件夹中没有媒体文件",
     "Aborting preview. Could not find the file" : "预览异常，无法找到文件。",
     "No ownCloud installation (7 or higher) found at {remote}" : "未发现 {remote} 安装有ownCloud (7 或更高版本 ) ",
     "Invalid ownCloud url" : "无效的 ownCloud 网址",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "为了更好地使用体验，请使用以下推荐的浏览器",
     "Your browser is not supported!" : "您的浏览器对此不支持！",
     "please install one of the following alternatives" : "请使用推荐的浏览器",
+    "Upload pictures in the files app to display them here" : "上传图片文件后您可以在这里查看它们",
     "Configuration error" : "配置错误",
     "Error loading slideshow template" : "加载幻灯片模板错误",
     "Next" : "下一个",

@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galéria",
-    "No pictures found" : "Nincsenek képek",
-    "Upload pictures in the files app to display them here" : "Tölts fel képeket az alkalmazással, hogy itt megjelenjenek",
-    "Nothing in here" : "Itt nincs semmi",
-    "No media files found in this folder" : "Ebben a mappában nincsenek média fájlok",
     "Aborting preview. Could not find the file" : "Előnézet megszakítása. Nem található a fájl",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nem található ownCloud telepítés (7 vagy nagyobb verzió) itt:  {remote}",
     "Invalid ownCloud url" : "Érvénytelen ownCloud webcím",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "A jobb teljesítmény érdekében, kérjük telepíts egy alternatívát a következők közül",
     "Your browser is not supported!" : "A böngésződ nem támogatott!",
     "please install one of the following alternatives" : "kérjük telepíts egy alternatívát a következők közül",
+    "Upload pictures in the files app to display them here" : "Tölts fel képeket az alkalmazással, hogy itt megjelenjenek",
     "Configuration error" : "Beállítási hiba",
     "Error loading slideshow template" : "Hiba történt a diasor sablonjának betöltésekor",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Hiba!</strong> Nem lehet előnézetet készíteni a fájlról.<br>",

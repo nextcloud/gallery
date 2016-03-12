@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerie",
-    "No pictures found" : "Keine Bilder gefunden",
-    "Upload pictures in the files app to display them here" : "Bilder in die App hochladen, um diese dort anzuzeigen",
-    "Nothing in here" : "Hier ist nichts",
-    "No media files found in this folder" : "Keine Mediadateien in diesem Ordner gefunden",
     "Aborting preview. Could not find the file" : "Die Vorschau wird abgebrochen. Die Datei konnte nicht gefunden werden",
     "No ownCloud installation (7 or higher) found at {remote}" : "Keine ownCloud-Installation (7 oder höher) auf {remote} gefunden",
     "Invalid ownCloud url" : "Ungültige ownCloud-URL",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Bitte eine der folgenden Alternativen installieren",
     "Your browser is not supported!" : "Dein Browser wird nicht unterstützt!",
     "please install one of the following alternatives" : "Bitte eine der folgenden Alternativen installieren",
+    "Upload pictures in the files app to display them here" : "Bilder in die App hochladen, um diese dort anzuzeigen",
     "Configuration error" : "Konfigurationsfehler",
     "Error loading slideshow template" : "Fehler beim Laden der Slideshow-Vorlage",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fehler!</strong> Konnte keine Vorschau dieser Datei erstellen.<br>",

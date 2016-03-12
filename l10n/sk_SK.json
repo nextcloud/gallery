@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galéria",
-    "No pictures found" : "Nenašli sa žiadne obrázky",
-    "Upload pictures in the files app to display them here" : "Tu sa zobrazia obrázky, ktoré nahráte v aplikácii Súbory",
-    "Nothing in here" : "Tu nič nie je",
-    "No media files found in this folder" : "V tomto priečinku sa nenachádzajú žiadne multimediálne súbory",
     "Aborting preview. Could not find the file" : "Ruším náhľad. Súbor nemožno nájsť.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nebola nájdená inštalácia ownCloudu (7 alebo vyššia) {remote}",
     "Invalid ownCloud url" : "Chybná ownCloud url",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "Lepšiu skúsenosť získate s jednou z nasledujúcich alternatív",
     "Your browser is not supported!" : "Váš prehliadač nie je podporovaný.",
     "please install one of the following alternatives" : "prosím inštalujte jednu z nasledujúcich alternatív",
+    "Upload pictures in the files app to display them here" : "Tu sa zobrazia obrázky, ktoré nahráte v aplikácii Súbory",
     "Configuration error" : "Chyba nastavenia",
     "Error loading slideshow template" : "Chyba pri načítaní šablóny prezentácie",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Chyba</strong> Nie je možné vytvoriť náhľad na súbor.<br>",

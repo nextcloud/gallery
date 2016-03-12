@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galeri",
-    "No pictures found" : "Hiç fotoğraf bulunamadı",
-    "Upload pictures in the files app to display them here" : "Dosyalar uygulaması ile resim yüklemek, bunları burada gösterecektir.",
-    "Nothing in here" : "Burada hiçbir şey yok",
-    "No media files found in this folder" : "Bu klasörde hiç ortam dosyası bulunamadı",
     "Aborting preview. Could not find the file" : "Önizleme iptal ediliyor. Dosya bulunamadı",
     "No ownCloud installation (7 or higher) found at {remote}" : "{remote} üzerinde ownCloud (7 veya daha üstü) kurulumu bulunamadı",
     "Invalid ownCloud url" : "Geçersiz ownCloud adresi",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "Arttırılmış bir tecrübe için lütfen aşağıdaki alternatiflerden birini kurun",
     "Your browser is not supported!" : "Tarayıcınız desteklenmiyor!",
     "please install one of the following alternatives" : "lütfen aşağıdaki alternatiflerden birini kurun",
+    "Upload pictures in the files app to display them here" : "Dosyalar uygulaması ile resim yüklemek, bunları burada gösterecektir.",
     "Configuration error" : "Yapılandırma hatası",
     "Error loading slideshow template" : "Slayt gösteri şablonu yüklenirken hata",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Hata!</strong> Bu dosyanın bir önizlemesi oluşturulamadı.<br>",

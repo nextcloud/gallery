@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galerii",
-    "No pictures found" : "Ühtegi pilti ei leitud.",
-    "Upload pictures in the files app to display them here" : "Piltide siin näitamiseks laadi need esmalt failide rakendusega siia",
-    "Nothing in here" : "Siin pole midagi",
-    "No media files found in this folder" : "Sellest kaustast meediafaile ei leitud",
     "Aborting preview. Could not find the file" : "Eelvaate tühistamine. Faili ei leitud",
     "No ownCloud installation (7 or higher) found at {remote}" : "Saidilt {remote} ei leitud ownCloudi (7 või uuem) ",
     "Invalid ownCloud url" : "Vigane ownCloud url",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "Parema kasutajakogemuse saamiseks paigalda palun üks järgnevatest alternatiividest",
     "Your browser is not supported!" : "Sinu veebilehitseja pole toetatud!",
     "please install one of the following alternatives" : "palun paigalda üks järgnevatest alternatiividest",
+    "Upload pictures in the files app to display them here" : "Piltide siin näitamiseks laadi need esmalt failide rakendusega siia",
     "Configuration error" : "Seadistamise tõrge",
     "Error loading slideshow template" : "Viga slaidiseansi kujunduse valimisel",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Viga!</strong> Faili eelvaate loomine ebaõnnestus.<br>",
