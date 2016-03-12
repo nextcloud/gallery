@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galleria",
-    "No pictures found" : "Kuvia ei löytynyt",
-    "Upload pictures in the files app to display them here" : "Lähetä kuvia tiedostosovelluksen kautta. Sen jälkeen kuvat näkyvät täällä",
-    "Nothing in here" : "Tyhjää täynnä",
-    "No media files found in this folder" : "Tästä kansiosta ei löytynyt mediatiedostoja",
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
     "Invalid ownCloud url" : "Virheellinen ownCloud-osoite",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Asenna jokin seuraavista vaihtoehdoista paremman käyttökokemuksen vuoksi",
     "Your browser is not supported!" : "Selaimesi ei ole tuettu!",
     "please install one of the following alternatives" : "asenna jokin seuraavista vaihtoehdoista",
+    "Upload pictures in the files app to display them here" : "Lähetä kuvia tiedostosovelluksen kautta. Sen jälkeen kuvat näkyvät täällä",
     "Configuration error" : "Asetusvirhe",
     "Error loading slideshow template" : "Virhe ladatessa diaesityksen mallipohjaa",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Virhe!</strong> Esikatselua tälle tiedostolle ei voitu toteuttaa.<br>",

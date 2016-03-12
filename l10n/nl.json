@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Album",
-    "No pictures found" : "Geen afbeeldingen gevonden",
-    "Upload pictures in the files app to display them here" : "Upload afbeeldingen in de bestandsapp, om ze hier te tonen",
-    "Nothing in here" : "Hier is niets",
-    "No media files found in this folder" : "Geen mediabestanden gevonden in deze map",
     "Aborting preview. Could not find the file" : "Voorvertoning afgebroken. Kon het bestand niet vinden",
     "No ownCloud installation (7 or higher) found at {remote}" : "Geen recente ownCloud installatie (7 of hoger) gevonden op {remote}",
     "Invalid ownCloud url" : "Ongeldige ownCloud url",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "Voor een betere ervaring, installeert u één van de volgende alternatieven",
     "Your browser is not supported!" : "Uw browser wordt niet ondersteund!",
     "please install one of the following alternatives" : "Installeer één van de volgende alternatieven",
+    "Upload pictures in the files app to display them here" : "Upload afbeeldingen in de bestandsapp, om ze hier te tonen",
     "Configuration error" : "Configuratiefout",
     "Error loading slideshow template" : "Fout bij laden diashow sjabloon",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fout!</strong> Kon geen voorvertoning van dit bestand maken.<br>",

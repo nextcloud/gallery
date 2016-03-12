@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Gallery",
-    "No pictures found" : "No pictures found",
-    "Upload pictures in the files app to display them here" : "Upload pictures in the files app to display them here",
-    "Nothing in here" : "Nothing in here",
-    "No media files found in this folder" : "No media files found in this folder",
     "Aborting preview. Could not find the file" : "Aborting preview. Could not find the file",
     "No ownCloud installation (7 or higher) found at {remote}" : "No ownCloud installation (7 or higher) found at {remote}",
     "Invalid ownCloud url" : "Invalid ownCloud URL",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "For an improved experience, please install one of the following alternatives",
     "Your browser is not supported!" : "Your browser is not supported!",
     "please install one of the following alternatives" : "please install one of the following alternatives",
+    "Upload pictures in the files app to display them here" : "Upload pictures in the files app to display them here",
     "Configuration error" : "Configuration error",
     "Error loading slideshow template" : "Error loading slideshow template",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Error!</strong> Could not generate a preview of this file.<br>",

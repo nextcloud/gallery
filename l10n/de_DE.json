@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galerie",
-    "No pictures found" : "Keine Bilder gefunden",
-    "Upload pictures in the files app to display them here" : "Laden Sie Bilder in der Dateien App hoch, um sie hier angezeigt zu bekommen.",
-    "Nothing in here" : "Hier sind keine Dateien",
-    "No media files found in this folder" : "Es wurden keine Media Dateien in diesem Ordner gefunden.",
     "Aborting preview. Could not find the file" : "Die Vorschau wird abgebrochen. Die Datei konnte nicht gefunden werden",
     "No ownCloud installation (7 or higher) found at {remote}" : "Keine ownCloud-Installation (7 oder höher) auf {remote} gefunden",
     "Invalid ownCloud url" : "Ungültige ownCloud-Adresse",
@@ -16,6 +12,7 @@
     "Link to copyright document" : "Link zum Copyright Dokument",
     "Your browser is not supported!" : "Ihr Browser wird nicht unterstützt!",
     "please install one of the following alternatives" : "Bitte installieren Sie eine der folgenden Alternativen",
+    "Upload pictures in the files app to display them here" : "Laden Sie Bilder in der Dateien App hoch, um sie hier angezeigt zu bekommen.",
     "Configuration error" : "Konfigurationsfehler",
     "Error loading slideshow template" : "Fehler beim Laden der Slideshow-Vorlage",
     "Next" : "Weiter",

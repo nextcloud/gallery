@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "畫廊",
-    "No pictures found" : "未發現照片",
-    "Upload pictures in the files app to display them here" : "在這裡顯示從應用程式上傳的圖片",
-    "Nothing in here" : "這裡什麼也沒有",
-    "No media files found in this folder" : "沒有媒體檔在此資料夾",
     "Aborting preview. Could not find the file" : "中止瀏覽，無法找到該檔案",
     "No ownCloud installation (7 or higher) found at {remote}" : "沒有在 {remote} 找到 ownCloud (本版7 或 更新版)",
     "Invalid ownCloud url" : "無效的 ownCloud URL",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "請安裝以下的選項，以獲得更好的使用者體驗",
     "Your browser is not supported!" : "您的瀏覽器不支援!",
     "please install one of the following alternatives" : "請安裝以下的選項",
+    "Upload pictures in the files app to display them here" : "在這裡顯示從應用程式上傳的圖片",
     "Configuration error" : "設定錯誤",
     "Error loading slideshow template" : "載入投影片檢視樣板時發生錯誤",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>錯誤!</strong> 無法預覽此檔案。<br>",

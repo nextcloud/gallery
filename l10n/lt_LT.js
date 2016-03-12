@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerija",
-    "No pictures found" : "Paveikslėlių nerasta",
-    "Upload pictures in the files app to display them here" : "Įkelkite paveikslėlius ir galėsite juo peržiūrėti čia",
-    "Nothing in here" : "Nieko nėra",
-    "No media files found in this folder" : "Nerasta medijos failų šiame aplanke",
     "Aborting preview. Could not find the file" : "Atšaukiama peržiūra. Nerastas failas",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nerastas ownCloud (7 ar aukštesnė versiją) {remote} serveryje.",
     "Invalid ownCloud url" : "Neteisinga ownCloud nuoroda",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Patogesniam naudojimui, prašau įdiekite šias alternatyvas",
     "Your browser is not supported!" : "Tavo naršyklė nepalaikoma!",
     "please install one of the following alternatives" : "prašau įdiegti šias alternatyvas",
+    "Upload pictures in the files app to display them here" : "Įkelkite paveikslėlius ir galėsite juo peržiūrėti čia",
     "Configuration error" : "Konfigūravimo klaida",
     "Error loading slideshow template" : "Klaida pakraunant pristatymą",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Klaida!</strong> Nepavyko sukurti failo peržiūros.<br>",

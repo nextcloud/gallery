@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Галерея",
-    "No pictures found" : "Изображения не найдены",
-    "Upload pictures in the files app to display them here" : "Загрузите изображения для отображения здесь",
-    "Nothing in here" : "Здесь ничего нет",
-    "No media files found in this folder" : "Медиафайлы не найдены в этой папке",
     "Aborting preview. Could not find the file" : "Предпросмотр отменен. Не удалось найти файл",
     "No ownCloud installation (7 or higher) found at {remote}" : "На удаленном ресурсе {remote} не установлен ownCloud версии 7 или выше",
     "Invalid ownCloud url" : "Неверный адрес ownCloud",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Для наилучшего результата, пожалуйста, установите одну из следующих опций",
     "Your browser is not supported!" : "Ваш бразуре не поддерживается!",
     "please install one of the following alternatives" : "пожалуйста, установите одну из следующих опций",
+    "Upload pictures in the files app to display them here" : "Загрузите изображения для отображения здесь",
     "Configuration error" : "Ошибка конфигурации",
     "Error loading slideshow template" : "Ошибка при загрузке шаблона слайд-шоу",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Ошибка!</strong> Не удалось сгенерировать предпросмотр файла.<br>",

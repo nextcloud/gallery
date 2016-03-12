@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galleria",
-    "No pictures found" : "Nessuna immagine trovata",
-    "Upload pictures in the files app to display them here" : "Carica le immagini nell'applicazione dei file per visualizzarle qui.",
-    "Nothing in here" : "Qui non c'è niente",
-    "No media files found in this folder" : "Nessun file multimediale trovato in questa cartella",
     "Aborting preview. Could not find the file" : "Anteprima interrotta. Impossibile trovare il file",
     "No ownCloud installation (7 or higher) found at {remote}" : "Nessuna installazione di ownCloud (7 o superiore) trovata su {remote}",
     "Invalid ownCloud url" : "URL di ownCloud non valido",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "Per un'esperienza più completa, installa una delle seguenti alternative",
     "Your browser is not supported!" : "Il tuo browser non è supportato!",
     "please install one of the following alternatives" : "installa una delle seguenti alternative",
+    "Upload pictures in the files app to display them here" : "Carica le immagini nell'applicazione dei file per visualizzarle qui.",
     "Configuration error" : "Errore di configurazione",
     "Error loading slideshow template" : "Errore durante il caricamento del modello di presentazione",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Errore!</strong> Impossibile generare un'anteprima di questo file.<br>",

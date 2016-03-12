@@ -2,10 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galariá",
-    "No pictures found" : "Cap d'imatge pas trobat",
-    "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
-    "Nothing in here" : "Pas res aquí dedins",
-    "No media files found in this folder" : "Cap de fichièr mèdia pas trobat dins aqueste dorsièr",
     "Aborting preview. Could not find the file" : "Interrupcion de la previsualizacion. Lo fichièr es introbable.",
     "No ownCloud installation (7 or higher) found at {remote}" : "Cap d'installacion ownCloud (7 o superior) pas trobada sus {remote}",
     "Invalid ownCloud url" : "URL ownCloud invalida",
@@ -20,6 +16,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Per una melhora experiéncia, installatz una de las alternativas seguentas",
     "Your browser is not supported!" : "Vòstre navigador es pas pres en carga !",
     "please install one of the following alternatives" : "Installatz una de las alternativas seguentas",
+    "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
     "Configuration error" : "Error de configuracion",
     "Error loading slideshow template" : "Error al moment del telecargament del modèl de diaporama ",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Error !</strong> Impossible de generar un apercebut d'aqueste fichièr.<br>",

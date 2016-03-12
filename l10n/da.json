@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "Galleri",
-    "No pictures found" : "Ingen billeder fundet",
-    "Upload pictures in the files app to display them here" : "Upload billeder i fil-app'en for at få dem vist her",
-    "Nothing in here" : "Her er tomt",
-    "No media files found in this folder" : "Ingen mediefiler in denne mappe",
     "Aborting preview. Could not find the file" : "Forlader forhåndsvisning. Kunne ikke finde filen",
     "No ownCloud installation (7 or higher) found at {remote}" : "Der er ingen ownCloud-installation (7 eller højere) på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-URL",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "For en bedre oplevelse, kan én af følgende alternativer installeres",
     "Your browser is not supported!" : "Din browser understøttes ikke!",
     "please install one of the following alternatives" : "installér venligst én af følgende alternativer",
+    "Upload pictures in the files app to display them here" : "Upload billeder i fil-app'en for at få dem vist her",
     "Configuration error" : "Konfigurationsfejl",
     "Error loading slideshow template" : "Fejl ved indlæsning af skabelon for diasshow",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fejl!</strong> Kunne ikke generere en forhåndsvisning af denne fil.<br>",

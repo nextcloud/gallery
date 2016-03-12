@@ -1,9 +1,5 @@
 { "translations": {
     "Gallery" : "גלריה",
-    "No pictures found" : "לא נמצאו תמונות",
-    "Upload pictures in the files app to display them here" : "יש להעלות תמונות ביישום הקבצים להצגתם כאן",
-    "Nothing in here" : "אין כאן כלום",
-    "No media files found in this folder" : "לא נמצאו קבצי מדיה בתיקייה זו",
     "Aborting preview. Could not find the file" : "מבטל תצוגה מקדימה. לא מצליח לאתר את הקובץ",
     "No ownCloud installation (7 or higher) found at {remote}" : "לא נמצאה התקנת ownCloud (גרסה 7 ומעלה) ב- {remote}",
     "Invalid ownCloud url" : "נתיב ownCloud לא חוקי",
@@ -18,6 +14,7 @@
     "For an improved experience, please install one of the following alternatives" : "לחוויה משופרת, יש להתקין אחת מהחלופות הבאות",
     "Your browser is not supported!" : "הדפדפן שלך אינו נתמך!",
     "please install one of the following alternatives" : "יש להתקין אחת מהחלופות הבאות",
+    "Upload pictures in the files app to display them here" : "יש להעלות תמונות ביישום הקבצים להצגתם כאן",
     "Configuration error" : "שגיאת הגדרה",
     "Error loading slideshow template" : "שגיאה בטעינת תבנית המצגת",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>שגיאה!</strong> לא ניתן ליצור תצוגה מקדימה לקובץ זה.<br>",
