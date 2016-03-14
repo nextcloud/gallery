@@ -26,6 +26,7 @@
 		 * Shows an information box to the user
 		 */
 		showInfo: function () {
+			Gallery.Share.hideDropDown();
 			if (this.infoContentContainer.is(':visible')) {
 				this.infoContentContainer.slideUp();
 			} else {
