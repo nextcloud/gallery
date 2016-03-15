@@ -92,7 +92,9 @@
 
 			}, function (xhr) {
 				var result = xhr.responseJSON;
-				Gallery.view.init(decodeURIComponent(currentLocation), result.message);
+				var albumPath = decodeURIComponent(currentLocation);
+				Gallery.view.init(albumPath, result.message);
+				Gallery._mapStructure(albumPath);
 			});
 		},
 
