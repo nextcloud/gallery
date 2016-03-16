@@ -5,7 +5,9 @@
 	var TEMPLATE =
 		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
 		'data-width="{{targetWidth}}" data-height="{{targetHeight}}"' +
-		'href="{{targetPath}}" data-dir="{{dir}}" data-path="{{path}}">' +
+		'href="{{targetPath}}" data-dir="{{dir}}" data-path="{{path}}"' +
+		'data-permissions="{{permissions}}" data-freespace="{{freeSpace}}"' +
+		'>' +
 		'	<div class="album-loader loading"></div>' +
 		'	<span class="album-label">' +
 		'		<span class="title">{{label}}</span>' +
@@ -21,14 +23,31 @@
 	 * @param {Array<Album|GalleryImage>} subAlbums
 	 * @param {Array<Album|GalleryImage>} images
 	 * @param {string} name
+	 * @param {number} fileId
+	 * @param {number} mTime
+	 * @param {string} etag
+	 * @param {number} size
+	 * @param {Boolean} sharedWithUser
+	 * @param {string} owner
+	 * @param {number} freeSpace
+	 * @param {number} permissions
 	 * @constructor
 	 */
-	var Album = function (path, subAlbums, images, name) {
+	var Album = function (path, subAlbums, images, name, fileId, mTime, etag, size, sharedWithUser,
+						  owner, freeSpace, permissions) {
 		this.path = path;
 		this.subAlbums = subAlbums;
 		this.images = images;
 		this.viewedItems = 0;
 		this.name = name;
+		this.fileId = fileId;
+		this.mTime = mTime;
+		this.etag = etag;
+		this.size = size;
+		this.sharedWithUser = sharedWithUser;
+		this.owner = owner;
+		this.freeSpace = freeSpace;
+		this.permissions = permissions;
 		this.domDef = null;
 		this.loader = null;
 		this.preloadOffset = 0;
@@ -96,6 +115,8 @@
 					targetWidth: targetHeight,
 					dir: this.path,
 					path: this.path,
+					permissions: this.permissions,
+					freeSpace: this.freeSpace,
 					label: this.name,
 					targetPath: '#' + encodeURIComponent(this.path)
 				});
@@ -308,10 +329,11 @@
 			var subAlbum = this.domDef.children('.album');
 
 			if (this.images.length >= 1) {
-				this._getFourImages(this.images, targetHeight, subAlbum).fail(function (validImages) {
-					album.images = validImages;
-					album._fillSubAlbum(targetHeight, subAlbum);
-				});
+				this._getFourImages(this.images, targetHeight, subAlbum).fail(
+					function (validImages) {
+						album.images = validImages;
+						album._fillSubAlbum(targetHeight, subAlbum);
+					});
 			} else {
 				var imageHolder = $('<div class="cropped">');
 				subAlbum.append(imageHolder);
@@ -328,7 +350,7 @@
 		 */
 		_showFolder: function (targetHeight, imageHolder) {
 			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/svg+xml',
-			null,null);
+				null, null);
 			var thumb = Thumbnails.getStandardIcon(-1);
 			image.thumbnail = thumb;
 			this.images.push(image);

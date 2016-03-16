@@ -21,15 +21,13 @@ use OCP\Files\Node;
  * @package OCA\Gallery\Service
  */
 abstract class FilesService extends Service {
-	/**
-	 * @var int
-	 */
-	protected $virtualRootLevel = null;
 
-	/**
-	 * @var string[]
-	 */
+	/** @var int */
+	protected $virtualRootLevel = null;
+	/** @var string[] */
 	protected $features;
+	/** @var string */
+	protected $ignoreAlbum = '.nomedia';
 
 	/**
 	 * Retrieves all files and sub-folders contained in a folder
@@ -95,6 +93,60 @@ abstract class FilesService extends Service {
 	}
 
 	/**
+	 * Returns various information about a node
+	 *
+	 * @param Node $node
+	 *
+	 * @return array<string,int|string|bool|array<string,int|string>>
+	 */
+	protected function getNodeData($node) {
+		$imagePath = $this->environment->getPathFromVirtualRoot($node);
+		$nodeId = $node->getId();
+		$mTime = $node->getMTime();
+		$etag = $node->getEtag();
+		$size = $node->getSize();
+		$sharedWithUser = $node->isShared();
+		$owner = $node->getOwner();
+		$ownerData = [];
+		if ($owner) {
+			$ownerData = [
+				'uid'         => $owner->getUID(),
+				'displayname' => $owner->getDisplayName()
+			];
+		}
+		$permissions = $node->getPermissions();
+
+		$nodeData = [
+			'path'           => $imagePath,
+			'nodeid'         => $nodeId,
+			'mtime'          => $mTime,
+			'etag'           => $etag,
+			'size'           => $size,
+			'sharedwithuser' => $sharedWithUser,
+			'owner'          => $ownerData,
+			'permissions'    => $permissions
+		];
+
+		//$this->logger->debug("Image path : {var1}", ['var1' => $imagePath]);
+
+		return $nodeData;
+	}
+
+	/**
+	 * Returns various information about a folder
+	 *
+	 * @param Folder $node
+	 *
+	 * @return array<string,int|string|bool|array<string,int|string>>
+	 */
+	protected function getFolderData($node) {
+		$folderData = $this->getNodeData($node);
+		$folderData['freespace'] = $node->getFreeSpace();
+
+		return $folderData;
+	}
+
+	/**
 	 * Returns the node if it's a folder we have access to
 	 *
 	 * @param Folder $node
@@ -105,7 +157,7 @@ abstract class FilesService extends Service {
 	protected function getAllowedSubFolder($node, $nodeType) {
 		if ($nodeType === 'dir') {
 			/** @var Folder $node */
-			if (!$node->nodeExists('.nomedia')) {
+			if (!$node->nodeExists($this->ignoreAlbum)) {
 				return [$node];
 			}
 		}
