@@ -17,7 +17,6 @@
 		cachedFeaturesString: '',
 		mediaTypes: [],
 		cachedMediaTypesString: '',
-		albumPermissions: null,
 		albumInfo: null,
 		albumSorting: null,
 		albumDesign: null,
@@ -46,19 +45,15 @@
 		 * Stores the configuration about the current album
 		 *
 		 * @param {{
-		 * 	fileid: number,
-		 * 	permissions: number,
-		 * 	path: string,
-		 * 	etag: string,
 		 * 	design,
 		 * 	information,
 		 * 	sorting,
 		 * 	error: string
 		 * }} albumConfig
+		 * @param albumPath
 		 */
-		setAlbumConfig: function (albumConfig) {
-			this.albumPermissions = this._setAlbumPermissions(albumConfig);
-			this.albumInfo = this._setAlbumInfo(albumConfig);
+		setAlbumConfig: function (albumConfig, albumPath) {
+			this.albumInfo = this._setAlbumInfo(albumConfig, albumPath);
 			this.albumSorting = this._setAlbumSorting(albumConfig);
 			this.albumDesign = this._setAlbumDesign(albumConfig);
 			this.albumError = albumConfig.error;
@@ -145,42 +140,15 @@
 		},
 
 		/**
-		 * Saves the permissions for the current album
-		 *
-		 * @param {{
-		 * 	fileid: number,
-		 * 	permissions: number,
-		 * 	path: string,
-		 * 	etag: string,
-		 * 	design,
-		 * 	information,
-		 * 	sorting,
-		 * 	error: string
-		 * }} albumConfig
-		 *
-		 * @returns {{fileid: number, permissions: number}}
-		 * @private
-		 */
-		_setAlbumPermissions: function (albumConfig) {
-			return {
-				path: albumConfig.path,
-				permissions: albumConfig.permissions
-			};
-		},
-
-		/**
 		 * Saves the description and copyright information for the current album
 		 *
 		 * @param {{
-		 * 	fileid: number,
-		 * 	permissions: number,
-		 * 	path: string,
-		 * 	etag: string,
 		 * 	design,
 		 * 	information,
 		 * 	sorting,
 		 * 	error: string
 		 * }} albumConfig
+		 * @param albumPath
 		 *
 		 * @returns {null||{
 		 * 	description: string,
@@ -193,9 +161,7 @@
 		 * }}
 		 * @private
 		 */
-		_setAlbumInfo: function (albumConfig) {
-			var albumPath = albumConfig.path;
-
+		_setAlbumInfo: function (albumConfig, albumPath) {
 			/**@type {{
 			 * 	description: string,
 			 * 	description_link: string,
@@ -239,10 +205,6 @@
 		 * Saves the description and copyright information for the current album
 		 *
 		 * @param {{
-		 * 	fileid: number,
-		 * 	permissions: number,
-		 * 	path: string,
-		 * 	etag: string,
 		 * 	design,
 		 * 	information,
 		 * 	sorting,
@@ -280,10 +242,6 @@
 		 * Saves the sorting configuration for the current album
 		 *
 		 * @param {{
-		 * 	fileid: number,
-		 * 	permissions: number,
-		 * 	path: string,
-		 * 	etag: string,
 		 * 	design,
 		 * 	information,
 		 * 	sorting,

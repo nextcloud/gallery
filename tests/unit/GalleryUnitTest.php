@@ -93,12 +93,21 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 * @param string $etag
 	 * @param int $size
 	 * @param bool $isShared
+	 * @param null|object $owner
+	 * @param int $permissions
 	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function mockFile(
-		$fileId, $storageId = 'home::user', $isReadable = true, $path = '',
-		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024, $isShared = false
+		$fileId,
+		$storageId = 'home::user',
+		$isReadable = true,
+		$path = '',
+		$etag = "8603c11cd6c5d739f2c156c38b8db8c4",
+		$size = 1024,
+		$isShared = false,
+		$owner = null,
+		$permissions = 31
 	) {
 		$storage = $this->mockGetStorage($storageId);
 		$file = $this->getMockBuilder('OCP\Files\File')
@@ -110,6 +119,10 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn('file');
 		$file->method('getStorage')
 			 ->willReturn($storage);
+		$file->method('getOwner')
+			 ->willReturn($owner);
+		$file->method('getPermissions')
+			 ->willReturn($permissions);
 		$file->method('isReadable')
 			 ->willReturn($isReadable);
 		$file->method('getPath')
@@ -125,10 +138,19 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	}
 
 	protected function mockJpgFile(
-		$fileId, $storageId = 'home::user', $isReadable = true, $path = '',
-		$etag = "8603c11cd6c5d739f2c156c38b8db8c4", $size = 1024, $isShared = false
+		$fileId,
+		$storageId = 'home::user',
+		$isReadable = true,
+		$path = '',
+		$etag = "8603c11cd6c5d739f2c156c38b8db8c4",
+		$size = 1024,
+		$isShared = false,
+		$owner = null,
+		$permissions = 31
 	) {
-		$file = $this->mockFile($fileId, $storageId, $isReadable, $path, $etag, $size, $isShared);
+		$file = $this->mockFile(
+			$fileId, $storageId, $isReadable, $path, $etag, $size, $isShared, $owner, $permissions
+		);
 		$this->mockJpgFileMethods($file);
 
 		return $file;
@@ -215,6 +237,25 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		return $file;
 	}
 
+	/**
+	 * @param string $storageId
+	 * @param int $nodeId
+	 * @param array $files
+	 * @param bool $isReadable
+	 * @param bool $mounted
+	 * @param null $mount
+	 * @param string $query
+	 * @param bool $queryResult
+	 * @param bool $sharedWithUser
+	 * @param string $etag
+	 * @param int $size
+	 * @param string $path
+	 * @param null|object $owner
+	 * @param int $permissions
+	 * @param int $freeSpace
+	 *
+	 * @return mixed|object|\PHPUnit_Framework_MockObject_MockObject
+	 */
 	protected function mockFolder(
 		$storageId,
 		$nodeId,
@@ -223,7 +264,14 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		$mounted = false,
 		$mount = null,
 		$query = '',
-		$queryResult = false
+		$queryResult = false,
+		$sharedWithUser = false,
+		$etag = "etag303",
+		$size = 4096,
+		$path = "not/important",
+		$owner = null,
+		$permissions = 31,
+		$freeSpace = 999999999
 	) {
 		$storage = $this->mockGetStorage($storageId);
 		$folder = $this->getMockBuilder('OCP\Files\Folder')
@@ -233,12 +281,26 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			   ->willReturn('dir');
 		$folder->method('getId')
 			   ->willReturn($nodeId);
+		$folder->method('getEtag')
+			   ->willReturn($etag);
+		$folder->method('getSize')
+			 ->willReturn($size);
+		$folder->method('getPath')
+			   ->willReturn($path);
+		$folder->method('getFreeSpace')
+			   ->willReturn($freeSpace);
 		$folder->method('getDirectoryListing')
 			   ->willReturn($files);
 		$folder->method('getStorage')
 			   ->willReturn($storage);
+		$folder->method('getOwner')
+			   ->willReturn($owner);
+		$folder->method('getPermissions')
+			   ->willReturn($permissions);
 		$folder->method('isReadable')
 			   ->willReturn($isReadable);
+		$folder->method('isShared')
+			   ->willReturn($sharedWithUser);
 		$folder->method('isMounted')
 			   ->willReturn($mounted);
 		$folder->method('getMountPoint')
