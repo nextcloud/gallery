@@ -22,30 +22,28 @@ use OCP\Files\File;
  */
 class SearchMediaService extends FilesService {
 
-	/**
-	 * @var null|array<string,string|int>
-	 */
+	/** @var null|array<string,string|int> */
 	private $images = [];
-	/**
-	 * @var string[]
-	 */
+	/** @var null|array<string,string|int> */
+	private $albums = [];
+	/** @var string[] */
 	private $supportedMediaTypes;
 
 	/**
 	 * This returns the list of all media files which can be shown starting from the given folder
 	 *
-	 * @param Folder $folder
-	 * @param string[] $supportedMediaTypes
-	 * @param array $features
+	 * @param Folder $folderNode the current album
+	 * @param string[] $supportedMediaTypes the list of supported media types
+	 * @param array $features the list of supported features
 	 *
 	 * @return array<string,string|int>|null all the images we could find
 	 */
-	public function getMediaFiles($folder, $supportedMediaTypes, $features) {
+	public function getMediaFiles($folderNode, $supportedMediaTypes, $features) {
 		$this->supportedMediaTypes = $supportedMediaTypes;
 		$this->features = $features;
-		$this->searchFolder($folder);
-
-		return $this->images;
+		$this->searchFolder($folderNode);
+		
+		return [$this->images, $this->albums];
 	}
 
 	/**
@@ -59,6 +57,8 @@ class SearchMediaService extends FilesService {
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
+		$albumData = $this->getFolderData($folder);
+		$this->albums[$albumData['path']] = $albumData;
 		$nodes = $this->getNodes($folder, $subDepth);
 		foreach ($nodes as $node) {
 			if (!$this->isAllowedAndAvailable($node)) {
@@ -178,9 +178,11 @@ class SearchMediaService extends FilesService {
 	 */
 	private function isPreviewAvailable($file) {
 		try {
-			$mimeType = $file->getMimetype();
+			$mimeType = $file->getMimeType();
 			if (in_array($mimeType, $this->supportedMediaTypes)) {
-				$this->addFileToResults($file);
+				$imageData = $this->getNodeData($file);
+				$imageData['mimetype'] = $mimeType;
+				$this->images[] = $imageData;
 
 				return true;
 			}
@@ -189,35 +191,6 @@ class SearchMediaService extends FilesService {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Adds various information about a file to the list of results
-	 *
-	 * @param File $file
-	 */
-	private function addFileToResults($file) {
-		$imagePath = $this->environment->getPathFromVirtualRoot($file);
-		$imageId = $file->getId();
-		$mimeType = $file->getMimeType();
-		$mTime = $file->getMTime();
-		$etag = $file->getEtag();
-		$size = $file->getSize();
-		$sharedWithUser = $file->isShared();
-
-		$imageData = [
-			'path'           => $imagePath,
-			'fileid'         => $imageId,
-			'mimetype'       => $mimeType,
-			'mtime'          => $mTime,
-			'etag'           => $etag,
-			'size'           => $size,
-			'sharedWithUser' => $sharedWithUser
-		];
-
-		$this->images[] = $imageData;
-
-		//$this->logger->debug("Image path : {path}", ['path' => $imagePath]);
 	}
 
 }

@@ -24,28 +24,19 @@ use OCA\GalleryPlus\Preview\Preview;
 /**
  * Finds configurations files and returns a configuration array
  *
- * Checks the current and parent folders for configuration files and the privacy flag
+ * Checks the current and parent folders for configuration files and to see if we're allowed to
+ * look for media file
  * Supports explicit inheritance
  *
  * @package OCA\GalleryPlus\Service
  */
 class ConfigService extends FilesService {
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $configName = 'gallery.cnf';
-	/**
-	 * @var string
-	 */
-	private $privacyChecker = '.nomedia';
-	/**
-	 * @var array <string,bool>
-	 */
+	/** @var array <string,bool> */
 	private $completionStatus = ['design' => false, 'information' => false, 'sorting' => false];
-	/**
-	 * @var ConfigParser
-	 */
+	/** @var ConfigParser */
 	private $configParser;
 	/** @var Preview */
 	private $previewManager;
@@ -151,38 +142,28 @@ class ConfigService extends FilesService {
 	}
 
 	/**
-	 * Returns information about the currently selected folder
+	 * Returns the configuration of the currently selected folder
 	 *
-	 *    * privacy setting
-	 *    * special configuration
-	 *    * permissions
-	 *    * ID
+	 *    * information (description, copyright)
+	 *    * sorting (date, name, inheritance)
+	 *    * design (colour)
+	 *    * if the album should be ignored
 	 *
 	 * @param Folder $folderNode the current folder
-	 * @param string $folderPathFromRoot path from the current folder to the virtual root
 	 * @param array $features the list of features retrieved fro the configuration file
 	 *
 	 * @return array|null
 	 * @throws ForbiddenServiceException
 	 */
-	public function getAlbumInfo($folderNode, $folderPathFromRoot, $features) {
+	public function getConfig($folderNode, $features) {
 		$this->features = $features;
-		list ($albumConfig, $privateAlbum) =
-			$this->getAlbumConfig($folderNode, $this->privacyChecker, $this->configName);
-		if ($privateAlbum) {
+		list ($albumConfig, $ignored) =
+			$this->collectConfig($folderNode, $this->ignoreAlbum, $this->configName);
+		if ($ignored) {
 			throw new ForbiddenServiceException(
 				'The owner has placed a restriction or the storage location is unavailable'
 			);
 		}
-		$albumInfo = [
-			'path'           => $folderPathFromRoot,
-			'fileid'         => $folderNode->getId(),
-			'permissions'    => $folderNode->getPermissions(),
-			'etag'           => $folderNode->getEtag(),
-			'sharedWithUser' => $folderNode->isShared()
-		];
-		// There is always an albumInfo, but the albumConfig may be empty
-		$albumConfig = array_merge($albumInfo, $albumConfig);
 
 		return $albumConfig;
 	}
@@ -256,33 +237,34 @@ class ConfigService extends FilesService {
 	 * reached the root folder
 	 *
 	 * @param Folder $folder the current folder
-	 * @param string $privacyChecker name of the file which blacklists folders
+	 * @param string $ignoreAlbum name of the file which blacklists folders
 	 * @param string $configName name of the configuration file
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
-	 * @param array $config the configuration collected so far
+	 * @param array $collectedConfig the configuration collected so far
 	 *
-	 * @return array<null|array,bool>
+	 * @return array <null|array,bool>
 	 */
-	private function getAlbumConfig(
-		$folder, $privacyChecker, $configName, $level = 0, $config = []
+	private function collectConfig(
+		$folder, $ignoreAlbum, $configName, $level = 0, $collectedConfig = []
 	) {
-		if ($folder->nodeExists($privacyChecker)) {
+		if ($folder->nodeExists($ignoreAlbum)) {
 			// Cancel as soon as we find out that the folder is private or external
 			return [null, true];
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
-			$config = $this->buildFolderConfig($folder, $configName, $config, $level);
+			$collectedConfig =
+				$this->buildFolderConfig($folder, $configName, $collectedConfig, $level);
 		}
 		if (!$isRootFolder) {
 			return $this->getParentConfig(
-				$folder, $privacyChecker, $configName, $level, $config
+				$folder, $ignoreAlbum, $configName, $level, $collectedConfig
 			);
 		}
-		$config = $this->validatesInfoConfig($config);
+		$collectedConfig = $this->validatesInfoConfig($collectedConfig);
 
 		// We have reached the root folder
-		return [$config, false];
+		return [$collectedConfig, false];
 	}
 
 	/**
@@ -291,22 +273,22 @@ class ConfigService extends FilesService {
 	 *
 	 * @param Folder $folder the current folder
 	 * @param string $configName name of the configuration file
-	 * @param array $config the configuration collected so far
+	 * @param array $collectedConfig the configuration collected so far
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 *
 	 * @return array
 	 */
-	private function buildFolderConfig($folder, $configName, $config, $level) {
+	private function buildFolderConfig($folder, $configName, $collectedConfig, $level) {
 		try {
-			list($config, $completionStatus) = $this->configParser->getFolderConfig(
-				$folder, $configName, $config, $this->completionStatus, $level
+			list($collectedConfig, $completionStatus) = $this->configParser->getFolderConfig(
+				$folder, $configName, $collectedConfig, $this->completionStatus, $level
 			);
 			$this->completionStatus = $completionStatus;
 		} catch (ConfigException $exception) {
-			$config = $this->buildErrorMessage($exception, $folder);
+			$collectedConfig = $this->buildErrorMessage($exception, $folder);
 		}
 
-		return $config;
+		return $collectedConfig;
 	}
 
 	/**
@@ -368,16 +350,17 @@ class ConfigService extends FilesService {
 	 * @param string $privacyChecker name of the file which blacklists folders
 	 * @param string $configName name of the configuration file
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
-	 * @param array $config the configuration collected so far
+	 * @param array $collectedConfig the configuration collected so far
 	 *
 	 * @return array<null|array,bool>
 	 */
-	private function getParentConfig($folder, $privacyChecker, $configName, $level, $config) {
+	private function getParentConfig($folder, $privacyChecker, $configName, $level, $collectedConfig
+	) {
 		$parentFolder = $folder->getParent();
 		$level++;
 
-		return $this->getAlbumConfig(
-			$parentFolder, $privacyChecker, $configName, $level, $config
+		return $this->collectConfig(
+			$parentFolder, $privacyChecker, $configName, $level, $collectedConfig
 		);
 	}
 
