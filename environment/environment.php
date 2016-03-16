@@ -309,7 +309,7 @@ class Environment {
 	 *
 	 * That root folder changes when folders are shared publicly
 	 *
-	 * @param File|Folder $node
+	 * @param File|Folder|N $node
 	 *
 	 * @return string
 	 */

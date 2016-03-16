@@ -59,9 +59,8 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 	public function testSendFolderWithNullFolder() {
 		$path = '';
 		$node = null;
-		$locationHasChanged = false;
 
-		self::invokePrivate($this->service, 'sendFolder', [$path, $node, $locationHasChanged]);
+		self::invokePrivate($this->service, 'sendFolder', [$path, $node]);
 	}
 
 	/**
@@ -72,9 +71,8 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 		$nodeId = 94875;
 		$isReadable = false;
 		$node = $this->mockFolder('home::user', $nodeId, [], $isReadable);
-		$locationHasChanged = false;
 
-		self::invokePrivate($this->service, 'sendFolder', [$path, $node, $locationHasChanged]);
+		self::invokePrivate($this->service, 'sendFolder', [$path, $node]);
 	}
 
 	public function testSendFolder() {
@@ -82,9 +80,8 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 		$nodeId = 94875;
 		$files = [];
 		$node = $this->mockFolder('home::user', $nodeId, $files);
-		$locationHasChanged = false;
 
-		$folder = [$path, $node, $locationHasChanged];
+		$folder = [$path, $node];
 
 		$response = self::invokePrivate($this->service, 'sendFolder', $folder);
 
@@ -113,9 +110,7 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 		$files = [];
 		$shared = $this->mockFolder('shared::12345', $nodeId, $files);
 		$this->mockGetVirtualRootFolderOfSharedFolder($storageId, $shared);
-
-		$locationHasChanged = false;
-		$folder = [$path, $shared, $locationHasChanged];
+		$folder = [$path, $shared];
 		try {
 			$response = self::invokePrivate($this->service, 'sendFolder', $folder);
 			$this->assertSame($folder, $response);
@@ -270,25 +265,6 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 		$this->assertSame($expectedResult, $response);
 	}
 
-	public function providesLocationChangeData() {
-		return [
-			[0, false],
-			[1, true],
-		];
-	}
-
-	/**
-	 * @dataProvider providesLocationChangeData
-	 *
-	 * @param int $depth
-	 * @param bool $expectedResult
-	 */
-	public function testHasLocationChanged($depth, $expectedResult) {
-		$response = self::invokePrivate($this->service, 'hasLocationChanged', [$depth]);
-
-		$this->assertSame($expectedResult, $response);
-	}
-
 	public function providesValidateLocationData() {
 		return [
 			['folder1', 0, 'folder1'],
@@ -319,9 +295,8 @@ class SearchFolderServiceTest extends \Test\GalleryUnitTest {
 
 		$this->mockGetFileNodeFromVirtualRoot($location, $file);
 		$this->mockGetPathFromVirtualRoot($folder, $location);
-
-		$locationHasChanged = false;
-		$expectedResult = [$location, $folder, $locationHasChanged];
+		
+		$expectedResult = [$location, $folder];
 
 		$response = self::invokePrivate($this->service, 'findFolder', [$location]);
 
