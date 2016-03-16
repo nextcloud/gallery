@@ -128,7 +128,7 @@ style(
 		</div>
 	</span>
 </div>
-<div id="gallery" class="hascontrols"></div>
+<div id="gallery" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
 <div class="hiddenuploadfield">
