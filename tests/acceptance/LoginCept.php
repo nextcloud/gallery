@@ -17,4 +17,4 @@ $I->am('A standard user');
 $I->wantTo('ensure that I can see the login page');
 
 $I->amOnPage(LoginPage::$URL);
-$I->seeElement(LoginPage::$loginButton);
+$I->seeElement(['css' => LoginPage::$loginButton]);
