@@ -71,10 +71,14 @@ class PageControllerTest extends \Test\TestCase {
 	public function testIndex() {
 		$url = 'http://owncloud/ajax/upload.php';
 		$this->mockUrlToUploadEndpoint($url);
+		$publicUploadEnabled = 'yes';
 		$params = [
 			'appName' => $this->appName,
-			'uploadUrl' => $url
+			'uploadUrl' => $url,
+			'publicUploadEnabled' => $publicUploadEnabled
 		];
+		$this->mockGetPublicUploadAppValue($publicUploadEnabled);
+
 		$template = new TemplateResponse($this->appName, 'index', $params);
 
 		$response = $this->controller->index();
@@ -229,6 +233,17 @@ class PageControllerTest extends \Test\TestCase {
 							   ]
 						   )
 						   ->willReturn($url);
+	}
+
+	private function mockGetPublicUploadAppValue($publicUploadEnabled) {
+		$this->appConfig->expects($this->once())
+			->method('getAppValue')
+			->with(
+				'core',
+				'shareapi_allow_public_upload',
+				'yes'
+			)
+			->willReturn($publicUploadEnabled);
 	}
 
 	/**
