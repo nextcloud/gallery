@@ -57,7 +57,7 @@ class Login {
 	public function confirmLogin() {
 		$I = $this->acceptanceTester;
 
-		$I->seeElement(FilesPage::$contentDiv);
 		$I->seeCurrentUrlEquals(FilesPage::$URL);
+		$I->seeElement(['css' => FilesPage::$contentDiv]);
 	}
 }
