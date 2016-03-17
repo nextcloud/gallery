@@ -67,7 +67,7 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	/** @var string */
 	public $passwordForFolderShare;
 	/** @var OCP\Share|IManager */
-	public $shareManager;
+	private $shareManager;
 
 	/**
 	 * Test set up
@@ -98,7 +98,7 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$this->controller = $this->getMockBuilder('OCP\AppFramework\Controller')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->shareManager = $this->getMockBuilder('OCP\Share\IManager')
+		$this->shareManager = $this->getMockBuilder('\OCP\Share\IManager')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -142,67 +142,90 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	}
 
 
-//	/**
-//	 * @todo Mock an environment response
-//	 */
-//	public function testBeforeControllerWithoutNotation() {
-//		$this->reflector->reflect(__CLASS__, __FUNCTION__);
-//		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
-//	}
-//
-//	/**
-//	 * @PublicPage
-//	 *
-//	 * @expectedException \OCA\Gallery\Middleware\CheckException
-//	 */
-//	public function testBeforeControllerWithPublicNotationAndInvalidToken() {
-//		$this->reflector->reflect(__CLASS__, __FUNCTION__);
-//
-//		$token = 'aaaabbbbccccdddd';
-//		$this->mockGetTokenParam($token);
-//
-//		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
-//	}
-//
-//	/**
-//	 * @PublicPage
-//	 *
-//	 * Because the method tested is static, we need to load our test environment \Helper\DataSetup
-//	 */
-//	public function testBeforeControllerWithPublicNotationAndToken() {
-//		$this->reflector->reflect(__CLASS__, __FUNCTION__);
-//
-//		$this->mockGetTokenAndPasswordParams(
-//			$this->sharedFolderToken, $this->passwordForFolderShare
-//		);
-//		$linkItem = Share::getShareByToken($this->sharedFolderToken, false);
-//
-//		$this->mockHasherVerify($this->passwordForFolderShare, $linkItem['share_with'], true);
-//
-//		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
-//	}
-//
-//	/**
-//	 * @PublicPage
-//	 *
-//	 * @expectedException \OCA\Gallery\Middleware\CheckException
-//	 */
-//	public function testBeforeControllerWithPublicNotationAndNoToken() {
-//		$this->reflector->reflect(__CLASS__, __FUNCTION__);
-//
-//		$token = null;
-//		$this->mockGetTokenParam($token);
-//		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
-//	}
-//
-//	/**
-//	 * @@Guest
-//	 */
-//	public function testBeforeControllerWithGuestNotation() {
-//		$this->reflector->reflect(__CLASS__, __FUNCTION__);
-//
-//		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
-//	}
+	/**
+	 * @todo Mock an environment response
+	 */
+	public function testBeforeControllerWithoutNotation() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * @expectedException \OCP\Files\NotFoundException
+	 */
+	public function testBeforeControllerWithPublicNotationAndInvalidToken() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$token = 'aaaabbbbccccdddd';
+		$this->mockGetTokenParam($token);
+
+		$share = $this->newShare();
+		$this->shareManager
+			->expects($this->once())
+			->method('getShareByToken')
+			->with($token)
+			->willReturn($share);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * Because the method tested is static, we need to load our test environment \Helper\DataSetup
+	 */
+	public function testBeforeControllerWithPublicNotationAndToken() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$this->mockGetTokenAndPasswordParams(
+			$this->sharedFolderToken, $this->passwordForFolderShare
+		);
+
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setNodeType('folder')
+			->setShareOwner('test')
+			->setTarget('folder1')
+			->setShareType(Share::SHARE_TYPE_LINK)
+			->setSharedWith('validpassword');
+		$this->shareManager
+			->expects($this->once())
+			->method('getShareByToken')
+			->with($this->sharedFolderToken)
+			->willReturn($share);
+
+		$this->shareManager
+			->expects($this->once())
+			->method('checkPassword')
+			->with($share, $this->passwordForFolderShare)
+			->willReturn(true);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 */
+	public function testBeforeControllerWithPublicNotationAndNoToken() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$token = null;
+		$this->mockGetTokenParam($token);
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @@Guest
+	 */
+	public function testBeforeControllerWithGuestNotation() {
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
 
 	public function testCheckSessionAfterPasswordEntry() {
 		$share = $this->newShare();
@@ -243,7 +266,6 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$share = $this->newShare();
 		$share->setId(12345)
 			->setSharedWith($password);
-		//$this->mockHasherVerify($password, $share->getPassword(), true);
 		$this->shareManager
 			->expects($this->once())
 			->method('checkPassword')
@@ -263,7 +285,6 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$share = $this->newShare();
 		$share->setId(12345)
 			->setSharedWith('Empyrion Galactic Survival');
-		//$this->mockHasherVerify($password, $share->getSharedWith(), false);
 		$this->shareManager
 			->expects($this->once())
 			->method('checkPassword')
@@ -279,7 +300,6 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$share->setId(12345)
 			->setSharedWith($password)
 			->setShareType(\OCP\Share::SHARE_TYPE_LINK);
-		//$this->mockHasherVerify($password, $share->getSharedWith(), true);
 		$this->shareManager
 			->expects($this->once())
 			->method('checkPassword')
@@ -302,7 +322,6 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$share->setId(12345)
 			->setShareType(\OCP\Share::SHARE_TYPE_LINK)
 			->setSharedWith('Empyrion Galactic Survival');
-		//$this->mockHasherVerify($password, $share->getSharedWith(), false);
 		$this->shareManager
 			->expects($this->once())
 			->method('checkPassword')
@@ -317,25 +336,32 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	 */
 	public function testAuthenticateWithWrongLinkType() {
 		$password = 'Je suis une pipe';
-		$linkItem = [
-			'id'         => 12345,
-			'share_with' => 'tester',
-			'share_type' => Share::SHARE_TYPE_USER
-		];
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setShareType(\OCP\Share::SHARE_TYPE_LINK)
+			->setSharedWith('tester');
+		$this->shareManager
+			->expects($this->once())
+			->method('checkPassword')
+			->with($share, $password)
+			->willReturn(false);
 
-		self::invokePrivate($this->middleware, 'authenticate', [$linkItem, $password]);
+		self::invokePrivate($this->middleware, 'authenticate', [$share, $password]);
 	}
 
 	public function testCheckAuthorisationAfterValidPasswordEntry() {
 		$password = 'Je suis une pipe';
-		$linkItem = [
-			'id'         => 12345,
-			'share_with' => $password,
-			'share_type' => Share::SHARE_TYPE_LINK
-		];
-		$this->mockHasherVerify($password, $linkItem['share_with'], true);
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setShareType(\OCP\Share::SHARE_TYPE_LINK)
+			->setSharedWith($password);
+		$this->shareManager
+			->expects($this->once())
+			->method('checkPassword')
+			->with($share, $password)
+			->willReturn(true);
 
-		self::invokePrivate($this->middleware, 'checkAuthorisation', [$linkItem, $password]);
+		self::invokePrivate($this->middleware, 'checkAuthorisation', [$share, $password]);
 	}
 
 	/**
@@ -345,14 +371,17 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	 */
 	public function testCheckAuthorisationAfterInvalidPasswordEntry() {
 		$password = 'Je suis une pipe';
-		$linkItem = [
-			'id'         => 12345,
-			'share_with' => 'Empyrion Galactic Survival',
-			'share_type' => Share::SHARE_TYPE_LINK
-		];
-		$this->mockHasherVerify($password, $linkItem['share_with'], false);
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setShareType(\OCP\Share::SHARE_TYPE_LINK)
+			->setSharedWith('Empyrion Galactic Survival');
+		$this->shareManager
+			->expects($this->once())
+			->method('checkPassword')
+			->with($share, $password)
+			->willReturn(false);
 
-		self::invokePrivate($this->middleware, 'checkAuthorisation', [$linkItem, $password]);
+		self::invokePrivate($this->middleware, 'checkAuthorisation', [$share, $password]);
 	}
 
 	/**
@@ -361,71 +390,64 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	 */
 	public function testCheckAuthorisationWithNoPassword() {
 		$password = null;
-		$linkItem = [
-			'id'         => 12345,
-			'share_with' => 'Empyrion Galactic Survival'
-		];
-		$this->mockSessionExists($linkItem['id']);
-		$this->mockSessionWithLinkItemId($linkItem['id']);
-
-		self::invokePrivate($this->middleware, 'checkAuthorisation', [$linkItem, $password]);
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setSharedWith('Empyrion Galactic Survival');
+		$this->mockSessionExists($share->getId());
+		$this->mockSessionWithLinkItemId($share->getId());
+		self::invokePrivate($this->middleware, 'checkAuthorisation', [$share, $password]);
 	}
 
 	public function testCheckItemTypeWithItemTypeSet() {
-		$linkItem = [
-			'id'        => 12345,
-			'item_type' => 'folder'
-		];
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setNodeType('folder');
 
-		self::invokePrivate($this->middleware, 'checkItemType', [$linkItem]);
+		self::invokePrivate($this->middleware, 'checkItemType', [$share]);
 	}
 
 	/**
-	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedException \OCP\Files\NotFoundException
 	 */
 	public function testCheckItemTypeWithItemTypeNotSet() {
-		$linkItem = [
-			'id' => 12345,
-		];
+		$share = $this->newShare();
+		$share->setId(12345);
 
-		self::invokePrivate($this->middleware, 'checkItemType', [$linkItem]);
+		self::invokePrivate($this->middleware, 'checkItemType', [$share]);
 	}
 
 	public function testCheckLinkItemIsValidWithValidLinkItem() {
-		$linkItem = [
-			'id'          => 12345,
-			'uid_owner'   => 'tester',
-			'file_source' => 'folder1'
-		];
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setShareOwner('tester')
+			->setTarget('folder1');
 		$token = 'aaaabbbbccccdddd';
 
-		self::invokePrivate($this->middleware, 'checkLinkItemIsValid', [$linkItem, $token]);
+		self::invokePrivate($this->middleware, 'checkLinkItemIsValid', [$share, $token]);
 	}
 
 	/**
 	 * @expectedException \OCA\Gallery\Middleware\CheckException
 	 */
 	public function testCheckLinkItemIsValidWithMissingOwner() {
-		$linkItem = [
-			'id'          => 12345,
-			'file_source' => 'folder1'
-		];
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setTarget('folder1');
 		$token = 'aaaabbbbccccdddd';
 
-		self::invokePrivate($this->middleware, 'checkLinkItemIsValid', [$linkItem, $token]);
+		self::invokePrivate($this->middleware, 'checkLinkItemIsValid', [$share, $token]);
 	}
 
 	/**
 	 * @expectedException \OCA\Gallery\Middleware\CheckException
 	 */
 	public function testCheckLinkItemIsValidWithMissingSource() {
-		$linkItem = [
-			'id'        => 12345,
-			'uid_owner' => 'tester',
-		];
+		$share = $this->newShare();
+		$share->setId(12345)
+			->setShareOwner('tester');
 		$token = 'aaaabbbbccccdddd';
 
-		self::invokePrivate($this->middleware, 'checkLinkItemIsValid', [$linkItem, $token]);
+		self::invokePrivate($this->middleware, 'checkLinkItemIsValid', [$share, $token]);
 	}
 
 	/**
@@ -444,31 +466,29 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	 * @param string $type
 	 */
 	public function testCheckLinkItemExistsWithValidLinkItem($type) {
-		$linkItem = [
-			'item_type' => $type
-		];
+		$share = $this->newShare();
+		$share->setNodeType($type);
 
-		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$linkItem]);
+		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$share]);
 	}
 
 	/**
 	 * @expectedException \OCA\Gallery\Middleware\CheckException
 	 */
 	public function testCheckLinkItemExistsWithEmptyLinkItem() {
-		$linkItem = false;
+		$share = false;
 
-		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$linkItem]);
+		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$share]);
 	}
 
 	/**
-	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testCheckLinkItemExistsWithWeirdLinkItem() {
-		$linkItem = [
-			'item_type' => 'cheese'
-		];
+		$share = $this->newShare();
+		$share->setNodeType('cheese');
 
-		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$linkItem]);
+		self::invokePrivate($this->middleware, 'checkLinkItemExists', [$share]);
 	}
 
 	public function testAfterExceptionWithCheckExceptionAndHtmlAcceptAnd401Code() {
@@ -548,22 +568,6 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 			->method('get')
 			->with('public_link_authenticated')
 			->willReturn($linkItemId);
-	}
-
-	/**
-	 * @param string $givenPassword clear text password
-	 * @param string $tokenPassword encrypted password
-	 * @param bool $valid
-	 */
-	private function mockHasherVerify($givenPassword, $tokenPassword, $valid) {
-		$this->hasher->expects($this->once())
-			->method('verify')
-			->with(
-				$givenPassword,
-				$tokenPassword,
-				''
-			)
-			->willReturn($valid);
 	}
 
 	private function mockHtml401Response() {
