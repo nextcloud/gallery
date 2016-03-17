@@ -4,6 +4,7 @@
 [![Codacy Badge](https://www.codacy.com/project/badge/02f02de5292e4f7393cd7e5697227a5a)](https://www.codacy.com/app/interfaSys/galleryplus)
 [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9/mini.png)](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/interfasys/galleryplus/badge.svg)](https://travis-ci.org/interfasys/galleryplus)
 
 [![Code Coverage](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=master)
 
