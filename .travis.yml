@@ -55,7 +55,8 @@ before_install:
   #- phantomjs --webdriver=4444 --ignore-ssl-errors=true --webdriver-loglevel=DEBUG &
 
   # Get rid of Github limits
-  - git config --global github.accesstoken $GH_TOKEN
+  # Only enable temporarily when making large package changes with composer
+  #- git config --global github.accesstoken $GH_TOKEN
 
   # Make modifications to the environment to allow us to retrieve core dumps
   # When debugging, make sure you enable sudo by commenting out the first line of this file
