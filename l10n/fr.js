@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your browser is not supported!" : "Votre navigateur n'est pas pris en charge !",
     "please install one of the following alternatives" : "veuillez installer l'une des alternatives suivantes",
     "Upload pictures in the files app to display them here" : "Ajoutez des images dans l'application Fichiers et elles apparaîtront ici",
+    "Upload new files via drag and drop or by using the [+] button above" : "Téléversez de nouveaux fichiers en utilisant le glisser-déposer ou le bouton [+] ci-dessus",
     "Configuration error" : "Erreur de configuration",
     "New" : "Nouveau",
     "Error loading slideshow template" : "Erreur lors du téléchargement du modèle de diaporama ",
