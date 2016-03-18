@@ -27,20 +27,15 @@
     "symfony/yaml": "~2.6"
   },
   "require-dev": {
+    "guzzlehttp/guzzle": "^5.0|^6.0",
+    "phpunit/phpunit": "^4.0|^5.1",
     "codeception/codeception": "2.1.*",
     "codeception/phpbuiltinserver": "*",
+    "composer-plugin-api": "^1.0",
     "codeception/c3": "2.*",
     "flow/jsonpath": "^0.3.1",
     "phpdocumentor/phpdocumentor": "^2.8",
     "jakub-onderka/php-parallel-lint": "0.*",
     "jakub-onderka/php-console-highlighter": "0.*"
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "Codeception\\c3\\Installer::copyC3ToRoot"
-    ],
-    "post-update-cmd": [
-      "Codeception\\c3\\Installer::copyC3ToRoot"
-    ]
   }
 }
