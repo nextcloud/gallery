@@ -12,6 +12,7 @@
 
 namespace OCA\GalleryPlus\Service;
 
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\Node;
 
@@ -95,7 +96,7 @@ abstract class FilesService extends Service {
 	/**
 	 * Returns various information about a node
 	 *
-	 * @param Node $node
+	 * @param Node|File|Folder $node
 	 *
 	 * @return array<string,int|string|bool|array<string,int|string>>
 	 */
@@ -106,30 +107,14 @@ abstract class FilesService extends Service {
 		$etag = $node->getEtag();
 		$size = $node->getSize();
 		$sharedWithUser = $node->isShared();
-		$owner = $node->getOwner();
-		$ownerData = [];
-		if ($owner) {
-			$ownerData = [
-				'uid'         => $owner->getUID(),
-				'displayname' => $owner->getDisplayName()
-			];
-		}
+		$ownerData = $this->getOwnerData($node);
 		$permissions = $node->getPermissions();
-
-		$nodeData = [
-			'path'           => $imagePath,
-			'nodeid'         => $nodeId,
-			'mtime'          => $mTime,
-			'etag'           => $etag,
-			'size'           => $size,
-			'sharedwithuser' => $sharedWithUser,
-			'owner'          => $ownerData,
-			'permissions'    => $permissions
-		];
 
 		//$this->logger->debug("Image path : {var1}", ['var1' => $imagePath]);
 
-		return $nodeData;
+		return $this->formatNodeData(
+			$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions
+		);
 	}
 
 	/**
@@ -247,11 +232,9 @@ abstract class FilesService extends Service {
 	 */
 	private function isExternalShareAllowed() {
 		$rootFolder = $this->environment->getVirtualRootFolder();
-		if ($this->isExternalShare($rootFolder) || in_array('external_shares', $this->features)) {
-			return true;
-		}
 
-		return false;
+		return ($this->isExternalShare($rootFolder)
+				|| in_array('external_shares', $this->features));
 	}
 
 	/**
@@ -270,6 +253,55 @@ abstract class FilesService extends Service {
 		);
 
 		return ($sid[0] === 'shared' && $sid[2][0] !== '/');
+	}
+
+	/**
+	 * Returns what we known about the owner of a node
+	 *
+	 * @param Node $node
+	 *
+	 * @return null|array<string,int|string>
+	 */
+	private function getOwnerData($node) {
+		$owner = $node->getOwner();
+		$ownerData = [];
+		if ($owner) {
+			$ownerData = [
+				'uid'         => $owner->getUID(),
+				'displayname' => $owner->getDisplayName()
+			];
+		}
+
+		return $ownerData;
+	}
+
+	/**
+	 * Returns an array containing information about a node
+	 *
+	 * @param string $imagePath
+	 * @param int $nodeId
+	 * @param int $mTime
+	 * @param string $etag
+	 * @param int $size
+	 * @param bool $sharedWithUser
+	 * @param array <string,int|string> $ownerData
+	 * @param int $permissions
+	 *
+	 * @return array
+	 */
+	private function formatNodeData(
+		$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions
+	) {
+		return [
+			'path'           => $imagePath,
+			'nodeid'         => $nodeId,
+			'mtime'          => $mTime,
+			'etag'           => $etag,
+			'size'           => $size,
+			'sharedwithuser' => $sharedWithUser,
+			'owner'          => $ownerData,
+			'permissions'    => $permissions
+		];
 	}
 
 }

@@ -240,12 +240,12 @@ class ConfigService extends FilesService {
 	 * @param string $ignoreAlbum name of the file which blacklists folders
 	 * @param string $configName name of the configuration file
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
-	 * @param array $collectedConfig the configuration collected so far
+	 * @param array $configSoFar the configuration collected so far
 	 *
 	 * @return array <null|array,bool>
 	 */
 	private function collectConfig(
-		$folder, $ignoreAlbum, $configName, $level = 0, $collectedConfig = []
+		$folder, $ignoreAlbum, $configName, $level = 0, $configSoFar = []
 	) {
 		if ($folder->nodeExists($ignoreAlbum)) {
 			// Cancel as soon as we find out that the folder is private or external
@@ -253,18 +253,15 @@ class ConfigService extends FilesService {
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
-			$collectedConfig =
-				$this->buildFolderConfig($folder, $configName, $collectedConfig, $level);
+			$configSoFar = $this->buildFolderConfig($folder, $configName, $configSoFar, $level);
 		}
 		if (!$isRootFolder) {
-			return $this->getParentConfig(
-				$folder, $ignoreAlbum, $configName, $level, $collectedConfig
-			);
+			return $this->getParentConfig($folder, $ignoreAlbum, $configName, $level, $configSoFar);
 		}
-		$collectedConfig = $this->validatesInfoConfig($collectedConfig);
+		$configSoFar = $this->validatesInfoConfig($configSoFar);
 
 		// We have reached the root folder
-		return [$collectedConfig, false];
+		return [$configSoFar, false];
 	}
 
 	/**
