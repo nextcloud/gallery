@@ -36,13 +36,13 @@ class SearchMediaService extends FilesService {
 	 * @param string[] $supportedMediaTypes the list of supported media types
 	 * @param array $features the list of supported features
 	 *
-	 * @return array<string,string|int>|null all the images we could find
+	 * @return array<null|array<string,string|int>> all the images we could find
 	 */
 	public function getMediaFiles($folderNode, $supportedMediaTypes, $features) {
 		$this->supportedMediaTypes = $supportedMediaTypes;
 		$this->features = $features;
 		$this->searchFolder($folderNode);
-		
+
 		return [$this->images, $this->albums];
 	}
 
@@ -57,14 +57,12 @@ class SearchMediaService extends FilesService {
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
-		$albumData = $this->getFolderData($folder);
-		$this->albums[$albumData['path']] = $albumData;
+		$this->addFolderToAlbumsArray($folder);
 		$nodes = $this->getNodes($folder, $subDepth);
 		foreach ($nodes as $node) {
 			if (!$this->isAllowedAndAvailable($node)) {
 				continue;
 			}
-			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
 			$subFolders = array_merge($subFolders, $this->getAllowedSubFolder($node, $nodeType));
 			$albumImageCounter = $this->addMediaFile($node, $nodeType, $albumImageCounter);
@@ -180,9 +178,7 @@ class SearchMediaService extends FilesService {
 		try {
 			$mimeType = $file->getMimeType();
 			if (in_array($mimeType, $this->supportedMediaTypes)) {
-				$imageData = $this->getNodeData($file);
-				$imageData['mimetype'] = $mimeType;
-				$this->images[] = $imageData;
+				$this->addFileToImagesArray($mimeType, $file);
 
 				return true;
 			}
@@ -191,6 +187,28 @@ class SearchMediaService extends FilesService {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Adds a folder to the albums array
+	 *
+	 * @param Folder $folder the folder to add to the albums array
+	 */
+	private function addFolderToAlbumsArray($folder) {
+		$albumData = $this->getFolderData($folder);
+		$this->albums[$albumData['path']] = $albumData;
+	}
+
+	/**
+	 * Adds a file to the images array
+	 *
+	 * @param string $mimeType the media type of the file to add to the images array
+	 * @param File $file the file to add to the images array
+	 */
+	private function addFileToImagesArray($mimeType, $file) {
+		$imageData = $this->getNodeData($file);
+		$imageData['mimetype'] = $mimeType;
+		$this->images[] = $imageData;
 	}
 
 }
