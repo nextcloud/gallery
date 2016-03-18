@@ -157,10 +157,23 @@ class PreviewService extends Service {
 	 * @param bool $animatedPreview
 	 *
 	 * @return bool
+	 * @throws InternalServerErrorServiceException
 	 */
 	private function isGifPreviewRequired($file, $animatedPreview) {
 		$gifSupport = $this->isMimeSupported('image/gif');
-		$animatedGif = $this->isGifAnimated($file);
+		try {
+			$fileHandle = $file->fopen('rb');
+			if ($fileHandle) {
+				$animatedGif = $this->isGifAnimated($fileHandle);
+				fclose($fileHandle);
+			} else {
+				throw new \Exception();
+			}
+		} catch (\Exception $exception) {
+			throw new InternalServerErrorServiceException(
+				'Something went wrong when trying to read' . $file->getPath()
+			);
+		}
 
 		return $gifSupport && !($animatedGif && $animatedPreview);
 	}
@@ -179,29 +192,16 @@ class PreviewService extends Service {
 	 *
 	 * @link http://php.net/manual/en/function.imagecreatefromgif.php#104473
 	 *
-	 * @param File $file
+	 * @param resource $fileHandle
 	 *
 	 * @return bool
-	 * @throws InternalServerErrorServiceException
 	 */
-	private function isGifAnimated($file) {
+	private function isGifAnimated($fileHandle) {
 		$count = 0;
-		try {
-			$fileHandle = $file->fopen('rb');
-			if ($fileHandle) {
-				while (!feof($fileHandle) && $count < 2) {
-					$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-					$count += preg_match_all(
-						'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-					);
-				}
-				fclose($fileHandle);
-			} else {
-				throw new \Exception();
-			}
-		} catch (\Exception $exception) {
-			throw new InternalServerErrorServiceException(
-				'Something went wrong when trying to read' . $file->getPath()
+		while (!feof($fileHandle) && $count < 2) {
+			$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+			$count += preg_match_all(
+				'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
 			);
 		}
 
