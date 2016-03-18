@@ -97,7 +97,8 @@ class PageController extends Controller {
 			// Parameters sent to the template
 			$params = [
 				'appName' => $appName,
-				'uploadUrl' => $this->urlGenerator->linkTo('files', 'ajax/upload.php')
+				'uploadUrl' => $this->urlGenerator->linkTo('files', 'ajax/upload.php'),
+				'publicUploadEnabled' => $this->appConfig->getAppValue('core', 'shareapi_allow_public_upload', 'yes')
 			];
 
 			// Will render the page using the template found in templates/index.php
