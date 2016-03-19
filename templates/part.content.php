@@ -131,6 +131,10 @@ style(
 <div id="gallery" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
+<input type="hidden" name="mailNotificationEnabled" id="mailNotificationEnabled"
+	   value="<?php p($_['mailNotificationEnabled']) ?>"/>
+<input type="hidden" name="mailPublicNotificationEnabled" id="mailPublicNotificationEnabled"
+	   value="<?php p($_['mailPublicNotificationEnabled']) ?>"/>
 <div class="hiddenuploadfield">
 	<input type="file" id="file_upload_start" class="hiddenuploadfield" name="files[]"
 		   data-url="<?php print_unescaped($_['uploadUrl']); ?>"/>
