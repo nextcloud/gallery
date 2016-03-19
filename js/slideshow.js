@@ -92,8 +92,6 @@
 		 * @returns {*}
 		 */
 		show: function (index) {
-			Gallery.Share.hideDropDown();
-			$('.album-info-container').slideUp();
 			this.hideErrorNotification();
 			this.active = true;
 			this.container.show();
