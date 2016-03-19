@@ -173,20 +173,19 @@
 				// Used later on to determine if the
 				// respective checkbox should be checked or
 				// not.
-				// FIXME public uploading is not supported in Gallery
-				/*var publicUploadEnabled = $('#filestable').data('allow-public-upload');
-				 if (typeof publicUploadEnabled == 'undefined') {
-				 publicUploadEnabled = 'no';
-				 }
-				 var allowPublicUploadStatus = false;
+				var publicUploadEnabled = $('#gallery').data('allow-public-upload');
+				if (typeof publicUploadEnabled == 'undefined') {
+					publicUploadEnabled = 'no';
+				}
+				var allowPublicUploadStatus = false;
 
-				 $.each(data, function (key, value) {
-				 if (value.share_type === self.SHARE_TYPE_LINK) {
-				 allowPublicUploadStatus =
-				 (value.permissions & OC.PERMISSION_CREATE) ? true : false;
-				 return true;
-				 }
-				 });*/
+				$.each(data, function (key, value) {
+					if (value.share_type === self.SHARE_TYPE_LINK) {
+						allowPublicUploadStatus =
+							(value.permissions & OC.PERMISSION_CREATE) ? true : false;
+						return true;
+					}
+				});
 
 				var sharePlaceholder = t('core', 'Share with users or groups …');
 				if (oc_appconfig.core.remoteShareAllowed) {
@@ -244,31 +243,29 @@
 					html += '<span class="icon-loading-small hidden"></span>';
 					html += '</div>';
 
-					// FIXME public uploading is not supported in Gallery
-					/*if (itemType === 'folder' && (possiblePermissions & OC.PERMISSION_CREATE) &&
-					 publicUploadEnabled === 'yes') {
-					 html += '<div id="allowPublicUploadWrapper" style="display:none;">';
-					 html += '<span class="icon-loading-small hidden"></span>';
-					 html +=
-					 '<input type="checkbox" class="checkbox checkbox--right" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' +
-					 ((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
-					 html += '<label for="sharingDialogAllowPublicUpload">' +
-					 t('core', 'Allow editing') + '</label>';
-					 html += '</div>';
-					 }
-					 html += '</div>';
-					 var mailPublicNotificationEnabled = $(
-					 'input:hidden[name=mailPublicNotificationEnabled]').val();
-					 if (mailPublicNotificationEnabled === 'yes') {
-					 html += '<form id="emailPrivateLink">';
-					 html +=
-					 '<input id="email" style="display:none; width:62%;" value="" placeholder="' +
-					 t('core', 'Email link to person') + '" type="text" />';
-					 html +=
-					 '<input id="emailButton" style="display:none;" type="submit" value="' +
-					 t('core', 'Send') + '" />';
-					 html += '</form>';
-					 }*/
+					if (itemType === 'folder' && (possiblePermissions & OC.PERMISSION_CREATE) &&
+						publicUploadEnabled === 'yes') {
+						html += '<div id="allowPublicUploadWrapper" style="display:none;">';
+						html += '<span class="icon-loading-small hidden"></span>';
+						html +=
+							'<input type="checkbox" class="checkbox checkbox--right" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' +
+							((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
+						html += '<label for="sharingDialogAllowPublicUpload">' +
+						t('core', 'Allow editing') + '</label>';
+						html += '</div>';
+					}
+
+					var mailPublicNotificationEnabled = $('input:hidden[name=mailPublicNotificationEnabled]').val();
+					if (mailPublicNotificationEnabled === 'yes') {
+						html += '<form id="emailPrivateLink">';
+						html +=
+							'<input id="email" style="display:none; width:62%;" value="" placeholder="' +
+							t('core', 'Email link to person') + '" type="text" />';
+						html +=
+							'<input id="emailButton" style="display:none;" type="submit" value="' +
+							t('core', 'Send') + '" />';
+						html += '</form>';
+					}
 				}
 
 				html += '<div id="expiration">';
@@ -446,32 +443,32 @@
 						.append(insert)
 						.appendTo(ul);
 				};
-				// FIXME Emailing links is not supported in Gallery
-				/*if (link && linksAllowed && $('#email').length != 0) {
-				 $('#email').autocomplete({
-				 minLength: 1,
-				 source: function (search, response) {
-				 $.get(OC.filePath('core', 'ajax', 'share.php'), {
-				 fetch: 'getShareWithEmail',
-				 search: search.term
-				 }, function (result) {
-				 if (result.status == 'success' && result.data.length > 0) {
-				 response(result.data);
-				 }
-				 });
-				 },
-				 select: function (event, item) {
-				 $('#email').val(item.item.email);
-				 return false;
-				 }
-				 })
-				 .data("ui-autocomplete")._renderItem = function (ul, item) {
-				 return $('<li>')
-				 .append('<a>' + escapeHTML(item.displayname) + "<br>" +
-				 escapeHTML(item.email) + '</a>')
-				 .appendTo(ul);
-				 };
-				 }*/
+
+				if (link && linksAllowed && $('#email').length != 0) {
+					$('#email').autocomplete({
+						minLength: 1,
+						source: function (search, response) {
+							$.get(OC.filePath('core', 'ajax', 'share.php'), {
+								fetch: 'getShareWithEmail',
+								search: search.term
+							}, function (result) {
+								if (result.status == 'success' && result.data.length > 0) {
+									response(result.data);
+								}
+							});
+						},
+						select: function (event, item) {
+							$('#email').val(item.item.email);
+							return false;
+						}
+					})
+						.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $('<li>')
+							.append('<a>' + escapeHTML(item.displayname) + "<br>" +
+							escapeHTML(item.email) + '</a>')
+							.appendTo(ul);
+					};
+				}
 
 			} else {
 				html += '<input id="shareWith" type="text" placeholder="' +
@@ -724,15 +721,15 @@
 			if (mailNotificationEnabled === 'yes' &&
 				shareType !== this.SHARE_TYPE_REMOTE) {
 				var checked = '';
-				if (mailSend === '1') {
+				if (mailSend === 1) {
 					checked = 'checked';
 				}
 				html +=
-					'<input type="checkbox" class="checkbox checkbox--right" ' +
-					'name="mailNotification" class="mailNotification" ' +
+					'<input id="mail-' + escapeHTML(shareWith) + '" type="checkbox" class="mailNotification checkbox checkbox--right" ' +
+					'name="mailNotification" ' +
 					checked + ' />';
 				html +=
-					'<label>' + t('core', 'notify by email') + '</label>';
+					'<label for="mail-' + escapeHTML(shareWith) + '">' + t('core', 'notify by email') + '</label>';
 			}
 			if (oc_appconfig.core.resharingAllowed &&
 				(possiblePermissions & OC.PERMISSION_SHARE)) {
@@ -1028,38 +1025,38 @@ $(document).ready(function () {
 	});
 
 	// Handle the Allow Public Upload Checkbox
-	// FIXME public uploading is not supported in Gallery
-	/*$(document).on('click', '#sharingDialogAllowPublicUpload', function () {
+	$(document).on('click', '#sharingDialogAllowPublicUpload', function () {
 
-	 // Gather data
-	 var $dropDown = $('#dropdown');
-	 var allowPublicUpload = $(this).is(':checked');
-	 var $button = $(this);
-	 var $loading = $dropDown.find('#allowPublicUploadWrapper .icon-loading-small');
+		// Gather data
+		var $dropDown = $('#dropdown');
+		var shareId = $('#linkCheckbox').data('id');
+		var allowPublicUpload = $(this).is(':checked');
+		var $button = $(this);
+		var $loading = $dropDown.find('#allowPublicUploadWrapper .icon-loading-small');
 
-	 if (!$loading.hasClass('hidden')) {
-	 // already in progress
-	 return false;
-	 }
+		if (!$loading.hasClass('hidden')) {
+			// already in progress
+			return false;
+		}
 
-	 // Update the share information
-	 $button.addClass('hidden');
-	 $button.prop('disabled', true);
-	 $loading.removeClass('hidden');
-	 //(path, shareType, shareWith, publicUpload, password, permissions)
-	 $.ajax({
-	 url: OC.linkToOCS('apps/files_sharing/api/v1', 2) + 'shares/' + shareId +
-	 '?format=json',
-	 type: 'PUT',
-	 data: {
-	 publicUpload: allowPublicUpload
-	 }
-	 }).done(function () {
-	 $loading.addClass('hidden');
-	 $button.removeClass('hidden');
-	 $button.prop('disabled', false);
-	 });
-	 });*/
+		// Update the share information
+		$button.addClass('hidden');
+		$button.prop('disabled', true);
+		$loading.removeClass('hidden');
+		//(path, shareType, shareWith, publicUpload, password, permissions)
+		$.ajax({
+			url: OC.linkToOCS('apps/files_sharing/api/v1', 2) + 'shares/' + shareId +
+			'?format=json',
+			type: 'PUT',
+			data: {
+				publicUpload: allowPublicUpload
+			}
+		}).done(function () {
+			$loading.addClass('hidden');
+			$button.removeClass('hidden');
+			$button.prop('disabled', false);
+		});
+	});
 
 	$(document).on('click', '#dropdown #showPassword', function () {
 		$('#linkPass').slideToggle(OC.menuSpeed);
@@ -1174,73 +1171,69 @@ $(document).ready(function () {
 	});
 
 
-	// FIXME Emailing links is not supported in Gallery
-	/*$(document).on('submit', '#dropdown #emailPrivateLink', function (event) {
-	 event.preventDefault();
-	 var link = $('#linkText').val();
-	 var itemType = $('#dropdown').data('item-type');
-	 var itemSource = $('#dropdown').data('item-source');
-	 var file = $('tr').filterAttr('data-id', String(itemSource)).data('file');
-	 var email = $('#email').val();
-	 var expirationDate = '';
-	 if ($('#expirationCheckbox').is(':checked') === true) {
-	 expirationDate = $("#expirationDate").val();
-	 }
-	 if (email != '') {
-	 $('#email').prop('disabled', true);
-	 $('#email').val(t('core', 'Sending ...'));
-	 $('#emailButton').prop('disabled', true);
+	$(document).on('submit', '#dropdown #emailPrivateLink', function (event) {
+		event.preventDefault();
+		var link = $('#linkText').val();
+		var itemType = $('#dropdown').data('item-type');
+		var itemSource = $('#dropdown').data('item-source');
+		var fileName = $('.last').children()[0].innerText;
+		var email = $('#email').val();
+		var expirationDate = '';
+		if ($('#expirationCheckbox').is(':checked') === true) {
+			expirationDate = $("#expirationDate").val();
+		}
+		if (email != '') {
+			$('#email').prop('disabled', true);
+			$('#email').val(t('core', 'Sending ...'));
+			$('#emailButton').prop('disabled', true);
 
-	 $.post(OC.filePath('core', 'ajax', 'share.php'), {
-	 action: 'email',
-	 toaddress: email,
-	 link: link,
-	 itemType: itemType,
-	 itemSource: itemSource,
-	 file: file,
-	 expiration: expirationDate
-	 },
-	 function (result) {
-	 $('#email').prop('disabled', false);
-	 $('#emailButton').prop('disabled', false);
-	 if (result && result.status == 'success') {
-	 $('#email').css('font-weight', 'bold').val(t('core', 'Email sent'));
-	 setTimeout(function () {
-	 $('#email').css('font-weight', 'normal').val('');
-	 }, 2000);
-	 } else {
-	 OC.dialogs.alert(result.data.message, t('core', 'Error while sharing'));
-	 }
-	 });
-	 }
-	 });*/
+			$.post(OC.filePath('core', 'ajax', 'share.php'), {
+					action: 'email',
+					toaddress: email,
+					link: link,
+					file: fileName,
+					itemType: itemType,
+					itemSource: itemSource,
+					expiration: expirationDate
+				},
+				function (result) {
+					$('#email').prop('disabled', false);
+					$('#emailButton').prop('disabled', false);
+					if (result && result.status == 'success') {
+						$('#email').css('font-weight', 'bold').val(t('core', 'Email sent'));
+						setTimeout(function () {
+							$('#email').css('font-weight', 'normal').val('');
+						}, 2000);
+					} else {
+						OC.dialogs.alert(result.data.message, t('core', 'Error while sharing'));
+					}
+				});
+		}
+	});
 
-	// FIXME Emailing links is not supported in Gallery
-	/*$(document).on('click', '#dropdown input[name=mailNotification]', function () {
-	 var $li = $(this).closest('li');
-	 var itemType = $('#dropdown').data('item-type');
-	 var itemSource = $('#dropdown').data('item-source');
-	 var action = '';
-	 if (this.checked) {
-	 action = 'informRecipients';
-	 } else {
-	 action = 'informRecipientsDisabled';
-	 }
+	$(document).on('click', '#dropdown input[name=mailNotification]', function () {
+		var $li = $(this).closest('li');
+		var itemType = $('#dropdown').data('item-type');
+		var itemSource = $('a.share').data('item-source');
+		var action = '';
+		if (this.checked) {
+			action = 'informRecipients';
+		} else {
+			action = 'informRecipientsDisabled';
+		}
+		var shareType = $li.data('share-type');
+		var shareWith = $li.attr('data-share-with');
+		$.post(OC.filePath('core', 'ajax', 'share.php'), {
+			action: action,
+			recipient: shareWith,
+			shareType: shareType,
+			itemSource: itemSource,
+			itemType: itemType
+		}, function (result) {
+			if (result.status !== 'success') {
+				OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
+			}
+		});
 
-	 var shareType = $li.data('share-type');
-	 var shareWith = $li.attr('data-share-with');
-
-	 $.post(OC.filePath('core', 'ajax', 'share.php'), {
-	 action: action,
-	 recipient: shareWith,
-	 shareType: shareType,
-	 itemSource: itemSource,
-	 itemType: itemType
-	 }, function (result) {
-	 if (result.status !== 'success') {
-	 OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
-	 }
-	 });
-
-	 });*/
+	});
 });

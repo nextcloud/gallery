@@ -3,9 +3,11 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<a style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
 		'data-width="{{targetWidth}}" data-height="{{targetHeight}}"' +
-		'href="{{targetPath}}">' +
+		'href="{{targetPath}}" data-dir="{{dir}}" data-path="{{path}}"' +
+		'data-permissions="{{permissions}}" data-freespace="{{freeSpace}}"' +
+		'>' +
 		'	<div class="album-loader loading"></div>' +
 		'	<span class="album-label">' +
 		'		<span class="title">{{label}}</span>' +
@@ -21,20 +23,65 @@
 	 * @param {Array<Album|GalleryImage>} subAlbums
 	 * @param {Array<Album|GalleryImage>} images
 	 * @param {string} name
+	 * @param {number} fileId
+	 * @param {number} mTime
+	 * @param {string} etag
+	 * @param {number} size
+	 * @param {Boolean} sharedWithUser
+	 * @param {string} owner
+	 * @param {number} freeSpace
+	 * @param {number} permissions
 	 * @constructor
 	 */
-	var Album = function (path, subAlbums, images, name) {
+	var Album = function (path, subAlbums, images, name, fileId, mTime, etag, size, sharedWithUser,
+						  owner, freeSpace, permissions) {
 		this.path = path;
 		this.subAlbums = subAlbums;
 		this.images = images;
 		this.viewedItems = 0;
 		this.name = name;
+		this.fileId = fileId;
+		this.mTime = mTime;
+		this.etag = etag;
+		this.size = size;
+		this.sharedWithUser = sharedWithUser;
+		this.owner = owner;
+		this.freeSpace = freeSpace;
+		this.permissions = permissions;
 		this.domDef = null;
 		this.loader = null;
 		this.preloadOffset = 0;
 	};
 
 	Album.prototype = {
+		droppableOptions: {
+			accept: '#gallery > .row > a',
+			activeClass: 'album-droppable',
+			hoverClass: 'album-droppable-hover',
+			tolerance: 'pointer'
+		},
+
+		/**
+		 * Processes UI elements dropped on the album
+		 *
+		 * @param event
+		 * @param ui
+		 */
+		onDrop: function (event, ui) {
+			var $item = ui.draggable;
+			var $clone = ui.helper;
+			var $target = $(event.target);
+			var targetPath = $target.data('dir').toString();
+			var filePath = $item.data('path').toString();
+			var fileName = OC.basename(filePath);
+
+			this.loader.show();
+
+			$clone.fadeOut("normal", function () {
+				Gallery.move($item, fileName, filePath, $target, targetPath);
+			});
+		},
+
 		/**
 		 * Returns a new album row
 		 *
@@ -66,6 +113,10 @@
 				var albumElement = template({
 					targetHeight: targetHeight,
 					targetWidth: targetHeight,
+					dir: this.path,
+					path: this.path,
+					permissions: this.permissions,
+					freeSpace: this.freeSpace,
 					label: this.name,
 					targetPath: '#' + encodeURIComponent(this.path)
 				});
@@ -73,6 +124,9 @@
 				this.loader = this.domDef.children('.album-loader');
 				this.loader.hide();
 				this.domDef.click(this._openAlbum.bind(this));
+
+				this.droppableOptions.drop = this.onDrop.bind(this);
+				this.domDef.droppable(this.droppableOptions);
 
 				// Define a if you don't want to set the style in the template
 				//a.width(targetHeight);
@@ -157,6 +211,9 @@
 			event.stopPropagation();
 			// show loading animation
 			this.loader.show();
+			if(!_.isUndefined(Gallery.Share)){
+				Gallery.Share.hideDropDown();
+			}
 		},
 
 		/**
@@ -274,10 +331,11 @@
 			var subAlbum = this.domDef.children('.album');
 
 			if (this.images.length >= 1) {
-				this._getFourImages(this.images, targetHeight, subAlbum).fail(function (validImages) {
-					album.images = validImages;
-					album._fillSubAlbum(targetHeight, subAlbum);
-				});
+				this._getFourImages(this.images, targetHeight, subAlbum).fail(
+					function (validImages) {
+						album.images = validImages;
+						album._fillSubAlbum(targetHeight, subAlbum);
+					});
 			} else {
 				var imageHolder = $('<div class="cropped">');
 				subAlbum.append(imageHolder);
@@ -294,7 +352,7 @@
 		 */
 		_showFolder: function (targetHeight, imageHolder) {
 			var image = new GalleryImage('Generic folder', 'Generic folder', -1, 'image/svg+xml',
-				Gallery.token);
+				null, null);
 			var thumb = Thumbnails.getStandardIcon(-1);
 			image.thumbnail = thumb;
 			this.images.push(image);

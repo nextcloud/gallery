@@ -7,7 +7,8 @@ design:
   background: "#ff9f00"
   inherit: yes
 information:
-  description: | # This is the official **Gallery** sample folder
+  description: |
+    # This is the official **Gallery** sample folder
     Contribute to this project [on Github](https://github.com/owncloud/gallery)
   copyright: Copyright 2014-2015 [Acme](http://www.ubersecrettester.ninja)
   inherit: yes

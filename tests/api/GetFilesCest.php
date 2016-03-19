@@ -59,20 +59,44 @@ class GetFilesCest {
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 
-		$I->seeResponseJsonMatchesXpath('//files/path');
+		$I->seeResponseJsonMatchesJsonPath('$.files[*]..path]');
+		$I->seeResponseJsonMatchesJsonPath('$.albums[*]..path]');
 		$I->dontSeeResponseContainsJson(['path' => 'folder2/testimagelarge.svg']);
 		// Folder 4 contains the .nomedia file
 		$I->dontSeeResponseContainsJson(['path' => 'folder4']);
-
-		$I->seeResponseJsonMatchesXpath('//albuminfo/path', '');
-
-		$I->seeResponseContainsJson(['locationhaschanged' => false]);
+		$I->seeResponseContainsJson(
+			[
+				'design'      => [
+					'background' => '#ff9f00',
+					'inherit'    => 'yes',
+					'level'      => 0,
+				],
+				'information' =>
+					[
+						// You have to use double-quotes here in order to be able to insert the line return
+						'description' => "# This is the official **Gallery** sample folder\xA" .
+										 "Contribute to this project [on Github](https://github.com/owncloud/gallery)\xA",
+						'copyright'   => 'Copyright 2014-2015 [Acme](http://www.ubersecrettester.ninja)',
+						'inherit'     => 'yes',
+						'level'       => 0,
+					],
+				'sorting'     =>
+					[
+						'type'    => 'date',
+						'order'   => 'des',
+						'inherit' => 'yes',
+						'level'   => 0,
+					],
+			]
+		);
+		$I->seeResponseContainsJson(['albumpath' => '']);
+		$I->seeResponseContainsJson(['updated' => true]);
 	}
 
 	/**
 	 * @depends getStandardList
 	 *
-	 * @param ApiTester $I
+	 * @param \Step\Api\User $I
 	 */
 	public function getListWithNativeSvgEnabled(\Step\Api\User $I) {
 		$mediaTypes = $this->params['mediatypes'];
@@ -102,13 +126,17 @@ class GetFilesCest {
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 		$I->seeResponseContainsJson(['path' => 'testimage-corrupt.jpg']);
-		$I->seeResponseContainsJson(['locationhaschanged' => true]);
+		$I->seeResponseContainsJson(['albumpath' => '']);
+		$I->seeResponseContainsJson(['updated' => true]);
 	}
 
 	public function getListOfParentFolderWhenFolderHasTypo(\Step\Api\User $I) {
 		$params = $this->params;
-		// The correct path is /folder1/shared1/shared1.1, containing testimage.png
-		$params['location'] = '/folder1/shared1/shared1.2';
+		// This doesn't match any path in the filesystem, the correct path is
+		// /folder1/shared1/shared1.1, containing testimage.png
+		$params['location'] = 'folder1/shared1/shared1.2';
+		// This is the path which will be used instead
+		$parentPath = 'folder1/shared1';
 
 		$I->am('an app');
 		$I->wantTo(
@@ -120,10 +148,44 @@ class GetFilesCest {
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsJson();
 		// /folder1/shared1 only contains 2 files. Warning, alphabetical order
-		$I->seeResponseJsonMatchesXpath('//files[path[1]="folder1/shared1/testimage.eps"]');
-		// This is weird and might come from a bug in Codeception
-		$I->seeResponseJsonMatchesXpath('//files[path[1][1]="folder1/shared1/testimage.gif"]');
-		$I->seeResponseContainsJson(['locationhaschanged' => true]);
+		$I->seeResponseContainsJson(
+			[
+				'path'           => $parentPath . '/testimage.eps',
+				'sharedwithuser' => false,
+				'owner'          => [
+					'uid'         => 'tester',
+					'displayname' => 'Gallery Tester (tester)'
+				],
+				'permissions'    => 27,
+				'mimetype'       => 'application/postscript'
+			]
+		);
+		$I->seeResponseContainsJson(
+			[
+				'path'           => $parentPath . '/testimage.gif',
+				'sharedwithuser' => false,
+				'owner'          => [
+					'uid'         => 'tester',
+					'displayname' => 'Gallery Tester (tester)'
+				],
+				'permissions'    => 27,
+				'mimetype'       => 'image/gif'
+			]
+		);
+		$I->seeResponseJsonMatchesJsonPath('$.albums[*]..path]');
+		$I->seeResponseContainsJson(
+			[
+				'path'           => $parentPath,
+				'sharedwithuser' => false,
+				'owner'          => [
+					'uid'         => 'tester',
+					'displayname' => 'Gallery Tester (tester)'
+				],
+				'permissions'    => 31
+			]
+		);
+		$I->seeResponseContainsJson(['albumpath' => $parentPath]);
+		$I->seeResponseContainsJson(['updated' => true]);
 	}
 
 	public function getListOfForbiddenPath(\Step\Api\User $I) {
@@ -142,7 +204,10 @@ class GetFilesCest {
 		$I->seeResponseCodeIs($statusCode);
 		$I->seeResponseIsJson();
 		$I->seeResponseContainsJson(
-			['message' => 'Album is private or unavailable (' . $statusCode . ')']
+			[
+				'message' => 'The owner has placed a restriction or the storage location is unavailable ('
+							 . $statusCode . ')'
+			]
 		);
 	}
 

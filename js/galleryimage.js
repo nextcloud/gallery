@@ -3,32 +3,40 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<a style="width: {{targetWidth}}px; height: {{targetHeight}}px;" href="">' +
+		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'href="" data-path="{{path}}">' +
 		'	<div class="image-loader loading"></div>' +
 		'	<span class="image-label">' +
 		'		<span class="title">{{label}}</span>' +
 		'	</span>' +
-		'	<div class="image container" data-path="{{path}}"></div>' +
+		'	<div class="image container"></div>' +
 		'</a>';
 
 	/**
 	 * Creates a new image object to store information about a media file
 	 *
-	 * @param src
-	 * @param path
-	 * @param fileId
-	 * @param mimeType
-	 * @param mTime modification time
-	 * @param etag
+	 * @param {string} src
+	 * @param {string} path
+	 * @param {number} fileId
+	 * @param {string} mimeType
+	 * @param {number} mTime modification time
+	 * @param {string} etag
+	 * @param {number} size
+	 * @param {boolean} sharedWithUser
+	 * @param {string} owner
 	 * @constructor
 	 */
-	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag) {
+	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag, size, sharedWithUser,
+								 owner) {
 		this.src = src;
 		this.path = path;
 		this.fileId = fileId;
 		this.mimeType = mimeType;
 		this.mTime = mTime;
 		this.etag = etag;
+		this.size = size;
+		this.sharedWithUser = sharedWithUser;
+		this.owner = owner;
 		this.thumbnail = null;
 		this.domDef = null;
 		this.spinner = null;

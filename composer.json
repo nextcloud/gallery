@@ -24,25 +24,21 @@
     "source": "https://github.com/interfasys/galleryplus"
   },
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=5.5.0",
     "symfony/yaml": "~2.6"
   },
   "require-dev": {
-    "Codeception/Codeception": "2.1.*",
+    "guzzlehttp/guzzle": "^5.3",
+    "phpunit/phpunit": "^4.0|^5.1",
+    "codeception/codeception": "2.1.*",
     "codeception/phpbuiltinserver": "*",
+    "composer-plugin-api": "^1.0",
     "codeception/c3": "2.*",
+    "flow/jsonpath": "^0.3.1",
     "phpdocumentor/phpdocumentor": "^2.8",
-	"jakub-onderka/php-parallel-lint": "0.*",
-	"jakub-onderka/php-console-highlighter": "0.*",
+    "jakub-onderka/php-parallel-lint": "0.*",
+    "jakub-onderka/php-console-highlighter": "0.*",
     "codeclimate/php-test-reporter": "dev-master",
     "codacy/coverage": "dev-master"
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "Codeception\\c3\\Installer::copyC3ToRoot"
-    ],
-    "post-update-cmd": [
-      "Codeception\\c3\\Installer::copyC3ToRoot"
-    ]
   }
 }

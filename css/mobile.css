@@ -5,4 +5,9 @@
 		margin-right: 0 !important;
 	}
 
+	/* shorten elements for mobile */
+	#uploadprogressbar {
+		width: 50px;
+	}
+
 }

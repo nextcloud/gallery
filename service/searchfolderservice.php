@@ -30,7 +30,7 @@ class SearchFolderService extends FilesService {
 	 * @var int
 	 */
 	protected $virtualRootLevel = null;
-	
+
 	/**
 	 * This returns what we think is the current folder node based on a given path
 	 *
@@ -74,9 +74,8 @@ class SearchFolderService extends FilesService {
 			return $this->findFolder($folder, $depth);
 		}
 		$path = $this->environment->getPathFromVirtualRoot($node);
-		$locationHasChanged = $this->hasLocationChanged($depth);
 
-		return $this->sendFolder($path, $node, $locationHasChanged);
+		return $this->sendFolder($path, $node);
 	}
 
 	/**
@@ -97,39 +96,26 @@ class SearchFolderService extends FilesService {
 	}
 
 	/**
-	 * @param $depth
-	 *
-	 * @return bool
-	 */
-	private function hasLocationChanged($depth) {
-		$locationHasChanged = false;
-		if ($depth > 0) {
-			$locationHasChanged = true;
-		}
-
-		return $locationHasChanged;
-	}
-
-	/**
 	 * Makes sure that the folder is not empty, does meet our requirements in terms of location and
 	 * returns details about it
 	 *
 	 * @param string $path
 	 * @param Folder $node
-	 * @param bool $locationHasChanged
 	 *
 	 * @return array <string,Folder,bool>
 	 * @throws ForbiddenServiceException|NotFoundServiceException
 	 */
-	private function sendFolder($path, $node, $locationHasChanged) {
+	private function sendFolder($path, $node) {
 		if (is_null($node)) {
 			// Something very wrong has just happened
 			throw new NotFoundServiceException('Oh Nooooes!');
 		} elseif (!$this->isAllowedAndAvailable($node)) {
-			throw new ForbiddenServiceException('Album is private or unavailable');
+			throw new ForbiddenServiceException(
+				'The owner has placed a restriction or the storage location is unavailable'
+			);
 		}
 
-		return [$path, $node, $locationHasChanged];
+		return [$path, $node];
 	}
 
 }

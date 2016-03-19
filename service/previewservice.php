@@ -207,21 +207,38 @@ class PreviewService extends Service {
 	 * @param File $file
 	 *
 	 * @return bool
-	 * @throws InternalServerErrorServiceException
 	 */
 	private function isGifAnimated($file) {
 		$count = 0;
+		$fileHandle = $this->isFileReadable($file);
+		if ($fileHandle) {
+			while (!feof($fileHandle) && $count < 2) {
+				$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
+				$count += preg_match_all(
+					'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
+				);
+			}
+			fclose($fileHandle);
+		}
+
+		return $count > 1;
+	}
+
+	/**
+	 * Determines if we can read the content of the file and returns a file pointer resource
+	 *
+	 * We can't use something like $node->isReadable() as it's too unreliable
+	 * Some storage classes just check for the presence of the file
+	 *
+	 * @param File $file
+	 *
+	 * @return resource
+	 * @throws InternalServerErrorServiceException
+	 */
+	private function isFileReadable($file) {
 		try {
 			$fileHandle = $file->fopen('rb');
-			if ($fileHandle) {
-				while (!feof($fileHandle) && $count < 2) {
-					$chunk = fread($fileHandle, 1024 * 100); //read 100kb at a time
-					$count += preg_match_all(
-						'#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches
-					);
-				}
-				fclose($fileHandle);
-			} else {
+			if (!$fileHandle) {
 				throw new \Exception();
 			}
 		} catch (\Exception $exception) {
@@ -230,7 +247,7 @@ class PreviewService extends Service {
 			);
 		}
 
-		return $count > 1;
+		return $fileHandle;
 	}
 
 }
