@@ -96,9 +96,19 @@ class PageController extends Controller {
 		} else {
 			// Parameters sent to the template
 			$params = [
-				'appName' => $appName,
-				'uploadUrl' => $this->urlGenerator->linkTo('files', 'ajax/upload.php'),
-				'publicUploadEnabled' => $this->appConfig->getAppValue('core', 'shareapi_allow_public_upload', 'yes')
+				'appName'                       => $appName,
+				'uploadUrl'                     => $this->urlGenerator->linkTo(
+					'files', 'ajax/upload.php'
+				),
+				'publicUploadEnabled'           => $this->appConfig->getAppValue(
+					'core', 'shareapi_allow_public_upload', 'yes'
+				),
+				'mailNotificationEnabled'       => $this->appConfig->getAppValue(
+					'core', 'shareapi_allow_mail_notification', 'no'
+				),
+				'mailPublicNotificationEnabled' => $this->appConfig->getAppValue(
+					'core', 'shareapi_allow_public_notification', 'no'
+				)
 			];
 
 			// Will render the page using the template found in templates/index.php

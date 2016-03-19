@@ -79,12 +79,18 @@ class PageControllerTest extends \Test\TestCase {
 		$url = 'http://owncloud/ajax/upload.php';
 		$this->mockUrlToUploadEndpoint($url);
 		$publicUploadEnabled = 'yes';
+		$mailNotificationEnabled = 'no';
+		$mailPublicNotificationEnabled = 'yes';
 		$params = [
-			'appName' => $this->appName,
-			'uploadUrl' => $url,
-			'publicUploadEnabled' => $publicUploadEnabled
+			'appName'                       => $this->appName,
+			'uploadUrl'                     => $url,
+			'publicUploadEnabled'           => $publicUploadEnabled,
+			'mailNotificationEnabled'       => $mailNotificationEnabled,
+			'mailPublicNotificationEnabled' => $mailPublicNotificationEnabled
 		];
-		$this->mockGetPublicUploadAppValue($publicUploadEnabled);
+		$this->mockGetTestAppValue(
+			$publicUploadEnabled, $mailNotificationEnabled, $mailPublicNotificationEnabled
+		);
 
 		$template = new TemplateResponse($this->appName, 'index', $params);
 
@@ -267,15 +273,19 @@ class PageControllerTest extends \Test\TestCase {
 						 ->willReturn(true);
 	}
 
-	private function mockGetPublicUploadAppValue($publicUploadEnabled) {
-		$this->appConfig->expects($this->once())
+	private function mockGetTestAppValue(
+		$publicUploadEnabled, $mailNotificationEnabled, $mailPublicNotificationEnabled
+	) {
+		$map = [
+			['core', 'shareapi_allow_public_upload', 'yes', $publicUploadEnabled],
+			['core', 'shareapi_allow_mail_notification', 'no', $mailNotificationEnabled],
+			['core', 'shareapi_allow_public_notification', 'no', $mailPublicNotificationEnabled]
+		];
+		$this->appConfig
 			->method('getAppValue')
-			->with(
-				'core',
-				'shareapi_allow_public_upload',
-				'yes'
-			)
-			->willReturn($publicUploadEnabled);
+			->will(
+				$this->returnValueMap($map)
+			);
 	}
 
 	/**
@@ -297,7 +307,7 @@ class PageControllerTest extends \Test\TestCase {
 						   ->with('files', 'ajax/upload.php')
 						   ->willReturn($url);
 	}
-	
+
 	/**
 	 * Mocks IURLGenerator->linkToRoute()
 	 *
