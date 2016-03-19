@@ -365,7 +365,6 @@
 						if (result.status === 'success') {
 							self._removeElement(dir, filePath, $item);
 						} else {
-							OC.Notification.hide();
 							if (result.status === 'error' && result.data.message) {
 								OC.Notification.showTemporary(result.data.message);
 							}
