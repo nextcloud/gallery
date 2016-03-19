@@ -82,11 +82,7 @@ class PageController extends Controller {
 		$appName = $this->appName;
 
 		// Parameters sent to the template
-		$params = [
-			'appName' => $appName,
-			'uploadUrl' => $this->urlGenerator->linkTo('files', 'ajax/upload.php'),
-			'publicUploadEnabled' => $this->appConfig->getAppValue('core', 'shareapi_allow_public_upload', 'yes')
-		];
+		$params = $this->getIndexParameters($appName);
 
 		// Will render the page using the template found in templates/index.php
 		$response = new TemplateResponse($appName, 'index', $params);
@@ -174,6 +170,35 @@ class PageController extends Controller {
 	 */
 	public function slideshow() {
 		return new TemplateResponse($this->appName, 'slideshow', [], 'blank');
+	}
+
+	/**
+	 * Returns the parameters to be used in the index function
+	 *
+	 * @param $appName
+	 *
+	 * @return array<string,string>
+	 */
+	private function getIndexParameters($appName) {
+
+		// Parameters sent to the index function
+		$params = [
+			'appName' => $appName,
+			'uploadUrl' => $this->urlGenerator->linkTo(
+				'files', 'ajax/upload.php'
+			),
+			'publicUploadEnabled' => $this->appConfig->getAppValue(
+				'core', 'shareapi_allow_public_upload', 'yes'
+			),
+			'mailNotificationEnabled' => $this->appConfig->getAppValue(
+				'core', 'shareapi_allow_mail_notification', 'no'
+			),
+			'mailPublicNotificationEnabled' => $this->appConfig->getAppValue(
+				'core', 'shareapi_allow_public_notification', 'no'
+			)
+		];
+
+		return $params;
 	}
 
 	/**

@@ -254,18 +254,18 @@
 						t('core', 'Allow editing') + '</label>';
 						html += '</div>';
 					}
-					 /*var mailPublicNotificationEnabled = $(
-					 'input:hidden[name=mailPublicNotificationEnabled]').val();
-					 if (mailPublicNotificationEnabled === 'yes') {
-					 html += '<form id="emailPrivateLink">';
-					 html +=
-					 '<input id="email" style="display:none; width:62%;" value="" placeholder="' +
-					 t('core', 'Email link to person') + '" type="text" />';
-					 html +=
-					 '<input id="emailButton" style="display:none;" type="submit" value="' +
-					 t('core', 'Send') + '" />';
-					 html += '</form>';
-					 }*/
+
+					var mailPublicNotificationEnabled = $('input:hidden[name=mailPublicNotificationEnabled]').val();
+					if (mailPublicNotificationEnabled === 'yes') {
+						html += '<form id="emailPrivateLink">';
+						html +=
+							'<input id="email" style="display:none; width:62%;" value="" placeholder="' +
+							t('core', 'Email link to person') + '" type="text" />';
+						html +=
+							'<input id="emailButton" style="display:none;" type="submit" value="' +
+							t('core', 'Send') + '" />';
+						html += '</form>';
+					}
 				}
 
 				html += '<div id="expiration">';
@@ -443,32 +443,32 @@
 						.append(insert)
 						.appendTo(ul);
 				};
-				// FIXME Emailing links is not supported in Gallery
-				/*if (link && linksAllowed && $('#email').length != 0) {
-				 $('#email').autocomplete({
-				 minLength: 1,
-				 source: function (search, response) {
-				 $.get(OC.filePath('core', 'ajax', 'share.php'), {
-				 fetch: 'getShareWithEmail',
-				 search: search.term
-				 }, function (result) {
-				 if (result.status == 'success' && result.data.length > 0) {
-				 response(result.data);
-				 }
-				 });
-				 },
-				 select: function (event, item) {
-				 $('#email').val(item.item.email);
-				 return false;
-				 }
-				 })
-				 .data("ui-autocomplete")._renderItem = function (ul, item) {
-				 return $('<li>')
-				 .append('<a>' + escapeHTML(item.displayname) + "<br>" +
-				 escapeHTML(item.email) + '</a>')
-				 .appendTo(ul);
-				 };
-				 }*/
+
+				if (link && linksAllowed && $('#email').length != 0) {
+					$('#email').autocomplete({
+						minLength: 1,
+						source: function (search, response) {
+							$.get(OC.filePath('core', 'ajax', 'share.php'), {
+								fetch: 'getShareWithEmail',
+								search: search.term
+							}, function (result) {
+								if (result.status == 'success' && result.data.length > 0) {
+									response(result.data);
+								}
+							});
+						},
+						select: function (event, item) {
+							$('#email').val(item.item.email);
+							return false;
+						}
+					})
+						.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $('<li>')
+							.append('<a>' + escapeHTML(item.displayname) + "<br>" +
+							escapeHTML(item.email) + '</a>')
+							.appendTo(ul);
+					};
+				}
 
 			} else {
 				html += '<input id="shareWith" type="text" placeholder="' +
@@ -721,15 +721,15 @@
 			if (mailNotificationEnabled === 'yes' &&
 				shareType !== this.SHARE_TYPE_REMOTE) {
 				var checked = '';
-				if (mailSend === '1') {
+				if (mailSend === 1) {
 					checked = 'checked';
 				}
 				html +=
-					'<input type="checkbox" class="checkbox checkbox--right" ' +
-					'name="mailNotification" class="mailNotification" ' +
+					'<input id="mail-' + escapeHTML(shareWith) + '" type="checkbox" class="mailNotification checkbox checkbox--right" ' +
+					'name="mailNotification" ' +
 					checked + ' />';
 				html +=
-					'<label>' + t('core', 'notify by email') + '</label>';
+					'<label for="mail-' + escapeHTML(shareWith) + '">' + t('core', 'notify by email') + '</label>';
 			}
 			if (oc_appconfig.core.resharingAllowed &&
 				(possiblePermissions & OC.PERMISSION_SHARE)) {
@@ -1171,73 +1171,69 @@ $(document).ready(function () {
 	});
 
 
-	// FIXME Emailing links is not supported in Gallery
-	/*$(document).on('submit', '#dropdown #emailPrivateLink', function (event) {
-	 event.preventDefault();
-	 var link = $('#linkText').val();
-	 var itemType = $('#dropdown').data('item-type');
-	 var itemSource = $('#dropdown').data('item-source');
-	 var file = $('tr').filterAttr('data-id', String(itemSource)).data('file');
-	 var email = $('#email').val();
-	 var expirationDate = '';
-	 if ($('#expirationCheckbox').is(':checked') === true) {
-	 expirationDate = $("#expirationDate").val();
-	 }
-	 if (email != '') {
-	 $('#email').prop('disabled', true);
-	 $('#email').val(t('core', 'Sending ...'));
-	 $('#emailButton').prop('disabled', true);
+	$(document).on('submit', '#dropdown #emailPrivateLink', function (event) {
+		event.preventDefault();
+		var link = $('#linkText').val();
+		var itemType = $('#dropdown').data('item-type');
+		var itemSource = $('#dropdown').data('item-source');
+		var fileName = $('.last').children()[0].innerText;
+		var email = $('#email').val();
+		var expirationDate = '';
+		if ($('#expirationCheckbox').is(':checked') === true) {
+			expirationDate = $("#expirationDate").val();
+		}
+		if (email != '') {
+			$('#email').prop('disabled', true);
+			$('#email').val(t('core', 'Sending ...'));
+			$('#emailButton').prop('disabled', true);
 
-	 $.post(OC.filePath('core', 'ajax', 'share.php'), {
-	 action: 'email',
-	 toaddress: email,
-	 link: link,
-	 itemType: itemType,
-	 itemSource: itemSource,
-	 file: file,
-	 expiration: expirationDate
-	 },
-	 function (result) {
-	 $('#email').prop('disabled', false);
-	 $('#emailButton').prop('disabled', false);
-	 if (result && result.status == 'success') {
-	 $('#email').css('font-weight', 'bold').val(t('core', 'Email sent'));
-	 setTimeout(function () {
-	 $('#email').css('font-weight', 'normal').val('');
-	 }, 2000);
-	 } else {
-	 OC.dialogs.alert(result.data.message, t('core', 'Error while sharing'));
-	 }
-	 });
-	 }
-	 });*/
+			$.post(OC.filePath('core', 'ajax', 'share.php'), {
+					action: 'email',
+					toaddress: email,
+					link: link,
+					file: fileName,
+					itemType: itemType,
+					itemSource: itemSource,
+					expiration: expirationDate
+				},
+				function (result) {
+					$('#email').prop('disabled', false);
+					$('#emailButton').prop('disabled', false);
+					if (result && result.status == 'success') {
+						$('#email').css('font-weight', 'bold').val(t('core', 'Email sent'));
+						setTimeout(function () {
+							$('#email').css('font-weight', 'normal').val('');
+						}, 2000);
+					} else {
+						OC.dialogs.alert(result.data.message, t('core', 'Error while sharing'));
+					}
+				});
+		}
+	});
 
-	// FIXME Emailing links is not supported in Gallery
-	/*$(document).on('click', '#dropdown input[name=mailNotification]', function () {
-	 var $li = $(this).closest('li');
-	 var itemType = $('#dropdown').data('item-type');
-	 var itemSource = $('#dropdown').data('item-source');
-	 var action = '';
-	 if (this.checked) {
-	 action = 'informRecipients';
-	 } else {
-	 action = 'informRecipientsDisabled';
-	 }
+	$(document).on('click', '#dropdown input[name=mailNotification]', function () {
+		var $li = $(this).closest('li');
+		var itemType = $('#dropdown').data('item-type');
+		var itemSource = $('a.share').data('item-source');
+		var action = '';
+		if (this.checked) {
+			action = 'informRecipients';
+		} else {
+			action = 'informRecipientsDisabled';
+		}
+		var shareType = $li.data('share-type');
+		var shareWith = $li.attr('data-share-with');
+		$.post(OC.filePath('core', 'ajax', 'share.php'), {
+			action: action,
+			recipient: shareWith,
+			shareType: shareType,
+			itemSource: itemSource,
+			itemType: itemType
+		}, function (result) {
+			if (result.status !== 'success') {
+				OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
+			}
+		});
 
-	 var shareType = $li.data('share-type');
-	 var shareWith = $li.attr('data-share-with');
-
-	 $.post(OC.filePath('core', 'ajax', 'share.php'), {
-	 action: action,
-	 recipient: shareWith,
-	 shareType: shareType,
-	 itemSource: itemSource,
-	 itemType: itemType
-	 }, function (result) {
-	 if (result.status !== 'success') {
-	 OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
-	 }
-	 });
-
-	 });*/
+	});
 });
