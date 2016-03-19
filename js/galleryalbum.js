@@ -211,6 +211,9 @@
 			event.stopPropagation();
 			// show loading animation
 			this.loader.show();
+			if(!_.isUndefined(Gallery.Share)){
+				Gallery.Share.hideDropDown();
+			}
 		},
 
 		/**
