@@ -28,7 +28,7 @@
     "symfony/yaml": "~2.6"
   },
   "require-dev": {
-    "guzzlehttp/guzzle": "^5.0|^6.0",
+    "guzzlehttp/guzzle": "^5.3",
     "phpunit/phpunit": "^4.0|^5.1",
     "codeception/codeception": "2.1.*",
     "codeception/phpbuiltinserver": "*",
