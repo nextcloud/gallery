@@ -318,7 +318,10 @@
 				}
 			};
 			Gallery.activeSlideShow.show(start);
-
+			if(!_.isUndefined(Gallery.Share)){
+				Gallery.Share.hideDropDown();
+			}
+			$('.album-info-container').slideUp();
 			// Resets the last focused element
 			document.activeElement.blur();
 		},
