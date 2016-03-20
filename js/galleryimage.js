@@ -3,36 +3,40 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<div class="item-container image-container" ' +
-		'style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
-		'data-width="{{targetWidth}}" data-height="{{targetHeight}}">' +
+		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'href="" data-path="{{path}}">' +
+		'	<div class="image-loader loading"></div>' +
 		'	<span class="image-label">' +
 		'		<span class="title">{{label}}</span>' +
 		'	</span>' +
-		'	<a class="image" href="{{targetPath}}" data-path="{{path}}"></a>' +
-		'</div>';
+		'	<div class="image container"></div>' +
+		'</a>';
 
 	/**
 	 * Creates a new image object to store information about a media file
 	 *
-	 * @param src
-	 * @param path
-	 * @param fileId
-	 * @param mimeType
-	 * @param mTime modification time
-	 * @param etag
+	 * @param {string} src
+	 * @param {string} path
+	 * @param {number} fileId
+	 * @param {string} mimeType
+	 * @param {number} mTime modification time
+	 * @param {string} etag
+	 * @param {number} size
+	 * @param {boolean} sharedWithUser
 	 * @constructor
 	 */
-	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag) {
+	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag, size, sharedWithUser) {
 		this.src = src;
 		this.path = path;
 		this.fileId = fileId;
 		this.mimeType = mimeType;
 		this.mTime = mTime;
 		this.etag = etag;
+		this.size = size;
+		this.sharedWithUser = sharedWithUser;
 		this.thumbnail = null;
 		this.domDef = null;
-		this.domHeight = null;
+		this.spinner = null;
 	};
 
 	GalleryImage.prototype = {
@@ -88,37 +92,50 @@
 		 * @return {a}
 		 */
 		getDom: function (targetHeight) {
-			var image = this;
-			if (this.domDef === null || this.domHeight !== targetHeight) {
-				this.domHeight = targetHeight;
-				// img is a Thumbnail.image
-				return this.getThumbnail(false).then(function (img) {
-					if (!image._template) {
-						image._template = Handlebars.compile(TEMPLATE);
-					}
-					var newWidth = Math.round(targetHeight * image.thumbnail.ratio);
-					var url = image._getLink();
-					var template = image._template({
-						targetHeight: targetHeight,
-						targetWidth: newWidth,
-						label: OC.basename(image.path),
-						targetPath: url,
-						path: image.path
-					});
-					image.domDef = $(template);
-					image._addLabel();
-					// This will stretch wide images to make them reach targetHeight
-					$(img).css({
-						'width': newWidth,
-						'height': targetHeight
-					});
-					img.alt = encodeURI(image.path);
-					image.domDef.children('a').append(img);
-
-					return image.domDef;
+			if (this.domDef === null) {
+				var template = Handlebars.compile(TEMPLATE);
+				var imageElement = template({
+					targetHeight: targetHeight,
+					targetWidth: targetHeight,
+					label: OC.basename(this.path),
+					path: this.path
 				});
+				this.domDef = $(imageElement);
+				this._addLabel();
+				this.spinner = this.domDef.children('.image-loader');
 			}
-			return $.Deferred().resolve(this.domDef);
+			return this.domDef;
+		},
+
+		/**
+		 * Resizes the image once it has been loaded
+		 *
+		 * @param targetHeight
+		 */
+		resize: function (targetHeight) {
+			if (this.spinner !== null) {
+				var img = this.thumbnail.image;
+				this.spinner.remove();
+				this.spinner = null;
+
+				var newWidth = Math.round(targetHeight * this.thumbnail.ratio);
+				this.domDef.attr('data-width', newWidth)
+					.attr('data-height', targetHeight);
+
+				var url = this._getLink();
+				var image = this.domDef.children('.image');
+				this.domDef.attr('href', url);
+
+				// This will stretch wide images to make them reach targetHeight
+				$(img).css({
+					'width': newWidth,
+					'height': targetHeight
+				});
+				img.alt = encodeURI(this.path);
+				image.append(img);
+
+				this.domDef.click(this._openImage.bind(this));
+			}
 		},
 
 		/**
@@ -156,6 +173,17 @@
 			}
 
 			return url;
+		},
+
+		/**
+		 * Call when the image is clicked on.
+		 *
+		 * @param event
+		 * @private
+		 */
+		_openImage: function (event) {
+			event.stopPropagation();
+			// click function for future use.
 		}
 	};
 

@@ -9,7 +9,8 @@ script(
 	$_['appName'],
 	[
 		'app',
-		'vendor/owncloud/share',
+		'vendor/jquery-touch-events/src/1.0.1/jquery.mobile-events.min',
+		'vendor/jquery.ui.touch-punch-custom',
 		'gallery',
 		'galleryutility',
 		'galleryconfig',
@@ -22,12 +23,30 @@ script(
 		'thumbnail',
 		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
+		'vendor/owncloud/share',
 		'vendor/commonmark/dist/commonmark.min',
 		'vendor/dompurify/src/purify',
 		'vendor/bigshot/bigshot-compressed',
 		'slideshow',
 		'slideshowcontrols',
-		'slideshowzoomablepreview'
+		'slideshowzoomablepreview',
+		'upload-helper',
+		'vendor/owncloud/newfilemenu'
+	]
+);
+script(
+	'files',
+	[
+		'upload',
+		'file-upload',
+		'jquery.fileupload',
+		'jquery.iframe-transport'
+	]
+);
+style(
+	'files',
+	[
+		'upload'
 	]
 );
 style(
@@ -35,10 +54,11 @@ style(
 	[
 		'styles',
 		'share',
-		'mobile',
 		'github-markdown',
 		'slideshow',
-		'gallerybutton'
+		'gallerybutton',
+		'upload',
+		'mobile',
 	]
 );
 ?>
@@ -67,6 +87,17 @@ style(
 			</div>
 		</div>
 	</div>
+	<div class="actions creatable">
+		<div id="uploadprogresswrapper">
+			<div id="uploadprogressbar"></div>
+			<button class="stop icon-close" style="display:none">
+			<span class="hidden-visually">
+				<?php p($l->t('Cancel upload')) ?>
+			</span>
+			</button>
+		</div>
+	</div>
+	<div id="file_action_panel"></div>
 	<span class="right">
 		<!-- sharing button -->
 		<div id="share-button" class="button">
@@ -104,5 +135,8 @@ style(
 </div>
 <div id="gallery" class="hascontrols"></div>
 <div id="emptycontent" class="hidden"></div>
-<div id="loading-indicator" class="loading"></div>
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>
+<div class="hiddenuploadfield">
+	<input type="file" id="file_upload_start" class="hiddenuploadfield" name="files[]"
+		   data-url="<?php print_unescaped($_['uploadUrl']); ?>"/>
+</div>

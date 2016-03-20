@@ -3,6 +3,7 @@
 	"use strict";
 	var Gallery = {
 		currentAlbum: null,
+		currentEtag: null,
 		config: {},
 		/** Map of the whole gallery, built as we navigate through folders */
 		albumMap: {},
@@ -22,7 +23,7 @@
 		 */
 		refresh: function (path, albumPath) {
 			if (Gallery.currentAlbum !== albumPath) {
-				Gallery.view.init(albumPath);
+				Gallery.view.init(albumPath, null);
 			}
 
 			// If the path is mapped, that means that it's an albumPath
@@ -64,37 +65,47 @@
 			};
 			// Only use the folder as a GET parameter and not as part of the URL
 			var url = Gallery.utility.buildGalleryUrl('files', '/list', params);
-			return $.getJSON(url).then(function (/**{{albuminfo:Object, files:Array}}*/ data) {
-				/**@type {{
-				 * 	fileid: number,
-				 * 	permissions: number,
-				 * 	path: string,
-				 * 	etag: string
-				 * 	information,
-				 * 	sorting,
-				 * 	error: string
-				 * }}*/
-				var albumInfo = data.albuminfo;
-				Gallery.config.setAlbumConfig(albumInfo);
-				// Both the folder and the etag have to match
-				if ((decodeURIComponent(currentLocation) === albumInfo.path)
-					&& (albumInfo.etag === albumEtag)) {
-					Gallery.imageMap = albumCache.imageMap;
-				} else {
-					Gallery._mapFiles(data);
-				}
+			return $.getJSON(url).then(
+				function (/**@type{{
+					* files:Array,
+					* albums:Array,
+					* albumconfig:Object,
+					* albumpath:String,
+					* updated:Boolean}}*/
+						  data) {
+					var albumpath = data.albumpath;
+					var updated = data.updated;
+					// FIXME albumConfig should be cached as well
+					/**@type {{design,information,sorting,error: string}}*/
+					var albumConfig = data.albumconfig;
+					//Gallery.config.setAlbumPermissions(currentAlbum);
+					Gallery.config.setAlbumConfig(albumConfig, albumpath);
+					// Both the folder and the etag have to match
+					if ((decodeURIComponent(currentLocation) === albumpath) &&
+						(updated === false)) {
+						Gallery.imageMap = albumCache.imageMap;
+					} else {
+						Gallery._mapFiles(data);
+					}
 
-				// Restore the previous sorting order for this album
-				if (!$.isEmptyObject(Gallery.albumMap[albumInfo.path].sorting)) {
-					Gallery.config.updateAlbumSorting(Gallery.albumMap[albumInfo.path].sorting);
-				}
+					// Restore the previous sorting order for this album
+					if (!$.isEmptyObject(Gallery.albumMap[albumpath].sorting)) {
+						Gallery.config.updateAlbumSorting(
+							Gallery.albumMap[albumpath].sorting);
+					}
 
-			}, function () {
-				// Triggered if we couldn't find a working folder
-				Gallery.view.element.empty();
-				Gallery.showEmpty();
-				Gallery.currentAlbum = null;
-			});
+				}, function (xhr) {
+					var result = xhr.responseJSON;
+					var albumPath = decodeURIComponent(currentLocation);
+					var message;
+					if (result === null) {
+						message = t('gallery', 'There was a problem reading files from this album');
+					} else {
+						message = result.message;
+					}
+					Gallery.view.init(albumPath, message);
+					Gallery._mapStructure(albumPath);
+				});
 		},
 
 		/**
@@ -130,8 +141,9 @@
 			// Sort the images
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(sortType,
 				sortOrder));
-			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy(albumSortType,
-				albumSortOrder));
+			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(
+				Gallery.utility.sortBy(albumSortType,
+					albumSortOrder));
 
 			// Save the new settings
 			var sortConfig = {
@@ -192,10 +204,11 @@
 					};
 				})();
 
-				var albumPermissions = Gallery.config.albumPermissions;
-				$('a.share').data('item', albumPermissions.fileid).data('link', true)
-					.data('possible-permissions', albumPermissions.permissions).
-					click();
+				var currentAlbum = Gallery.albumMap[Gallery.currentAlbum];
+				$('a.share').data('item', currentAlbum.fileid)
+					.data('link', true)
+					.data('possible-permissions', currentAlbum.permissions)
+					.click();
 				if (!$('#linkCheckbox').is(':checked')) {
 					$('#linkText').hide();
 				}
@@ -253,59 +266,6 @@
 		},
 
 		/**
-		 * Hide the search button while we wait for core to fix the templates
-		 */
-		hideSearch: function () {
-			$('form.searchbox').hide();
-		},
-
-		/**
-		 * Shows an empty gallery message
-		 */
-		showEmpty: function () {
-			var emptyContentElement = $('#emptycontent');
-			var message = '<div class="icon-gallery"></div>';
-			message += '<h2>' + t('gallery',
-				'No pictures found') + '</h2>';
-			message += '<p>' + t('gallery',
-				'Upload pictures in the files app to display them here') + '</p>';
-			emptyContentElement.html(message);
-			emptyContentElement.removeClass('hidden');
-			$('#controls').addClass('hidden');
-			$('#loading-indicator').hide();
-		},
-
-		/**
-		 * Shows an empty gallery message
-		 */
-		showEmptyFolder: function () {
-			var emptyContentElement = $('#emptycontent');
-			var message = '<div class="icon-gallery"></div>';
-			message += '<h2>' + t('gallery',
-				'Nothing in here') + '</h2>';
-			message += '<p>' + t('gallery',
-				'No media files found in this folder') + '</p>';
-			emptyContentElement.html(message);
-			emptyContentElement.removeClass('hidden');
-		},
-
-		/**
-		 * Shows the infamous loading spinner
-		 */
-		showLoading: function () {
-			$('#emptycontent').addClass('hidden');
-			$('#controls').removeClass('hidden');
-		},
-
-		/**
-		 * Shows thumbnails
-		 */
-		showNormal: function () {
-			$('#emptycontent').addClass('hidden');
-			$('#controls').removeClass('hidden');
-		},
-
-		/**
 		 * Creates a new slideshow using the images found in the current folder
 		 *
 		 * @param {Array} images
@@ -340,7 +300,8 @@
 					c: image.etag,
 					requesttoken: oc_requesttoken
 				};
-				var downloadUrl = Gallery.utility.buildGalleryUrl('files', '/download/' + image.fileId,
+				var downloadUrl = Gallery.utility.buildGalleryUrl('files',
+					'/download/' + image.fileId,
 					params);
 
 				return {
@@ -373,15 +334,76 @@
 				}
 			};
 			Gallery.activeSlideShow.show(start);
-
+			if (!_.isUndefined(Gallery.Share)) {
+				Gallery.Share.hideDropDown();
+			}
+			$('.album-info-container').slideUp();
 			// Resets the last focused element
 			document.activeElement.blur();
 		},
 
 		/**
+		 * Moves files and albums to a new location
+		 *
+		 * @param {jQuery} $item
+		 * @param {string} fileName
+		 * @param {string} filePath
+		 * @param {jQuery} $target
+		 * @param {string} targetPath
+		 */
+		move: function ($item, fileName, filePath, $target, targetPath) {
+			var self = this;
+			var dir = Gallery.currentAlbum;
+
+			if (targetPath.charAt(targetPath.length - 1) !== '/') {
+				// make sure we move the files into the target dir,
+				// not overwrite it
+				targetPath = targetPath + '/';
+			}
+			$.post(OC.generateUrl('apps/files/ajax/move.php'),
+				{
+					dir: Gallery.currentAlbum,
+					file: fileName,
+					target: targetPath
+				},
+				function (result) {
+					if (result) {
+						if (result.status === 'success') {
+							self._removeElement(dir, filePath, $item);
+						} else {
+							if (result.status === 'error' && result.data.message) {
+								OC.Notification.showTemporary(result.data.message);
+							}
+							else {
+								OC.Notification.showTemporary(
+									t('gallery', 'Could not move "{file}", target exists',
+										{file: fileName})
+								);
+							}
+							$item.fadeTo("normal", 1);
+							$target.children('.album-loader').hide();
+						}
+					} else {
+						OC.dialogs.alert(
+							t('gallery', 'Could not move "{file}", target exists', {file: fileName})
+						);
+						$item.fadeTo("normal", 1);
+						$target.children('.album-loader').hide();
+					}
+				}
+			);
+		},
+
+		/**
 		 * Builds the album's model
 		 *
-		 * @param {{albuminfo:Object, files:Array}} data
+		 * @param {{
+		 * 	files:Array,
+		 * 	albums:Array,
+		 * 	albumconfig:Object,
+		 * 	albumpath:String,
+		 *	updated:Boolean
+		 * 	}} data
 		 * @private
 		 */
 		_mapFiles: function (data) {
@@ -392,23 +414,41 @@
 			var mimeType = null;
 			var mTime = null;
 			var etag = null;
-			var albumInfo = data.albuminfo;
-			var currentLocation = albumInfo.path;
+			var size = null;
+			var sharedWithUser = null;
+			var currentLocation = data.albumpath;
 			// This adds a new node to the map for each parent album
 			Gallery._mapStructure(currentLocation);
 			var files = data.files;
 			if (files.length > 0) {
 				var subAlbumCache = {};
 				var albumCache = Gallery.albumMap[currentLocation]
-					= new Album(currentLocation, [], [], OC.basename(currentLocation));
+					= new Album(
+					currentLocation,
+					[],
+					[],
+					OC.basename(currentLocation),
+					data.albums[currentLocation].nodeid,
+					data.albums[currentLocation].mtime,
+					data.albums[currentLocation].etag,
+					data.albums[currentLocation].size,
+					data.albums[currentLocation].sharedwithuser,
+					data.albums[currentLocation].freespace,
+					data.albums[currentLocation].permissions
+				);
 				for (var i = 0; i < files.length; i++) {
 					path = files[i].path;
-					fileId = files[i].fileid;
+					fileId = files[i].nodeid;
 					mimeType = files[i].mimetype;
 					mTime = files[i].mtime;
 					etag = files[i].etag;
+					size = files[i].size;
+					sharedWithUser = files[i].sharedwithuser;
 
-					image = new GalleryImage(path, path, fileId, mimeType, mTime, etag);
+					image =
+						new GalleryImage(
+							path, path, fileId, mimeType, mTime, etag, size, sharedWithUser
+						);
 
 					// Determines the folder name for the image
 					var dir = OC.dirname(path);
@@ -422,11 +462,20 @@
 						// The image belongs to a sub-album, so we create a sub-album cache if it
 						// doesn't exist and add images to it
 						if (!subAlbumCache[dir]) {
-							subAlbumCache[dir] = new Album(dir, [], [],
-								OC.basename(dir));
+							subAlbumCache[dir] = new Album(
+								dir,
+								[],
+								[],
+								OC.basename(dir),
+								data.albums[dir].nodeid,
+								data.albums[dir].mtime,
+								data.albums[dir].etag,
+								data.albums[dir].size,
+								data.albums[dir].sharedwithuser,
+								data.albums[currentLocation].freespace,
+								data.albums[dir].permissions);
 						}
 						subAlbumCache[dir].images.push(image);
-
 						// The sub-album also has to be added to the global map
 						if (!Gallery.albumMap[dir]) {
 							Gallery.albumMap[dir] = {};
@@ -438,13 +487,13 @@
 				Gallery._mapAlbums(albumCache, subAlbumCache);
 
 				// Caches the information which is not already cached
-				albumCache.etag = albumInfo.etag;
+				albumCache.etag = data.albums[currentLocation].etag;
 				albumCache.imageMap = Gallery.imageMap;
 			}
 		},
 
 		/**
-		 * Adds every album leading the current folder to a global album map
+		 * Adds every album leading to the current folder to a global album map
 		 *
 		 * Per example, if you have Root/Folder1/Folder2/CurrentFolder then the map will contain:
 		 *    * Root
@@ -518,15 +567,54 @@
 				// directive
 				$.get(OC.generateUrl('apps/files_sharing/testremote'),
 					{remote: remote}).then(function (protocol) {
-						if (protocol !== 'http' && protocol !== 'https') {
-							OC.dialogs.alert(t('files_sharing',
-									'No ownCloud installation (7 or higher) found at {remote}',
-									{remote: remote}),
-								t('files_sharing', 'Invalid ownCloud url'));
-						} else {
-							OC.redirect(protocol + '://' + url);
-						}
-					});
+					if (protocol !== 'http' && protocol !== 'https') {
+						OC.dialogs.alert(t('files_sharing',
+							'No ownCloud installation (7 or higher) found at {remote}',
+							{remote: remote}),
+							t('files_sharing', 'Invalid ownCloud url'));
+					} else {
+						OC.redirect(protocol + '://' + url);
+					}
+				});
+			}
+		},
+
+		/**
+		 * Removes the moved element from the UI and refreshes the view
+		 *
+		 * @param {string} dir
+		 * @param {string}filePath
+		 * @param {jQuery} $item
+		 * @private
+		 */
+		_removeElement: function (dir, filePath, $item) {
+			var images = Gallery.albumMap[Gallery.currentAlbum].images;
+			var albums = Gallery.albumMap[Gallery.currentAlbum].subAlbums;
+			// if still viewing the same directory
+			if (Gallery.currentAlbum === dir) {
+				var removed = false;
+				// We try to see if an image was removed
+				var movedImage = _(images).findIndex({path: filePath});
+				if (movedImage >= 0) {
+					images.splice(movedImage, 1);
+					removed = true;
+				} else {
+					// It wasn't an image, so try to remove an album
+					var movedAlbum = _(albums).findIndex({path: filePath});
+					if (movedAlbum >= 0) {
+						albums.splice(movedAlbum, 1);
+						removed = true;
+					}
+				}
+
+				if (removed) {
+					$item.remove();
+					// Refresh the photowall without checking if new files have arrived in the
+					// current album
+					// TODO On the next visit this album is going to be reloaded, unless we can get
+					// an etag back from the move endpoint
+					Gallery.view.init(Gallery.currentAlbum);
+				}
 			}
 		}
 	};

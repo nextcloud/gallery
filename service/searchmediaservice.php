@@ -22,30 +22,28 @@ use OCP\Files\File;
  */
 class SearchMediaService extends FilesService {
 
-	/**
-	 * @var null|array<string,string|int>
-	 */
+	/** @var null|array<string,string|int> */
 	private $images = [];
-	/**
-	 * @var string[]
-	 */
+	/** @var null|array<string,string|int> */
+	private $albums = [];
+	/** @var string[] */
 	private $supportedMediaTypes;
 
 	/**
 	 * This returns the list of all media files which can be shown starting from the given folder
 	 *
-	 * @param Folder $folder
-	 * @param string[] $supportedMediaTypes
-	 * @param array $features
+	 * @param Folder $folderNode the current album
+	 * @param string[] $supportedMediaTypes the list of supported media types
+	 * @param array $features the list of supported features
 	 *
-	 * @return array<string,string|int>|null all the images we could find
+	 * @return array<null|array<string,string|int>> all the images we could find
 	 */
-	public function getMediaFiles($folder, $supportedMediaTypes, $features) {
+	public function getMediaFiles($folderNode, $supportedMediaTypes, $features) {
 		$this->supportedMediaTypes = $supportedMediaTypes;
 		$this->features = $features;
-		$this->searchFolder($folder);
+		$this->searchFolder($folderNode);
 
-		return $this->images;
+		return [$this->images, $this->albums];
 	}
 
 	/**
@@ -59,12 +57,12 @@ class SearchMediaService extends FilesService {
 	private function searchFolder($folder, $subDepth = 0) {
 		$albumImageCounter = 0;
 		$subFolders = [];
+		$this->addFolderToAlbumsArray($folder);
 		$nodes = $this->getNodes($folder, $subDepth);
 		foreach ($nodes as $node) {
 			if (!$this->isAllowedAndAvailable($node)) {
 				continue;
 			}
-			//$this->logger->debug("Sub-Node path : {path}", ['path' => $node->getPath()]);
 			$nodeType = $this->getNodeType($node);
 			$subFolders = array_merge($subFolders, $this->getAllowedSubFolder($node, $nodeType));
 			$albumImageCounter = $this->addMediaFile($node, $nodeType, $albumImageCounter);
@@ -178,9 +176,9 @@ class SearchMediaService extends FilesService {
 	 */
 	private function isPreviewAvailable($file) {
 		try {
-			$mimeType = $file->getMimetype();
+			$mimeType = $file->getMimeType();
 			if (in_array($mimeType, $this->supportedMediaTypes)) {
-				$this->addFileToResults($file);
+				$this->addFileToImagesArray($mimeType, $file);
 
 				return true;
 			}
@@ -192,28 +190,25 @@ class SearchMediaService extends FilesService {
 	}
 
 	/**
-	 * Adds various information about a file to the list of results
+	 * Adds a folder to the albums array
 	 *
-	 * @param File $file
+	 * @param Folder $folder the folder to add to the albums array
 	 */
-	private function addFileToResults($file) {
-		$imagePath = $this->environment->getPathFromVirtualRoot($file);
-		$imageId = $file->getId();
-		$mimeType = $file->getMimetype();
-		$mTime = $file->getMTime();
-		$etag = $file->getEtag();
+	private function addFolderToAlbumsArray($folder) {
+		$albumData = $this->getFolderData($folder);
+		$this->albums[$albumData['path']] = $albumData;
+	}
 
-		$imageData = [
-			'path'     => $imagePath,
-			'fileid'   => $imageId,
-			'mimetype' => $mimeType,
-			'mtime'    => $mTime,
-			'etag'     => $etag
-		];
-
+	/**
+	 * Adds a file to the images array
+	 *
+	 * @param string $mimeType the media type of the file to add to the images array
+	 * @param File $file the file to add to the images array
+	 */
+	private function addFileToImagesArray($mimeType, $file) {
+		$imageData = $this->getNodeData($file);
+		$imageData['mimetype'] = $mimeType;
 		$this->images[] = $imageData;
-
-		//$this->logger->debug("Image path : {path}", ['path' => $imagePath]);
 	}
 
 }

@@ -4,6 +4,7 @@
 [![Codacy Badge](https://www.codacy.com/project/badge/02f02de5292e4f7393cd7e5697227a5a)](https://www.codacy.com/app/interfaSys/galleryplus)
 [![Code Climate](https://codeclimate.com/github/interfasys/galleryplus/badges/gpa.svg)](https://codeclimate.com/github/interfasys/galleryplus)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9/mini.png)](https://insight.sensiolabs.com/projects/76c41e1a-ed83-46e0-bbad-af925f72e8c9)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/interfasys/galleryplus/badge.svg)](https://travis-ci.org/interfasys/galleryplus)
 
 [![Code Coverage](https://scrutinizer-ci.com/g/interfasys/galleryplus/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/interfasys/galleryplus/?branch=master)
 
@@ -13,17 +14,18 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 
 **This branch brings new features and bug fixes from the master branch of `owncloud/gallery` to ownCloud 8.2.x**
 
-![Screenshot](https://oc8demo.interfacloud.com/index.php/apps/galleryplus/s/GYFcC2YvieDhrnu/51282.jpg)
+![Screenshot](https://raw.githubusercontent.com/owncloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
 * Support for large selection of media types (depending on ownCloud setup)
+* Upload and organise images and albums straight from the app
 * Large, zoomable previews which can be shown in fullscreen mode
 * Sort images by name or date added
-* Per album description and copyright statement
-* A la carte features (external shares, native svg, etc.)
+* Per album design, description and copyright statement
+* A la carte features (external shares, browser svg rendering, etc.)
 * Image download straight from the slideshow or the gallery
-* Seamlessly jump between the gallery and the files view
+* Switch to Gallery from any folder in files and vice-versa
 * Ignore folders containing a ".nomedia" file
-* Native SVG support (disabled by default)
+* Browser rendering of SVG images (disabled by default)
 * Mobile support
 
 Checkout the [full changelog](CHANGELOG.md) for more.
@@ -40,7 +42,6 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 ## Contributors
 
 * All the people who have provided patches to [Gallery+](https://github.com/interfasys/galleryplus/pulls?q=is%3Apr+is%3Aclosed), [Gallery](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) and [Pictures](https://github.com/owncloud/gallery-old/pulls?q=is%3Apr+is%3Aclosed) over the years
-
 
 ## Requirements
 
@@ -65,7 +66,7 @@ Everything you need to know about bug reporting and contributing [is located her
 Here is a list of steps you might want to take before using the app
 
 ### Supporting more media types
-First, make sure you have installed ImageMagick and its PECL extension.
+First, make sure you have installed ImageMagick and its imagick PECL extension.
 Next add a few new entries to your **config/config.php** configuration file.
 
 ```
@@ -91,7 +92,7 @@ That's it. You should be able to see more media types in your slideshows and gal
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can greatly reduce the loading time of the app.
 
-Read about it in the [Administration Manual](https://doc.owncloud.org/server/8.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
+Read about it in the [Administration Manual](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
 
 ## Installation
 
@@ -125,4 +126,5 @@ $ git pull --rebase
 ```
 
 ## List of patches
+
 None so far

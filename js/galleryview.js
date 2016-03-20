@@ -1,6 +1,9 @@
-/* global Gallery */
+/* global Handlebars, Gallery */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
+
+	var TEMPLATE_ADDBUTTON = '<a href="#" class="button new"><img src="{{iconUrl}}" alt="{{addText}}"></img></a>';
+
 	/**
 	 * Builds and updates the Gallery view
 	 *
@@ -9,13 +12,18 @@
 	var View = function () {
 		this.element = $('#gallery');
 		this.loadVisibleRows.loading = false;
+		this._setupUploader();
 		this.breadcrumb = new Gallery.Breadcrumb();
+		this.emptyContentElement = $('#emptycontent');
+		this.controlsElement = $('#controls');
 	};
 
 	View.prototype = {
 		element: null,
 		breadcrumb: null,
 		requestId: -1,
+		emptyContentElement: null,
+		controlsElement: null,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -23,31 +31,23 @@
 		clear: function () {
 			// We want to keep all the events
 			this.element.children().detach();
-			Gallery.showLoading();
+			this.showLoading();
 		},
 
 		/**
 		 * Populates the view if there are images or albums to show
 		 *
 		 * @param {string} albumPath
+		 * @param {string|undefined} errorMessage
 		 */
-		init: function (albumPath) {
+		init: function (albumPath, errorMessage) {
 			// Only do it when the app is initialised
 			if (this.requestId === -1) {
 				this._initButtons();
+				this._blankUrl();
 			}
 			if ($.isEmptyObject(Gallery.imageMap)) {
-				this.clear();
-				if (albumPath === '') {
-					Gallery.showEmpty();
-				} else {
-					Gallery.showEmptyFolder();
-					this.hideButtons();
-					Gallery.currentAlbum = albumPath;
-					var availableWidth = $(window).width() - Gallery.buttonsWidth;
-					this.breadcrumb.init(albumPath, availableWidth);
-					Gallery.config.albumDesign = null;
-				}
+				Gallery.view.showEmptyFolder(albumPath, errorMessage);
 			} else {
 				this.viewAlbum(albumPath);
 			}
@@ -80,11 +80,11 @@
 			}
 
 			this.clear();
-			$('#loading-indicator').show();
 
-			if (albumPath !== Gallery.currentAlbum) {
+			if (Gallery.albumMap[albumPath].etag !== Gallery.currentEtag) {
 				this.loadVisibleRows.loading = false;
 				Gallery.currentAlbum = albumPath;
+				Gallery.currentEtag = Gallery.albumMap[albumPath].etag;
 				this._setupButtons(albumPath);
 			}
 
@@ -142,59 +142,51 @@
 			// 2 windows worth of rows is the limit from which we need to start loading new rows.
 			// As we scroll down, it grows
 			var targetHeight = ($(window).height() * 2) + scroll;
-			var showRows = function (album) {
+			var showRows = _.throttle(function (album) {
 
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
 					view.loadVisibleRows.loading = null;
-					$('#loading-indicator').hide();
 					return;
 				}
 
 				// Everything is still in sync, since no deferred calls have been placed yet
 
-				return album.getNextRow($(window).width()).then(function (row) {
+				var row = album.getRow($(window).width(), view.requestId);
+				var rowDom = row.getDom();
+				view.element.append(rowDom);
 
+				return album.fillNextRow(row).then(function () {
 					/**
 					 * At this stage, the row has a width and contains references to images based
 					 * on
 					 * information available when making the request, but this information may have
 					 * changed while we were receiving thumbnails for the row
 					 */
-
 					if (view.requestId === row.requestId) {
-						return row.getDom().then(function (dom) {
-
-							if (Gallery.currentAlbum !== path) {
-								view.loadVisibleRows.loading = null;
-								return; //throw away the row if the user has navigated away in the
-										// meantime
-							}
-							if (view.element.length === 1) {
-								Gallery.showNormal();
-							}
-
-							view.element.append(dom);
-
-							if (album.viewedItems < album.subAlbums.length + album.images.length &&
-								view.element.height() < targetHeight) {
-								return showRows(album);
-							}
-
-							// No more rows to load at the moment
+						if (Gallery.currentAlbum !== path) {
 							view.loadVisibleRows.loading = null;
-							$('#loading-indicator').hide();
-						}, function () {
-							// Something went wrong, so kill the loader
-							view.loadVisibleRows.loading = null;
-							$('#loading-indicator').hide();
-						});
+							return; //throw away the row if the user has navigated away in the
+									// meantime
+						}
+						if (view.element.length === 1) {
+							view._showNormal();
+						}
+						if (album.viewedItems < album.subAlbums.length + album.images.length &&
+							view.element.height() < targetHeight) {
+							return showRows(album);
+						}
+						// No more rows to load at the moment
+						view.loadVisibleRows.loading = null;
+					} else {
+						// This is the safest way to do things
+						view.viewAlbum(Gallery.currentAlbum);
 					}
-					// This is the safest way to do things
-					view.viewAlbum(Gallery.currentAlbum);
-
+				}, function () {
+					// Something went wrong, so kill the loader
+					view.loadVisibleRows.loading = null;
 				});
-			};
+			}, 100);
 			if (this.element.height() < targetHeight) {
 				this.loadVisibleRows.loading = true;
 				this.loadVisibleRows.loading = showRows(album);
@@ -202,12 +194,101 @@
 			}
 		},
 
-		hideButtons: function () {
-			$('#loading-indicator').hide();
-			$('#album-info-button').hide();
-			$('#share-button').hide();
-			$('#sort-name-button').hide();
-			$('#sort-date-button').hide();
+		/**
+		 * Shows an empty gallery message
+		 *
+		 * @param {string} albumPath
+		 * @param {string|null} errorMessage
+		 */
+		showEmptyFolder: function (albumPath, errorMessage) {
+			var message = '<div class="icon-gallery"></div>';
+			var uploadAllowed = true;
+
+			this.clear();
+
+			if (!_.isUndefined(errorMessage) && errorMessage !== null) {
+				message += '<h2>' + t('gallery',
+						'Album cannot be shown') + '</h2>';
+				message += '<p>' + errorMessage + '</p>';
+				uploadAllowed = false;
+			} else {
+				message += '<h2>' + t('gallery',
+						'No media files found') + '</h2>';
+				// We can't upload yet on the public side
+				if (Gallery.token) {
+					message += '<p>' + t('gallery',
+							'Upload pictures in the files app to display them here') + '</p>';
+				} else {
+					message += '<p>' + t('gallery',
+							'Upload new files via drag and drop or by using the [+] button above') +
+						'</p>';
+				}
+			}
+			this.emptyContentElement.html(message);
+			this.emptyContentElement.removeClass('hidden');
+
+			//Gallery.view.showEmptyFolder();
+			this._hideButtons(uploadAllowed);
+			Gallery.currentAlbum = albumPath;
+			var availableWidth = $(window).width() - Gallery.buttonsWidth;
+			this.breadcrumb.init(albumPath, availableWidth);
+			Gallery.config.albumDesign = null;
+		},
+
+		/**
+		 * Shows the infamous loading spinner
+		 */
+		showLoading: function () {
+			this.emptyContentElement.addClass('hidden');
+			this.controlsElement.removeClass('hidden');
+		},
+
+		/**
+		 * Shows thumbnails
+		 */
+		_showNormal: function () {
+			this.emptyContentElement.addClass('hidden');
+			this.controlsElement.removeClass('hidden');
+		},
+
+		/**
+		 * Sets up our custom handlers for folder uploading operations
+		 *
+		 * We only want it to be called for that specific case as all other file uploading
+		 * operations will call Files.highlightFiles
+		 *
+		 * @see OC.Upload.init/file_upload_param.done()
+		 *
+		 * @private
+		 */
+		_setupUploader: function () {
+			$('#file_upload_start').on('fileuploaddone', function (e, data) {
+				if (data.files[0] === data.originalFiles[data.originalFiles.length - 1]
+					&& data.files[0].relativePath) {
+
+					//Ask for a refresh of the photowall
+					Gallery.getFiles(Gallery.currentAlbum).done(function () {
+						Gallery.view.init(Gallery.currentAlbum);
+					});
+				}
+			});
+
+			// Since 9.0
+			if (OC.Upload) {
+				OC.Upload._isReceivedSharedFile = function (file) {
+					var path = file.name;
+					var sharedWith = false;
+
+					if (Gallery.currentAlbum !== '' && Gallery.currentAlbum !== '/') {
+						path = Gallery.currentAlbum + '/' + path;
+					}
+					if (Gallery.imageMap[path] && Gallery.imageMap[path].sharedWithUser) {
+						sharedWith = true;
+					}
+
+					return sharedWith;
+				};
+			}
 		},
 
 		/**
@@ -216,6 +297,7 @@
 		 * @private
 		 */
 		_initButtons: function () {
+			this.element.on("contextmenu", function(e) { e.preventDefault(); });
 			$('#filelist-button').click(Gallery.switchToFilesView);
 			$('#download').click(Gallery.download);
 			$('#share-button').click(Gallery.share);
@@ -225,6 +307,7 @@
 			$('#sort-date-button').click(Gallery.sorter);
 			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
+			this._renderNewButton();
 
 			this.requestId = Math.random();
 		},
@@ -241,9 +324,20 @@
 
 			var availableWidth = $(window).width() - Gallery.buttonsWidth;
 			this.breadcrumb.init(albumPath, availableWidth);
-
-			$('#sort-name-button').show();
-			$('#sort-date-button').show();
+			var album = Gallery.albumMap[albumPath];
+			
+			var sum = album.images.length + album.subAlbums.length;
+			//If sum of the number of images and subalbums exceeds 1 then show the buttons.
+			if(sum > 1)
+			{
+				$('#sort-name-button').show();
+				$('#sort-date-button').show();
+			}
+			else
+			{
+				$('#sort-name-button').hide();
+				$('#sort-date-button').hide();
+			}
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(
@@ -251,6 +345,27 @@
 					currentSort.order));
 			Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(Gallery.utility.sortBy('name',
 				currentSort.albumOrder));
+
+			$('#save-button').show();
+			$('#download').show();
+		},
+
+		/**
+		 * Hide buttons in the controls bar
+		 *
+		 * @param uploadAllowed
+		 */
+		_hideButtons: function (uploadAllowed) {
+			$('#album-info-button').hide();
+			$('#share-button').hide();
+			$('#sort-name-button').hide();
+			$('#sort-date-button').hide();
+			$('#save-button').hide();
+			$('#download').hide();
+
+			if (!uploadAllowed) {
+				$('a.button.new').hide();
+			}
 		},
 
 		/**
@@ -350,6 +465,74 @@
 						$(this).removeClass('hover');
 					});
 			}
+		},
+		
+		/**
+		 * If no url is entered then do not show the error box.
+		 *
+		 */
+		_blankUrl: function() {
+			$('#remote_address').on("change keyup paste", function() {
+ 				if ($(this).val() === '') {
+ 					$('#save-button-confirm').prop('disabled', true);
+ 				} else {
+ 					$('#save-button-confirm').prop('disabled', false);
+ 				}
+			});
+		},
+		
+		/**
+		 * Creates the [+] button allowing users who can't drag and drop to upload files
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_renderNewButton: function () {
+			// if no actions container exist, skip
+			var $actionsContainer = $('.actions');
+			if (!$actionsContainer.length) {
+				return;
+			}
+			if (!this._addButtonTemplate) {
+				this._addButtonTemplate = Handlebars.compile(TEMPLATE_ADDBUTTON);
+			}
+			var $newButton = $(this._addButtonTemplate({
+				addText: t('gallery', 'New'),
+				iconUrl: OC.imagePath('core', 'actions/add')
+			}));
+
+			$actionsContainer.prepend($newButton);
+			$newButton.tooltip({'placement': 'bottom'});
+
+			$newButton.click(_.bind(this._onClickNewButton, this));
+			this._newButton = $newButton;
+		},
+
+		/**
+		 * Creates the click handler for the [+] button
+		 * @param event
+		 * @returns {boolean}
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_onClickNewButton: function (event) {
+			var $target = $(event.target);
+			if (!$target.hasClass('.button')) {
+				$target = $target.closest('.button');
+			}
+			this._newButton.tooltip('hide');
+			event.preventDefault();
+			if ($target.hasClass('disabled')) {
+				return false;
+			}
+			if (!this._newFileMenu) {
+				this._newFileMenu = new Gallery.NewFileMenu();
+				$('body').append(this._newFileMenu.$el);
+			}
+			this._newFileMenu.showAt($target);
+
+			return false;
 		}
 	};
 
