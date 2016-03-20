@@ -14,7 +14,6 @@
 		activeSlideShow: null,
 		buttonsWidth: 400,
 		browserToolbarHeight: 150,
-		filesClient: null,
 
 		/**
 		 * Refreshes the view and starts the slideshow if required
@@ -345,27 +344,39 @@
 				// not overwrite it
 				targetPath = targetPath + '/';
 			}
-			self.filesClient.move(dir + '/' + fileName, targetPath + fileName)
-				.done(function () {
-					self._removeElement(dir, filePath, $item);
-				})
-				.fail(function (status) {
-					if (status === 412) {
-						// TODO: some day here we should invoke the conflict dialog
-						OC.Notification.showTemporary(
+			$.post(OC.generateUrl('apps/files/ajax/move.php'),
+				{
+					dir: Gallery.currentAlbum,
+					file: fileName,
+					target: targetPath
+				},
+				function (result) {
+					if (result) {
+						if (result.status === 'success') {
+							self._removeElement(dir, filePath, $item);
+						} else {
+							OC.Notification.hide();
+							if (result.status === 'error' && result.data.message) {
+								OC.Notification.showTemporary(result.data.message);
+							}
+							else {
+								OC.Notification.showTemporary(
+									t('gallery', 'Could not move "{file}", target exists',
+										{file: fileName})
+								);
+							}
+							$item.fadeTo("normal", 1);
+							$target.children('.album-loader').hide();
+						}
+					} else {
+						OC.dialogs.alert(
 							t('gallery', 'Could not move "{file}", target exists', {file: fileName})
 						);
-					} else {
-						OC.Notification.showTemporary(
-							t('gallery', 'Could not move "{file}"', {file: fileName})
-						);
+						$item.fadeTo("normal", 1);
+						$target.children('.album-loader').hide();
 					}
-					$item.fadeTo("normal", 1);
-					$target.children('.album-loader').hide();
-				})
-				.always(function () {
-					// Nothing?
-				});
+				}
+			);
 		},
 
 		/**
