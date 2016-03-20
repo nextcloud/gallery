@@ -55,6 +55,10 @@
 	transition: opacity 3s;
 }
 
+#slideshow input.icon-view-download {
+	background-image: url("../img/download.svg");
+}
+
 #slideshow input.icon-view-toggle-background {
 	background-image: url("../img/toggle.svg");
 }
