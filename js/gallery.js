@@ -95,12 +95,18 @@
 							Gallery.albumMap[albumpath].sorting);
 					}
 
-			}, function (xhr) {
-				var result = xhr.responseJSON;
-				var albumPath = decodeURIComponent(currentLocation);
-				Gallery.view.init(albumPath, result.message);
-				Gallery._mapStructure(albumPath);
-			});
+				}, function (xhr) {
+					var result = xhr.responseJSON;
+					var albumPath = decodeURIComponent(currentLocation);
+					var message;
+					if (result === null) {
+						message = t('gallery', 'There was a problem reading files from this album');
+					} else {
+						message = result.message;
+					}
+					Gallery.view.init(albumPath, message);
+					Gallery._mapStructure(albumPath);
+				});
 		},
 
 		/**
