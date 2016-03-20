@@ -28,13 +28,12 @@
 	 * @param {string} etag
 	 * @param {number} size
 	 * @param {Boolean} sharedWithUser
-	 * @param {string} owner
 	 * @param {number} freeSpace
 	 * @param {number} permissions
 	 * @constructor
 	 */
 	var Album = function (path, subAlbums, images, name, fileId, mTime, etag, size, sharedWithUser,
-						  owner, freeSpace, permissions) {
+						  freeSpace, permissions) {
 		this.path = path;
 		this.subAlbums = subAlbums;
 		this.images = images;
@@ -45,7 +44,6 @@
 		this.etag = etag;
 		this.size = size;
 		this.sharedWithUser = sharedWithUser;
-		this.owner = owner;
 		this.freeSpace = freeSpace;
 		this.permissions = permissions;
 		this.domDef = null;

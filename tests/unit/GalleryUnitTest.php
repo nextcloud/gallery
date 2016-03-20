@@ -93,7 +93,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 * @param string $etag
 	 * @param int $size
 	 * @param bool $isShared
-	 * @param null|object $owner
 	 * @param int $permissions
 	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject
@@ -106,7 +105,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		$etag = "8603c11cd6c5d739f2c156c38b8db8c4",
 		$size = 1024,
 		$isShared = false,
-		$owner = null,
 		$permissions = 31
 	) {
 		$storage = $this->mockGetStorage($storageId);
@@ -119,8 +117,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			 ->willReturn('file');
 		$file->method('getStorage')
 			 ->willReturn($storage);
-		$file->method('getOwner')
-			 ->willReturn($owner);
 		$file->method('getPermissions')
 			 ->willReturn($permissions);
 		$file->method('isReadable')
@@ -145,11 +141,10 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		$etag = "8603c11cd6c5d739f2c156c38b8db8c4",
 		$size = 1024,
 		$isShared = false,
-		$owner = null,
 		$permissions = 31
 	) {
 		$file = $this->mockFile(
-			$fileId, $storageId, $isReadable, $path, $etag, $size, $isShared, $owner, $permissions
+			$fileId, $storageId, $isReadable, $path, $etag, $size, $isShared, $permissions
 		);
 		$this->mockJpgFileMethods($file);
 
@@ -250,7 +245,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 * @param string $etag
 	 * @param int $size
 	 * @param string $path
-	 * @param null|object $owner
 	 * @param int $permissions
 	 * @param int $freeSpace
 	 *
@@ -269,7 +263,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		$etag = "etag303",
 		$size = 4096,
 		$path = "not/important",
-		$owner = null,
 		$permissions = 31,
 		$freeSpace = 999999999
 	) {
@@ -293,8 +286,6 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 			   ->willReturn($files);
 		$folder->method('getStorage')
 			   ->willReturn($storage);
-		$folder->method('getOwner')
-			   ->willReturn($owner);
 		$folder->method('getPermissions')
 			   ->willReturn($permissions);
 		$folder->method('isReadable')

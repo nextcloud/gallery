@@ -107,13 +107,12 @@ abstract class FilesService extends Service {
 		$etag = $node->getEtag();
 		$size = $node->getSize();
 		$sharedWithUser = $node->isShared();
-		$ownerData = $this->getOwnerData($node);
 		$permissions = $node->getPermissions();
 
 		//$this->logger->debug("Image path : {var1}", ['var1' => $imagePath]);
 
 		return $this->formatNodeData(
-			$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions
+			$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $permissions
 		);
 	}
 
@@ -256,30 +255,6 @@ abstract class FilesService extends Service {
 	}
 
 	/**
-	 * Returns what we known about the owner of a node
-	 *
-	 * @param Node $node
-	 *
-	 * @return null|array<string,int|string>
-	 */
-	private function getOwnerData($node) {
-		// On 8.2 we don't have getOwner()
-		//$owner = $node->getOwner();
-		$storage = $node->getStorage();
-		$owner = \OC::$server->getUserManager()
-							 ->get($storage->getOwner($node->getInternalPath()));
-		$ownerData = [];
-		if ($owner) {
-			$ownerData = [
-				'uid'         => $owner->getUID(),
-				'displayname' => $owner->getDisplayName()
-			];
-		}
-
-		return $ownerData;
-	}
-
-	/**
 	 * Returns an array containing information about a node
 	 *
 	 * @param string $imagePath
@@ -288,13 +263,12 @@ abstract class FilesService extends Service {
 	 * @param string $etag
 	 * @param int $size
 	 * @param bool $sharedWithUser
-	 * @param array <string,int|string> $ownerData
 	 * @param int $permissions
 	 *
 	 * @return array
 	 */
 	private function formatNodeData(
-		$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions
+		$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $permissions
 	) {
 		return [
 			'path'           => $imagePath,
@@ -303,7 +277,6 @@ abstract class FilesService extends Service {
 			'etag'           => $etag,
 			'size'           => $size,
 			'sharedwithuser' => $sharedWithUser,
-			'owner'          => $ownerData,
 			'permissions'    => $permissions
 		];
 	}

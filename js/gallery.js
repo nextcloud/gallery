@@ -416,7 +416,6 @@
 			var etag = null;
 			var size = null;
 			var sharedWithUser = null;
-			var owner = null;
 			var currentLocation = data.albumpath;
 			// This adds a new node to the map for each parent album
 			Gallery._mapStructure(currentLocation);
@@ -434,7 +433,6 @@
 					data.albums[currentLocation].etag,
 					data.albums[currentLocation].size,
 					data.albums[currentLocation].sharedwithuser,
-					data.albums[currentLocation].owner,
 					data.albums[currentLocation].freespace,
 					data.albums[currentLocation].permissions
 				);
@@ -446,7 +444,6 @@
 					etag = files[i].etag;
 					size = files[i].size;
 					sharedWithUser = files[i].sharedwithuser;
-					owner = files[i].owner;
 
 					image =
 						new GalleryImage(
@@ -475,7 +472,6 @@
 								data.albums[dir].etag,
 								data.albums[dir].size,
 								data.albums[dir].sharedwithuser,
-								data.albums[currentLocation].owner,
 								data.albums[currentLocation].freespace,
 								data.albums[dir].permissions);
 						}

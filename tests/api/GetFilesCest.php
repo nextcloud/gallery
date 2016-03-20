@@ -152,10 +152,6 @@ class GetFilesCest {
 			[
 				'path'           => $parentPath . '/testimage.eps',
 				'sharedwithuser' => false,
-				'owner'          => [
-					'uid'         => 'tester',
-					'displayname' => 'Gallery Tester (tester)'
-				],
 				'permissions'    => 27,
 				'mimetype'       => 'application/postscript'
 			]
@@ -164,10 +160,6 @@ class GetFilesCest {
 			[
 				'path'           => $parentPath . '/testimage.gif',
 				'sharedwithuser' => false,
-				'owner'          => [
-					'uid'         => 'tester',
-					'displayname' => 'Gallery Tester (tester)'
-				],
 				'permissions'    => 27,
 				'mimetype'       => 'image/gif'
 			]
@@ -177,10 +169,6 @@ class GetFilesCest {
 			[
 				'path'           => $parentPath,
 				'sharedwithuser' => false,
-				'owner'          => [
-					'uid'         => 'tester',
-					'displayname' => 'Gallery Tester (tester)'
-				],
 				'permissions'    => 31
 			]
 		);

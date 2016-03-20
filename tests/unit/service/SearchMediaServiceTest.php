@@ -310,7 +310,6 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			'etag'           => "5d739f2c156c38b8db8c48603c11cd6c",
 			'size'           => 88888,
 			'sharedwithuser' => false,
-			'owner'          => [],
 			'permissions'    => 31,
 			'freespace'      => 7777777,
 		];
@@ -322,19 +321,15 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			'etag'           => "8603c11cd6c5d739f2c156c38b8db8c4",
 			'size'           => 1024,
 			'sharedwithuser' => false,
-			'owner'          => [],
 			'permissions'    => 31,
 			'mimetype'       => 'image/jpeg',
 		];
 		$file1 = $this->mockJpgFile(
 			$file1Data['nodeid'], 'home::user', $isReadable, $file1Data['path'],
-			$file1Data['etag'], $file1Data['size'], $file1Data['sharedwithuser'], null,
+			$file1Data['etag'], $file1Data['size'], $file1Data['sharedwithuser'],
 			$file1Data['permissions']
 		);
-
-		$ownerUid = 909090;
-		$ownerName = 'San Akinamoura';
-		$owner = $this->mockOwner($ownerUid, $ownerName);
+		
 		$file2Data = [
 			'path'           => 'holidays/everest.jpg',
 			'nodeid'         => 22222,
@@ -342,16 +337,12 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			'etag'           => "739f2c156c38b88603c11cd6c5ddb8c4",
 			'size'           => 102410241024,
 			'sharedwithuser' => true,
-			'owner'          => [
-				'uid'         => $ownerUid,
-				'displayname' => $ownerName
-			],
 			'permissions'    => 31,
 			'mimetype'       => 'image/jpeg',
 		];
 		$file2 = $this->mockJpgFile(
 			$file2Data['nodeid'], 'webdav::user@domain.com/dav', $isReadable, $file2Data['path'],
-			$file2Data['etag'], $file2Data['size'], $file2Data['sharedwithuser'], $owner,
+			$file2Data['etag'], $file2Data['size'], $file2Data['sharedwithuser'],
 			$file2Data['permissions']
 		);
 
@@ -362,7 +353,6 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			'etag'           => "56c38b8db8c486035d739f2c1c11cd6c",
 			'size'           => 33333,
 			'sharedwithuser' => false,
-			'owner'          => [],
 			'permissions'    => 11,
 			'freespace'      => 576576576576,
 		];
@@ -372,7 +362,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 				$file2
 			],
 			$isReadable, $mounted, $mount, $query, $queryResult, $album1Data['sharedwithuser'],
-			$album1Data['etag'], $album1Data['size'], $album1Data['path'], null,
+			$album1Data['etag'], $album1Data['size'], $album1Data['path'],
 			$album1Data['permissions'], $album1Data['freespace']
 		);
 
@@ -384,7 +374,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 				$album1
 			],
 			$isReadable, $mounted, $mount, $query, $queryResult, $topFolder1Data['sharedwithuser'],
-			$topFolder1Data['etag'], $topFolder1Data['size'], $topFolder1Data['path'], null,
+			$topFolder1Data['etag'], $topFolder1Data['size'], $topFolder1Data['path'],
 			$topFolder1Data['permissions'], $topFolder1Data['freespace']
 		);
 		$albumIgnored = $this->mockFolder(
@@ -393,7 +383,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 				$file2
 			],
 			$isReadable, $mounted, $mount, '.nomedia', true, $album1Data['sharedwithuser'],
-			$album1Data['etag'], $album1Data['size'], $album1Data['path'], null,
+			$album1Data['etag'], $album1Data['size'], $album1Data['path'],
 			$album1Data['permissions'], $album1Data['freespace']
 		);
 		$topFolder2 = $this->mockFolder(
@@ -404,7 +394,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 				$albumIgnored
 			],
 			$isReadable, $mounted, $mount, $query, $queryResult, $topFolder1Data['sharedwithuser'],
-			$topFolder1Data['etag'], $topFolder1Data['size'], $topFolder1Data['path'], null,
+			$topFolder1Data['etag'], $topFolder1Data['size'], $topFolder1Data['path'],
 			$topFolder1Data['permissions'], $topFolder1Data['freespace']
 		);
 
@@ -475,24 +465,6 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		$this->mockGetResourceFromId($this->environment, $fileId, $file);
 
 		$this->service->getResourceFromId($fileId);
-	}
-
-	/**
-	 * @param int $uid
-	 * @param string $displayName
-	 *
-	 * @return mixed|object|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function mockOwner($uid, $displayName) {
-		$owner = $this->getMockBuilder('OCP\IUser')
-					  ->disableOriginalConstructor()
-					  ->getMock();
-		$owner->method('getUID')
-			  ->willReturn($uid);
-		$owner->method('getDisplayName')
-			  ->willReturn($displayName);
-
-		return $owner;
 	}
 
 	/**
