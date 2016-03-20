@@ -106,7 +106,10 @@ abstract class FilesService extends Service {
 		$etag = $node->getEtag();
 		$size = $node->getSize();
 		$sharedWithUser = $node->isShared();
-		$owner = $node->getOwner();
+		//$owner = $node->getOwner();
+		$storage = $node->getStorage();
+		$owner = \OC::$server->getUserManager()
+							 ->get($storage->getOwner($node->getInternalPath()));
 		$ownerData = [];
 		if ($owner) {
 			$ownerData = [
