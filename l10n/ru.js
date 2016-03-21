@@ -18,6 +18,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Для наилучшего результата, пожалуйста, установите одну из следующих опций",
     "Your browser is not supported!" : "Ваш бразуре не поддерживается!",
     "please install one of the following alternatives" : "пожалуйста, установите одну из следующих опций",
+    "Album cannot be shown" : "Этот альбом не может быть отображен",
     "Upload pictures in the files app to display them here" : "Загрузите изображения для отображения здесь",
     "Configuration error" : "Ошибка конфигурации",
     "New" : "Новый",
