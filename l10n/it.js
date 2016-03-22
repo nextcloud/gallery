@@ -2,6 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galleria",
+    "There was a problem reading files from this album" : "Si è verificato un problema durante la lettura dei file da questo album.",
     "Aborting preview. Could not find the file" : "Anteprima interrotta. Impossibile trovare il file",
     "Could not move \"{file}\", target exists" : "Impossibile spostare \"{file}\", la destinazione esiste già",
     "Could not move \"{file}\"" : "Impossibile spostare \"{file}\"",
