@@ -2,6 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeri",
+    "There was a problem reading files from this album" : "Pati një problem me leximin e kartelave prej këtij albumi",
     "Aborting preview. Could not find the file" : "Po ndërpritet paraparja. S’u gjet dot kartela",
     "Could not move \"{file}\", target exists" : "S’u lëviz dot \"{file}\", objektivi ekziston",
     "Could not move \"{file}\"" : "S’u lëviz dot \"{file}\"",
