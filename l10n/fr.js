@@ -2,6 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerie",
+    "There was a problem reading files from this album" : "Il y a eu un problème lors de la lecture des fichiers de cet album",
     "Aborting preview. Could not find the file" : "Interruption de la prévisualisation. Le fichier est introuvable.",
     "Could not move \"{file}\", target exists" : "Impossible de déplacer \"{file}\", la cible existe",
     "Could not move \"{file}\"" : "Impossible de déplacer \"{file}\"",
@@ -18,6 +19,8 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Pour une meilleure expérience, veuillez installer l'une des alternatives suivantes",
     "Your browser is not supported!" : "Votre navigateur n'est pas pris en charge !",
     "please install one of the following alternatives" : "veuillez installer l'une des alternatives suivantes",
+    "Album cannot be shown" : "L'album ne peut être affiché",
+    "No media files found" : "Aucun fichier média trouvé",
     "Upload pictures in the files app to display them here" : "Ajoutez des images dans l'application Fichiers et elles apparaîtront ici",
     "Upload new files via drag and drop or by using the [+] button above" : "Téléversez de nouveaux fichiers en utilisant le glisser-déposer ou le bouton [+] ci-dessus",
     "Configuration error" : "Erreur de configuration",
