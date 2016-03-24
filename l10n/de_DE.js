@@ -22,6 +22,7 @@ OC.L10N.register(
     "Album cannot be shown" : "Album kann nicht angezeigt werden.",
     "No media files found" : "Es wurden keine Medien Dateien gefunden",
     "Upload pictures in the files app to display them here" : "Laden Sie Bilder in der Dateien App hoch, um sie hier angezeigt zu bekommen.",
+    "Upload new files via drag and drop or by using the [+] button above" : "Hochladen neuer Dateien mittels Drag&Drop oder mit der [+]-Schaltfläche oben",
     "Configuration error" : "Konfigurationsfehler",
     "New" : "Neu",
     "Error loading slideshow template" : "Fehler beim Laden der Slideshow-Vorlage",
