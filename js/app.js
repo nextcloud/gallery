@@ -49,8 +49,7 @@ $(document).ready(function () {
 
 		// This block loads new rows
 		$('html, #content-wrapper').scroll(function () {
-			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum],
-				Gallery.currentAlbum);
+			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum]);
 		});
 
 
