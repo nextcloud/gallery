@@ -2,6 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Myndasafn",
+    "There was a problem reading files from this album" : "Það kom upp vandamál við að lesa skrár úr þessu albúmi",
     "Aborting preview. Could not find the file" : "Hætti forskoðun. Gat ekki fundið skrána",
     "Could not move \"{file}\", target exists" : "Gat ekki fært \"{file}\", markskrá er til",
     "Could not move \"{file}\"" : "Gat ekki fært \"{file}\"",

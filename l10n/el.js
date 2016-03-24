@@ -18,6 +18,7 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Για βελτιωμένη εμπειρία, παρακαλώ εγκαταστήστε μία από τις ακόλουθες εναλλακτικές",
     "Your browser is not supported!" : "Ο περιηγητής σας δεν υποστηρίζεται!",
     "please install one of the following alternatives" : "παρακαλώ εγκαταστήστε μία από τις ακόλουθες εναλλακτικές",
+    "No media files found" : "Δεν βρέθηκαν πολυμέσα",
     "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
     "Configuration error" : "Σφάλμα ρυθμίσεων",
     "New" : "Νέο",
