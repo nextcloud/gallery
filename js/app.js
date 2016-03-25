@@ -87,6 +87,7 @@ $(document).ready(function () {
  */
 window.onhashchange = function () {
 	"use strict";
+	Gallery.view.dimControls();
 	var currentLocation = window.location.href.split('#')[1] || '';
 	// The hash location is ALWAYS encoded, despite what the browser shows
 	var path = decodeURIComponent(currentLocation);

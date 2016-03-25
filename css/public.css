@@ -41,8 +41,6 @@ body {
 }
 
 #save-button-confirm:disabled, #save-button-confirm:disabled:hover, #save-button-confirm:disabled:focus {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-    filter: alpha(opacity=20);
     opacity: .2;
     cursor: default;
 }
