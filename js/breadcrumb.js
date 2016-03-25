@@ -109,6 +109,13 @@
 		},
 
 		/**
+		 * Shows the dark spinner on the crumb
+		 */
+		showLoader: function () {
+			$(this).children('a').addClass("icon-loading-dark small");
+		},
+
+		/**
 		 * Builds the breadcrumbs array
 		 *
 		 * @private
@@ -236,6 +243,7 @@
 			// We go through the array in reverse order
 			var crumbsElement = crumbs.get().reverse();
 			$(crumbsElement).each(function () {
+				$(this).click(self.showLoader);
 				if ($(this).hasClass('home')) {
 					$(this).show();
 					return;
