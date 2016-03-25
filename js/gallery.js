@@ -12,7 +12,7 @@
 		appName: 'galleryplus',
 		token: undefined,
 		activeSlideShow: null,
-		buttonsWidth: 400,
+		buttonsWidth: 650,
 		browserToolbarHeight: 150,
 		filesClient: null,
 
