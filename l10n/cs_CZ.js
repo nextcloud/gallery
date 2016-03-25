@@ -2,6 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galerie",
+    "There was a problem reading files from this album" : "Nastal problém při čtení souborů z tohoto alba",
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "Could not move \"{file}\", target exists" : "Nelze přesunout \"{file}\", cíl existuje",
     "Could not move \"{file}\"" : "Nelze přesunout \"{file}\"",
