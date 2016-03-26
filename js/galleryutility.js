@@ -19,7 +19,7 @@ window.Gallery = window.Gallery || {};
 		/**
 		 * Detects if the browser is a recent or an old version of Internet Explorer
 		 *
-		 * @returns {string|bool}
+		 * @returns {string|boolean}
 		 */
 		getIeVersion: function () {
 			// Blocking IE8
@@ -27,9 +27,10 @@ window.Gallery = window.Gallery || {};
 				return 'unsupportedIe';
 			} else if (navigator.userAgent.indexOf("MSIE") > 0) {
 				return 'oldIe';
-			} else if ((!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) ||
-				(navigator.userAgent.indexOf("Edge/") > 0)) {
+			} else if (!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) {
 				return 'modernIe';
+			} else if (navigator.userAgent.indexOf("Edge/") > 0) {
+				return 'edge';
 			}
 
 			return false;

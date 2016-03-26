@@ -132,7 +132,8 @@
 		 */
 		_worksInCurrentBrowser: function (feature, validationRule) {
 			var isAcceptable = true;
-			if (feature === validationRule && Gallery.ieVersion !== false) {
+			if (feature === validationRule &&
+				(Gallery.ieVersion !== false && Gallery.ieVersion !== 'edge')) {
 				isAcceptable = false;
 			}
 
