@@ -169,9 +169,6 @@
 							return; //throw away the row if the user has navigated away in the
 									// meantime
 						}
-						if (view.element.length === 1) {
-							view._showNormal();
-						}
 						if (album.viewedItems < album.subAlbums.length + album.images.length &&
 							view.element.height() < targetHeight) {
 							return showRows(album);
@@ -188,6 +185,7 @@
 				});
 			}, 100);
 			if (this.element.height() < targetHeight) {
+				this._showNormal();
 				this.loadVisibleRows.loading = true;
 				this.loadVisibleRows.loading = showRows(album);
 				return this.loadVisibleRows.loading;
@@ -204,7 +202,9 @@
 			var message = '<div class="icon-gallery"></div>';
 			var uploadAllowed = true;
 
-			this.clear();
+			this.element.children().detach();
+			$('#content').removeClass('icon-loading');
+			this.controlsElement.find('.mask').remove();
 
 			if (!_.isUndefined(errorMessage) && errorMessage !== null) {
 				message += '<h2>' + t('gallery',
@@ -227,7 +227,6 @@
 			this.emptyContentElement.html(message);
 			this.emptyContentElement.removeClass('hidden');
 
-			//Gallery.view.showEmptyFolder();
 			this._hideButtons(uploadAllowed);
 			Gallery.currentAlbum = albumPath;
 			var availableWidth = $(window).width() - Gallery.buttonsWidth;
@@ -236,11 +235,27 @@
 		},
 
 		/**
+		 * Dims the controls bar when retrieving new content. Matches the effect in Files
+		 */
+		dimControls: function () {
+			// Use the existing mask if its already there
+			var $mask = this.controlsElement.find('.mask');
+			if ($mask.exists()) {
+				return;
+			}
+			$mask = $('<div class="mask transparent"></div>');
+			this.controlsElement.append($mask);
+			$mask.removeClass('transparent');
+		},
+
+		/**
 		 * Shows the infamous loading spinner
 		 */
 		showLoading: function () {
 			this.emptyContentElement.addClass('hidden');
 			this.controlsElement.removeClass('hidden');
+			$('#content').addClass('icon-loading');
+			this.dimControls();
 		},
 
 		/**
@@ -249,6 +264,8 @@
 		_showNormal: function () {
 			this.emptyContentElement.addClass('hidden');
 			this.controlsElement.removeClass('hidden');
+			$('#content').removeClass('icon-loading');
+			this.controlsElement.find('.mask').remove();
 		},
 
 		/**

@@ -330,3 +330,29 @@ http://www.bypeople.com/author/comatosed/*/
 .icon-gallery {
 	background-image: url('../img/gallery-dark.svg');
 }
+
+.mask {
+	z-index: 50;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #fff;
+	background-repeat: no-repeat no-repeat;
+	background-position: 50%;
+	opacity: 0.5;
+	transition: opacity 100ms;
+	-moz-transition: opacity 100ms;
+	-o-transition: opacity 100ms;
+	-ms-transition: opacity 100ms;
+	-webkit-transition: opacity 100ms;
+}
+
+.mask.transparent {
+	opacity: 0;
+}
+
+.icon-loading-dark.small {
+	background-size: 16px;
+}
