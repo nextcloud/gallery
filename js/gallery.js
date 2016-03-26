@@ -306,6 +306,7 @@
 			Gallery.activeSlideShow.setImages(images, autoPlay);
 			Gallery.activeSlideShow.onStop = function () {
 				$('#content').show();
+				Gallery.view.removeLoading();
 				if (Gallery.currentAlbum !== '') {
 					// Only modern browsers can manipulate history
 					if (history && history.replaceState) {

@@ -203,8 +203,7 @@
 			var uploadAllowed = true;
 
 			this.element.children().detach();
-			$('#content').removeClass('icon-loading');
-			this.controlsElement.find('.mask').remove();
+			this.removeLoading();
 
 			if (!_.isUndefined(errorMessage) && errorMessage !== null) {
 				message += '<h2>' + t('gallery',
@@ -259,13 +258,20 @@
 		},
 
 		/**
+		 * Removes the spinner in the main area and restore normal visibility of the controls bar
+		 */
+		removeLoading: function () {
+			$('#content').removeClass('icon-loading');
+			this.controlsElement.find('.mask').remove();
+		},
+
+		/**
 		 * Shows thumbnails
 		 */
 		_showNormal: function () {
 			this.emptyContentElement.addClass('hidden');
 			this.controlsElement.removeClass('hidden');
-			$('#content').removeClass('icon-loading');
-			this.controlsElement.find('.mask').remove();
+			this.removeLoading();
 		},
 
 		/**
