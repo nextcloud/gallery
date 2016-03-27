@@ -1,5 +1,6 @@
 { "translations": {
     "Gallery" : "Galeria",
+    "There was a problem reading files from this album" : "Houve um problema ao ler arquivos desse álbum",
     "Aborting preview. Could not find the file" : "Anulando visualização. Não foi possível encontrar o arquivo",
     "Could not move \"{file}\", target exists" : "Não foi possível mover o \"{file}\", o alvo já existe",
     "Could not move \"{file}\"" : "Não foi possível mover \"{file}\"",
