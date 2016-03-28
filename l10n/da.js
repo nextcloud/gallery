@@ -2,7 +2,10 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galleri",
+    "There was a problem reading files from this album" : "Der opstod et problem med at læse filer fra dette album",
     "Aborting preview. Could not find the file" : "Forlader forhåndsvisning. Kunne ikke finde filen",
+    "Could not move \"{file}\", target exists" : "Kunne ikke flytte \"{file}\" - der findes allerede en fil med dette navn",
+    "Could not move \"{file}\"" : "Kunne ikke flytte \"{file}\"",
     "No ownCloud installation (7 or higher) found at {remote}" : "Der er ingen ownCloud-installation (7 eller højere) på {remote}",
     "Invalid ownCloud url" : "Ugyldig ownCloud-URL",
     "Gallery view" : "Galleri visning",
