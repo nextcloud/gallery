@@ -34,7 +34,7 @@ $c->query('OCP\INavigationManager')
 
 			  // Sorting weight for the navigation. The higher the number, the higher
 			  // will it be listed in the navigation
-			  'order' => 3,
+			  'order' => 2,
 
 			  // The route that will be shown on startup when called from within ownCloud
 			  // Public links are using another route, see appinfo/routes.php
