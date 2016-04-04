@@ -331,7 +331,10 @@
 			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
 			this._renderNewButton();
-
+			// Trigger cancelling of file upload
+			$('#uploadprogresswrapper .stop').on('click', function () {
+				OC.Upload.cancelUploads();
+			});
 			this.requestId = Math.random();
 		},
 
