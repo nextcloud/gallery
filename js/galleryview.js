@@ -374,6 +374,7 @@
 
 			$('#save-button').show();
 			$('#download').show();
+			$('a.button.new').show();
 		},
 
 		/**
