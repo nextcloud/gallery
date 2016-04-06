@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Gabim formësimi",
     "New" : "E re",
     "Error loading slideshow template" : "Gabim gjatë ngarkimit të gjedhes për diapozitiva",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Gabim!</strong> S’u prodhua dot një paraparje e kësaj kartele.<br>",
     "Next" : "Pasuesja",
     "Play" : "Luaje",
     "Pause" : "Pauzë",

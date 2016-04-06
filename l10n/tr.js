@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Yapılandırma hatası",
     "New" : "Yeni",
     "Error loading slideshow template" : "Slayt gösteri şablonu yüklenirken hata",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Hata!</strong> Bu dosyanın bir önizlemesi oluşturulamadı.<br>",
     "Next" : "Sonraki",
     "Play" : "Oynat",
     "Pause" : "Duraklat",

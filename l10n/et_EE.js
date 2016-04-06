@@ -21,7 +21,6 @@ OC.L10N.register(
     "Configuration error" : "Seadistamise tõrge",
     "New" : "Uus",
     "Error loading slideshow template" : "Viga slaidiseansi kujunduse valimisel",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Viga!</strong> Faili eelvaate loomine ebaõnnestus.<br>",
     "Next" : "Järgmine",
     "Play" : "Esita",
     "Pause" : "Paus",

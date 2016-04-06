@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Konfigurationsfejl",
     "New" : "Ny",
     "Error loading slideshow template" : "Fejl ved indlæsning af skabelon for diasshow",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fejl!</strong> Kunne ikke generere en forhåndsvisning af denne fil.<br>",
     "Next" : "Næste",
     "Play" : "Afspil",
     "Pause" : "Pause",
