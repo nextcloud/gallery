@@ -25,7 +25,6 @@ OC.L10N.register(
     "Configuration error" : "Konfigurasjonsfeil",
     "New" : "Ny",
     "Error loading slideshow template" : "Feil ved lasting av mal for lysbildevisning",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Feil!</strong> Klarte ikke å generere forhåndsvisning av denne filen.<br>",
     "Next" : "Neste",
     "Play" : "Spill",
     "Pause" : "Pause",

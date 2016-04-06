@@ -20,7 +20,6 @@ OC.L10N.register(
     "Configuration error" : "Kesalahan konfigurasi",
     "New" : "Baru",
     "Error loading slideshow template" : "Kesalahan saat memuat templat slideshow",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Kesalahan!</strong> Tidak dapat menghasilkan pratinjau berkas ini.<br>",
     "Next" : "Berikutnya",
     "Play" : "Putar",
     "Pause" : "Jeda",

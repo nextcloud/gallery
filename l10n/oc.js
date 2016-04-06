@@ -22,7 +22,6 @@ OC.L10N.register(
     "Configuration error" : "Error de configuracion",
     "New" : "Novèl",
     "Error loading slideshow template" : "Error al moment del telecargament del modèl de diaporama ",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Error !</strong> Impossible de generar un apercebut d'aqueste fichièr.<br>",
     "Next" : "Seguent",
     "Play" : "Aviar",
     "Pause" : "Pausa",

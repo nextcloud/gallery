@@ -18,7 +18,6 @@ OC.L10N.register(
     "Configuration error" : "Конфигурационна грешка",
     "New" : "Създай",
     "Error loading slideshow template" : "Грешка при зареждане на шаблон за слайдшоу.",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Грешка!</strong> Не може да се генерира визуализация на този файл.<br>",
     "Next" : "Следваща",
     "Play" : "Пусни",
     "Pause" : "Пауза",

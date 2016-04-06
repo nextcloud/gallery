@@ -22,7 +22,6 @@ OC.L10N.register(
     "Configuration error" : "設定エラー",
     "New" : "新規作成",
     "Error loading slideshow template" : "スライドショーのテンプレートの読み込みエラー",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>エラー！</strong> このファイルのプレビューを生成できませんでした。<br>",
     "Next" : "次",
     "Play" : "再生",
     "Pause" : "一時停止",

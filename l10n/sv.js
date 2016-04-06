@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Konfigurationsfel",
     "New" : "Ny",
     "Error loading slideshow template" : "Fel vid laddning av mallen för bildspelet",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fel!</strong> Kunde ej generera en förhandsgranskning av denna fil. <br>",
     "Next" : "Nästa",
     "Play" : "Spela",
     "Pause" : "Paus",

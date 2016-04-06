@@ -22,7 +22,6 @@ OC.L10N.register(
     "Configuration error" : "กำหนดค่าผิดพลาด",
     "New" : "ใหม่",
     "Error loading slideshow template" : "เกิดข้อผิดพลาดในการโหลดแม่แบบสไลด์โชว์",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>ข้อผิดพลาด!</strong> ไม่สามารถสร้างตัวอย่างของไฟล์นี้<br>",
     "Next" : "ถัดไป",
     "Play" : "เล่น",
     "Pause" : "หยุดชั่วคราว",

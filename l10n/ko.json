@@ -20,7 +20,6 @@
     "Configuration error" : "설정 오류",
     "New" : "새로 만들기",
     "Error loading slideshow template" : "슬라이드 쇼 템플릿을 불러오는 중 오류 발생",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>오류!</strong> 이 파일의 미리 보기를 생성할 수 없습니다.<br>",
     "Next" : "다음",
     "Play" : "재생",
     "Pause" : "일시 정지",

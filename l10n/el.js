@@ -23,7 +23,6 @@ OC.L10N.register(
     "Configuration error" : "Σφάλμα ρυθμίσεων",
     "New" : "Νέο",
     "Error loading slideshow template" : "Σφάλμα φόρτωσης προτύπου προβολής διαφανειών",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Σφάλμα!</strong> Αδυναμία δημιουργίας προεπισκόπησης αυτού του αρχείου.<br>",
     "Next" : "Επόμενο",
     "Play" : "Αναπαραγωγή",
     "Pause" : "Παύση",
