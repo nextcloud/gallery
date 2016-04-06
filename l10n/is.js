@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Villa í stillingum",
     "New" : "Nýtt",
     "Error loading slideshow template" : "Villa við að hlaða inn sniðmáti fyrir skyggnusýningu",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Villa!</strong> Gat ekki útbúið forskoðun fyrir þessa skrá.<br>",
     "Next" : "Næst",
     "Play" : "Afspilun",
     "Pause" : "Í bið",

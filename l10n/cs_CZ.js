@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Chyba konfigurace",
     "New" : "Nový",
     "Error loading slideshow template" : "Chyba při načítání šablony prezentace",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Chyba!</strong> Náhled tohoto souboru nelze vytvořit.<br>",
     "Next" : "Následující",
     "Play" : "Přehrát",
     "Pause" : "Pozastavit",

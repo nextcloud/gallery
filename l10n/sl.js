@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Napaka nastavitve",
     "New" : "Novo",
     "Error loading slideshow template" : "Napaka nalaganja predloge za slikovno predstavitev",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Napaka!</strong> Ni mogoče ustvariti predogleda te datoteke.<br>",
     "Next" : "Naslednja",
     "Play" : "Predvajaj",
     "Pause" : "Premor",

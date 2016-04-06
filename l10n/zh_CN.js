@@ -25,7 +25,6 @@ OC.L10N.register(
     "Configuration error" : "配置错误",
     "New" : "新建",
     "Error loading slideshow template" : "加载幻灯片模板错误",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>错误！</strong> 无法生成此文件的预览。<br>",
     "Next" : "下一个",
     "Play" : "播放",
     "Pause" : "暂停",

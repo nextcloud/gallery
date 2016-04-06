@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Errore di configurazione",
     "New" : "Nuovo",
     "Error loading slideshow template" : "Errore durante il caricamento del modello di presentazione",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Errore!</strong> Impossibile generare un'anteprima di questo file.<br>",
     "Next" : "Avanti",
     "Play" : "Riproduci",
     "Pause" : "Pausa",

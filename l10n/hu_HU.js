@@ -22,7 +22,6 @@ OC.L10N.register(
     "Configuration error" : "Beállítási hiba",
     "New" : "Új",
     "Error loading slideshow template" : "Hiba történt a diasor sablonjának betöltésekor",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Hiba!</strong> Nem lehet előnézetet készíteni a fájlról.<br>",
     "Next" : "Következő",
     "Play" : "Lejátszás",
     "Pause" : "Szünet",

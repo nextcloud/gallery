@@ -26,7 +26,6 @@ OC.L10N.register(
     "Configuration error" : "Asetusvirhe",
     "New" : "Uusi",
     "Error loading slideshow template" : "Virhe ladatessa diaesityksen mallipohjaa",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Virhe!</strong> Esikatselua tälle tiedostolle ei voitu toteuttaa.<br>",
     "Next" : "Seuraava",
     "Play" : "Toista",
     "Pause" : "Keskeytä",
