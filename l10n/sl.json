@@ -24,6 +24,7 @@
     "Configuration error" : "Napaka nastavitve",
     "New" : "Novo",
     "Error loading slideshow template" : "Napaka nalaganja predloge za slikovno predstavitev",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Napaka!</strong> Ni mogoče ustvariti predogleda te datoteke.<br>Nadaljujte na naslednjo sliko, trenutna z napako pa bo odstranjena.",
     "Next" : "Naslednja",
     "Play" : "Predvajaj",
     "Pause" : "Premor",
