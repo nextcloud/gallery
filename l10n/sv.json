@@ -24,6 +24,7 @@
     "Configuration error" : "Konfigurationsfel",
     "New" : "Ny",
     "Error loading slideshow template" : "Fel vid laddning av mallen för bildspelet",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fel!</strong> Kunde inte skapa en förhandsgranskning av den här filen.<br>Vänligen gå till nästa bild medan vi tar bort den här bilden från bildspelet",
     "Next" : "Nästa",
     "Play" : "Spela",
     "Pause" : "Paus",
