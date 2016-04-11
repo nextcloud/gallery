@@ -54,6 +54,7 @@
 	};
 
 	Album.prototype = {
+		requestId: null,
 		droppableOptions: {
 			accept: '#gallery > .row > a',
 			activeClass: 'album-droppable',
@@ -86,12 +87,11 @@
 		 * Returns a new album row
 		 *
 		 * @param {number} width
-		 * @param requestId
 		 *
 		 * @returns {Gallery.Row}
 		 */
-		getRow: function (width, requestId) {
-			return new Gallery.Row(width, requestId);
+		getRow: function (width) {
+			return new Gallery.Row(width);
 		},
 
 		/**

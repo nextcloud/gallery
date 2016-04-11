@@ -5,14 +5,12 @@
 	 * Creates a row
 	 *
 	 * @param {number} targetWidth
-	 * @param {number} requestId
 	 * @constructor
 	 */
-	var Row = function (targetWidth, requestId) {
+	var Row = function (targetWidth) {
 		this.targetWidth = targetWidth;
 		this.items = [];
 		this.width = 4; // 4px margin to start with
-		this.requestId = requestId;
 		this.domDef = $('<div/>').addClass('row');
 	};
 

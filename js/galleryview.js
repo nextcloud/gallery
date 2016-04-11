@@ -29,6 +29,8 @@
 		 * Removes all thumbnails from the view
 		 */
 		clear: function () {
+			this.loadVisibleRows.processing = false;
+			this.loadVisibleRows.loading = null;
 			// We want to keep all the events
 			this.element.children().detach();
 			this.showLoading();
@@ -82,7 +84,6 @@
 			this.clear();
 
 			if (Gallery.albumMap[albumPath].etag !== Gallery.currentEtag) {
-				this.loadVisibleRows.loading = false;
 				Gallery.currentAlbum = albumPath;
 				Gallery.currentEtag = Gallery.albumMap[albumPath].etag;
 				this._setupButtons(albumPath);
@@ -98,7 +99,7 @@
 			// Loading rows without blocking the execution of the rest of the script
 			setTimeout(function () {
 				this.loadVisibleRows.activeIndex = 0;
-				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum], Gallery.currentAlbum);
+				this.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum]);
 			}.bind(this), 0);
 		},
 
@@ -120,75 +121,65 @@
 		/**
 		 * Loads and displays gallery rows on screen
 		 *
-		 * @param {Album} album
-		 * @param {string} path
+		 * view.loadVisibleRows.loading holds the Promise of a row
 		 *
-		 * @returns {boolean|null|*}
+		 * @param {Album} album
 		 */
-		loadVisibleRows: function (album, path) {
+		loadVisibleRows: function (album) {
 			var view = this;
-			// If the row is still loading (state() = 'pending'), let it load
-			if (this.loadVisibleRows.loading &&
-				this.loadVisibleRows.loading.state() !== 'resolved') {
-				return this.loadVisibleRows.loading;
+			// Wait for the previous request to be completed
+			if (this.loadVisibleRows.processing) {
+				return;
 			}
 
 			/**
-			 * At this stage, there is no loading taking place (loading = false|null), so we can
-			 * look for new rows
+			 * At this stage, there is no loading taking place, so we can look for new rows
 			 */
 
 			var scroll = $('#content-wrapper').scrollTop() + $(window).scrollTop();
 			// 2 windows worth of rows is the limit from which we need to start loading new rows.
 			// As we scroll down, it grows
 			var targetHeight = ($(window).height() * 2) + scroll;
+			// We throttle rows in order to try and not generate too many CSS resizing events at
+			// the same time
 			var showRows = _.throttle(function (album) {
 
 				// If we've reached the end of the album, we kill the loader
 				if (!(album.viewedItems < album.subAlbums.length + album.images.length)) {
+					view.loadVisibleRows.processing = false;
 					view.loadVisibleRows.loading = null;
 					return;
 				}
 
-				// Everything is still in sync, since no deferred calls have been placed yet
+				// Prevents creating rows which are no longer required. I.e when changing album
+				if (view.requestId !== album.requestId) {
+					return;
+				}
 
-				var row = album.getRow($(window).width(), view.requestId);
+				// We can now safely create a new row
+				var row = album.getRow($(window).width());
 				var rowDom = row.getDom();
 				view.element.append(rowDom);
 
 				return album.fillNextRow(row).then(function () {
-					/**
-					 * At this stage, the row has a width and contains references to images based
-					 * on
-					 * information available when making the request, but this information may have
-					 * changed while we were receiving thumbnails for the row
-					 */
-					if (view.requestId === row.requestId) {
-						if (Gallery.currentAlbum !== path) {
-							view.loadVisibleRows.loading = null;
-							return; //throw away the row if the user has navigated away in the
-									// meantime
-						}
-						if (album.viewedItems < album.subAlbums.length + album.images.length &&
-							view.element.height() < targetHeight) {
-							return showRows(album);
-						}
-						// No more rows to load at the moment
-						view.loadVisibleRows.loading = null;
-					} else {
-						// This is the safest way to do things
-						view.viewAlbum(Gallery.currentAlbum);
+					if (album.viewedItems < album.subAlbums.length + album.images.length &&
+						view.element.height() < targetHeight) {
+						return showRows(album);
 					}
+					// No more rows to load at the moment
+					view.loadVisibleRows.processing = false;
+					view.loadVisibleRows.loading = null;
 				}, function () {
 					// Something went wrong, so kill the loader
+					view.loadVisibleRows.processing = false;
 					view.loadVisibleRows.loading = null;
 				});
 			}, 100);
 			if (this.element.height() < targetHeight) {
 				this._showNormal();
-				this.loadVisibleRows.loading = true;
+				this.loadVisibleRows.processing = true;
+				album.requestId = view.requestId;
 				this.loadVisibleRows.loading = showRows(album);
-				return this.loadVisibleRows.loading;
 			}
 		},
 
