@@ -26,6 +26,7 @@ OC.L10N.register(
     "Configuration error" : "Yapılandırma hatası",
     "New" : "Yeni",
     "Error loading slideshow template" : "Slayt gösteri şablonu yüklenirken hata",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Hata!</strong> Dosyanın önizlemesi oluşturulamadı.<br>Lütfen bir sonraki slayta geçip bu resmi slayt gösterisinden kaldırın.",
     "Next" : "Sonraki",
     "Play" : "Oynat",
     "Pause" : "Duraklat",
