@@ -26,6 +26,7 @@ OC.L10N.register(
     "Configuration error" : "Configuratiefout",
     "New" : "Nieuw",
     "Error loading slideshow template" : "Fout bij laden diashow sjabloon",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fout!</strong> Kon geen voorbeeld van die bestand genereren.<br>Ga naar de volgende dia, terwijl we deze afbeelding uit de diashow verwijderen",
     "Next" : "Volgende",
     "Play" : "Afspelen",
     "Pause" : "Pauze",
