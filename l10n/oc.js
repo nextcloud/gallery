@@ -18,6 +18,8 @@ OC.L10N.register(
     "For an improved experience, please install one of the following alternatives" : "Per una melhora experiéncia, installatz una de las alternativas seguentas",
     "Your browser is not supported!" : "Vòstre navigador es pas pres en carga !",
     "please install one of the following alternatives" : "Installatz una de las alternativas seguentas",
+    "Album cannot be shown" : "Impossible d'afichar l'album",
+    "No media files found" : "Cap de fichièr mèdia pas trobat",
     "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
     "Configuration error" : "Error de configuracion",
     "New" : "Novèl",
