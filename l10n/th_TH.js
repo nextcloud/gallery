@@ -25,7 +25,7 @@ OC.L10N.register(
     "Upload new files via drag and drop or by using the [+] button above" : "อัพโหลดไฟล์ใหม่ผ่านการลากและวางหรือโดยการใช้ปุ่ม [+] ดังกล่าวข้างต้น",
     "Configuration error" : "กำหนดค่าผิดพลาด",
     "New" : "ใหม่",
-    "Error loading slideshow template" : "เกิดข้อผิดพลาดในการโหลดแม่แบบสไลด์โชว์",
+    "Error loading slideshow template" : "เกิดข้อผิดพลาดในการโหลดเทมเพลตสไลด์โชว์",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>ข้อผิดพลาด!</strong> ไม่สามารถสร้างตัวอย่างการแสดงของไฟล์นี้<br> โปรดไปยังภาพนิ่งถัดไปในขณะที่เราลบภาพนี้จากสไลด์โชว์",
     "Next" : "ถัดไป",
     "Play" : "เล่น",
