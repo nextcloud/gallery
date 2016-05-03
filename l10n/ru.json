@@ -24,6 +24,7 @@
     "Configuration error" : "Ошибка конфигурации",
     "New" : "Новый",
     "Error loading slideshow template" : "Ошибка при загрузке шаблона слайд-шоу",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Ошибка!</strong> Не удалось создать предпросмотр файлы. <br>Пожалуйста переходите к следующему слайду, пока мы удалим это изображение из слайд-шоу",
     "Next" : "Следующий",
     "Play" : "Проиграть",
     "Pause" : "Пауза",
