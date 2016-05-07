@@ -1,6 +1,7 @@
 { "translations": {
     "Gallery" : "Galeria",
     "Aborting preview. Could not find the file" : "Przerywanie podglądu. Nie można odnaleźć pliku",
+    "Could not move \"{file}\"" : "Nie można przenieść \"{file}\"",
     "Invalid ownCloud url" : "Błędny adres URL",
     "Gallery view" : "Widok galerii",
     "Could not load the description: " : "Nie można załadować opisu:",
