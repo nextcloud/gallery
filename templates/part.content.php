@@ -40,7 +40,6 @@ script(
 		'upload',
 		'file-upload',
 		'jquery.fileupload',
-		'jquery.iframe-transport'
 	]
 );
 style(
