@@ -176,6 +176,10 @@
 	height: 100%;
 }
 
+#slideshow > .bigshotContainer > img {
+	z-index: 10;
+}
+
 #slideshow .icon-loading-dark {
 	position: absolute !important;
 	top: 50%;
