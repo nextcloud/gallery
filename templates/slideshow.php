@@ -7,9 +7,12 @@
 	<input type="button" class="svg exit icon-view-close"/>
 	<div class="notification"></div>
 	<div class="menu">
-		<input type="button" class="menuItem svg downloadImage icon-view-download hidden"/>
+		<input type="button"
+			   class="menuItem svg downloadImage icon-view-download hidden"/>
 		<input type="button"
 			   class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
+		<input type="button"
+			   class="menuItem svg deleteImage icon-delete-white hidden">
 	</div>
 	<div class="progress icon-view-pause"/>
 	<div class="name">
