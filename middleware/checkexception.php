@@ -29,7 +29,9 @@ class CheckException extends \Exception {
 	 * @param int $code the HTTP status code
 	 */
 	public function __construct($msg, $code = 0) {
-		Util::writeLog('gallery', 'Exception: ' . $msg . ' (' . $code . ')', Util::ERROR);
+		if($msg !== 'Share is a write-only share') {
+			Util::writeLog('gallery', 'Exception: ' . $msg . ' (' . $code . ')', Util::ERROR);
+		}
 		parent::__construct($msg, $code);
 	}
 

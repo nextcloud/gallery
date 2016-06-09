@@ -21,6 +21,7 @@ use OCP\IURLGenerator;
 use OCP\ISession;
 use OCP\ILogger;
 use OCP\Share;
+use OCP\Share\IManager;
 use OCP\Security\IHasher;
 
 use OCP\AppFramework\Http;
@@ -46,6 +47,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	private $environment;
 	/** @var IControllerMethodReflector */
 	protected $reflector;
+	/** @var IManager */
+	protected $shareManager;
 
 	/***
 	 * Constructor
@@ -58,6 +61,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
+	 * @param IManager $shareManager
 	 */
 	public function __construct(
 		$appName,
@@ -67,7 +71,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		Environment $environment,
 		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		ILogger $logger
+		ILogger $logger,
+		IManager $shareManager
 	) {
 		parent::__construct(
 			$appName,
@@ -80,6 +85,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		$this->session = $session;
 		$this->environment = $environment;
 		$this->reflector = $reflector;
+		$this->shareManager = $shareManager;
 	}
 
 	/**
@@ -121,6 +127,16 @@ class EnvCheckMiddleware extends CheckMiddleware {
 				"Can't access a public resource without a token", Http::STATUS_NOT_FOUND
 			);
 		} else {
+
+			try {
+				$share = $this->shareManager->getShareByToken($token);
+				if (!($share->getPermissions() & \OCP\Constants::PERMISSION_READ)) {
+					throw new CheckException(
+						"Share is a write-only share", Http::STATUS_FORBIDDEN
+					);
+				}
+			} catch(\OCP\Share\Exceptions\ShareNotFound $e) {}
+
 			$linkItem = $this->getLinkItem($token);
 			$password = $this->request->getParam('password');
 			// Let's see if the user needs to provide a password

@@ -25,7 +25,9 @@ class ServiceException extends \Exception {
 	 * @param string $msg the message contained in the exception
 	 */
 	public function __construct($msg) {
-		Util::writeLog('gallery', 'Exception: ' . $msg, Util::ERROR);
+		if($msg !== 'Share is a write-only share') {
+			Util::writeLog('gallery', 'Exception: ' . $msg, Util::ERROR);
+		}
 		parent::__construct($msg);
 	}
 }
