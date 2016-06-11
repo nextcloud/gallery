@@ -596,7 +596,7 @@ EOF;
 
     /**
      * @expectedException \Symfony\Component\Yaml\Exception\ParseException
-     * @expectedExceptionMessage Multiple documents are not supported.
+     * @expectedExceptionMessageRegExp /^Multiple documents are not supported.+/
      */
     public function testMultipleDocumentsNotSupportedException()
     {
@@ -626,6 +626,34 @@ yaml:
   - array stuff
 EOF
         );
+    }
+
+    public function testSequenceInMappingStartedBySingleDashLine()
+    {
+        $yaml = <<<EOT
+a:
+-
+  b:
+  -
+    bar: baz
+- foo
+d: e
+EOT;
+        $expected = array(
+            'a' => array(
+                array(
+                    'b' => array(
+                        array(
+                            'bar' => 'baz',
+                        ),
+                    ),
+                ),
+                'foo',
+            ),
+            'd' => 'e',
+        );
+
+        $this->assertSame($expected, $this->parser->parse($yaml));
     }
 
     /**
@@ -889,9 +917,13 @@ EOF;
 
         $deprecations = array();
         set_error_handler(function ($type, $msg) use (&$deprecations) {
-            if (E_USER_DEPRECATED === $type) {
-                $deprecations[] = $msg;
+            if (E_USER_DEPRECATED !== $type) {
+                restore_error_handler();
+
+                return call_user_func_array('PHPUnit_Util_ErrorHandler::handleError', func_get_args());
             }
+
+            $deprecations[] = $msg;
         });
 
         $this->parser->parse($yaml);
@@ -989,6 +1021,7 @@ EOT
 foo
 # bar
 baz
+
 EOT
                     ,
                 ),
@@ -1017,7 +1050,7 @@ EOT;
         $expected = array(
             'foo' => array(
                 'bar' => array(
-                    'scalar-block' => 'line1 line2>',
+                    'scalar-block' => "line1 line2>\n",
                 ),
                 'baz' => array(
                     'foobar' => null,
