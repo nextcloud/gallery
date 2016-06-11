@@ -16,6 +16,7 @@ namespace OCA\Gallery\Environment;
 
 use OCP\IUserManager;
 use OCP\Share;
+use OCP\Share\IShare;
 use OCP\ILogger;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
@@ -113,23 +114,20 @@ class Environment {
 	}
 
 	/**
-	 * Creates the environment based on the linkItem the token links to
+	 * Creates the environment based on the share the token links to
 	 *
-	 * @param array $linkItem
+	 * @param IShare $share
 	 */
-	public function setTokenBasedEnv($linkItem) {
-		// Resolves reshares down to the last real share
-		$rootLinkItem = Share::resolveReShare($linkItem);
-		$origShareOwner = $rootLinkItem['uid_owner'];
-		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwner);
+	public function setTokenBasedEnv($share) {
+		$origShareOwnerId = $share->getShareOwner();
+		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwnerId);
 
-		// This is actually the node ID
-		$this->sharedNodeId = $linkItem['file_source'];
+		$this->sharedNodeId = $share->getNodeId();
 		$this->fromRootToFolder = $this->buildFromRootToFolder($this->sharedNodeId);
 
-		$this->folderName = $linkItem['file_target'];
-		$this->userId = $rootLinkItem['uid_owner'];
-		$this->sharePassword = $linkItem['share_with'];
+		$this->folderName = $share->getTarget();
+		$this->userId = $origShareOwnerId;
+		$this->sharePassword = $share->getPassword();
 	}
 
 	/**
@@ -309,7 +307,7 @@ class Environment {
 	 *
 	 * That root folder changes when folders are shared publicly
 	 *
-	 * @param File|Folder|N $node
+	 * @param File|Folder|Node $node
 	 *
 	 * @return string
 	 */
@@ -332,7 +330,7 @@ class Environment {
 	 * Returns the path from the shared folder to the root folder in the original
 	 * owner's filesystem: /userId/files/parent_folder/shared_folder
 	 *
-	 * This cannot be calculated with paths and IDs, the linkitem's file source is required
+	 * This cannot be calculated with paths and IDs, the share's file source is required
 	 *
 	 * @param string $fileSource
 	 *
