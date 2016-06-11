@@ -78,15 +78,14 @@
 			row.domDef.append(itemDom);
 			itemDom.draggable(this.draggableOptions);
 
-			// No need to use getThumbnailWidth() for albums, the width is always 200
+			// The width of an album is always the same as its height
 			if (element instanceof Album) {
-				var width = row.targetHeight;
-				validateRowWidth(width);
+				validateRowWidth(row.targetHeight);
 			} else {
 				// We can't calculate the total width if we don't have the width of the thumbnail
-				element.getThumbnailWidth().then(function (width) {
+				element.getThumbnailWidth(row.targetHeight).then(function (width) {
 					if (element.thumbnail.status !== fileNotFoundStatus) {
-						element.resize(row.targetHeight);
+						element.resize(row.targetHeight, width);
 						validateRowWidth(width);
 					} else {
 						itemDom.remove();

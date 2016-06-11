@@ -73,12 +73,18 @@
 		 *
 		 * @returns {number}
 		 */
-		getThumbnailWidth: function () {
+		getThumbnailWidth: function (targetHeight) {
+			var image = this;
 			// img is a Thumbnail.image
 			return this.getThumbnail(false).then(function (img) {
 				var width = 0;
 				if (img) {
-					width = img.originalWidth;
+					// In Firefox, you don't get the size of a SVG before it's added to the DOM
+					image.domDef.children('.image').append(img);
+					if (image.mimeType === 'image/svg+xml') {
+						image.thumbnail.ratio = img.width / img.height;
+					}
+					width = Math.round(targetHeight * image.thumbnail.ratio);
 				}
 
 				return width;
@@ -113,20 +119,18 @@
 		/**
 		 * Resizes the image once it has been loaded
 		 *
-		 * @param targetHeight
+		 * @param {Number} targetHeight
+		 * @param {Number} newWidth
 		 */
-		resize: function (targetHeight) {
+		resize: function (targetHeight, newWidth) {
 			if (this.spinner !== null) {
 				var img = this.thumbnail.image;
 				this.spinner.remove();
 				this.spinner = null;
-
-				var newWidth = Math.round(targetHeight * this.thumbnail.ratio);
 				this.domDef.attr('data-width', newWidth)
 					.attr('data-height', targetHeight);
 
 				var url = this._getLink();
-				var image = this.domDef.children('.image');
 				this.domDef.attr('href', url);
 
 				// This will stretch wide images to make them reach targetHeight
@@ -135,7 +139,6 @@
 					'height': targetHeight
 				});
 				img.alt = encodeURI(this.path);
-				image.append(img);
 
 				this.domDef.click(this._openImage.bind(this));
 			}
