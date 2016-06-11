@@ -56,7 +56,7 @@ class DownloadWithTokenCest {
 	}
 
 	/**
-	 * When a token is not valid we get an error 400, NOT 404
+	 * When a token is not valid we get an error 404
 	 *
 	 * @param \Step\Api\TokenUser $I
 	 */
@@ -64,10 +64,10 @@ class DownloadWithTokenCest {
 		$I->am('a file owner');
 		$I->wantTo('insert a file in a forum');
 		$I->amGoingTo("send a bogus token");
-		$I->expectTo("be redirected to an error 400 page");
+		$I->expectTo("be redirected to an error 404 page");
 		$I->haveHttpHeader('Accept', $this->browserHeader);
 		$I->sendGET($this->apiUrl . '1AmaW1cK3d70k3N');
-		$I->seeResponseCodeIs(400);
+		$I->seeResponseCodeIs(404);
 		$I->seeHttpHeader('Content-type', 'text/html; charset=UTF-8');
 	}
 
