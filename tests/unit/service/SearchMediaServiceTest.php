@@ -225,8 +225,17 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			[$folder5, $folder5Path],
 		];
 		// 1 standard folder, 1 external share (ignored) and 3 files
+		$folder1a = $this->mockFolder(
+			'home::user', 545454,
+			[
+				$this->mockJpgFile(11111),
+				$this->mockJpgFile(22222),
+				$this->mockJpgFile(33333)
+			],
+			$isReadable, $mounted, $mount, $query, $queryResult
+		);
 		$config5 = [
-			$folder1,
+			$folder1a,
 			$folder6,
 			$this->mockJpgFile(77777),
 			$this->mockJpgFile(88888),
@@ -239,12 +248,21 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		);
 		$map5 = [
 			[$topFolder5, ''],
-			[$folder1, $folder1Path],
+			[$folder1a, $folder1Path],
 			[$folder6, $folder6Path],
 		];
 		// 1 standard folder (3), 1 deep folder and 3 files
+		$folder1b = $this->mockFolder(
+			'home::user', 545454,
+			[
+				$this->mockJpgFile(11111),
+				$this->mockJpgFile(22222),
+				$this->mockJpgFile(33333)
+			],
+			$isReadable, $mounted, $mount, $query, $queryResult
+		);
 		$config6 = [
-			$folder1,
+			$folder1b,
 			$folder7,
 			$this->mockJpgFile(77777),
 			$this->mockJpgFile(88888),
@@ -256,7 +274,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		);
 		$map6 = [
 			[$topFolder6, ''],
-			[$folder1, $folder1Path],
+			[$folder1b, $folder1Path],
 			[$folder7, $folder7Path],
 		];
 
@@ -331,6 +349,11 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			$file1Data['etag'], $file1Data['size'], $file1Data['sharedwithuser'], null,
 			$file1Data['permissions']
 		);
+		$file1a = $this->mockJpgFile(
+			$file1Data['nodeid'], 'home::user', $isReadable, $file1Data['path'],
+			$file1Data['etag'], $file1Data['size'], $file1Data['sharedwithuser'], null,
+			$file1Data['permissions']
+		);
 
 		$ownerUid = 909090;
 		$ownerName = 'San Akinamoura';
@@ -400,7 +423,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			'home::user',
 			$topFolder1Data['nodeid'],
 			[
-				$file1,
+				$file1a,
 				$albumIgnored
 			],
 			$isReadable, $mounted, $mount, $query, $queryResult, $topFolder1Data['sharedwithuser'],
@@ -415,7 +438,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 			[$album1, $album1Data['path']],
 		];
 		$map2 = [
-			[$file1, $file1Data['path']],
+			[$file1a, $file1Data['path']],
 			[$topFolder2, $topFolder2Data['path']],
 		];
 
