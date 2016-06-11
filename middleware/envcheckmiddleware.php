@@ -21,6 +21,8 @@ use OCP\IURLGenerator;
 use OCP\ISession;
 use OCP\ILogger;
 use OCP\Share;
+use OCP\Share\IShare;
+use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Security\IHasher;
 
 use OCP\AppFramework\Http;
@@ -71,8 +73,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		Environment $environment,
 		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		ILogger $logger,
-		IManager $shareManager
+		IManager $shareManager,
+		ILogger $logger
 	) {
 		parent::__construct(
 			$appName,
@@ -127,12 +129,12 @@ class EnvCheckMiddleware extends CheckMiddleware {
 				"Can't access a public resource without a token", Http::STATUS_NOT_FOUND
 			);
 		} else {
-			$linkItem = $this->getLinkItem($token);
+			$share = $this->getShare($token);
 			$password = $this->request->getParam('password');
 			// Let's see if the user needs to provide a password
-			$this->checkAuthorisation($linkItem, $password);
+			$this->checkAuthorisation($share, $password);
 
-			$this->environment->setTokenBasedEnv($linkItem);
+			$this->environment->setTokenBasedEnv($share);
 		}
 	}
 
@@ -144,53 +146,37 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * @fixme setIncognitoMode in 8.1 https://github.com/owncloud/core/pull/12912
 	 *
 	 * @param string $token
-	 * @return NotFoundResponse|Share\IShare
+	 *
+	 * @throws CheckException
+	 * @return IShare
 	 */
-	private function getLinkItem($token) {
+	private function getShare($token) {
 		// Allows a logged in user to access public links
 		\OC_User::setIncognitoMode(true);
 
 		try {
-			$linkItem = $this->shareManager->getShareByToken($token);
+			$share = $this->shareManager->getShareByToken($token);
 		} catch (ShareNotFound $e) {
-			return new NotFoundResponse();
+			throw new CheckException($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}
 
-		$this->checkLinkItemExists($linkItem);
-		$this->checkLinkItemIsValid($linkItem, $token);
-		$this->checkItemType($linkItem);
+		$this->checkShareIsValid($share, $token);
+		$this->checkItemType($share);
 
-		return $linkItem;
-	}
-
-	/**
-	 * Makes sure that the token exists
-	 *
-	 * @param \OCP\Share\IShare $linkItem
-	 *
-	 * @throws CheckException
-	 */
-	private function checkLinkItemExists($linkItem) {
-		if ($linkItem === false
-			|| ($linkItem->getNodeType() !== 'file'
-				&& $linkItem->getNodeType() !== 'folder')
-		) {
-			$message = 'Passed token parameter is not valid';
-			throw new CheckException($message, Http::STATUS_BAD_REQUEST);
-		}
+		return $share;
 	}
 
 	/**
 	 * Makes sure that the token contains all the information that we need
 	 *
-	 * @param \OCP\Share\IShare $linkItem
+	 * @param IShare $share
 	 * @param string $token
 	 *
 	 * @throws CheckException
 	 */
-	private function checkLinkItemIsValid($linkItem, $token) {
-		if ($linkItem->getShareOwner() === null
-			|| $linkItem->getTarget() === null
+	private function checkShareIsValid($share, $token) {
+		if ($share->getShareOwner() === null
+			|| $share->getTarget() === null
 		) {
 			$message =
 				'Passed token seems to be valid, but it does not contain all necessary information . ("'
@@ -202,13 +188,13 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	/**
 	 * Makes sure an item type was set for that token
 	 *
-	 * @param \OCP\Share\IShare $linkItem
+	 * @param IShare $share
 	 *
 	 * @throws CheckException
 	 */
-	private function checkItemType($linkItem) {
-		if ($linkItem->getNodeType() === null) {
-			$message = 'No item type set for share id: ' . $linkItem->getId();
+	private function checkItemType($share) {
+		if ($share->getNodeType() === null) {
+			$message = 'No item type set for share id: ' . $share->getId();
 			throw new CheckException($message, Http::STATUS_NOT_FOUND);
 		}
 	}
@@ -217,19 +203,19 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	/**
 	 * Checks if a password is required or if the one supplied is working
 	 *
-	 * @param \OCP\Share\IShare $linkItem
+	 * @param IShare $share
 	 * @param string|null $password optional password
 	 *
 	 * @throws CheckException
 	 */
-	private function checkAuthorisation($linkItem, $password) {
-		$passwordRequired = $linkItem->getSharedWith();
+	private function checkAuthorisation($share, $password) {
+		$passwordRequired = $share->getSharedWith();
 
 		if (isset($passwordRequired)) {
 			if ($password !== null) {
-				$this->authenticate($linkItem, $password);
+				$this->authenticate($share, $password);
 			} else {
-				$this->checkSession($linkItem);
+				$this->checkSession($share);
 			}
 		}
 	}
@@ -237,6 +223,29 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	/**
 	 * Authenticate link item with the given password
 	 * or with the session if no password was given.
+	 *
+	 * @param IShare $share
+	 * @param string $password
+	 *
+	 * @return bool true if authorized, an exception is raised otherwise
+	 *
+	 * @throws CheckException
+	 */
+	private function authenticate($share, $password) {
+		if ((int)$share->getShareType() === Share::SHARE_TYPE_LINK) {
+			$this->checkPassword($share, $password);
+		} else {
+			throw new CheckException(
+				'Unknown share type ' . $share->getShareType() . ' for share id '
+				. $share->getId(), Http::STATUS_NOT_FOUND
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Validates the given password
 	 *
 	 * @fixme @LukasReschke says: Migrate old hashes to new hash format
 	 * Due to the fact that there is no reasonable functionality to update the password
@@ -249,39 +258,16 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @link https://github.com/owncloud/core/issues/10671
 	 *
-	 * @param \OCP\Share\IShare $linkItem
-	 * @param string $password
-	 *
-	 * @return bool true if authorized, an exception is raised otherwise
-	 *
-	 * @throws CheckException
-	 */
-	private function authenticate($linkItem, $password) {
-		if ((int)$linkItem->getShareType() === Share::SHARE_TYPE_LINK) {
-			$this->checkPassword($linkItem, $password);
-		} else {
-			throw new CheckException(
-				'Unknown share type ' . $linkItem->getShareType() . ' for share id '
-				. $linkItem->getId(), Http::STATUS_NOT_FOUND
-			);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Validates the given password
-	 *
-	 * @param \OCP\Share\IShare $linkItem
+	 * @param IShare $share
 	 * @param string $password
 	 *
 	 * @throws CheckException
 	 */
-	private function checkPassword($linkItem, $password) {
+	private function checkPassword($share, $password) {
 		$newHash = '';
-		if ($this->shareManager->checkPassword($linkItem, $password)) {
+		if ($this->shareManager->checkPassword($share, $password)) {
 			// Save item id in session for future requests
-			$this->session->set('public_link_authenticated', $linkItem->getId());
+			$this->session->set('public_link_authenticated', $share->getId());
 			// @codeCoverageIgnoreStart
 			if (!empty($newHash)) {
 				// For future use
@@ -296,14 +282,14 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * Makes sure the user is already properly authenticated when a password is required and none
 	 * was provided
 	 *
-	 * @param \OCP\Share\IShare $linkItem
+	 * @param IShare $share
 	 *
 	 * @throws CheckException
 	 */
-	private function checkSession($linkItem) {
+	private function checkSession($share) {
 		// Not authenticated ?
 		if (!$this->session->exists('public_link_authenticated')
-			|| $this->session->get('public_link_authenticated') !== $linkItem->getId()
+			|| $this->session->get('public_link_authenticated') !== $share->getId()
 		) {
 			throw new CheckException("Missing password", Http::STATUS_UNAUTHORIZED);
 		}

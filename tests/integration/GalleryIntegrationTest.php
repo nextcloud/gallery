@@ -14,6 +14,8 @@ namespace OCA\Gallery\Tests\Integration;
 
 use Helper\CoreTestCase;
 
+use OC\Share20\Manager;
+
 use OCP\Share;
 use OCP\Files\Node;
 use OCP\Files\Folder;
@@ -39,6 +41,8 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 	protected $container;
 	/** @var IServerContainer */
 	protected $server;
+	/** @var Manager */
+	protected $shareManager;
 	/** @var Folder|null */
 	protected $userFolder;
 	/** @var string */
@@ -85,6 +89,7 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 		$app = new Gallery();
 		$this->container = $app->getContainer();
 		$this->server = $this->container->getServer();
+		$this->shareManager = $this->server->getShareManager();
 
 		$setupData = $this->getModule('\Helper\DataSetup');
 		$this->userId = $setupData->userId;
@@ -125,9 +130,9 @@ abstract class GalleryIntegrationTest extends \Codeception\TestCase\Test {
 	 * @return Environment
 	 */
 	protected function setTokenBasedEnv($token) {
-		$linkItem = Share::getShareByToken($token, false);
+		$share = $this->shareManager->getShareByToken($token);
 		$environment = $this->instantiateEnvironment();
-		$environment->setTokenBasedEnv($linkItem);
+		$environment->setTokenBasedEnv($share);
 
 		return $environment;
 	}

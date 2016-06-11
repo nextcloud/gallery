@@ -394,8 +394,8 @@ class Application extends App {
 					$c->query('Environment'),
 					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
 					$c->query('OCP\IURLGenerator'),
-					$c->query('Logger'),
-                    			$c->query('OCP\Share\IManager')
+					$c->query('OCP\Share\IManager'),
+					$c->query('Logger')
 				);
 			}
 		);
