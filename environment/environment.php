@@ -59,6 +59,10 @@ class Environment {
 	 */
 	private $sharedNodeId;
 	/**
+	 * @var File|Folder
+	 */
+	private $sharedNode;
+	/**
 	 * @var IRootFolder
 	 */
 	private $rootFolder;
@@ -125,6 +129,8 @@ class Environment {
 
 		// This is actually the node ID
 		$this->sharedNodeId = $linkItem['file_source'];
+		$this->sharedNode =
+			$this->getResourceFromFolderAndId($this->userFolder, $this->sharedNodeId);
 		$this->fromRootToFolder = $this->buildFromRootToFolder($this->sharedNodeId);
 
 		$this->folderName = $linkItem['file_target'];
@@ -141,6 +147,15 @@ class Environment {
 	 */
 	public function setStandardEnv() {
 		$this->fromRootToFolder = $this->userFolder->getPath() . '/';
+	}
+
+	/**
+	 * Returns true if the environment has been setup using a token
+	 *
+	 * @return bool
+	 */
+	public function isTokenBasedEnv() {
+		return !empty($this->sharedNodeId);
 	}
 
 	/**
@@ -196,12 +211,17 @@ class Environment {
 	 * @throws NotFoundEnvException
 	 */
 	public function getResourceFromId($resourceId) {
-		$resourcesArray = $this->userFolder->getById($resourceId);
-		if ($resourcesArray[0] === null) {
-			throw new NotFoundEnvException('Could not locate file linked to ID: ' . $resourceId);
+		if ($this->isTokenBasedEnv()) {
+			if ($this->sharedNode->getType() === 'dir') {
+				$resource = $this->getResourceFromFolderAndId($this->sharedNode, $resourceId);
+			} else {
+				$resource = $this->sharedNode;
+			}
+		} else {
+			$resource = $this->getResourceFromFolderAndId($this->userFolder, $resourceId);
 		}
 
-		return $resourcesArray[0];
+		return $resource;
 	}
 
 	/**
@@ -221,7 +241,7 @@ class Environment {
 	 */
 	public function getVirtualRootFolder() {
 		$rootFolder = $this->userFolder;
-		if (!empty($this->sharedNodeId)) {
+		if ($this->isTokenBasedEnv()) {
 			$node = $this->getSharedNode();
 			$nodeType = $node->getType();
 			if ($nodeType === 'dir') {
@@ -326,6 +346,25 @@ class Environment {
 		$path = rtrim($path, '/');
 
 		return $path;
+	}
+
+	/**
+	 * Returns the resource found in a specific folder and identified by the given ID
+	 *
+	 * @param Folder $folder
+	 * @param int $resourceId
+	 *
+	 * @return Node
+	 * @throws NotFoundEnvException
+	 */
+	private function getResourceFromFolderAndId($folder, $resourceId) {
+		$resourcesArray = $folder->getById($resourceId);
+
+		if ($resourcesArray[0] === null) {
+			throw new NotFoundEnvException('Could not locate node linked to ID: ' . $resourceId);
+		}
+
+		return $resourcesArray[0];
 	}
 
 	/**
