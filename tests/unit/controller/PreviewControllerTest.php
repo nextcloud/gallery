@@ -118,7 +118,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$thumbnailId = 1234;
 
 		$file = $this->mockJpgFile($thumbnailId);
-		$this->mockGetResourceFromId($this->previewService, $thumbnailId, $file);
+		$this->mockGetFile($this->previewService, $thumbnailId, $file);
 
 		$this->controller->getThumbnails($thumbnailId, $square, $scale);
 	}
@@ -251,7 +251,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$height = 768;
 
 		$exception = new NotFoundServiceException('Not found');
-		$this->mockGetResourceFromIdWithBadFile($this->previewService, $fileId, $exception);
+		$this->mockGetFileWithBadFile($this->previewService, $fileId, $exception);
 
 		$errorResponse = $this->jsonErrorMessage(Http::STATUS_NOT_FOUND);
 
@@ -296,7 +296,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$fileId, $file, $width, $height, $keepAspect = true, $animatedPreview = true,
 		$base64Encode = false, $previewRequired = true
 	) {
-		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
+		$this->mockGetFile($this->previewService, $fileId, $file);
 
 		$this->mockIsPreviewRequired($file, $animatedPreview, $previewRequired);
 		$previewData = $this->mockPreviewData($file, $previewRequired);
@@ -329,7 +329,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$fileId, $file, $width, $height, $keepAspect = true, $animatedPreview = true,
 		$base64Encode = false
 	) {
-		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
+		$this->mockGetFile($this->previewService, $fileId, $file);
 
 		$this->mockIsPreviewRequired($file, $animatedPreview, true);
 
@@ -353,7 +353,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 		$fileId, $file, $width, $height, $keepAspect = true, $animatedPreview = true,
 		$base64Encode = false
 	) {
-		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
+		$this->mockGetFile($this->previewService, $fileId, $file);
 
 		$this->mockIsPreviewRequired($file, $animatedPreview, true);
 
@@ -368,7 +368,7 @@ class PreviewControllerTest extends \Test\GalleryUnitTest {
 	 */
 	private function mockGetDataWithBrokenSetup($fileId, $animatedPreview) {
 		$file = $this->mockJpgFile($fileId);
-		$this->mockGetResourceFromId($this->previewService, $fileId, $file);
+		$this->mockGetFile($this->previewService, $fileId, $file);
 
 		$this->mockIsPreviewRequiredThrowsException($file, $animatedPreview);
 
