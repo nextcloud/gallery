@@ -58,6 +58,8 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	protected $logger;
 	/** @var Controller */
 	private $controller;
+	/** @var \OCP\Share\IManager */
+	private $shareManager;
 	/** @var SharingCheckMiddleware */
 	private $middleware;
 
@@ -95,6 +97,9 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 		$this->controller = $this->getMockBuilder('OCP\AppFramework\Controller')
 								 ->disableOriginalConstructor()
 								 ->getMock();
+		$this->shareManager = $this->getMockBuilder('OCP\Share\IManager')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->middleware = new EnvCheckMiddleware(
 			$this->appName,
@@ -104,7 +109,8 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 			$this->environment,
 			$this->reflector,
 			$this->urlGenerator,
-			$this->logger
+			$this->logger,
+			$this->shareManager
 		);
 
 		/**
@@ -147,8 +153,41 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	 * @PublicPage
 	 *
 	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedExceptionMessage Share is a write-only share
+	 */
+	public function testBeforeControllerWithPublicNotationAndReadOnlyToken() {
+		$share = $this->getMock('\OCP\Share\IShare');
+		$share->expects($this->once())
+			->method('getPermissions')
+			->willReturn(\OCP\Constants::PERMISSION_CREATE);
+		$this->shareManager
+			->expects($this->once())
+			->method('getShareByToken')
+			->willReturn($share);
+
+		$this->reflector->reflect(__CLASS__, __FUNCTION__);
+
+		$token = 'aaaabbbbccccdddd';
+		$this->mockGetTokenParam($token);
+
+		$this->middleware->beforeController(__CLASS__, __FUNCTION__);
+	}
+
+	/**
+	 * @PublicPage
+	 *
+	 * @expectedException \OCA\Gallery\Middleware\CheckException
 	 */
 	public function testBeforeControllerWithPublicNotationAndInvalidToken() {
+		$share = $this->getMock('\OCP\Share\IShare');
+		$share->expects($this->once())
+			->method('getPermissions')
+			->willReturn(\OCP\Constants::PERMISSION_READ);
+		$this->shareManager
+			->expects($this->once())
+			->method('getShareByToken')
+			->willReturn($share);
+
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
 
 		$token = 'aaaabbbbccccdddd';
@@ -163,6 +202,15 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 	 * Because the method tested is static, we need to load our test environment \Helper\DataSetup
 	 */
 	public function testBeforeControllerWithPublicNotationAndToken() {
+		$share = $this->getMock('\OCP\Share\IShare');
+		$share->expects($this->once())
+			->method('getPermissions')
+			->willReturn(\OCP\Constants::PERMISSION_READ);
+		$this->shareManager
+			->expects($this->once())
+			->method('getShareByToken')
+			->willReturn($share);
+
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
 
 		$this->mockGetTokenAndPasswordParams(
