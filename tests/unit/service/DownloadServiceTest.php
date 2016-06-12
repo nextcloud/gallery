@@ -73,7 +73,7 @@ class DownloadServiceTest extends \Test\GalleryUnitTest {
 	 * @expectedException \OCA\GalleryPlus\Service\NotFoundServiceException
 	 */
 	public function testDownloadNonExistentFile() {
-		$file = $this->mockBadFile(12345);
+		$file = $this->mockBadFile();
 
 		$this->service->downloadFile($file);
 	}

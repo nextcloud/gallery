@@ -143,7 +143,7 @@ trait Preview {
 		$status = Http::STATUS_OK;
 		try {
 			/** @type File $file */
-			$file = $this->previewService->getResourceFromId($fileId);
+			$file = $this->previewService->getFile($fileId);
 			$this->configService->validateMimeType($file->getMimeType());
 		} catch (ServiceException $exception) {
 			$file = null;

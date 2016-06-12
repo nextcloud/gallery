@@ -55,6 +55,26 @@ abstract class Service {
 	}
 
 	/**
+	 * Returns the file matching the given ID
+	 *
+	 * @param int $nodeId ID of the resource to locate
+	 *
+	 * @return Node
+	 * @throws NotFoundServiceException
+	 */
+	public function getFile($nodeId) {
+		$node = $this->getNode($nodeId);
+
+		if ($node->getType() === 'file') {
+			$this->validateNode($node);
+
+			return $node;
+		} else {
+			throw new NotFoundServiceException("Cannot find a file with this ID");
+		}
+	}
+
+	/**
 	 * Returns the node matching the given ID
 	 *
 	 * @param int $nodeId ID of the resource to locate
@@ -62,18 +82,26 @@ abstract class Service {
 	 * @return Node
 	 * @throws NotFoundServiceException
 	 */
-	public function getResourceFromId($nodeId) {
+	private function getNode($nodeId) {
 		try {
 			$node = $this->environment->getResourceFromId($nodeId);
-
-			// Making extra sure that we can actually do something with the file
-			if (!$node->getMimetype() || !$node->isReadable()) {
-				throw new NotFoundServiceException("Can't access the file");
-			}
 
 			return $node;
 		} catch (\Exception $exception) {
 			throw new NotFoundServiceException($exception->getMessage());
+		}
+	}
+
+	/**
+	 * Makes extra sure that we can actually do something with the file
+	 *
+	 * @param Node $node
+	 *
+	 * @throws NotFoundServiceException
+	 */
+	private function validateNode($node) {
+		if (!$node->getMimetype() || !$node->isReadable()) {
+			throw new NotFoundServiceException("Can't access the file");
 		}
 	}
 

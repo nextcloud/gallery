@@ -487,17 +487,43 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 		$this->assertSame($result, $response);
 	}
 
+	public function testGetFile() {
+		$fileId = 99999;
+		$storageId = 'home::user';
+		$file = $this->mockJpgFile($fileId, $storageId);
+
+		$this->mockGetResourceFromId($fileId, $file);
+
+		$response = $this->service->getFile($fileId);
+
+		$this->assertSame($file, $response);
+	}
+
+	/**
+	 * @expectedException \OCA\Gallery\Service\NotFoundServiceException
+	 */
+	public function testGetFileWithBadMediaType() {
+		$fileId = 99999;
+		$storageId = 'home::user';
+		$file = $this->mockFile($fileId, $storageId);
+
+		$this->mockGetResourceFromId($fileId, $file);
+
+		$this->service->getFile($fileId);
+	}
+
 	/**
 	 * @expectedException \OCA\GalleryPlus\Service\NotFoundServiceException
 	 */
-	public function testGetResourceFromIdWithUnreadableFile() {
+	public function testGetFileWithFolderId() {
 		$fileId = 99999;
 		$storageId = 'home::user';
-		$isReadable = false;
-		$file = $this->mockFile($fileId, $storageId, $isReadable);
-		$this->mockGetResourceFromId($this->environment, $fileId, $file);
+		$file = $this->mockJpgFile($fileId, $storageId);
+		$folder = $this->mockFolder($storageId, $fileId, [$file]);
+		
+		$this->mockGetResourceFromId($fileId, $folder);
 
-		$this->service->getResourceFromId($fileId);
+		$this->service->getFile($fileId);
 	}
 
 	/**
