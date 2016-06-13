@@ -209,7 +209,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * @throws CheckException
 	 */
 	private function checkAuthorisation($share, $password) {
-		$passwordRequired = $share->getSharedWith();
+		$passwordRequired = $share->getPassword();
 
 		if (isset($passwordRequired)) {
 			if ($password !== null) {
