@@ -48,7 +48,7 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	}
 
 	/**
-	 * Mocks Object->getResourceFromId
+	 * Mocks Object->getFile
 	 *
 	 * Needs to pass a mock of a File or Folder
 	 *
@@ -56,15 +56,15 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 * @param int $fileId
 	 * @param File|Folder $answer
 	 */
-	protected function mockGetResourceFromId($mockedObject, $fileId, $answer) {
+	protected function mockGetFile($mockedObject, $fileId, $answer) {
 		$mockedObject->expects($this->once())
-					 ->method('getResourceFromId')
+					 ->method('getFile')
 					 ->with($this->equalTo($fileId))
 					 ->willReturn($answer);
 	}
 
 	/**
-	 * Mocks Object->getResourceFromId with a bad Id
+	 * Mocks Object->getFile with a bad Id
 	 *
 	 * Needs to pass a mock of a File or Folder
 	 *
@@ -72,9 +72,9 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	 * @param int $fileId
 	 * @param \Exception $exception
 	 */
-	protected function mockGetResourceFromIdWithBadFile($mockedObject, $fileId, $exception) {
+	protected function mockGetFileWithBadFile($mockedObject, $fileId, $exception) {
 		$mockedObject->expects($this->once())
-					 ->method('getResourceFromId')
+					 ->method('getFile')
 					 ->with($this->equalTo($fileId))
 					 ->willThrowException($exception);
 	}
@@ -284,7 +284,7 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 		$folder->method('getEtag')
 			   ->willReturn($etag);
 		$folder->method('getSize')
-			 ->willReturn($size);
+			   ->willReturn($size);
 		$folder->method('getPath')
 			   ->willReturn($path);
 		$folder->method('getFreeSpace')
@@ -325,19 +325,22 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	protected function mockGetFileNodeFromVirtualRoot($location, $file) {
 		$this->environment->expects($this->any())
 						  ->method('getNodeFromVirtualRoot')
-						  ->with(
-							  $location
-						  )
+						  ->with($location)
 						  ->willReturn($file);
 	}
 
 	protected function mockGetPathFromVirtualRoot($node, $path) {
 		$this->environment->expects($this->any())
 						  ->method('getPathFromVirtualRoot')
-						  ->with(
-							  $node
-						  )
+						  ->with($node)
 						  ->willReturn($path);
+	}
+
+	protected function mockGetResourceFromId($nodeId, $node) {
+		$this->environment->expects($this->any())
+						  ->method('getResourceFromId')
+						  ->with($nodeId)
+						  ->willReturn($node);
 	}
 
 }

@@ -140,7 +140,7 @@ trait Files {
 	 */
 	private function getDownload($fileId, $filename) {
 		/** @type File $file */
-		$file = $this->downloadService->getResourceFromId($fileId);
+		$file = $this->downloadService->getFile($fileId);
 		$this->configService->validateMimeType($file->getMimeType());
 		$download = $this->downloadService->downloadFile($file);
 		if (is_null($filename)) {
