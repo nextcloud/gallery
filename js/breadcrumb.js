@@ -263,7 +263,9 @@
 				if (self.breadcrumbsElement.width() > availableWidth) {
 					shorten = true;
 					$(this).hide();
-					ellipsisPath = $(this).data('dir');
+					if (!ellipsisPath) {
+						ellipsisPath = $(this).data('dir');
+					}
 				}
 			});
 
