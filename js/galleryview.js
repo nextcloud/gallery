@@ -83,7 +83,9 @@
 
 			this.clear();
 
-			if (Gallery.albumMap[albumPath].etag !== Gallery.currentEtag) {
+			if (albumPath !== Gallery.currentAlbum
+				|| (albumPath === Gallery.currentAlbum &&
+				Gallery.albumMap[albumPath].etag !== Gallery.currentEtag)) {
 				Gallery.currentAlbum = albumPath;
 				Gallery.currentEtag = Gallery.albumMap[albumPath].etag;
 				this._setupButtons(albumPath);
