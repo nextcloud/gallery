@@ -112,7 +112,7 @@
 		 * Shows the dark spinner on the crumb
 		 */
 		showLoader: function () {
-			$(this).children('a').addClass("icon-loading-dark small");
+			$(this).addClass("icon-loading-small-dark");
 		},
 
 		/**
