@@ -243,10 +243,13 @@
 			// We go through the array in reverse order
 			var crumbsElement = crumbs.get().reverse();
 			$(crumbsElement).each(function () {
-				$(this).click(self.showLoader);
 				if ($(this).hasClass('home')) {
 					$(this).show();
 					return;
+				}
+				// 1st sub-album has no-parent and the breadcrumbs contain home, ellipsis and last
+				if (self.breadcrumbs.length > 3) {
+					$(this).click(self.showLoader);
 				}
 				if ($(this).hasClass('ellipsis')) {
 					self.ellipsis = $(this);
