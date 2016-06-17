@@ -48,7 +48,7 @@
 				console.warn('Missing upload element "file_upload_start"');
 			}
 			this._menuItems = [];
-			OC.Plugins.attach('Gallery.NewFileMenu', this); 
+			OC.Plugins.attach('Gallery.NewFileMenu', this);
 		},
 
 		template: function (data) {
@@ -72,21 +72,22 @@
 			// which itself triggers the upload dialog.
 			// Currently the upload logic is still in file-upload.js and filelist.js
 			if (action === 'upload') {
-				OC.hideMenus();
+				OC.hideMenus(null);
 			} else {
 				event.preventDefault();
 				this.$el.find('.menuitem.active').removeClass('active');
 				$target.addClass('active');
 				var actionItem;
 				for (var i = 0, len = this._menuItems.length; i < len; i++) {
-					if (this._menuItems[i].id === action)
+					if (this._menuItems[i].id === action) {
 						actionItem = this._menuItems[i];
 						break; // Return as soon as the object is found
+					}
 				}
-				if(actionItem != null) {
+				if (actionItem !== null) {
 					actionItem.actionHandler();
 				}
-				OC.hideMenus();
+				OC.hideMenus(null);
 			}
 		},
 
@@ -98,7 +99,7 @@
 		 *
 		 * @param {Object} actionSpec item’s properties
 		 */
-		addMenuEntry: function(actionSpec) {
+		addMenuEntry: function (actionSpec) {
 			this._menuItems.push({
 				'id': actionSpec.id,
 				'displayName': actionSpec.displayName,
