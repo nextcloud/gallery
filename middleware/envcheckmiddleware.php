@@ -9,9 +9,9 @@
  * @author Bernhard Posselt <dev@bernhard-posselt.com>
  * @author Authors of \OCA\Files_Sharing\Helper
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  * @copyright Bernhard Posselt 2012-2015
- * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2015
+ * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2016
  */
 
 namespace OCA\GalleryPlus\Middleware;
