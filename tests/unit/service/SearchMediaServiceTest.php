@@ -500,7 +500,7 @@ class SearchMediaServiceTest extends \Test\GalleryUnitTest {
 	}
 
 	/**
-	 * @expectedException \OCA\Gallery\Service\NotFoundServiceException
+	 * @expectedException \OCA\GalleryPlus\Service\NotFoundServiceException
 	 */
 	public function testGetFileWithBadMediaType() {
 		$fileId = 99999;

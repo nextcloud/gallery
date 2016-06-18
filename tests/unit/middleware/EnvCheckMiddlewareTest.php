@@ -30,7 +30,7 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 
-use OCA\GalleryPlus\Environment\Environment;
+use OCA\GalleryPlus\Environment\EnvironmentException;
 
 /**
  * @package OCA\GalleryPlus\Middleware\EnvCheckMiddlewareTest
@@ -113,7 +113,7 @@ class EnvCheckMiddlewareTest extends \Test\GalleryUnitTest {
 	/**
 	 * @PublicPage
 	 *
-	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedException \OCA\GalleryPlus\Middleware\CheckException
 	 */
 	public function testBeforeControllerWithPublicNotationAndInvalidToken() {
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
@@ -169,7 +169,7 @@ class EnvCheckMiddlewareTest extends \Test\GalleryUnitTest {
 	/**
 	 * @PublicPage
 	 *
-	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedException \OCA\GalleryPlus\Middleware\CheckException
 	 */
 	public function testBeforeControllerWithPublicNotationAndTokenAndInvalidPassword() {
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
@@ -192,7 +192,7 @@ class EnvCheckMiddlewareTest extends \Test\GalleryUnitTest {
 	/**
 	 * @PublicPage
 	 *
-	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedException \OCA\GalleryPlus\Middleware\CheckException
 	 */
 	public function testBeforeControllerWithPublicNotationAndNoToken() {
 		$this->reflector->reflect(__CLASS__, __FUNCTION__);
@@ -377,7 +377,7 @@ class EnvCheckMiddlewareTest extends \Test\GalleryUnitTest {
 	}
 
 	/**
-	 * @expectedException \OCA\Gallery\Middleware\CheckException
+	 * @expectedException \OCA\GalleryPlus\Middleware\CheckException
 	 */
 	public function testCheckItemTypeWithItemTypeNotSet() {
 		$share = $this->mockShare(null, 'tester', 'folder1');
