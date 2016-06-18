@@ -9,7 +9,7 @@
  * @author Lukas Reschke
  * @author Bernhard Posselt
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  * @copyright ownCloud Inc. 2015
  */
 

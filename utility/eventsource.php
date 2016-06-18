@@ -14,7 +14,7 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
  * @copyright Copyright (c) 2015, ownCloud, Inc.
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace OCA\Gallery\Utility;
