@@ -4,38 +4,42 @@
 	<name>Gallery+</name>
 	<description>Fork of the official Gallery app for ownCloud with the following features:
 
-		- Support for large selection of media types (depending on ownCloud setup)
+		- Support for large selection of visual media types (depending on ownCloud setup)
 
-		- Large, zoomable previews
+		- Upload and organise images and albums straight from the app
+
+		- Large, zoomable previews which can be shown in fullscreen mode
 
 		- Sort images by name or date
 
-		- Per album description and copyright statement
+		- Per album design, description and copyright statement
 
-		- A la carte features
+		- A la carte features (external shares, browser svg rendering, etc.)
 
 		- Image download straight from the slideshow or the gallery
 
-		- Seamlessly jump between the gallery and the files view
+		- Switch to Gallery+ from any folder in files and vice-versa
 
 		- Ignore folders containing a ".nomedia" file
 
-		- Native SVG support
+		- Browser rendering of SVG images (disabled by default)
 
 		- Mobile support
 
+		- Direct Gallery+ and download links from the share dialogue using the ShareLinks app https://apps.owncloud.com/content/show.php/ShareLinks?content=170527
+
 		Provides a dedicated view of all images in a grid, adds image viewing capabilities to the
 		files app and adds a gallery view to public links.
-		Compatible with Firefox, Chrome and Internet Explorer 9+
+		Compatible with Firefox, Chrome and Internet Explorer 10+
 	</description>
 	<licence>AGPL</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
-	<version>15.0.0</version>
+	<version>15.1.0</version>
 	<namespace>GalleryPlus</namespace>
 	<category>Multimedia</category>
 	<ocsid>169116</ocsid>
 	<dependencies>
 		<php min-version="5.5" max-version="7"/>
-		<owncloud min-version="9.0" max-version="9.1.99"/>
+		<owncloud min-version="9.0" max-version="9.0.99"/>
 	</dependencies>
 </info>
