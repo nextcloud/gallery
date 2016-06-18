@@ -8,8 +8,8 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  * @author Authors of \OCA\Files_Sharing\Helper
  *
- * @copyright Olivier Paroz 2015
- * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2015
+ * @copyright Olivier Paroz 2016
+ * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2016
  */
 
 namespace OCA\GalleryPlus\Environment;
