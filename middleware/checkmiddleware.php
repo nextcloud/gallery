@@ -8,7 +8,7 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  * @author Bernhard Posselt <dev@bernhard-posselt.com>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  * @copyright Bernhard Posselt 2012-2015
  */
 

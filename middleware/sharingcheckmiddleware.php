@@ -9,7 +9,7 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
  * @copyright Lukas Reschke 2014-2015
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  */
 
 namespace OCA\Gallery\Middleware;
