@@ -421,33 +421,28 @@
 			var nameElement = this.container.find('.title');
 			nameElement.text(imageName);
 		},
+
 		/**
 		 * Delete the image from the slideshow
 		 * @private
 		 */
 		_deleteImage: function () {
-			var imageName = this.images[this.current].name;
 			var imagePath = this.images[this.current].path;
 			var fileId = Gallery.imageMap[imagePath].fileId;
-			var self=this;
+			var self = this;
 			$.ajax({
-				type:'DELETE',
-				url:OC.getRootPath()+'/remote.php/webdav/'+imagePath,
-				success: function (){
+				type: 'DELETE',
+				url: OC.getRootPath() + '/remote.php/webdav/' + imagePath,
+				success: function () {
 					self.images.splice(self.current, 1);
-					delete self.images[self.current];
 					delete Gallery.imageMap[imagePath];
-					fileId = fileId.substring(1, fileId.length-1);
 					delete Thumbnails.map[fileId];
 					Gallery.albumMap[Gallery.currentAlbum].images.splice(self.current, 1);
-					if(self.images.length == 0)
-					{
+					if (self.images.length == 0) {
 						self._exit();
 					}
 					else {
-						self.current = (self.current + 1) % self.images.length;
-						var next = (self.current + 1) % self.images.length;
-						self._updateSlideshow(next);
+						self._updateSlideshow(self.current);
 					}
 					Gallery.view.init(Gallery.currentAlbum);
 				}
