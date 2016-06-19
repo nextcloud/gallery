@@ -116,13 +116,18 @@
 
 		/**
 		 * Shows the action buttons
+		 *
+		 * @param {boolean} transparent
+		 * @param {boolean} isPublic
 		 */
-		showActionButtons: function (transparent) {
+		showActionButtons: function (transparent, isPublic) {
 			if (transparent) {
 				this._showBackgroundToggle();
 			}
 			this.showButton('.downloadImage');
-			this.showButton('.deleteImage');
+			if (!isPublic) {
+				this.showButton('.deleteImage');
+			}
 		},
 
 		/**
