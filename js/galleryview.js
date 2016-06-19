@@ -550,6 +550,9 @@
 			}
 			this._newFileMenu.showAt($target);
 
+			if (Gallery.currentAlbum === '') {
+				$('.menuitem[data-action="hideAlbum"]').parent().hide();
+			}
 			return false;
 		}
 	};

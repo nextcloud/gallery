@@ -70,6 +70,71 @@ var FileList = {
 	},
 
 	/**
+	 * Create an empty file inside the current album.
+	 *
+	 * @param {string} name name of the file
+	 *
+	 * @return {Promise} promise that will be resolved after the
+	 * file was created
+	 *
+	 */
+	createFile: function(name) {
+		var self = this;
+		var deferred = $.Deferred();
+		var promise = deferred.promise();
+
+		OCA.Files.isFileNameValid(name);
+
+		var targetPath = this.getCurrentDirectory() + '/' + name;
+
+		//Check if file already exists
+		if(Gallery.imageMap[targetPath]) {
+			OC.Notification.showTemporary(
+				t('files', 'Could not create file "{file}" because it already exists', {file: name})
+			);
+			deferred.reject();
+			return promise;
+		}
+
+		Gallery.filesClient.putFileContents(
+			targetPath,
+			'',
+			{
+				contentType: 'text/plain',
+				overwrite: true
+			}
+			)
+			.done(function() {
+				// TODO: error handling / conflicts
+				Gallery.filesClient.getFileInfo(
+					targetPath, {
+						properties: self.findFile(targetPath)
+					}
+					)
+					.then(function(status, data) {
+						deferred.resolve(status, data);
+					})
+					.fail(function(status) {
+						OC.Notification.showTemporary(t('files', 'Could not create file "{file}"', {file: name}));
+						deferred.reject(status);
+					});
+			})
+			.fail(function(status) {
+				if (status === 412) {
+					OC.Notification.showTemporary(
+						t('files', 'Could not create file "{file}" because it already exists', {file: name})
+					);
+				} else {
+					OC.Notification.showTemporary(t('files', 'Could not create file "{file}"', {file: name}));
+				}
+				deferred.reject(status);
+			});
+
+		return promise;
+	},
+
+
+	/**
 	 * Retrieves the current album
 	 *
 	 * @returns {string}

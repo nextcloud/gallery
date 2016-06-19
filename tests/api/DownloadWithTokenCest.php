@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 use Page\Gallery as GalleryApp;
@@ -77,9 +77,9 @@ class DownloadWithTokenCest {
 	 *
 	 * @param \Step\Api\TokenUser $I
 	 */
-	public function TryTodownloadFileWithoutAToken(\Step\Api\TokenUser $I) {
+	public function TryToDownloadFileWithoutAToken(\Step\Api\TokenUser $I) {
 		$I->am('a thief');
-		$I->wantTo('steal all the files I can get my hands on');
+		$I->wantTo('steal all the files I can get my hands on without a token');
 
 		$fileMetaData = $I->getSharedFileInformation();
 		$params = [
@@ -89,5 +89,26 @@ class DownloadWithTokenCest {
 		$I->sendGET(GalleryApp::$URL . '/files.public/download/{fileId}', $params);
 		$I->seeResponseCodeIs(404);
 		$I->seeHttpHeader('Content-type', 'text/html; charset=UTF-8');
+	}
+
+	/**
+	 * This is to make sure we get the file we're supposed to even in case the wrong fileId is used
+	 * with a token
+	 *
+	 * @param \Step\Api\TokenUser $I
+	 */
+	public function TryToDownloadWrongFileUsingToken(\Step\Api\TokenUser $I) {
+		$I->am('a thief');
+		$I->wantTo('steal files I\'m not allowed to access using this token');
+
+		$fileMetaData = $I->getSharedFileInformation();
+		$privateFileMetaData = $I->getSharedFileInformation();
+		$params = [
+			'fileId' => $privateFileMetaData['fileId'],
+			'token'  => $fileMetaData['token']
+		];
+		$I->haveHttpHeader('Accept', $this->browserHeader);
+		$I->sendGET(GalleryApp::$URL . '/files.public/download/{fileId}', $params);
+		$I->downloadAFile($fileMetaData);
 	}
 }

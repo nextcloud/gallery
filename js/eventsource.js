@@ -8,7 +8,7 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
  * @copyright Robin Appelman 2012-2015
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  */
 
 /**

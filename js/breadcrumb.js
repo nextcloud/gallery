@@ -112,7 +112,7 @@
 		 * Shows the dark spinner on the crumb
 		 */
 		showLoader: function () {
-			$(this).children('a').addClass("icon-loading-dark small");
+			$(this).addClass("icon-loading-small-dark");
 		},
 
 		/**
@@ -243,10 +243,16 @@
 			// We go through the array in reverse order
 			var crumbsElement = crumbs.get().reverse();
 			$(crumbsElement).each(function () {
-				$(this).click(self.showLoader);
 				if ($(this).hasClass('home')) {
 					$(this).show();
+					if (self.breadcrumbs.length > 2) {
+						$(this).click(self.showLoader);
+					}
 					return;
+				}
+				// 1st sub-album has no-parent and the breadcrumbs contain home, ellipsis and last
+				if (self.breadcrumbs.length > 3) {
+					$(this).click(self.showLoader);
 				}
 				if ($(this).hasClass('ellipsis')) {
 					self.ellipsis = $(this);
@@ -260,7 +266,9 @@
 				if (self.breadcrumbsElement.width() > availableWidth) {
 					shorten = true;
 					$(this).hide();
-					ellipsisPath = $(this).data('dir');
+					if (!ellipsisPath) {
+						ellipsisPath = $(this).data('dir');
+					}
 				}
 			});
 

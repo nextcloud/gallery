@@ -31,7 +31,8 @@ script(
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
 		'upload-helper',
-		'vendor/owncloud/newfilemenu'
+		'vendor/owncloud/newfilemenu',
+		'newfilemenuplugins'
 	]
 );
 script(

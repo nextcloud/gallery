@@ -122,6 +122,7 @@
 				this._showBackgroundToggle();
 			}
 			this.showButton('.downloadImage');
+			this.showButton('.deleteImage');
 		},
 
 		/**
@@ -130,6 +131,7 @@
 		hideActionButtons: function () {
 			this.hideButton('.changeBackground');
 			this.hideButton('.downloadImage');
+			this.hideButton('.deleteImage');
 		},
 
 		/**
@@ -184,6 +186,7 @@
 		 */
 		_specialButtonSetup: function (makeCallBack) {
 			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
+			this.container.find('.deleteImage').click(makeCallBack(this._deleteImage));
 			this.container.find('.menu').width = 52;
 			if (this.backgroundToggle) {
 				this.container.find('.changeBackground').click(
@@ -417,6 +420,34 @@
 		_setName: function (imageName) {
 			var nameElement = this.container.find('.title');
 			nameElement.text(imageName);
+		},
+
+		/**
+		 * Delete the image from the slideshow
+		 * @private
+		 */
+		_deleteImage: function () {
+			var imagePath = this.images[this.current].path;
+			var fileId = Gallery.imageMap[imagePath].fileId;
+			var self = this;
+			$.ajax({
+				type: 'DELETE',
+				url: OC.getRootPath() + '/remote.php/webdav/' + imagePath,
+				success: function () {
+					self.images.splice(self.current, 1);
+					delete Gallery.imageMap[imagePath];
+					delete Thumbnails.map[fileId];
+					Gallery.albumMap[Gallery.currentAlbum].images.splice(self.current, 1);
+					if (self.images.length == 0) {
+						self._exit();
+					}
+					else {
+						self.current = self.current % self.images.length;
+						self._updateSlideshow(self.current);
+					}
+					Gallery.view.init(Gallery.currentAlbum);
+				}
+			});
 		}
 	};
 

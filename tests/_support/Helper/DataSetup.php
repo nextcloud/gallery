@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace Helper;
@@ -101,6 +101,10 @@ class DataSetup extends \Codeception\Module {
 	public $sharedFileName = 'testimage-wide.png';
 	/** @var string */
 	public $sharedFileToken;
+	/** @var File */
+	public $privateFile;
+	/** @var string */
+	public $privateFileName = 'font.ttf';
 
 	/** @var IAppContainer */
 	private $container;
@@ -345,6 +349,9 @@ class DataSetup extends \Codeception\Module {
 
 				if ($value === $this->sharedFileName) {
 					$this->sharedFile = $file;
+				}
+				if ($value === $this->privateFileName) {
+					$this->privateFile = $file;
 				}
 			}
 		}
