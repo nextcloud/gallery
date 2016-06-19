@@ -245,6 +245,9 @@
 			$(crumbsElement).each(function () {
 				if ($(this).hasClass('home')) {
 					$(this).show();
+					if (self.breadcrumbs.length > 2) {
+						$(this).click(self.showLoader);
+					}
 					return;
 				}
 				// 1st sub-album has no-parent and the breadcrumbs contain home, ellipsis and last
