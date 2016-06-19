@@ -24,7 +24,7 @@
     "Configuration error" : "Asetusvirhe",
     "New" : "Uusi",
     "Error loading slideshow template" : "Virhe ladatessa diaesityksen mallipohjaa",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Virhe!</strong> Esikatselua tälle tiedostolle ei voitu toteuttaa.<br>",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Virhe!</strong> Tästä tiedostosta ei voitu luoda esikatselukuvaa.<br>Siirry seuraavaan diaan, tämä kuva poistetaan diaesityksestä",
     "Next" : "Seuraava",
     "Play" : "Toista",
     "Pause" : "Keskeytä",

@@ -1,5 +1,6 @@
 { "translations": {
     "Gallery" : "Album",
+    "There was a problem reading files from this album" : "Er was een probleem met het laden van bestanden van dit album",
     "Aborting preview. Could not find the file" : "Voorvertoning afgebroken. Kon het bestand niet vinden",
     "Could not move \"{file}\", target exists" : "Kon \"{file}\" niet verplaatsen, doel bestaat al",
     "Could not move \"{file}\"" : "Kon \"{file}\" niet verplaatsen",
@@ -23,7 +24,7 @@
     "Configuration error" : "Configuratiefout",
     "New" : "Nieuw",
     "Error loading slideshow template" : "Fout bij laden diashow sjabloon",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fout!</strong> Kon geen voorvertoning van dit bestand maken.<br>",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fout!</strong> Kon geen voorbeeld van die bestand genereren.<br>Ga naar de volgende dia, terwijl we deze afbeelding uit de diashow verwijderen",
     "Next" : "Volgende",
     "Play" : "Afspelen",
     "Pause" : "Pauze",

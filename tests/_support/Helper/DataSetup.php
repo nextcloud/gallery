@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace Helper;
@@ -101,6 +101,10 @@ class DataSetup extends \Codeception\Module {
 	public $sharedFileName = 'testimage-wide.png';
 	/** @var string */
 	public $sharedFileToken;
+	/** @var File */
+	public $privateFile;
+	/** @var string */
+	public $privateFileName = 'font.ttf';
 
 	/** @var IAppContainer */
 	private $container;
@@ -108,6 +112,8 @@ class DataSetup extends \Codeception\Module {
 	private $server;
 	/** @var IUserManager */
 	private $userManager;
+	/** @var Share\IManager */
+	private $shareManager;
 	/** @var IRootFolder */
 	private $rootFolder;
 	/** @var array */
@@ -128,6 +134,7 @@ class DataSetup extends \Codeception\Module {
 		$this->server = $this->container->getServer();
 		$this->rootFolder = $this->server->getRootFolder();
 		$this->userManager = $this->server->getUserManager();
+		$this->shareManager = $this->server->getShareManager();
 
 		/**
 		 * Logging hooks are missing at the moment, so we need to disable encryption
@@ -346,6 +353,9 @@ class DataSetup extends \Codeception\Module {
 				if ($value === $this->sharedFileName) {
 					$this->sharedFile = $file;
 				}
+				if ($value === $this->privateFileName) {
+					$this->privateFile = $file;
+				}
 			}
 		}
 	}
@@ -395,6 +405,7 @@ class DataSetup extends \Codeception\Module {
 	 * @return bool|string
 	 */
 	protected function createShare($nodeType, $shareWith = null) {
+		$share = $this->shareManager->newShare();
 		/**
 		 * Pick the file or the folder
 		 */
@@ -403,12 +414,16 @@ class DataSetup extends \Codeception\Module {
 		} else {
 			$sharedNode = $this->sharedFolder;
 		}
-		$fileInfo = $sharedNode->getFileInfo();
+
+		$share->setNode($sharedNode)
+			  ->setPermissions(\OCP\Constants::PERMISSION_READ)
+			  ->setSharedBy($this->sharerUserId);
 
 		/**
 		 * Decide which type of share it is
 		 */
 		$shareType = \OCP\Share::SHARE_TYPE_USER;
+
 		if ($shareWith === null) {
 			// We need to make sure sharing via link is enabled
 			$this->server->getConfig()
@@ -416,19 +431,19 @@ class DataSetup extends \Codeception\Module {
 
 			// Only password protect the folders
 			if ($nodeType === 'folder') {
-				$shareWith = $this->passwordForFolderShare;
+				$share->setPassword($this->passwordForFolderShare);
 			}
 			$shareType = \OCP\Share::SHARE_TYPE_LINK;
+		} else {
+			$share->setSharedWith($shareWith);
 		}
 
-		/**
-		 * Share and generate the token if it's a public share
-		 */
+		$share->setShareType($shareType);
 
-		return Share::shareItem(
-			$nodeType, $fileInfo['fileid'], $shareType, $shareWith,
-			\OCP\Constants::PERMISSION_ALL
-		);
+		$this->shareManager->createShare($share);
+
+		return $share->getToken();
+
 	}
 
 }

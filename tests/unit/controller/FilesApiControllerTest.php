@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace OCA\GalleryPlus\Controller;
@@ -46,7 +46,7 @@ class FilesApiControllerTest extends FilesControllerTest {
 		$status = Http::STATUS_NOT_FOUND;
 
 		$exception = new NotFoundServiceException('Not found');
-		$this->mockGetResourceFromIdWithBadFile($this->downloadService, $fileId, $exception);
+		$this->mockGetFileWithBadFile($this->downloadService, $fileId, $exception);
 
 		$redirectUrl = '/index.php/app/error';
 		$this->mockUrlToErrorPage($status, $redirectUrl);

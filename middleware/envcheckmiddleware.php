@@ -9,9 +9,9 @@
  * @author Bernhard Posselt <dev@bernhard-posselt.com>
  * @author Authors of \OCA\Files_Sharing\Helper
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  * @copyright Bernhard Posselt 2012-2015
- * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2015
+ * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2016
  */
 
 namespace OCA\GalleryPlus\Middleware;
@@ -21,12 +21,15 @@ use OCP\IURLGenerator;
 use OCP\ISession;
 use OCP\ILogger;
 use OCP\Share;
+use OCP\Share\IShare;
+use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Security\IHasher;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\IControllerMethodReflector;
 
 use OCA\GalleryPlus\Environment\Environment;
+use OCP\Share\IManager;
 
 /**
  * Checks that we have a valid token linked to a valid resource and that the
@@ -46,6 +49,8 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	private $environment;
 	/** @var IControllerMethodReflector */
 	protected $reflector;
+	/** @var IManager */
+	protected $shareManager;
 
 	/***
 	 * Constructor
@@ -58,6 +63,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
+	 * @param IManager $shareManager
 	 */
 	public function __construct(
 		$appName,
@@ -67,6 +73,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		Environment $environment,
 		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
+		IManager $shareManager,
 		ILogger $logger
 	) {
 		parent::__construct(
@@ -80,6 +87,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		$this->session = $session;
 		$this->environment = $environment;
 		$this->reflector = $reflector;
+		$this->shareManager = $shareManager;
 	}
 
 	/**
@@ -121,70 +129,54 @@ class EnvCheckMiddleware extends CheckMiddleware {
 				"Can't access a public resource without a token", Http::STATUS_NOT_FOUND
 			);
 		} else {
-			$linkItem = $this->getLinkItem($token);
+			$share = $this->getShare($token);
 			$password = $this->request->getParam('password');
 			// Let's see if the user needs to provide a password
-			$this->checkAuthorisation($linkItem, $password);
+			$this->checkAuthorisation($share, $password);
 
-			$this->environment->setTokenBasedEnv($linkItem);
+			$this->environment->setTokenBasedEnv($share);
 		}
 	}
 
 	/**
 	 * Validates a token to make sure its linked to a valid resource
 	 *
-	 * Logic mostly duplicated from @see \OCA\Files_Sharing\Helper
+	 * Uses Share 2.0
 	 *
 	 * @fixme setIncognitoMode in 8.1 https://github.com/owncloud/core/pull/12912
 	 *
 	 * @param string $token
 	 *
-	 * @return array
-	 *
 	 * @throws CheckException
+	 * @return IShare
 	 */
-	private function getLinkItem($token) {
+	private function getShare($token) {
 		// Allows a logged in user to access public links
 		\OC_User::setIncognitoMode(true);
 
-		$linkItem = Share::getShareByToken($token, false);
-
-		$this->checkLinkItemExists($linkItem);
-		$this->checkLinkItemIsValid($linkItem, $token);
-		$this->checkItemType($linkItem);
-
-		// Checks passed, let's store the linkItem
-		return $linkItem;
-	}
-
-	/**
-	 * Makes sure that the token exists
-	 *
-	 * @param array|bool $linkItem
-	 *
-	 * @throws CheckException
-	 */
-	private function checkLinkItemExists($linkItem) {
-		if ($linkItem === false
-			|| ($linkItem['item_type'] !== 'file'
-				&& $linkItem['item_type'] !== 'folder')
-		) {
-			$message = 'Passed token parameter is not valid';
-			throw new CheckException($message, Http::STATUS_BAD_REQUEST);
+		try {
+			$share = $this->shareManager->getShareByToken($token);
+		} catch (ShareNotFound $e) {
+			throw new CheckException($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}
+
+		$this->checkShareIsValid($share, $token);
+		$this->checkItemType($share);
+
+		return $share;
 	}
 
 	/**
 	 * Makes sure that the token contains all the information that we need
 	 *
-	 * @param array|bool $linkItem
+	 * @param IShare $share
 	 * @param string $token
 	 *
 	 * @throws CheckException
 	 */
-	private function checkLinkItemIsValid($linkItem, $token) {
-		if (!isset($linkItem['uid_owner'])
-			|| !isset($linkItem['file_source'])
+	private function checkShareIsValid($share, $token) {
+		if ($share->getShareOwner() === null
+			|| $share->getTarget() === null
 		) {
 			$message =
 				'Passed token seems to be valid, but it does not contain all necessary information . ("'
@@ -196,33 +188,34 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	/**
 	 * Makes sure an item type was set for that token
 	 *
-	 * @param array|bool $linkItem
+	 * @param IShare $share
 	 *
 	 * @throws CheckException
 	 */
-	private function checkItemType($linkItem) {
-		if (!isset($linkItem['item_type'])) {
-			$message = 'No item type set for share id: ' . $linkItem['id'];
+	private function checkItemType($share) {
+		if ($share->getNodeType() === null) {
+			$message = 'No item type set for share id: ' . $share->getId();
 			throw new CheckException($message, Http::STATUS_NOT_FOUND);
 		}
 	}
 
+
 	/**
 	 * Checks if a password is required or if the one supplied is working
 	 *
-	 * @param array|bool $linkItem
+	 * @param IShare $share
 	 * @param string|null $password optional password
 	 *
 	 * @throws CheckException
 	 */
-	private function checkAuthorisation($linkItem, $password) {
-		$passwordRequired = isset($linkItem['share_with']);
+	private function checkAuthorisation($share, $password) {
+		$passwordRequired = $share->getPassword();
 
-		if ($passwordRequired) {
+		if (isset($passwordRequired)) {
 			if ($password !== null) {
-				$this->authenticate($linkItem, $password);
+				$this->authenticate($share, $password);
 			} else {
-				$this->checkSession($linkItem);
+				$this->checkSession($share);
 			}
 		}
 	}
@@ -230,6 +223,29 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	/**
 	 * Authenticate link item with the given password
 	 * or with the session if no password was given.
+	 *
+	 * @param IShare $share
+	 * @param string $password
+	 *
+	 * @return bool true if authorized, an exception is raised otherwise
+	 *
+	 * @throws CheckException
+	 */
+	private function authenticate($share, $password) {
+		if ((int)$share->getShareType() === Share::SHARE_TYPE_LINK) {
+			$this->checkPassword($share, $password);
+		} else {
+			throw new CheckException(
+				'Unknown share type ' . $share->getShareType() . ' for share id '
+				. $share->getId(), Http::STATUS_NOT_FOUND
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Validates the given password
 	 *
 	 * @fixme @LukasReschke says: Migrate old hashes to new hash format
 	 * Due to the fact that there is no reasonable functionality to update the password
@@ -242,39 +258,16 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 *
 	 * @link https://github.com/owncloud/core/issues/10671
 	 *
-	 * @param array|bool $linkItem
-	 * @param string $password
-	 *
-	 * @return bool true if authorized, an exception is raised otherwise
-	 *
-	 * @throws CheckException
-	 */
-	private function authenticate($linkItem, $password) {
-		if ((int)$linkItem['share_type'] === Share::SHARE_TYPE_LINK) {
-			$this->checkPassword($linkItem, $password);
-		} else {
-			throw new CheckException(
-				'Unknown share type ' . $linkItem['share_type'] . ' for share id '
-				. $linkItem['id'], Http::STATUS_NOT_FOUND
-			);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Validates the given password
-	 *
-	 * @param array|bool $linkItem
+	 * @param IShare $share
 	 * @param string $password
 	 *
 	 * @throws CheckException
 	 */
-	private function checkPassword($linkItem, $password) {
+	private function checkPassword($share, $password) {
 		$newHash = '';
-		if ($this->hasher->verify($password, $linkItem['share_with'], $newHash)) {
+		if ($this->shareManager->checkPassword($share, $password)) {
 			// Save item id in session for future requests
-			$this->session->set('public_link_authenticated', $linkItem['id']);
+			$this->session->set('public_link_authenticated', $share->getId());
 			// @codeCoverageIgnoreStart
 			if (!empty($newHash)) {
 				// For future use
@@ -289,14 +282,14 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	 * Makes sure the user is already properly authenticated when a password is required and none
 	 * was provided
 	 *
-	 * @param array|bool $linkItem
+	 * @param IShare $share
 	 *
 	 * @throws CheckException
 	 */
-	private function checkSession($linkItem) {
+	private function checkSession($share) {
 		// Not authenticated ?
 		if (!$this->session->exists('public_link_authenticated')
-			|| $this->session->get('public_link_authenticated') !== $linkItem['id']
+			|| $this->session->get('public_link_authenticated') !== $share->getId()
 		) {
 			throw new CheckException("Missing password", Http::STATUS_UNAUTHORIZED);
 		}

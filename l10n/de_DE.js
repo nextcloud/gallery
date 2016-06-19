@@ -26,7 +26,7 @@ OC.L10N.register(
     "Configuration error" : "Konfigurationsfehler",
     "New" : "Neu",
     "Error loading slideshow template" : "Fehler beim Laden der Slideshow-Vorlage",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Fehler!</strong> Konnte keine Vorschau der Datei erzeugen.<br>",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fehler!</strong> Konnte keine Vorschau dieser Datei erzeugen.<br> Bitte wechseln Sie zum nächsten Bild, während im Hintergrund das Bild aus der Diashow entfernt wird.",
     "Next" : "Weiter",
     "Play" : "Abspielen",
     "Pause" : "Anhalten",

@@ -2,6 +2,7 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galleri",
+    "There was a problem reading files from this album" : "Det oppstod ett problem under lasting av filer fra dette albumet",
     "Aborting preview. Could not find the file" : "Avbryter visning. Fant ikke filen",
     "Could not move \"{file}\", target exists" : "Klarte ikke å flytte \"{file}\", målfilen finnes",
     "Could not move \"{file}\"" : "Klarte ikke å flytte \"{file}\"",
@@ -25,7 +26,7 @@ OC.L10N.register(
     "Configuration error" : "Konfigurasjonsfeil",
     "New" : "Ny",
     "Error loading slideshow template" : "Feil ved lasting av mal for lysbildevisning",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>" : "<strong>Feil!</strong> Klarte ikke å generere forhåndsvisning av denne filen.<br>",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Feil!</strong> Kunne ikke generere en forhånsvisning av denne filen. <br>Vennligst gå til neste bilde mens vi fjerner dette bildet fra visningen.",
     "Next" : "Neste",
     "Play" : "Spill",
     "Pause" : "Pause",

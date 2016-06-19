@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  */
 
 namespace OCA\GalleryPlus\AppInfo;
@@ -394,6 +394,7 @@ class Application extends App {
 					$c->query('Environment'),
 					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
 					$c->query('OCP\IURLGenerator'),
+					$c->query('OCP\Share\IManager'),
 					$c->query('Logger')
 				);
 			}

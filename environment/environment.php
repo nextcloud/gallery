@@ -8,14 +8,15 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  * @author Authors of \OCA\Files_Sharing\Helper
  *
- * @copyright Olivier Paroz 2015
- * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2015
+ * @copyright Olivier Paroz 2016
+ * @copyright Authors of \OCA\Files_Sharing\Helper 2014-2016
  */
 
 namespace OCA\GalleryPlus\Environment;
 
 use OCP\IUserManager;
 use OCP\Share;
+use OCP\Share\IShare;
 use OCP\ILogger;
 use OCP\Files\IRootFolder;
 use OCP\Files\Folder;
@@ -58,6 +59,10 @@ class Environment {
 	 * @var int
 	 */
 	private $sharedNodeId;
+	/**
+	 * @var File|Folder
+	 */
+	private $sharedNode;
 	/**
 	 * @var IRootFolder
 	 */
@@ -113,23 +118,21 @@ class Environment {
 	}
 
 	/**
-	 * Creates the environment based on the linkItem the token links to
+	 * Creates the environment based on the share the token links to
 	 *
-	 * @param array $linkItem
+	 * @param IShare $share
 	 */
-	public function setTokenBasedEnv($linkItem) {
-		// Resolves reshares down to the last real share
-		$rootLinkItem = Share::resolveReShare($linkItem);
-		$origShareOwner = $rootLinkItem['uid_owner'];
-		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwner);
+	public function setTokenBasedEnv($share) {
+		$origShareOwnerId = $share->getShareOwner();
+		$this->userFolder = $this->rootFolder->getUserFolder($origShareOwnerId);
 
-		// This is actually the node ID
-		$this->sharedNodeId = $linkItem['file_source'];
+		$this->sharedNodeId = $share->getNodeId();
+		$this->sharedNode = $share->getNode();
 		$this->fromRootToFolder = $this->buildFromRootToFolder($this->sharedNodeId);
 
-		$this->folderName = $linkItem['file_target'];
-		$this->userId = $rootLinkItem['uid_owner'];
-		$this->sharePassword = $linkItem['share_with'];
+		$this->folderName = $share->getTarget();
+		$this->userId = $origShareOwnerId;
+		$this->sharePassword = $share->getPassword();
 	}
 
 	/**
@@ -141,6 +144,15 @@ class Environment {
 	 */
 	public function setStandardEnv() {
 		$this->fromRootToFolder = $this->userFolder->getPath() . '/';
+	}
+
+	/**
+	 * Returns true if the environment has been setup using a token
+	 *
+	 * @return bool
+	 */
+	public function isTokenBasedEnv() {
+		return !empty($this->sharedNodeId);
 	}
 
 	/**
@@ -196,12 +208,17 @@ class Environment {
 	 * @throws NotFoundEnvException
 	 */
 	public function getResourceFromId($resourceId) {
-		$resourcesArray = $this->userFolder->getById($resourceId);
-		if ($resourcesArray[0] === null) {
-			throw new NotFoundEnvException('Could not locate file linked to ID: ' . $resourceId);
+		if ($this->isTokenBasedEnv()) {
+			if ($this->sharedNode->getType() === 'dir') {
+				$resource = $this->getResourceFromFolderAndId($this->sharedNode, $resourceId);
+			} else {
+				$resource = $this->sharedNode;
+			}
+		} else {
+			$resource = $this->getResourceFromFolderAndId($this->userFolder, $resourceId);
 		}
 
-		return $resourcesArray[0];
+		return $resource;
 	}
 
 	/**
@@ -221,7 +238,7 @@ class Environment {
 	 */
 	public function getVirtualRootFolder() {
 		$rootFolder = $this->userFolder;
-		if (!empty($this->sharedNodeId)) {
+		if ($this->isTokenBasedEnv()) {
 			$node = $this->getSharedNode();
 			$nodeType = $node->getType();
 			if ($nodeType === 'dir') {
@@ -309,7 +326,7 @@ class Environment {
 	 *
 	 * That root folder changes when folders are shared publicly
 	 *
-	 * @param File|Folder|N $node
+	 * @param File|Folder|Node $node
 	 *
 	 * @return string
 	 */
@@ -329,10 +346,29 @@ class Environment {
 	}
 
 	/**
+	 * Returns the resource found in a specific folder and identified by the given ID
+	 *
+	 * @param Folder $folder
+	 * @param int $resourceId
+	 *
+	 * @return Node
+	 * @throws NotFoundEnvException
+	 */
+	private function getResourceFromFolderAndId($folder, $resourceId) {
+		$resourcesArray = $folder->getById($resourceId);
+
+		if ($resourcesArray[0] === null) {
+			throw new NotFoundEnvException('Could not locate node linked to ID: ' . $resourceId);
+		}
+
+		return $resourcesArray[0];
+	}
+
+	/**
 	 * Returns the path from the shared folder to the root folder in the original
 	 * owner's filesystem: /userId/files/parent_folder/shared_folder
 	 *
-	 * This cannot be calculated with paths and IDs, the linkitem's file source is required
+	 * This cannot be calculated with paths and IDs, the share's file source is required
 	 *
 	 * @param string $fileSource
 	 *

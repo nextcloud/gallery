@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace Page\Acceptance;
@@ -57,7 +57,7 @@ class Login {
 	public function confirmLogin() {
 		$I = $this->acceptanceTester;
 
-		$I->seeCurrentUrlEquals(FilesPage::$URL);
+		$I->seeInCurrentUrl(FilesPage::$URL);
 		$I->seeElement(['css' => FilesPage::$contentDiv]);
 	}
 }

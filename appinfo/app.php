@@ -8,7 +8,7 @@
  * @author Olivier Paroz <owncloud@interfasys.ch>
  * @author Robin Appelman <icewind@owncloud.com>
  *
- * @copyright Olivier Paroz 2014-2015
+ * @copyright Olivier Paroz 2014-2016
  * @copyright Robin Appelman 2014-2015
  */
 
@@ -34,7 +34,7 @@ $c->query('OCP\INavigationManager')
 
 			  // Sorting weight for the navigation. The higher the number, the higher
 			  // will it be listed in the navigation
-			  'order' => 3,
+			  'order' => 2,
 
 			  // The route that will be shown on startup when called from within ownCloud
 			  // Public links are using another route, see appinfo/routes.php
@@ -63,7 +63,8 @@ Util::addTranslations('galleryplus');
 $request = $c->query('Request');
 if (isset($request->server['REQUEST_URI']) && !\OCP\App::isEnabled('gallery')) {
 	$url = $request->server['REQUEST_URI'];
-	if (preg_match('%/apps/files(/.*)?%', $url)
+	if (preg_match('/apps\/files(_sharing)?$/', $url)
+		|| preg_match('%apps/files(_sharing)?[/?]%', $url)
 		|| preg_match('%^((?!/apps/).)*/s/\b(.*)\b(?<!/authenticate)$%', $url)
 	) {
 		// @codeCoverageIgnoreStart

@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace OCA\GalleryPlus\Controller;
@@ -144,7 +144,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 		$status = Http::STATUS_NOT_FOUND;
 
 		$exception = new NotFoundServiceException('Not found');
-		$this->mockGetResourceFromIdWithBadFile($this->downloadService, $fileId, $exception);
+		$this->mockGetFileWithBadFile($this->downloadService, $fileId, $exception);
 
 		$redirectUrl = '/index.php/app/error';
 		$this->mockUrlToErrorPage($status, $redirectUrl);
@@ -182,10 +182,11 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 			'design'      => [],
 		];
 
-		$folder = $this->mockFolder(
-			'home::user', $folderId, $files, true, false, null, '', false, $folderIsShared,
-			$folderEtag, 4096, 'some/path', null, $folderPermissions
-		);
+		$folderData = ['home::user', $folderId, $files, true, false, null, '', false, $folderIsShared,
+					$folderEtag, 4096, 'some/path', null, $folderPermissions];
+
+		$folder = call_user_func_array([$this,'mockFolder'], $folderData);
+		$folder2 = call_user_func_array([$this, 'mockFolder'], $folderData);
 
 		return [
 			[
@@ -199,7 +200,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 				]
 			],
 			[
-				$location, $folderPathFromRoot, $folder, $albumConfig, $files, $albums, $folderEtag,
+				$location, $folderPathFromRoot, $folder2, $albumConfig, $files, $albums, $folderEtag,
 				[
 					'files'       => [],
 					'albums'      => [],
@@ -330,7 +331,7 @@ class FilesControllerTest extends \Test\GalleryUnitTest {
 	 * @return array
 	 */
 	private function mockGetDownload($fileId, $file, $filename) {
-		$this->mockGetResourceFromId($this->downloadService, $fileId, $file);
+		$this->mockGetFile($this->downloadService, $fileId, $file);
 
 		$download = $this->mockDownloadData($file, $filename);
 

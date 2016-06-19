@@ -83,7 +83,9 @@
 
 			this.clear();
 
-			if (Gallery.albumMap[albumPath].etag !== Gallery.currentEtag) {
+			if (albumPath !== Gallery.currentAlbum
+				|| (albumPath === Gallery.currentAlbum &&
+				Gallery.albumMap[albumPath].etag !== Gallery.currentEtag)) {
 				Gallery.currentAlbum = albumPath;
 				Gallery.currentEtag = Gallery.albumMap[albumPath].etag;
 				this._setupButtons(albumPath);
@@ -322,7 +324,10 @@
 			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
 			this._renderNewButton();
-
+			// Trigger cancelling of file upload
+			$('#uploadprogresswrapper .stop').on('click', function () {
+				OC.Upload.cancelUploads();
+			});
 			this.requestId = Math.random();
 		},
 
@@ -362,6 +367,7 @@
 
 			$('#save-button').show();
 			$('#download').show();
+			$('a.button.new').show();
 		},
 
 		/**
@@ -546,6 +552,9 @@
 			}
 			this._newFileMenu.showAt($target);
 
+			if (Gallery.currentAlbum === '') {
+				$('.menuitem[data-action="hideAlbum"]').parent().hide();
+			}
 			return false;
 		}
 	};

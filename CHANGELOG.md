@@ -1,3 +1,9 @@
+owncloud-galleryplus (15.1.0)
+* [security] Tokens give access to all the files owned by the sharer, so we need to have additional checks in place (@oparoz)
+* Add delete button to slideshow owncloud/gallery#649 (@manishbisht)
+* Add "hide album" feature available from the [+] button owncloud/gallery#547 (@eknoes @oparoz)
+* Various fixes (@oparoz)
+
 owncloud-galleryplus (15.0.0)
 * Drag and drop files and folders owncloud/gallery#405 (@oparoz)
 * Upload straight from the app owncloud/gallery#25 (@oparoz)

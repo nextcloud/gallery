@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 use Codeception\Util\Xml as XmlUtils;
@@ -67,7 +67,7 @@ class OcsCreateUserCest {
 	}
 
 	public function deleteUser(ApiTester $I, \Codeception\Scenario $scenario) {
-		//$scenario->skip('ownCloud master is broken');
+		$scenario->skip('ownCloud master is broken');
 		$I->wantTo('delete the user');
 		$I->amHttpAuthenticated('admin', 'admin');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');

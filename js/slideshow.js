@@ -401,6 +401,11 @@
 								el: '.changeBackground',
 								trans: t('gallery', 'Toggle background'),
 								toolTip: true
+							},
+							{
+								el: '.deleteImage',
+								trans: t('gallery', 'Delete'),
+								toolTip: true
 							}
 						];
 						for (var i = 0; i < buttonsArray.length; i++) {

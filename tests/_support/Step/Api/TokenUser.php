@@ -7,7 +7,7 @@
  *
  * @author Olivier Paroz <owncloud@interfasys.ch>
  *
- * @copyright Olivier Paroz 2015
+ * @copyright Olivier Paroz 2016
  */
 
 namespace Step\Api;
@@ -26,6 +26,20 @@ class TokenUser extends \ApiTester {
 			'name'      => $sharedFile['file']->getName(),
 			'mediatype' => $sharedFile['file']->getMimetype(),
 			'token'     => $sharedFile['token']
+		];
+
+		return $fileMetaData;
+	}
+
+	/**
+	 * Retrieves the shared file and its token
+	 */
+	public function getPrivateFileInformation() {
+		$I = $this;
+		$privateFile = $I->getPrivateFile();
+
+		$fileMetaData = [
+			'fileId' => $privateFile['file']->getId(),
 		];
 
 		return $fileMetaData;
