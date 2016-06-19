@@ -442,6 +442,7 @@
 						self._exit();
 					}
 					else {
+						self.current = self.current % self.images.length;
 						self._updateSlideshow(self.current);
 					}
 					Gallery.view.init(Gallery.currentAlbum);
