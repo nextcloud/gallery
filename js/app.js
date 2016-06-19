@@ -28,19 +28,18 @@ $(document).ready(function () {
 			.then(function (config) {
 				Gallery.config = new Gallery.Config(config);
 				var currentLocation = window.location.href.split('#')[1] || '';
-				Gallery.getFiles(currentLocation).then(function () {
-					Gallery.activeSlideShow = new SlideShow();
-					$.when(
-						Gallery.activeSlideShow.init(
-							false,
-							null,
-							Gallery.config.galleryFeatures
-						))
-						.then(function () {
+				Gallery.activeSlideShow = new SlideShow();
+				$.when(
+					Gallery.activeSlideShow.init(
+						false,
+						null,
+						Gallery.config.galleryFeatures
+					))
+					.then(function () {
+						Gallery.getFiles(currentLocation).then(function () {
 							window.onhashchange();
 						});
-
-				});
+					});
 			});
 
 		$(document).click(function () {
