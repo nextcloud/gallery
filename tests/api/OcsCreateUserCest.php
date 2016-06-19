@@ -67,7 +67,7 @@ class OcsCreateUserCest {
 	}
 
 	public function deleteUser(ApiTester $I, \Codeception\Scenario $scenario) {
-		//$scenario->skip('ownCloud master is broken');
+		$scenario->skip('ownCloud master is broken');
 		$I->wantTo('delete the user');
 		$I->amHttpAuthenticated('admin', 'admin');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
