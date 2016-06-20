@@ -23,9 +23,12 @@
 	 * @param {string} etag
 	 * @param {number} size
 	 * @param {boolean} sharedWithUser
-	 * @constructor
+	 * @param {string} owner
+	 * @param {number} permissions
+ * @constructor
 	 */
-	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag, size, sharedWithUser) {
+	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag, size, sharedWithUser,
+								 owner, permissions) {
 		this.src = src;
 		this.path = path;
 		this.fileId = fileId;
@@ -34,6 +37,8 @@
 		this.etag = etag;
 		this.size = size;
 		this.sharedWithUser = sharedWithUser;
+		this.owner = owner;
+		this.permissions = permissions;
 		this.thumbnail = null;
 		this.domDef = null;
 		this.spinner = null;

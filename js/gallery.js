@@ -309,6 +309,7 @@
 					path: image.path,
 					file: image.fileId,
 					mimeType: image.mimeType,
+					permissions: image.permissions,
 					url: previewUrl,
 					downloadUrl: downloadUrl
 				};
@@ -417,6 +418,8 @@
 			var etag = null;
 			var size = null;
 			var sharedWithUser = null;
+			var owner = null;
+			var permissions = 0;
 			var currentLocation = data.albumpath;
 			// This adds a new node to the map for each parent album
 			Gallery._mapStructure(currentLocation);
@@ -445,10 +448,12 @@
 					etag = files[i].etag;
 					size = files[i].size;
 					sharedWithUser = files[i].sharedwithuser;
+					owner = files[i].owner;
+					permissions = files[i].permissions;
 
 					image =
 						new GalleryImage(
-							path, path, fileId, mimeType, mTime, etag, size, sharedWithUser
+							path, path, fileId, mimeType, mTime, etag, size, sharedWithUser, owner, permissions
 						);
 
 					// Determines the folder name for the image

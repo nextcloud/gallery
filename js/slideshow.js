@@ -105,7 +105,7 @@
 				if (currentImageId === index) {
 					var image = this.images[index];
 					var transparent = this._isTransparent(image.mimeType);
-					this.controls.showActionButtons(transparent, Gallery.token);
+					this.controls.showActionButtons(transparent, Gallery.token, image.permissions);
 					this.errorLoadingImage = false;
 					this.currentImage = img;
 
