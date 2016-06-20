@@ -1,4 +1,4 @@
-/* global SlideShow */
+/* global OC, Gallery, SlideShow */
 (function ($, SlideShow) {
 	"use strict";
 	/**
@@ -119,13 +119,15 @@
 		 *
 		 * @param {boolean} transparent
 		 * @param {boolean} isPublic
+		 * @param {number} permissions
 		 */
-		showActionButtons: function (transparent, isPublic) {
+		showActionButtons: function (transparent, isPublic, permissions) {
 			if (transparent) {
 				this._showBackgroundToggle();
 			}
 			this.showButton('.downloadImage');
-			if (!isPublic) {
+			var canDelete = ((permissions & OC.PERMISSION_DELETE) !== 0);
+			if (!isPublic && canDelete) {
 				this.showButton('.deleteImage');
 			}
 		},
@@ -443,7 +445,7 @@
 					delete Gallery.imageMap[imagePath];
 					delete Thumbnails.map[fileId];
 					Gallery.albumMap[Gallery.currentAlbum].images.splice(self.current, 1);
-					if (self.images.length == 0) {
+					if (self.images.length === 0) {
 						self._exit();
 					}
 					else {
