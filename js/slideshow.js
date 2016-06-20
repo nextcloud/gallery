@@ -270,6 +270,23 @@
 		},
 
 		/**
+		 * Deletes an image from the slideshow
+		 *
+		 * @param {object} image
+		 * @param {number} currentIndex
+		 */
+		deleteImage: function (image, currentIndex) {
+			// These are Gallery specific commands to be replaced
+			// which should sit somewhere else
+			if (!window.galleryFileAction) {
+				delete Gallery.imageMap[image.path];
+				delete Thumbnails.map[image.file];
+				Gallery.albumMap[Gallery.currentAlbum].images.splice(currentIndex, 1);
+				Gallery.view.init(Gallery.currentAlbum);
+			}
+		},
+
+		/**
 		 * Automatically fades the controls after 3 seconds
 		 *
 		 * @private

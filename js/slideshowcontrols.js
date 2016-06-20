@@ -1,4 +1,4 @@
-/* global OC, Gallery, SlideShow */
+/* global OC, SlideShow */
 (function ($, SlideShow) {
 	"use strict";
 	/**
@@ -434,17 +434,14 @@
 		 * @private
 		 */
 		_deleteImage: function () {
-			var imagePath = this.images[this.current].path;
-			var fileId = Gallery.imageMap[imagePath].fileId;
+			var image = this.images[this.current];
 			var self = this;
 			$.ajax({
 				type: 'DELETE',
-				url: OC.getRootPath() + '/remote.php/webdav/' + imagePath,
+				url: OC.getRootPath() + '/remote.php/webdav/' + image.path,
 				success: function () {
+					self.slideshow.deleteImage(image, self.current);
 					self.images.splice(self.current, 1);
-					delete Gallery.imageMap[imagePath];
-					delete Thumbnails.map[fileId];
-					Gallery.albumMap[Gallery.currentAlbum].images.splice(self.current, 1);
 					if (self.images.length === 0) {
 						self._exit();
 					}
@@ -452,7 +449,6 @@
 						self.current = self.current % self.images.length;
 						self._updateSlideshow(self.current);
 					}
-					Gallery.view.init(Gallery.currentAlbum);
 				}
 			});
 		}
