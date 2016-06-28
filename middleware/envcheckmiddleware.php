@@ -312,7 +312,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	private function checkSession($linkItem) {
 		// Not authenticated ?
 		if (!$this->session->exists('public_link_authenticated')
-			|| $this->session->get('public_link_authenticated') !== $linkItem['id']
+			|| $this->session->get('public_link_authenticated') !== (string)$linkItem['id']
 		) {
 			throw new CheckException("Missing password", Http::STATUS_UNAUTHORIZED);
 		}
