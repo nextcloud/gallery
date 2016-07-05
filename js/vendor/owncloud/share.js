@@ -144,8 +144,8 @@
 			var data = this._loadShares(path);
 			var dropDownEl;
 			var self = this;
-			var html = '<div id="dropdown" class="drop shareDropDown" data-item-type="' + itemType +
-				'" data-item-source="' + path + '">';
+			var html = '<div id="dropdown" class="drop shareDropDown" data-item-type="' + escapeHTML(itemType) +
+				'" data-item-source="' + escapeHTML(path) + '">';
 			if (data !== false && data[0] && !_.isUndefined(data[0].uid_file_owner) &&
 				data[0].uid_file_owner !== OC.currentUser
 			) {
