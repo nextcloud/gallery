@@ -267,7 +267,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 		$newHash = '';
 		if ($this->shareManager->checkPassword($share, $password)) {
 			// Save item id in session for future requests
-			$this->session->set('public_link_authenticated', $share->getId());
+			$this->session->set('public_link_authenticated', (string)$share->getId());
 			// @codeCoverageIgnoreStart
 			if (!empty($newHash)) {
 				// For future use
@@ -289,7 +289,7 @@ class EnvCheckMiddleware extends CheckMiddleware {
 	private function checkSession($share) {
 		// Not authenticated ?
 		if (!$this->session->exists('public_link_authenticated')
-			|| $this->session->get('public_link_authenticated') !== $share->getId()
+			|| $this->session->get('public_link_authenticated') !== (string)$share->getId()
 		) {
 			throw new CheckException("Missing password", Http::STATUS_UNAUTHORIZED);
 		}
