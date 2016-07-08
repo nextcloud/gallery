@@ -214,8 +214,8 @@ class EnvCheckMiddlewareTest extends \Test\GalleryUnitTest {
 	public function testCheckSessionAfterPasswordEntry() {
 		$share = $this->mockShare('file', 'tester', 'image.png');
 
-		$this->mockSessionExists($share->getId());
-		$this->mockSessionWithShareId($share->getId());
+		$this->mockSessionExists((string)$share->getId());
+		$this->mockSessionWithShareId((string)$share->getId());
 
 		parent::invokePrivate($this->middleware, 'checkSession', [$share]);
 	}
@@ -365,8 +365,8 @@ class EnvCheckMiddlewareTest extends \Test\GalleryUnitTest {
 			Constants::PERMISSION_READ, $wrongPassword
 		);
 
-		$this->mockSessionExists($share->getId());
-		$this->mockSessionWithShareId($share->getId());
+		$this->mockSessionExists((string)$share->getId());
+		$this->mockSessionWithShareId((string)$share->getId());
 		parent::invokePrivate($this->middleware, 'checkAuthorisation', [$share, $password]);
 	}
 
