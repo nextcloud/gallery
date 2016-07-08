@@ -247,8 +247,8 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 
 	public function testCheckSessionAfterPasswordEntry() {
 		$linkItem['id'] = 12345;
-		$this->mockSessionExists($linkItem['id']);
-		$this->mockSessionWithLinkItemId($linkItem['id']);
+		$this->mockSessionExists((string)$linkItem['id']);
+		$this->mockSessionWithLinkItemId((string)$linkItem['id']);
 
 		self::invokePrivate($this->middleware, 'checkSession', [$linkItem]);
 	}
@@ -387,8 +387,8 @@ class EnvCheckMiddlewareTest extends \Codeception\TestCase\Test {
 			'id'         => 12345,
 			'share_with' => 'Empyrion Galactic Survival'
 		];
-		$this->mockSessionExists($linkItem['id']);
-		$this->mockSessionWithLinkItemId($linkItem['id']);
+		$this->mockSessionExists((string)$linkItem['id']);
+		$this->mockSessionWithLinkItemId((string)$linkItem['id']);
 
 		self::invokePrivate($this->middleware, 'checkAuthorisation', [$linkItem, $password]);
 	}
