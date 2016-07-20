@@ -1,4 +1,4 @@
-/* global SlideShow */
+/* global OC, SlideShow */
 (function ($, SlideShow) {
 	"use strict";
 	/**
@@ -116,12 +116,20 @@
 
 		/**
 		 * Shows the action buttons
+		 *
+		 * @param {boolean} transparent
+		 * @param {boolean} isPublic
+		 * @param {number} permissions
 		 */
-		showActionButtons: function (transparent) {
+		showActionButtons: function (transparent, isPublic, permissions) {
 			if (transparent) {
 				this._showBackgroundToggle();
 			}
 			this.showButton('.downloadImage');
+			var canDelete = ((permissions & OC.PERMISSION_DELETE) !== 0);
+			if (!isPublic && canDelete) {
+				this.showButton('.deleteImage');
+			}
 		},
 
 		/**
@@ -130,6 +138,7 @@
 		hideActionButtons: function () {
 			this.hideButton('.changeBackground');
 			this.hideButton('.downloadImage');
+			this.hideButton('.deleteImage');
 		},
 
 		/**
@@ -184,6 +193,7 @@
 		 */
 		_specialButtonSetup: function (makeCallBack) {
 			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
+			this.container.find('.deleteImage').click(makeCallBack(this._deleteImage));
 			this.container.find('.menu').width = 52;
 			if (this.backgroundToggle) {
 				this.container.find('.changeBackground').click(
@@ -417,6 +427,30 @@
 		_setName: function (imageName) {
 			var nameElement = this.container.find('.title');
 			nameElement.text(imageName);
+		},
+
+		/**
+		 * Delete the image from the slideshow
+		 * @private
+		 */
+		_deleteImage: function () {
+			var image = this.images[this.current];
+			var self = this;
+			$.ajax({
+				type: 'DELETE',
+				url: OC.getRootPath() + '/remote.php/webdav/' + image.path,
+				success: function () {
+					self.slideshow.deleteImage(image, self.current);
+					self.images.splice(self.current, 1);
+					if (self.images.length === 0) {
+						self._exit();
+					}
+					else {
+						self.current = self.current % self.images.length;
+						self._updateSlideshow(self.current);
+					}
+				}
+			});
 		}
 	};
 

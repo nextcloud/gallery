@@ -105,7 +105,7 @@
 				if (currentImageId === index) {
 					var image = this.images[index];
 					var transparent = this._isTransparent(image.mimeType);
-					this.controls.showActionButtons(transparent);
+					this.controls.showActionButtons(transparent, Gallery.token, image.permissions);
 					this.errorLoadingImage = false;
 					this.currentImage = img;
 
@@ -270,6 +270,23 @@
 		},
 
 		/**
+		 * Deletes an image from the slideshow
+		 *
+		 * @param {object} image
+		 * @param {number} currentIndex
+		 */
+		deleteImage: function (image, currentIndex) {
+			// These are Gallery specific commands to be replaced
+			// which should sit somewhere else
+			if (!window.galleryFileAction) {
+				delete Gallery.imageMap[image.path];
+				delete Thumbnails.map[image.file];
+				Gallery.albumMap[Gallery.currentAlbum].images.splice(currentIndex, 1);
+				Gallery.view.init(Gallery.currentAlbum);
+			}
+		},
+
+		/**
 		 * Automatically fades the controls after 3 seconds
 		 *
 		 * @private
@@ -400,6 +417,11 @@
 							{
 								el: '.changeBackground',
 								trans: t('gallery', 'Toggle background'),
+								toolTip: true
+							},
+							{
+								el: '.deleteImage',
+								trans: t('gallery', 'Delete'),
 								toolTip: true
 							}
 						];

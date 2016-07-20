@@ -124,6 +124,7 @@
 						path: dir + file.name,
 						fileId: file.id,
 						mimeType: file.mimetype,
+						permissions: file.permissions,
 						url: imageUrl,
 						downloadUrl: downloadUrl
 					});
