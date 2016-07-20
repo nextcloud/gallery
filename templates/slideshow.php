@@ -12,7 +12,7 @@
 		<input type="button"
 			   class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
 		<input type="button"
-			   class="menuItem svg deleteImage icon-delete-white hidden">
+			   class="menuItem svg deleteImage icon-view-delete hidden">
 	</div>
 	<div class="progress icon-view-pause"/>
 	<div class="name">
