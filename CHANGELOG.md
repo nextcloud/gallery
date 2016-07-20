@@ -1,3 +1,8 @@
+owncloud-galleryplus (15.1.1)
+* [security] Stored XSS on Share-popup of a directory's Gallery-view (@lukasreschke)
+* Fix redirect loop on shared links when using a password #51 (@TDannhauer @oparoz)
+* Improve delete icon in slideshow (@manishbisht)
+
 owncloud-galleryplus (15.1.0)
 * [security] Tokens give access to all the files owned by the sharer, so we need to have additional checks in place (@oparoz)
 * Add delete button to slideshow owncloud/gallery#649 (@manishbisht @oparoz)
