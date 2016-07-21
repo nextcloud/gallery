@@ -52,11 +52,6 @@
 
 				this._initControlsAutoFader();
 
-				// Replace all Owncloud svg images with png images for ancient browsers
-				if (!OC.Util.hasSVGSupport()) {
-					OC.Util.replaceSVG(this.$el);
-				}
-
 				// Only modern browsers can manipulate history
 				if (history && history.pushState) {
 					// Stop the slideshow when backing out.
