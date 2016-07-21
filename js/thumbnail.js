@@ -157,9 +157,7 @@ function Thumbnail (fileId, square) {
 		},
 
 		/**
-		 * Returns the link to the media type icon
-		 *
-		 * All browsers get an SVG always
+		 * Returns the link to the SVG media type icon
 		 *
 		 * @param mimeType
 		 *
