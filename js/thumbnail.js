@@ -159,7 +159,7 @@ function Thumbnail (fileId, square) {
 		/**
 		 * Returns the link to the media type icon
 		 *
-		 * Modern browsers get an SVG, older ones a PNG
+		 * All browsers get an SVG always
 		 *
 		 * @param mimeType
 		 *
@@ -168,9 +168,6 @@ function Thumbnail (fileId, square) {
 		 */
 		_getMimeIcon: function (mimeType) {
 			var icon = OC.MimeType.getIconUrl(mimeType);
-			if (Gallery.ieVersion !== false) {
-				icon = icon.substr(0, icon.lastIndexOf(".")) + ".png";
-			}
 			return icon;
 		},
 
