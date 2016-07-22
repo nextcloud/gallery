@@ -4,15 +4,15 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/owncloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/owncloud/gallery/badge.svg)](https://travis-ci.org/owncloud/gallery)
 
-Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.
+Media gallery for ownCloud and Nextcloud which includes previews for all media types supported by your installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This version is for ownCloud 9.1. If you need the same app for older versions of ownCloud. Use [Gallery+](https://apps.owncloud.com/content/show.php/Gallery?content=169116) from the app store.**
+**This version is for ownCloud 9.2 and Nextcloud 11. If you need the same app for older versions of ownCloud and Nextcloud. Use [Gallery+](https://github.com/interfasys/galleryplus) from their respective app stores.**
 
 ![Screenshot](https://raw.githubusercontent.com/owncloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
-* Support for large selection of media types (depending on ownCloud setup)
+* Support for large selection of media types (depending on server setup)
 * Upload and organise images and albums straight from the app
 * Large, zoomable previews which can be shown in fullscreen mode
 * Sort images by name or date added
@@ -48,7 +48,7 @@ See this [wiki article](https://github.com/owncloud/gallery/wiki/Requirements) a
 There are many ways in which you can help make Gallery a better product
 
 * Report bugs (see below)
-* Provide patches for both [`owncloud/core`](https://github.com/owncloud/core) and the app
+* Provide patches for [`owncloud/core`](https://github.com/owncloud/core), [`nextcloud/server`](https://github.com/nextcloud/server) or the app itself
 * Help test new features by checking out new branches on Github
 * Design interface components for new features
 * Develop new features. Please consult with the maintainers before starting your journey
@@ -84,11 +84,17 @@ That's it. You should be able to see more media types in your slideshows and gal
 
 ### Improving performance
 
+#### Redis for files locking
+
+Using Redis for files locking improves performance **by a factor of 10** when loading an album.
+
+Read about it in the [ownCloud](https://doc.owncloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) or [Nextcloud](https://docs.nextcloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
+
 #### Assets pipelining
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can greatly reduce the loading time of the app.
 
-Read about it in the [Administration Manual](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html)
+Read about it in the [ownCloud](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html) or [Nextcloud](https://docs.nextcloud.org/server/9/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
 
 ## Installation
 
@@ -101,20 +107,20 @@ Read about it in the [Administration Manual](https://doc.owncloud.org/server/9.0
 ### Installing from archive
 
 * Go to the [the releases page](https://github.com/owncloud/gallery/releases)
-* Download the latest release/archive to your server's **owncloud/apps/** directory
+* Download the latest release/archive to your server's **apps/** directory
 * Unpack the app
 * **IMPORTANT**: Make sure the folder name is gallery
 
 ### Installing from Git
 
-In your terminal go into the **owncloud/apps/** directory and then run the following command:
+In your terminal go into the **apps/** directory and then run the following command:
 ```
 $ git clone https://github.com/owncloud/gallery.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery
 
-To update the app go inside you **owncloud/apps/gallery/** directory and type:
+To update the app go inside you *apps/gallery/** directory and type:
 ```
 $ git pull --rebase
 ```
