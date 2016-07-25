@@ -6,7 +6,7 @@
  * later. See the COPYING file.
  *
  * @author Lukas Reschke <lukas@owncloud.com>
- * @author Olivier Paroz <owncloud@interfasys.ch>
+ * @author Olivier Paroz <galleryapps@oparoz.com>
  *
  * @copyright Lukas Reschke 2014-2015
  * @copyright Olivier Paroz 2014-2016
