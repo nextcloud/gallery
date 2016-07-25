@@ -11,7 +11,7 @@
  * @author Robin Appelman <icewind@owncloud.com>
  * @author Thomas Müller <thomas.mueller@tmit.eu>
  * @author Vincent Petry <pvince81@owncloud.com>
- * @author Olivier Paroz <owncloud@interfasys.ch>
+ * @author Olivier Paroz <galleryapps@oparoz.com>
  *
  * @copyright Copyright (c) 2015, ownCloud, Inc.
  * @copyright Olivier Paroz 2016

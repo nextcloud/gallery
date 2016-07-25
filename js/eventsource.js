@@ -5,7 +5,7 @@
  * later. See the COPYING file.
  *
  * @author Robin Appelman <icewind1991@gmail.com>
- * @author Olivier Paroz <owncloud@interfasys.ch>
+ * @author Olivier Paroz <galleryapps@oparoz.com>
  *
  * @copyright Robin Appelman 2012-2015
  * @copyright Olivier Paroz 2014-2016
