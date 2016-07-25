@@ -5,7 +5,7 @@
     "Olivier Paroz <galleryapps@oparoz.com>",
     "Robin Appelman <robin@icewind.nl>"
   ],
-  "description": "Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.",
+  "description": "Media gallery for ownCloud and Nextcloud which includes previews for all media types supported by your installation.",
   "license": "AGPL",
   "private": true,
   "ignore": [

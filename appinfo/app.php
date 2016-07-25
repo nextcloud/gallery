@@ -21,7 +21,7 @@ $c = $app->getContainer();
 $appName = $c->query('AppName');
 
 /**
- * Menu entry in ownCloud
+ * Menu entry
  */
 $c->query('OCP\INavigationManager')
   ->add(
@@ -36,7 +36,7 @@ $c->query('OCP\INavigationManager')
 			  // will it be listed in the navigation
 			  'order' => 2,
 
-			  // The route that will be shown on startup when called from within ownCloud
+			  // The route that will be shown on startup when called from within the GUI
 			  // Public links are using another route, see appinfo/routes.php
 			  'href'  => $urlGenerator->linkToRoute($appName . '.page.index'),
 
