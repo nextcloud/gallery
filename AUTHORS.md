@@ -6,4 +6,4 @@
 
 ## Alumni
 
-* Robin Appelman <icewind@owncloud.com>
+* Robin Appelman <robin@icewind.nl>
