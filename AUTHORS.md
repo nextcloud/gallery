@@ -2,7 +2,7 @@
 
 ## Current
 
-* Olivier Paroz <owncloud@interfasys.ch>
+* Olivier Paroz <galleryapps@oparoz.com>
 
 ## Alumni
 
