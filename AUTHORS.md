@@ -2,8 +2,8 @@
 
 ## Current
 
-* Olivier Paroz <owncloud@interfasys.ch>
+* Olivier Paroz <galleryapps@oparoz.com>
 
 ## Alumni
 
-* Robin Appelman <icewind@owncloud.com>
+* Robin Appelman <robin@icewind.nl>

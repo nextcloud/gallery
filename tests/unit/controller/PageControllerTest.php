@@ -1,11 +1,11 @@
 <?php
 /**
- * ownCloud - gallery
+ * Gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
- * @author Olivier Paroz <owncloud@interfasys.ch>
+ * @author Olivier Paroz <galleryapps@oparoz.com>
  *
  * @copyright Olivier Paroz 2016
  */
@@ -69,7 +69,7 @@ class PageControllerTest extends \Test\TestCase {
 
 
 	public function testIndex() {
-		$url = 'http://owncloud/ajax/upload.php';
+		$url = 'http://server.cloud/ajax/upload.php';
 		$this->mockUrlToUploadEndpoint($url);
 		$publicUploadEnabled = 'yes';
 		$mailNotificationEnabled = 'no';
@@ -160,7 +160,7 @@ class PageControllerTest extends \Test\TestCase {
 		$fileId = 12345;
 
 		$this->mockGetSharedNode('file', $fileId);
-		$redirectUrl = 'http://owncloud/download/' . $filename;
+		$redirectUrl = 'http://server.cloud/download/' . $filename;
 		$this->mockUrlToDownloadPage($token, $fileId, $filename, $redirectUrl);
 		$template = new RedirectResponse($redirectUrl);
 
