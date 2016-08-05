@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "Could not move \"{file}\", target exists" : "Tiedoston \"{file}\" siirtäminen ei onnistunut, kohde on olemassa",
     "Could not move \"{file}\"" : "Tiedoston \"{file}\" siirtäminen ei onnistunut",
-    "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
-    "Invalid ownCloud url" : "Virheellinen ownCloud-osoite",
     "Gallery view" : "Gallerianäkymä",
     "Could not load the description" : "Kuvauksen lataaminen epäonnistui",
     "Could not load the description: " : "Kuvauksen lataaminen epäonnistui:",

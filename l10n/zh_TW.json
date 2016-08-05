@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "中止瀏覽，無法找到該檔案",
     "Could not move \"{file}\", target exists" : "無法移動 \"{file}\"，目標已經存在",
     "Could not move \"{file}\"" : "無法移動 \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "沒有在 {remote} 找到 ownCloud （需為版本 7 或以上）",
-    "Invalid ownCloud url" : "無效的 ownCloud URL",
     "Gallery view" : "瀏覽相簿",
     "Could not load the description" : "無法載入敘述",
     "Could not load the description: " : "無法載入敘述",

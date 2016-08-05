@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Előnézet megszakítása. Nem található a fájl",
     "Could not move \"{file}\", target exists" : "{file} fájl nem áthelyezhető, mert a cél már létezik",
     "Could not move \"{file}\"" : "{file} fájl nem áthelyezhető",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Nem található ownCloud telepítés (7 vagy nagyobb verzió) itt:  {remote}",
-    "Invalid ownCloud url" : "Érvénytelen ownCloud webcím",
     "Gallery view" : "Galéria nézet",
     "Could not load the description" : "Nem lehet betölteni a leírást",
     "Could not load the description: " : "Nem lehet betölteni a leírást:",

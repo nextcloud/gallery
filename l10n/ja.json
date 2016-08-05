@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "Could not move \"{file}\", target exists" : "ターゲットが存在するため，ファイル \"{file}\"を移動できませんでした",
     "Could not move \"{file}\"" : "\"{file}\" を移動できませんでした",
-    "No ownCloud installation (7 or higher) found at {remote}" : "{remote} にはownCloud (7以上)がインストールされていません",
-    "Invalid ownCloud url" : "無効なownCloud URL です",
     "Gallery view" : "ギャラリー表示",
     "Could not load the description" : "説明を読み出せませんでした",
     "Could not load the description: " : "説明を読み出せませんでした：",

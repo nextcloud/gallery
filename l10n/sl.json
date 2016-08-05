@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Predogled je prekinjen. Ni mogoče najti datoteke.",
     "Could not move \"{file}\", target exists" : "Datoteke \"{file}\" ni mogoče premakniti, ker cilj že obstaja",
     "Could not move \"{file}\"" : "Ni mogoče premakniti \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Na mestu {remote} ni nameščenega okolja ownCloud (različice 7 ali višje)",
-    "Invalid ownCloud url" : "Neveljaven naslov URL strežnika ownCloud",
     "Gallery view" : "Galerijski pogled",
     "Could not load the description" : "Ni mogoče naložiti opisa",
     "Could not load the description: " : "Ni mogoče naložiti opisa:",

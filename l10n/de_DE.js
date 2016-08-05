@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Die Vorschau wird abgebrochen. Die Datei konnte nicht gefunden werden",
     "Could not move \"{file}\", target exists" : "Die Datei konnte nicht verschoben werden \"{file}\", da die Datei im Zielordner bereits existiert",
     "Could not move \"{file}\"" : "Die Datei konnte nicht verschoben werden \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Keine ownCloud-Installation (7 oder höher) auf {remote} gefunden",
-    "Invalid ownCloud url" : "Ungültige ownCloud-Adresse",
     "Gallery view" : "Gallery Ansicht",
     "Could not load the description" : "Die Beschreibung konnte nicht geladen werden",
     "Could not load the description: " : "Die Beschreibung konnte nicht geladen werden:",

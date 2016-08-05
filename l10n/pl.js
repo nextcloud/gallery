@@ -2,9 +2,10 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Galeria",
+    "There was a problem reading files from this album" : "Wystąpił problem podczas odczytywania pliku z tego albumu",
     "Aborting preview. Could not find the file" : "Przerywanie podglądu. Nie można odnaleźć pliku",
+    "Could not move \"{file}\", target exists" : "Nie można było przenieść „{file}” – plik o takiej nazwie już istnieje",
     "Could not move \"{file}\"" : "Nie można przenieść \"{file}\"",
-    "Invalid ownCloud url" : "Błędny adres URL",
     "Gallery view" : "Widok galerii",
     "Could not load the description: " : "Nie można załadować opisu:",
     "Copyright" : "Prawa autorskie",

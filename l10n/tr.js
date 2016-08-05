@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Önizleme iptal ediliyor. Dosya bulunamadı",
     "Could not move \"{file}\", target exists" : "\"{file}\" taşınamadı, hedef mevcut",
     "Could not move \"{file}\"" : "\"{file}\" taşınamadı",
-    "No ownCloud installation (7 or higher) found at {remote}" : "{remote} üzerinde ownCloud (7 veya daha üstü) kurulumu bulunamadı",
-    "Invalid ownCloud url" : "Geçersiz ownCloud adresi",
     "Gallery view" : "Galeri görünümü",
     "Could not load the description" : "Açıklama yüklenemedi",
     "Could not load the description: " : "Açıklama yüklenemedi:",

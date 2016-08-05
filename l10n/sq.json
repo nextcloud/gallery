@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Po ndërpritet paraparja. S’u gjet dot kartela",
     "Could not move \"{file}\", target exists" : "S’u lëviz dot \"{file}\", objektivi ekziston",
     "Could not move \"{file}\"" : "S’u lëviz dot \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Te {remote} s’u gjet instalim ownCloud (7 ose më sipër)",
-    "Invalid ownCloud url" : "URL ownCloud e pavlefshme",
     "Gallery view" : "Pamje Galeri",
     "Could not load the description" : "S’ngarkoi dot përshkrimin",
     "Could not load the description: " : "S’ngarkoi dot përshkrimin: ",

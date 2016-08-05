@@ -4,8 +4,6 @@ OC.L10N.register(
     "Gallery" : "Galerii",
     "Aborting preview. Could not find the file" : "Eelvaate tühistamine. Faili ei leitud",
     "Could not move \"{file}\"" : "\"{file}\" liigutamine ebaõnnestus",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Saidilt {remote} ei leitud ownCloudi (7 või uuem) ",
-    "Invalid ownCloud url" : "Vigane ownCloud url",
     "Gallery view" : "Galeriivaade",
     "Could not load the description" : "Kirjelduse laadimine ebaõnnestus",
     "Could not load the description: " : "Kirjelduse laadimine ebaõnnestus:",

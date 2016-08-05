@@ -5,8 +5,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Interrupcion de la previsualizacion. Lo fichièr es introbable.",
     "Could not move \"{file}\", target exists" : "Impossible de desplaçar \"{file}\", la cibla existís",
     "Could not move \"{file}\"" : "Impossible de desplaçar \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Cap d'installacion ownCloud (7 o superior) pas trobada sus {remote}",
-    "Invalid ownCloud url" : "URL ownCloud invalida",
     "Gallery view" : "Vista en galariá",
     "Could not load the description" : "Impossible de cargar la descripcion",
     "Could not load the description: " : "Impossible de cargar la descripcion :",

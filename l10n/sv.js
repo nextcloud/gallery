@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Avbryt förhandsgranskning. Kunde ej hitta filen",
     "Could not move \"{file}\", target exists" : "Kunde inte flytta \"{file}\", filen existerar redan",
     "Could not move \"{file}\"" : "Kunde inte flytta \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Ingen OwnCloud Installation (7 eller senare) funnen på {remote}",
-    "Invalid ownCloud url" : "Felaktig ownCloud url",
     "Gallery view" : "Galleri vy",
     "Could not load the description" : "Kunde ej ladda beskrivning",
     "Could not load the description: " : "Kunde ej ladda beskrivningen",

@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
     "Could not move \"{file}\", target exists" : "No se pudo mover \"{file}\", destino ya existe",
     "Could not move \"{file}\"" : "No se pudo mover \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "No se encontró una instalación de ownCloud (7 o mayor) en {remote}",
-    "Invalid ownCloud url" : "URL de ownCloud inválida",
     "Gallery view" : "Vista de galería",
     "Could not load the description" : "No se pudo cargar la descripción",
     "Could not load the description: " : "No se pudo cargar la descripción:",

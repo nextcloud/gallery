@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Aborting preview. Could not find the file",
     "Could not move \"{file}\", target exists" : "Could not move \"{file}\", target exists",
     "Could not move \"{file}\"" : "Could not move \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "No ownCloud installation (7 or higher) found at {remote}",
-    "Invalid ownCloud url" : "Invalid ownCloud URL",
     "Gallery view" : "Gallery view",
     "Could not load the description" : "Could not load the description",
     "Could not load the description: " : "Could not load the description: ",
