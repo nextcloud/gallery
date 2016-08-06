@@ -32,6 +32,7 @@ OC.L10N.register(
     "Close" : "Luk",
     "Download" : "Hent",
     "Toggle background" : "Slå baggrund til/fra",
+    "Delete" : "Slet",
     "\"{name}\" is an invalid file name." : "'{name}' er et ugyldigt filnavn.",
     "File name cannot be empty." : "Filnavnet kan ikke stå tomt.",
     "Upload" : "Upload",

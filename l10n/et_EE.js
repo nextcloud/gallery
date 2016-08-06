@@ -26,6 +26,8 @@ OC.L10N.register(
     "Close" : "Sulge",
     "Download" : "Lae alla",
     "Toggle background" : "Tausta lülitamine",
+    "Delete" : "Kustuta",
+    "Could not create file \"{file}\"" : "Faili \"{file}\" loomine ebaõnnestus",
     "\"{name}\" is an invalid file name." : "\"{name}\" on vigane failinimi.",
     "File name cannot be empty." : "Faili nimi ei saa olla tühi.",
     "Upload" : "Lae üles",

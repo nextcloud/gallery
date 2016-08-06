@@ -23,6 +23,7 @@ OC.L10N.register(
     "Close" : "Затвори",
     "Download" : "Изтегляне",
     "Toggle background" : "Превключване на фона",
+    "Delete" : "Изтриване",
     "\"{name}\" is an invalid file name." : "\"{name}\" е непозволено име за файл.",
     "File name cannot be empty." : "Името на файла не може да бъде празно.",
     "Upload" : "Качване",

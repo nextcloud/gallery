@@ -32,6 +32,7 @@ OC.L10N.register(
     "Close" : "Zavrieť",
     "Download" : "Sťahovanie",
     "Toggle background" : "Prepnúť pozadie",
+    "Delete" : "Zmazať",
     "\"{name}\" is an invalid file name." : "\"{name}\" je neplatné meno súboru.",
     "File name cannot be empty." : "Meno súboru nemôže byť prázdne",
     "Upload" : "Nahrať",

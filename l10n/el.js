@@ -28,6 +28,8 @@ OC.L10N.register(
     "Close" : "Κλείσιμο",
     "Download" : "Λήψη",
     "Toggle background" : "Αλλαγή φόντου",
+    "Delete" : "Διαγραφή",
+    "Could not create file \"{file}\"" : "Αδυναμία δημιουργίας του \"{file}\"",
     "\"{name}\" is an invalid file name." : "Το \"{name}\" δεν είναι έγκυρο όνομα αρχείου.",
     "File name cannot be empty." : "Το όνομα αρχείου δεν μπορεί να είναι κενό.",
     "Upload" : "Μεταφόρτωση",

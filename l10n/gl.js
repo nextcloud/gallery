@@ -23,6 +23,7 @@ OC.L10N.register(
     "Close" : "Pechar",
     "Download" : "Descargar",
     "Toggle background" : "Alternar o fondo",
+    "Delete" : "Eliminar",
     "\"{name}\" is an invalid file name." : "«{name}» é un nome incorrecto de ficheiro.",
     "File name cannot be empty." : "O nome de ficheiro non pode estar baleiro",
     "Upload" : "Enviar",

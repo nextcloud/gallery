@@ -25,6 +25,7 @@ OC.L10N.register(
     "Close" : "Tutup",
     "Download" : "Unduh",
     "Toggle background" : "Ubah latar belakang",
+    "Delete" : "Hapus",
     "\"{name}\" is an invalid file name." : "\"{name}\" adalah nama berkas yang tidak sah.",
     "File name cannot be empty." : "Nama berkas tidak boleh kosong.",
     "Upload" : "Unggah",
