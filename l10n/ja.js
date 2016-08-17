@@ -35,7 +35,7 @@ OC.L10N.register(
     "Download" : "ダウンロード",
     "Toggle background" : "背景の切り替え",
     "Delete" : "削除",
-    "Could not create file \"{file}\" because it already exists" : "ファイル \"{file}\"は既に存在するため作成できませんでした",
+    "Could not create file \"{file}\" because it already exists" : "ファイル \"{file}\"はすでに存在するため作成できませんでした",
     "Could not create file \"{file}\"" : "ファイル \"{file}\" を作成できませんでした",
     "\"{name}\" is an invalid file name." : "\"{name}\" は無効なファイル名です。",
     "File name cannot be empty." : "ファイル名を空にすることはできません。",
