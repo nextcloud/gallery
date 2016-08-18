@@ -6,6 +6,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Predogled je prekinjen. Ni mogoče najti datoteke.",
     "Could not move \"{file}\", target exists" : "Datoteke \"{file}\" ni mogoče premakniti, ker cilj že obstaja",
     "Could not move \"{file}\"" : "Ni mogoče premakniti \"{file}\"",
+    "No compatible server found at {remote}" : "Na naslovu {remote} ni skladnih strežnikov",
     "Invalid server url" : "Neveljaven naslov URL strežnika",
     "Gallery view" : "Galerijski pogled",
     "Could not load the description" : "Ni mogoče naložiti opisa",
