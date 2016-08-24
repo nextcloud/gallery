@@ -76,7 +76,7 @@ style(
 						  data-owner="<?php p($_['displayName']) ?>"
 						  data-name="<?php p($_['filename']) ?>">
 									<button id="save-button"><?php p(
-											$l->t('Add to your ownCloud')
+											$l->t('Add to your Nextcloud')
 										) ?></button>
 									<form class="save-form hidden" action="#">
 										<input type="text" id="remote_address"
