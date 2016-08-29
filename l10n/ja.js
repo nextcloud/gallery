@@ -6,6 +6,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "Could not move \"{file}\", target exists" : "ターゲットが存在するため，ファイル \"{file}\"を移動できませんでした",
     "Could not move \"{file}\"" : "\"{file}\" を移動できませんでした",
+    "No compatible server found at {remote}" : "{remote}には互換性のあるサーバーが見つかりませんでした",
     "Invalid server url" : "無効なサーバーURL",
     "Gallery view" : "ギャラリー表示",
     "Could not load the description" : "説明を読み出せませんでした",
