@@ -5,8 +5,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Interrupcion de la previsualizacion. Lo fichièr es introbable.",
     "Could not move \"{file}\", target exists" : "Impossible de desplaçar \"{file}\", la cibla existís",
     "Could not move \"{file}\"" : "Impossible de desplaçar \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Cap d'installacion ownCloud (7 o superior) pas trobada sus {remote}",
-    "Invalid ownCloud url" : "URL ownCloud invalida",
     "Gallery view" : "Vista en galariá",
     "Could not load the description" : "Impossible de cargar la descripcion",
     "Could not load the description: " : "Impossible de cargar la descripcion :",
@@ -31,6 +29,9 @@ OC.L10N.register(
     "Close" : "Tampar",
     "Download" : "Telecargar",
     "Toggle background" : "Activar/Desactivar lo rèire plan",
+    "Delete" : "Suprimir",
+    "Could not create file \"{file}\" because it already exists" : "Impossible de crear lo fichièr \"{file}\" perque existís ja",
+    "Could not create file \"{file}\"" : "Impossible de crear lo fichièr \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" es pas un nom de fichièr valid.",
     "File name cannot be empty." : "Lo nom de fichièr pòt pas èsser void.",
     "Upload" : "Cargament",
@@ -100,7 +101,6 @@ OC.L10N.register(
     "the link has expired" : "lo ligam a expirat",
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
-    "Add to your ownCloud" : "Apondre a vòstre ownCloud",
     "Picture view" : "Visualizacion de l'imatge"
 },
 "nplurals=2; plural=(n > 1);");

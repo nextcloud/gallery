@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "Could not move \"{file}\", target exists" : "Nelze přesunout \"{file}\", cíl existuje",
     "Could not move \"{file}\"" : "Nelze přesunout \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Nebyla nalezena instalace ownCloud (7 nebo vyšší) na {remote}",
-    "Invalid ownCloud url" : "Neplatná ownCloud url",
     "Gallery view" : "Náhled galerie",
     "Could not load the description" : "Nezdařilo se načíst popis",
     "Could not load the description: " : "Nezdařilo se načíst popis:",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Nahrajte nové soubory pomocí přetažení, nebo za použití tlačítka [+] výše",
     "Configuration error" : "Chyba konfigurace",
     "New" : "Nový",
+    "Hide Album" : "Skrýt album",
+    "Could not hide album" : "Nepodařilo se skrýt album",
     "Error loading slideshow template" : "Chyba při načítání šablony prezentace",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Chyba!</strong> Náhled tohoto souboru nelze vytvořit.<br>Přejděte prosím na následující položku a tento obrázek bude odstraněn ze slideshow",
     "Next" : "Následující",
@@ -32,6 +32,9 @@
     "Close" : "Zavřít",
     "Download" : "Stáhnout",
     "Toggle background" : "Přepnout pozadí",
+    "Delete" : "Smazat",
+    "Could not create file \"{file}\" because it already exists" : "Nelze vytvořit soubor \"{file}\", protože již existuje",
+    "Could not create file \"{file}\"" : "Nelze vytvořit soubor \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" je neplatným názvem souboru.",
     "File name cannot be empty." : "Název souboru nemůže být prázdný řetězec.",
     "Upload" : "Nahrát",
@@ -102,7 +105,6 @@
     "the link has expired" : "platnost odkazu vypršela",
     "sharing is disabled" : "sdílení je zakázané",
     "For more information, please ask the person who has sent you this link." : "Pro více informací kontaktujte osobu, která vám zaslala tento odkaz.",
-    "Add to your ownCloud" : "Přidat do svého ownCloudu",
     "Picture view" : "Zobrazení obrázku"
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 }

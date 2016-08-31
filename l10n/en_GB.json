@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Aborting preview. Could not find the file",
     "Could not move \"{file}\", target exists" : "Could not move \"{file}\", target exists",
     "Could not move \"{file}\"" : "Could not move \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "No ownCloud installation (7 or higher) found at {remote}",
-    "Invalid ownCloud url" : "Invalid ownCloud URL",
     "Gallery view" : "Gallery view",
     "Could not load the description" : "Could not load the description",
     "Could not load the description: " : "Could not load the description: ",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Upload new files via drag and drop or by using the [+] button above",
     "Configuration error" : "Configuration error",
     "New" : "New",
+    "Hide Album" : "Hide Album",
+    "Could not hide album" : "Could not hide album",
     "Error loading slideshow template" : "Error loading slideshow template",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow",
     "Next" : "Next",
@@ -32,6 +32,9 @@
     "Close" : "Close",
     "Download" : "Download",
     "Toggle background" : "Toggle background",
+    "Delete" : "Delete",
+    "Could not create file \"{file}\" because it already exists" : "Could not create file \"{file}\" because it already exists",
+    "Could not create file \"{file}\"" : "Could not create file \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" is an invalid file name.",
     "File name cannot be empty." : "File name cannot be empty.",
     "Upload" : "Upload",
@@ -102,7 +105,6 @@
     "the link has expired" : "the link has expired",
     "sharing is disabled" : "sharing is disabled",
     "For more information, please ask the person who has sent you this link." : "For more information, please ask the person who has sent you this link.",
-    "Add to your ownCloud" : "Add to your ownCloud",
     "Picture view" : "Picture view"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

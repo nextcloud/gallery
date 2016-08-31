@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Előnézet megszakítása. Nem található a fájl",
     "Could not move \"{file}\", target exists" : "{file} fájl nem áthelyezhető, mert a cél már létezik",
     "Could not move \"{file}\"" : "{file} fájl nem áthelyezhető",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Nem található ownCloud telepítés (7 vagy nagyobb verzió) itt:  {remote}",
-    "Invalid ownCloud url" : "Érvénytelen ownCloud webcím",
     "Gallery view" : "Galéria nézet",
     "Could not load the description" : "Nem lehet betölteni a leírást",
     "Could not load the description: " : "Nem lehet betölteni a leírást:",
@@ -32,6 +30,9 @@
     "Close" : "Bezárás",
     "Download" : "Letöltés",
     "Toggle background" : "Háttér ki/be kapcsolása",
+    "Delete" : "Törlés",
+    "Could not create file \"{file}\" because it already exists" : "{file} fájl nem létrehozható, mert már létezik",
+    "Could not create file \"{file}\"" : "{file} fájl nem létrehozható",
     "\"{name}\" is an invalid file name." : "\"{name}\" érvénytelen, mint fájlnév.",
     "File name cannot be empty." : "A fájlnév nem lehet semmi.",
     "Upload" : "Feltöltés",
@@ -102,7 +103,6 @@
     "the link has expired" : "a hivatkozás lejárt",
     "sharing is disabled" : "letiltásra került a megosztás",
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
-    "Add to your ownCloud" : "Adjuk hozzá a saját ownCloudunkhoz",
     "Picture view" : "Képnézet"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

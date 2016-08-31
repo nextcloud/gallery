@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "מבטל תצוגה מקדימה. לא מצליח לאתר את הקובץ",
     "Could not move \"{file}\", target exists" : "לא ניתן להעביר \"{file}\", קובץ מטרה קיים",
     "Could not move \"{file}\"" : "לא ניתן להעביר \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "לא נמצאה התקנת ownCloud (גרסה 7 ומעלה) ב- {remote}",
-    "Invalid ownCloud url" : "נתיב ownCloud לא חוקי",
     "Gallery view" : "תצוגת גלריה",
     "Could not load the description" : "לא ניתן לטעון את התיאור",
     "Could not load the description: " : "לא ניתן לטעון את התיאור:",
@@ -23,7 +21,10 @@
     "Upload new files via drag and drop or by using the [+] button above" : "העלאת קבצים חדשים באמצעות גרירה ושחרור או באמצעות כפתור ה- [+] מעלה",
     "Configuration error" : "שגיאת הגדרה",
     "New" : "חדש",
+    "Hide Album" : "הסתרת אלבום",
+    "Could not hide album" : "לא ניתן היה להסתיר את האלבום",
     "Error loading slideshow template" : "שגיאה בטעינת תבנית המצגת",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>שגיאה!</strong> לא ניתן ליצור תצוגה מקדימה לקובץ זה.<br>יש לעבור לשקופית הבאה בזמן הסרת התמונה מהמצגת",
     "Next" : "הבא",
     "Play" : "נגן",
     "Pause" : "השהה",
@@ -31,6 +32,9 @@
     "Close" : "סגירה",
     "Download" : "הורדה",
     "Toggle background" : "מעבר בין רקעים",
+    "Delete" : "מחיקה",
+    "Could not create file \"{file}\" because it already exists" : "לא ניתן ליצור את הקובץ \"{file}\" כיוון שהוא כבר קיים",
+    "Could not create file \"{file}\"" : "לא ניתן ליצור את הקובץ \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" הנו שם קובץ לא חוקי.",
     "File name cannot be empty." : "שם קובץ אינו יכול להיות ריק",
     "Upload" : "העלאה",
@@ -101,7 +105,6 @@
     "the link has expired" : "הקישור פג תוקף",
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
-    "Add to your ownCloud" : "הוספה ל- ownCloud שלך",
     "Picture view" : "תצוגת תמונה"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -5,8 +5,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Ακύρωση προεπισκόπησης. Αδυναμία εύρεσης αρχείου",
     "Could not move \"{file}\", target exists" : "Αδυναμία μετακίνησης του \"{file}\", υπάρχει ήδη αρχείο με αυτό το όνομα",
     "Could not move \"{file}\"" : "Αδυναμία μετακίνησης του \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Δεν βρέθηκε εγκατάσταση ownCloud (έκδοση 7 ή νεώτερη) στο {remote}",
-    "Invalid ownCloud url" : "Άκυρη url ownCloud ",
     "Gallery view" : "Προβολή Συλλογής",
     "Could not load the description" : "Αδυναμία φόρτωσης περιγραφής",
     "Could not load the description: " : "Αδυναμία φόρτωσης της περιγραφής:",
@@ -30,6 +28,8 @@ OC.L10N.register(
     "Close" : "Κλείσιμο",
     "Download" : "Λήψη",
     "Toggle background" : "Αλλαγή φόντου",
+    "Delete" : "Διαγραφή",
+    "Could not create file \"{file}\"" : "Αδυναμία δημιουργίας του \"{file}\"",
     "\"{name}\" is an invalid file name." : "Το \"{name}\" δεν είναι έγκυρο όνομα αρχείου.",
     "File name cannot be empty." : "Το όνομα αρχείου δεν μπορεί να είναι κενό.",
     "Upload" : "Μεταφόρτωση",
@@ -99,7 +99,6 @@ OC.L10N.register(
     "the link has expired" : "ο σύνδεσμος έληξε",
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
-    "Add to your ownCloud" : "Προσθήκη στο ownCloud σου",
     "Picture view" : "Προβολή εικονιδίων"
 },
 "nplurals=2; plural=(n != 1);");

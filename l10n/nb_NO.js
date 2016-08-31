@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Avbryter visning. Fant ikke filen",
     "Could not move \"{file}\", target exists" : "Klarte ikke å flytte \"{file}\", målfilen finnes",
     "Could not move \"{file}\"" : "Klarte ikke å flytte \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Ingen ownCloud-installasjon (7 eller høyere) funnet på {remote}",
-    "Invalid ownCloud url" : "Ugyldig ownCloud-url",
     "Gallery view" : "Gallerivisning",
     "Could not load the description" : "Klarte ikke å laste inn beskrivelsen",
     "Could not load the description: " : "Klarte ikke å laste inn beskrivelsen:",
@@ -34,6 +32,9 @@ OC.L10N.register(
     "Close" : "Lukk",
     "Download" : "Last ned",
     "Toggle background" : "Bytt bakgrunn",
+    "Delete" : "Slett",
+    "Could not create file \"{file}\" because it already exists" : "Klarte ikke å opprette fil \"{file}\" fordi den finnes allerede",
+    "Could not create file \"{file}\"" : "Klarte ikke å opprette fil \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" er et uglydig filnavn.",
     "File name cannot be empty." : "Filnavn kan ikke være tomt.",
     "Upload" : "Last opp",
@@ -104,7 +105,6 @@ OC.L10N.register(
     "the link has expired" : "lenken er utløpt",
     "sharing is disabled" : "deling er deaktivert",
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
-    "Add to your ownCloud" : "Legg til i din ownCloud",
     "Picture view" : "Bildevisning"
 },
 "nplurals=2; plural=(n != 1);");

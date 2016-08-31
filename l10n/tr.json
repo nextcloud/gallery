@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Önizleme iptal ediliyor. Dosya bulunamadı",
     "Could not move \"{file}\", target exists" : "\"{file}\" taşınamadı, hedef mevcut",
     "Could not move \"{file}\"" : "\"{file}\" taşınamadı",
-    "No ownCloud installation (7 or higher) found at {remote}" : "{remote} üzerinde ownCloud (7 veya daha üstü) kurulumu bulunamadı",
-    "Invalid ownCloud url" : "Geçersiz ownCloud adresi",
     "Gallery view" : "Galeri görünümü",
     "Could not load the description" : "Açıklama yüklenemedi",
     "Could not load the description: " : "Açıklama yüklenemedi:",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Yeni dosyaları sürükle ve bırak ile ya da yukarıdaki [+] düğmesini kullanarak yükleyin",
     "Configuration error" : "Yapılandırma hatası",
     "New" : "Yeni",
+    "Hide Album" : "Albümü Gizle",
+    "Could not hide album" : "Albüm gizlenemedi",
     "Error loading slideshow template" : "Slayt gösteri şablonu yüklenirken hata",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Hata!</strong> Dosyanın önizlemesi oluşturulamadı.<br>Lütfen bir sonraki slayta geçip bu resmi slayt gösterisinden kaldırın.",
     "Next" : "Sonraki",
@@ -32,6 +32,9 @@
     "Close" : "Kapat",
     "Download" : "İndir",
     "Toggle background" : "Arkaplanı değiştir",
+    "Delete" : "Sil",
+    "Could not create file \"{file}\" because it already exists" : "\"{file}\" dosyası zaten mevcut olduğundan oluşturulamadı",
+    "Could not create file \"{file}\"" : "\"{file}\" dosyası oluşturulamadı",
     "\"{name}\" is an invalid file name." : "\"{name}\" geçersiz bir dosya adı.",
     "File name cannot be empty." : "Dosya adı boş olamaz.",
     "Upload" : "Yükle",
@@ -102,7 +105,6 @@
     "the link has expired" : "bağlantı zamanı geçmiş",
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Daha fazla bilgi için size bu bağlantıyı veren kişiyle bağlantıya geçin.",
-    "Add to your ownCloud" : "ownCloud'ınıza Ekleyin",
     "Picture view" : "Resim görünümü"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

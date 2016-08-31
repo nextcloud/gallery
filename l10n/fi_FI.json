@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Perutaan esikatselu, tiedostoa ei löytynyt",
     "Could not move \"{file}\", target exists" : "Tiedoston \"{file}\" siirtäminen ei onnistunut, kohde on olemassa",
     "Could not move \"{file}\"" : "Tiedoston \"{file}\" siirtäminen ei onnistunut",
-    "No ownCloud installation (7 or higher) found at {remote}" : "ownCloud-asennusta (versiota 7 tai uudempaa) ei löytynyt osoitteesta {remote}",
-    "Invalid ownCloud url" : "Virheellinen ownCloud-osoite",
     "Gallery view" : "Gallerianäkymä",
     "Could not load the description" : "Kuvauksen lataaminen epäonnistui",
     "Could not load the description: " : "Kuvauksen lataaminen epäonnistui:",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Lähetä uusia tiedostoja vetämällä ne tänne tai käyttämällä yllä olevaa [+]-painiketta",
     "Configuration error" : "Asetusvirhe",
     "New" : "Uusi",
+    "Hide Album" : "Piilota albumi",
+    "Could not hide album" : "Albumin piilottaminen ei onnistunut",
     "Error loading slideshow template" : "Virhe ladatessa diaesityksen mallipohjaa",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Virhe!</strong> Tästä tiedostosta ei voitu luoda esikatselukuvaa.<br>Siirry seuraavaan diaan, tämä kuva poistetaan diaesityksestä",
     "Next" : "Seuraava",
@@ -32,6 +32,9 @@
     "Close" : "Sulje",
     "Download" : "Lataa",
     "Toggle background" : "Tausta päälle/pois",
+    "Delete" : "Poista",
+    "Could not create file \"{file}\" because it already exists" : "Tiedostoa \"{file}\" ei voitu luoda, koska se on jo olemassa",
+    "Could not create file \"{file}\"" : "Tiedostoa \"{file}\" ei voitu luoda",
     "\"{name}\" is an invalid file name." : "\"{name}\" on virheellinen tiedostonimi.",
     "File name cannot be empty." : "Tiedoston nimi ei voi olla tyhjä.",
     "Upload" : "Lähetä",
@@ -102,7 +105,6 @@
     "the link has expired" : "linkki on vanhentunut",
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
-    "Add to your ownCloud" : "Lisää ownCloudiisi",
     "Picture view" : "Kuvanäkymä"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

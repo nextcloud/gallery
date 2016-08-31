@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
     "Could not move \"{file}\", target exists" : "No se pudo mover \"{file}\", destino ya existe",
     "Could not move \"{file}\"" : "No se pudo mover \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "No se encontró una instalación de ownCloud (7 o mayor) en {remote}",
-    "Invalid ownCloud url" : "URL de ownCloud inválida",
     "Gallery view" : "Vista de galería",
     "Could not load the description" : "No se pudo cargar la descripción",
     "Could not load the description: " : "No se pudo cargar la descripción:",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Sube nuevos ficheros mediante arrastrar y soltar  o usando el botón [+] encima.",
     "Configuration error" : "Error en la configuración",
     "New" : "Nuevo",
+    "Hide Album" : "Albun oculto",
+    "Could not hide album" : "No puedo ocultar el albun",
     "Error loading slideshow template" : "Error al cargar la plantilla de presentación",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>¡Error!</strong> No se pudo generar una vista previa de este archivo.<br>Por favor, vaya a la siguiente presentación mientras eliminamos esta imagen de la presentación",
     "Next" : "Siguiente",
@@ -32,6 +32,9 @@
     "Close" : "Cerrar",
     "Download" : "Descargar",
     "Toggle background" : "Mostrar/ocultar fondo",
+    "Delete" : "Eliminar",
+    "Could not create file \"{file}\" because it already exists" : "No se pudo crear archivo \"{file}\" porque ya existe",
+    "Could not create file \"{file}\"" : "No se pudo crear archivo \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" es un nombre de archivo inválido.",
     "File name cannot be empty." : "El nombre de archivo no puede estar vacío.",
     "Upload" : "Subir",
@@ -102,7 +105,6 @@
     "the link has expired" : "el enlace ha expirado",
     "sharing is disabled" : "compartir está desactivado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, contacte a la persona que le envió el enlace.",
-    "Add to your ownCloud" : "Agregue su propio ownCloud",
     "Picture view" : "Vista de imágenes"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

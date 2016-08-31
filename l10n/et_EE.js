@@ -4,8 +4,6 @@ OC.L10N.register(
     "Gallery" : "Galerii",
     "Aborting preview. Could not find the file" : "Eelvaate tühistamine. Faili ei leitud",
     "Could not move \"{file}\"" : "\"{file}\" liigutamine ebaõnnestus",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Saidilt {remote} ei leitud ownCloudi (7 või uuem) ",
-    "Invalid ownCloud url" : "Vigane ownCloud url",
     "Gallery view" : "Galeriivaade",
     "Could not load the description" : "Kirjelduse laadimine ebaõnnestus",
     "Could not load the description: " : "Kirjelduse laadimine ebaõnnestus:",
@@ -28,6 +26,8 @@ OC.L10N.register(
     "Close" : "Sulge",
     "Download" : "Lae alla",
     "Toggle background" : "Tausta lülitamine",
+    "Delete" : "Kustuta",
+    "Could not create file \"{file}\"" : "Faili \"{file}\" loomine ebaõnnestus",
     "\"{name}\" is an invalid file name." : "\"{name}\" on vigane failinimi.",
     "File name cannot be empty." : "Faili nimi ei saa olla tühi.",
     "Upload" : "Lae üles",
@@ -95,7 +95,6 @@ OC.L10N.register(
     "the link has expired" : "link on aegunud",
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
-    "Add to your ownCloud" : "Lisa oma ownCloudi",
     "Picture view" : "Pildi vaade"
 },
 "nplurals=2; plural=(n != 1);");

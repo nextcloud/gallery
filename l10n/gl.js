@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Galería",
     "Aborting preview. Could not find the file" : "Cancelando a vista previa. Non foi posíbel atopar o ficheiro",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Non se atopou unha instalación do ownCloud (7 ou superior) en {remote}",
-    "Invalid ownCloud url" : "URL incorrecto do ownCloud",
     "Could not load the description" : "Non foi posíbel cargar a descrición",
     "Could not load the description: " : "Non foi posíbel cargar a descrición:",
     "Copyright" : "Copyright",
@@ -25,6 +23,7 @@ OC.L10N.register(
     "Close" : "Pechar",
     "Download" : "Descargar",
     "Toggle background" : "Alternar o fondo",
+    "Delete" : "Eliminar",
     "\"{name}\" is an invalid file name." : "«{name}» é un nome incorrecto de ficheiro.",
     "File name cannot be empty." : "O nome de ficheiro non pode estar baleiro",
     "Upload" : "Enviar",
@@ -94,7 +93,6 @@ OC.L10N.register(
     "the link has expired" : "caducou a ligazón",
     "sharing is disabled" : "foi desactivada a compartición",
     "For more information, please ask the person who has sent you this link." : "Para obter máis información, pregúntelle á persoa que lle enviou esta ligazón.",
-    "Add to your ownCloud" : "Engadir ao seu ownCloud",
     "Picture view" : "Ver imaxes"
 },
 "nplurals=2; plural=(n != 1);");

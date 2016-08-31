@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Po ndërpritet paraparja. S’u gjet dot kartela",
     "Could not move \"{file}\", target exists" : "S’u lëviz dot \"{file}\", objektivi ekziston",
     "Could not move \"{file}\"" : "S’u lëviz dot \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Te {remote} s’u gjet instalim ownCloud (7 ose më sipër)",
-    "Invalid ownCloud url" : "URL ownCloud e pavlefshme",
     "Gallery view" : "Pamje Galeri",
     "Could not load the description" : "S’ngarkoi dot përshkrimin",
     "Could not load the description: " : "S’ngarkoi dot përshkrimin: ",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Ngarkoni kartela të reja përmes teknikës merr dhe vër, ose duke përdorur butonin [+] me sipër",
     "Configuration error" : "Gabim formësimi",
     "New" : "E re",
+    "Hide Album" : "Fshihe Albumin",
+    "Could not hide album" : "Albumi s’u fsheh dot",
     "Error loading slideshow template" : "Gabim gjatë ngarkimit të gjedhes për diapozitiva",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Gabim!</strong> S’u prodhua dot një paraparje e kësaj kartele.<br>Ju lutemi, kaloni te diapozitiva pasuese, teksa heqim këtë figurë nga paraqitja",
     "Next" : "Pasuesja",
@@ -32,6 +32,9 @@
     "Close" : "Mbylle",
     "Download" : "Shkarko",
     "Toggle background" : "Ndërroni sfondin",
+    "Delete" : "Fshije",
+    "Could not create file \"{file}\" because it already exists" : "S’u krijua dot kartela \"{file}\" ngaqë ka një të tillë",
+    "Could not create file \"{file}\"" : "S’u krijua dot kartela \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" është emër i pavlefshëm kartele.",
     "File name cannot be empty." : "Emri i kartelës s’mund të jetë i zbrazët.",
     "Upload" : "Ngarkoje",
@@ -102,7 +105,6 @@
     "the link has expired" : "lidhja ka skaduar",
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër të dhëna, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
-    "Add to your ownCloud" : "Shtojeni te ownCloud-i juaj",
     "Picture view" : "Pamje Foto"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

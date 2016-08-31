@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "中止瀏覽，無法找到該檔案",
     "Could not move \"{file}\", target exists" : "無法移動 \"{file}\"，目標已經存在",
     "Could not move \"{file}\"" : "無法移動 \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "沒有在 {remote} 找到 ownCloud （需為版本 7 或以上）",
-    "Invalid ownCloud url" : "無效的 ownCloud URL",
     "Gallery view" : "瀏覽相簿",
     "Could not load the description" : "無法載入敘述",
     "Could not load the description: " : "無法載入敘述",
@@ -33,6 +31,9 @@ OC.L10N.register(
     "Close" : " 關閉",
     "Download" : "下載",
     "Toggle background" : "切換背景",
+    "Delete" : "刪除",
+    "Could not create file \"{file}\" because it already exists" : "無法建立檔案 \"{file}\"，因為此檔案已存在",
+    "Could not create file \"{file}\"" : "無法建立檔案 \"{file}\"",
     "\"{name}\" is an invalid file name." : "{name} 是無效的檔名",
     "File name cannot be empty." : "檔名不能為空",
     "Upload" : "上傳",
@@ -103,7 +104,6 @@ OC.L10N.register(
     "the link has expired" : "連結過期",
     "sharing is disabled" : "分享功能已停用",
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
-    "Add to your ownCloud" : "加入到你的 ownCloud",
     "Picture view" : "檢視圖片"
 },
 "nplurals=1; plural=0;");

@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Forlader forhåndsvisning. Kunne ikke finde filen",
     "Could not move \"{file}\", target exists" : "Kunne ikke flytte \"{file}\" - der findes allerede en fil med dette navn",
     "Could not move \"{file}\"" : "Kunne ikke flytte \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Der er ingen ownCloud-installation (7 eller højere) på {remote}",
-    "Invalid ownCloud url" : "Ugyldig ownCloud-URL",
     "Gallery view" : "Galleri visning",
     "Could not load the description" : "Kunne ikke indlæse beskrivelsen",
     "Could not load the description: " : "Kunne ikke indlæse beskrivelsen:",
@@ -23,7 +21,10 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Upload nye filer ved træk-og-slip eller ved at bruge [+]-knappen ovenfor",
     "Configuration error" : "Konfigurationsfejl",
     "New" : "Ny",
+    "Hide Album" : "Skjul album",
+    "Could not hide album" : "Kunne ikke skjule album",
     "Error loading slideshow template" : "Fejl ved indlæsning af skabelon for diasshow",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fejl!</strong> Kunne ikke danne forhåndsvisning af denne fil.<br>Gå venligst til næste slide mens vi fjerner dette billede fra slideshow'et",
     "Next" : "Næste",
     "Play" : "Afspil",
     "Pause" : "Pause",
@@ -31,6 +32,9 @@
     "Close" : "Luk",
     "Download" : "Hent",
     "Toggle background" : "Slå baggrund til/fra",
+    "Delete" : "Slet",
+    "Could not create file \"{file}\" because it already exists" : "Kunne ikke oprette filen \"{file}\", fordi den allerede findes",
+    "Could not create file \"{file}\"" : "Kunne ikke oprette filen \"{file}\"",
     "\"{name}\" is an invalid file name." : "'{name}' er et ugyldigt filnavn.",
     "File name cannot be empty." : "Filnavnet kan ikke stå tomt.",
     "Upload" : "Upload",
@@ -101,7 +105,6 @@
     "the link has expired" : "linket er udløbet",
     "sharing is disabled" : "deling er deaktiveret",
     "For more information, please ask the person who has sent you this link." : "For mere information, så spørg personen som sendte dig dette link.",
-    "Add to your ownCloud" : "Tilføj til din ownCload",
     "Picture view" : "Billedvisning"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

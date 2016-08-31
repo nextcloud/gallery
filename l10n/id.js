@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Galeri",
     "Aborting preview. Could not find the file" : "Membatalkan pratinjau. Tidak dapat menemukan berkas.",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Tidak ditemukan instalasi ownCloud (7 atau lebih tinggi) pada {remote}",
-    "Invalid ownCloud url" : "URL ownCloud tidak sah",
     "Gallery view" : "Tampilan galeri",
     "Could not load the description" : "Tidak dapat memuat deskripsi",
     "Could not load the description: " : "Tidak dapat memuat deskripsi:",
@@ -27,6 +25,7 @@ OC.L10N.register(
     "Close" : "Tutup",
     "Download" : "Unduh",
     "Toggle background" : "Ubah latar belakang",
+    "Delete" : "Hapus",
     "\"{name}\" is an invalid file name." : "\"{name}\" adalah nama berkas yang tidak sah.",
     "File name cannot be empty." : "Nama berkas tidak boleh kosong.",
     "Upload" : "Unggah",
@@ -96,7 +95,6 @@ OC.L10N.register(
     "the link has expired" : "tautan telah kadaluarsa",
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
-    "Add to your ownCloud" : "Tambahkan ke ownCloud Anda",
     "Picture view" : "Tampilan gambar"
 },
 "nplurals=1; plural=0;");

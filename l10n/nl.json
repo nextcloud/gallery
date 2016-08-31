@@ -4,8 +4,6 @@
     "Aborting preview. Could not find the file" : "Voorvertoning afgebroken. Kon het bestand niet vinden",
     "Could not move \"{file}\", target exists" : "Kon \"{file}\" niet verplaatsen, doel bestaat al",
     "Could not move \"{file}\"" : "Kon \"{file}\" niet verplaatsen",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Geen recente ownCloud installatie (7 of hoger) gevonden op {remote}",
-    "Invalid ownCloud url" : "Ongeldige ownCloud url",
     "Gallery view" : "Album",
     "Could not load the description" : "Kon de beschrijving niet laden",
     "Could not load the description: " : "Kon de beschrijving niet laden:",
@@ -23,6 +21,8 @@
     "Upload new files via drag and drop or by using the [+] button above" : "Upload nieuwe bestanden via drag 'n drop of door gebruik van de  [+] knop hierboven",
     "Configuration error" : "Configuratiefout",
     "New" : "Nieuw",
+    "Hide Album" : "Verbergen album",
+    "Could not hide album" : "Kon album niet verbergen",
     "Error loading slideshow template" : "Fout bij laden diashow sjabloon",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fout!</strong> Kon geen voorbeeld van die bestand genereren.<br>Ga naar de volgende dia, terwijl we deze afbeelding uit de diashow verwijderen",
     "Next" : "Volgende",
@@ -32,6 +32,9 @@
     "Close" : "Sluiten",
     "Download" : "Downloaden",
     "Toggle background" : "Omschakelen achtergrond",
+    "Delete" : "Verwijderen",
+    "Could not create file \"{file}\" because it already exists" : "Kon \"{file}\" niet aanmaken, omdat het al bestaat",
+    "Could not create file \"{file}\"" : "Kon \"{file}\" niet aanmaken",
     "\"{name}\" is an invalid file name." : "\"{name}\" is een ongeldige bestandsnaam.",
     "File name cannot be empty." : "Bestandsnaam kan niet leeg zijn.",
     "Upload" : "Uploaden",
@@ -102,7 +105,6 @@
     "the link has expired" : "de link is verlopen",
     "sharing is disabled" : "delen is uitgeschakeld",
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die u deze link heeft gestuurd.",
-    "Add to your ownCloud" : "Toevoegen aan uw ownCloud",
     "Picture view" : "Afbeeldingenoverzicht"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

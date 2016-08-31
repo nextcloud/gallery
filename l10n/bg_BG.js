@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Gallery" : "Галерия",
     "Aborting preview. Could not find the file" : "Отказан е прегледа. Не можах да намеря файла",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Не е открита ownCloud ( 7 или по-висока ) инсталация на {remote}.",
-    "Invalid ownCloud url" : "Невалиден ownCloud интернет адрес.",
     "Could not load the description" : "Неможе да зареди описанието",
     "Could not load the description: " : "Неможе да зареди описанието:",
     "Copyright" : "Авторско право",
@@ -25,6 +23,7 @@ OC.L10N.register(
     "Close" : "Затвори",
     "Download" : "Изтегляне",
     "Toggle background" : "Превключване на фона",
+    "Delete" : "Изтриване",
     "\"{name}\" is an invalid file name." : "\"{name}\" е непозволено име за файл.",
     "File name cannot be empty." : "Името на файла не може да бъде празно.",
     "Upload" : "Качване",
@@ -90,7 +89,6 @@ OC.L10N.register(
     "the link has expired" : "тази връзка е изтекла",
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
-    "Add to your ownCloud" : "Добави към своя ownCloud",
     "Picture view" : "Албум със снимки"
 },
 "nplurals=2; plural=(n != 1);");
