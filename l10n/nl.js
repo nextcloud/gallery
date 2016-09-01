@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Voorvertoning afgebroken. Kon het bestand niet vinden",
     "Could not move \"{file}\", target exists" : "Kon \"{file}\" niet verplaatsen, doel bestaat al",
     "Could not move \"{file}\"" : "Kon \"{file}\" niet verplaatsen",
+    "No ownCloud installation (7 or higher) found at {remote}" : "Geen ownCloud installatie (7 of hoger) gevonden op {remote}",
+    "Invalid ownCloud url" : "Ongeldige ownCloud url",
     "Gallery view" : "Album",
     "Could not load the description" : "Kon de beschrijving niet laden",
     "Could not load the description: " : "Kon de beschrijving niet laden:",
@@ -107,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "de link is verlopen",
     "sharing is disabled" : "delen is uitgeschakeld",
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die u deze link heeft gestuurd.",
+    "Add to your Nextcloud" : "Toevoegen aan je Nextcloud",
     "Picture view" : "Afbeeldingenoverzicht"
 },
 "nplurals=2; plural=(n != 1);");
