@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "Could not move \"{file}\", target exists" : "Nelze přesunout \"{file}\", cíl existuje",
     "Could not move \"{file}\"" : "Nelze přesunout \"{file}\"",
+    "No ownCloud installation (7 or higher) found at {remote}" : "Nebyla nalezena instalace ownCloud (7 nebo vyšší) na {remote}",
+    "Invalid ownCloud url" : "Neplatná ownCloud url",
     "Gallery view" : "Náhled galerie",
     "Could not load the description" : "Nezdařilo se načíst popis",
     "Could not load the description: " : "Nezdařilo se načíst popis:",
@@ -107,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "platnost odkazu vypršela",
     "sharing is disabled" : "sdílení je zakázané",
     "For more information, please ask the person who has sent you this link." : "Pro více informací kontaktujte osobu, která vám zaslala tento odkaz.",
+    "Add to your Nextcloud" : "Přidat do Nextcloud",
     "Picture view" : "Zobrazení obrázku"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
