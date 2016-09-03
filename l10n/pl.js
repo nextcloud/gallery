@@ -16,6 +16,7 @@ OC.L10N.register(
     "No media files found" : "Nie znaleziono plików multimedialnych",
     "Configuration error" : "Błąd konfiguracji",
     "New" : "Nowy",
+    "Hide Album" : "Ukryj Album",
     "Error loading slideshow template" : "Błąd podczas ładowania szablonu pokazu slajdów",
     "Next" : "Następny",
     "Play" : "Odtwarzaj",

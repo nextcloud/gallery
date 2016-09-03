@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Предпросмотр отменен. Не удалось найти файл",
     "Could not move \"{file}\", target exists" : "Невозможно переместить \"{file}\", целевой уже существует",
     "Could not move \"{file}\"" : "Невозможно переместить \"{file}\"",
+    "No ownCloud installation (7 or higher) found at {remote}" : "На удаленном ресурсе {remote} не найден ownCloud (версии 7 или выше)",
+    "Invalid ownCloud url" : "Неверный URL-адрес ownCloud",
     "Gallery view" : "Галерея",
     "Could not load the description" : "Не удалось загрузить описание",
     "Could not load the description: " : "Не удалось загрузить описание:",
@@ -107,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "срок действия ссылки истек",
     "sharing is disabled" : "общий доступ отключён",
     "For more information, please ask the person who has sent you this link." : "Для получения более подробной информации, пожалуйста, обратитесь к человеку, который послал вам эту ссылку.",
+    "Add to your Nextcloud" : "Добавить в ваш Nextcloud",
     "Picture view" : "Просмотр изображения"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
