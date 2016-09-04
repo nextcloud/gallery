@@ -1,16 +1,16 @@
 # Gallery 
-[![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=master)](https://travis-ci.org/owncloud/gallery)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/owncloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/owncloud/gallery/badge.svg)](https://travis-ci.org/owncloud/gallery)
+[![Build Status](https://travis-ci.org/nextcloud/gallery.svg?branch=master)](https://travis-ci.org/nextcloud/gallery)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/nextcloud/gallery/badge.svg)](https://travis-ci.org/nextcloud/gallery)
 
 Media gallery for ownCloud and Nextcloud which includes previews for all media types supported by your installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This version is for ownCloud 9.2 and Nextcloud 11. If you need the same app for older versions of ownCloud and Nextcloud. Use [Gallery+](https://github.com/interfasys/galleryplus) from their respective app stores.**
+**This version is for ownCloud 9.2 and Nextcloud 11. If you need the same app for older versions of ownCloud and Nextcloud. Use [Gallery+](https://github.com/oparoz/galleryplus) from their respective app stores.**
 
-![Screenshot](https://raw.githubusercontent.com/owncloud/gallery/master/build/screenshots/Gallery.jpg)
+![Screenshot](https://raw.githubusercontent.com/nextcloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
 * Support for large selection of media types (depending on server setup)
 * Upload and organise images and albums straight from the app
@@ -37,26 +37,29 @@ Checkout the [full changelog](CHANGELOG.md) for more.
 
 ## Contributors
 
-* All the people who have provided patches to [Gallery(+)](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed) and [Pictures](https://github.com/owncloud/gallery-old/pulls?q=is%3Apr+is%3Aclosed) over the years
+All the people who have provided patches to:
+* [Gallery(+)](https://github.com/nextcloud/gallery/pulls?q=is%3Apr+is%3Aclosed)
+* [Gallery(+) at ownCloud](https://github.com/owncloud/gallery/pulls?q=is%3Apr+is%3Aclosed)
+* [Pictures at ownCloud](https://github.com/owncloud/gallery-old/pulls?q=is%3Apr+is%3Aclosed) over the years
 
 ## Requirements
 
-See this [wiki article](https://github.com/owncloud/gallery/wiki/Requirements) about the requirements for Gallery.
+See this [wiki article](https://github.com/nextcloud/gallery/wiki/Requirements) about the requirements for Gallery.
 
 ## Supporting the development
 
 There are many ways in which you can help make Gallery a better product
 
 * Report bugs (see below)
-* Provide patches for [`owncloud/core`](https://github.com/owncloud/core), [`nextcloud/server`](https://github.com/nextcloud/server) or the app itself
+* Provide patches for [`nextcloud/server`](https://github.com/nextcloud/server) , [`owncloud/core`](https://github.com/owncloud/core) or the app itself
 * Help test new features by checking out new branches on Github
 * Design interface components for new features
 * Develop new features. Please consult with the maintainers before starting your journey
-* Fund a feature, either via [BountySource](https://www.bountysource.com/teams/interfasys/issues?tracker_ids=9328526) or by directly hiring a maintainer or anybody else who is capable of developing and maintaining it
+* Fund a feature, either via [BountySource](https://www.bountysource.com/teams/nextcloud/issues?tracker_ids=9328526,41629711) or by directly hiring a community member who is capable of developing and maintaining it
 
 ## Bug reporting and contributing
 
-Everything you need to know about bug reporting and contributing [is located here](https://github.com/owncloud/gallery/blob/master/CONTRIBUTING.md).
+Everything you need to know about bug reporting and contributing [is located here](https://github.com/nextcloud/gallery/blob/master/CONTRIBUTING.md).
 
 ## Preparation
 Here is a list of steps you might want to take before using the app
@@ -88,13 +91,13 @@ That's it. You should be able to see more media types in your slideshows and gal
 
 Using Redis for files locking improves performance **by a factor of 10** when loading an album.
 
-Read about it in the [ownCloud](https://doc.owncloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) or [Nextcloud](https://docs.nextcloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
+Read about it in the [Nextcloud](https://docs.nextcloud.org/server/10/admin_manual/configuration_files/files_locking_transactional.html) or [ownCloud](https://doc.owncloud.org/server/9.2/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
 
 #### Assets pipelining
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can greatly reduce the loading time of the app.
 
-Read about it in the [ownCloud](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html) or [Nextcloud](https://docs.nextcloud.org/server/9/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
+Read about it in the [Nextcloud](https://docs.nextcloud.org/server/10/admin_manual/configuration_server/js_css_asset_management_configuration.html) or [ownCloud](https://doc.owncloud.org/server/9.2/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
 
 ## Installation
 
@@ -106,7 +109,7 @@ Read about it in the [ownCloud](https://doc.owncloud.org/server/9.0/admin_manual
 
 ### Installing from archive
 
-* Go to the [the releases page](https://github.com/owncloud/gallery/releases)
+* Go to the [the releases page](https://github.com/nextcloud/gallery/releases)
 * Download the latest release/archive to your server's **apps/** directory
 * Unpack the app
 * **IMPORTANT**: Make sure the folder name is gallery
@@ -115,7 +118,7 @@ Read about it in the [ownCloud](https://doc.owncloud.org/server/9.0/admin_manual
 
 In your terminal go into the **apps/** directory and then run the following command:
 ```
-$ git clone https://github.com/owncloud/gallery.git
+$ git clone https://github.com/nextcloud/gallery.git
 ```
 
 Now you can activate it in the apps menu. It's called Gallery
