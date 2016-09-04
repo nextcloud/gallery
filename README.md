@@ -1,3 +1,9 @@
+
+# This app is now maintained at https://github.com/nextcloud/gallery
+## Issues: https://github.com/nextcloud/gallery/issues
+
+-------------------------
+
 # Gallery 
 [![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=master)](https://travis-ci.org/owncloud/gallery)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
