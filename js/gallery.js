@@ -231,7 +231,7 @@
 		},
 
 		/**
-		 * Lets the user add the shared files to his ownCloud
+		 * Lets the user add the shared files to his cloud
 		 */
 		showSaveForm: function () {
 			$(this).hide();
@@ -240,7 +240,7 @@
 		},
 
 		/**
-		 * Sends the shared files to the viewer's ownCloud
+		 * Sends the shared files to the viewer's cloud
 		 *
 		 * @param event
 		 */
@@ -252,7 +252,7 @@
 			var owner = saveElement.data('owner');
 			var name = saveElement.data('name');
 			var isProtected = saveElement.data('protected');
-			Gallery._saveToOwnCloud(remote, Gallery.token, owner, name, isProtected);
+			Gallery._saveToServer(remote, Gallery.token, owner, name, isProtected);
 		},
 
 		/**
@@ -526,7 +526,7 @@
 		},
 
 		/**
-		 * Saves the folder to a remote ownCloud installation
+		 * Saves the folder to a remote server
 		 *
 		 * Our location is the remote for the other server
 		 *
@@ -537,7 +537,7 @@
 		 * @param {boolean} isProtected
 		 * @private
 		 */
-		_saveToOwnCloud: function (remote, token, owner, name, isProtected) {
+		_saveToServer: function (remote, token, owner, name, isProtected) {
 			var location = window.location.protocol + '//' + window.location.host + OC.webroot;
 			var isProtectedInt = (isProtected) ? 1 : 0;
 			var url = remote + '/index.php/apps/files#' + 'remote=' + encodeURIComponent(location)
@@ -556,9 +556,9 @@
 					{remote: remote}).then(function (protocol) {
 					if (protocol !== 'http' && protocol !== 'https') {
 						OC.dialogs.alert(t('files_sharing',
-							'No ownCloud installation (7 or higher) found at {remote}',
+							'No compatible server found at {remote}',
 							{remote: remote}),
-							t('files_sharing', 'Invalid ownCloud url'));
+							t('files_sharing', 'Invalid server url'));
 					} else {
 						OC.redirect(protocol + '://' + url);
 					}

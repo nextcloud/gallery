@@ -1,11 +1,11 @@
 <?php
 /**
- * ownCloud - gallery
+ * Gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
- * @author Olivier Paroz <owncloud@interfasys.ch>
+ * @author Olivier Paroz <galleryapps@oparoz.com>
  * @author Bernhard Posselt <dev@bernhard-posselt.com>
  *
  * @copyright Olivier Paroz 2014-2016

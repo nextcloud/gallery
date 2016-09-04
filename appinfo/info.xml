@@ -2,9 +2,9 @@
 <info>
 	<id>gallery</id>
 	<name>Gallery</name>
-	<description>Media gallery for ownCloud with the following features:
+	<description>Media gallery for ownCloud and Nextcloud with the following features:
 
-		- Support for large selection of media types (depending on ownCloud setup)
+		- Support for large selection of media types (depending on server setup)
 
 		- Large, zoomable previews
 
