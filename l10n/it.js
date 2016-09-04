@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Anteprima interrotta. Impossibile trovare il file",
     "Could not move \"{file}\", target exists" : "Impossibile spostare \"{file}\", la destinazione esiste già",
     "Could not move \"{file}\"" : "Impossibile spostare \"{file}\"",
+    "No ownCloud installation (7 or higher) found at {remote}" : "Nessuna installazione di ownCloud (7 o superiore) trovata su {remote}",
+    "Invalid ownCloud url" : "URL di ownCloud non valido",
     "Gallery view" : "Galleria",
     "Could not load the description" : "Impossibile caricare la descrizione",
     "Could not load the description: " : "Impossibile caricare la descrizione:",
@@ -107,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "il collegamento è scaduto",
     "sharing is disabled" : "la condivisione è disabilitata",
     "For more information, please ask the person who has sent you this link." : "Per ulteriori informazioni, chiedi alla persona che ti ha inviato il collegamento.",
+    "Add to your Nextcloud" : "Aggiungi al tuo Nextcloud",
     "Picture view" : "Vista immagini"
 },
 "nplurals=2; plural=(n != 1);");
