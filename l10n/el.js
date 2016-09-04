@@ -20,6 +20,7 @@ OC.L10N.register(
     "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
     "Configuration error" : "Σφάλμα ρυθμίσεων",
     "New" : "Νέο",
+    "Hide Album" : "Απόκρυψη άλμπουμ",
     "Error loading slideshow template" : "Σφάλμα φόρτωσης προτύπου προβολής διαφανειών",
     "Next" : "Επόμενο",
     "Play" : "Αναπαραγωγή",
