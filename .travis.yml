@@ -117,6 +117,7 @@ after_success:
   # Send coverage report to Scrutinizer
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
+  - bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
   # Generate API documentation
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
