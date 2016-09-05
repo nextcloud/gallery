@@ -44,6 +44,7 @@ class CheckTestUsersCest {
 	public function testTestUsersCreation(ApiTester $I) {
 		$I->wantTo('make sure my test users have been created');
 		$I->amHttpAuthenticated('admin', 'admin');
+		$I->haveHttpHeader('OCS-APIRequest', 'true');
 		$I->sendGET($this->baseUrl . '/users/' . $this->userId);
 		$I->seeResponseCodeIs(200);
 		$I->seeResponseIsXml();
