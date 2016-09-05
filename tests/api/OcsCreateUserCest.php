@@ -36,6 +36,7 @@ class OcsCreateUserCest {
 		//$scenario->skip('ownCloud master is broken');
 		$I->wantTo('create a user via the provisioning API');
 		$I->amHttpAuthenticated('admin', 'admin');
+		$I->haveHttpHeader('OCS-APIRequest', 'true');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
 		$I->sendPOST(
 			$this->apiUrl . '/users',
@@ -54,6 +55,7 @@ class OcsCreateUserCest {
 		//$scenario->skip('ownCloud master is broken');
 		$I->wantTo('make sure the user exists');
 		$I->amHttpAuthenticated('admin', 'admin');
+		$I->haveHttpHeader('OCS-APIRequest', 'true');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
 		$I->sendGET($this->apiUrl . '/users/' . $this->userId);
 		$I->seeResponseCodeIs(200);
@@ -70,6 +72,7 @@ class OcsCreateUserCest {
 		//$scenario->skip('ownCloud master is broken');
 		$I->wantTo('delete the user');
 		$I->amHttpAuthenticated('admin', 'admin');
+		$I->haveHttpHeader('OCS-APIRequest', 'true');
 		$I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
 		$I->sendDELETE($this->apiUrl . '/users/' . $this->userId);
 		$I->seeResponseCodeIs(200);
