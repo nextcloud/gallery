@@ -107,6 +107,7 @@ OC.L10N.register(
     "the link has expired" : "o link expirou",
     "sharing is disabled" : "o compartilhamento está desativado",
     "For more information, please ask the person who has sent you this link." : "Para mais informações, por favor, pergunte a pessoa que lhe enviou este link.",
+    "Add to your Nextcloud" : "Adicionar ao seu Nextcloud",
     "Picture view" : "Visualizar foto"
 },
 "nplurals=2; plural=(n > 1);");

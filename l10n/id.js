@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Membatalkan pratinjau. Tidak dapat menemukan berkas.",
     "Could not move \"{file}\", target exists" : "Tidak dapat memindahkan \"{file}\", sudah ada",
     "Could not move \"{file}\"" : "Tidak dapat memindahkan \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "Tidak ditemukan instalasi ownCloud (7 atau lebih tinggi) pada {remote}",
-    "Invalid ownCloud url" : "URL ownCloud tidak sah",
     "Gallery view" : "Tampilan galeri",
     "Could not load the description" : "Tidak dapat memuat deskripsi",
     "Could not load the description: " : "Tidak dapat memuat deskripsi:",

@@ -6,8 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Предпросмотр отменен. Не удалось найти файл",
     "Could not move \"{file}\", target exists" : "Невозможно переместить \"{file}\", целевой уже существует",
     "Could not move \"{file}\"" : "Невозможно переместить \"{file}\"",
-    "No ownCloud installation (7 or higher) found at {remote}" : "На удаленном ресурсе {remote} не найден ownCloud (версии 7 или выше)",
-    "Invalid ownCloud url" : "Неверный URL-адрес ownCloud",
     "Gallery view" : "Галерея",
     "Could not load the description" : "Не удалось загрузить описание",
     "Could not load the description: " : "Не удалось загрузить описание:",
