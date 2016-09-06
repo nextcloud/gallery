@@ -4,6 +4,7 @@
     "Aborting preview. Could not find the file" : "Anteprima interrotta. Impossibile trovare il file",
     "Could not move \"{file}\", target exists" : "Impossibile spostare \"{file}\", la destinazione esiste già",
     "Could not move \"{file}\"" : "Impossibile spostare \"{file}\"",
+    "Invalid server url" : "URL del server non valido",
     "Gallery view" : "Galleria",
     "Could not load the description" : "Impossibile caricare la descrizione",
     "Could not load the description: " : "Impossibile caricare la descrizione:",
