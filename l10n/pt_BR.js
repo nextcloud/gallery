@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Anulando visualização. Não foi possível encontrar o arquivo",
     "Could not move \"{file}\", target exists" : "Não foi possível mover o \"{file}\", o alvo já existe",
     "Could not move \"{file}\"" : "Não foi possível mover \"{file}\"",
+    "No compatible server found at {remote}" : "Não foi encontrado nenhum servidor compatível em {remote}",
+    "Invalid server url" : "URL de servidor inválida",
     "Gallery view" : "Galeria de imagens",
     "Could not load the description" : "Não foi possível carregar a descrição",
     "Could not load the description: " : "Não foi possível carregar a descrição:",

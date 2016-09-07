@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Načítání náhledu ukončeno. Soubor nelze nalézt",
     "Could not move \"{file}\", target exists" : "Nelze přesunout \"{file}\", cíl existuje",
     "Could not move \"{file}\"" : "Nelze přesunout \"{file}\"",
+    "No compatible server found at {remote}" : "Na {remote} nebyl nalezen kompatibilní server",
+    "Invalid server url" : "Neplatné URL serveru",
     "Gallery view" : "Náhled galerie",
     "Could not load the description" : "Nezdařilo se načíst popis",
     "Could not load the description: " : "Nezdařilo se načíst popis:",
