@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "プレビューを中止します。ファイルが見つかりませんでした。",
     "Could not move \"{file}\", target exists" : "ターゲットが存在するため，ファイル \"{file}\"を移動できませんでした",
     "Could not move \"{file}\"" : "\"{file}\" を移動できませんでした",
+    "No compatible server found at {remote}" : "互換性のあるサーバーが {remote} にはありません。",
+    "Invalid server url" : "サーバーのURLが無効",
     "Gallery view" : "ギャラリー表示",
     "Could not load the description" : "説明を読み出せませんでした",
     "Could not load the description: " : "説明を読み出せませんでした：",
@@ -24,6 +26,7 @@ OC.L10N.register(
     "Configuration error" : "設定エラー",
     "New" : "新規作成",
     "Hide Album" : "アルバムを隠す",
+    "Could not hide album" : "アルバムを隠すことができませんでした",
     "Error loading slideshow template" : "スライドショーのテンプレートの読み込みエラー",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>エラー！</strong> このファイルのプレビューを生成できませんでした。<br>スライドショーからこの画像を削除するには次のスライドに移動してください。",
     "Next" : "次",
@@ -106,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "リンクの期限が切れました",
     "sharing is disabled" : "共有は無効になっています",
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
+    "Add to your Nextcloud" : "あなたのNextcloud に追加",
     "Picture view" : "ピクチャービュー"
 },
 "nplurals=1; plural=0;");
