@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Hætti forskoðun. Gat ekki fundið skrána",
     "Could not move \"{file}\", target exists" : "Gat ekki fært \"{file}\", markskrá er til",
     "Could not move \"{file}\"" : "Gat ekki fært \"{file}\"",
+    "No compatible server found at {remote}" : "Enginn samhæfður vefþjónn fannst á {remote}",
+    "Invalid server url" : "Ógild URI-slóð vefþjóns",
     "Gallery view" : "Myndasafnssýn",
     "Could not load the description" : "Gat ekki hlaðið inn lýsingunni",
     "Could not load the description: " : "Gat ekki hlaðið inn lýsingunni: ",
@@ -23,6 +25,8 @@ OC.L10N.register(
     "Upload new files via drag and drop or by using the [+] button above" : "Sendu inn nýjar skrár með því að draga/sleppa eða með [+] hnappnum hér fyrir ofan",
     "Configuration error" : "Villa í stillingum",
     "New" : "Nýtt",
+    "Hide Album" : "Fela albúm",
+    "Could not hide album" : "Gat ekki falið albúm",
     "Error loading slideshow template" : "Villa við að hlaða inn sniðmáti fyrir skyggnusýningu",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Villa!</strong> Gat ekki útbúið forskoðun fyrir þessa skrá.<br>Farðu yfir á næstu skyggnu á meðan við fjarlægjum þessa mynd úr skyggnusýningunni",
     "Next" : "Næst",
@@ -105,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "tengillinn er útrunninn",
     "sharing is disabled" : "slökkt er á skráadeilingu",
     "For more information, please ask the person who has sent you this link." : "Til að vita meira skaltu hafa samband við þann sem sendi þér þennan tengil.",
+    "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
     "Picture view" : "Myndasýn"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
