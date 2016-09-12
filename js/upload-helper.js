@@ -42,34 +42,6 @@ var FileList = {
 	},
 
 	/**
-	 * Refreshes the photowall
-	 *
-	 * Called at the end of the uploading process when 1 or multiple files are sent
-	 * Never called with folders on Chrome, unless files are uploaded at the same time as folders
-	 *
-	 * @param fileList
-	 */
-	highlightFiles: function (fileList) {
-		"use strict";
-		//Ask for a refresh of the photowall
-		Gallery.getFiles(Gallery.currentAlbum).done(function () {
-			var fileId, path;
-			// Removes the cached thumbnails of files which have been re-uploaded
-			_(fileList).each(function (fileName) {
-				path = Gallery.currentAlbum + '/' + fileName;
-				if (Gallery.imageMap[path]) {
-					fileId = Gallery.imageMap[path].fileId;
-					if (Thumbnails.map[fileId]) {
-						delete Thumbnails.map[fileId];
-					}
-				}
-			});
-
-			Gallery.view.init(Gallery.currentAlbum);
-		});
-	},
-
-	/**
 	 * Create an empty file inside the current album.
 	 *
 	 * @param {string} name name of the file
@@ -144,6 +116,24 @@ var FileList = {
 
 		// In Files, dirs start with a /
 		return '/' + Gallery.currentAlbum;
+	},
+
+	getUploadUrl: function(fileName, dir) {
+		if (_.isUndefined(dir)) {
+			dir = this.getCurrentDirectory();
+		}
+
+		var pathSections = dir.split('/');
+		if (!_.isUndefined(fileName)) {
+			pathSections.push(fileName);
+		}
+		var encodedPath = '';
+		_.each(pathSections, function(section) {
+			if (section !== '') {
+				encodedPath += '/' + encodeURIComponent(section);
+			}
+		});
+		return OC.linkToRemoteBase('webdav') + encodedPath;
 	}
 };
 
