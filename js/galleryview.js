@@ -27,11 +27,32 @@
 		},
 
 		/**
+		 * @param {string} path
+		 * @returns {boolean}
+		 */
+		_isValidPath: function(path) {
+			var sections = path.split('/');
+			for (var i = 0; i < sections.length; i++) {
+				if (sections[i] === '..') {
+					return false;
+				}
+			}
+
+			return path.toLowerCase().indexOf(decodeURI('%0a')) === -1 &&
+				path.toLowerCase().indexOf(decodeURI('%00')) === -1;
+		},
+
+		/**
 		 * Populates the view if there are images or albums to show
 		 *
 		 * @param {string} albumPath
 		 */
 		init: function (albumPath) {
+			// Set path to an empty value if not a valid one
+			if(!this._isValidPath(albumPath)) {
+				albumPath = '';
+			}
+
 			// Only do it when the app is initialised
 			if (this.requestId === -1) {
 				this._initButtons();
