@@ -74,8 +74,8 @@ class HttpErrorTest extends \Test\TestCase {
 	 * @param String $status
 	 */
 	public function testJsonError($exception, $message, $status) {
-		$request = $this->createMock(IRequest::class);
-		$logger = $this->createMock(ILogger::class);
+		$request = $this->createMock('OCP\IRequest');
+		$logger = $this->createMock('OCP\ILogger');
 
 		if($exception instanceof ForbiddenServiceException) {
 			$amount = 0;
@@ -94,7 +94,7 @@ class HttpErrorTest extends \Test\TestCase {
 			->willReturn('1234');
 
 		/** @var HttpError $httpError */
-		$httpError = $this->getMockForTrait(HttpError::class);
+		$httpError = $this->getMockForTrait('\OCA\Gallery\Controller\HttpError');
 		/** @type JSONResponse $response */
 		$response = $httpError->jsonError($exception, $request, $logger);
 
