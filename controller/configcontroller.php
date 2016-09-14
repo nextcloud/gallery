@@ -63,7 +63,7 @@ class ConfigController extends Controller {
 		try {
 			return $this->getConfig($extramediatypes);
 		} catch (\Exception $exception) {
-			return $this->jsonError($exception);
+			return $this->jsonError($exception, $this->request, $this->logger);
 		}
 	}
 

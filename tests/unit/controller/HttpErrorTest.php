@@ -20,26 +20,25 @@ use OCA\Gallery\Environment\NotFoundEnvException;
 use OCA\Gallery\Service\NotFoundServiceException;
 use OCA\Gallery\Service\ForbiddenServiceException;
 use OCA\Gallery\Service\InternalServerErrorServiceException;
+use OCP\ILogger;
+use OCP\IRequest;
 
 /**
  * Class HttpErrorTest
  *
  * @package OCA\Gallery\Controller
  */
-class HttpErrorTest extends \Test\TestCase {
-
-	/** @var string */
-	private $appName = 'gallery';
+class HttpErrorTest extends \Test\GalleryUnitTest {
 
 	/**
 	 * @return array
 	 */
 	public function providesExceptionData() {
-		$notFoundEnvMessage = 'Not found in env';
+		$notFoundEnvMessage = 'An error occurred. Request ID: 1234';
 		$notFoundEnvException = new NotFoundEnvException($notFoundEnvMessage);
 		$notFoundEnvStatus = Http::STATUS_NOT_FOUND;
 
-		$notFoundServiceMessage = 'Not found in service';
+		$notFoundServiceMessage = 'An error occurred. Request ID: 1234';
 		$notFoundServiceException = new NotFoundServiceException($notFoundServiceMessage);
 		$notFoundServiceStatus = Http::STATUS_NOT_FOUND;
 
@@ -47,11 +46,11 @@ class HttpErrorTest extends \Test\TestCase {
 		$forbiddenServiceException = new ForbiddenServiceException($forbiddenServiceMessage);
 		$forbiddenServiceStatus = Http::STATUS_FORBIDDEN;
 
-		$errorServiceMessage = 'Broken service';
+		$errorServiceMessage = 'An error occurred. Request ID: 1234';
 		$errorServiceException = new InternalServerErrorServiceException($errorServiceMessage);
 		$errorServiceStatus = Http::STATUS_INTERNAL_SERVER_ERROR;
 
-		$coreServiceMessage = 'Broken core';
+		$coreServiceMessage = 'An error occurred. Request ID: 1234';
 		$coreServiceException = new \Exception($coreServiceMessage);
 		$coreServiceStatus = Http::STATUS_INTERNAL_SERVER_ERROR;
 
@@ -72,12 +71,32 @@ class HttpErrorTest extends \Test\TestCase {
 	 * @param String $status
 	 */
 	public function testJsonError($exception, $message, $status) {
+		$request = $this->createMock('OCP\IRequest');
+		$logger = $this->createMock('OCP\ILogger');
+
+		if($exception instanceof ForbiddenServiceException) {
+			$amount = 0;
+			$message = $message . ' (' . $status . ')';
+		} else {
+			$amount = 1;
+		}
+
+		$logger
+			->expects($this->exactly($amount))
+			->method('logException')
+			->with($exception, ['app' => 'gallery']);
+		$request
+			->expects($this->exactly($amount))
+			->method('getId')
+			->willReturn('1234');
+
+		/** @var HttpError $httpError */
 		$httpError = $this->getMockForTrait('\OCA\Gallery\Controller\HttpError');
 		/** @type JSONResponse $response */
-		$response = $httpError->jsonError($exception);
+		$response = $httpError->jsonError($exception, $request, $logger);
 
-		$this->assertEquals(
-			['message' => $message . ' (' . $status . ')', 'success' => false], $response->getData()
+		$this->assertSame(
+			['message' => $message, 'success' => false], $response->getData()
 		);
 		$this->assertEquals($status, $response->getStatus());
 	}
