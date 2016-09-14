@@ -43,6 +43,9 @@
 		 * @param {string|undefined} errorMessage
 		 */
 		init: function (albumPath, errorMessage) {
+			// Remove all null-bytes from the path
+			albumPath = albumPath.replace(/\0/g, '');
+
 			// Only do it when the app is initialised
 			if (this.requestId === -1) {
 				this._initButtons();
