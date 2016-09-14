@@ -170,10 +170,12 @@ class ConfigControllerTest extends \Test\TestCase {
 		$this->configService->expects($this->any())
 							->method('getFeaturesList')
 							->willThrowException(new ServiceException($exceptionMessage));
-		// Default status code when something breaks
-		$status = Http::STATUS_INTERNAL_SERVER_ERROR;
+		$this->request
+			->expects($this->once())
+			->method('getId')
+			->willReturn('1234');
 		$errorMessage = [
-			'message' => $exceptionMessage  . ' (' . $status . ')',
+			'message' => 'An error occurred. Request ID: 1234',
 			'success' => false
 		];
 		/** @type JSONResponse $response */
