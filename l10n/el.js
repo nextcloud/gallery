@@ -104,6 +104,7 @@ OC.L10N.register(
     "the link has expired" : "ο σύνδεσμος έληξε",
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
+    "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
     "Picture view" : "Προβολή εικονιδίων"
 },
 "nplurals=2; plural=(n != 1);");
