@@ -24,6 +24,7 @@
     "Configuration error" : "設定エラー",
     "New" : "新規作成",
     "Hide Album" : "アルバムを隠す",
+    "Could not hide album" : "アルバムを非表示にできませんでした",
     "Error loading slideshow template" : "スライドショーのテンプレートの読み込みエラー",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>エラー！</strong> このファイルのプレビューを生成できませんでした。<br>スライドショーからこの画像を削除するには次のスライドに移動してください。",
     "Next" : "次",
