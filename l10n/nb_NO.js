@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Avbryter visning. Fant ikke filen",
     "Could not move \"{file}\", target exists" : "Klarte ikke å flytte \"{file}\", målfilen finnes",
     "Could not move \"{file}\"" : "Klarte ikke å flytte \"{file}\"",
+    "No compatible server found at {remote}" : "Ingen kompatibel tjener ble funnet på {remote}",
+    "Invalid server url" : "Ugyldig tjener adresse",
     "Gallery view" : "Gallerivisning",
     "Could not load the description" : "Klarte ikke å laste inn beskrivelsen",
     "Could not load the description: " : "Klarte ikke å laste inn beskrivelsen:",
@@ -23,6 +25,8 @@ OC.L10N.register(
     "Upload new files via drag and drop or by using the [+] button above" : "Last opp nye filer med dra & slipp eller med [+]-knappen over",
     "Configuration error" : "Konfigurasjonsfeil",
     "New" : "Ny",
+    "Hide Album" : "Skjul album",
+    "Could not hide album" : "Kunne ikke skjule album",
     "Error loading slideshow template" : "Feil ved lasting av mal for lysbildevisning",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Feil!</strong> Kunne ikke generere en forhånsvisning av denne filen. <br>Vennligst gå til neste bilde mens vi fjerner dette bildet fra visningen.",
     "Next" : "Neste",
@@ -105,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "lenken er utløpt",
     "sharing is disabled" : "deling er deaktivert",
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
+    "Add to your Nextcloud" : "Legg til i din Nextcloud",
     "Picture view" : "Bildevisning"
 },
 "nplurals=2; plural=(n != 1);");
