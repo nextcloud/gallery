@@ -23,6 +23,8 @@ OC.L10N.register(
     "Upload new files via drag and drop or by using the [+] button above" : "Envie ficheiros novos através da técnica de arrastar e largar ou usando o botão [+] acima",
     "Configuration error" : "Erro de configuração",
     "New" : "Novo",
+    "Hide Album" : "Esconder Album",
+    "Could not hide album" : "Não foi possível esconder o Album",
     "Error loading slideshow template" : "Ocorreu um erro a carregar o modelo de diapositivos",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Erro!</strong> Não foi possível gerar uma pré-visualização deste ficheiro.<br>Por favor siga para o próximo diapositivo enquanto removemos esta imagem da apresentação",
     "Next" : "Seguinte",
