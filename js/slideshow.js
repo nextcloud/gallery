@@ -97,6 +97,7 @@
 			this.container.show();
 			this.container.css('background-position', 'center');
 			this._hideImage();
+			this.container.find('.icon-loading-dark').show();
 			var currentImageId = index;
 			return this.loadImage(this.images[index]).then(function (img) {
 				this.container.css('background-position', '-10000px 0');
@@ -125,6 +126,7 @@
 
 					this._setUrl(image.path);
 					this.controls.show(currentImageId);
+					this.container.find('.icon-loading-dark').hide();
 				}
 			}.bind(this), function () {
 				// Don't do anything if the user has moved along while we were loading as it would
