@@ -4,6 +4,8 @@
     "Aborting preview. Could not find the file" : "A abortar a pré-visualização. Não foi possível encontrar o ficheiro",
     "Could not move \"{file}\", target exists" : "Não foi possível mover \"{file}\", alvo já existe",
     "Could not move \"{file}\"" : "Não foi possível mover \"{file}\"",
+    "No compatible server found at {remote}" : "Não foi encontrado nenhum servidor compatível em {remote}",
+    "Invalid server url" : "Endereço do servidor inválido",
     "Gallery view" : "Visualização da galeria",
     "Could not load the description" : "Não foi possível carregar a descrição",
     "Could not load the description: " : "Não foi possível carregar a descrição:",
