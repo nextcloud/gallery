@@ -201,7 +201,7 @@
 			if (!_.isUndefined(errorMessage) && errorMessage !== null) {
 				message += '<h2>' + t('gallery',
 						'Album cannot be shown') + '</h2>';
-				message += '<p>' + errorMessage + '</p>';
+				message += '<p>' + escapeHTML(errorMessage) + '</p>';
 				uploadAllowed = false;
 			} else {
 				message += '<h2>' + t('gallery',
