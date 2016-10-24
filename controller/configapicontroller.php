@@ -65,7 +65,7 @@ class ConfigApiController extends ApiController {
 		try {
 			return $this->getConfig($extramediatypes);
 		} catch (\Exception $exception) {
-			return $this->jsonError($exception);
+			return $this->jsonError($exception, $this->request, $this->logger);
 		}
 	}
 

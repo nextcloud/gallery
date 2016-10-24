@@ -97,7 +97,7 @@ class FilesController extends Controller {
 		try {
 			return $this->getFilesAndAlbums($location, $featuresArray, $etag, $mediaTypesArray);
 		} catch (\Exception $exception) {
-			return $this->jsonError($exception);
+			return $this->jsonError($exception, $this->request, $this->logger);
 		}
 	}
 
