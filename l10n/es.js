@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Abortando previsualización. No se pudo encontrar el archivo",
     "Could not move \"{file}\", target exists" : "No se pudo mover \"{file}\", destino ya existe",
     "Could not move \"{file}\"" : "No se pudo mover \"{file}\"",
+    "No compatible server found at {remote}" : "No se ha encontrado un servidor compatible en {remote}",
+    "Invalid server url" : "URL del servidor inválida",
     "Gallery view" : "Vista de galería",
     "Could not load the description" : "No se pudo cargar la descripción",
     "Could not load the description: " : "No se pudo cargar la descripción:",
@@ -107,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "el enlace ha expirado",
     "sharing is disabled" : "compartir está desactivado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, contacte a la persona que le envió el enlace.",
+    "Add to your Nextcloud" : "Añadir a tu Nextcloud",
     "Picture view" : "Vista de imágenes"
 },
 "nplurals=2; plural=(n != 1);");

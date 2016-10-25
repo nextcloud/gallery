@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Avbryt förhandsgranskning. Kunde ej hitta filen",
     "Could not move \"{file}\", target exists" : "Kunde inte flytta \"{file}\", filen existerar redan",
     "Could not move \"{file}\"" : "Kunde inte flytta \"{file}\"",
+    "No compatible server found at {remote}" : "Ingen kompatibel server hittad hos {remote}",
+    "Invalid server url" : "Ogiltig server-url",
     "Gallery view" : "Galleri vy",
     "Could not load the description" : "Kunde ej ladda beskrivning",
     "Could not load the description: " : "Kunde ej ladda beskrivningen",
@@ -23,6 +25,8 @@ OC.L10N.register(
     "Upload new files via drag and drop or by using the [+] button above" : "Ladda upp nya filer genom att dra och släppa eller genom att använda [+] knappen ovan",
     "Configuration error" : "Konfigurationsfel",
     "New" : "Ny",
+    "Hide Album" : "Göm album",
+    "Could not hide album" : "Kunde inte hitta album",
     "Error loading slideshow template" : "Fel vid laddning av mallen för bildspelet",
     "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fel!</strong> Kunde inte skapa en förhandsgranskning av den här filen.<br>Vänligen gå till nästa bild medan vi tar bort den här bilden från bildspelet",
     "Next" : "Nästa",
@@ -105,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "tidsgräns för länken har löpt ut",
     "sharing is disabled" : "delning är inaktiverat",
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
+    "Add to your Nextcloud" : "Lägg till till din Nextcloud",
     "Picture view" : "Bildvy"
 },
 "nplurals=2; plural=(n != 1);");
