@@ -4,7 +4,7 @@ OC.L10N.register(
     "Gallery" : "Galerije",
     "There was a problem reading files from this album" : "Prišlo je do težav med branjem datotek tega albuma",
     "Aborting preview. Could not find the file" : "Predogled je prekinjen. Ni mogoče najti datoteke.",
-    "Could not move \"{file}\", target exists" : "Datoteke \"{file}\" ni mogoče premakniti, ker cilj že obstaja",
+    "Could not move \"{file}\", target exists" : "Datoteke »{file}« ni mogoče premakniti, ker cilj že obstaja",
     "Could not move \"{file}\"" : "Ni mogoče premakniti \"{file}\"",
     "No compatible server found at {remote}" : "Na naslovu {remote} ni skladnih strežnikov",
     "Invalid server url" : "Neveljaven naslov URL strežnika",
