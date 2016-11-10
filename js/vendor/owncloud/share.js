@@ -200,7 +200,7 @@
 					var federatedCloudSharingDoc =
 						'<a target="_blank" class="icon-info svg shareWithRemoteInfo" ' +
 						'href="{docLink}" title="' + t('core',
-							'Share with people on other ownClouds using the syntax username@example.com/owncloud') +
+							'Share with people on other servers using the syntax username@example.com/nextcloud') +
 						'"></a>';
 					html += federatedCloudSharingDoc.replace('{docLink}',
 						oc_appconfig.core.federatedCloudShareDoc);
