@@ -65,7 +65,7 @@ OC.L10N.register(
     "Email sent" : "Електронната поща е изпратена",
     "Warning" : "Предупреждение",
     "This share is password-protected" : "Тази зона е защитена с парола.",
-    "The password is wrong. Try again." : "Грешна парола. Опитай отново.",
+    "The password is wrong. Try again." : "Грешна парола. Опитайте отново.",
     "Sort by date" : "Сортирай по дата",
     "Sort by name" : "Сортирай по име",
     "Cancel upload" : "Отказване на качването",
