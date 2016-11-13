@@ -28,7 +28,7 @@
     "Error" : "Грешка",
     "Error while sharing" : "Грешка при споделяне",
     "Error while unsharing" : "Грешка при премахване на споделянето",
-    "Error while changing permissions" : "Грешка при промяна на привилегиите",
+    "Error while changing permissions" : "Грешка при промяна на правата",
     "Shared with you and the group {group} by {owner}" : "Споделено с вас и групата {group} от {owner}",
     "Shared with you by {owner}" : "Споделено с Вас от {owner}.",
     "Share" : "Сподели",
