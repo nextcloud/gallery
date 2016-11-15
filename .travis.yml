@@ -10,7 +10,7 @@ addons:
       - gdb
 env:
   global:
-    - CORE_BRANCH=master
+    - CORE_BRANCH=make-sure-tests-run-on-phpunit-4-again
     - APP_NAME=gallery
     - SERVER_FOLDER=server
     - CLOUD=nextcloud
