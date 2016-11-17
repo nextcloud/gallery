@@ -47,7 +47,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Dalintis su naudotoju ar grupe...",
     "Share with users, groups or remote users …" : "Dalintis su naudotoju, grupe, ar nutolusiu naudotoju...",
     "Share" : "Dalintis",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Dalintis su naudotoju kitose ownCloud debesijose, naudojant sintaksę naudotojas@example.com/owncloud",
     "Share link" : "Dalintis nuoroda",
     "The public link will expire no later than {days} days after it is created" : "Vieša nuoroda galios ne mažiau kaip {days} dienas nuo sukūrimo",
     "Link" : "Nuoroda",

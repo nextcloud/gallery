@@ -47,7 +47,6 @@
     "Share with users or groups …" : "分享给其他用户或组 ...",
     "Share with users, groups or remote users …" : "分享给其他用户、组或远程用户 ...",
     "Share" : "共享",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "使用语法 username@example.com/owncloud 分享给其他 ownCloud 上的用户",
     "Share link" : "分享链接",
     "The public link will expire no later than {days} days after it is created" : "这个共享链接将在创建后 {days} 天失效",
     "Link" : "链接",

@@ -49,7 +49,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Jaa käyttäjien tai ryhmien kanssa…",
     "Share with users, groups or remote users …" : "Jaa käyttäjien, ryhmien tai etäkäyttäjien kanssa…",
     "Share" : "Jaa",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Jaa toisia ownCloud-järjestelmiä käyttävien kesken käyttäen syntaksia käyttäjätunnus@esimerkki.fi/owncloud",
     "Share link" : "Jaa linkki",
     "The public link will expire no later than {days} days after it is created" : "Julkinen linkki vanhenee {days} päivän jälkeen sen luomisesta",
     "Link" : "Linkki",

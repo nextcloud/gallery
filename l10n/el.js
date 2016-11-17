@@ -47,7 +47,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Διαμοιρασμός με χρήστες ή ομάδες ...",
     "Share with users, groups or remote users …" : "Διαμοιρασμός με χρήστες, ομάδες ή απομακρυσμένους χρήστες ...",
     "Share" : "Διαμοιρασμός",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Διαμοιρασμός με άτομα σε άλλα ownClouds χρησιμοποιώντας την σύνταξη username@example.com/owncloud",
     "Share link" : "Διαμοιρασμός συνδέσμου",
     "The public link will expire no later than {days} days after it is created" : "Ο δημόσιος σύνδεσμος θα απενεργοποιηθεί το πολύ {days} ημέρες μετά την δημιουργία του",
     "Link" : "Σύνδεσμος",

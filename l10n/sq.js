@@ -49,7 +49,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Ndajeni me përdorues ose grupe …",
     "Share with users, groups or remote users …" : "Ndajeni me përdorues, grupe ose përdorues të largët …",
     "Share" : "Ndajeni me të tjerët",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Ndajeni me persona në ownCloud-e të tjera duke përdorur sintaksën username@example.com/owncloud",
     "Share link" : "Ndani lidhjen",
     "The public link will expire no later than {days} days after it is created" : "Lidhja publike do të skadojë jo më vonë se {days} ditë pas krijimit",
     "Link" : "Lidhje",

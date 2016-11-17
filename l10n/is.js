@@ -51,7 +51,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Deila með notendum eða hópum ...",
     "Share with users, groups or remote users …" : "Deila með notendum, hópa eða ytri notendum ...",
     "Share" : "Deila",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Deila með fólki í öðrum ownCloud-skýjum með skipuninni notandanafn@dæmi.is/owncloud",
     "Share link" : "Deila tengli",
     "The public link will expire no later than {days} days after it is created" : "Almenningstengillinn rennur út eigi síðar en {days} dögum eftir að hann er útbúinn",
     "Link" : "Tengill",

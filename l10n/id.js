@@ -49,7 +49,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Bagikan dengan pengguna atau grup ...",
     "Share with users, groups or remote users …" : "Bagikan dengan pengguna, grup atau pengguna remote ...",
     "Share" : "Bagikan",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Bagikan dengan orang lain di ownCloud menggunakan sintaks username@example.com/owncloud",
     "Share link" : "Bagikan tautan",
     "The public link will expire no later than {days} days after it is created" : "Tautan publik akan kadaluarsa tidak lebih dari {days} hari setelah ini dibuat",
     "Link" : "Tautan",

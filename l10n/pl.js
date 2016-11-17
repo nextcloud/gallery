@@ -49,7 +49,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Współdziel z użytkownikami lub grupami",
     "Share with users, groups or remote users …" : "Współdziel z użytkownikami, grupami lub użytkownikami zdalnymi ...",
     "Share" : "Udostępnij",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Współdziel z użytkownikami innych chmur ownCloud używając wzorca uzytkownik@example.com/owncloud",
     "Share link" : "Udostępnij link",
     "The public link will expire no later than {days} days after it is created" : "Link publiczny wygaśnie nie później niż po {days} dniach od utworzenia",
     "Link" : "Link",

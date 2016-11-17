@@ -44,7 +44,6 @@ OC.L10N.register(
     "Share with users or groups …" : "Partejar amb d'utilizaires o gropes...",
     "Share with users, groups or remote users …" : "Partejar amb d'utilizaires, gropes, o utilizaires distants",
     "Share" : "Partejar",
-    "Share with people on other ownClouds using the syntax username@example.com/owncloud" : "Partejatz amb de personas sus d'autres ownClouds en utilizant la sintaxi utilizaire@exemple.com/owncloud",
     "Share link" : "Partejar lo ligam",
     "The public link will expire no later than {days} days after it is created" : "Aqueste ligam public expirarà al mai tard {days} jorns aprèp sa creacion.",
     "Link" : "Ligam",
