@@ -51,6 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "ユーザーもしくはグループと共有 ...",
     "Share with users, groups or remote users …" : "ユーザー、グループもしくはリモートユーザーと共有 ...",
     "Share" : "共有",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Federated Cloud ID （ username@example.com/cloud ）を使用して他のサーバー上のユーザーと共有する",
     "Share link" : "URLで共有",
     "The public link will expire no later than {days} days after it is created" : "URLによる共有は、作成してから {days} 日以内に有効期限切れになります",
     "Link" : "リンク",

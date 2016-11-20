@@ -49,6 +49,7 @@
     "Share with users or groups …" : "Megosztás felhasználókkal vagy csoportokkal ...",
     "Share with users, groups or remote users …" : "Megosztás felhasználókkal, csoportokkal vagy távoli felhasználókkal ...",
     "Share" : "Megosztás",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Megosztás más szervert használó emberekkel, az Egyesített Felhő Azonosítóval: username@example.com/cloud",
     "Share link" : "Megosztás hivatkozással",
     "The public link will expire no later than {days} days after it is created" : "A nyilvános hivatkozás érvényessége legkorábban {days} nappal a létrehozása után jár csak le",
     "Link" : "Hivatkozás",
