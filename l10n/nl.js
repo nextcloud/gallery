@@ -51,6 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "Delen met gebruikers of groepen ...",
     "Share with users, groups or remote users …" : "Delen met gebruikers, groepen of externe gebruikers ...",
     "Share" : "Delen",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Delen met mensen bij andere servers via hun gefedereerde Cloud ID gebruikersnaam@voorbeeld.nl/nextcloud",
     "Share link" : "Deel link",
     "The public link will expire no later than {days} days after it is created" : "De openbare link vervalt niet eerder dan {days} dagen na het aanmaken",
     "Link" : "Link",
