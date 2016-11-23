@@ -9,8 +9,8 @@ design:
 information:
   description: |
     # This is the official **Gallery** sample folder
-    Contribute to this project [on Github](https://github.com/owncloud/gallery)
-  copyright: Copyright 2014-2015 [Acme](http://www.ubersecrettester.ninja)
+    Contribute to this project [on Github](https://github.com/nextcloud/gallery)
+  copyright: Copyright 2014-2015 [Acme](http://www.nextcloud.ninja)
   inherit: yes
 sorting:
   type: date

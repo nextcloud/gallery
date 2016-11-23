@@ -75,8 +75,8 @@ class GetFilesCest {
 					[
 						// You have to use double-quotes here in order to be able to insert the line return
 						'description' => "# This is the official **Gallery** sample folder\xA" .
-										 "Contribute to this project [on Github](https://github.com/owncloud/gallery)\xA",
-						'copyright'   => 'Copyright 2014-2015 [Acme](http://www.ubersecrettester.ninja)',
+										 "Contribute to this project [on Github](https://github.com/nextcloud/gallery)\xA",
+						'copyright'   => 'Copyright 2014-2015 [Acme](http://www.nextcloud.ninja)',
 						'inherit'     => 'yes',
 						'level'       => 0,
 					],

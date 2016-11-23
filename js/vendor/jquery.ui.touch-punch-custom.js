@@ -4,7 +4,7 @@
  * Copyright 2011–2014, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Modified for ownCloud Gallery by Olivier Paroz to convert taphold events into clicks instead of
+ * Modified for Nextcloud Gallery by Olivier Paroz to convert taphold events into clicks instead of
  * using touchstart
  * @see https://stackoverflow.com/questions/34027761/jquery-ui-sortable-hold-and-drag-for-mobile
  *

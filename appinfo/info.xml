@@ -2,7 +2,7 @@
 <info>
 	<id>gallery</id>
 	<name>Gallery</name>
-	<description>Media gallery for ownCloud and Nextcloud with the following features:
+	<description>Media gallery for Nextcloud with the following features:
 
 		- Support for large selection of media types (depending on server setup)
 
@@ -26,11 +26,11 @@
 
 		Provides a dedicated view of all images in a grid, adds image viewing capabilities to the
 		files app and adds a gallery view to public links.
-		Compatible with Firefox, Chrome and Internet Explorer 9+
+		Compatible with Firefox, Chrome and Internet Explorer 11
 	</description>
 	<licence>AGPL</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
-	<version>15.0.0</version>
+	<version>15.0.1</version>
 	<namespace>Gallery</namespace>
 	<category>Multimedia</category>
 	<dependencies>

@@ -21,7 +21,7 @@ git config user.email "travis-gallery-reporter@interfasys.ch"
 git add .
 
 # Initialising wiki submodule
-git submodule add https://github.com/owncloud/gallery.wiki.git wiki
+git submodule add https://github.com/nextcloud/gallery.wiki.git wiki
 
 git commit -m "Gallery documentation"
 
