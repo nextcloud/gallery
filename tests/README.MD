@@ -1,6 +1,6 @@
 # Testing the Gallery app
 
-Read more about automated testing in [the wiki](https://github.com/owncloud/gallery/wiki/Behavioural%2C-functional-and-unit-testing-suite/)
+Read more about automated testing in [the wiki](https://github.com/nextcloud/gallery/wiki/Behavioural%2C-functional-and-unit-testing-suite/)
 
 ## Requirements
 
