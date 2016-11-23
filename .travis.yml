@@ -118,13 +118,6 @@ after_success:
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
   - bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
-  # Generate API documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
-  # Generate Wiki documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then git submodule update --init; fi"
-  # Send documentation to Github Pages
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
-
 after_failure:
   - cat tests/_output/phpbuiltinserver.errors.txt
   - bash build/after_failure.sh
