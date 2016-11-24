@@ -4,11 +4,11 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/coverage.png?b=stable10)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=stable10)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/nextcloud/gallery/badge.svg)](https://travis-ci.org/nextcloud/gallery)
 
-Media gallery for ownCloud and Nextcloud which includes previews for all media types supported by your installation.
+Media gallery for Nextcloud which includes previews for all media types supported by your installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This version is for ownCloud 9.1 and Nextcloud 10. If you need the same app for older versions of ownCloud and Nextcloud. Use [Gallery+](https://github.com/oparoz/galleryplus) from their respective app stores.**
+**This version is for Nextcloud 10. If you need the same app for older versions of Nextcloud. Use [Gallery+](https://github.com/oparoz/galleryplus) from the app stores.**
 
 ![Screenshot](https://raw.githubusercontent.com/nextcloud/gallery/stable10/build/screenshots/Gallery.jpg)
 ## Featuring
@@ -51,7 +51,7 @@ See this [wiki article](https://github.com/nextcloud/gallery/wiki/Requirements) 
 There are many ways in which you can help make Gallery a better product
 
 * Report bugs (see below)
-* Provide patches for [`nextcloud/server`](https://github.com/nextcloud/server) , [`owncloud/core`](https://github.com/owncloud/core) or the app itself
+* Provide patches for [`nextcloud/server`](https://github.com/nextcloud/server) or the app itself
 * Help test new features by checking out new branches on Github
 * Design interface components for new features
 * Develop new features. Please consult with the maintainers before starting your journey
@@ -91,13 +91,13 @@ That's it. You should be able to see more media types in your slideshows and gal
 
 Using Redis for files locking improves performance **by a factor of 10** when loading an album.
 
-Read about it in the [Nextcloud](https://docs.nextcloud.org/server/10/admin_manual/configuration_files/files_locking_transactional.html) or [ownCloud](https://doc.owncloud.org/server/9.2/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
+Read about it in the [Nextcloud](https://docs.nextcloud.org/server/10/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
 
 #### Assets pipelining
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can greatly reduce the loading time of the app.
 
-Read about it in the [Nextcloud](https://docs.nextcloud.org/server/10/admin_manual/configuration_server/js_css_asset_management_configuration.html) or [ownCloud](https://doc.owncloud.org/server/9.2/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
+Read about it in the [Nextcloud](https://docs.nextcloud.org/server/10/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
 
 ## Installation
 
