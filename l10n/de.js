@@ -98,6 +98,7 @@ OC.L10N.register(
     "the file is corrupt" : "die Datei ist beschädigt",
     "the encryption key is missing" : "Der Verschlüsselungsschlüssel fehlt",
     "Here is the error message returned by the server: " : "Hier ist die Fehlermeldung, welche vom Server zurückgegeben wurde:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Für weitere Informationen kontaktiere bitte deinen freundlichen Nextcloud-Administrator.",
     "Sorry, but the server could not fulfill your request." : "Entschuldigung, aber der Server konnte deine Anfrage nicht beantworten.",
     "Possible reasons for the problem:" : "Mögliche Gründe für das Problem:",
     "a conflicting app was installed" : "eine konfliktträchtige App wurde installiert",

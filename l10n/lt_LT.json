@@ -1,9 +1,10 @@
 { "translations": {
     "Gallery" : "Galerija",
     "There was a problem reading files from this album" : "Klaida nuskaitant šio albumo failus",
-    "Aborting preview. Could not find the file" : "Atšaukiama peržiūra. Nerastas failas",
-    "Could not move \"{file}\", target exists" : "Nepavyko perkelti \"{file}\", toks jau egzistuoja",
+    "Aborting preview. Could not find the file" : "Peržiūra nutraukiama. Nepavyko rasti failo",
+    "Could not move \"{file}\", target exists" : "Nepavyko perkelti \"{file}\", toks jau yra",
     "Could not move \"{file}\"" : "Nepavyko perkelti \"{file}\"",
+    "Invalid server url" : "Neteisingas serverio url",
     "Gallery view" : "Galerijos išdėstymas",
     "Could not load the description" : "Nepavyko atnaujinti aprašymo",
     "Could not load the description: " : "Nepavyko atnaujinti aprašymo:",
