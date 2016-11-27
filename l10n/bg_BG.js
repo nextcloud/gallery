@@ -78,6 +78,7 @@ OC.L10N.register(
     "the file is corrupt" : "файлът е повреден",
     "the encryption key is missing" : "криптиращия ключ липсва",
     "Here is the error message returned by the server: " : "Ето съобщението за грешка, върнато от сървъра:",
+    "For more information, please contact your friendly Nextcloud administrator." : "За повече информация се свържете с любезния администратор на Nextcloud.",
     "Sorry, but the server could not fulfill your request." : "Съжаляваме, но сървърът не може да изпълни заявката.",
     "Possible reasons for the problem:" : "Възможни причини за проблема:",
     "a conflicting app was installed" : "бе инсталирано конфликтно приложение",

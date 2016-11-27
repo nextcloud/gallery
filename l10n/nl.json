@@ -96,6 +96,7 @@
     "the file is corrupt" : "het bestand is beschadigd",
     "the encryption key is missing" : "de encryptiesleutel ontbreekt",
     "Here is the error message returned by the server: " : "Hier is de foutmelding van de server:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Voor meer informatie neem je contact op met je Nextcloud beheerder.",
     "Sorry, but the server could not fulfill your request." : "Sorry, maar de server kon uw opdracht niet uitvoeren.",
     "Possible reasons for the problem:" : "Mogelijke oorzaken voor het probleem:",
     "a conflicting app was installed" : "een conflicteren app was geinstalleerd",
