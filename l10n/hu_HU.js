@@ -98,6 +98,7 @@ OC.L10N.register(
     "the file is corrupt" : "a fájl korrupt",
     "the encryption key is missing" : "a titkosító kulcs hiányzik",
     "Here is the error message returned by the server: " : "Ezzel a hibaüzenettel tért vissza a szerver:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Bővebb információért, kérjük keresd fel a barátságos Nextcloud rendszergazdát.",
     "Sorry, but the server could not fulfill your request." : "Sajnáljuk, de a szerver nem tudta teljesíteni a kérését.",
     "Possible reasons for the problem:" : "A probléma lehetséges okai:",
     "a conflicting app was installed" : "ütköző alkalmazás lett telepítve",
