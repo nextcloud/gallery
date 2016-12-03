@@ -49,7 +49,7 @@ style(
 <header>
 	<div id="header">
 		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>"
-		   title="" id="owncloud">
+		   title="" id="nextcloud">
 			<div class="logo-icon svg">
 			</div>
 		</a>
