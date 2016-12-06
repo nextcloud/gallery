@@ -58,7 +58,7 @@ $c->query('OCP\INavigationManager')
  */
 Util::addTranslations($appName);
 
-\OC::$server->getEventDispatcher()->addListener('OCA\Files::loadAdditionalScripts', function() use ($appName) {
+$loadScripts = function() use ($appName) {
 	// @codeCoverageIgnoreStart
 	/**
 	 * Scripts for the Files app
@@ -77,4 +77,7 @@ Util::addTranslations($appName);
 	 */
 	Util::addStyle($appName, 'slideshow');
 	Util::addStyle($appName, 'gallerybutton');
-});// @codeCoverageIgnoreEnd
+};// @codeCoverageIgnoreEnd
+
+\OC::$server->getEventDispatcher()->addListener('OCA\Files::loadAdditionalScripts', $loadScripts);
+\OC::$server->getEventDispatcher()->addListener('OCA\Files_Sharing::loadAdditionalScripts', $loadScripts);
