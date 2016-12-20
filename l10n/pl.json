@@ -87,15 +87,18 @@
     "File list" : "Lista plików",
     "Sorry, this file could not be found." : "Przepraszamy, ten plik nie został odnaleziony.",
     "Reasons might be:" : "Możliwe powody:",
+    "the wrong file ID was provided" : "wprowadzono nie właściwy ID pliku",
     "the file was removed" : "plik został usunięty",
     "the file is corrupt" : "plik jest uszkodzony",
     "the encryption key is missing" : "brakujący klucz szyfrowania",
     "Possible reasons for the problem:" : "Możliwe przyczyny tego problemu:",
+    "the filesystem is not readable" : "system plików jest nie czytelny",
     "For more information, please contact your friendly ownCloud administrator." : "Po więcej informacji, proszę skontaktuj się z twoim przyjaznym administratorem ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "Przepraszamy ale wygląda na to, że ten link już nie działa.",
     "the item was removed" : "element został usunięty",
     "the link has expired" : "link wygasł",
     "sharing is disabled" : "udostępnianie jest wyłączone",
+    "For more information, please ask the person who has sent you this link." : "Po więcej informacji, proszę skontaktuj się z osobą, która wysłała Tobie ten link.",
     "Add to your Nextcloud" : "Dodaj do swojego Nextcloud",
     "Picture view" : "Widok zdjęć"
 },"pluralForm" :"nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
