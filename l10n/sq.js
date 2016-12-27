@@ -6,6 +6,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Po ndërpritet paraparja. S’u gjet dot skedari",
     "Could not move \"{file}\", target exists" : "S’u lëviz dot \"{file}\", objektivi ekziston",
     "Could not move \"{file}\"" : "S’u lëviz dot \"{file}\"",
+    "Invalid server url" : "url e serverit e pavlefshme",
     "Gallery view" : "Pamje Galeri",
     "Could not load the description" : "S’ngarkoi dot përshkrimin",
     "Could not load the description: " : "S’ngarkoi dot përshkrimin: ",
