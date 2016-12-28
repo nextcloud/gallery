@@ -6,6 +6,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Po ndërpritet paraparja. S’u gjet dot skedari",
     "Could not move \"{file}\", target exists" : "S’u lëviz dot \"{file}\", objektivi ekziston",
     "Could not move \"{file}\"" : "S’u lëviz dot \"{file}\"",
+    "No compatible server found at {remote}" : "Nuk u gjet asnjë server i pajtueshëm në {remote}",
     "Invalid server url" : "url e serverit e pavlefshme",
     "Gallery view" : "Pamje Galeri",
     "Could not load the description" : "S’ngarkoi dot përshkrimin",
@@ -50,6 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "Ndajeni me përdorues ose grupe …",
     "Share with users, groups or remote users …" : "Ndajeni me përdorues, grupe ose përdorues të largët …",
     "Share" : "Ndajeni me të tjerët",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Ndani me njerëz në servera të tjerë duke përdorut ID-në e Federated Cloud username@example.com/cloud",
     "Share link" : "Ndani lidhjen",
     "The public link will expire no later than {days} days after it is created" : "Lidhja publike do të skadojë jo më vonë se {days} ditë pas krijimit",
     "Link" : "Lidhje",
@@ -96,6 +98,7 @@ OC.L10N.register(
     "the file is corrupt" : "skedari është i dëmtuar",
     "the encryption key is missing" : "mungon kyçi i fshehtëzimeve",
     "Here is the error message returned by the server: " : "Ky është mesazhi i gabimit i kthyer nga serveri: ",
+    "For more information, please contact your friendly Nextcloud administrator." : "Për më shumë informacion, ju lutemi kontaktoni adiministratorit tuaj miqësor të Nextcloud.",
     "Sorry, but the server could not fulfill your request." : "Na vjen keq, por skedari s’e përmbushi dot kërkesën tuaj.",
     "Possible reasons for the problem:" : "Arsye të mundshme për problemin:",
     "a conflicting app was installed" : "qe instaluar një aplikacion konfliktues",
@@ -107,6 +110,7 @@ OC.L10N.register(
     "the link has expired" : "lidhja ka skaduar",
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
+    "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
     "Picture view" : "Pamje Foto"
 },
 "nplurals=2; plural=(n != 1);");
