@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Ruším náhľad. Súbor nemožno nájsť.",
     "Could not move \"{file}\", target exists" : "Nie je možné presunúť „{file}“, cieľ už existuje",
     "Could not move \"{file}\"" : "Nie je možné presunúť „{file}“",
+    "No compatible server found at {remote}" : "Nebol nájdený kompatibilný server na adrese {remote}",
+    "Invalid server url" : "Neplatná url servera",
     "Gallery view" : "Pohľad galérie",
     "Could not load the description" : "Nemožno načítať popis",
     "Could not load the description: " : "Nemožno načítať popis:",
@@ -49,6 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "Sprístupniť používateľom alebo skupinám...",
     "Share with users, groups or remote users …" : "Sprístupniť používateľom, skupinám alebo vzdialeným používateľom...",
     "Share" : "Sprístupniť",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sprístupniť ľuďom na iných serveroch pomocou identifikátora Federated Cloud ID username@example.com/cloud",
     "Share link" : "Sprístupniť odkaz",
     "The public link will expire no later than {days} days after it is created" : "Verejný odkaz nevyprší skôr než za {days} dní po vytvorení",
     "Link" : "Odkaz",
@@ -95,6 +98,7 @@ OC.L10N.register(
     "the file is corrupt" : "súbor je narušený",
     "the encryption key is missing" : "chýba šifrovací kľúč",
     "Here is the error message returned by the server: " : "Server vrátil nasledujúcu chybovú správu:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Pre viac informácií kontaktujte prosím správcu vášho priateľského Nextcloudu.",
     "Sorry, but the server could not fulfill your request." : "Ľutujem, server nedokáže splniť vašu požiadavku.",
     "Possible reasons for the problem:" : "Možné príčiny problému:",
     "a conflicting app was installed" : "inštalovaná konfliktná aplikácia",
@@ -106,6 +110,7 @@ OC.L10N.register(
     "the link has expired" : "linka vypršala",
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
+    "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
     "Picture view" : "Zobrazenie obrázka"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
