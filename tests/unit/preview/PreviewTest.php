@@ -50,11 +50,7 @@ class PreviewTest extends \Test\GalleryUnitTest {
 		$this->logger = $this->getMockBuilder('\OCP\ILogger')
 							 ->disableOriginalConstructor()
 							 ->getMock();
-		$this->previewManager = new Preview(
-			$this->config,
-			$this->corePreviewManager,
-			$this->logger
-		);
+		$this->previewManager = new Preview($this->corePreviewManager);
 	}
 
 	/**
