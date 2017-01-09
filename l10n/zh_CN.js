@@ -6,6 +6,8 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "预览异常，无法找到文件。",
     "Could not move \"{file}\", target exists" : "不能移动 \"{file}\"，目标已存在。",
     "Could not move \"{file}\"" : "不能移动 \"{file}\"",
+    "No compatible server found at {remote}" : "在 {remote} 没有找到兼容的服务器",
+    "Invalid server url" : "无效的服务器链接 url",
     "Gallery view" : "查看相册",
     "Could not load the description" : "无法载入描述",
     "Could not load the description: " : "无法载入描述",
@@ -49,6 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "分享给其他用户或组 ...",
     "Share with users, groups or remote users …" : "分享给其他用户、组或远程用户 ...",
     "Share" : "共享",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "使用 username@example.com/cloud 格式，其他服务器上联盟云的用户共享",
     "Share link" : "分享链接",
     "The public link will expire no later than {days} days after it is created" : "这个共享链接将在创建后 {days} 天失效",
     "Link" : "链接",
@@ -95,6 +98,7 @@ OC.L10N.register(
     "the file is corrupt" : "文件已损坏",
     "the encryption key is missing" : "加密密钥丢失",
     "Here is the error message returned by the server: " : "下面是服务器返回的错误信息：",
+    "For more information, please contact your friendly Nextcloud administrator." : "需要更多得信息，请联系您的Nextcloud管理员。",
     "Sorry, but the server could not fulfill your request." : "抱歉，服务器无法完成您的请求。",
     "Possible reasons for the problem:" : "可能的原因：",
     "a conflicting app was installed" : "已安装了一个会引发冲突的应用",
@@ -106,6 +110,7 @@ OC.L10N.register(
     "the link has expired" : "链接已过期",
     "sharing is disabled" : "共享已禁用",
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系共享链接给你的人。",
+    "Add to your Nextcloud" : "添加到您的Nextcloud",
     "Picture view" : "查看图片"
 },
 "nplurals=1; plural=0;");
