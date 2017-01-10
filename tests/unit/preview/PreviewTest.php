@@ -12,12 +12,8 @@
 
 namespace OCA\Gallery\Preview;
 
-use OCP\IConfig;
+use OCP\Files\File;
 use OCP\IPreview;
-use OCP\ILogger;
-
-use OCA\Gallery\AppInfo\Application;
-
 
 /**
  * Class PreviewTest
@@ -26,12 +22,8 @@ use OCA\Gallery\AppInfo\Application;
  */
 class PreviewTest extends \Test\GalleryUnitTest {
 
-	/** @var IConfig */
-	private $config;
-	/** @var IPreview */
+	/** @var IPreview|\PHPUnit_Framework_MockObject_MockObject */
 	private $corePreviewManager;
-	/** @var ILogger */
-	protected $logger;
 	/** @var Preview */
 	private $previewManager;
 
@@ -41,20 +33,10 @@ class PreviewTest extends \Test\GalleryUnitTest {
 	public function setUp() {
 		parent::setUp();
 
-		$this->config = $this->getMockBuilder('\OCP\IConfig')
-							 ->disableOriginalConstructor()
-							 ->getMock();
-		$this->corePreviewManager = $this->getMockBuilder('\OCP\IPreview')
+		$this->corePreviewManager = $this->getMockBuilder(IPreview::class)
 										 ->disableOriginalConstructor()
 										 ->getMock();
-		$this->logger = $this->getMockBuilder('\OCP\ILogger')
-							 ->disableOriginalConstructor()
-							 ->getMock();
-		$this->previewManager = new Preview(
-			$this->config,
-			$this->corePreviewManager,
-			$this->logger
-		);
+		$this->previewManager = new Preview($this->corePreviewManager);
 	}
 
 	/**
@@ -63,50 +45,14 @@ class PreviewTest extends \Test\GalleryUnitTest {
 	public function testGetPreviewFromCoreWithBrokenSystem() {
 		$keepAspect = true; // Doesn't matter
 		$exception = new \Exception('Encryption ate your file');
-		$preview = $this->mockGetPreviewWithBrokenSetup($exception);
-		self::invokePrivate($this->previewManager, 'preview', [$preview]);
+		$this->corePreviewManager->method('getPreview')
+			->willThrowException($exception);
 
-		self::invokePrivate($this->previewManager, 'getPreviewFromCore', [$keepAspect]);
+		$this->previewManager->getPreview(
+			$this->createMock(File::class),
+			42,
+			42,
+			$keepAspect
+		);
 	}
-
-	/**
-	 * @param $fileId
-	 * @param $width
-	 * @param $height
-	 *
-	 * @return object|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function mockGetPreview($fileId, $width, $height) {
-		$image = new \OC_Image(file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg'));
-		$image->preciseResize($width, $height);
-
-		$preview = $this->getMockBuilder('\OC\Preview')
-						->disableOriginalConstructor()
-						->getMock();
-		$preview->method('getPreview')
-				->willReturn($image);
-		$preview->method('isCached')
-				->willReturn($fileId);
-
-		return $preview;
-	}
-
-	private function mockGetPreviewWithBrokenSetup($exception) {
-		$preview = $this->getMockBuilder('\OC\Preview')
-						->disableOriginalConstructor()
-						->getMock();
-		$preview->method('setMaxX')
-				->willReturn(null);
-		$preview->method('setMaxY')
-				->willReturn(null);
-		$preview->method('setScalingUp')
-				->willReturn(null);
-		$preview->method('setKeepAspect')
-				->willReturn(null);
-		$preview->method('getPreview')
-				->willThrowException($exception);
-
-		return $preview;
-	}
-
 }

@@ -53,6 +53,7 @@ use OCA\Gallery\Utility\EventSource;
 
 use OCA\OcUtility\AppInfo\Application as OcUtility;
 use OCA\OcUtility\Service\SmarterLogger as SmarterLogger;
+use OCP\IPreview;
 
 /**
  * Class Application
@@ -248,9 +249,7 @@ class Application extends App {
 		$container->registerService(
 			'CustomPreviewManager', function (IContainer $c) {
 			return new Preview(
-				$c->query('OCP\IConfig'),
-				$c->query('OCP\IPreview'),
-				$c->query('Logger')
+				$c->query(IPreview::class)
 			);
 		}
 		);

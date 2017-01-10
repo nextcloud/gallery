@@ -27,7 +27,7 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 
 	/** @var PreviewService */
 	protected $service;
-	/** @var Preview */
+	/** @var Preview|\PHPUnit_Framework_MockObject_MockObject */
 	protected $previewManager;
 
 	/**
@@ -133,7 +133,9 @@ class PreviewServiceTest extends \Test\GalleryUnitTest {
 	public function testCreatePreviewWithBrokenSystem() {
 		/** @type File $file */
 		$file = $this->mockJpgFile(12345);
-		$this->mockGetUserIdFails();
+
+		$this->previewManager->method('getPreview')
+			->willThrowException(new \Exception('BOOM'));
 
 		$this->service->createPreview(
 			$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false

@@ -102,10 +102,7 @@ class PreviewService extends Service {
 		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
 	) {
 		try {
-			$userId = $this->environment->getUserId();
-			$imagePathFromFolder = $this->environment->getPathFromUserFolder($file);
-			$this->previewManager->setupView($userId, $file, $imagePathFromFolder);
-			$preview = $this->previewManager->preparePreview($maxX, $maxY, $keepAspect);
+			$preview = $this->previewManager->getPreview($file, $maxX, $maxY, $keepAspect);
 			if ($preview && $base64Encode) {
 				$preview['preview'] = $this->encode($preview['preview']);
 			}
