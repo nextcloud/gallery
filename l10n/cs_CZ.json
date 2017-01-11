@@ -96,6 +96,7 @@
     "the file is corrupt" : "soubor je poškozen",
     "the encryption key is missing" : "chybí šifrovací klíč",
     "Here is the error message returned by the server: " : "Zde je chybová zpráva vrácená serverem:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Pokud chcete vědět víc, kontaktujte svého přátelského administrátora  Nextcloudu.",
     "Sorry, but the server could not fulfill your request." : "Omlouváme se, ale server nemohl splnit váš požadavek.",
     "Possible reasons for the problem:" : "Možný důvod problému:",
     "a conflicting app was installed" : "byla nainstalovaná konfliktní aplikace",
