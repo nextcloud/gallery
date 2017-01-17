@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Gallery" : "Галерия",
     "Aborting preview. Could not find the file" : "Отказан е прегледа. Не можах да намеря файла",
+    "Could not move \"{file}\", target exists" : "Неуспешно преместване на  \"{file}\", крайната местоположение вече съществува",
+    "Could not move \"{file}\"" : "Неуспешно преместване на \"{file}\"",
     "Could not load the description" : "Неможе да зареди описанието",
     "Could not load the description: " : "Неможе да зареди описанието:",
     "Copyright" : "Авторско право",
@@ -24,6 +26,8 @@ OC.L10N.register(
     "Download" : "Изтегляне",
     "Toggle background" : "Превключване на фона",
     "Delete" : "Изтриване",
+    "Could not create file \"{file}\" because it already exists" : "Неуспешно създаване на \"{file}\", защото вече съществува",
+    "Could not create file \"{file}\"" : "Неуспешно създаване на \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" е непозволено име за файл.",
     "File name cannot be empty." : "Името на файла не може да бъде празно.",
     "Upload" : "Качване",
