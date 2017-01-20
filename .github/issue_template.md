@@ -41,8 +41,6 @@ Tell us what happens instead
 
 **PHP version:**
 
-**cloud server:** Nextcloud or ownCloud
-
 **cloud version:** (see admin page or version.php)
 
 **Updated from an older installation or fresh install:**
@@ -51,7 +49,7 @@ Tell us what happens instead
 <!--
 If you have access to your command line run e.g.:
 # sudo -u www-data php occ app:list`
-from within your installation folder*
+from within your installation folder. www-data is the user which owns the occ file
 -->
 
 <details>
@@ -67,7 +65,7 @@ Paste the list of applications here
 <!--
 If you have access to your command line run e.g.:
 # sudo -u www-data php occ config:list system`
-from within your installation folder
+from within your installation folder. www-data is the user which owns the occ file
 
 or 
 
@@ -102,7 +100,7 @@ Insert your webserver log here
 
 #### Cloud log
 <!--
-The log has the name owncloud.log or nextcloud.log and is found in the data folder
+The log has the name nextcloud.log and is found in the data folder
 -->
 
 <details>
