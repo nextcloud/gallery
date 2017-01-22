@@ -6,11 +6,7 @@
 #controls .button.view-switcher {
 	float: right;
 	margin-top: 5px;
-	font-weight: normal;
-	width: 40px;
 	padding: 6px 11px;
-	background-color: transparent;
-	border: 1px solid transparent;
 }
 
 #controls .button.view-switcher img{
@@ -21,7 +17,6 @@
 	float: none;
 	margin-right: 4px;
 	padding: 7px 11px;
-	background-color: rgba(240, 240, 240, .9);
 }
 
 #controls .button.view-switcher.gallery img{
