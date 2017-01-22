@@ -8,7 +8,7 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Impossible de déplacer \"{file}\"",
     "No compatible server found at {remote}" : "Aucun serveur compatible trouvé sur {remote}",
     "Invalid server url" : "Url serveur invalide",
-    "Gallery view" : "Vue en galerie",
+    "Gallery view" : "Vue galerie",
     "Could not load the description" : "Impossible de charger la description",
     "Could not load the description: " : "Impossible de charger la description :",
     "Copyright" : "Droit d'auteur",
