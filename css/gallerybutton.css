@@ -9,18 +9,15 @@
 	padding: 6px 11px;
 }
 
-#controls .button.view-switcher img{
-	opacity: .3;
-}
-
 #controls .button.view-switcher.gallery {
 	float: none;
 	margin-right: 4px;
 	padding: 7px 11px;
 }
 
-#controls .button.view-switcher.gallery img{
-	opacity: .5;
+/* TODO: move to core */
+.icon-toggle-pictures {
+	background-image: url('../../../core/img/actions/toggle-pictures.svg?v=1');
 }
 
 #controls .button.sorting {

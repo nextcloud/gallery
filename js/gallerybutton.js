@@ -72,9 +72,7 @@ $(document).ready(function () {
 			GalleryButton.button =
 				$('<div id="gallery-button" class="button view-switcher">' +
 						'<div id="button-loading"></div>' +
-					'<img class="svg" src="' + OC.imagePath('core', 'actions/toggle-pictures.svg') +
-					'"' +
-					'alt="' + t('gallery', 'Gallery view') + '"/>' +
+					'<span class="icon-toggle-pictures"></span>' +
 					'</div>');
 
 			GalleryButton.button.click(function () {
