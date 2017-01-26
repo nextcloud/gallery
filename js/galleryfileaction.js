@@ -145,7 +145,6 @@
 					window.galleryFileAction.features
 				)).then(function () {
 					// Don't show the download button on the "Files" slideshow
-					galleryFileAction.slideShow.removeButton('.downloadImage');
 					galleryFileAction._startSlideshow(images, start);
 				});
 			} else {
