@@ -95,6 +95,7 @@
     "the file is corrupt" : "skráin er skemmd",
     "the encryption key is missing" : "dulritunarlykil vantar",
     "Here is the error message returned by the server: " : "Hér er villumeldingin sem kom frá þjóninum:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Til að fá nánari upplýsingar, hafðu samband við vinalega Nextcloud kerfisstjórann.",
     "Sorry, but the server could not fulfill your request." : "Því miður gat netþjónninn ekki uppfyllt fyrirspurnina þína.",
     "Possible reasons for the problem:" : "Mögulegar ástæður fyrir þessu vandamáli:",
     "a conflicting app was installed" : "app sem veldur árekstri var sett upp",
