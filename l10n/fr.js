@@ -61,7 +61,7 @@ OC.L10N.register(
     "Allow editing" : "Permettre la modification",
     "Email link to person" : "Envoyer le lien par courriel",
     "Send" : "Envoyer",
-    "Set expiration date" : "Spécifier une date d'expiration",
+    "Set expiration date" : "Indiquer une date d'expiration",
     "Expiration" : "Expiration",
     "Expiration date" : "Date d'expiration",
     "An error occured. Please try again" : "Une erreur est survenue. Merci de réessayer",
