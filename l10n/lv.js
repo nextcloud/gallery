@@ -15,6 +15,8 @@ OC.L10N.register(
     "Copyright notice" : "Autortiesību paziņojums",
     "This application may not work properly on your browser." : "Iespējams, šī lietojumprogramma nedarbojas pareizi, jūsu pārlūkprogrammā.",
     "Your browser is not supported!" : "Jūsu pārlūkprogramma netiek atbalstīta!",
+    "please install one of the following alternatives" : "lūdzu, instalējiet kādu no peejamām alternatīvām",
+    "Album cannot be shown" : "Albumu nevar parādīt",
     "No media files found" : "Nav atrasts neviens multivides fails",
     "Configuration error" : "Konfigurācijas kļūda",
     "New" : "Jauna",
