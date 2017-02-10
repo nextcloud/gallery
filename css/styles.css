@@ -70,7 +70,6 @@ div.crumb.last a {
 }
 
 #content-wrapper {
-	background-color: #fff;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transition: background-color 1s linear;
