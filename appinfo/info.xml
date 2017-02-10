@@ -6,19 +6,23 @@
 
 		- Support for large selection of media types (depending on server setup)
 
-		- Large, zoomable previews
+		- Upload and organise images and albums straight from the app
+
+		- Large, zoomable previews which can be shown in fullscreen mode
 
 		- Sort images by name or date
 
-		- Per album description and copyright statement
+		- Per album design, description and copyright statement
 
-		- A la carte features
+		- A la carte features (external shares, browser svg rendering, etc.)
 
 		- Image download straight from the slideshow or the gallery
 
-		- Seamlessly jump between the gallery and the files view
+		- Switch to Gallery from any folder in files and vice-versa
 
 		- Ignore folders containing a ".nomedia" file
+
+		- Browser rendering of SVG images (disabled by default)
 
 		- Native SVG support
 
@@ -33,8 +37,17 @@
 	<version>16.0.0</version>
 	<namespace>Gallery</namespace>
 	<category>Multimedia</category>
+	<documentation>
+		<user>https://github.com/nextcloud/gallery/blob/master/README.md</user>
+		<admin>https://github.com/nextcloud/gallery/blob/master/README.md</admin>
+		<developer>https://github.com/nextcloud/gallery/wiki</developer>
+	</documentation>
+	<category>Multimedia</category>
+	<website>https://github.com/nextcloud/gallery</website>
+	<bugs>https://github.com/nextcloud/gallery/issues</bugs>
+	<repository type="git">https://github.com/nextcloud/gallery.git</repository>
 	<dependencies>
-		<php min-version="5.4" max-version="7"/>
+		<php min-version="5.6" max-version="7"/>
 		<nextcloud min-version="11" max-version="12"/>
 	</dependencies>
 	<default_enable />
