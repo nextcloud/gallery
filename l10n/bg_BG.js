@@ -48,6 +48,7 @@ OC.L10N.register(
     "Set expiration date" : "Задаване на дата на изтичане",
     "Expiration" : "Изтичане",
     "Expiration date" : "Дата на изтичане",
+    "An error occured. Please try again" : "Възникна грешка. Опитайте отново.",
     "Adding user..." : "Добавяне на потребител...",
     "group" : "група",
     "remote" : "отдалечен",
@@ -92,6 +93,7 @@ OC.L10N.register(
     "the link has expired" : "тази връзка е изтекла",
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
+    "Add to your Nextcloud" : "Добавете към вашия Nextcloud",
     "Picture view" : "Албум със снимки"
 },
 "nplurals=2; plural=(n != 1);");
