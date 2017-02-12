@@ -569,7 +569,7 @@
 			}
 			if (!this._newFileMenu) {
 				this._newFileMenu = new Gallery.NewFileMenu();
-				$('body').append(this._newFileMenu.$el);
+				$('.actions').append(this._newFileMenu.$el);
 			}
 			this._newFileMenu.showAt($target);
 
