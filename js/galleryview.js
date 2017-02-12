@@ -2,7 +2,7 @@
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 
-	var TEMPLATE_ADDBUTTON = '<a href="#" class="button new"><img src="{{iconUrl}}" alt="{{addText}}"></img></a>';
+	var TEMPLATE_ADDBUTTON = '<a href="#" class="button new"><span class="icon icon-add"></span><span class="hidden-visually">New</span></a>';
 
 	/**
 	 * Builds and updates the Gallery view
