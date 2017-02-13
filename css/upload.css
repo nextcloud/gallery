@@ -37,9 +37,11 @@
 }
 
 .newFileMenu {
-	width: 140px;
-	margin-left: -56px;
-	margin-top: 25px;
+	font-weight: 300;
+	top: 100%;
+	margin-top: 4px;
+	min-width: 100px;
+	margin-left: 3px;
 	z-index: 1001;
 }
 
@@ -51,31 +53,8 @@
 	box-shadow: 0 0 6px #f8b9b7;
 }
 
-.newFileMenu .menuitem {
-	white-space: nowrap;
-	overflow: hidden;
-}
 .newFileMenu.popovermenu .menuitem .icon {
 	margin-bottom: -2px;
-}
-.newFileMenu.popovermenu a.menuitem,
-.newFileMenu.popovermenu label.menuitem,
-.newFileMenu.popovermenu .menuitem {
-	padding: 0;
-	margin: 0;
-}
-
-.newFileMenu.popovermenu a.menuitem.active {
-	opacity: 1;
-}
-
-.newFileMenu.bubble:after {
-	left: 75px;
-	right: auto;
-}
-.newFileMenu.bubble:before {
-	left: 75px;
-	right: auto;
 }
 
 .newFileMenu .filenameform {
@@ -83,7 +62,7 @@
 }
 
 .newFileMenu .filenameform input {
-	width: 100px;
+	margin: 2px 0;
 }
 
 #fileList .popovermenu .action {
