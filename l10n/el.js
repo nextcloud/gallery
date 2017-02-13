@@ -6,6 +6,7 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Ακύρωση προεπισκόπησης. Αδυναμία εύρεσης αρχείου",
     "Could not move \"{file}\", target exists" : "Αδυναμία μετακίνησης του \"{file}\", υπάρχει ήδη αρχείο με αυτό το όνομα",
     "Could not move \"{file}\"" : "Αδυναμία μετακίνησης του \"{file}\"",
+    "No compatible server found at {remote}" : "Δεν βρέθηκε συμβατός διακομιστής σε {remote}",
     "Invalid server url" : "Μη έγκυρη url δικομιστή",
     "Gallery view" : "Προβολή Συλλογής",
     "Could not load the description" : "Αδυναμία φόρτωσης περιγραφής",
