@@ -33,6 +33,8 @@
     "Error while changing permissions" : "Грешка при промяна на правата",
     "Shared with you and the group {group} by {owner}" : "Споделено с вас и групата {group} от {owner}",
     "Shared with you by {owner}" : "Споделено с Вас от {owner}.",
+    "Share with users or groups …" : "Споделяне с потребители или групи...",
+    "Share with users, groups or remote users …" : "Споделяне с потребители, групи или отдалечени потребители...",
     "Share" : "Сподели",
     "Share link" : "Връзка за споделяне",
     "The public link will expire no later than {days} days after it is created" : "Общодостъпната връзка ще изтече не по-късно от {days} дни след създаването ѝ.",
