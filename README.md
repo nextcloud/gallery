@@ -48,7 +48,7 @@ See this [wiki article](https://github.com/owncloud/gallery/wiki/Requirements) a
 There are many ways in which you can help make Gallery a better product
 
 * Report bugs (see below)
-* Provide patches for [`owncloud/core`](https://github.com/owncloud/core), [`nextcloud/server`](https://github.com/nextcloud/server) or the app itself
+* Provide patches for [`owncloud/core`](https://github.com/owncloud/core) or the app itself
 * Help test new features by checking out new branches on Github
 * Design interface components for new features
 * Develop new features. Please consult with the maintainers before starting your journey
