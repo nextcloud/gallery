@@ -4,7 +4,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/owncloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/owncloud/gallery/badge.svg)](https://travis-ci.org/owncloud/gallery)
 
-Media gallery for ownCloud and Nextcloud which includes previews for all media types supported by your installation.
+Media gallery for ownCloud which includes previews for all media types supported by your installation.
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
@@ -88,13 +88,13 @@ That's it. You should be able to see more media types in your slideshows and gal
 
 Using Redis for files locking improves performance **by a factor of 10** when loading an album.
 
-Read about it in the [ownCloud](https://doc.owncloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) or [Nextcloud](https://docs.nextcloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
+Read about it in the [ownCloud](https://doc.owncloud.org/server/9/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
 
 #### Assets pipelining
 Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
 This can greatly reduce the loading time of the app.
 
-Read about it in the [ownCloud](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html) or [Nextcloud](https://docs.nextcloud.org/server/9/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
+Read about it in the [ownCloud](https://doc.owncloud.org/server/9.0/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
 
 ## Installation
 
