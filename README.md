@@ -1,9 +1,3 @@
-
-# This app is now maintained at https://github.com/nextcloud/gallery
-## Issues: https://github.com/nextcloud/gallery/issues
-
--------------------------
-
 # Gallery 
 [![Build Status](https://travis-ci.org/owncloud/gallery.svg?branch=master)](https://travis-ci.org/owncloud/gallery)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/gallery/?branch=master)
@@ -14,7 +8,7 @@ Media gallery for ownCloud and Nextcloud which includes previews for all media t
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This version is for ownCloud 9.2 and Nextcloud 11. If you need the same app for older versions of ownCloud and Nextcloud. Use [Gallery+](https://github.com/interfasys/galleryplus) from their respective app stores.**
+**This version is for ownCloud 10.0. If you need the same app for older versions of ownCloud. Use [Gallery+](https://github.com/interfasys/galleryplus) from their respective app stores.**
 
 ![Screenshot](https://raw.githubusercontent.com/owncloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
