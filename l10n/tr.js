@@ -106,6 +106,7 @@ OC.L10N.register(
     "the link has expired" : "bağlantı zamanı geçmiş",
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Daha fazla bilgi için size bu bağlantıyı veren kişiyle bağlantıya geçin.",
+    "Add to your Nextcloud" : "Nextcloud'unuza ekleyin",
     "Picture view" : "Resim görünümü"
 },
 "nplurals=2; plural=(n > 1);");
