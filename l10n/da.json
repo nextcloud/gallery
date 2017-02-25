@@ -4,6 +4,8 @@
     "Aborting preview. Could not find the file" : "Forlader forhåndsvisning. Kunne ikke finde filen",
     "Could not move \"{file}\", target exists" : "Kunne ikke flytte \"{file}\" - der findes allerede en fil med dette navn",
     "Could not move \"{file}\"" : "Kunne ikke flytte \"{file}\"",
+    "No compatible server found at {remote}" : "Ingen kompatible servere fundet på {remote}",
+    "Invalid server url" : "Ugyldig server url",
     "Gallery view" : "Galleri visning",
     "Could not load the description" : "Kunne ikke indlæse beskrivelsen",
     "Could not load the description: " : "Kunne ikke indlæse beskrivelsen:",
@@ -47,6 +49,7 @@
     "Share with users or groups …" : "Del med brugere eller grupper",
     "Share with users, groups or remote users …" : "Del med brugere, grupper eller eksterne brugere...",
     "Share" : "Del",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Del med andre på en anden server ved hjælp af deres Federated Cloud id username@example.com/cloud ",
     "Share link" : "Del link",
     "The public link will expire no later than {days} days after it is created" : "Det offentlige link udløber senest {days} dage efter det blev oprettet",
     "Link" : "Link",
@@ -93,6 +96,7 @@
     "the file is corrupt" : "filen er beskadiget",
     "the encryption key is missing" : "krypteringsnøglen mangler",
     "Here is the error message returned by the server: " : "Her er fejlbeskeden som serveren sendte:",
+    "For more information, please contact your friendly Nextcloud administrator." : "For mere information, kontakt din venlige Nextcloud administrator.",
     "Sorry, but the server could not fulfill your request." : "Beklager, men serveren kunne ikke opfylde din anmodning.",
     "Possible reasons for the problem:" : "Mulige årsager til problemet:",
     "a conflicting app was installed" : "en app med konflikter blev installeret",
@@ -104,6 +108,7 @@
     "the link has expired" : "linket er udløbet",
     "sharing is disabled" : "deling er deaktiveret",
     "For more information, please ask the person who has sent you this link." : "For mere information, så spørg personen som sendte dig dette link.",
+    "Add to your Nextcloud" : "Tilføj til din Nextcloud",
     "Picture view" : "Billedvisning"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
