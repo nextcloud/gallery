@@ -37,6 +37,10 @@ $(document).ready(function () {
 					))
 					.then(function () {
 						Gallery.getFiles(currentLocation).then(function () {
+							if (history && history.pushState) {
+								// Going back in the history will show the photowall
+								history.pushState(null, '', '#' + currentLocation);
+							}
 							window.onhashchange();
 						});
 					});
