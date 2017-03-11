@@ -49,9 +49,9 @@ class AppTest extends GalleryIntegrationTest {
 	public function testNavigationEntry() {
 		$navigationManager = \OC::$server->getNavigationManager();
 		$navigationManager->clear();
-		$this->assertEmpty($navigationManager->getAll());
+		$countBefore = count($navigationManager->getAll());
 		require __DIR__ . '/../../../appinfo/app.php';
 		// Test whether the navigation entry got added
-		$this->assertCount(1, $navigationManager->getAll());
+		$this->assertCount($countBefore + 1, $navigationManager->getAll());
 	}
 }
