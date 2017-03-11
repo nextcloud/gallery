@@ -1,15 +1,15 @@
 {
-  "name": "owncloud/gallery",
+  "name": "nextcloud/gallery",
   "type": "project",
-  "description": "Media gallery for ownCloud which includes previews for all media types supported by your ownCloud installation.",
+  "description": "Media gallery for Nextcloud which includes previews for all media types supported by your Nextcloud installation.",
   "license": "AGPL-3.0",
-  "homepage": "https://github.com/owncloud/gallery",
+  "homepage": "https://github.com/nextcloud/gallery",
   "authors": [
     {
       "name": "Olivier Paroz",
       "email": "galleryapps@oparoz.com",
       "role": "Developer",
-      "homepage": "http://www.interfasys.ch"
+      "homepage": "http://www.oparoz.com"
     },
     {
       "name": "Robin Appelman",
@@ -19,22 +19,22 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/owncloud/gallery/issues",
-    "wiki": "https://github.com/owncloud/gallery/wiki",
-    "source": "https://github.com/owncloud/gallery"
+    "issues": "https://github.com/nextcloud/gallery/issues",
+    "wiki": "https://github.com/nextcloud/gallery/wiki",
+    "source": "https://github.com/nextcloud/gallery"
   },
   "require": {
-    "symfony/yaml": "~2.6"
+    "symfony/yaml": "~3.2"
   },
   "require-dev": {
-    "guzzlehttp/guzzle": "^5.0|^6.2",
-    "phpunit/phpunit": "^4.0|^5.4",
+    "guzzlehttp/guzzle": "^6.2",
+    "phpunit/phpunit": "^5.7|^6.0",
     "codeception/codeception": "2.2.*",
     "codeception/phpbuiltinserver": "*",
     "composer-plugin-api": "^1.0",
     "codeception/c3": "2.*",
-    "flow/jsonpath": "^0.3.1",
-    "phpdocumentor/phpdocumentor": "^2.8",
+    "flow/jsonpath": "^0.3.4",
+    "phpdocumentor/phpdocumentor": "^2.9",
     "jakub-onderka/php-parallel-lint": "0.*",
     "jakub-onderka/php-console-highlighter": "0.*"
   }
