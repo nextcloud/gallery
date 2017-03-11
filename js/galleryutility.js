@@ -26,7 +26,7 @@ window.Gallery = window.Gallery || {};
 			if ($('html').is('.ie8')) {
 				return 'unsupportedIe';
 			} else if (navigator.userAgent.indexOf("MSIE") > 0) {
-				return 'oldIe';
+				return 'unsupportedIe';
 			} else if (!!navigator.userAgent.match(/Trident.*rv[ :]*11\./)) {
 				return 'modernIe';
 			} else if (navigator.userAgent.indexOf("Edge/") > 0) {
