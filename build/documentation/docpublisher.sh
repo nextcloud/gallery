@@ -14,7 +14,7 @@ git init
 
 # Inside this git repo we'll pretend to be a new user
 git config user.name "Travis CI"
-git config user.email "travis-gallery-reporter@interfasys.ch"
+git config user.email "travis-gallery-reporter@nextcloud.com"
 
 # The first and only commit to this new Git repo contains all the
 # files present with the commit message "Deploy to GitHub Pages".
@@ -23,7 +23,7 @@ git add .
 # Initialising wiki submodule
 git submodule add https://github.com/nextcloud/gallery.wiki.git wiki
 
-git commit -m "Gallery documentation"
+git commit -m "Nextcloud Gallery documentation"
 
 # Force push from the current repo's master branch to the remote
 # repo's gh-pages branch. (All previous history on the gh-pages branch

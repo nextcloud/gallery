@@ -1,7 +1,7 @@
 # Gallery 
 [![Build Status](https://travis-ci.org/nextcloud/gallery.svg?branch=master)](https://travis-ci.org/nextcloud/gallery)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
+[![Code Coverage](https://codecov.io/gh/nextcloud/gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/nextcloud/gallery)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/nextcloud/gallery/badge.svg)](https://travis-ci.org/nextcloud/gallery)
 
 Media gallery for Nextcloud which includes previews for all media types supported by your installation.

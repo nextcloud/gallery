@@ -96,7 +96,7 @@ before_script:
   - cd ${TRAVIS_BUILD_DIR}/../${SERVER_FOLDER}/apps/$APP_NAME
   - composer self-update
   - composer install -o --prefer-dist --no-interaction
-  - composer show -i
+  - composer show
 
 script:
   # Test lint
@@ -114,10 +114,8 @@ script:
   # - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then phpenv config-rm xdebug.ini; phpdbg -qrr vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
 
 after_success:
-  # Send coverage report to Scrutinizer
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml; fi"
-  - bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+  # Send coverage report to Codecov
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml; fi"
 
   # Generate API documentation
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
