@@ -23,7 +23,7 @@ script(
 		'thumbnail',
 		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
 		'eventsource',
-		'vendor/owncloud/share',
+		'vendor/nextcloud/share',
 		'vendor/commonmark/dist/commonmark.min',
 		'vendor/dompurify/src/purify',
 		'vendor/bigshot/bigshot-compressed',
@@ -31,7 +31,7 @@ script(
 		'slideshowcontrols',
 		'slideshowzoomablepreview',
 		'upload-helper',
-		'vendor/owncloud/newfilemenu',
+		'vendor/nextcloud/newfilemenu',
 		'newfilemenuplugins'
 	]
 );
