@@ -1,11 +1,11 @@
 {
   "name": "gallery",
-  "homepage": "https://github.com/owncloud/gallery",
+  "homepage": "https://github.com/nextcloud/gallery",
   "authors": [
     "Olivier Paroz <galleryapps@oparoz.com>",
     "Robin Appelman <robin@icewind.nl>"
   ],
-  "description": "Media gallery for ownCloud and Nextcloud which includes previews for all media types supported by your installation.",
+  "description": "Media gallery for Nextcloud which includes previews for all media types supported by your Nextcloud installation.",
   "license": "AGPL",
   "private": true,
   "ignore": [
@@ -18,7 +18,7 @@
   "dependencies": {
     "eventsource-polyfill": "~0.*",
     "github-markdown-css": "~2.*",
-    "dompurify": "~0.7.0",
-    "commonmark": "~0.22.0"
+    "dompurify": "~0.8.*",
+    "commonmark": "~0.27.*"
   }
 }
