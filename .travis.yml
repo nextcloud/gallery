@@ -115,7 +115,9 @@ script:
 
 after_success:
   # Send coverage report to Codecov
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then wget https://codecov.io/bash -O codecov.sh; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ] && [ '$TRAVIS_PULL_REQUEST' ]; then bash codecov.sh -B $TRAVIS_BRANCH -C $TRAVIS_COMMIT -P $TRAVIS_PULL_REQUEST -t 739120c2-700d-47c4-845c-c0d0c9c3707d -f tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then bash codecov.sh -B $TRAVIS_BRANCH -C $TRAVIS_COMMIT -t 739120c2-700d-47c4-845c-c0d0c9c3707d -f tests/_output/coverage.xml; fi"
 
   # Generate API documentation
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
