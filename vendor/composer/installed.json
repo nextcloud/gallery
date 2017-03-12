@@ -1,27 +1,33 @@
 [
     {
         "name": "symfony/yaml",
-        "version": "v2.8.7",
-        "version_normalized": "2.8.7.0",
+        "version": "v3.2.6",
+        "version_normalized": "3.2.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "815fabf3f48c7d1df345a69d1ad1a88f59757b34"
+            "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/815fabf3f48c7d1df345a69d1ad1a88f59757b34",
-            "reference": "815fabf3f48c7d1df345a69d1ad1a88f59757b34",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/093e416ad096355149e265ea2e4cc1f9ee40ab1a",
+            "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.9"
+            "php": ">=5.5.9"
         },
-        "time": "2016-06-06 11:11:27",
+        "require-dev": {
+            "symfony/console": "~2.8|~3.0"
+        },
+        "suggest": {
+            "symfony/console": "For validating YAML files using the lint command"
+        },
+        "time": "2017-03-07T16:47:02+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.8-dev"
+                "dev-master": "3.2-dev"
             }
         },
         "installation-source": "dist",

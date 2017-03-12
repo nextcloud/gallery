@@ -10,7 +10,7 @@ modules:
          - \Helper\Acceptance
          - \Helper\DataSetup
          - WebDriver:
-             url: http://localhost:8000
+             url: 'http://localhost:8000'
              browser: phantomjs
              window_size: 960x1080
              capabilities:
