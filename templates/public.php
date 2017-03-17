@@ -56,13 +56,7 @@ style(
 
 		<div class="header-appname-container">
 			<h1 class="header-appname">
-				<?php
-				if (\OCP\App::isEnabled('enterprise_key')) {
-					print_unescaped($theme->getHTMLName());
-				} else {
-					p($theme->getName());
-				}
-				?>
+				<?php print_unescaped($theme->getHTMLName()); ?>
 			</h1>
 		</div>
 
@@ -154,6 +148,6 @@ style(
 		</div>
 	</div>
 	<footer>
-		<p class="info"><?php p($theme->getLongFooter()); ?></p>
+		<p class="info"><?php print_unescaped($theme->getLongFooter()); ?></p>
 	</footer>
 </div>
