@@ -46,9 +46,12 @@ OC.L10N.register(
     "Error while sharing" : "Klaida, dalijimosi metu",
     "Error while unsharing" : "Klaida, kai atšaukiamas dalijimasis",
     "Error while changing permissions" : "Klaida, keičiant privilegijas",
+    "Shared with you and the group {group} by {owner}" : "{owner} bendrina su jumis ir grupe {group}",
+    "Shared with you by {owner}" : "{owner} bendrina su jumis",
     "Share with users or groups …" : "Bendrinti su naudotojais ar grupėmis …",
     "Share with users, groups or remote users …" : "Bendrinti su naudotojais, grupėmis ar nuotoliniais naudotojais …",
     "Share" : "Bendrinti",
+    "Share link" : "Bendrinti nuorodą",
     "The public link will expire no later than {days} days after it is created" : "Vieša nuoroda galios ne mažiau kaip {days} dienas nuo sukūrimo",
     "Link" : "Nuoroda",
     "Password protect" : "Apsaugotas slaptažodžiu",
@@ -106,6 +109,7 @@ OC.L10N.register(
     "the link has expired" : "baigėsi nuorodos galiojimo laikas",
     "sharing is disabled" : "dalinimasis yra išjungtas",
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
+    "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
     "Picture view" : "Paveikslo rodymas"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");
