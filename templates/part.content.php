@@ -7,33 +7,7 @@
  */
 script(
 	$_['appName'],
-	[
-		'app',
-		'vendor/jquery-touch-events/src/1.0.1/jquery.mobile-events.min',
-		'vendor/jquery.ui.touch-punch-custom',
-		'gallery',
-		'galleryutility',
-		'galleryconfig',
-		'galleryinfobox',
-		'galleryview',
-		'breadcrumb',
-		'galleryalbum',
-		'galleryrow',
-		'galleryimage',
-		'thumbnail',
-		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
-		'eventsource',
-		'vendor/nextcloud/share',
-		'vendor/commonmark/dist/commonmark.min',
-		'vendor/dompurify/src/purify',
-		'vendor/bigshot/bigshot-compressed',
-		'slideshow',
-		'slideshowcontrols',
-		'slideshowzoomablepreview',
-		'upload-helper',
-		'vendor/nextcloud/newfilemenu',
-		'newfilemenuplugins'
-	]
+	'merged'
 );
 script(
 	'files',

@@ -63,14 +63,7 @@ $loadScripts = function() use ($appName) {
 	/**
 	 * Scripts for the Files app
 	 */
-	Util::addScript($appName, 'vendor/bigshot/bigshot-compressed');
-	Util::addScript($appName, 'vendor/dompurify/src/purify');
-	Util::addScript($appName, 'galleryutility');
-	Util::addScript($appName, 'galleryfileaction');
-	Util::addScript($appName, 'slideshow');
-	Util::addScript($appName, 'slideshowcontrols');
-	Util::addScript($appName, 'slideshowzoomablepreview');
-	Util::addScript($appName, 'gallerybutton');
+	Util::addScript($appName, 'scripts-for-file-app');
 
 	/**
 	 * Styles for the Files app
