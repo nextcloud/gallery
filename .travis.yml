@@ -69,7 +69,7 @@ before_install:
 
   # Installing the server
   - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
-  - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+  - . ./before_install.sh $APP_NAME $CORE_BRANCH $DB
   - cd ../${SERVER_FOLDER}
   - php occ app:enable $APP_NAME
 
