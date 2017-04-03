@@ -101,7 +101,7 @@ OC.L10N.register(
     "For more information, please contact your friendly Nextcloud administrator." : "Ayrıntılı bilgi almak için Nextcloud yöneticiniz ile görüşün.",
     "Sorry, but the server could not fulfill your request." : "Maalesef sunucu isteğinizi karşılayamadı.",
     "Possible reasons for the problem:" : "Bu sorunun olası nedenleri:",
-    "a conflicting app was installed" : "çakışan bir uygulama yüklü",
+    "a conflicting app was installed" : "çakışan bir uygulama kurulmuş",
     "a required component is missing or was disconnected" : "gerekli bir bileşen eksik ya da bağlı değil",
     "the filesystem is not readable" : "dosya sistemi okunamıyor",
     "For more information, please contact your friendly ownCloud administrator." : "Ayrıntılı bilgi almak için ownCloud yöneticiniz ile görüşün.",
