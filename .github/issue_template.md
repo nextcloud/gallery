@@ -7,7 +7,7 @@ Thank you for taking the time to:
 
 To make it easier for us to help you, please fill in as much information as possible in
 one of the forms below.
- 
+
 Please choose between the "Bug report" and the "Feature request" form and delete the content of the other one
 -->
 
@@ -32,6 +32,9 @@ Tell us what happens instead
 
 
 ### Server configuration
+<!--
+You can use the Issue Template application to prefill most of the required information: https://apps.nextcloud.com/apps/issuetemplate
+-->
 
 **Operating system**:
 
@@ -62,18 +65,19 @@ Paste the list of applications here
 ```
 
 </details>
- 
-**The content of config/config.php:**
-<!--
-If you have access to your command line run e.g.:
-# sudo -u www-data php occ config:list system`
-from within your installation folder
 
-or 
+**Nextcloud configuration:**
+
+```
+If you have access to your command line run e.g.:
+sudo -u www-data php occ config:list system
+from within your Nextcloud installation folder
+
+or
 
 Insert your config.php content here
-(Without the database password, passwordsalt and secret)
--->
+Make sure to remove all sensitive content such as passwords. (e.g. database password, passwordsalt, secret, smtp password, …)
+```
 
 <details>
 <summary>Config report</summary>
@@ -124,7 +128,7 @@ Insert your cloud log here
 Press F12 in your browser and copy the relevant information from:
 
 a) The javascript console log
-b) The network log 
+b) The network log
 c) etc.
 -->
 
@@ -136,7 +140,7 @@ Insert your browser log here
 ```
 
 </details>
- 
+
 ## Feature request
 
 **User type**: Logged-in or public user
@@ -162,7 +166,7 @@ Please explain the risks and caveats associated with this request
 <!--
 This greatly accelerates the delivery of a feature
 -->
- 
+
 **Are you a developer willing to implement this feature?**: yes/no
 
 **Can you sponsor the development of this feature or do you know someone who can?**: yes/no
