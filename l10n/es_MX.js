@@ -22,7 +22,7 @@ OC.L10N.register(
     "Album cannot be shown" : "No se puede mostrar el álbum",
     "No media files found" : "No se encontraron archivos de medios",
     "Upload pictures in the files app to display them here" : "Cargue imágenes en la aplicación de archivos para desplegarlas aquí",
-    "Upload new files via drag and drop or by using the [+] button above" : "Cargue archivos nuevos ya sea arrastrándolos o bien usando el botón  [+] de arriba",
+    "Upload new files via drag and drop or by using the [+] button above" : "Cargue archivos nuevos ya sea arrastrándolos o bien usando el botón [+] de arriba",
     "Configuration error" : "Error de configuración",
     "New" : "Nuevo",
     "Hide Album" : "Ocultar álbum",
