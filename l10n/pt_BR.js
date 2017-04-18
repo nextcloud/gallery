@@ -28,7 +28,7 @@ OC.L10N.register(
     "Hide Album" : "Ocultar Álbum",
     "Could not hide album" : "Não foi possível ocultar o álbum",
     "Error loading slideshow template" : "Erro ao carregar o modelo de slideshow",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Erro!</strong> Não foi possível gerar uma visualização desse arquivo.<br>Por favor, vá para o próximo slide, enquanto nós removemos esta imagem da apresentação de slides",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Erro!</strong> Não foi possível gerar uma visualização desse arquivo.<br>Por favor, vá para o próximo slide enquanto removemos esta imagem da apresentação de slides",
     "Next" : "Próximo",
     "Play" : "Reproduzir",
     "Pause" : "Pausa",
