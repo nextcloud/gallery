@@ -1,4 +1,4 @@
-/* global Handlebars, Gallery */
+/* global Handlebars, Gallery, Thumbnails */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 
@@ -291,28 +291,50 @@
 		/**
 		 * Sets up our custom handlers for folder uploading operations
 		 *
-		 * We only want it to be called for that specific case as all other file uploading
-		 * operations will call Files.highlightFiles
-		 *
 		 * @see OC.Upload.init/file_upload_param.done()
 		 *
 		 * @private
 		 */
 		_setupUploader: function () {
-			$('#file_upload_start').on('fileuploaddone', function (e, data) {
-				if (data.files[0] === data.originalFiles[data.originalFiles.length - 1]
-					&& data.files[0].relativePath) {
+			var $uploadEl = $('#file_upload_start');
+			if (!$uploadEl.exists()) {
+				return;
+			}
+			this._uploader = new OC.Uploader($uploadEl, {
+				fileList: FileList,
+				dropZone: $('#content')
+			});
+			this._uploader.on('add', function (e, data) {
+				data.targetDir = '/' + Gallery.currentAlbum;
+			});
+			this._uploader.on('done', function (e, upload) {
+				var data = upload.data;
 
+				// is that the last upload ?
+				if (data.files[0] === data.originalFiles[data.originalFiles.length - 1]) {
+					var fileList = data.originalFiles;
 					//Ask for a refresh of the photowall
 					Gallery.getFiles(Gallery.currentAlbum).done(function () {
+						var fileId, path;
+						// Removes the cached thumbnails of files which have been re-uploaded
+						_(fileList).each(function (fileName) {
+							path = Gallery.currentAlbum + '/' + fileName;
+							if (Gallery.imageMap[path]) {
+								fileId = Gallery.imageMap[path].fileId;
+								if (Thumbnails.map[fileId]) {
+									delete Thumbnails.map[fileId];
+								}
+							}
+						});
+
 						Gallery.view.init(Gallery.currentAlbum);
 					});
 				}
 			});
 
-			// Since 9.0
-			if (OC.Upload) {
-				OC.Upload._isReceivedSharedFile = function (file) {
+			// Since Nextcloud 9.0
+			if (OC.Uploader) {
+				OC.Uploader.prototype._isReceivedSharedFile = function (file) {
 					var path = file.name;
 					var sharedWith = false;
 
