@@ -1,7 +1,7 @@
 # Gallery 
-[![Build Status](https://travis-ci.org/nextcloud/gallery.svg?branch=master)](https://travis-ci.org/nextcloud/gallery)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
+[![Build Status](https://travis-ci.org/nextcloud/gallery.svg?branch=stable11)](https://travis-ci.org/nextcloud/gallery)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/quality-score.png?b=stable11)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=stable11)
+[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/coverage.png?b=stable11)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=stable11)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/nextcloud/gallery/badge.svg)](https://travis-ci.org/nextcloud/gallery)
 
 Media gallery for Nextcloud which includes previews for all media types supported by your installation.
@@ -10,7 +10,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 
 **This version is for Nextcloud 11. If you need the same app for older versions of Nextcloud. Use [Gallery+](https://github.com/oparoz/galleryplus) from the app stores.**
 
-![Screenshot](https://raw.githubusercontent.com/nextcloud/gallery/master/build/screenshots/Gallery.jpg)
+![Screenshot](https://raw.githubusercontent.com/nextcloud/gallery/stable11/build/screenshots/Gallery.jpg)
 ## Featuring
 * Support for large selection of media types (depending on server setup)
 * Upload and organise images and albums straight from the app
