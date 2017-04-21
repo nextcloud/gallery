@@ -1,6 +1,6 @@
 [
   "app.js",
-  "vendor/jquery-touch-events/src/1.0.1/jquery.mobile-events.min.js",
+  "vendor/jquery-touch-events/src/1.0.8/jquery.mobile-events.min.js",
   "vendor/jquery.ui.touch-punch-custom.js",
   "gallery.js",
   "galleryutility.js",

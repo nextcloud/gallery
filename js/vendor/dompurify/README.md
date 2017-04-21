@@ -1,4 +1,4 @@
-# DOMPurify [![Bower version](https://badge.fury.io/bo/dompurify.svg)](http://badge.fury.io/bo/dompurify) · [![npm version](https://badge.fury.io/js/dompurify.svg)](http://badge.fury.io/js/dompurify) · [![Build Status](https://travis-ci.org/cure53/DOMPurify.svg)](https://travis-ci.org/cure53/DOMPurify)
+# DOMPurify [![Bower version](https://badge.fury.io/bo/dompurify.svg)](http://badge.fury.io/bo/dompurify) · [![npm version](https://badge.fury.io/js/dompurify.svg)](http://badge.fury.io/js/dompurify) · [![Build Status](https://travis-ci.org/cure53/DOMPurify.svg)](https://travis-ci.org/cure53/DOMPurify) · [![Downloads](https://img.shields.io/npm/dm/dompurify.svg)](https://www.npmjs.com/package/dompurify)
 
 [![NPM](https://nodei.co/npm/dompurify.png)](https://nodei.co/npm/dompurify/)
 
@@ -160,6 +160,9 @@ var clean = DOMPurify.sanitize(dirty, {SANITIZE_DOM: false});
 
 // discard an element's content when the element is removed (default is true)
 var clean = DOMPurify.sanitize(dirty, {KEEP_CONTENT: false});
+
+// glue elements like style, script or others to document.body and prevent unintuitive browser behavior in several edge-cases (default is false)
+var clean = DOMPurify.sanitize(dirty, {FORCE_BODY: true});
 ```
 There is even [more examples here](https://github.com/cure53/DOMPurify/tree/master/demos#what-is-this), showing how you can run, customize and configure DOMPurify to fit your needs.
 

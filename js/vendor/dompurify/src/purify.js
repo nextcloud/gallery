@@ -21,7 +21,7 @@
      * Version label, exposed for easier checks
      * if DOMPurify is up to date or not
      */
-    DOMPurify.version = '0.8.5';
+    DOMPurify.version = '0.8.6';
 
     /**
      * Array of elements that DOMPurify removed during sanitation.
@@ -45,7 +45,6 @@
     var NamedNodeMap = window.NamedNodeMap || window.MozNamedAttrMap;
     var Text = window.Text;
     var Comment = window.Comment;
-    var DOMParser = window.DOMParser;
 
     // As per issue #47, the web-components registry is inherited by a
     // new document created via createHTMLDocument. As per the spec
@@ -159,7 +158,7 @@
         'hreflang','id','ismap','label','lang','list','loop', 'low','max',
         'maxlength','media','method','min','multiple','name','noshade','novalidate',
         'nowrap','open','optimum','pattern','placeholder','poster','preload','pubdate',
-        'radiogroup','readonly','rel','required','rev','reversed','rows',
+        'radiogroup','readonly','rel','required','rev','reversed','role','rows',
         'rowspan','spellcheck','scope','selected','shape','size','span',
         'srclang','start','src','step','style','summary','tabindex','title',
         'type','usemap','valign','value','width','xmlns',
@@ -213,6 +212,9 @@
     /* Explicitly forbidden attributes (overrides ALLOWED_ATTR/ADD_ATTR) */
     var FORBID_ATTR = null;
 
+    /* Decide if ARIA attributes are okay */
+    var ALLOW_ARIA_ATTR = true;
+
     /* Decide if custom data attributes are okay */
     var ALLOW_DATA_ATTR = true;
 
@@ -233,6 +235,10 @@
 
     /* Decide if document with <html>... should be returned */
     var WHOLE_DOCUMENT = false;
+
+    /* Decide if all elements (e.g. style, script) must be children of 
+     * document.body. By default, browsers might move them to document.head */
+    var FORCE_BODY = false;
 
     /* Decide if a DOM `HTMLBodyElement` should be returned, instead of a html string.
      * If `WHOLE_DOCUMENT` is enabled a `HTMLHtmlElement` will be returned instead
@@ -261,7 +267,7 @@
 
     /* Tags that are safe for data: URIs */
     var DATA_URI_TAGS = _addToSet({}, [
-        'audio', 'video', 'img', 'source'
+        'audio', 'video', 'img', 'source', 'image'
     ]);
 
     /* Attributes safe for values like "javascript:" */
@@ -298,6 +304,7 @@
             _addToSet({}, cfg.FORBID_TAGS) : {};
         FORBID_ATTR = 'FORBID_ATTR' in cfg ?
             _addToSet({}, cfg.FORBID_ATTR) : {};
+        ALLOW_ARIA_ATTR     = cfg.ALLOW_ARIA_ATTR     !== false; // Default true
         ALLOW_DATA_ATTR     = cfg.ALLOW_DATA_ATTR     !== false; // Default true
         ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false; // Default false
         SAFE_FOR_JQUERY     = cfg.SAFE_FOR_JQUERY     ||  false; // Default false
@@ -306,6 +313,7 @@
         RETURN_DOM          = cfg.RETURN_DOM          ||  false; // Default false
         RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT ||  false; // Default false
         RETURN_DOM_IMPORT   = cfg.RETURN_DOM_IMPORT   ||  false; // Default false
+        FORCE_BODY          = cfg.FORCE_BODY          ||  false; // Default false
         SANITIZE_DOM        = cfg.SANITIZE_DOM        !== false; // Default true
         KEEP_CONTENT        = cfg.KEEP_CONTENT        !== false; // Default true
 
@@ -379,15 +387,13 @@
      * @return a DOM, filled with the dirty markup
      */
     var _initDocument = function(dirty) {
-        /* Create a HTML document using DOMParser */
+        /* Create a HTML document */
         var doc, body;
-        try {
-            doc = new DOMParser().parseFromString(dirty, 'text/html');
-        } catch (e) {}
+        
+        if (FORCE_BODY) {
+            dirty = '<remove></remove>' + dirty;
+        }
 
-        /* Some browsers throw, some browsers return null for the code above
-           DOMParser with text/html support is only in very recent browsers.
-           See #159 why the check here is extra-thorough */
         if (!doc || !doc.documentElement) {
             doc = implementation.createHTMLDocument('');
             body = doc.body;
@@ -469,6 +475,7 @@
      */
     var _sanitizeElements = function(currentNode) {
         var tagName, content;
+
         /* Execute a hook if present */
         _executeHook('beforeSanitizeElements', currentNode, null);
 
@@ -527,6 +534,7 @@
     };
 
     var DATA_ATTR = /^data-[\-\w.\u00B7-\uFFFF]/;
+    var ARIA_ATTR = /^aria-[\-\w]+$/;
     var IS_ALLOWED_URI = /^(?:(?:(?:f|ht)tps?|mailto|tel):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i;
     var IS_SCRIPT_OR_DATA = /^(?:\w+script|data):/i;
     /* This needs to be extensive thanks to Webkit/Blink's behavior */
@@ -588,6 +596,13 @@
                 if (attributes.indexOf(idAttr) > l) {
                     currentNode.setAttribute('id', idAttr.value);
                 }
+            } else if (
+                  // This works around a bug in Safari, where input[type=file] 
+                  // cannot be dynamically set after type has been removed
+                  currentNode.nodeName === 'INPUT' && lcName === 'type' && 
+                  value === 'file' && (ALLOWED_ATTR[lcName] || !FORBID_ATTR[lcName])) {
+                  continue;
+                
             } else {
                 // This avoids a crash in Safari v9.0 with double-ids.
                 // The trick is to first set the id to be empty and then to
@@ -623,6 +638,9 @@
             if (ALLOW_DATA_ATTR && DATA_ATTR.test(lcName)) {
                 // This attribute is safe
             }
+            else if (ALLOW_ARIA_ATTR && ARIA_ATTR.test(lcName)) {
+                // This attribute is safe
+            }
             /* Otherwise, check the name is permitted */
             else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
                 continue;
@@ -636,9 +654,9 @@
             else if (IS_ALLOWED_URI.test(value.replace(ATTR_WHITESPACE,''))) {
                 // This attribute is safe
             }
-            /* Keep image data URIs alive if src is allowed */
+            /* Keep image data URIs alive if src/xlink:href is allowed */
             else if (
-                lcName === 'src' &&
+                (lcName === 'src' || lcName === 'xlink:href') &&
                 value.indexOf('data:') === 0 &&
                 DATA_URI_TAGS[currentNode.nodeName.toLowerCase()]) {
                 // This attribute is safe
@@ -789,6 +807,11 @@
             if (!body) {
                 return RETURN_DOM ? null : '';
             }
+        }
+
+        /* Remove first element node (ours) if FORCE_BODY is set */
+        if (FORCE_BODY) {
+            _forceRemove(body.firstChild);
         }
 
         /* Get node iterator */
