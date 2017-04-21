@@ -1,4 +1,4 @@
-# DOMPurify [![Bower version](https://badge.fury.io/bo/dompurify.svg)](http://badge.fury.io/bo/dompurify) · [![npm version](https://badge.fury.io/js/dompurify.svg)](http://badge.fury.io/js/dompurify) · [![Build Status](https://travis-ci.org/cure53/DOMPurify.svg?branch=master)](https://travis-ci.org/cure53/DOMPurify)
+# DOMPurify [![Bower version](https://badge.fury.io/bo/dompurify.svg)](http://badge.fury.io/bo/dompurify) · [![npm version](https://badge.fury.io/js/dompurify.svg)](http://badge.fury.io/js/dompurify) · [![Build Status](https://travis-ci.org/cure53/DOMPurify.svg)](https://travis-ci.org/cure53/DOMPurify) · [![Downloads](https://img.shields.io/npm/dm/dompurify.svg)](https://www.npmjs.com/package/dompurify)
 
 [![NPM](https://nodei.co/npm/dompurify.png)](https://nodei.co/npm/dompurify/)
 
@@ -6,7 +6,9 @@ DOMPurify is a DOM-only, super-fast, uber-tolerant XSS sanitizer for HTML, MathM
 
 It's also very simple to use and get started with.
 
-DOMPurify is written in JavaScript and works in all modern browsers (Safari, Opera (15+), Internet Explorer (10+), Edge, Firefox and Chrome - as well as almost anything else using Blink or WebKit). It doesn't break on IE6 or other legacy browsers. It simply does nothing there. Our automated tests cover [9 different browsers](https://github.com/cure53/DOMPurify/blob/master/test/karma.conf.js#L125) right now.
+DOMPurify is written in JavaScript and works in all modern browsers (Safari, Opera (15+), Internet Explorer (10+), Edge, Firefox and Chrome - as well as almost anything else using Blink or WebKit). It doesn't break on IE6 or other legacy browsers. It either uses [a fall-back](#what-about-older-browsers-like-msie8) or simply does nothing. 
+
+Our automated tests cover [12 different browsers](https://github.com/cure53/DOMPurify/blob/master/test/karma.conf.js#L153) right now. We also cover Node.js v4.0.0, v5.0.0 and v6.0.0, running DOMPurify on [jsdom](https://github.com/tmpvar/jsdom).
 
 DOMPurify is written by security people who have vast background in web attacks and XSS. Fear not. For more details please also read about our [Security Goals & Threat Model](https://github.com/cure53/DOMPurify/wiki/Security-Goals-&-Threat-Model)
 
@@ -38,6 +40,8 @@ var clean = DOMPurify.sanitize(dirty);
 
 The resulting HTML can be written into a DOM element using `innerHTML` or the DOM using `document.write()`. That is fully up to you. But keep in mind, if you use the sanitized HTML with jQuery's very insecure `elm.html()` method, then the `SAFE_FOR_JQUERY` flag has to be set to make sure it's safe! Other than that, all is fine.
 
+After sanitizing your markup, you can also have a look at the property `DOMPurify.removed` and find out, what elements and attributes were thrown out.
+
 If you're using an [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) module loader like [Require.js](http://requirejs.org/), you can load this script asynchronously as well:
 
 ```javascript
@@ -46,16 +50,27 @@ require(['dompurify'], function(DOMPurify) {
 });
 ```
 
-You can also grab the files straight from npm (requires either [io.js](https://iojs.org) or [Browserify](http://browserify.org/), **Node.js 0.x is not supported**):  
+DOMPurify also works server-side with node.js as well as client-side via [Browserify](http://browserify.org/) or similar translators.  Node.js 0.x is not supported; either [io.js](https://iojs.org) or Node.js 4.x or newer is required.
 
 ```bash
 npm install dompurify
 ```
 
 ```javascript
-var DOMPurify = require('dompurify');
-var clean = DOMPurify.sanitize(dirty);
+const createDOMPurify = require('dompurify');
+const jsdom = require('jsdom');
+const window = jsdom.jsdom('', {
+  features: {
+    FetchExternalResources: false, // disables resource loading over HTTP / filesystem
+    ProcessExternalResources: false // do not execute JS within script blocks
+  }
+}).defaultView;
+const DOMPurify = createDOMPurify(window);
+
+const clean = DOMPurify.sanitize(dirty);
 ```
+
+Strictly speaking, DOMPurify creates a document without a browsing context and you can replace it with `const window = jsdom.jsdom().defaultView;`, however, the longer case protects against accidental bugs in jsdom or DOMPurify.
 
 ## Is there a demo?
 
@@ -82,6 +97,11 @@ DOMPurify.sanitize('<UL><li><A HREF=//google.com>click</UL>'); // becomes <ul><l
 
 DOMPurify currently supports HTML5, SVG and MathML. DOMPurify per default allows CSS, HTML custom data attributes. DOMPurify also supports the Shadow DOM - and sanitizes DOM templates recursively. DOMPurify also allows you to sanitize HTML for being used with the jQuery `$()` and `elm.html()` methods but requires the `SAFE_FOR_JQUERY` flag for that - see below.
 
+## What about older browsers like MSIE8?
+
+DOMPurify offers a fall-back behavior for older MSIE browsers. It uses the MSIE-only `toStaticHTML` feature to sanitize. Note however that in this fall-back mode, pretty much none of the configuration flags shown below have any effect. You need to handle that yourself.
+
+If not even `toStaticHTML` is supported, DOMPurify does nothing at all. It simply returns exactly the string that you fed it.
 
 ## Can I configure it?
 
@@ -115,6 +135,10 @@ var clean = DOMPurify.sanitize(dirty, {ADD_ATTR: ['my-attr']});
 // prohibit HTML5 data attributes (default is true)
 var clean = DOMPurify.sanitize(dirty, {ALLOW_DATA_ATTR: false});
 
+// allow external protocol handlers in URL attributes (default is false)
+// by default only http, https, ftp, ftps, tel and mailto are allowed.
+var clean = DOMPurify.sanitize(dirty, {ALLOW_UNKNOWN_PROTOCOLS: true});
+
 // return a DOM HTMLBodyElement instead of an HTML string (default is false)
 var clean = DOMPurify.sanitize(dirty, {RETURN_DOM: true});
 
@@ -136,8 +160,11 @@ var clean = DOMPurify.sanitize(dirty, {SANITIZE_DOM: false});
 
 // discard an element's content when the element is removed (default is true)
 var clean = DOMPurify.sanitize(dirty, {KEEP_CONTENT: false});
+
+// glue elements like style, script or others to document.body and prevent unintuitive browser behavior in several edge-cases (default is false)
+var clean = DOMPurify.sanitize(dirty, {FORCE_BODY: true});
 ```
-There is even [more examples here](https://github.com/cure53/DOMPurify/tree/master/demos#what-it-this), showing how you can run, customize and configure DOMPurify to fit your needs.
+There is even [more examples here](https://github.com/cure53/DOMPurify/tree/master/demos#what-is-this), showing how you can run, customize and configure DOMPurify to fit your needs.
 
 ## Hooks
 
@@ -168,7 +195,9 @@ DOMPurify.addHook('beforeSanitizeElements', function(currentNode, data, config) 
 
 We are currently using Travis CI in combination with BrowserStack. This gives us the possibility to confirm for each and every commit that all is going according to plan in all supported browsers. Check out the build logs here: https://travis-ci.org/cure53/DOMPurify
 
-You can further run local tests by executing `npm run-script local-test` or, in case you have a BrowserStack account with automation available, run the tests using `npm run-script ci-test`.
+You can further run local tests by executing `npm test`. The tests work fine with Node.js v0.6.2 and jsdom@8.5.0.
+
+All relevant commits will be signed with the key `0x24BB6BF4` for additional security (since 8th of April 2016).
 
 ## Security Mailing List
 
@@ -176,15 +205,18 @@ We maintain a mailing list that notifies whenever a security-critical release of
 
 [https://lists.ruhr-uni-bochum.de/mailman/listinfo/dompurify-security](https://lists.ruhr-uni-bochum.de/mailman/listinfo/dompurify-security)
 
-
-## What's on the road-map?
-
-We recently implemented a Hook-API allowing developers to create their own DOMPurify plugins and customize its functionality without changing the core. Thus, we are looking forward for plugins and extensions - pull requests are welcome! Oh, and we will increase the amount of browsers and HTML-mappings in our automates tests to make sure nothing slips through.
+Feature releases will not be announced to this list.
 
 ## Who contributed?
 
-Several people need to be listed here! [@garethheyes](https://twitter.com/garethheyes) for invaluable help, [@shafigullin](https://twitter.com/shafigullin) for breaking the library multiple times and thereby strengthening it, [@mmrupp](https://twitter.com/mmrupp) and [@irsdl](https://twitter.com/irsdl) for doing the same.
+Several people need to be listed here! 
 
-Big thanks also go to [@asutherland](https://twitter.com/asutherland), [@mathias](https://twitter.com/mathias), [@cgvwzq](https://twitter.com/cgvwzq), [@robbertatwork](https://twitter.com/robbertatwork), [@giutro](https://twitter.com/giutro) and [@fhemberger](https://twitter.com/fhemberger)! Further, thanks [@neilj](https://twitter.com/neilj) for his code review and countless small optimizations, fixes and beautifications. Big thanks also go to [@tdeekens](https://twitter.com/tdeekens) for doing all the hard work and getting us on track with Travis CI and BrowserStack.
+[@garethheyes](https://twitter.com/garethheyes) and [@filedescriptor](https://twitter.com/filedescriptor) for invaluable help, [@shafigullin](https://twitter.com/shafigullin) for breaking the library multiple times and thereby strengthening it, [@mmrupp](https://twitter.com/mmrupp) and [@irsdl](https://twitter.com/irsdl) for doing the same.
+
+Big thanks also go to [@asutherland](https://twitter.com/asutherland), [@mathias](https://twitter.com/mathias), [@cgvwzq](https://twitter.com/cgvwzq), [@robbertatwork](https://twitter.com/robbertatwork), [@giutro](https://twitter.com/giutro) and [@fhemberger](https://twitter.com/fhemberger)! 
+
+Further, thanks [@neilj](https://twitter.com/neilj) and [@0xsobky](https://twitter.com/0xsobky) for their code reviews and countless small optimizations, fixes and beautifications. 
+
+Big thanks also go to [@tdeekens](https://twitter.com/tdeekens) for doing all the hard work and getting us on track with Travis CI and BrowserStack. And thanks to [@Joris-van-der-Wel](https://github.com/Joris-van-der-Wel) for setting up DOMPurify for jsdom and creating the additional test suite.
 
 And last but not least, thanks to [BrowserStack](https://browserstack.com) for supporting this project with their services for free and delivering excellent, dedicated and very professional support on top of that.
