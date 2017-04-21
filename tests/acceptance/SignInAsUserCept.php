@@ -22,8 +22,6 @@ $loginPage = new Login($I);
 $loginPage->login('admin', 'admin');
 $loginPage->confirmLogin();
 
-
-$I->click('.menutoggle');
-$I->click('Gallery', '#navigation');
+$I->click('Gallery', '#appmenu');
 $I->seeCurrentUrlEquals(GalleryPage::$URL);
 $I->seeElement(['css' => GalleryPage::$contentDiv]);
