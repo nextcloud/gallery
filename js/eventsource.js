@@ -1,5 +1,5 @@
 /**
- * Gallery
+ * Nextcloud - Gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
@@ -7,8 +7,8 @@
  * @author Robin Appelman <icewind1991@gmail.com>
  * @author Olivier Paroz <galleryapps@oparoz.com>
  *
- * @copyright Robin Appelman 2012-2015
- * @copyright Olivier Paroz 2014-2016
+ * @copyright Robin Appelman 2017
+ * @copyright Olivier Paroz 2017
  */
 
 /**
