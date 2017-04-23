@@ -15,9 +15,9 @@ filter:
         - 'tests/*'
         - 'build/*'
         - 'documentation/*'
-        - 'controller/configapicontroller.php'
-        - 'controller/filesapicontroller.php'
-        - 'controller/previewapicontroller.php'
+        - 'lib/Controller/ConfigApiController.php'
+        - 'lib/Controller/FilesApiController.php'
+        - 'lib/Controller/PreviewApiController.php'
 
 tools:
     sensiolabs_security_checker: true
