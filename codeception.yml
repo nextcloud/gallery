@@ -23,13 +23,13 @@ coverage:
     enabled: true
     include:
         - appinfo/*.php
-        - config/*
-        - controller/*
-        - environment/*
-        - http/*
-        - middleware/*
-        - preview/*
-        - service/*
+        - lib/AppInfo/*.php
+        - lib/Config/*
+        - lib/Controller/*
+        - lib/Environment/*
+        - lib/Http/*
+        - lib/Middleware/*
+        - lib/Service/*
     exclude:
         - build/*
         - css/*
