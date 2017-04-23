@@ -181,7 +181,7 @@ trait Preview {
 	 *
 	 * @param $status
 	 *
-	 * @return array<null,int>
+	 * @return array<null|int>
 	 */
 	private function getErrorData($status = Http::STATUS_INTERNAL_SERVER_ERROR) {
 		return [null, $status];
