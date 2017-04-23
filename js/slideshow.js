@@ -9,7 +9,7 @@
  *
  * @copyright Olivier Paroz 2017
  */
-/* global DOMPurify */
+/* global Gallery, Thumbnails, DOMPurify */
 (function ($, OC, OCA, t) {
 	"use strict";
 	/**
@@ -33,6 +33,9 @@
 		zoomablePreview: null,
 		active: false,
 		backgroundToggle: false,
+		// We need 6 hexas for comparison reasons
+		darkBackgroundColour: '#000000',
+		lightBackgroundColour: '#ffffff',
 
 		/**
 		 * Initialises the slideshow
@@ -115,17 +118,12 @@
 					this.controls.showActionButtons(transparent, Gallery.token, image.permissions);
 					this.errorLoadingImage = false;
 					this.currentImage = img;
-
-					var backgroundColour = '#000';
-					if (transparent) {
-						backgroundColour = '#fff';
-					}
 					img.setAttribute('alt', image.name);
 					$(img).css('position', 'absolute');
-					$(img).css('background-color', backgroundColour);
+					$(img).css('background-color', image.backgroundColour);
 					if (transparent && this.backgroundToggle === true) {
 						var $border = 30 / window.devicePixelRatio;
-						$(img).css('outline', $border + 'px solid ' + backgroundColour);
+						$(img).css('outline', $border + 'px solid ' + image.backgroundColour);
 					}
 
 					this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
@@ -163,6 +161,7 @@
 				var image = new Image();
 
 				image.onload = function () {
+					preview.backgroundColour = this._getBackgroundColour(image, mimeType);
 					if (this.imageCache[url]) {
 						this.imageCache[url].resolve(image);
 					}
@@ -192,6 +191,96 @@
 				// Preloads the next image in the list
 				this.loadImage(next);
 			}.bind(this));
+		},
+
+		/**
+		 * Determines which colour to use for the background
+		 *
+		 * @param {*} image
+		 * @param {string} mimeType
+		 *
+		 * @returns {string}
+		 * @private
+		 */
+		_getBackgroundColour: function (image, mimeType) {
+			var backgroundColour = this.darkBackgroundColour;
+			if (this._isTransparent(mimeType) && this._isMainlyDark(image)) {
+				backgroundColour = this.lightBackgroundColour;
+			}
+			return backgroundColour;
+		},
+
+		/**
+		 * Calculates the luminance of an image to determine if an image is mainly dark
+		 *
+		 * @param {*} image
+		 *
+		 * @returns {boolean}
+		 * @private
+		 */
+		_isMainlyDark: function (image) {
+			var isMainlyDark = false;
+			var numberOfSamples = 1000; // Seems to be the sweet spot
+			// The name has to be 'canvas'
+			var lumiCanvas = document.createElement('canvas');
+
+			var imgArea = image.width * image.height;
+			var canArea = numberOfSamples;
+			var factor = Math.sqrt(canArea / imgArea);
+
+			var scaledWidth = factor * image.width;
+			var scaledHeight = factor * image.height;
+			lumiCanvas.width = scaledWidth;
+			lumiCanvas.height = scaledHeight;
+			var lumiCtx = lumiCanvas.getContext('2d');
+			lumiCtx.drawImage(image, 0, 0, scaledWidth, scaledHeight);
+			var imgData = lumiCtx.getImageData(0, 0, lumiCanvas.width, lumiCanvas.height);
+			var pix = imgData.data; // pix.length will be approximately 4*numberOfSamples (for RGBA)
+			var pixelArraySize = pix.length;
+			var totalLuminance = 0;
+			var sampleNumber = 1;
+			var averageLuminance;
+			var totalAlpha = 0;
+			var alphaLevel;
+			var red = 0;
+			var green = 0;
+			var blue = 0;
+			var alpha = 0;
+			var lum = 0;
+			var alphaThreshold = 0.1;
+
+			var sampleCounter = 0;
+			var itemsPerPixel = 4; // red, green, blue, alpha
+			// i += 4 because 4 colours for every pixel
+			for (var i = 0, n = pixelArraySize; i < n; i += itemsPerPixel) {
+				sampleCounter++;
+				alpha = pix[i + 3] / 255;
+				totalAlpha += alpha;
+				if (Math.ceil(alpha * 100) / 100 > alphaThreshold) {
+					red = pix[i];
+					green = pix[i + 1];
+					blue = pix[i + 2];
+					// Luminance formula from
+					// http://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
+					lum = (red + red + green + green + green + blue) / 6;
+					//lum = (red * 0.299 + green * 0.587 + blue * 0.114 );
+					totalLuminance += lum * alpha;
+					sampleNumber++;
+				}
+			}
+
+			// Deletes the canvas
+			lumiCanvas = null;
+
+			// Calculate the optimum background colour for this image
+			averageLuminance = Math.ceil((totalLuminance / sampleNumber) * 100) / 100;
+			alphaLevel = Math.ceil((totalAlpha / numberOfSamples) * 100);
+
+			if (averageLuminance < 60 && alphaLevel < 90) {
+				isMainlyDark = true;
+			}
+
+			return isMainlyDark;
 		},
 
 		/**
@@ -229,18 +318,18 @@
 			var rgb = container.css('background-color').match(/\d+/g);
 			var hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
 			var $border = 30 / window.devicePixelRatio;
+			var newBackgroundColor;
 
 			// Grey #363636
-			if (hex === "#000000") {
-				container.css('background-color', '#FFF');
-				if (this.backgroundToggle === true) {
-					container.css('outline', $border + 'px solid #FFF');
-				}
+			if (hex === this.darkBackgroundColour) {
+				newBackgroundColor = this.lightBackgroundColour;
 			} else {
-				container.css('background-color', '#000');
-				if (this.backgroundToggle === true) {
-					container.css('outline', $border + 'px solid #000');
-				}
+				newBackgroundColor = this.darkBackgroundColour;
+			}
+
+			container.css('background-color', newBackgroundColor);
+			if (this.backgroundToggle === true) {
+				container.css('outline', $border + 'px solid ' + newBackgroundColor);
 			}
 		},
 
