@@ -6,9 +6,9 @@ Read more about automated testing in [the wiki](https://github.com/nextcloud/gal
 
 * PHP tidy enabled
 * PHP imagick extension
-* `core` cloned via git
-* `core` submodule initialised
-* `core` has to be installed
+* `server` cloned via git
+* `server` submodule initialised
+* `server` has to be installed
 * Gallery app enabled (`sudo -u<myuser> ./occ app:enable gallery`)
 * composer installed (see below)
 * vendor folder and composer.lock file removed
@@ -71,7 +71,7 @@ Refer to the Codeception [quick guide](http://codeception.com/quickstart) if you
 
 In order to be able to test the Javascript in acceptance tests, we need to install one more component: PhantomJS. Use your distribution installer to get it or download a binary for Windows or Mac from the [official website](http://phantomjs.org/download.html).
 
-*Note: It's also required for Javascript tests in `core`, so this is not specific to this repository.*
+*Note: It's also required for Javascript tests in `server`, so this is not specific to this repository.*
 
 ### Running tests
 

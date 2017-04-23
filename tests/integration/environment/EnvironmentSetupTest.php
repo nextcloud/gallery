@@ -1,28 +1,29 @@
 <?php
 /**
- * Gallery
+ * Nextcloud - Gallery
+ *
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
  * @author Olivier Paroz <galleryapps@oparoz.com>
  *
- * @copyright Olivier Paroz 2016
+ * @copyright Olivier Paroz 2017
  */
 
-namespace OCA\Gallery\Environment;
+namespace OCA\Gallery\Tests\Integration\Environment;
 
 use OCP\Files\Folder;
 use OCP\Files\Node;
 
-use OCA\Gallery\Tests\Integration\GalleryIntegrationTest;
+use OCA\Gallery\Environment\Environment;
 
 /**
  * Class EnvironmentSetupTest
  *
- * @package OCA\Gallery\Tests\Integration
+ * @package OCA\Gallery\Tests\Integration\Environment
  */
-class EnvironmentSetupTest extends GalleryIntegrationTest {
+class EnvironmentSetupTest extends \OCA\Gallery\Tests\Integration\GalleryIntegrationTest {
 
 	/**
 	 * Tests is setting up the environment using a normal user works

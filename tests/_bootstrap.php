@@ -1,18 +1,20 @@
 <?php
 /**
- * Gallery
+ * Nextcloud - Gallery
  *
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
  * @author Olivier Paroz <galleryapps@oparoz.com>
  *
- * @copyright Olivier Paroz 2016
+ * @copyright Olivier Paroz 2017
  */
 
 use Codeception\Util\Autoload;
 
-define('PHPUNIT_RUN', 1);
+if (!defined('PHPUNIT_RUN')) {
+	define('PHPUNIT_RUN', 1);
+}
 
 // Add core
 require_once __DIR__ . '/../../../lib/base.php';
@@ -21,7 +23,9 @@ require_once __DIR__ . '/../../../lib/base.php';
 OC::$loader->addValidRoot(OC::$SERVERROOT . '/tests');
 
 // Give access to core tests to Codeception
-Autoload::addNamespace('Test', '/../../../tests/lib');
+Autoload::addNamespace('Test', OC::$SERVERROOT . '/tests/lib');
+Autoload::addNamespace('OCA\Gallery\Tests', 'tests/unit');
+Autoload::addNamespace('OCA\Gallery\Tests\Integration', 'tests/integration');
 
 // Load all apps
 OC_App::loadApps();
