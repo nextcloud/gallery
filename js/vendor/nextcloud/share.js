@@ -230,6 +230,9 @@
 					html += '<label for="linkText" class="hidden-visually">' + t('core', 'Link') +
 						'</label>';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
+
+					html += '<div id="linkSocial"></div>';
+
 					html +=
 						'<input type="checkbox" class="checkbox checkbox--right" ' +
 						'name="showPassword" id="showPassword" value="1" />' +
@@ -594,6 +597,30 @@
 			$('#emailPrivateLink #email').show();
 			$('#emailPrivateLink #emailButton').show();
 			$('#allowPublicUploadWrapper').show();
+			$('#linkSocial').show();
+			$('#linkSocial').html('');
+
+			var ul = $('<ul/>');
+
+			OC.Share.Social.Collection.each(function(model) {
+				var url = model.get('url');
+				url = url.replace('{{reference}}', link);
+
+				var li = $('<li>' +
+					'<a href="#" class="pop-up" data-url="' + url + '" data-window="'+model.get('newWindow')+'">' +
+					'<span class="icon ' + model.get('iconClass') + '"></span>' +
+						model.get('name') +
+					'</a>');
+				li.appendTo(ul);
+				/*social.push({
+					url: url,
+					label: t('core', 'Share to {name}', {name: model.get('name')}),
+					name: model.get('name'),
+					iconClass: model.get('iconClass'),
+					newWindow: model.get('newWindow')
+				});*/
+			});
+			ul.appendTo('#linkSocial');
 		},
 		/**
 		 *
@@ -602,6 +629,7 @@
 			$('#linkText').slideUp(OC.menuSpeed);
 			$('#defaultExpireMessage').hide();
 			$('#showPassword+label').hide();
+			$('#linkSocial').hide();
 			$('#linkPass').slideUp(OC.menuSpeed);
 			$('#emailPrivateLink #email').hide();
 			$('#emailPrivateLink #emailButton').hide();
@@ -1030,6 +1058,7 @@ $(document).ready(function () {
 			$('#linkText').val('');
 			$('#showPassword').prop('checked', false);
 			$('#linkPass').hide();
+			$('#linkSocial').hide();
 			$('#sharingDialogAllowPublicUpload').prop('checked', false);
 			$('#expirationCheckbox').prop('checked', false);
 			$('#expirationDate').hide();
@@ -1293,6 +1322,26 @@ $(document).ready(function () {
 				OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
 			}
 		});
+	});
 
+	$(document).on('click', '#dropdown .pop-up', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		var url = $(event.currentTarget).data('url');
+		var newWindow = $(event.currentTarget).data('window');
+		$(event.currentTarget).tooltip('hide');
+		if (url) {
+			if (newWindow === true) {
+				var width = 600;
+				var height = 400;
+				var left = (screen.width / 2) - (width / 2);
+				var top = (screen.height / 2) - (height / 2);
+
+				window.open(url, 'name', 'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+			} else {
+				window.location.href = url;
+			}
+		}
 	});
 });
