@@ -23,6 +23,7 @@ use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Controller\PageController;
 use OCA\Gallery\Environment\Environment;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @package OCA\Gallery\Controller
@@ -41,6 +42,8 @@ class PageControllerTest extends \Test\TestCase {
 	private $appConfig;
 	/** @var PageController */
 	protected $controller;
+	/** @var EventDispatcherInterface */
+	protected $dispatcher;
 
 	/**
 	 * Test set up
@@ -60,12 +63,14 @@ class PageControllerTest extends \Test\TestCase {
 		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
 								->disableOriginalConstructor()
 								->getMock();
+		$this->dispatcher = $this->createMock(EventDispatcherInterface::class);
 		$this->controller = new PageController(
 			$this->appName,
 			$this->request,
 			$this->environment,
 			$this->urlGenerator,
-			$this->appConfig
+			$this->appConfig,
+			$this->dispatcher
 		);
 	}
 
@@ -86,6 +91,10 @@ class PageControllerTest extends \Test\TestCase {
 		$this->mockGetTestAppValue(
 			$publicUploadEnabled, $mailNotificationEnabled, $mailPublicNotificationEnabled
 		);
+
+		$this->dispatcher->expects($this->once())
+			->method('dispatch')
+			->with('OCP\Share::loadSocial');
 
 		$template = new TemplateResponse($this->appName, 'index', $params);
 
