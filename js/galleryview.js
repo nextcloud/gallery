@@ -370,7 +370,7 @@
 			this.element.on("contextmenu", function(e) { e.preventDefault(); });
 			$('#filelist-button').click(Gallery.switchToFilesView);
 			$('#download').click(Gallery.download);
-			$('#share-button').click(Gallery.share);
+			$('#shared-button').click(Gallery.share);
 			Gallery.infoBox = new Gallery.InfoBox();
 			$('#album-info-button').click(Gallery.showInfo);
 			$('#sort-name-button').click(Gallery.sorter);
@@ -398,7 +398,7 @@
 			var availableWidth = $(window).width() - Gallery.buttonsWidth;
 			this.breadcrumb.init(albumPath, availableWidth);
 			var album = Gallery.albumMap[albumPath];
-			
+
 			var sum = album.images.length + album.subAlbums.length;
 			//If sum of the number of images and subalbums exceeds 1 then show the buttons.
 			if(sum > 1)
@@ -431,7 +431,7 @@
 		 */
 		_hideButtons: function (uploadAllowed) {
 			$('#album-info-button').hide();
-			$('#share-button').hide();
+			$('#shared-button').hide();
 			$('#sort-name-button').hide();
 			$('#sort-date-button').hide();
 			$('#save-button').hide();
@@ -449,7 +449,7 @@
 		 * @private
 		 */
 		_shareButtonSetup: function (albumPath) {
-			var shareButton = $('#share-button');
+			var shareButton = $('#shared-button');
 			if (albumPath === '' || Gallery.token) {
 				shareButton.hide();
 			} else {
@@ -540,7 +540,7 @@
 					});
 			}
 		},
-		
+
 		/**
 		 * If no url is entered then do not show the error box.
 		 *
@@ -554,7 +554,7 @@
  				}
 			});
 		},
-		
+
 		/**
 		 * Creates the [+] button allowing users who can't drag and drop to upload files
 		 *
