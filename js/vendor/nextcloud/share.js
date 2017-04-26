@@ -231,7 +231,8 @@
 						'</label>';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
 
-					html += '<div id="linkSocial"></div>';
+					html += '<a id="linkTextMore" class="button icon-more" href="#"></a>';
+					html += '<div id="linkSocial" class="popovermenu bubble menu hidden"></div>';
 
 					html +=
 						'<input type="checkbox" class="checkbox checkbox--right" ' +
@@ -597,6 +598,7 @@
 			$('#emailPrivateLink #email').show();
 			$('#emailPrivateLink #emailButton').show();
 			$('#allowPublicUploadWrapper').show();
+			$('#linkTextMore').show();
 			$('#linkSocial').show();
 			$('#linkSocial').html('');
 
@@ -607,18 +609,11 @@
 				url = url.replace('{{reference}}', link);
 
 				var li = $('<li>' +
-					'<a href="#" class="pop-up" data-url="' + url + '" data-window="'+model.get('newWindow')+'">' +
+					'<a href="#" class="menuitem pop-up" data-url="' + url + '" data-window="'+model.get('newWindow')+'">' +
 					'<span class="icon ' + model.get('iconClass') + '"></span>' +
-						model.get('name') +
+					'<span>' + model.get('name') + '</span>' +
 					'</a>');
 				li.appendTo(ul);
-				/*social.push({
-					url: url,
-					label: t('core', 'Share to {name}', {name: model.get('name')}),
-					name: model.get('name'),
-					iconClass: model.get('iconClass'),
-					newWindow: model.get('newWindow')
-				});*/
 			});
 			ul.appendTo('#linkSocial');
 		},
@@ -630,6 +625,7 @@
 			$('#defaultExpireMessage').hide();
 			$('#showPassword+label').hide();
 			$('#linkSocial').hide();
+			$('#linkTextMore').hide();
 			$('#linkPass').slideUp(OC.menuSpeed);
 			$('#emailPrivateLink #email').hide();
 			$('#emailPrivateLink #emailButton').hide();
@@ -1059,6 +1055,7 @@ $(document).ready(function () {
 			$('#showPassword').prop('checked', false);
 			$('#linkPass').hide();
 			$('#linkSocial').hide();
+			$('#linkTextMore').hide();
 			$('#sharingDialogAllowPublicUpload').prop('checked', false);
 			$('#expirationCheckbox').prop('checked', false);
 			$('#expirationDate').hide();
