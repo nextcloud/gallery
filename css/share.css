@@ -39,7 +39,9 @@
 }
 
 #dropdown .shareWithRemoteInfo {
-	padding: 11px 20px;
+	padding: 11px;
+	right: 17px;
+	top: 18px;
 }
 
 #dropdown .avatar {
@@ -113,8 +115,9 @@ a.unshare {
 }
 
 #dropdown input[type="text"],#dropdown input[type="password"] {
-	width: 86%;
-	margin-left: 7px;
+	width: 100%;
+	padding-right: 44px;
+	text-overflow: ellipsis;
 }
 
 #dropdown form {
@@ -125,6 +128,24 @@ a.unshare {
 
 #linkText,#linkPass,#expiration {
 	display:none;
+}
+
+#linkText-container {
+	position: relative;
+}
+
+#linkTextMore,
+.shareWithRemoteInfo {
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 0 !important;
+	background-color: transparent;
+	border: none;
+}
+
+#linkSocial .icon {
+	background-size: 16px;
 }
 
 #link #showPassword img {

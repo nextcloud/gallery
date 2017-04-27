@@ -229,10 +229,11 @@
 
 					html += '<label for="linkText" class="hidden-visually">' + t('core', 'Link') +
 						'</label>';
+					html += '<div id="linkText-container">';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
-
 					html += '<a id="linkTextMore" class="button icon-more" href="#"></a>';
 					html += '<div id="linkSocial" class="popovermenu bubble menu hidden"></div>';
+					html += '</div>';
 
 					html +=
 						'<input type="checkbox" class="checkbox checkbox--right" ' +
