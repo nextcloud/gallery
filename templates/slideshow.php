@@ -13,6 +13,15 @@
 			   class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
 		<input type="button"
 			   class="menuItem svg deleteImage icon-view-delete hidden">
+		<div id="slideshow-shared-button" class="menuItem button">
+			<img class="svg" src="<?php print_unescaped(
+				image_path('gallery', 'share-white.svg')
+			); ?>" alt="<?php p($l->t("Share")); ?>"/>
+		</div>
+		<a class="share" data-item-type="folder" data-item=""
+		   title="<?php p($l->t("Share")); ?>"
+		   data-possible-permissions="31">
+		</a>
 	</div>
 	<div class="progress icon-view-pause"/>
 	<div class="name">
