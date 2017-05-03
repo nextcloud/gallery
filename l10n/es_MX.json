@@ -1,7 +1,7 @@
 { "translations": {
     "Gallery" : "Galería",
     "There was a problem reading files from this album" : "Se presentó un problema al leer los archivos de este álbum",
-    "Aborting preview. Could not find the file" : "Abortando previsualización. No fue posible encontrar el archivo",
+    "Aborting preview. Could not find the file" : "Abortando vista previa. No fue posible encontrar el archivo",
     "Could not move \"{file}\", target exists" : "No fue posible mover \"{file}\", el destino ya existe",
     "Could not move \"{file}\"" : "No fue posible mover \"{file}\"",
     "No compatible server found at {remote}" : "No se encontró un servidor compatible en {remote}",
@@ -26,7 +26,7 @@
     "Hide Album" : "Ocultar álbum",
     "Could not hide album" : "No fue posible ocultar el álbum",
     "Error loading slideshow template" : "Se presentó un error al cargar la plantilla de presentación",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>¡Error!</strong> No fue posible generar la previsualización de este archivo. <br>Favor de ir a la siguiente imagen mientras quitamos ésta del carrusel ",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>¡Error!</strong> No fue posible generar la vista previa de este archivo. <br>Favor de ir a la siguiente imagen mientras quitamos ésta del carrusel ",
     "Next" : "Siguiente",
     "Play" : "Reproducir",
     "Pause" : "Pausar",
