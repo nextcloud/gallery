@@ -189,7 +189,7 @@
 			this.container.children('.exit').click(makeCallBack(this._exit));
 			this.container.children('.pause, .play').click(makeCallBack(this._playPauseToggle));
 			this.progressBar.click(makeCallBack(this._playPauseToggle));
-			this.container.children('.previous, .next, .menu, .name').on(
+			this.container.children('.previous, .next, .slideshow-menu, .name').on(
 				'mousewheel DOMMouseScroll mousemove', function (evn) {
 					this.container.children('.bigshotContainer')[0].dispatchEvent(
 						new WheelEvent(evn.originalEvent.type, evn.originalEvent));
@@ -205,11 +205,11 @@
 		_specialButtonSetup: function (makeCallBack) {
 			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
 			this.container.find('.deleteImage').click(makeCallBack(this._deleteImage));
-			this.container.find('.menu').width = 52;
+			this.container.find('.slideshow-menu').width = 52;
 			if (this.backgroundToggle) {
 				this.container.find('.changeBackground').click(
 					makeCallBack(this._toggleBackground));
-				this.container.find('.menu').width += 52;
+				this.container.find('.slideshow-menu').width += 52;
 			} else {
 				this.hideButton('.changeBackground');
 			}
