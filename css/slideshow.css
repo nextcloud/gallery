@@ -45,7 +45,7 @@
 
 #slideshow.inactive > input,
 #slideshow.inactive > .progress,
-#slideshow.inactive > .menu input,
+#slideshow.inactive > .slideshow-menu input,
 #slideshow.inactive > .name {
 	opacity: 0;
 	/* slow fadeout, fadein will be 300ms again*/
@@ -72,7 +72,7 @@
 }
 
 #slideshow > input:hover,
-#slideshow > .menu input:hover,
+#slideshow > .slideshow-menu input:hover,
 #slideshow.inactive > .name:hover {
 	opacity: .75;
 }
@@ -116,13 +116,13 @@
 	cursor: pointer;
 }
 
-#slideshow > .menu {
+#slideshow > .slideshow-menu {
 	position: relative;
 	z-index: 1100;
 	right: 50px;
 }
 
-#slideshow .menu .menuItem {
+#slideshow .slideshow-menu .menuItem {
 	float: right;
 	border: 0 transparent;
 	color: transparent;
