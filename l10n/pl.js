@@ -64,6 +64,8 @@ OC.L10N.register(
     "Set expiration date" : "Ustaw datę wygaśnięcia",
     "Expiration" : "Wygaśnięcie",
     "Expiration date" : "Data wygaśnięcia",
+    "No users or groups found for {search}" : "Nie znaleziono użytkownika lub grupy {search}",
+    "No users found for {search}" : "Nie znaleziono użytkownika {search}",
     "An error occured. Please try again" : "Wystąpił błąd. Proszę spróbować ponownie.",
     "Adding user..." : "Dodawanie użytkownika...",
     "group" : "grupa",
