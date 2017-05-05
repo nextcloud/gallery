@@ -46,6 +46,7 @@
 #slideshow.inactive > input,
 #slideshow.inactive > .progress,
 #slideshow.inactive > .slideshow-menu input,
+#slideshow.inactive > .slideshow-menu img,
 #slideshow.inactive > .name {
 	opacity: 0;
 	/* slow fadeout, fadein will be 300ms again*/
@@ -73,6 +74,7 @@
 
 #slideshow > input:hover,
 #slideshow > .slideshow-menu input:hover,
+#slideshow #slideshow-shared-button:hover,
 #slideshow.inactive > .name:hover {
 	opacity: .75;
 }
@@ -137,6 +139,12 @@
 	margin-right: 10px;
 }
 
+#slideshow .slideshow-menu .menuItem > img {
+	width: 24px;
+	height: 24px;
+	padding-top: 8px;
+}
+
 #slideshow > .name {
 	position: fixed;
 	bottom: 18px;
@@ -193,4 +201,9 @@
 	margin: auto;
 	width: 32px;
 	height: 32px;
+}
+
+#slideshow #dropdown.shareDropDown {
+	/** above slideshow buttons */
+	z-index: 100001;
 }

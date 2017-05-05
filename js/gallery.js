@@ -205,7 +205,7 @@
 				event.stopPropagation();
 
 				var currentAlbum = Gallery.albumMap[Gallery.currentAlbum];
-				$('a.share').data('path', currentAlbum.path)
+				$('#controls a.share').data('path', currentAlbum.path)
 					.data('link', true)
 					.data('item-source', currentAlbum.fileId)
 					.data('possible-permissions', currentAlbum.permissions)

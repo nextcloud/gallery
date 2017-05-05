@@ -138,8 +138,12 @@
 			}
 			this.showButton('.downloadImage');
 			var canDelete = ((permissions & OC.PERMISSION_DELETE) !== 0);
+			var canShare = ((permissions & OC.PERMISSION_SHARE) !== 0);
 			if (!isPublic && canDelete) {
 				this.showButton('.deleteImage');
+			}
+			if (!isPublic && canShare) {
+				this.showButton('#slideshow-shared-button');
 			}
 		},
 
@@ -150,6 +154,7 @@
 			this.hideButton('.changeBackground');
 			this.hideButton('.downloadImage');
 			this.hideButton('.deleteImage');
+			this.hideButton('#slideshow-shared-button');
 		},
 
 		/**
@@ -205,6 +210,7 @@
 		_specialButtonSetup: function (makeCallBack) {
 			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
 			this.container.find('.deleteImage').click(makeCallBack(this._deleteImage));
+			this.container.find('#slideshow-shared-button').click(makeCallBack(this.share));
 			this.container.find('.slideshow-menu').width = 52;
 			if (this.backgroundToggle) {
 				this.container.find('.changeBackground').click(
@@ -213,8 +219,24 @@
 			} else {
 				this.hideButton('.changeBackground');
 			}
+		},
 
+		/**
+		 * Populates the share dialog with the needed information
+		 */
+		share: function () {
+			var image = this.images[this.current];
+			if (!Gallery.Share.droppedDown) {
 
+				$('.slideshow-menu a.share').data('path', image.path)
+					.data('link', true)
+					.data('item-source', image.file)
+					.data('possible-permissions', image.permissions)
+					.click();
+				if (!$('#linkCheckbox').is(':checked')) {
+					$('#linkText').hide();
+				}
+			}
 		},
 
 		/**
@@ -239,7 +261,7 @@
 				var rightKey = 39;
 				var spaceKey = 32;
 				var fKey = 70;
-				var zoomOutKeys = [48, 96, 79, 40]; // zero, o or down key
+				var zoomOutKeys = [48, 96, 79, 40]; // zeros, o or down key
 				var zoomInKeys = [57, 105, 73, 38]; // 9, i or up key
 				if (evt.keyCode === escKey) {
 					makeCallBack(this._exit)(evt);
@@ -328,6 +350,7 @@
 		 * @private
 		 */
 		_next: function () {
+			Gallery.Share.hideDropDown();
 			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
@@ -346,6 +369,7 @@
 		 * @private
 		 */
 		_previous: function () {
+			Gallery.Share.hideDropDown();
 			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
