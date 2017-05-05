@@ -28,26 +28,16 @@ class DownloadService extends Service {
 	 * Downloads the requested file
 	 *
 	 * @param File $file
-	 * @param bool $base64Encode
 	 *
-	 * @return array|false
+	 * @return File
 	 * @throws NotFoundServiceException
 	 */
-	public function downloadFile($file, $base64Encode = false) {
+	public function downloadFile($file) {
 		try {
 			$this->logger->debug(
 				"[DownloadService] File to Download: {name}", ['name' => $file->getName()]
 			);
-			$download = [
-				'preview'  => $file->getContent(),
-				'mimetype' => $file->getMimeType()
-			];
-
-			if ($base64Encode) {
-				$download['preview'] = $this->encode($download['preview']);
-			}
-
-			return $download;
+			return $file;
 		} catch (\Exception $exception) {
 			throw new NotFoundServiceException('There was a problem accessing the file');
 		}

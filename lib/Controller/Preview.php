@@ -87,9 +87,15 @@ trait Preview {
 			);
 		if ($preview === null) {
 			$preview = $this->prepareEmptyThumbnail($file, $status);
+			return [$preview, $status];
 		}
 
-		return [$preview, $status];
+		$result = [
+			'preview' => $base64Encode ? base64_encode($preview->getContent()) : $preview->getContent(),
+			'mimetype' => $file->getMimeType()
+		];
+
+		return [$result, $status];
 	}
 
 	/**
@@ -156,7 +162,7 @@ trait Preview {
 	 * @param bool $keepAspect
 	 * @param bool $base64Encode
 	 *
-	 * @return array<\OC_Image|string, int>
+	 * @return array<File|ISimpleFile, int>
 	 */
 	private function getPreviewData(
 		$file, $animatedPreview, $width, $height, $keepAspect, $base64Encode

@@ -13,6 +13,7 @@
 namespace OCA\Gallery\Service;
 
 use OCP\Files\File;
+use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\Image;
 use OCP\IPreview;
 use OCP\ILogger;
@@ -94,26 +95,14 @@ class PreviewService extends Service {
 	 * @param int $maxX asked width for the preview
 	 * @param int $maxY asked height for the preview
 	 * @param bool $keepAspect
-	 * @param bool $base64Encode
 	 *
-	 * @return string|\OC_Image|string|false preview data
+	 * @return ISimpleFile preview
 	 * @throws InternalServerErrorServiceException
 	 */
-	public function createPreview(
-		$file, $maxX = 0, $maxY = 0, $keepAspect = true, $base64Encode = false
+	public function createPreview(File $file, $maxX = 0, $maxY = 0, $keepAspect = true
 	) {
 		try {
-			$preview = $this->previewManager->getPreview($file, $maxX, $maxY, !$keepAspect);
-			$img = new Image($preview->getContent());
-			$mimeType = $img->mimeType();
-			if ($img && $base64Encode) {
-				$img = $this->encode($img);
-			}
-
-			return [
-				'preview'  => $img,
-				'mimetype' => $mimeType
-			];
+			return $this->previewManager->getPreview($file, $maxX, $maxY, !$keepAspect);
 		} catch (\Exception $exception) {
 			throw new InternalServerErrorServiceException('Preview generation has failed');
 		}

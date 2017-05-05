@@ -121,7 +121,7 @@ class PreviewController extends Controller {
 	 * @param int $width
 	 * @param int $height
 	 *
-	 * @return ImageResponse|Http\JSONResponse
+	 * @return Http\FileDisplayResponse|Http\JSONResponse
 	 */
 	public function getPreview($fileId, $width, $height) {
 		/** @type File $file */
@@ -135,9 +135,21 @@ class PreviewController extends Controller {
 				], $status
 			);
 		}
-		$preview['name'] = $file->getName();
 
-		return new ImageResponse($preview, $status);
+		$response = new Http\FileDisplayResponse($preview, Http::STATUS_OK, ['Content-Type' => $preview->getMimeType()]);
+
+		// Let cache this!
+		$response->addHeader('Pragma', 'public');
+
+		// Cache previews for 24H
+		$response->cacheFor(3600 * 24);
+		$expires = new \DateTime();
+		$expires->add(new \DateInterval('P1D'));
+		$response->addHeader('Expires', $expires->format(\DateTime::RFC2822));
+		$response->addHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . rawurlencode($file->getName()) . '; filename="'
+			. rawurlencode($file->getName()) . '"');
+		return $response;
+
 	}
 
 }
