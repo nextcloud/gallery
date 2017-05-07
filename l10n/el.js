@@ -93,6 +93,7 @@ OC.L10N.register(
     "the file is corrupt" : "το αρχείο είναι κατεστραμμένο",
     "the encryption key is missing" : "λείπει το κλειδί κρυπτογράφησης",
     "Here is the error message returned by the server: " : "Εδώ είναι το μήνυμα σφάλματος που επέστρεψε ο διακομιστής:",
+    "For more information, please contact your friendly Nextcloud administrator." : "Για περισσότερες πληροφορίες, επικοινωνήστε με τον υπεύθυνο διαχειριστή του Nextcloud.",
     "Sorry, but the server could not fulfill your request." : "Συγγνώμη αλλά ο διακομιστής δεν μπόρεσε να εκπληρώσει το αίτημά σας.",
     "Possible reasons for the problem:" : "Πιθανές αιτίες του πορβλήματος:",
     "a conflicting app was installed" : "εγκαταστάθηκε μια ασύμβατη εφαρμογή",

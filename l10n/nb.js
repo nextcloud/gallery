@@ -64,6 +64,8 @@ OC.L10N.register(
     "Set expiration date" : "Sett utløpsdato",
     "Expiration" : "Utløpsdato",
     "Expiration date" : "Utløpsdato",
+    "No users or groups found for {search}" : "Fant ingen brukere for {search}",
+    "No users found for {search}" : "Ingen brukre funnet for {search}",
     "An error occured. Please try again" : "Det oppstod en feil. Prøv igjen",
     "Adding user..." : "Legger til bruker…",
     "group" : "gruppe",

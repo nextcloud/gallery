@@ -64,6 +64,8 @@ OC.L10N.register(
     "Set expiration date" : "Vervaldatum instellen",
     "Expiration" : "Vervaltermijn",
     "Expiration date" : "Vervaldatum",
+    "No users or groups found for {search}" : "Geen gebruikers of groepen gevonden voor {search}",
+    "No users found for {search}" : "Geen gebruikers gevonden voor {search}",
     "An error occured. Please try again" : "Er trad een fout op. Probeer het opnieuw",
     "Adding user..." : "Gebruiker toevoegen...",
     "group" : "groep",
