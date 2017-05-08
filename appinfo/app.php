@@ -70,6 +70,7 @@ $loadScripts = function() use ($appName) {
 	 */
 	Util::addStyle($appName, 'slideshow');
 	Util::addStyle($appName, 'gallerybutton');
+	Util::addStyle($appName, 'share');
 };// @codeCoverageIgnoreEnd
 
 \OC::$server->getEventDispatcher()->addListener('OCA\Files::loadAdditionalScripts', $loadScripts);
