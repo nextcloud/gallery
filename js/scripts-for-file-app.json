@@ -6,5 +6,6 @@
   "slideshow.js",
   "slideshowcontrols.js",
   "slideshowzoomablepreview.js",
-  "gallerybutton.js"
+  "gallerybutton.js",
+  "vendor/nextcloud/share.js"
 ]
