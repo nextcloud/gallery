@@ -64,6 +64,7 @@ OC.L10N.register(
     "Set expiration date" : "Sett utløpsdato",
     "Expiration" : "Utløpsdato",
     "Expiration date" : "Utløpsdato",
+    "This list is maybe truncated - please refine your search term to see more results." : "Listen er kanskje avkortet - forbedre søkeord for å få flere resultater.",
     "No users or groups found for {search}" : "Fant ingen brukere for {search}",
     "No users found for {search}" : "Ingen brukre funnet for {search}",
     "An error occured. Please try again" : "Det oppstod en feil. Prøv igjen",
