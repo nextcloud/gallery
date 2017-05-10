@@ -65,6 +65,7 @@ OC.L10N.register(
     "group" : "ομάδα",
     "remote" : "απομακρυσμένα",
     "Resharing is not allowed" : "Ξαναμοιρασμός δεν επιτρέπεται",
+    "Error while retrieving shares" : "Σφάλμα κατά την λήψη κοινόχρηστων",
     "Unshare" : "Διακοπή διαμοιρασμού",
     "notify by email" : "ειδοποίηση με email",
     "can share" : "δυνατότητα διαμοιρασμού",
