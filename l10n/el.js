@@ -60,6 +60,8 @@ OC.L10N.register(
     "Set expiration date" : "Ορισμός ημ. λήξης",
     "Expiration" : "Λήξη",
     "Expiration date" : "Ημερομηνία λήξης",
+    "No users or groups found for {search}" : "Δεν βρέθηκαν χρήστες ή ομάδες για {search}",
+    "No users found for {search}" : "Δεν βρέθηκαν χρήστες για {search}",
     "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Adding user..." : "Προσθήκη χρήστη ...",
     "group" : "ομάδα",
