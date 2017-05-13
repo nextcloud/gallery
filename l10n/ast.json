@@ -4,6 +4,7 @@
     "Aborting preview. Could not find the file" : "Albortando vista previa. Nun s'atopó'l ficheru",
     "Could not move \"{file}\", target exists" : "Nun pudo movese \"{file}\", destín yá esiste",
     "Could not move \"{file}\"" : "Nun pudo movese \"{file}\"",
+    "No compatible server found at {remote}" : "Nun s'alcontró dengún sirvidor compatible en {remote}",
     "Gallery view" : "Vista de galería",
     "Could not load the description" : "Nun pudo cargase la descripción",
     "Could not load the description: " : "Nun pudo cargase la descripción:",
