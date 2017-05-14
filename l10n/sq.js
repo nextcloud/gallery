@@ -64,6 +64,7 @@ OC.L10N.register(
     "Set expiration date" : "Caktoni datë skadimi",
     "Expiration" : "Skadim",
     "Expiration date" : "Datë skadimi",
+    "No users or groups found for {search}" : "S’u gjetën përdorues ose grupe për {Kërkim}",
     "An error occured. Please try again" : "Ndodhi një gabim. Ju lutemi, riprovoni",
     "Adding user..." : "Po shtohet përdorues…",
     "group" : "grup",
