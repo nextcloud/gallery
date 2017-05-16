@@ -229,7 +229,12 @@
 
 					html += '<label for="linkText" class="hidden-visually">' + t('core', 'Link') +
 						'</label>';
+					html += '<div id="linkText-container">';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
+					html += '<a id="linkTextMore" class="button icon-more" href="#"></a>';
+					html += '<div id="linkSocial" class="popovermenu bubble menu hidden"></div>';
+					html += '</div>';
+
 					html +=
 						'<input type="checkbox" class="checkbox checkbox--right" ' +
 						'name="showPassword" id="showPassword" value="1" />' +
@@ -594,6 +599,31 @@
 			$('#emailPrivateLink #email').show();
 			$('#emailPrivateLink #emailButton').show();
 			$('#allowPublicUploadWrapper').show();
+			$('#linkTextMore').show();
+			$('#linkSocial').hide();
+			$('#linkSocial').html('');
+
+			var ul = $('<ul/>');
+
+			OC.Share.Social.Collection.each(function(model) {
+				var url = model.get('url');
+				url = url.replace('{{reference}}', link);
+
+				var li = $('<li>' +
+					'<a href="#" class="menuitem pop-up" data-url="' + url + '" data-window="'+model.get('newWindow')+'">' +
+					'<span class="icon ' + model.get('iconClass') + '"></span>' +
+					'<span>' + model.get('name') + '</span>' +
+					'</a>');
+				li.appendTo(ul);
+			});
+			ul.appendTo('#linkSocial');
+
+			if (OC.Share.Social.Collection.length === 0) {
+				$('#linkTextMore').hide();
+				$linkText.addClass('no-menu-item');
+			} else {
+				$linkText.removeClass('no-menu-item');
+			}
 		},
 		/**
 		 *
@@ -602,6 +632,8 @@
 			$('#linkText').slideUp(OC.menuSpeed);
 			$('#defaultExpireMessage').hide();
 			$('#showPassword+label').hide();
+			$('#linkSocial').hide();
+			$('#linkTextMore').hide();
 			$('#linkPass').slideUp(OC.menuSpeed);
 			$('#emailPrivateLink #email').hide();
 			$('#emailPrivateLink #emailButton').hide();
@@ -1030,6 +1062,8 @@ $(document).ready(function () {
 			$('#linkText').val('');
 			$('#showPassword').prop('checked', false);
 			$('#linkPass').hide();
+			$('#linkSocial').hide();
+			$('#linkTextMore').hide();
 			$('#sharingDialogAllowPublicUpload').prop('checked', false);
 			$('#expirationCheckbox').prop('checked', false);
 			$('#expirationDate').hide();
@@ -1293,6 +1327,39 @@ $(document).ready(function () {
 				OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
 			}
 		});
+	});
 
+	$(document).on('click', '#dropdown .pop-up', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		var url = $(event.currentTarget).data('url');
+		var newWindow = $(event.currentTarget).data('window');
+		$(event.currentTarget).tooltip('hide');
+		if (url) {
+			if (newWindow === true) {
+				var width = 600;
+				var height = 400;
+				var left = (screen.width / 2) - (width / 2);
+				var top = (screen.height / 2) - (height / 2);
+
+				window.open(url, 'name', 'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+			} else {
+				window.location.href = url;
+			}
+		}
+	});
+
+	$(document).on('click', '.icon-more', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		var children = event.currentTarget.parentNode.children;
+
+		$.each(children, function (key, value) {
+			if (value.classList.contains('popovermenu')) {
+				$(value).toggle();
+			}
+		});
 	});
 });

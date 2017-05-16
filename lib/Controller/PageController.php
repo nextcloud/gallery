@@ -25,6 +25,7 @@ use OCP\AppFramework\Http\RedirectResponse;
 
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Http\ImageResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Generates templates for the landing page from within ownCloud, the public
@@ -40,6 +41,8 @@ class PageController extends Controller {
 	private $urlGenerator;
 	/** @var IConfig */
 	private $appConfig;
+	/** @var EventDispatcherInterface */
+	private $dispatcher;
 
 	/**
 	 * Constructor
@@ -49,19 +52,22 @@ class PageController extends Controller {
 	 * @param Environment $environment
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
+	 * @param EventDispatcherInterface $dispatcher
 	 */
 	public function __construct(
 		$appName,
 		IRequest $request,
 		Environment $environment,
 		IURLGenerator $urlGenerator,
-		IConfig $appConfig
+		IConfig $appConfig,
+		EventDispatcherInterface $dispatcher
 	) {
 		parent::__construct($appName, $request);
 
 		$this->environment = $environment;
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
+		$this->dispatcher = $dispatcher;
 	}
 
 	/**
@@ -83,6 +89,8 @@ class PageController extends Controller {
 
 		// Parameters sent to the template
 		$params = $this->getIndexParameters($appName);
+
+		$this->dispatcher->dispatch('OCP\Share::loadSocial');
 
 		// Will render the page using the template found in templates/index.php
 		$response = new TemplateResponse($appName, 'index', $params);
