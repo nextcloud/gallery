@@ -617,6 +617,13 @@
 				li.appendTo(ul);
 			});
 			ul.appendTo('#linkSocial');
+
+			if (OC.Share.Social.Collection.length === 0) {
+				$('#linkTextMore').hide();
+				$linkText.addClass('no-menu-item');
+			} else {
+				$linkText.removeClass('no-menu-item');
+			}
 		},
 		/**
 		 *

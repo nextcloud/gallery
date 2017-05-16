@@ -119,6 +119,9 @@ a.unshare {
 	padding-right: 44px;
 	text-overflow: ellipsis;
 }
+#dropdown input#linkText.no-menu-item {
+	padding-right: 6px;
+}
 
 #dropdown form {
 	font-size: 100%;
