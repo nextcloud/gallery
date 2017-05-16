@@ -144,6 +144,14 @@ a.unshare {
 	border: none;
 }
 
+#slideshow #linkTextMore {
+	padding: 17px;
+}
+
+#slideshow #linkSocial {
+	right: -5px;
+}
+
 #linkSocial .icon {
 	background-size: 16px;
 }
