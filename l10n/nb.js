@@ -76,7 +76,7 @@ OC.L10N.register(
     "Unshare" : "Avslutt deling",
     "notify by email" : "Varsle på e-mail",
     "can share" : "kan dele",
-    "can edit" : "kan endre",
+    "can edit" : "kan redigere",
     "access control" : "tilgangskontroll",
     "create" : "opprette",
     "change" : "endre",
