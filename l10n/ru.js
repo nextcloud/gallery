@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Невозможно создать файл \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" это неправильное имя файла.",
     "File name cannot be empty." : "Имя файла не может быть пустым.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" - недопустимый тип файла",
     "Upload" : "Загрузить",
     "Error" : "Ошибка",
     "Error while sharing" : "При попытке поделиться произошла ошибка",
