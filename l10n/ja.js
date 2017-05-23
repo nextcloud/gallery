@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "ファイル \"{file}\" を作成できませんでした",
     "\"{name}\" is an invalid file name." : "\"{name}\" は無効なファイル名です。",
     "File name cannot be empty." : "ファイル名を空にすることはできません。",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" は無効なファイル形式です",
     "Upload" : "アップロード",
     "Error" : "エラー",
     "Error while sharing" : "共有でエラー発生",

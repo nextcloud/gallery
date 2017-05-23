@@ -39,6 +39,7 @@
     "Could not create file \"{file}\"" : "Gat ekki búið til skrána \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" er ógilt skráarheiti.",
     "File name cannot be empty." : "Heiti skráar má ekki vera tómt",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" er ógild skráartegund",
     "Upload" : "Senda inn",
     "Error" : "Villa",
     "Error while sharing" : "Villa við deilingu",

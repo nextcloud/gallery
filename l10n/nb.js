@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Klarte ikke å opprette fil \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" er et uglydig filnavn.",
     "File name cannot be empty." : "Filnavn kan ikke være tomt.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" er ikke en tillatt filtype",
     "Upload" : "Last opp",
     "Error" : "Feil",
     "Error while sharing" : "Feil under deling",
