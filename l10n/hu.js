@@ -64,6 +64,8 @@ OC.L10N.register(
     "Set expiration date" : "Legyen lejárati idő",
     "Expiration" : "Lejárat",
     "Expiration date" : "Lejárati idő",
+    "No users or groups found for {search}" : "{search} keresésre nem található felhasználó vagy csoport ",
+    "No users found for {search}" : "{search} keresésre nem található felhasználó ",
     "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",
     "Adding user..." : "Felhasználó hozzáadása...",
     "group" : "csoport",
