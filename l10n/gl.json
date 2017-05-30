@@ -5,7 +5,7 @@
     "Could not move \"{file}\", target exists" : "Non foi posíbel mover «{file}», o destino xa existe",
     "Could not move \"{file}\"" : "Non foi posíbel mover «{file}»",
     "No compatible server found at {remote}" : "Non se atopa un servidor compatíbel en {remote}",
-    "Invalid server url" : "URL de servidor incorrecta",
+    "Invalid server url" : "URL de servidor incorrecto",
     "Gallery view" : "Vista da galería",
     "Could not load the description" : "Non foi posíbel cargar a descrición",
     "Could not load the description: " : "Non foi posíbel cargar a descrición:",
