@@ -22,7 +22,7 @@ OC.L10N.register(
     "Album cannot be shown" : "Kan ikke vise album",
     "No media files found" : "Finner ingen media-filer",
     "Upload pictures in the files app to display them here" : "Last opp bilder i Filer-programmet for å vise dem her",
-    "Upload new files via drag and drop or by using the [+] button above" : "Last opp nye filer med dra & slipp eller med [+]-knappen over",
+    "Upload new files via drag and drop or by using the [+] button above" : "Last opp nye filer med dra og slipp eller med [+]-knappen ovenfor",
     "Configuration error" : "Oppsettsfeil",
     "New" : "Ny",
     "Hide Album" : "Skjul album",
