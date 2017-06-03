@@ -88,7 +88,7 @@ OC.L10N.register(
     "Sending ..." : "Senden…",
     "Email sent" : "E-Mail gesendet",
     "Warning" : "Warnung",
-    "This share is password-protected" : "Diese Freigabe ist durch ein Passwort geschützt",
+    "This share is password-protected" : "Freigabe ist passwortgeschützt",
     "The password is wrong. Try again." : "Das Passwort ist falsch. Bitte versuchen Sie es erneut.",
     "Sort by date" : "Nach Datum ordnen",
     "Sort by name" : "Nach Name ordnen",
