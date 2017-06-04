@@ -39,6 +39,7 @@
     "Could not create file \"{file}\"" : "Kon \"{file}\" niet aanmaken",
     "\"{name}\" is an invalid file name." : "\"{name}\" is een ongeldige bestandsnaam.",
     "File name cannot be empty." : "Bestandsnaam kan niet leeg zijn.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" is een niet toegestaan bestandstype",
     "Upload" : "Uploaden",
     "Error" : "Fout",
     "Error while sharing" : "Fout tijdens het delen",

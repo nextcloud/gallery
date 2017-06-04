@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "\"{file}\" dosyası oluşturulamadı",
     "\"{name}\" is an invalid file name." : "\"{name}\" geçersiz bir dosya adı.",
     "File name cannot be empty." : "Dosya adı boş olamaz.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" dosya türüne izin verilmiyor",
     "Upload" : "Yükle",
     "Error" : "Hata",
     "Error while sharing" : "Paylaşılırken sorun çıktı",
