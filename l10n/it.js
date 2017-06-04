@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Impossibile creare il file \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" non è un nome file valido.",
     "File name cannot be empty." : "Il nome del file non può essere vuoto.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" non è un tipo di file consentito",
     "Upload" : "Carica",
     "Error" : "Errore",
     "Error while sharing" : "Errore durante la condivisione",
