@@ -13,7 +13,7 @@ OC.L10N.register(
     "Could not load the description: " : "Não foi possível carregar a descrição:",
     "Copyright" : "Direitos Autorais",
     "Could not load the copyright notice: " : "Não foi possível carregar o aviso de direitos autorais:",
-    "Copyright notice" : "Nota de direitos autorais",
+    "Copyright notice" : "Aviso de direitos autorais",
     "Link to copyright document" : "Link para documento de direitos autorais",
     "This application may not work properly on your browser." : "Este aplicativo pode não funcionar corretamente em seu navegador.",
     "For an improved experience, please install one of the following alternatives" : "Para uma melhor experiência, por favor instale uma das seguintes alternativas",
