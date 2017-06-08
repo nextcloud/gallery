@@ -38,6 +38,14 @@ OC.L10N.register(
     "Link" : "Холбоос",
     "Password protect" : "Нууц үгээр хамгаалах",
     "Password" : "Нууц үг",
-    "Send" : "Илгээх"
+    "Send" : "Илгээх",
+    "group" : "бүлэг",
+    "remote" : "алсын",
+    "notify by email" : "цахим шуудангаар мэдэгдэх",
+    "access control" : "хандах эрхийн удирдлага",
+    "create" : "үүсгэх",
+    "change" : "Өөрчлөх",
+    "delete" : "устгах",
+    "Password protected" : "Нууц үгээх хамгаалагдсан"
 },
 "nplurals=2; plural=(n != 1);");
