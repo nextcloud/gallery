@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Gallery" : "Galeria",
     "There was a problem reading files from this album" : "Houve um problema ao ler arquivos deste álbum",
-    "Aborting preview. Could not find the file" : "Anulando visualização. Não foi possível encontrar o arquivo",
+    "Aborting preview. Could not find the file" : "Anulando visualização. Não é possível encontrar o arquivo",
     "Could not move \"{file}\", target exists" : "Não foi possível mover o \"{file}\" pois o destino já existe",
     "Could not move \"{file}\"" : "Não foi possível mover \"{file}\"",
     "No compatible server found at {remote}" : "Não foi encontrado nenhum servidor compatível em {remote}",
