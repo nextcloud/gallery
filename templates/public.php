@@ -7,27 +7,7 @@
  */
 script(
 	$_['appName'],
-	[
-		'app',
-		'gallery',
-		'galleryutility',
-		'galleryconfig',
-		'galleryinfobox',
-		'galleryview',
-		'breadcrumb',
-		'galleryalbum',
-		'galleryrow',
-		'galleryimage',
-		'thumbnail',
-		'vendor/modified-eventsource-polyfill/eventsource-polyfill',
-		'eventsource',
-		'vendor/commonmark/dist/commonmark.min',
-		'vendor/dompurify/src/purify',
-		'vendor/bigshot/bigshot-compressed',
-		'slideshow',
-		'slideshowcontrols',
-		'slideshowzoomablepreview'
-	]
+	'merged'
 );
 style(
 	$_['appName'],
