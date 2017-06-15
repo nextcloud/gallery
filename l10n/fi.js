@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Tiedostoa \"{file}\" ei voitu luoda",
     "\"{name}\" is an invalid file name." : "\"{name}\" on virheellinen tiedostonimi.",
     "File name cannot be empty." : "Tiedoston nimi ei voi olla tyhjä.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" ei ole hyväksytty tiedostotyyppi",
     "Upload" : "Lähetä",
     "Error" : "Virhe",
     "Error while sharing" : "Virhe jaettaessa",
