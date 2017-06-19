@@ -350,7 +350,7 @@
 		 * @private
 		 */
 		_next: function () {
-			if(!_.isUndefined(Gallery.Share)){
+			if(Gallery.Share){
 				Gallery.Share.hideDropDown();
 			}
 			this._setName('');
@@ -371,7 +371,7 @@
 		 * @private
 		 */
 		_previous: function () {
-			if(!_.isUndefined(Gallery.Share)){
+			if(Gallery.Share){
 				Gallery.Share.hideDropDown();
 			}
 			this._setName('');
