@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Nepavyko sukurti failo \"{file}\"",
     "\"{name}\" is an invalid file name." : "„{name}“ yra netinkamas failo pavadinimas.",
     "File name cannot be empty." : "Failo pavadinimas negali būti tuščias.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" yra neleistinas failo tipas",
     "Upload" : "Įkelti",
     "Error" : "Klaida",
     "Error while sharing" : "Klaida, dalijimosi metu",
