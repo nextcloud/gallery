@@ -350,7 +350,9 @@
 		 * @private
 		 */
 		_next: function () {
-			Gallery.Share.hideDropDown();
+			if(Gallery.Share){
+				Gallery.Share.hideDropDown();
+			}
 			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
@@ -369,7 +371,9 @@
 		 * @private
 		 */
 		_previous: function () {
-			Gallery.Share.hideDropDown();
+			if(Gallery.Share){
+				Gallery.Share.hideDropDown();
+			}
 			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
