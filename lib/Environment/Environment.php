@@ -357,7 +357,7 @@ class Environment {
 	private function getResourceFromFolderAndId($folder, $resourceId) {
 		$resourcesArray = $folder->getById($resourceId);
 
-		if ($resourcesArray[0] === null) {
+		if (!isset($resourcesArray[0])) {
 			throw new NotFoundEnvException('Could not locate node linked to ID: ' . $resourceId);
 		}
 
