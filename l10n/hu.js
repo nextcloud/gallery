@@ -41,6 +41,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "{file} fájl nem létrehozható",
     "\"{name}\" is an invalid file name." : "\"{name}\" érvénytelen, mint fájlnév.",
     "File name cannot be empty." : "A fájlnév nem lehet semmi.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" nem engedélyetett fájltípus",
     "Upload" : "Feltöltés",
     "Error" : "Hiba",
     "Error while sharing" : "Nem sikerült létrehozni a megosztást",
