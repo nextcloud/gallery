@@ -102,7 +102,7 @@ OC.L10N.register(
     "the file is corrupt" : "filen er ødelagt",
     "the encryption key is missing" : "krypteringsnøkkelen mangler",
     "Here is the error message returned by the server: " : "Her er feilmeldingen som ble returnert av tjeneren:",
-    "For more information, please contact your friendly Nextcloud administrator." : "For mer informasjon, vennligst kontakt til vennlige Nextcloud administrator",
+    "For more information, please contact your friendly Nextcloud administrator." : "For mer informasjon, kontakt til vennlige Nextcloud-administrator.",
     "Sorry, but the server could not fulfill your request." : "Beklager, men tjeneren kunne ikke utføre forespørselen din.",
     "Possible reasons for the problem:" : "Mulige årsaker til problemet:",
     "a conflicting app was installed" : "en uforenlig app var installert",
