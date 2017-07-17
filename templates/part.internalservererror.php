@@ -29,7 +29,7 @@ style(
 		<?php endif; ?>
 		</br>
 		<p><?php p(
-				$l->t('For more information, please contact your friendly ownCloud administrator.')
+				$l->t('For more information, please contact your friendly Nextcloud administrator.')
 			); ?></p>
 	</li>
 </ul>
