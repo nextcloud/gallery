@@ -102,13 +102,13 @@
     "a conflicting app was installed" : "충돌하는 앱이 설치됨",
     "a required component is missing or was disconnected" : "필요한 구성 요소가 없거나 연결 해제됨",
     "the filesystem is not readable" : "파일 시스템에서 읽을 수 없음",
-    "For more information, please contact your friendly ownCloud administrator." : "더 많은 정보를 보려면 ownCloud 관리자에게 연락하십시오.",
     "Sorry, this link doesn't seem to work anymore." : "이 링크가 더 이상 작동하지 않습니다.",
     "the item was removed" : "항목이 삭제됨",
     "the link has expired" : "링크가 만료됨",
     "sharing is disabled" : "공유가 비활성화됨",
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Add to your Nextcloud" : "Nextcloud에 추가",
-    "Picture view" : "사진 보기"
+    "Picture view" : "사진 보기",
+    "For more information, please contact your friendly ownCloud administrator." : "더 많은 정보를 보려면 ownCloud 관리자에게 연락하십시오."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

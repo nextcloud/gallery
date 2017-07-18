@@ -96,12 +96,12 @@
     "a conflicting app was installed" : "foi instalada uma app conflituosa",
     "a required component is missing or was disconnected" : "está em falta um componente necessário ou foi desligado",
     "the filesystem is not readable" : "o sistema de ficheiros não é legível",
-    "For more information, please contact your friendly ownCloud administrator." : "Para mais informação, por favor, contacte o seu administrador da ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "Desculpe, esta hiperligação parece que já não funciona.",
     "the item was removed" : "o item foi removido",
     "the link has expired" : "a hiperligação expirou",
     "sharing is disabled" : "a partilha está desativada",
     "For more information, please ask the person who has sent you this link." : "Para mais informação, por favor, pergunte à pessoa que lhe enviou esta hiperligação.",
-    "Picture view" : "Visualização da Imagem"
+    "Picture view" : "Visualização da Imagem",
+    "For more information, please contact your friendly ownCloud administrator." : "Para mais informação, por favor, contacte o seu administrador da ownCloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

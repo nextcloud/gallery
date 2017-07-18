@@ -100,13 +100,13 @@
     "a conflicting app was installed" : "nameščen je neskladen program",
     "a required component is missing or was disconnected" : "zahtevana povezava ni na voljo ali pa je povezava prekinjena",
     "the filesystem is not readable" : "datotečnega sistema ni mogoče brati",
-    "For more information, please contact your friendly ownCloud administrator." : "Za več podrobnosti stopite v stik s skrbnikom strežnika ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "Videti je, da povezava ne deluje več.",
     "the item was removed" : "predmet je odstranjen",
     "the link has expired" : "povezava je potekla",
     "sharing is disabled" : "souporaba je onemogočena.",
     "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je poslala to povezavo.",
     "Add to your Nextcloud" : "Dodaj v svoj Nextcloud",
-    "Picture view" : "Slikovni pogled"
+    "Picture view" : "Slikovni pogled",
+    "For more information, please contact your friendly ownCloud administrator." : "Za več podrobnosti stopite v stik s skrbnikom strežnika ownCloud."
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

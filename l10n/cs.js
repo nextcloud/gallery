@@ -108,13 +108,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "byla nainstalovaná konfliktní aplikace",
     "a required component is missing or was disconnected" : "chybí nebo je odpojena požadovaná část systému",
     "the filesystem is not readable" : "nelze čist ze souborového systému",
-    "For more information, please contact your friendly ownCloud administrator." : "Pro více informací prosím kontaktujte svého přátelského ownCloud administrátora.",
     "Sorry, this link doesn't seem to work anymore." : "Omlouváme se, tento odkaz je již nejspíše nefunkční.",
     "the item was removed" : "položka byla odebrána",
     "the link has expired" : "platnost odkazu vypršela",
     "sharing is disabled" : "sdílení je zakázané",
     "For more information, please ask the person who has sent you this link." : "Pro více informací kontaktujte osobu, která vám zaslala tento odkaz.",
     "Add to your Nextcloud" : "Přidat do Nextcloud",
-    "Picture view" : "Zobrazení obrázku"
+    "Picture view" : "Zobrazení obrázku",
+    "For more information, please contact your friendly ownCloud administrator." : "Pro více informací prosím kontaktujte svého přátelského ownCloud administrátora."
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

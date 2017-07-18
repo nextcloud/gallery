@@ -108,13 +108,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "um aplicativo conflitante foi instalado",
     "a required component is missing or was disconnected" : "um componente necessário está faltando ou foi desconectado",
     "the filesystem is not readable" : "o sistema de arquivos não está legível",
-    "For more information, please contact your friendly ownCloud administrator." : "Para obter mais informações, por favor contacte o seu amigo administrador do ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "Desculpe, este link parece não funcionar mais.",
     "the item was removed" : "o item foi excluído",
     "the link has expired" : "o link expirou",
     "sharing is disabled" : "o compartilhamento está desativado",
     "For more information, please ask the person who has sent you this link." : "Para mais informações, pergunte à pessoa que lhe enviou o link.",
     "Add to your Nextcloud" : "Adicionar ao seu Nextcloud",
-    "Picture view" : "Visualização de imagem"
+    "Picture view" : "Visualização de imagem",
+    "For more information, please contact your friendly ownCloud administrator." : "Para obter mais informações, por favor contacte o seu amigo administrador do ownCloud."
 },
 "nplurals=2; plural=(n > 1);");

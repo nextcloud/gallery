@@ -100,12 +100,12 @@ OC.L10N.register(
     "a conflicting app was installed" : "แอพฯตรวจสอบปัญหาได้ถูกติดตั้งแล้ว",
     "a required component is missing or was disconnected" : "ส่วนประกอบที่จำเป็นขาดหายไปหรือถูกยกเลิกการเชื่อมต่อ",
     "the filesystem is not readable" : "ไม่สามารถอ่านระบบแฟ้ม",
-    "For more information, please contact your friendly ownCloud administrator." : "สำหรับข้อมูลเพิ่มเติมโปรดติดต่อผู้ดูแลระบบ ownCloud ของคุณ",
     "Sorry, this link doesn't seem to work anymore." : "ขออภัย ลิงค์นี้ดูเหมือนจะมีปัญหา",
     "the item was removed" : "รายการที่ถูกลบออก",
     "the link has expired" : "ลิงค์หมดอายุ",
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
-    "Picture view" : "ดูรูปภาพ"
+    "Picture view" : "ดูรูปภาพ",
+    "For more information, please contact your friendly ownCloud administrator." : "สำหรับข้อมูลเพิ่มเติมโปรดติดต่อผู้ดูแลระบบ ownCloud ของคุณ"
 },
 "nplurals=1; plural=0;");
