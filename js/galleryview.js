@@ -241,7 +241,7 @@
 				// We can't upload yet on the public side
 				if (Gallery.token) {
 					message += '<p>' + t('gallery',
-							'Upload pictures in the files app to display them here') + '</p>';
+							'Upload pictures in the Files app to display them here') + '</p>';
 				} else {
 					message += '<p>' + t('gallery',
 							'Upload new files via drag and drop or by using the [+] button above') +
