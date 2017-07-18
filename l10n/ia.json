@@ -95,13 +95,13 @@
     "a conflicting app was installed" : "un application confligente esse installate",
     "a required component is missing or was disconnected" : "un componente requirite es absente o esseva disconnectite",
     "the filesystem is not readable" : "le systema de file non es legibile",
-    "For more information, please contact your friendly ownCloud administrator." : "Pro obtener plus informationes, per favor contacta tu amical administrator ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "Pardono, iste ligamine sembla non functionar plus.",
     "the item was removed" : "le elemento esseva removite",
     "the link has expired" : "le ligamine ha expirate",
     "sharing is disabled" : "le compartimento de files es disactivate",
     "For more information, please ask the person who has sent you this link." : "Pro obtener plus informationes, per favor demanda le persona qui ha te inviate iste ligamine.",
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
-    "Picture view" : "Visualisation de Imagine"
+    "Picture view" : "Visualisation de Imagine",
+    "For more information, please contact your friendly ownCloud administrator." : "Pro obtener plus informationes, per favor contacta tu amical administrator ownCloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

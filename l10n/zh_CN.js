@@ -108,13 +108,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "已安装了一个会引发冲突的应用",
     "a required component is missing or was disconnected" : "必要的部件丢失，或者与服务器的连接已断开",
     "the filesystem is not readable" : "该文件无法打开",
-    "For more information, please contact your friendly ownCloud administrator." : "欲了解更多信息，请联系您的熟悉的 ownCloud 管理员。",
     "Sorry, this link doesn't seem to work anymore." : "抱歉，此链接已失效",
     "the item was removed" : "此项已移除",
     "the link has expired" : "链接已过期",
     "sharing is disabled" : "共享已禁用",
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系共享链接给你的人。",
     "Add to your Nextcloud" : "添加到您的Nextcloud",
-    "Picture view" : "查看图片"
+    "Picture view" : "查看图片",
+    "For more information, please contact your friendly ownCloud administrator." : "欲了解更多信息，请联系您的熟悉的 ownCloud 管理员。"
 },
 "nplurals=1; plural=0;");

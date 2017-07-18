@@ -105,13 +105,13 @@
     "a conflicting app was installed" : "ütköző alkalmazás lett telepítve",
     "a required component is missing or was disconnected" : "szükséges követelmény hiányzik, vagy szétkapcsolt",
     "the filesystem is not readable" : "a fájlrendszer nem olvasható",
-    "For more information, please contact your friendly ownCloud administrator." : "Bővebb információért, kérjük keresse fel a barátságos ownCloud rendszergazdáját.",
     "Sorry, this link doesn't seem to work anymore." : "Sajnáljuk, de úgy tűnik, hogy ez a hivatkozás már nem működik.",
     "the item was removed" : "az elem el lett távolítva",
     "the link has expired" : "a hivatkozás lejárt",
     "sharing is disabled" : "letiltásra került a megosztás",
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
-    "Picture view" : "Képnézet"
+    "Picture view" : "Képnézet",
+    "For more information, please contact your friendly ownCloud administrator." : "Bővebb információért, kérjük keresse fel a barátságos ownCloud rendszergazdáját."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -105,13 +105,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "qe instaluar një aplikacion konfliktues",
     "a required component is missing or was disconnected" : "mungon ose është shkëputur një përbërës i domosdoshëm",
     "the filesystem is not readable" : "sistemi i skedarëve nuk është i lexueshëm",
-    "For more information, please contact your friendly ownCloud administrator." : "Për më tepër të dhëna, ju lutemi, lidhuni me ne përgjegjësin miqësor të ownCloud-it tuaj.",
     "Sorry, this link doesn't seem to work anymore." : "Na vjen keq, kjo lidhje nuk duket se funksionon më.",
     "the item was removed" : "objekti u hoq",
     "the link has expired" : "lidhja ka skaduar",
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
-    "Picture view" : "Pamje Foto"
+    "Picture view" : "Pamje Foto",
+    "For more information, please contact your friendly ownCloud administrator." : "Për më tepër të dhëna, ju lutemi, lidhuni me ne përgjegjësin miqësor të ownCloud-it tuaj."
 },
 "nplurals=2; plural=(n != 1);");

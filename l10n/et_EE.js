@@ -89,12 +89,12 @@ OC.L10N.register(
     "a conflicting app was installed" : "paigaldati rakendus, mis tekitas konflikti",
     "a required component is missing or was disconnected" : "nõutud komponent puudub või pole ühendatud",
     "the filesystem is not readable" : "failisüsteem pole loetav",
-    "For more information, please contact your friendly ownCloud administrator." : "Lisainfo saamiseks võta ühendust oma muheda ownCloudi adminiga.",
     "Sorry, this link doesn't seem to work anymore." : "Vabandust, näib, et see link enam ei tööta.",
     "the item was removed" : "üksus on eemaldatud",
     "the link has expired" : "link on aegunud",
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
-    "Picture view" : "Pildi vaade"
+    "Picture view" : "Pildi vaade",
+    "For more information, please contact your friendly ownCloud administrator." : "Lisainfo saamiseks võta ühendust oma muheda ownCloudi adminiga."
 },
 "nplurals=2; plural=(n != 1);");

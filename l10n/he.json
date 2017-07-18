@@ -98,12 +98,12 @@
     "a conflicting app was installed" : "הותקן יישום הגורם להתנגשות",
     "a required component is missing or was disconnected" : "מרכיב נדרש חסר או מנותק",
     "the filesystem is not readable" : "קובץ המערכת לא ניתן לקריאה",
-    "For more information, please contact your friendly ownCloud administrator." : "למידע נוסף, יש לפנות למנהל ownCloud החברותי",
     "Sorry, this link doesn't seem to work anymore." : "מצטערים, לא נראה שקישור זה עובד יותר. ",
     "the item was removed" : "הפריט הוסר",
     "the link has expired" : "הקישור פג תוקף",
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
-    "Picture view" : "תצוגת תמונה"
+    "Picture view" : "תצוגת תמונה",
+    "For more information, please contact your friendly ownCloud administrator." : "למידע נוסף, יש לפנות למנהל ownCloud החברותי"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

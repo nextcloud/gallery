@@ -106,13 +106,13 @@
     "a conflicting app was installed" : "se instaló una aplicación conflictiva",
     "a required component is missing or was disconnected" : "un componente necesario no se encuentra o se desconectó",
     "the filesystem is not readable" : "el flilesystem no se puede leer",
-    "For more information, please contact your friendly ownCloud administrator." : "Para obtener más información, póngase en contacto con el administrador de ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "Vaya, este enlace parece que no volverá a funcionar.",
     "the item was removed" : "el elemento fue eliminado",
     "the link has expired" : "el enlace ha expirado",
     "sharing is disabled" : "compartir está desactivado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, contacte a la persona que le envió el enlace.",
     "Add to your Nextcloud" : "Añadir a tu Nextcloud",
-    "Picture view" : "Vista de imágenes"
+    "Picture view" : "Vista de imágenes",
+    "For more information, please contact your friendly ownCloud administrator." : "Para obtener más información, póngase en contacto con el administrador de ownCloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
