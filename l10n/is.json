@@ -106,13 +106,13 @@
     "a conflicting app was installed" : "app sem veldur árekstri var sett upp",
     "a required component is missing or was disconnected" : "nauðsynlega forritseiningu vantar eða er aftengd",
     "the filesystem is not readable" : "skráakerfið er ekki læsilegt",
-    "For more information, please contact your friendly ownCloud administrator." : "Til að fá nánari upplýsingar, hafðu samband við vinalega ownCloud kerfisstjórann.",
     "Sorry, this link doesn't seem to work anymore." : "Því miður, þessi tengill virðist ekki virka lengur.",
     "the item was removed" : "atriðið var fjarlægt",
     "the link has expired" : "tengillinn er útrunninn",
     "sharing is disabled" : "slökkt er á skráadeilingu",
     "For more information, please ask the person who has sent you this link." : "Til að vita meira skaltu hafa samband við þann sem sendi þér þennan tengil.",
     "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
-    "Picture view" : "Myndasýn"
+    "Picture view" : "Myndasýn",
+    "For more information, please contact your friendly ownCloud administrator." : "Til að fá nánari upplýsingar, hafðu samband við vinalega ownCloud kerfisstjórann."
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

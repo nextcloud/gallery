@@ -102,13 +102,13 @@
     "a conflicting app was installed" : "inštalovaná konfliktná aplikácia",
     "a required component is missing or was disconnected" : "požadovaný komponent chýba alebo nie je pripojený",
     "the filesystem is not readable" : "súborový systém je nečitateľný",
-    "For more information, please contact your friendly ownCloud administrator." : "Viac informácií získate od vášho priateľského ownCloud správcu.",
     "Sorry, this link doesn't seem to work anymore." : "Ľutujem, táto linka už nevyzerá funkčná.",
     "the item was removed" : "položka bola presunutá",
     "the link has expired" : "linka vypršala",
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
-    "Picture view" : "Zobrazenie obrázka"
+    "Picture view" : "Zobrazenie obrázka",
+    "For more information, please contact your friendly ownCloud administrator." : "Viac informácií získate od vášho priateľského ownCloud správcu."
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 }

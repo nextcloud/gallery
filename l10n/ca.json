@@ -83,12 +83,12 @@
     "the file was removed" : "l'arxiu ha estat eliminat",
     "the file is corrupt" : "L'arxiu està corrupte",
     "Possible reasons for the problem:" : "Posible motiu del problema: ",
-    "For more information, please contact your friendly ownCloud administrator." : "Per a més informació pots contactar el teu amigable administrador Nextcloud.",
     "Sorry, this link doesn't seem to work anymore." : "Ho sento, aquest enllaç no sembla funcionar més.",
     "the item was removed" : "l'element ha estat eliminat",
     "the link has expired" : "l'enllaç ha expirat",
     "sharing is disabled" : "s'ha desactivat la compartició",
     "Add to your Nextcloud" : "Afegir al teu Nextcloud",
-    "Picture view" : "Mostra fotos"
+    "Picture view" : "Mostra fotos",
+    "For more information, please contact your friendly ownCloud administrator." : "Per a més informació pots contactar el teu amigable administrador Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

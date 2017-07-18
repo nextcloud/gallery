@@ -92,12 +92,12 @@
     "a conflicting app was installed" : "una aplicacion incompatibla es estada installada",
     "a required component is missing or was disconnected" : "un component requesit es mancant o es estat desconnectat",
     "the filesystem is not readable" : "lo sistèma de fichièrs es pas legible",
-    "For more information, please contact your friendly ownCloud administrator." : "Per mai d'informacions, contactatz vòstre administrator ownCloud.",
     "Sorry, this link doesn't seem to work anymore." : "O planhèm, sembla qu'aqueste ligam fonciona pas mai.",
     "the item was removed" : "l'element es estat suprimit",
     "the link has expired" : "lo ligam a expirat",
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
-    "Picture view" : "Visualizacion de l'imatge"
+    "Picture view" : "Visualizacion de l'imatge",
+    "For more information, please contact your friendly ownCloud administrator." : "Per mai d'informacions, contactatz vòstre administrator ownCloud."
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

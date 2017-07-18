@@ -92,13 +92,13 @@ OC.L10N.register(
     "For more information, please contact your friendly Nextcloud administrator." : "Plašākai informācijai, lūdzu, sazinieties ar draudzīgo administratoru.",
     "Sorry, but the server could not fulfill your request." : "Atvainojiet, bet serveris nevar izpildīt jūsu pieprasījumu.",
     "Possible reasons for the problem:" : "Iespējamo problēmu iemesls:",
-    "For more information, please contact your friendly ownCloud administrator." : "Plašākai informācijai, lūdzu, sazinieties ar draudzīgo administratoru.",
     "Sorry, this link doesn't seem to work anymore." : "Izskatās, ka šī saite vairs nedarbojas",
     "the item was removed" : "vienums tika dzēsts",
     "the link has expired" : "saites derīgums ir beidzies",
     "sharing is disabled" : "koplietošana nav ieslēgta",
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
     "Add to your Nextcloud" : "Pievienot savam Nextcloud",
-    "Picture view" : "Attēla skats"
+    "Picture view" : "Attēla skats",
+    "For more information, please contact your friendly ownCloud administrator." : "Plašākai informācijai, lūdzu, sazinieties ar draudzīgo administratoru."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

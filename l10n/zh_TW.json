@@ -102,13 +102,13 @@
     "a conflicting app was installed" : "安裝了會造成衝突的 app",
     "a required component is missing or was disconnected" : "必要的元件遺失了或是已經失去連線",
     "the filesystem is not readable" : "該檔案系統無法讀取",
-    "For more information, please contact your friendly ownCloud administrator." : "如欲取得更多資訊，請您聯絡您的 ownCloud 系統管理員",
     "Sorry, this link doesn't seem to work anymore." : "抱歉，此連結已經失效",
     "the item was removed" : "項目已經移除",
     "the link has expired" : "連結過期",
     "sharing is disabled" : "分享功能已停用",
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
     "Add to your Nextcloud" : "加入到您的 Nextcloud",
-    "Picture view" : "檢視圖片"
+    "Picture view" : "檢視圖片",
+    "For more information, please contact your friendly ownCloud administrator." : "如欲取得更多資訊，請您聯絡您的 ownCloud 系統管理員"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

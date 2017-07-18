@@ -106,13 +106,13 @@
     "a conflicting app was installed" : "ristiriidan aiheuttava sovellus on asennettu",
     "a required component is missing or was disconnected" : "vaadittu komponentti puuttuu tai on irrotettu",
     "the filesystem is not readable" : "tiedostojärjestelmä ei ole luettavissa",
-    "For more information, please contact your friendly ownCloud administrator." : "Lisätietoja on saatavilla ownCloud-istunnon ylläpitäjältä.",
     "Sorry, this link doesn't seem to work anymore." : "Valitettavasti tämä linkki ei enää toimi.",
     "the item was removed" : "kohde poistettiin",
     "the link has expired" : "linkki on vanhentunut",
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
     "Add to your Nextcloud" : "Lisää Nextcloudiisi",
-    "Picture view" : "Kuvanäkymä"
+    "Picture view" : "Kuvanäkymä",
+    "For more information, please contact your friendly ownCloud administrator." : "Lisätietoja on saatavilla ownCloud-istunnon ylläpitäjältä."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

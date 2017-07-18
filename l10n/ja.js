@@ -108,13 +108,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "競合するアプリがインストールされました",
     "a required component is missing or was disconnected" : "必要なコンポーネントが不足しているか切断されました",
     "the filesystem is not readable" : "ファイルシステムは読み込みできません",
-    "For more information, please contact your friendly ownCloud administrator." : "詳細については、親切な ownCloud の管理者に連絡してください。",
     "Sorry, this link doesn't seem to work anymore." : "すいません、このリンクはもう利用できません。",
     "the item was removed" : "アイテムが削除されました",
     "the link has expired" : "リンクの期限が切れました",
     "sharing is disabled" : "共有は無効になっています",
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
-    "Picture view" : "ピクチャービュー"
+    "Picture view" : "ピクチャービュー",
+    "For more information, please contact your friendly ownCloud administrator." : "詳細については、親切な ownCloud の管理者に連絡してください。"
 },
 "nplurals=1; plural=0;");

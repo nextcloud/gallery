@@ -108,13 +108,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "een conflicteren app was geinstalleerd",
     "a required component is missing or was disconnected" : "een vereist onderdeel ontbreekt of is losgekoppeld",
     "the filesystem is not readable" : "het bestandssysteem is niet leesbaar",
-    "For more information, please contact your friendly ownCloud administrator." : "Voor meer informatie neemt u contact op met je systeembeheerder.",
     "Sorry, this link doesn't seem to work anymore." : "Sorry, deze link lijkt niet meer in gebruik te zijn.",
     "the item was removed" : "bestand was verwijderd",
     "the link has expired" : "link is verlopen",
     "sharing is disabled" : "delen is uitgeschakeld",
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die u deze link heeft gestuurd.",
     "Add to your Nextcloud" : "Toevoegen aan je Nextcloud",
-    "Picture view" : "Afbeeldingenoverzicht"
+    "Picture view" : "Afbeeldingenoverzicht",
+    "For more information, please contact your friendly ownCloud administrator." : "Voor meer informatie neemt u contact op met je systeembeheerder."
 },
 "nplurals=2; plural=(n != 1);");

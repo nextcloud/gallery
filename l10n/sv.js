@@ -107,13 +107,13 @@ OC.L10N.register(
     "a conflicting app was installed" : "En motstridig applikation har installerats",
     "a required component is missing or was disconnected" : "En behövd komponent saknas eller har inaktiverats",
     "the filesystem is not readable" : "filsystemet är ej läsbart",
-    "For more information, please contact your friendly ownCloud administrator." : "För mer information var god kontakta din vänliga ownCloud administratör.",
     "Sorry, this link doesn't seem to work anymore." : "Tyvärr, denna länk verkar inte fungera längre.",
     "the item was removed" : "objektet togs bort",
     "the link has expired" : "tidsgräns för länken har löpt ut",
     "sharing is disabled" : "delning är inaktiverat",
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
-    "Picture view" : "Bildvy"
+    "Picture view" : "Bildvy",
+    "For more information, please contact your friendly ownCloud administrator." : "För mer information var god kontakta din vänliga ownCloud administratör."
 },
 "nplurals=2; plural=(n != 1);");
