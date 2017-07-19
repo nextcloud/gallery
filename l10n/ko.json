@@ -19,7 +19,6 @@
     "please install one of the following alternatives" : "다음 중 하나를 설치하십시오",
     "Album cannot be shown" : "앨범을 표시할 수 없습니다.",
     "No media files found" : "미디어 파일을 찾을 수 없습니다.",
-    "Upload pictures in the files app to display them here" : "파일 앱에서 사진을 올리면 여기에 표시됩니다",
     "Upload new files via drag and drop or by using the [+] button above" : "드래그 앤 드롭 또는 위의 [+] 단추를 사용하여 새 파일을 업로드 하십시오.",
     "Configuration error" : "설정 오류",
     "New" : "새로 만들기",
@@ -109,6 +108,7 @@
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Add to your Nextcloud" : "Nextcloud에 추가",
     "Picture view" : "사진 보기",
+    "Upload pictures in the files app to display them here" : "파일 앱에서 사진을 올리면 여기에 표시됩니다",
     "For more information, please contact your friendly ownCloud administrator." : "더 많은 정보를 보려면 ownCloud 관리자에게 연락하십시오."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

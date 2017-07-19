@@ -19,7 +19,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "יש להתקין אחת מהחלופות הבאות",
     "Album cannot be shown" : "לא ניתן להציג את האלבום",
     "No media files found" : "לא נמצאו קובצי מדיה",
-    "Upload pictures in the files app to display them here" : "יש להעלות תמונות ביישום הקבצים להצגתם כאן",
     "Upload new files via drag and drop or by using the [+] button above" : "העלאת קבצים חדשים באמצעות גרירה ושחרור או באמצעות כפתור ה- [+] מעלה",
     "Configuration error" : "שגיאת הגדרה",
     "New" : "חדש",
@@ -106,6 +105,7 @@ OC.L10N.register(
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
     "Picture view" : "תצוגת תמונה",
+    "Upload pictures in the files app to display them here" : "יש להעלות תמונות ביישום הקבצים להצגתם כאן",
     "For more information, please contact your friendly ownCloud administrator." : "למידע נוסף, יש לפנות למנהל ownCloud החברותי"
 },
 "nplurals=2; plural=(n != 1);");

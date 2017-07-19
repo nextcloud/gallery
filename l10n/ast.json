@@ -18,7 +18,6 @@
     "please install one of the following alternatives" : "por favor instale una de les siguientes alternatives",
     "Album cannot be shown" : "Nun pue amosase l'álbum",
     "No media files found" : "Nun s'atoparon ficheros multimedia",
-    "Upload pictures in the files app to display them here" : "Xubir semeyes nos ficheros d'aplicación p'amosalos equí",
     "Upload new files via drag and drop or by using the [+] button above" : "Xubir nuevos ficheros al traviés d'arrastrar y soltar o utilizando'l botón [+] anterior",
     "Configuration error" : "Error de configuración",
     "New" : "Nuevu",
@@ -104,6 +103,7 @@
     "sharing is disabled" : "la compartición ta deshabilitada",
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
     "Picture view" : "Vista d'imáxenes",
+    "Upload pictures in the files app to display them here" : "Xubir semeyes nos ficheros d'aplicación p'amosalos equí",
     "For more information, please contact your friendly ownCloud administrator." : "Pa llograr más información, póngase en contactu col alministrador d'ownCloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

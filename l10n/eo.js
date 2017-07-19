@@ -7,7 +7,6 @@ OC.L10N.register(
     "Gallery view" : "Galeria vido",
     "Could not load the description: " : "Ne ŝargeblis la priskribo:",
     "Copyright" : "Kopirajto",
-    "Upload pictures in the files app to display them here" : "Alŝutu bildojn en la dosieraplikaĵo por vidigi ilin ĉi tie",
     "New" : "Nova",
     "Error loading slideshow template" : "Eraro dum ŝargado de ŝablono pri lumbilda prezento",
     "Next" : "Sekva",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "Reasons might be:" : "Kialoj povas esti:",
     "the item was removed" : "la ero foriĝis",
     "sharing is disabled" : "kunhavigo malkapablas",
-    "Picture view" : "Bilda vido"
+    "Picture view" : "Bilda vido",
+    "Upload pictures in the files app to display them here" : "Alŝutu bildojn en la dosieraplikaĵo por vidigi ilin ĉi tie"
 },
 "nplurals=2; plural=(n != 1);");

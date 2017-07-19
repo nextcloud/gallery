@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "favor de instalar alguna de las siguientes alternativas",
     "Album cannot be shown" : "No se puede mostrar el álbum",
     "No media files found" : "No se encontraron archivos de medios",
-    "Upload pictures in the files app to display them here" : "Cargue imágenes en la aplicación de archivos para desplegarlas aquí",
     "Upload new files via drag and drop or by using the [+] button above" : "Cargue archivos nuevos ya sea arrastrándolos o bien usando el botón [+] de arriba",
     "Configuration error" : "Error de configuración",
     "New" : "Nuevo",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Para mayor información, favor de consultar a la persona que le envió este link.",
     "Add to your Nextcloud" : "Agregar a su Nextcloud",
     "Picture view" : "Vista de imágenes",
+    "Upload pictures in the files app to display them here" : "Cargue imágenes en la aplicación de archivos para desplegarlas aquí",
     "For more information, please contact your friendly ownCloud administrator." : "Para mayor información, favor de contactar a su cordial administrador de ownCloud. "
 },
 "nplurals=2; plural=(n != 1);");

@@ -19,7 +19,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "por favor, instale uma das seguintes alternativas",
     "Album cannot be shown" : "O álbum não pode ser apresentado",
     "No media files found" : "Não foram encontrados quaisquer ficheiros multimédia",
-    "Upload pictures in the files app to display them here" : "Envie imagens na aplicação de ficheiros para as exibir aqui",
     "Upload new files via drag and drop or by using the [+] button above" : "Envie ficheiros novos através da técnica de arrastar e largar ou usando o botão [+] acima",
     "Configuration error" : "Erro de configuração",
     "New" : "Novo",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "sharing is disabled" : "a partilha está desativada",
     "For more information, please ask the person who has sent you this link." : "Para mais informação, por favor, pergunte à pessoa que lhe enviou esta hiperligação.",
     "Picture view" : "Visualização da Imagem",
+    "Upload pictures in the files app to display them here" : "Envie imagens na aplicação de ficheiros para as exibir aqui",
     "For more information, please contact your friendly ownCloud administrator." : "Para mais informação, por favor, contacte o seu administrador da ownCloud."
 },
 "nplurals=2; plural=(n != 1);");

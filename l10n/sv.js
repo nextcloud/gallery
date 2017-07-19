@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "Var god installera ett av följande alternativ",
     "Album cannot be shown" : "Album kan ej visas",
     "No media files found" : "Inga media-filer kunde hittas",
-    "Upload pictures in the files app to display them here" : "Ladda upp bilder i molnet för att visa dem här",
     "Upload new files via drag and drop or by using the [+] button above" : "Ladda upp nya filer genom att dra och släppa eller genom att använda [+] knappen ovan",
     "Configuration error" : "Konfigurationsfel",
     "New" : "Ny",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
     "Picture view" : "Bildvy",
+    "Upload pictures in the files app to display them here" : "Ladda upp bilder i molnet för att visa dem här",
     "For more information, please contact your friendly ownCloud administrator." : "För mer information var god kontakta din vänliga ownCloud administratör."
 },
 "nplurals=2; plural=(n != 1);");
