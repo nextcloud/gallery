@@ -187,9 +187,9 @@
 					}
 				});
 
-				var sharePlaceholder = t('core', 'Share with users or groups …');
+				var sharePlaceholder = t('gallery', 'Share with users or groups …');
 				if (oc_appconfig.core.remoteShareAllowed) {
-					sharePlaceholder = t('core', 'Share with users, groups or remote users …');
+					sharePlaceholder = t('gallery', 'Share with users, groups or remote users …');
 				}
 
 				html += '<label for="shareWith" class="hidden-visually">' + t('core', 'Share') +
@@ -198,12 +198,11 @@
 					'<input id="shareWith" type="text" placeholder="' + sharePlaceholder + '" />';
 				if (oc_appconfig.core.remoteShareAllowed) {
 					var federatedCloudSharingDoc =
-						'<a target="_blank" class="icon-info svg shareWithRemoteInfo" ' +
-						'href="{docLink}" title="' + t('core',
+						'<span class="icon-info svg shareWithRemoteInfo hasTooltip" ' +
+						'title="' + t('gallery',
 							'Share with people on other servers using their Federated Cloud ID username@example.com/cloud') +
-						'"></a>';
-					html += federatedCloudSharingDoc.replace('{docLink}',
-						oc_appconfig.core.federatedCloudShareDoc);
+						'"></span>';
+					html += federatedCloudSharingDoc;
 				}
 				html += '<span class="shareWithLoading icon-loading-small hidden"></span>';
 				html += '<ul id="shareWithList">';
