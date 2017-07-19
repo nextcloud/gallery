@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "per favor, installa uno del alternativas sequente",
     "Album cannot be shown" : "Impossibile monstrar le album",
     "No media files found" : "Nulle files de multimedia trovate",
-    "Upload pictures in the files app to display them here" : "Incarga imagines in le application Files pro visualisar los in ci ",
     "Configuration error" : "Error de configuration",
     "New" : "Nove",
     "Hide Album" : "Occultar Album",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Pro obtener plus informationes, per favor demanda le persona qui ha te inviate iste ligamine.",
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
     "Picture view" : "Visualisation de Imagine",
+    "Upload pictures in the files app to display them here" : "Incarga imagines in le application Files pro visualisar los in ci ",
     "For more information, please contact your friendly ownCloud administrator." : "Pro obtener plus informationes, per favor contacta tu amical administrator ownCloud."
 },
 "nplurals=2; plural=(n != 1);");

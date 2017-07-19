@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "kérlek telepíts egy alternatívát a következők közül",
     "Album cannot be shown" : "Az album nem jeleníthető meg",
     "No media files found" : "Nem található média fájl",
-    "Upload pictures in the files app to display them here" : "Töltsön fel képeket a Fájlok alkalmazással, hogy itt megjelenjenek",
     "Upload new files via drag and drop or by using the [+] button above" : "Töltsön fel új fájlokat ráhúzással, vagy használja a [+] gombot",
     "Configuration error" : "Beállítási hiba",
     "New" : "Új",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
     "Picture view" : "Képnézet",
+    "Upload pictures in the files app to display them here" : "Töltsön fel képeket a Fájlok alkalmazással, hogy itt megjelenjenek",
     "For more information, please contact your friendly ownCloud administrator." : "Bővebb információért, kérjük keresse fel a barátságos ownCloud rendszergazdáját."
 },
 "nplurals=2; plural=(n != 1);");

@@ -19,7 +19,6 @@ OC.L10N.register(
     "Your browser is not supported!" : "Таны browser-г дэмжихгүй!",
     "Album cannot be shown" : "Зургийн цомогийг харуулж чадахгүй",
     "No media files found" : "Медиа файлууд олдсонгүй",
-    "Upload pictures in the files app to display them here" : "Энд зургаа үзэхийн тулд \"Файлууд\" программ ашиглан зургаа энд байршуулна уу",
     "Configuration error" : "Тохиргооны алдаа",
     "New" : "Шинэ",
     "Hide Album" : "Зургийн цомогийг нуух",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "create" : "үүсгэх",
     "change" : "Өөрчлөх",
     "delete" : "устгах",
-    "Password protected" : "Нууц үгээх хамгаалагдсан"
+    "Password protected" : "Нууц үгээх хамгаалагдсан",
+    "Upload pictures in the files app to display them here" : "Энд зургаа үзэхийн тулд \"Файлууд\" программ ашиглан зургаа энд байршуулна уу"
 },
 "nplurals=2; plural=(n != 1);");

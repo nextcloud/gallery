@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "prosím inštalujte jednu z nasledujúcich alternatív",
     "Album cannot be shown" : "Album nemožno zobraziť",
     "No media files found" : "Neboli nájdené žiadne multimediálne súbory",
-    "Upload pictures in the files app to display them here" : "Tu sa zobrazia obrázky, ktoré nahráte v aplikácii Súbory",
     "Upload new files via drag and drop or by using the [+] button above" : "Nahrajte nové súbory pretiahnutím alebo pomocou tlačidla [+] vyššie",
     "Configuration error" : "Chyba nastavenia",
     "New" : "Nový",
@@ -111,6 +110,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
     "Picture view" : "Zobrazenie obrázka",
+    "Upload pictures in the files app to display them here" : "Tu sa zobrazia obrázky, ktoré nahráte v aplikácii Súbory",
     "For more information, please contact your friendly ownCloud administrator." : "Viac informácií získate od vášho priateľského ownCloud správcu."
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

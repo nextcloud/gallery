@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "以下の選択肢のいずれかをインストールしてください",
     "Album cannot be shown" : "アルバムが表示できません",
     "No media files found" : "メディアファイルが見つかりませんでした",
-    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。",
     "Upload new files via drag and drop or by using the [+] button above" : "ドラッグ＆ドロップや [+]ボタンを使って新しいファイルをアップロードしてください。",
     "Configuration error" : "設定エラー",
     "New" : "新規作成",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
     "Picture view" : "ピクチャービュー",
+    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。",
     "For more information, please contact your friendly ownCloud administrator." : "詳細については、親切な ownCloud の管理者に連絡してください。"
 },
 "nplurals=1; plural=0;");
