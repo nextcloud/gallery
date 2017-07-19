@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "priporočljivo je namestiti enega od navedenih možnih paketov",
     "Album cannot be shown" : "Albuma ni mogoče pokazati",
     "No media files found" : "Ni najdenih predstavnih datotek",
-    "Upload pictures in the files app to display them here" : "Pošljite slike v oblak, da bodo prikazane na tem mestu",
     "Upload new files via drag and drop or by using the [+] button above" : "Datoteke je mogoče poslati v oblak z gumbom [+] ali z miško s povleci in spusti v okno mape.",
     "Configuration error" : "Napaka nastavitve",
     "New" : "Novo",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je poslala to povezavo.",
     "Add to your Nextcloud" : "Dodaj v svoj Nextcloud",
     "Picture view" : "Slikovni pogled",
+    "Upload pictures in the files app to display them here" : "Pošljite slike v oblak, da bodo prikazane na tem mestu",
     "For more information, please contact your friendly ownCloud administrator." : "Za več podrobnosti stopite v stik s skrbnikom strežnika ownCloud."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

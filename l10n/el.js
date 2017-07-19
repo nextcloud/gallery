@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "παρακαλώ εγκαταστήστε μία από τις ακόλουθες εναλλακτικές",
     "Album cannot be shown" : "Το άλμπουμ δεν μπορεί να προβληθεί",
     "No media files found" : "Δεν βρέθηκαν πολυμέσα",
-    "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
     "Configuration error" : "Σφάλμα ρυθμίσεων",
     "New" : "Νέο",
     "Hide Album" : "Απόκρυψη άλμπουμ",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
     "Picture view" : "Προβολή εικονιδίων",
+    "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
     "For more information, please contact your friendly ownCloud administrator." : "Για περισσότερες πληροφορίες παρακαλούμε, επικοινωνήστε με το φιλικό διαχειριστή του συστήματός σας."
 },
 "nplurals=2; plural=(n != 1);");

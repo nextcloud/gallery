@@ -19,7 +19,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "โปรดติดตั้งหนึ่งในทางเลือกดังต่อไปนี้",
     "Album cannot be shown" : "ไม่สามารถแสดงอัลบั้มได้",
     "No media files found" : "ไม่พบไฟล์สื่อ",
-    "Upload pictures in the files app to display them here" : "อัพโหลดรูปภาพในไฟล์แอพฯเพื่อแสดงพวกเขาที่นี่",
     "Upload new files via drag and drop or by using the [+] button above" : "อัพโหลดไฟล์ใหม่ผ่านการลากและวางหรือโดยการใช้ปุ่ม [+] ดังกล่าวข้างต้น",
     "Configuration error" : "กำหนดค่าผิดพลาด",
     "New" : "ใหม่",
@@ -106,6 +105,7 @@ OC.L10N.register(
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
     "Picture view" : "ดูรูปภาพ",
+    "Upload pictures in the files app to display them here" : "อัพโหลดรูปภาพในไฟล์แอพฯเพื่อแสดงพวกเขาที่นี่",
     "For more information, please contact your friendly ownCloud administrator." : "สำหรับข้อมูลเพิ่มเติมโปรดติดต่อผู้ดูแลระบบ ownCloud ของคุณ"
 },
 "nplurals=1; plural=0;");

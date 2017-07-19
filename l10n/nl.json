@@ -19,7 +19,6 @@
     "please install one of the following alternatives" : "Installeer één van de volgende alternatieven",
     "Album cannot be shown" : "Album kan niet worden getoond",
     "No media files found" : "Geen mediabestanden gevonden",
-    "Upload pictures in the files app to display them here" : "Upload afbeeldingen in de bestandsapp, om ze hier te tonen",
     "Upload new files via drag and drop or by using the [+] button above" : "Upload nieuwe bestanden via drag 'n drop of door gebruik van de  [+] knop hierboven",
     "Configuration error" : "Configuratiefout",
     "New" : "Nieuw",
@@ -113,6 +112,7 @@
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die u deze link heeft gestuurd.",
     "Add to your Nextcloud" : "Toevoegen aan je Nextcloud",
     "Picture view" : "Afbeeldingenoverzicht",
+    "Upload pictures in the files app to display them here" : "Upload afbeeldingen in de bestandsapp, om ze hier te tonen",
     "For more information, please contact your friendly ownCloud administrator." : "Voor meer informatie neemt u contact op met je systeembeheerder."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "ju lutemi, instaloni një nga alternativat vijuese",
     "Album cannot be shown" : "Albumi s’shfaqet dot",
     "No media files found" : "S’u gjetën skedar media",
-    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i skedarëve që t’i shfaqni këtu",
     "Upload new files via drag and drop or by using the [+] button above" : "Ngarkoni kartela të reja përmes teknikës merr dhe vër, ose duke përdorur butonin [+] me sipër",
     "Configuration error" : "Gabim formësimi",
     "New" : "E re",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
     "Picture view" : "Pamje Foto",
+    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i skedarëve që t’i shfaqni këtu",
     "For more information, please contact your friendly ownCloud administrator." : "Për më tepër të dhëna, ju lutemi, lidhuni me ne përgjegjësin miqësor të ownCloud-it tuaj."
 },
 "nplurals=2; plural=(n != 1);");

@@ -18,7 +18,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "Installatz una de las alternativas seguentas",
     "Album cannot be shown" : "Impossible d'afichar l'album",
     "No media files found" : "Cap de fichièr mèdia pas trobat",
-    "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
     "Configuration error" : "Error de configuracion",
     "New" : "Novèl",
     "Error loading slideshow template" : "Error al moment del telecargament del modèl de diaporama ",
@@ -100,6 +99,7 @@ OC.L10N.register(
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
     "Picture view" : "Visualizacion de l'imatge",
+    "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
     "For more information, please contact your friendly ownCloud administrator." : "Per mai d'informacions, contactatz vòstre administrator ownCloud."
 },
 "nplurals=2; plural=(n > 1);");

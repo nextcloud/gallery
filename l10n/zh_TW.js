@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "請安裝以下的替代軟體",
     "Album cannot be shown" : "無法顯示相簿",
     "No media files found" : "找不到媒體檔案",
-    "Upload pictures in the files app to display them here" : "在「檔案」應用程式中上傳圖片，就會顯示在這邊",
     "Upload new files via drag and drop or by using the [+] button above" : "拖曳檔案來上傳，或是按上方的 [+] 按鈕",
     "Configuration error" : "設定錯誤",
     "New" : "新增",
@@ -111,6 +110,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
     "Add to your Nextcloud" : "加入到您的 Nextcloud",
     "Picture view" : "檢視圖片",
+    "Upload pictures in the files app to display them here" : "在「檔案」應用程式中上傳圖片，就會顯示在這邊",
     "For more information, please contact your friendly ownCloud administrator." : "如欲取得更多資訊，請您聯絡您的 ownCloud 系統管理員"
 },
 "nplurals=1; plural=0;");

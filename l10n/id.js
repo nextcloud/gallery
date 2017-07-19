@@ -21,7 +21,6 @@ OC.L10N.register(
     "please install one of the following alternatives" : "silakan pasang salah satu alternatif berikut",
     "Album cannot be shown" : "Album tidak dapat ditampilkan",
     "No media files found" : "Tidak ditemukan berkas media",
-    "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
     "Upload new files via drag and drop or by using the [+] button above" : "Unggah berkas baru melalui drag dan drop atau menggunakan tombol [+] diatas",
     "Configuration error" : "Kesalahan konfigurasi",
     "New" : "Baru",
@@ -111,6 +110,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
     "Picture view" : "Tampilan gambar",
+    "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
     "For more information, please contact your friendly ownCloud administrator." : "Untuk informasi lebih lanjut, silakan hubungi administrator ownCloud Anda."
 },
 "nplurals=1; plural=0;");
