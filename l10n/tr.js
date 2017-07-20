@@ -21,6 +21,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "lütfen aşağıdaki alternatiflerden birini kurun",
     "Album cannot be shown" : "Albüm görüntülenemedi",
     "No media files found" : "Herhangi bir ortam dosyası bulunamadı",
+    "Upload pictures in the Files app to display them here" : "Dosyalar uygulaması ile yükleyeceğiniz görseller burada görüntülenir",
     "Upload new files via drag and drop or by using the [+] button above" : "Yeni dosyaları sürükleyip bırakarak ya da yukarıdaki [+] düğmesine tıklayarak yükleyin",
     "Configuration error" : "Yapılandırma sorunu",
     "New" : "Yeni",
