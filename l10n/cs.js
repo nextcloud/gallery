@@ -21,6 +21,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "nainstalujte prosím jednu z následujících alternativ",
     "Album cannot be shown" : "Album nelze zobrazit",
     "No media files found" : "Nenalezeny žádné multimediální soubory",
+    "Upload pictures in the Files app to display them here" : "Pro zobrazení obrázků v tomto náhledu nějaké nahrajte přes aplikaci soubory",
     "Upload new files via drag and drop or by using the [+] button above" : "Nahrajte nové soubory pomocí přetažení, nebo za použití tlačítka [+] výše",
     "Configuration error" : "Chyba konfigurace",
     "New" : "Nový",
