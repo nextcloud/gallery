@@ -21,6 +21,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "пожалуйста, установите одну из следующих альтернатив",
     "Album cannot be shown" : "Этот альбом не может быть отображен",
     "No media files found" : "Медиафайлы не найдены",
+    "Upload pictures in the Files app to display them here" : "Загрузите изображения в приложении «Файлы» для их просмотра",
     "Upload new files via drag and drop or by using the [+] button above" : "Перетащите файлы или используйте кнопку [ + ] выше",
     "Configuration error" : "Ошибка конфигурации",
     "New" : "Новый",
