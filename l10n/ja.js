@@ -115,6 +115,6 @@ OC.L10N.register(
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
     "Picture view" : "ピクチャービュー",
     "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。",
-    "For more information, please contact your friendly ownCloud administrator." : "詳細については、親切な ownCloud の管理者に連絡してください。"
+    "For more information, please contact your friendly ownCloud administrator." : "詳細については、親切な Nextcloud の管理者に連絡してください。"
 },
 "nplurals=1; plural=0;");
