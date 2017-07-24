@@ -21,6 +21,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "settu upp einn af eftirfarandi valkostum",
     "Album cannot be shown" : "Ekki er hægt að birta albúmið",
     "No media files found" : "Engar margmiðlunarskrár fundust",
+    "Upload pictures in the Files app to display them here" : "Sendu inn myndir í skráaappinu svo að þær birtist hér",
     "Upload new files via drag and drop or by using the [+] button above" : "Sendu inn nýjar skrár með því að draga/sleppa eða með [+] hnappnum hér fyrir ofan",
     "Configuration error" : "Villa í stillingum",
     "New" : "Nýtt",
