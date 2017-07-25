@@ -104,8 +104,6 @@ OC.L10N.register(
     "the link has expired" : "הקישור פג תוקף",
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
-    "Picture view" : "תצוגת תמונה",
-    "Upload pictures in the files app to display them here" : "יש להעלות תמונות ביישום הקבצים להצגתם כאן",
-    "For more information, please contact your friendly ownCloud administrator." : "למידע נוסף, יש לפנות למנהל ownCloud החברותי"
+    "Picture view" : "תצוגת תמונה"
 },
 "nplurals=2; plural=(n != 1);");

@@ -68,7 +68,6 @@ OC.L10N.register(
     "Reasons might be:" : "Kialoj povas esti:",
     "the item was removed" : "la ero foriĝis",
     "sharing is disabled" : "kunhavigo malkapablas",
-    "Picture view" : "Bilda vido",
-    "Upload pictures in the files app to display them here" : "Alŝutu bildojn en la dosieraplikaĵo por vidigi ilin ĉi tie"
+    "Picture view" : "Bilda vido"
 },
 "nplurals=2; plural=(n != 1);");

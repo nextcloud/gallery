@@ -98,8 +98,6 @@ OC.L10N.register(
     "the link has expired" : "lo ligam a expirat",
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
-    "Picture view" : "Visualizacion de l'imatge",
-    "Upload pictures in the files app to display them here" : "Apondètz d'imatges dins l'aplicacion Fichièrs e apareisseràn aicí",
-    "For more information, please contact your friendly ownCloud administrator." : "Per mai d'informacions, contactatz vòstre administrator ownCloud."
+    "Picture view" : "Visualizacion de l'imatge"
 },
 "nplurals=2; plural=(n > 1);");

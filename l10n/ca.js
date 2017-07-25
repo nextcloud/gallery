@@ -90,7 +90,6 @@ OC.L10N.register(
     "the link has expired" : "l'enllaç ha expirat",
     "sharing is disabled" : "s'ha desactivat la compartició",
     "Add to your Nextcloud" : "Afegir al teu Nextcloud",
-    "Picture view" : "Mostra fotos",
-    "For more information, please contact your friendly ownCloud administrator." : "Per a més informació pots contactar el teu amigable administrador Nextcloud."
+    "Picture view" : "Mostra fotos"
 },
 "nplurals=2; plural=(n != 1);");

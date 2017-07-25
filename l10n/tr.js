@@ -114,8 +114,6 @@ OC.L10N.register(
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Add to your Nextcloud" : "Nextcloud hesabınıza ekleyin",
-    "Picture view" : "Görsel görünümü",
-    "Upload pictures in the files app to display them here" : "Dosyalar uygulaması ile yükleyeceğiniz görseller burada görüntülenir",
-    "For more information, please contact your friendly ownCloud administrator." : "Ayrıntılı bilgi almak için ownCloud yöneticiniz ile görüşün."
+    "Picture view" : "Görsel görünümü"
 },
 "nplurals=2; plural=(n > 1);");

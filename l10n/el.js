@@ -107,8 +107,6 @@ OC.L10N.register(
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
-    "Picture view" : "Προβολή εικονιδίων",
-    "Upload pictures in the files app to display them here" : "Mεταφορτώστε εικόνες στην εφαρμογή \"Αρχεία\" για να εμφανιστούν εδώ.",
-    "For more information, please contact your friendly ownCloud administrator." : "Για περισσότερες πληροφορίες παρακαλούμε, επικοινωνήστε με το φιλικό διαχειριστή του συστήματός σας."
+    "Picture view" : "Προβολή εικονιδίων"
 },
 "nplurals=2; plural=(n != 1);");

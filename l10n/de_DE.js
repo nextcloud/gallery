@@ -114,8 +114,6 @@ OC.L10N.register(
     "sharing is disabled" : "Teilen ist deaktiviert",
     "For more information, please ask the person who has sent you this link." : "Um nähere Informationen zu erhalten, wenden Sie sich bitte an die Person, die Ihnen diesen Link geschickt hat.",
     "Add to your Nextcloud" : "Zu Ihrer Nextcloud hinzufügen",
-    "Picture view" : "Bildansicht",
-    "Upload pictures in the files app to display them here" : "Laden Sie Bilder in der Dateien-App hoch, damit diese hier angezeigt werden.",
-    "For more information, please contact your friendly ownCloud administrator." : "Für mehr Informationen kontaktieren Sie bitte Ihren freundlichen ownCloud Administrator."
+    "Picture view" : "Bildansicht"
 },
 "nplurals=2; plural=(n != 1);");

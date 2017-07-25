@@ -102,8 +102,6 @@ OC.L10N.register(
     "the link has expired" : "a hiperligação expirou",
     "sharing is disabled" : "a partilha está desativada",
     "For more information, please ask the person who has sent you this link." : "Para mais informação, por favor, pergunte à pessoa que lhe enviou esta hiperligação.",
-    "Picture view" : "Visualização da Imagem",
-    "Upload pictures in the files app to display them here" : "Envie imagens na aplicação de ficheiros para as exibir aqui",
-    "For more information, please contact your friendly ownCloud administrator." : "Para mais informação, por favor, contacte o seu administrador da ownCloud."
+    "Picture view" : "Visualização da Imagem"
 },
 "nplurals=2; plural=(n != 1);");
