@@ -85,11 +85,11 @@
 				if (_.isFunction(errorCallback)) {
 					errorCallback(result);
 				} else {
-					var msg = t('core', 'Error');
+					var msg = t('gallery', 'Error');
 					if (result.ocs && result.ocs.meta.message) {
 						msg = result.ocs.meta.message;
 					}
-					OC.dialogs.alert(msg, t('core', 'Error while sharing'));
+					OC.dialogs.alert(msg, t('gallery', 'Error while sharing'));
 				}
 			});
 		},
@@ -108,7 +108,7 @@
 					callback();
 				}
 			}).fail(function () {
-				OC.dialogs.alert(t('core', 'Error while unsharing'), t('core', 'Error'));
+				OC.dialogs.alert(t('gallery', 'Error while unsharing'), t('gallery', 'Error'));
 
 			});
 		},
@@ -126,8 +126,8 @@
 					permissions: permissions
 				}
 			}).fail(function () {
-				OC.dialogs.alert(t('core', 'Error while changing permissions'),
-					t('core', 'Error'));
+				OC.dialogs.alert(t('gallery', 'Error while changing permissions'),
+					t('gallery', 'Error'));
 			});
 		},
 		/**
@@ -155,12 +155,12 @@
 				}
 
 				if (data[0].share_type == this.SHARE_TYPE_GROUP) {
-					html += t('core', 'Shared with you and the group {group} by {owner}', {
+					html += t('gallery', 'Shared with you and the group {group} by {owner}', {
 						group: data[0].share_with,
 						owner: data[0].displayname_owner
 					});
 				} else {
-					html += t('core', 'Shared with you by {owner}',
+					html += t('gallery', 'Shared with you by {owner}',
 						{owner: data[0].displayname_owner});
 				}
 				html += '</span><br />';
@@ -192,7 +192,7 @@
 					sharePlaceholder = t('gallery', 'Share with users, groups or remote users …');
 				}
 
-				html += '<label for="shareWith" class="hidden-visually">' + t('core', 'Share') +
+				html += '<label for="shareWith" class="hidden-visually">' + t('gallery', 'Share') +
 					'</label>';
 				html +=
 					'<input id="shareWith" type="text" placeholder="' + sharePlaceholder + '" />';
@@ -214,19 +214,19 @@
 					html +=
 						'<input type="checkbox" class="checkbox checkbox--right" ' +
 						'name="linkCheckbox" id="linkCheckbox" value="1" />' +
-						'<label for="linkCheckbox">' + t('core', 'Share link') + '</label>';
+						'<label for="linkCheckbox">' + t('gallery', 'Share link') + '</label>';
 					html += '<br />';
 
 					var defaultExpireMessage = '';
 					if ((itemType === 'folder' || itemType === 'file') &&
 						oc_appconfig.core.defaultExpireDateEnforced) {
 						defaultExpireMessage =
-							t('core',
+							t('gallery',
 								'The public link will expire no later than {days} days after it is created',
 								{'days': oc_appconfig.core.defaultExpireDate}) + '<br/>';
 					}
 
-					html += '<label for="linkText" class="hidden-visually">' + t('core', 'Link') +
+					html += '<label for="linkText" class="hidden-visually">' + t('gallery', 'Link') +
 						'</label>';
 					html += '<div id="linkText-container">';
 					html += '<input id="linkText" type="text" readonly="readonly" />';
@@ -238,12 +238,12 @@
 						'<input type="checkbox" class="checkbox checkbox--right" ' +
 						'name="showPassword" id="showPassword" value="1" />' +
 						'<label for="showPassword" style="display:none;">' +
-						t('core', 'Password protect') + '</label>';
+						t('gallery', 'Password protect') + '</label>';
 					html += '<div id="linkPass">';
 					html += '<label for="linkPassText" class="hidden-visually">' +
-						t('core', 'Password') + '</label>';
+						t('gallery', 'Password') + '</label>';
 					html += '<input id="linkPassText" type="password" placeholder="' +
-						t('core', 'Choose a password for the public link') + '" />';
+						t('gallery', 'Choose a password for the public link') + '" />';
 					html += '<span class="icon-loading-small hidden"></span>';
 					html += '</div>';
 
@@ -255,7 +255,7 @@
 							'<input type="checkbox" class="checkbox checkbox--right" value="1" name="allowPublicUpload" id="sharingDialogAllowPublicUpload"' +
 							((allowPublicUploadStatus) ? 'checked="checked"' : '') + ' />';
 						html += '<label for="sharingDialogAllowPublicUpload">' +
-						t('core', 'Allow editing') + '</label>';
+						t('gallery', 'Allow editing') + '</label>';
 						html += '</div>';
 					}
 
@@ -264,10 +264,10 @@
 						html += '<form id="emailPrivateLink">';
 						html +=
 							'<input id="email" style="display:none; width:62%;" value="" placeholder="' +
-							t('core', 'Email link to person') + '" type="text" />';
+							t('gallery', 'Email link to person') + '" type="text" />';
 						html +=
 							'<input id="emailButton" style="display:none;" type="submit" value="' +
-							t('core', 'Send') + '" />';
+							t('gallery', 'Send') + '" />';
 						html += '</form>';
 					}
 				}
@@ -277,11 +277,11 @@
 					'<input type="checkbox" class="checkbox checkbox--right" ' +
 					'name="expirationCheckbox" id="expirationCheckbox" value="1" />' +
 					'<label for="expirationCheckbox">' +
-					t('core', 'Set expiration date') + '</label>';
+					t('gallery', 'Set expiration date') + '</label>';
 				html += '<label for="expirationDate" class="hidden-visually">' +
-					t('core', 'Expiration') + '</label>';
+					t('gallery', 'Expiration') + '</label>';
 				html += '<input id="expirationDate" type="text" placeholder="' +
-					t('core', 'Expiration date') + '" style="display:none; width:90%;" />';
+					t('gallery', 'Expiration date') + '" style="display:none; width:90%;" />';
 				html += '<em id="defaultExpireMessage">' + defaultExpireMessage + '</em>';
 				html += '</div>';
 				dropDownEl = $(html);
@@ -394,14 +394,14 @@
 										Math.min(perPage, oc_config['sharing.maxAutocompleteResults'])
 										<= Math.max(users.length, groups.length, remotes.length, emails.length, lookup.length)) {
 
-										var message = t('core', 'This list is maybe truncated - please refine your search term to see more results.');
+										var message = t('gallery', 'This list is maybe truncated - please refine your search term to see more results.');
 										$('.ui-autocomplete').append('<li class="autocomplete-note">' + message + '</li>');
 									}
 
 								} else {
-									var title = t('core', 'No users or groups found for {search}', {search: $('#shareWith').val()});
+									var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
 									if (!view.configModel.get('allowGroupSharing')) {
-										title = t('core', 'No users found for {search}', {search: $('#shareWith').val()});
+										title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
 									}
 									$('#shareWith').addClass('error')
 										.attr('data-original-title', title)
@@ -419,7 +419,7 @@
 							}
 						}).fail(function () {
 							$('#dropdown').find('.shareWithLoading').addClass('hidden');
-							OC.Notification.show(t('core', 'An error occured. Please try again'));
+							OC.Notification.show(t('gallery', 'An error occured. Please try again'));
 							window.setTimeout(OC.Notification.hide, 5000);
 						});
 					},
@@ -462,7 +462,7 @@
 						var $input = $(this);
 						var $loading = $dropDown.find('.shareWithLoading');
 						$loading.removeClass('hidden');
-						$input.val(t('core', 'Adding user...'));
+						$input.val(t('gallery', 'Adding user...'));
 						$input.prop('disabled', true);
 						Gallery.Share.share(
 							itemSource,
@@ -491,9 +491,9 @@
 					var insert = $("<a>");
 					var text = item.label;
 					if (item.value.shareType === Gallery.Share.SHARE_TYPE_GROUP) {
-						text = text + ' (' + t('core', 'group') + ')';
+						text = text + ' (' + t('gallery', 'group') + ')';
 					} else if (item.value.shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
-						text = text + ' (' + t('core', 'remote') + ')';
+						text = text + ' (' + t('gallery', 'remote') + ')';
 					}
 					insert.text(text);
 					if (item.value.shareType === Gallery.Share.SHARE_TYPE_GROUP) {
@@ -535,7 +535,7 @@
 
 			} else {
 				html += '<input id="shareWith" type="text" placeholder="' +
-					t('core', 'Resharing is not allowed') +
+					t('gallery', 'Resharing is not allowed') +
 					'" style="width:90%;" disabled="disabled"/>';
 				html += '</div>';
 				dropDownEl = $(html);
@@ -737,7 +737,7 @@
 
 			if (data === false) {
 				OC.dialogs.alert(t('gallery', 'Error while retrieving shares'),
-					t('core', 'Error'));
+					t('gallery', 'Error'));
 			}
 
 			return data;
@@ -763,10 +763,10 @@
 				permissions: permissions
 			};
 			if (shareType === this.SHARE_TYPE_GROUP) {
-				shareWithDisplayName = shareWithDisplayName + " (" + t('core', 'group') + ')';
+				shareWithDisplayName = shareWithDisplayName + " (" + t('gallery', 'group') + ')';
 			}
 			if (shareType === this.SHARE_TYPE_REMOTE) {
-				shareWithDisplayName = shareWithDisplayName + " (" + t('core', 'remote') + ')';
+				shareWithDisplayName = shareWithDisplayName + " (" + t('gallery', 'remote') + ')';
 			}
 			if (!this.itemShares[shareType]) {
 				this.itemShares[shareType] = [];
@@ -800,8 +800,8 @@
 				'title="' + escapeHTML(shareWith) + '">';
 			var showCrudsButton;
 			html +=
-				'<a href="#" class="unshare"><img class="svg" alt="' + t('core', 'Unshare') +
-				'" title="' + t('core', 'Unshare') + '" src="' +
+				'<a href="#" class="unshare"><img class="svg" alt="' + t('gallery', 'Unshare') +
+				'" title="' + t('gallery', 'Unshare') + '" src="' +
 				OC.imagePath('core', 'actions/delete') + '"/></a>';
 			if (oc_config.enable_avatars === true) {
 				html += '<div class="avatar"></div>';
@@ -819,7 +819,7 @@
 					'name="mailNotification" ' +
 					checked + ' />';
 				html +=
-					'<label for="mail-' + escapeHTML(shareWith) + '">' + t('core', 'notify by email') + '</label>';
+					'<label for="mail-' + escapeHTML(shareWith) + '">' + t('gallery', 'notify by email') + '</label>';
 			}
 			if (oc_appconfig.core.resharingAllowed &&
 				(possiblePermissions & OC.PERMISSION_SHARE)) {
@@ -827,7 +827,7 @@
 					'" type="checkbox" class="permissions checkbox checkbox--right" name="share" ' +
 					shareChecked + ' data-permissions="' + OC.PERMISSION_SHARE + '" />';
 				html += '<label for="canShare-' + escapeHTML(shareWith) + '">' +
-					t('core', 'can share') + '</label>';
+					t('gallery', 'can share') + '</label>';
 			}
 			if (possiblePermissions & OC.PERMISSION_CREATE ||
 				possiblePermissions & OC.PERMISSION_UPDATE ||
@@ -836,11 +836,11 @@
 					'" type="checkbox" class="permissions checkbox checkbox--right" name="edit" ' +
 					editChecked + ' />';
 				html += '<label for="canEdit-' + escapeHTML(shareWith) + '">' +
-					t('core', 'can edit') + '</label>';
+					t('gallery', 'can edit') + '</label>';
 			}
 			if (shareType !== this.SHARE_TYPE_REMOTE) {
 				showCrudsButton = '<a href="#" class="showCruds"><img class="svg" alt="' +
-					t('core', 'access control') + '" src="' +
+					t('gallery', 'access control') + '" src="' +
 					OC.imagePath('core', 'actions/triangle-s') + '"/></a>';
 			}
 			html += '<div class="cruds" style="display:none;">';
@@ -849,21 +849,21 @@
 					'" type="checkbox" class="permissions checkbox checkbox--right" name="create" ' +
 					createChecked + ' data-permissions="' + OC.PERMISSION_CREATE + '"/>';
 				html += '<label for="canCreate-' + escapeHTML(shareWith) + '">' +
-					t('core', 'create') + '</label>';
+					t('gallery', 'create') + '</label>';
 			}
 			if (possiblePermissions & OC.PERMISSION_UPDATE) {
 				html += '<input id="canUpdate-' + escapeHTML(shareWith) +
 					'" type="checkbox" class="permissions checkbox checkbox--right" name="update" ' +
 					updateChecked + ' data-permissions="' + OC.PERMISSION_UPDATE + '"/>';
 				html += '<label for="canUpdate-' + escapeHTML(shareWith) + '">' +
-					t('core', 'change') + '</label>';
+					t('gallery', 'change') + '</label>';
 			}
 			if (possiblePermissions & OC.PERMISSION_DELETE) {
 				html += '<input id="canDelete-' + escapeHTML(shareWith) +
 					'" type="checkbox" class="permissions checkbox checkbox--right" name="delete" ' +
 					deleteChecked + ' data-permissions="' + OC.PERMISSION_DELETE + '"/>';
 				html += '<label for="canDelete-' + escapeHTML(shareWith) + '">' +
-					t('core', 'delete') + '</label>';
+					t('gallery', 'delete') + '</label>';
 			}
 			html += '</div>';
 			html += '</li>';
@@ -1056,7 +1056,7 @@ $(document).ready(function () {
 		if (this.checked) {
 			// Reset password placeholder
 			$('#linkPassText').attr('placeholder',
-				t('core', 'Choose a password for the public link'));
+				t('gallery', 'Choose a password for the public link'));
 			// Reset link
 			$('#linkText').val('');
 			$('#showPassword').prop('checked', false);
@@ -1167,7 +1167,7 @@ $(document).ready(function () {
 			}).done(function () {
 				$loading.addClass('hidden');
 				$('#linkPassText').attr('placeholder',
-					t('core', 'Choose a password for the public link'));
+					t('gallery', 'Choose a password for the public link'));
 			});
 		} else {
 			$('#linkPassText').focus();
@@ -1192,7 +1192,7 @@ $(document).ready(function () {
 			}).done(function (data) {
 				$loading.addClass('hidden');
 				linkPassText.val('');
-				linkPassText.attr('placeholder', t('core', 'Password protected'));
+				linkPassText.attr('placeholder', t('gallery', 'Password protected'));
 
 				if (oc_appconfig.core.enforcePasswordForPublicLink) {
 					Gallery.Share.showLink(data.id, data.token, "password set");
@@ -1224,8 +1224,8 @@ $(document).ready(function () {
 					$('#defaultExpireMessage').slideDown(OC.menuSpeed);
 				}
 			}).fail(function () {
-				OC.dialogs.alert(t('core', 'Error unsetting expiration date'),
-					t('core', 'Error'));
+				OC.dialogs.alert(t('gallery', 'Error unsetting expiration date'),
+					t('gallery', 'Error'));
 			});
 		}
 	});
@@ -1252,7 +1252,7 @@ $(document).ready(function () {
 			var expirationDateField = $('#dropdown #expirationDate');
 			if (result && !result.ocs.meta.message) {
 				expirationDateField.attr('original-title',
-					t('core', 'Error setting expiration date'));
+					t('gallery', 'Error setting expiration date'));
 			} else {
 				expirationDateField.attr('original-title', result.ocs.meta.message);
 			}
@@ -1276,7 +1276,7 @@ $(document).ready(function () {
 		}
 		if (email != '') {
 			$('#email').prop('disabled', true);
-			$('#email').val(t('core', 'Sending ...'));
+			$('#email').val(t('gallery', 'Sending ...'));
 			$('#emailButton').prop('disabled', true);
 
 			$.post(OC.filePath('core', 'ajax', 'share.php'), {
@@ -1292,12 +1292,12 @@ $(document).ready(function () {
 					$('#email').prop('disabled', false);
 					$('#emailButton').prop('disabled', false);
 					if (result && result.status == 'success') {
-						$('#email').css('font-weight', 'bold').val(t('core', 'Email sent'));
+						$('#email').css('font-weight', 'bold').val(t('gallery', 'Email sent'));
 						setTimeout(function () {
 							$('#email').css('font-weight', 'normal').val('');
 						}, 2000);
 					} else {
-						OC.dialogs.alert(result.data.message, t('core', 'Error while sharing'));
+						OC.dialogs.alert(result.data.message, t('gallery', 'Error while sharing'));
 					}
 				});
 		}
@@ -1323,7 +1323,7 @@ $(document).ready(function () {
 			itemType: itemType
 		}, function (result) {
 			if (result.status !== 'success') {
-				OC.dialogs.alert(t('core', result.data.message), t('core', 'Warning'));
+				OC.dialogs.alert(t('gallery', result.data.message), t('gallery', 'Warning'));
 			}
 		});
 	});
