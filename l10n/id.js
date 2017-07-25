@@ -109,8 +109,6 @@ OC.L10N.register(
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
-    "Picture view" : "Tampilan gambar",
-    "Upload pictures in the files app to display them here" : "Unggah gambar di aplikasi berkas untuk menampilkannya disini",
-    "For more information, please contact your friendly ownCloud administrator." : "Untuk informasi lebih lanjut, silakan hubungi administrator ownCloud Anda."
+    "Picture view" : "Tampilan gambar"
 },
 "nplurals=1; plural=0;");

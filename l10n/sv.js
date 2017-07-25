@@ -112,8 +112,6 @@ OC.L10N.register(
     "sharing is disabled" : "delning är inaktiverat",
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
-    "Picture view" : "Bildvy",
-    "Upload pictures in the files app to display them here" : "Ladda upp bilder i molnet för att visa dem här",
-    "For more information, please contact your friendly ownCloud administrator." : "För mer information var god kontakta din vänliga ownCloud administratör."
+    "Picture view" : "Bildvy"
 },
 "nplurals=2; plural=(n != 1);");

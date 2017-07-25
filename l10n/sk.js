@@ -109,8 +109,6 @@ OC.L10N.register(
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
-    "Picture view" : "Zobrazenie obrázka",
-    "Upload pictures in the files app to display them here" : "Tu sa zobrazia obrázky, ktoré nahráte v aplikácii Súbory",
-    "For more information, please contact your friendly ownCloud administrator." : "Viac informácií získate od vášho priateľského ownCloud správcu."
+    "Picture view" : "Zobrazenie obrázka"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

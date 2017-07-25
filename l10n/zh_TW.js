@@ -114,8 +114,6 @@ OC.L10N.register(
     "sharing is disabled" : "分享功能已停用",
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
     "Add to your Nextcloud" : "加入到您的 Nextcloud",
-    "Picture view" : "檢視圖片",
-    "Upload pictures in the files app to display them here" : "在「檔案」應用程式中上傳圖片，就會顯示在這邊",
-    "For more information, please contact your friendly ownCloud administrator." : "如欲取得更多資訊，請您聯絡您的 ownCloud 系統管理員"
+    "Picture view" : "檢視圖片"
 },
 "nplurals=1; plural=0;");
