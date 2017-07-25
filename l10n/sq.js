@@ -112,7 +112,6 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
     "Picture view" : "Pamje Foto",
-    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i skedarëve që t’i shfaqni këtu",
-    "For more information, please contact your friendly ownCloud administrator." : "Për më tepër të dhëna, ju lutemi, lidhuni me ne përgjegjësin miqësor të ownCloud-it tuaj."
+    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i skedarëve që t’i shfaqni këtu"
 },
 "nplurals=2; plural=(n != 1);");

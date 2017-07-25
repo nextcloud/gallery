@@ -94,7 +94,6 @@ OC.L10N.register(
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
     "Picture view" : "Pildi vaade",
-    "Upload pictures in the files app to display them here" : "Piltide siin näitamiseks laadi need esmalt failide rakendusega siia",
-    "For more information, please contact your friendly ownCloud administrator." : "Lisainfo saamiseks võta ühendust oma muheda ownCloudi adminiga."
+    "Upload pictures in the files app to display them here" : "Piltide siin näitamiseks laadi need esmalt failide rakendusega siia"
 },
 "nplurals=2; plural=(n != 1);");

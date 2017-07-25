@@ -105,7 +105,6 @@ OC.L10N.register(
     "sharing is disabled" : "la compartición ta deshabilitada",
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
     "Picture view" : "Vista d'imáxenes",
-    "Upload pictures in the files app to display them here" : "Xubir semeyes nos ficheros d'aplicación p'amosalos equí",
-    "For more information, please contact your friendly ownCloud administrator." : "Pa llograr más información, póngase en contactu col alministrador d'ownCloud."
+    "Upload pictures in the files app to display them here" : "Xubir semeyes nos ficheros d'aplicación p'amosalos equí"
 },
 "nplurals=2; plural=(n != 1);");

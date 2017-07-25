@@ -115,7 +115,6 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系共享链接给你的人。",
     "Add to your Nextcloud" : "添加到您的Nextcloud",
     "Picture view" : "查看图片",
-    "Upload pictures in the files app to display them here" : "上传图片文件后您可以在这里查看它们",
-    "For more information, please contact your friendly ownCloud administrator." : "欲了解更多信息，请联系您的熟悉的 ownCloud 管理员。"
+    "Upload pictures in the files app to display them here" : "上传图片文件后您可以在这里查看它们"
 },
 "nplurals=1; plural=0;");

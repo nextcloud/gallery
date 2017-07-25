@@ -95,7 +95,6 @@ OC.L10N.register(
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
     "Add to your Nextcloud" : "Добавете към вашия Nextcloud",
-    "Picture view" : "Албум със снимки",
-    "For more information, please contact your friendly ownCloud administrator." : "За повече информация се свържете вашия любезен ownCloud администратор."
+    "Picture view" : "Албум със снимки"
 },
 "nplurals=2; plural=(n != 1);");

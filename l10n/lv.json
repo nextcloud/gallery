@@ -96,7 +96,6 @@
     "sharing is disabled" : "koplietošana nav ieslēgta",
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
     "Add to your Nextcloud" : "Pievienot savam Nextcloud",
-    "Picture view" : "Attēla skats",
-    "For more information, please contact your friendly ownCloud administrator." : "Plašākai informācijai, lūdzu, sazinieties ar draudzīgo administratoru."
+    "Picture view" : "Attēla skats"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

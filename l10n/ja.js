@@ -114,7 +114,6 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
     "Picture view" : "ピクチャービュー",
-    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。",
-    "For more information, please contact your friendly ownCloud administrator." : "詳細については、親切な Nextcloud の管理者に連絡してください。"
+    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。"
 },
 "nplurals=1; plural=0;");

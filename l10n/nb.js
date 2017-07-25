@@ -115,7 +115,6 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
     "Add to your Nextcloud" : "Legg til i din Nextcloud",
     "Picture view" : "Bildevisning",
-    "Upload pictures in the files app to display them here" : "Last opp bilder i Filer-programmet for å vise dem her",
-    "For more information, please contact your friendly ownCloud administrator." : "For mer informasjon, kontakt ownCloud-administratoren."
+    "Upload pictures in the files app to display them here" : "Last opp bilder i Filer-programmet for å vise dem her"
 },
 "nplurals=2; plural=(n != 1);");
