@@ -107,7 +107,6 @@ OC.L10N.register(
     "sharing is disabled" : "souporaba je onemogočena.",
     "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je poslala to povezavo.",
     "Add to your Nextcloud" : "Dodaj v svoj Nextcloud",
-    "Picture view" : "Slikovni pogled",
-    "Upload pictures in the files app to display them here" : "Pošljite slike v oblak, da bodo prikazane na tem mestu"
+    "Picture view" : "Slikovni pogled"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

@@ -114,7 +114,6 @@ OC.L10N.register(
     "sharing is disabled" : "o compartilhamento está desativado",
     "For more information, please ask the person who has sent you this link." : "Para mais informações, pergunte à pessoa que lhe enviou o link.",
     "Add to your Nextcloud" : "Adicionar ao seu Nextcloud",
-    "Picture view" : "Visualização de imagem",
-    "Upload pictures in the files app to display them here" : "Envie fotos no aplicativo de arquivos para mostrá-las aqui"
+    "Picture view" : "Visualização de imagem"
 },
 "nplurals=2; plural=(n > 1);");

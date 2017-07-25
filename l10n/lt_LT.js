@@ -114,7 +114,6 @@ OC.L10N.register(
     "sharing is disabled" : "dalinimasis yra išjungtas",
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
-    "Picture view" : "Paveikslo rodymas",
-    "Upload pictures in the files app to display them here" : "Įkelkite paveikslus į failų programėlę, kad jie būtų rodomi čia"
+    "Picture view" : "Paveikslo rodymas"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");

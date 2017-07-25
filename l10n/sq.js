@@ -111,7 +111,6 @@ OC.L10N.register(
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
-    "Picture view" : "Pamje Foto",
-    "Upload pictures in the files app to display them here" : "Ngarkoni foto te aplikacioni i skedarëve që t’i shfaqni këtu"
+    "Picture view" : "Pamje Foto"
 },
 "nplurals=2; plural=(n != 1);");

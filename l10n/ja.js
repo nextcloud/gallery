@@ -113,7 +113,6 @@ OC.L10N.register(
     "sharing is disabled" : "共有は無効になっています",
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
-    "Picture view" : "ピクチャービュー",
-    "Upload pictures in the files app to display them here" : "ファイルアプリから画像をアップロードするとここに表示されます。"
+    "Picture view" : "ピクチャービュー"
 },
 "nplurals=1; plural=0;");

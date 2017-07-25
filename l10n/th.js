@@ -104,7 +104,6 @@ OC.L10N.register(
     "the link has expired" : "ลิงค์หมดอายุ",
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
-    "Picture view" : "ดูรูปภาพ",
-    "Upload pictures in the files app to display them here" : "อัพโหลดรูปภาพในไฟล์แอพฯเพื่อแสดงพวกเขาที่นี่"
+    "Picture view" : "ดูรูปภาพ"
 },
 "nplurals=1; plural=0;");

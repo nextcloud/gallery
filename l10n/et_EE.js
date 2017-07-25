@@ -93,7 +93,6 @@ OC.L10N.register(
     "the link has expired" : "link on aegunud",
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
-    "Picture view" : "Pildi vaade",
-    "Upload pictures in the files app to display them here" : "Piltide siin näitamiseks laadi need esmalt failide rakendusega siia"
+    "Picture view" : "Pildi vaade"
 },
 "nplurals=2; plural=(n != 1);");

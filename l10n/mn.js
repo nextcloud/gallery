@@ -45,7 +45,6 @@ OC.L10N.register(
     "create" : "үүсгэх",
     "change" : "Өөрчлөх",
     "delete" : "устгах",
-    "Password protected" : "Нууц үгээх хамгаалагдсан",
-    "Upload pictures in the files app to display them here" : "Энд зургаа үзэхийн тулд \"Файлууд\" программ ашиглан зургаа энд байршуулна уу"
+    "Password protected" : "Нууц үгээх хамгаалагдсан"
 },
 "nplurals=2; plural=(n != 1);");

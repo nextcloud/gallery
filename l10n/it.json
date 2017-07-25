@@ -112,7 +112,6 @@
     "sharing is disabled" : "la condivisione è disabilitata",
     "For more information, please ask the person who has sent you this link." : "Per ulteriori informazioni, chiedi alla persona che ti ha inviato il collegamento.",
     "Add to your Nextcloud" : "Aggiungi al tuo Nextcloud",
-    "Picture view" : "Vista immagini",
-    "Upload pictures in the files app to display them here" : "Carica le immagini nell'applicazione dei file per visualizzarle qui."
+    "Picture view" : "Vista immagini"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

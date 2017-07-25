@@ -112,7 +112,6 @@ OC.L10N.register(
     "sharing is disabled" : "letiltásra került a megosztás",
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
-    "Picture view" : "Képnézet",
-    "Upload pictures in the files app to display them here" : "Töltsön fel képeket a Fájlok alkalmazással, hogy itt megjelenjenek"
+    "Picture view" : "Képnézet"
 },
 "nplurals=2; plural=(n != 1);");

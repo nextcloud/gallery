@@ -112,7 +112,6 @@
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Add to your Nextcloud" : "Nextcloud hesabınıza ekleyin",
-    "Picture view" : "Görsel görünümü",
-    "Upload pictures in the files app to display them here" : "Dosyalar uygulaması ile yükleyeceğiniz görseller burada görüntülenir"
+    "Picture view" : "Görsel görünümü"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -113,7 +113,6 @@ OC.L10N.register(
     "sharing is disabled" : "deling er deaktiveret",
     "For more information, please ask the person who has sent you this link." : "For mere information, så spørg personen som sendte dig dette link.",
     "Add to your Nextcloud" : "Tilføj til din Nextcloud",
-    "Picture view" : "Billedvisning",
-    "Upload pictures in the files app to display them here" : "Upload billeder i fil-app'en for at få dem vist her"
+    "Picture view" : "Billedvisning"
 },
 "nplurals=2; plural=(n != 1);");

@@ -109,7 +109,6 @@ OC.L10N.register(
     "sharing is disabled" : "공유가 비활성화됨",
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Add to your Nextcloud" : "Nextcloud에 추가",
-    "Picture view" : "사진 보기",
-    "Upload pictures in the files app to display them here" : "파일 앱에서 사진을 올리면 여기에 표시됩니다"
+    "Picture view" : "사진 보기"
 },
 "nplurals=1; plural=0;");
