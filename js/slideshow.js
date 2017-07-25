@@ -77,7 +77,7 @@
 					}.bind(this));
 				}
 			}.bind(this)).fail(function () {
-				OC.Notification.show(t('core', 'Error loading slideshow template'));
+				OC.Notification.show(t('gallery', 'Error loading slideshow template'));
 			});
 		},
 
