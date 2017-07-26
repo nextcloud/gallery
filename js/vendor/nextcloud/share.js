@@ -581,7 +581,7 @@
 			var $linkText = $('#linkText');
 
 			var link = parent.location.protocol + '//' + location.host +
-				OC.generateUrl('/apps/' + Gallery.appName + '/s/') + token;
+				OC.generateUrl('/apps/gallery/s/') + token;
 
 			$linkText.val(link);
 			$linkText.slideDown(OC.menuSpeed);
