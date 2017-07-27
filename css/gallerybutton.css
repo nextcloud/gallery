@@ -12,12 +12,11 @@
 #controls .button.view-switcher.gallery {
 	float: none;
 	margin-right: 4px;
-	padding: 7px 11px;
+	padding: 9px 11px;
 }
 
-/* TODO: move to core */
-.icon-toggle-pictures {
-	background-image: url('../../../core/img/actions/toggle-pictures.svg?v=1');
+.icon-toggle-pictures.hidden {
+	opacity: 0 !important;
 }
 
 #controls .button.sorting {
@@ -34,8 +33,6 @@
 	border-radius: 3px 0 0 3px;
 	margin-left: 3px;
 	margin-right: 0;
-	border-right: 0;
-	border-right: 1px solid rgba(216, 216, 216, 0.9);
 }
 
 #controls .button.right-switch-button {
@@ -72,23 +69,8 @@
 }
 
 #controls .button.view-switcher:hover {
-	background-color: rgba(255, 255, 255, .9);
 	color: #111;
 	border: 1px solid rgba(240, 240, 240, .9);
-}
-
-#controls .button.sorting.active-button {
-	background-color: rgba(255, 255, 255, .9);
-	color: #111;
-	border: 1px solid rgba(240, 240, 240, .9);
-	border-right-color: rgba(216, 216, 216, 0.9);
-}
-
-#controls .button.sorting.active-button:hover {
-	background-color: rgba(255, 255, 255, .9);
-	color: #111;
-	border: 1px solid rgba(240, 240, 240, .9);
-	border-right-color: rgba(216, 216, 216, 0.9);
 }
 
 /* Original Flip CSS by David Walsh
@@ -132,7 +114,7 @@ http://davidwalsh.name/css-flip*/
 }
 
 #controls .button.sorting .front,
-#controls .button.sorting.active-button.hover .back {
+#controls .button.sorting.active.hover .back {
 	z-index: 2;
 
 	-webkit-transform: rotateX(0deg);
@@ -152,12 +134,11 @@ http://davidwalsh.name/css-flip*/
 	position: absolute;
 	width: 24px;
 	height: 24px;
-	background-size: 24px 24px;
 	margin-left: -4px;
-	margin-top: -3px;
+	margin-top: -5px;
 }
 
-#controls .button.sorting.active-button.hover .front {
+#controls .button.sorting.active.hover .front {
 	-webkit-transform: rotateX(180deg);
 	-moz-transform: rotateX(180deg);
 	transform: rotateX(180deg);

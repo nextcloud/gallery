@@ -187,7 +187,8 @@
 			}
 
 			var button = $('#filelist-button');
-			button.children('#button-loading').addClass('loading');
+			button.children('img').addClass('hidden');
+			button.children('#button-loading').removeClass('hidden').addClass('icon-loading-small');
 			OC.redirect(OC.generateUrl(subUrl, params));
 		},
 

@@ -71,12 +71,13 @@ $(document).ready(function () {
 			// Button for opening files list as gallery view
 			GalleryButton.button =
 				$('<div id="gallery-button" class="button view-switcher">' +
-						'<div id="button-loading"></div>' +
+						'<div id="button-loading" class="hidden"></div>' +
 					'<span class="icon-toggle-pictures"></span>' +
 					'</div>');
 
 			GalleryButton.button.click(function () {
-				$(this).children('#button-loading').addClass('loading');
+				$(this).children('span').addClass('hidden');
+				$(this).children('#button-loading').removeClass('hidden').addClass('icon-loading-small');
 				window.location.href = GalleryButton.url;
 			});
 

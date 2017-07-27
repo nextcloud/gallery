@@ -113,7 +113,7 @@ style(
 					</div>
 					<!-- toggle for opening the current album as file list -->
 					<div id="filelist-button" class="button view-switcher gallery">
-						<div id="button-loading"></div>
+						<div id="button-loading" class="hidden"></div>
 						<img class="svg" src="<?php print_unescaped(
 							image_path('core', 'actions/toggle-filelist.svg')
 						); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
