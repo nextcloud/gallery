@@ -30,7 +30,7 @@ style(
 	<div id="header">
 		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>"
 		   title="" id="nextcloud">
-			<div class="logo-icon svg">
+			<div class="logo logo-icon svg">
 			</div>
 		</a>
 
@@ -61,11 +61,8 @@ style(
 								</span>
 				<?php } ?>
 				<a id="download" class="button">
-					<img class="svg" src="<?php print_unescaped(
-						image_path('core', 'actions/download.svg')
-					); ?>" alt=""/>
-						<span id="download-text"><?php p($l->t('Download')) ?>
-						</span>
+					<span class="icon-download"></span>
+					<span id="download-text"><?php p($l->t('Download')) ?></span>
 				</a>
 			</span>
 		</div>
