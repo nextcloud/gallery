@@ -511,7 +511,7 @@
 		_setSortButton: function (sortType, sortOrder, active) {
 			var button = $('#sort-' + sortType + '-button');
 			// Removing all the classes which control the image in the button
-			button.removeClass('active-button');
+			button.removeClass('active');
 			button.find('img').removeClass('front');
 			button.find('img').removeClass('back');
 
@@ -527,7 +527,7 @@
 
 			// The active button needs a hover action for the flip effect
 			if (active) {
-				button.addClass('active-button');
+				button.addClass('active');
 				if (button.is(":hover")) {
 					button.removeClass('hover');
 				}
