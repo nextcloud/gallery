@@ -21,6 +21,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "以下の選択肢のいずれかをインストールしてください",
     "Album cannot be shown" : "アルバムが表示できません",
     "No media files found" : "メディアファイルが見つかりませんでした",
+    "Upload pictures in the Files app to display them here" : "Filesアプリに画像をアップロードして表示する",
     "Upload new files via drag and drop or by using the [+] button above" : "ドラッグ＆ドロップや [+]ボタンを使って新しいファイルをアップロードしてください。",
     "Configuration error" : "設定エラー",
     "New" : "新規作成",
