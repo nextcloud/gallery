@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "{file} fájl nem áthelyezhető",
     "No compatible server found at {remote}" : "Itt nem található kompatibilis szerver: {remote}",
     "Invalid server url" : "Érvénytelen szerver URL",
-    "Gallery view" : "Galéria nézet",
     "Could not load the description" : "Nem lehet betölteni a leírást",
     "Could not load the description: " : "Nem lehet betölteni a leírást:",
     "Copyright" : "Szerzői jog",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "sharing is disabled" : "letiltásra került a megosztás",
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
-    "Picture view" : "Képnézet"
+    "Picture view" : "Képnézet",
+    "Gallery view" : "Galéria nézet"
 },
 "nplurals=2; plural=(n != 1);");

@@ -6,7 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "מבטל תצוגה מקדימה. לא מצליח לאתר את הקובץ",
     "Could not move \"{file}\", target exists" : "לא ניתן להעביר \"{file}\", קובץ מטרה קיים",
     "Could not move \"{file}\"" : "לא ניתן להעביר \"{file}\"",
-    "Gallery view" : "תצוגת גלריה",
     "Could not load the description" : "לא ניתן לטעון את התיאור",
     "Could not load the description: " : "לא ניתן לטעון את התיאור:",
     "Copyright" : "זכויות יוצרים",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "the link has expired" : "הקישור פג תוקף",
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
-    "Picture view" : "תצוגת תמונה"
+    "Picture view" : "תצוגת תמונה",
+    "Gallery view" : "תצוגת גלריה"
 },
 "nplurals=2; plural=(n != 1);");

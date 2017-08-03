@@ -6,7 +6,6 @@
     "Could not move \"{file}\"" : "Nie je možné presunúť „{file}“",
     "No compatible server found at {remote}" : "Nebol nájdený kompatibilný server na adrese {remote}",
     "Invalid server url" : "Neplatná url servera",
-    "Gallery view" : "Pohľad galérie",
     "Could not load the description" : "Nemožno načítať popis",
     "Could not load the description: " : "Nemožno načítať popis:",
     "Copyright" : "Copyright",
@@ -107,6 +106,7 @@
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
-    "Picture view" : "Zobrazenie obrázka"
+    "Picture view" : "Zobrazenie obrázka",
+    "Gallery view" : "Pohľad galérie"
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 }

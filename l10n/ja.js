@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "\"{file}\" を移動できませんでした",
     "No compatible server found at {remote}" : "互換性のあるサーバーが {remote} にはありません。",
     "Invalid server url" : "サーバーのURLが無効",
-    "Gallery view" : "ギャラリー表示",
     "Could not load the description" : "説明を読み出せませんでした",
     "Could not load the description: " : "説明を読み出せませんでした：",
     "Copyright" : "著作権",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "共有は無効になっています",
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
-    "Picture view" : "ピクチャービュー"
+    "Picture view" : "ピクチャービュー",
+    "Gallery view" : "ギャラリー表示"
 },
 "nplurals=1; plural=0;");

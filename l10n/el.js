@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Αδυναμία μετακίνησης του \"{file}\"",
     "No compatible server found at {remote}" : "Δεν βρέθηκε συμβατός διακομιστής σε {remote}",
     "Invalid server url" : "Μη έγκυρη url δικομιστή",
-    "Gallery view" : "Προβολή Συλλογής",
     "Could not load the description" : "Αδυναμία φόρτωσης περιγραφής",
     "Could not load the description: " : "Αδυναμία φόρτωσης της περιγραφής:",
     "Copyright" : "Copyright",
@@ -107,6 +106,7 @@ OC.L10N.register(
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
-    "Picture view" : "Προβολή εικονιδίων"
+    "Picture view" : "Προβολή εικονιδίων",
+    "Gallery view" : "Προβολή Συλλογής"
 },
 "nplurals=2; plural=(n != 1);");

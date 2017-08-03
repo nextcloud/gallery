@@ -5,7 +5,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "Interrupcion de la previsualizacion. Lo fichièr es introbable.",
     "Could not move \"{file}\", target exists" : "Impossible de desplaçar \"{file}\", la cibla existís",
     "Could not move \"{file}\"" : "Impossible de desplaçar \"{file}\"",
-    "Gallery view" : "Vista en galariá",
     "Could not load the description" : "Impossible de cargar la descripcion",
     "Could not load the description: " : "Impossible de cargar la descripcion :",
     "Copyright" : "Drech d'autor",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "the link has expired" : "lo ligam a expirat",
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
-    "Picture view" : "Visualizacion de l'imatge"
+    "Picture view" : "Visualizacion de l'imatge",
+    "Gallery view" : "Vista en galariá"
 },
 "nplurals=2; plural=(n > 1);");

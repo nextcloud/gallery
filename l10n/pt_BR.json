@@ -6,7 +6,6 @@
     "Could not move \"{file}\"" : "Não foi possível mover \"{file}\"",
     "No compatible server found at {remote}" : "Não foi encontrado nenhum servidor compatível em {remote}",
     "Invalid server url" : "URL inválida de servidor",
-    "Gallery view" : "Vista da  galeria",
     "Could not load the description" : "Não foi possível carregar a descrição",
     "Could not load the description: " : "Não foi possível carregar a descrição:",
     "Copyright" : "Direitos Autorais",
@@ -112,6 +111,7 @@
     "sharing is disabled" : "o compartilhamento está desativado",
     "For more information, please ask the person who has sent you this link." : "Para mais informações, pergunte à pessoa que lhe enviou o link.",
     "Add to your Nextcloud" : "Adicionar ao seu Nextcloud",
-    "Picture view" : "Visualização de imagem"
+    "Picture view" : "Visualização de imagem",
+    "Gallery view" : "Vista da  galeria"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

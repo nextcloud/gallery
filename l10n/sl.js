@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Ni mogoče premakniti \"{file}\"",
     "No compatible server found at {remote}" : "Ne najdem kompatibilnega strežnika na {remote}",
     "Invalid server url" : "Neveljaven URL naslov",
-    "Gallery view" : "Galerijski pogled",
     "Could not load the description" : "Ni mogoče naložiti opisa",
     "Could not load the description: " : "Ni mogoče naložiti opisa:",
     "Copyright" : "Avtorske pravice",
@@ -107,6 +106,7 @@ OC.L10N.register(
     "sharing is disabled" : "souporaba je onemogočena.",
     "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je poslala to povezavo.",
     "Add to your Nextcloud" : "Dodaj v svoj Nextcloud",
-    "Picture view" : "Slikovni pogled"
+    "Picture view" : "Slikovni pogled",
+    "Gallery view" : "Galerijski pogled"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

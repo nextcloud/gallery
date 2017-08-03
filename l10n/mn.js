@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "\"{file}\"-г зөөж чадсангүй",
     "No compatible server found at {remote}" : "{remote}-д холбогдох боломжтой сервер олдсонгүй",
     "Invalid server url" : "Серверийн url буруу байна",
-    "Gallery view" : "Зургийн цомог харах",
     "Could not load the description" : "Тайлбарыг ачаалж чадсангүй",
     "Could not load the description: " : "Тайлбарыг ачаалж чадсангүй:",
     "Copyright" : "Зохиогчийн эрх",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "create" : "үүсгэх",
     "change" : "Өөрчлөх",
     "delete" : "устгах",
-    "Password protected" : "Нууц үгээх хамгаалагдсан"
+    "Password protected" : "Нууц үгээх хамгаалагдсан",
+    "Gallery view" : "Зургийн цомог харах"
 },
 "nplurals=2; plural=(n != 1);");

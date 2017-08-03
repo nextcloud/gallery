@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "گالری",
-    "Gallery view" : "نمایش گالری",
     "Could not load the description: " : "امکان بارگذاری توضیحات وجود ندارد:",
     "Copyright" : "کپی‌رایت",
     "New" : "جدید",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "the item was removed" : "این مورد حذف شده است",
     "the link has expired" : "لینک منقضی شده است",
     "sharing is disabled" : "قابلیت اشتراک گذاری غیرفعال است",
-    "Picture view" : "نمایش تصویر"
+    "Picture view" : "نمایش تصویر",
+    "Gallery view" : "نمایش گالری"
 },
 "nplurals=1; plural=0;");

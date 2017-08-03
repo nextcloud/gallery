@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Gat ekki fært \"{file}\"",
     "No compatible server found at {remote}" : "Enginn samhæfður vefþjónn fannst á {remote}",
     "Invalid server url" : "Ógild URI-slóð vefþjóns",
-    "Gallery view" : "Myndasafnssýn",
     "Could not load the description" : "Gat ekki hlaðið inn lýsingunni",
     "Could not load the description: " : "Gat ekki hlaðið inn lýsingunni: ",
     "Copyright" : "Höfundarréttur",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "slökkt er á skráadeilingu",
     "For more information, please ask the person who has sent you this link." : "Til að vita meira skaltu hafa samband við þann sem sendi þér þennan tengil.",
     "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
-    "Picture view" : "Myndasýn"
+    "Picture view" : "Myndasýn",
+    "Gallery view" : "Myndasafnssýn"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -7,7 +7,6 @@ OC.L10N.register(
     "Could not move \"{file}\", target exists" : "Nun pudo movese \"{file}\", destín yá esiste",
     "Could not move \"{file}\"" : "Nun pudo movese \"{file}\"",
     "No compatible server found at {remote}" : "Nun s'alcontró dengún sirvidor compatible en {remote}",
-    "Gallery view" : "Vista de galería",
     "Could not load the description" : "Nun pudo cargase la descripción",
     "Could not load the description: " : "Nun pudo cargase la descripción:",
     "Copyright" : "Copyright",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "the link has expired" : "l'enllaz caducó",
     "sharing is disabled" : "la compartición ta deshabilitada",
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
-    "Picture view" : "Vista d'imáxenes"
+    "Picture view" : "Vista d'imáxenes",
+    "Gallery view" : "Vista de galería"
 },
 "nplurals=2; plural=(n != 1);");

@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Tidak dapat memindahkan \"{file}\"",
     "No compatible server found at {remote}" : "Tida ditemukan server yang kompatibel pada {remote}",
     "Invalid server url" : "URL server salah",
-    "Gallery view" : "Tampilan galeri",
     "Could not load the description" : "Tidak dapat memuat deskripsi",
     "Could not load the description: " : "Tidak dapat memuat deskripsi:",
     "Copyright" : "Hak cipta",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
-    "Picture view" : "Tampilan gambar"
+    "Picture view" : "Tampilan gambar",
+    "Gallery view" : "Tampilan galeri"
 },
 "nplurals=1; plural=0;");

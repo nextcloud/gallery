@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "S’u lëviz dot \"{file}\"",
     "No compatible server found at {remote}" : "Nuk u gjet asnjë server i pajtueshëm në {remote}",
     "Invalid server url" : "url e serverit e pavlefshme",
-    "Gallery view" : "Pamje Galeri",
     "Could not load the description" : "S’ngarkoi dot përshkrimin",
     "Could not load the description: " : "S’ngarkoi dot përshkrimin: ",
     "Copyright" : "Të drejta kopjimi",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
-    "Picture view" : "Pamje Foto"
+    "Picture view" : "Pamje Foto",
+    "Gallery view" : "Pamje Galeri"
 },
 "nplurals=2; plural=(n != 1);");

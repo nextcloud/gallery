@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "No fue posible mover \"{file}\"",
     "No compatible server found at {remote}" : "No se encontró un servidor compatible en {remote}",
     "Invalid server url" : "URL del servidor inválido",
-    "Gallery view" : "Ver galería",
     "Could not load the description" : "No fue posible cargar la descripción",
     "Could not load the description: " : "No fue posible cargar la descripción:",
     "Copyright" : "Derechos de autor",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "sharing is disabled" : "compartir está deshabilitado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, favor de consultar a la persona que le envió este link.",
     "Add to your Nextcloud" : "Agregar a su Nextcloud",
-    "Picture view" : "Vista de imágenes"
+    "Picture view" : "Vista de imágenes",
+    "Gallery view" : "Ver galería"
 },
 "nplurals=2; plural=(n != 1);");
