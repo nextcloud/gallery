@@ -6,7 +6,6 @@
     "Could not move \"{file}\"" : "Impossibile displaciar  \"{file}\"",
     "No compatible server found at {remote}" : "Nulle servitor compatibile trovate a {remote}",
     "Invalid server url" : "Adresse URL de servitor non es valide",
-    "Gallery view" : "Visualisation de Galeria",
     "Could not load the description" : "Impossibile cargar le description",
     "Could not load the description: " : "Impossibile cargar le description:",
     "Copyright" : "Copyright",
@@ -100,6 +99,7 @@
     "sharing is disabled" : "le compartimento de files es disactivate",
     "For more information, please ask the person who has sent you this link." : "Pro obtener plus informationes, per favor demanda le persona qui ha te inviate iste ligamine.",
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
-    "Picture view" : "Visualisation de Imagine"
+    "Picture view" : "Visualisation de Imagine",
+    "Gallery view" : "Visualisation de Galeria"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

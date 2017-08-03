@@ -6,7 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "กำลังยกเลิกการแสดงตัวอย่าง ไม่สามารถค้นหาไฟล์",
     "Could not move \"{file}\", target exists" : "ไม่สามารถย้ายไฟล์ \"{file}\" ไม่มีไฟล์นั้นอยู่",
     "Could not move \"{file}\"" : "ไม่สามารถย้ายไฟล์ \"{file}\"",
-    "Gallery view" : "ดูแกลอรี่",
     "Could not load the description" : "ไม่สามารถโหลดคำอธิบาย",
     "Could not load the description: " : "ไม่สามารถโหลดคำอธิบาย",
     "Copyright" : "ลิขสิทธิ์",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "the link has expired" : "ลิงค์หมดอายุ",
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
-    "Picture view" : "ดูรูปภาพ"
+    "Picture view" : "ดูรูปภาพ",
+    "Gallery view" : "ดูแกลอรี่"
 },
 "nplurals=1; plural=0;");

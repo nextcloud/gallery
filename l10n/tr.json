@@ -6,7 +6,6 @@
     "Could not move \"{file}\"" : "\"{file}\" taşınamadı",
     "No compatible server found at {remote}" : "{remote} konumunda uyumlu bir sunucu bulunamadı",
     "Invalid server url" : "Sunucu adresi geçersiz",
-    "Gallery view" : "Galeri görünümü",
     "Could not load the description" : "Açıklama yüklenemedi",
     "Could not load the description: " : "Açıklama yüklenemedi:",
     "Copyright" : "Telif hakları",
@@ -112,6 +111,7 @@
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Add to your Nextcloud" : "Nextcloud hesabınıza ekleyin",
-    "Picture view" : "Görsel görünümü"
+    "Picture view" : "Görsel görünümü",
+    "Gallery view" : "Galeri görünümü"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

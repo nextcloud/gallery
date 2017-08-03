@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "\"{file}\"을(를) 이동할 수 없음",
     "No compatible server found at {remote}" : "{remote}에서 호환 서버를 찾을 수 없음",
     "Invalid server url" : "잘못된 서버 URL",
-    "Gallery view" : "갤러리 보기",
     "Could not load the description" : "설명을 불러올 수 없음",
     "Could not load the description: " : "설명을 불러올 수 없음: ",
     "Copyright" : "저작권",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "sharing is disabled" : "공유가 비활성화됨",
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Add to your Nextcloud" : "Nextcloud에 추가",
-    "Picture view" : "사진 보기"
+    "Picture view" : "사진 보기",
+    "Gallery view" : "갤러리 보기"
 },
 "nplurals=1; plural=0;");

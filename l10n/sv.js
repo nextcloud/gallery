@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Kunde inte flytta \"{file}\"",
     "No compatible server found at {remote}" : "Ingen kompatibel server hittad hos {remote}",
     "Invalid server url" : "Ogiltig server-url",
-    "Gallery view" : "Bildgalleri vy",
     "Could not load the description" : "Kunde inte ladda beskrivningen",
     "Could not load the description: " : "Kunde inte ladda beskrivningen:",
     "Copyright" : "Copyright",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "sharing is disabled" : "delning är inaktiverat",
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
-    "Picture view" : "Bildvy"
+    "Picture view" : "Bildvy",
+    "Gallery view" : "Bildgalleri vy"
 },
 "nplurals=2; plural=(n != 1);");

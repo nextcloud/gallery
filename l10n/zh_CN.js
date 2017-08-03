@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "不能移动 \"{file}\"",
     "No compatible server found at {remote}" : "在 {remote} 没有找到兼容的服务器",
     "Invalid server url" : "无效的服务器链接 url",
-    "Gallery view" : "查看相册",
     "Could not load the description" : "无法载入描述",
     "Could not load the description: " : "无法载入描述",
     "Copyright" : "版权",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "共享已禁用",
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系共享链接给你的人。",
     "Add to your Nextcloud" : "添加到您的Nextcloud",
-    "Picture view" : "查看图片"
+    "Picture view" : "查看图片",
+    "Gallery view" : "查看相册"
 },
 "nplurals=1; plural=0;");

@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Klarte ikke å flytte \"{file}\"",
     "No compatible server found at {remote}" : "Ingen kompatibel tjener ble funnet på {remote}",
     "Invalid server url" : "Ugyldig tjeneradresse",
-    "Gallery view" : "Gallerivisning",
     "Could not load the description" : "Klarte ikke å laste inn beskrivelsen",
     "Could not load the description: " : "Klarte ikke å laste inn beskrivelsen:",
     "Copyright" : "Opphavsrett",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "deling er avskrudd",
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
     "Add to your Nextcloud" : "Legg til i din Nextcloud",
-    "Picture view" : "Bildevisning"
+    "Picture view" : "Bildevisning",
+    "Gallery view" : "Gallerivisning"
 },
 "nplurals=2; plural=(n != 1);");
