@@ -40,7 +40,6 @@ style(
 			</h1>
 		</div>
 
-		<div id="logo-claim" style="display:none;"><?php p($theme->getLogoClaim()); ?></div>
 		<div class="header-right">
 			<span id="details">
 				<?php
