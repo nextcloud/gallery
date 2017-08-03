@@ -4,7 +4,6 @@ OC.L10N.register(
     "Gallery" : "Bildaro",
     "Could not move \"{file}\", target exists" : "Ne eblas movi “{file}”-n, celo jam ekzistas",
     "Could not move \"{file}\"" : "Ne eblas movi “{file}”-n",
-    "Gallery view" : "Galeria vido",
     "Could not load the description: " : "Ne ŝargeblis la priskribo:",
     "Copyright" : "Kopirajto",
     "New" : "Nova",
@@ -68,6 +67,7 @@ OC.L10N.register(
     "Reasons might be:" : "Kialoj povas esti:",
     "the item was removed" : "la ero foriĝis",
     "sharing is disabled" : "kunhavigo malkapablas",
-    "Picture view" : "Bilda vido"
+    "Picture view" : "Bilda vido",
+    "Gallery view" : "Galeria vido"
 },
 "nplurals=2; plural=(n != 1);");

@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Nepavyko perkelti \"{file}\"",
     "No compatible server found at {remote}" : "Suderinamas serveris nerastas adresu {remote}",
     "Invalid server url" : "Neteisingas serverio adresas",
-    "Gallery view" : "Galerijos rodinys",
     "Could not load the description" : "Nepavyko įkelti aprašo",
     "Could not load the description: " : "Nepavyko įkelti aprašo: ",
     "Copyright" : "Autorių teisės",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "dalinimasis yra išjungtas",
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
-    "Picture view" : "Paveikslo rodymas"
+    "Picture view" : "Paveikslo rodymas",
+    "Gallery view" : "Galerijos rodinys"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");

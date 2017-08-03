@@ -4,7 +4,6 @@ OC.L10N.register(
     "Gallery" : "Galerii",
     "Aborting preview. Could not find the file" : "Eelvaate tühistamine. Faili ei leitud",
     "Could not move \"{file}\"" : "\"{file}\" liigutamine ebaõnnestus",
-    "Gallery view" : "Galeriivaade",
     "Could not load the description" : "Kirjelduse laadimine ebaõnnestus",
     "Could not load the description: " : "Kirjelduse laadimine ebaõnnestus:",
     "Copyright" : "Autoriõigused",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "the link has expired" : "link on aegunud",
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
-    "Picture view" : "Pildi vaade"
+    "Picture view" : "Pildi vaade",
+    "Gallery view" : "Galeriivaade"
 },
 "nplurals=2; plural=(n != 1);");

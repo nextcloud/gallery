@@ -6,7 +6,6 @@
     "Could not move \"{file}\"" : "Nie można przenieść \"{file}\"",
     "No compatible server found at {remote}" : "Nie znaleziono kompatybilnego serwera na {remote}",
     "Invalid server url" : "Błędny adres serwera",
-    "Gallery view" : "Widok galerii",
     "Could not load the description" : "Nie można załadować opisu",
     "Could not load the description: " : "Nie można załadować opisu:",
     "Copyright" : "Prawa autorskie",
@@ -111,6 +110,7 @@
     "sharing is disabled" : "udostępnianie jest wyłączone",
     "For more information, please ask the person who has sent you this link." : "Po więcej informacji, proszę skontaktuj się z osobą, która wysłała Tobie ten link.",
     "Add to your Nextcloud" : "Dodaj do swojego Nextcloud",
-    "Picture view" : "Widok zdjęć"
+    "Picture view" : "Widok zdjęć",
+    "Gallery view" : "Widok galerii"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

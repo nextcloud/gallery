@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Tiedoston \"{file}\" siirtäminen ei onnistunut",
     "No compatible server found at {remote}" : "Yhteensopivaa palvelinta ei löytynyt osoitteesta {remote}",
     "Invalid server url" : "Virheellinen palvelimen URL",
-    "Gallery view" : "Gallerianäkymä",
     "Could not load the description" : "Kuvauksen lataaminen epäonnistui",
     "Could not load the description: " : "Kuvauksen lataaminen epäonnistui:",
     "Copyright" : "Tekijänoikeus",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
     "Add to your Nextcloud" : "Lisää Nextcloudiisi",
-    "Picture view" : "Kuvanäkymä"
+    "Picture view" : "Kuvanäkymä",
+    "Gallery view" : "Gallerianäkymä"
 },
 "nplurals=2; plural=(n != 1);");

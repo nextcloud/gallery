@@ -6,7 +6,6 @@ OC.L10N.register(
     "Aborting preview. Could not find the file" : "A abortar a pré-visualização. Não foi possível encontrar o ficheiro",
     "Could not move \"{file}\", target exists" : "Não foi possível mover \"{file}\", alvo já existe",
     "Could not move \"{file}\"" : "Não foi possível mover \"{file}\"",
-    "Gallery view" : "Visualização da galeria",
     "Could not load the description" : "Não foi possível carregar a descrição",
     "Could not load the description: " : "Não foi possível carregar a descrição:",
     "Copyright" : "Direitos de Autor",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "the link has expired" : "a hiperligação expirou",
     "sharing is disabled" : "a partilha está desativada",
     "For more information, please ask the person who has sent you this link." : "Para mais informação, por favor, pergunte à pessoa que lhe enviou esta hiperligação.",
-    "Picture view" : "Visualização da Imagem"
+    "Picture view" : "Visualização da Imagem",
+    "Gallery view" : "Visualização da galeria"
 },
 "nplurals=2; plural=(n != 1);");

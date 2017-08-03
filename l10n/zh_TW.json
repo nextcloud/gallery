@@ -6,7 +6,6 @@
     "Could not move \"{file}\"" : "無法移動 \"{file}\"",
     "No compatible server found at {remote}" : "沒有在 {remote} 找到相容的伺服器",
     "Invalid server url" : "無效的伺服器 URL",
-    "Gallery view" : "瀏覽相簿",
     "Could not load the description" : "無法載入敘述",
     "Could not load the description: " : "無法載入敘述：",
     "Copyright" : "著作權",
@@ -112,6 +111,7 @@
     "sharing is disabled" : "分享功能已停用",
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
     "Add to your Nextcloud" : "加入到您的 Nextcloud",
-    "Picture view" : "檢視圖片"
+    "Picture view" : "檢視圖片",
+    "Gallery view" : "瀏覽相簿"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

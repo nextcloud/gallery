@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Nelze přesunout \"{file}\"",
     "No compatible server found at {remote}" : "Na {remote} nebyl nalezen kompatibilní server",
     "Invalid server url" : "Neplatné URL serveru",
-    "Gallery view" : "Náhled galerie",
     "Could not load the description" : "Nezdařilo se načíst popis",
     "Could not load the description: " : "Nezdařilo se načíst popis:",
     "Copyright" : "Autorská práva",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "sharing is disabled" : "sdílení je zakázané",
     "For more information, please ask the person who has sent you this link." : "Pro více informací kontaktujte osobu, která vám zaslala tento odkaz.",
     "Add to your Nextcloud" : "Přidat do Nextcloud",
-    "Picture view" : "Zobrazení obrázku"
+    "Picture view" : "Zobrazení obrázku",
+    "Gallery view" : "Náhled galerie"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
