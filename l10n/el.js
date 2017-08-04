@@ -33,6 +33,7 @@ OC.L10N.register(
     "Download" : "Λήψη",
     "Toggle background" : "Αλλαγή φόντου",
     "Delete" : "Διαγραφή",
+    "Could not create file \"{file}\" because it already exists" : "Αδυναμία δημιουργίας αρχείου \"{file}\" διότι υπάρχει ήδη",
     "Could not create file \"{file}\"" : "Αδυναμία δημιουργίας του \"{file}\"",
     "\"{name}\" is an invalid file name." : "Το \"{name}\" δεν είναι έγκυρο όνομα αρχείου.",
     "File name cannot be empty." : "Το όνομα αρχείου δεν μπορεί να είναι κενό.",
