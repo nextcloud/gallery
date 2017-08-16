@@ -289,7 +289,7 @@
 
 				// trigger remote share info tooltip
 				if (oc_appconfig.core.remoteShareAllowed) {
-					$('.shareWithRemoteInfo').tooltip({placement: 'top'});
+					$('.shareWithRemoteInfo').tooltip({placement: 'bottom'});
 				}
 
 				//Get owner avatars
