@@ -49,7 +49,7 @@
     "Share with users or groups …" : "Compartir con otros usuarios o grupos ...",
     "Share with users, groups or remote users …" : "Compartir con otros usuarios, grupos o usuarios remotos...",
     "Share" : "Compartir",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparte con personas en otros servidores usando tu ID de nube federada username@example.com/cloud",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparte con personas en otros servidores usando tu ID username@example.com/cloud",
     "Share link" : "Compartir liga",
     "The public link will expire no later than {days} days after it is created" : "La liga pública expirará a los {days} días de haber sido creada",
     "Link" : "Liga",
