@@ -20,6 +20,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "kérlek telepíts egy alternatívát a következők közül",
     "Album cannot be shown" : "Az album nem jeleníthető meg",
     "No media files found" : "Nem található média fájl",
+    "Upload pictures in the Files app to display them here" : "Töltsön fel képeket a Fájlok alkalmazással, hogy itt megjelenjenek",
     "Upload new files via drag and drop or by using the [+] button above" : "Töltsön fel új fájlokat ráhúzással, vagy használja a [+] gombot",
     "Configuration error" : "Beállítási hiba",
     "New" : "Új",
