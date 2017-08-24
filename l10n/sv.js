@@ -114,6 +114,6 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
     "Picture view" : "Bildvy",
-    "Gallery view" : "Bildgalleri vy"
+    "Gallery view" : "Bildgallerivy"
 },
 "nplurals=2; plural=(n != 1);");
