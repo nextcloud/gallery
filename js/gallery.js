@@ -128,10 +128,14 @@
 			var sortOrder = 'asc';
 			var albumSortType = 'name';
 			var albumSortOrder = 'asc';
+
+			sortType = /^sort-([-\w]+?)-button$/.exec(this.id)[1];
+		/*
 			if (this.id === 'sort-date-button') {
 				sortType = 'date';
 
 			}
+		 */
 			var currentSort = Gallery.config.albumSorting;
 			if (currentSort.type === sortType && currentSort.order === sortOrder) {
 				sortOrder = 'des';
@@ -411,6 +415,7 @@
 			var sharedWithUser = null;
 			var owner = null;
 			var permissions = 0;
+			var exif = null;
 			var currentLocation = data.albumpath;
 			// This adds a new node to the map for each parent album
 			Gallery._mapStructure(currentLocation);
@@ -442,10 +447,11 @@
 					sharedWithUser = files[i].sharedwithuser;
 					owner = files[i].owner;
 					permissions = files[i].permissions;
+					exif = files[i].exif;
 
 					image =
 						new GalleryImage(
-							path, path, fileId, mimeType, mTime, etag, size, sharedWithUser, owner, permissions
+							path, path, fileId, mimeType, mTime, etag, size, sharedWithUser, owner, permissions, exif
 						);
 
 					// Determines the folder name for the image

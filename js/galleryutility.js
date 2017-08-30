@@ -229,7 +229,9 @@ window.Gallery = window.Gallery || {};
 		 * @returns {Function}
 		 */
 		sortBy: function (sortType, sortOrder) {
-			if (sortType === 'name') {
+			switch (sortType) {
+				case 'name':
+		//if (sortType === 'name') {
 				if (sortOrder === 'asc') {
 					//sortByNameAsc
 					return function (a, b) {
@@ -240,8 +242,9 @@ window.Gallery = window.Gallery || {};
 				return function (a, b) {
 					return -OC.Util.naturalSortCompare(a.path, b.path);
 				};
-			}
-			if (sortType === 'date') {
+		//}
+				case 'date':
+		//if (sortType === 'date') {
 				if (sortOrder === 'asc') {
 					//sortByDateAsc
 					return function (a, b) {
@@ -252,6 +255,15 @@ window.Gallery = window.Gallery || {};
 				return function (a, b) {
 					return a.mTime - b.mTime;
 				};
+		//}
+				case 'date-taken':     // EXIF 'DateTimeOriginal' field
+					return sortOrder === 'asc' ?
+						function (a, b) {
+							return b.exif.taken_date - a.exif.taken_date;
+						} :
+						function (a, b) {
+							return a.exif.taken_date - b.exif.taken_date;
+						};
 			}
 		},
 

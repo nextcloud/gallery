@@ -144,12 +144,15 @@
 		 * @param {string} sortOrder asc or des
 		 */
 		sortControlsSetup: function (sortType, sortOrder) {
+		/*
 			var reverseSortType = 'date';
 			if (sortType === 'date') {
 				reverseSortType = 'name';
 			}
+		 */
+			this._setSortButton(null, 'asc', false); // default icon
+		//this._setSortButton(reverseSortType, 'asc', false); // default icon
 			this._setSortButton(sortType, sortOrder, true);
-			this._setSortButton(reverseSortType, 'asc', false); // default icon
 		},
 
 		/**
@@ -373,8 +376,12 @@
 			$('#shared-button').click(Gallery.share);
 			Gallery.infoBox = new Gallery.InfoBox();
 			$('#album-info-button').click(Gallery.showInfo);
+
+			$('#controls .button.sorting').click(Gallery.sorter);
+		/*
 			$('#sort-name-button').click(Gallery.sorter);
 			$('#sort-date-button').click(Gallery.sorter);
+		 */
 			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
 			this._renderNewButton();
@@ -401,7 +408,13 @@
 
 			var sum = album.images.length + album.subAlbums.length;
 			//If sum of the number of images and subalbums exceeds 1 then show the buttons.
-			if(sum > 1)
+			var btns = $('#controls .button.sorting');
+			if (sum > 1) {
+				btns.show();
+			} else {
+				btns.hide();
+			}
+		/*
 			{
 				$('#sort-name-button').show();
 				$('#sort-date-button').show();
@@ -411,6 +424,7 @@
 				$('#sort-name-button').hide();
 				$('#sort-date-button').hide();
 			}
+		 */
 			var currentSort = Gallery.config.albumSorting;
 			this.sortControlsSetup(currentSort.type, currentSort.order);
 			Gallery.albumMap[Gallery.currentAlbum].images.sort(
@@ -432,8 +446,11 @@
 		_hideButtons: function (uploadAllowed) {
 			$('#album-info-button').hide();
 			$('#shared-button').hide();
+			$('#controls .button.sorting').hide();
+		/*
 			$('#sort-name-button').hide();
 			$('#sort-date-button').hide();
+		 */
 			$('#save-button').hide();
 			$('#download').hide();
 
@@ -509,7 +526,10 @@
 		 * @private
 		 */
 		_setSortButton: function (sortType, sortOrder, active) {
-			var button = $('#sort-' + sortType + '-button');
+			var button = sortType ?
+				$('#sort-' + sortType + '-button'):
+				$('.button.sorting.active');
+		//var button = $('#sort-' + sortType + '-button');
 			// Removing all the classes which control the image in the button
 			button.removeClass('active');
 			button.find('img').removeClass('front');
