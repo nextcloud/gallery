@@ -62,6 +62,7 @@
     "Set expiration date" : "Legyen lejárati idő",
     "Expiration" : "Lejárat",
     "Expiration date" : "Lejárati idő",
+    "This list is maybe truncated - please refine your search term to see more results." : "Ez a lista lehet, hogy le van vágva - kérem pontosítsa a keresését, hogy több eredményt lásson.",
     "No users or groups found for {search}" : "{search} keresésre nem található felhasználó vagy csoport ",
     "No users found for {search}" : "{search} keresésre nem található felhasználó ",
     "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",
