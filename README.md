@@ -93,12 +93,6 @@ Using Redis for files locking improves performance **by a factor of 10** when lo
 
 Read about it in the [Nextcloud](https://docs.nextcloud.org/server/11/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
 
-#### Assets pipelining
-Make sure to enable "asset pipelining", so that all the Javascript and CSS resources can be mixed together.
-This can greatly reduce the loading time of the app.
-
-Read about it in the [Nextcloud](https://docs.nextcloud.org/server/11/admin_manual/configuration_server/js_css_asset_management_configuration.html) Administration Manual
-
 ## Installation
 
 ### Installing from the app store
