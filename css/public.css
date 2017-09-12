@@ -10,6 +10,11 @@ body {
 	overflow: hidden;
 }
 
+/* height fix for ie11 */
+html.ie #content {
+	height: auto;
+}
+
 /* within #save */
 #save .save-form {
 	position: relative;
