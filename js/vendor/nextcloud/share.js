@@ -1349,7 +1349,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$(document).on('click', '.icon-more', function(event) {
+	$(document).on('click', '#dropdown .icon-more', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
