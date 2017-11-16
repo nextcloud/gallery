@@ -196,14 +196,7 @@
 					'</label>';
 				html +=
 					'<input id="shareWith" type="text" placeholder="' + sharePlaceholder + '" />';
-				if (oc_appconfig.core.remoteShareAllowed) {
-					var federatedCloudSharingDoc =
-						'<span class="icon-info svg shareWithRemoteInfo hasTooltip" ' +
-						'title="' + t('gallery',
-							'Share with people on other servers using their Federated Cloud ID username@example.com/cloud') +
-						'"></span>';
-					html += federatedCloudSharingDoc;
-				}
+				html += '<span class="shareWithConfirm icon-confirm svg"></span>';
 				html += '<span class="shareWithLoading icon-loading-small hidden"></span>';
 				html += '<ul id="shareWithList">';
 				html += '</ul>';
@@ -287,11 +280,6 @@
 				dropDownEl = $(html);
 				dropDownEl = dropDownEl.appendTo(appendTo);
 
-				// trigger remote share info tooltip
-				if (oc_appconfig.core.remoteShareAllowed) {
-					$('.shareWithRemoteInfo').tooltip({placement: 'bottom'});
-				}
-
 				//Get owner avatars
 				if (oc_config.enable_avatars === true && data !== false && data[0] !== false &&
 					!_.isUndefined(data[0]) && !_.isUndefined(data[0].uid_file_owner)) {
@@ -342,9 +330,9 @@
 					source: function (search, response) {
 						var $shareWithField = $('#dropdown #shareWith');
 						var $loading = $('#dropdown .shareWithLoading');
-						var $remoteInfo = $('#dropdown .shareWithRemoteInfo');
+						var $confirm = $('#dropdown .shareWithConfirm');
 						$loading.removeClass('hidden');
-						$remoteInfo.addClass('hidden');
+						$confirm.addClass('hidden');
 
 						$shareWithField.removeClass('error')
 							.tooltip('hide');
@@ -356,7 +344,7 @@
 							itemType: itemType
 						}, function (result) {
 							$loading.addClass('hidden');
-							$remoteInfo.removeClass('hidden');
+							$confirm.removeClass('hidden');
 							if (result.ocs.meta.statuscode === 100) {
 								var users = result.ocs.data.exact.users.concat(result.ocs.data.users);
 								var groups = result.ocs.data.exact.groups.concat(result.ocs.data.groups);
@@ -427,7 +415,7 @@
 							}
 						}).fail(function () {
 							$('#dropdown').find('.shareWithLoading').addClass('hidden');
-							$('#dropdown').find('.shareWithRemoteInfo').removeClass('hidden');
+							$('#dropdown').find('.shareWithConfirm').removeClass('hidden');
 							OC.Notification.show(t('gallery', 'An error occurred. Please try again'));
 							window.setTimeout(OC.Notification.hide, 5000);
 						});
@@ -470,9 +458,9 @@
 
 						var $input = $(this);
 						var $loading = $dropDown.find('.shareWithLoading');
-						var $remoteInfo = $dropDown.find('.shareWithRemoteInfo');
+						var $confirm = $dropDown.find('.shareWithConfirm');
 						$loading.removeClass('hidden');
-						$remoteInfo.addClass('hidden');
+						$confirm.addClass('hidden');
 						$input.val(t('gallery', 'Adding user...'));
 						$input.prop('disabled', true);
 						Gallery.Share.share(
@@ -495,7 +483,7 @@
 								$input.prop('disabled', false);
 
 								$loading.addClass('hidden');
-								$remoteInfo.removeClass('hidden');
+								$confirm.removeClass('hidden');
 							},
 							function (result) {
 								var message = t('gallery', 'Error');
@@ -508,7 +496,7 @@
 								$input.prop('disabled', false);
 
 								$loading.addClass('hidden');
-								$remoteInfo.removeClass('hidden');
+								$confirm.removeClass('hidden');
 							});
 						return false;
 					}
