@@ -170,14 +170,17 @@
 		 */
 		_addLabel: function () {
 			var imageLabel = this.domDef.children('.image-label');
-			var toggleLabel = function() {
+			var showLabel = function() {
+				imageLabel.slideDown(OC.menuSpeed);
+			};
+			var hideLabel = function() {
 				if ($(this).hasClass('selected')) {
 					imageLabel.show();
 					return;
 				}
-				imageLabel.slideToggle(OC.menuSpeed);
+				imageLabel.slideUp(OC.menuSpeed);
 			};
-			this.domDef.hover(toggleLabel, toggleLabel);
+			this.domDef.hover(showLabel, hideLabel);
 		},
 
 		/**
