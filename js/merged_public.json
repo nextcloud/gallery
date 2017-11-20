@@ -23,5 +23,6 @@
   "slideshowzoomablepreview.js",
   "files-helper.js",
   "vendor/nextcloud/newfilemenu.js",
-  "newfilemenuplugins.js"
+  "newfilemenuplugins.js",
+  "gallerypublic.js"
 ]

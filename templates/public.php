@@ -7,7 +7,7 @@
  */
 script(
 	$_['appName'],
-	'merged'
+	'merged_public'
 );
 style(
 	$_['appName'],

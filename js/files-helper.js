@@ -217,5 +217,213 @@ var Files = {
 	}
 };
 
+/**
+ * The FileSummary class encapsulates the file summary values and
+ * the logic to render it in the given container
+ *
+ * @constructs FileSummary
+ * @memberof OCA.Files
+ *
+ * @param $tr table row element
+ * @param {OC.Backbone.Model} [options.filesConfig] files app configuration
+ */
+var FileSummary = function() {
+	this.clear();
+};
+
+FileSummary.prototype = {
+	summary: {
+		totalFiles: 0,
+		totalDirs: 0,
+		totalHidden: 0,
+		totalSize: 0,
+		sumIsPending:false
+	},
+
+	/**
+	 * Returns whether the given file info must be hidden
+	 *
+	 * @param {OC.Files.FileInfo} fileInfo file info
+	 *
+	 * @return {boolean} true if the file is a hidden file, false otherwise
+	 */
+	_isHiddenFile: function(file) {
+		return file.name && file.name.charAt(0) === '.';
+	},
+
+	/**
+	 * Adds file
+	 * @param {OC.Files.FileInfo} file file to add
+	 */
+	add: function(file) {
+		if (file.type === 'dir' || file.mime === 'httpd/unix-directory') {
+			this.summary.totalDirs++;
+		}
+		else {
+			this.summary.totalFiles++;
+		}
+		if (this._isHiddenFile(file)) {
+			this.summary.totalHidden++;
+		}
+
+		var size = parseInt(file.size, 10) || 0;
+		if (size >=0) {
+			this.summary.totalSize += size;
+		} else {
+			this.summary.sumIsPending = true;
+		}
+	},
+	/**
+	 * Removes file
+	 * @param {OC.Files.FileInfo} file file to remove
+	 */
+	remove: function(file) {
+		if (file.type === 'dir' || file.mime === 'httpd/unix-directory') {
+			this.summary.totalDirs--;
+		}
+		else {
+			this.summary.totalFiles--;
+		}
+		if (this._isHiddenFile(file)) {
+			this.summary.totalHidden--;
+		}
+		var size = parseInt(file.size, 10) || 0;
+		if (size >=0) {
+			this.summary.totalSize -= size;
+		}
+	},
+	/**
+	 * Returns the total of files and directories
+	 */
+	getTotal: function() {
+		return this.summary.totalDirs + this.summary.totalFiles;
+	},
+	/**
+	 * Recalculates the summary based on the given files array
+	 * @param files array of files
+	 */
+	calculate: function(files) {
+		var file;
+		var summary = {
+			totalDirs: 0,
+			totalFiles: 0,
+			totalHidden: 0,
+			totalSize: 0,
+			sumIsPending: false
+		};
+
+		for (var i = 0; i < files.length; i++) {
+			file = files[i];
+			if (file.type === 'dir' || file.mime === 'httpd/unix-directory') {
+				summary.totalDirs++;
+			}
+			else {
+				summary.totalFiles++;
+			}
+			if (this._isHiddenFile(file)) {
+				summary.totalHidden++;
+			}
+			var size = parseInt(file.size, 10) || 0;
+			if (size >=0) {
+				summary.totalSize += size;
+			} else {
+				summary.sumIsPending = true;
+			}
+		}
+		this.setSummary(summary);
+	},
+	/**
+	 * Clears the summary
+	 */
+	clear: function() {
+		this.calculate([]);
+	},
+	/**
+	 * Sets the current summary values
+	 * @param summary map
+	 */
+	setSummary: function(summary) {
+		this.summary = summary;
+	}
+};
+
+var FilesFiles = {
+	/**
+	 * Returns the download URL of the given file(s)
+	 * @param {string} filename string or array of file names to download
+	 * @param {string} [dir] optional directory in which the file name is, defaults to the current directory
+	 * @param {bool} [isDir=false] whether the given filename is a directory and might need a special URL
+	 */
+	getDownloadUrl: function(filename, dir, isDir) {
+		if (!_.isArray(filename) && !isDir) {
+			var pathSections = dir.split('/');
+			pathSections.push(filename);
+			var encodedPath = '';
+			_.each(pathSections, function(section) {
+				if (section !== '') {
+					encodedPath += '/' + encodeURIComponent(section);
+				}
+			});
+			return OC.linkToRemoteBase('webdav') + encodedPath;
+		}
+
+		if (_.isArray(filename)) {
+			filename = JSON.stringify(filename);
+		}
+
+		var params = {
+			dir: dir,
+			files: filename
+		};
+		return this.getAjaxUrl('download', params);
+	},
+
+	/**
+	 * Returns the ajax URL for a given action
+	 * @param action action string
+	 * @param params optional params map
+	 */
+	getAjaxUrl: function(action, params) {
+		var q = '';
+		if (params) {
+			q = '?' + OC.buildQueryString(params);
+		}
+		return OC.filePath('files', 'ajax', action + '.php') + q;
+	},
+
+	/**
+	 * Handles the download and calls the callback function once the download has started
+	 * - browser sends download request and adds parameter with a token
+	 * - server notices this token and adds a set cookie to the download response
+	 * - browser now adds this cookie for the domain
+	 * - JS periodically checks for this cookie and then knows when the download has started to call the callback
+	 *
+	 * @param {string} url download URL
+	 * @param {function} callback function to call once the download has started
+	 */
+	handleDownload: function(url, callback) {
+		var randomToken = Math.random().toString(36).substring(2),
+			checkForDownloadCookie = function() {
+				if (!OC.Util.isCookieSetToValue('ocDownloadStarted', randomToken)){
+					return false;
+				} else {
+					callback();
+					return true;
+				}
+			};
+
+		if (url.indexOf('?') >= 0) {
+			url += '&';
+		} else {
+			url += '?';
+		}
+		OC.redirect(url + 'downloadStartSecret=' + randomToken);
+		OC.Util.waitFor(checkForDownloadCookie, 500);
+	}
+};
+
 OCA.Files = Files;
 OCA.Files.App.fileList = FileList;
+OCA.Files.FileSummary = FileSummary;
+OCA.Files.Files = FilesFiles;
+

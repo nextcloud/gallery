@@ -9,11 +9,13 @@
  *
  * @copyright Olivier Paroz 2017
  */
-/* global Handlebars, Gallery, Thumbnails */
+/* global Handlebars, Gallery, GalleryImage, Thumbnails */
 (function ($, _, OC, t, Gallery) {
 	"use strict";
 
 	var TEMPLATE_ADDBUTTON = '<a href="#" class="button new"><span class="icon icon-add"></span><span class="hidden-visually">New</span></a>';
+	var TEMPLATE_DOWNLOADBUTTON = '<a href="#" id="download-selected-button" class="button download hidden"><span class="icon icon-download"></span>' +
+		'<span class="hidden-visually">Download</span></a>';
 
 	/**
 	 * Builds and updates the Gallery view
@@ -35,6 +37,21 @@
 		requestId: -1,
 		emptyContentElement: null,
 		controlsElement: null,
+		/**
+		 * Map of file id to file data
+		 * @type Object.<int, Object>
+		 */
+		_selectedFiles: {},
+		/**
+		 * Summary of selected files.
+		 * @type OCA.Files.FileSummary
+		 */
+		_selectionSummary: null,
+		/**
+		 * Initialiation status
+		 * @type Boolean
+		 */
+		_initialized: false,
 
 		/**
 		 * Removes all thumbnails from the view
@@ -87,6 +104,9 @@
 			}
 
 			this._setBackgroundColour();
+
+			this._initSelection();
+			this.initialized = true;
 		},
 
 		/**
@@ -362,6 +382,26 @@
 		},
 
 		/**
+		 * Setups selection feature
+		 * Also resets file actions list to be hidden in case of user navigating
+		 * back and forth between albums
+		 *
+		 * @private
+		 */
+		_initSelection: function() {
+			this._selectedFiles = {};
+			this._selectionSummary = new OCA.Files.FileSummary();
+			if (!this.initialized) {
+				this.element.on('change', '.selectCheckBox', _.bind(this._onClickFileCheckbox, this));
+			}
+
+			var downloadSelectedButton = $('#download-selected-button');
+			if (downloadSelectedButton && !downloadSelectedButton.hasClass('hidden')) {
+				downloadSelectedButton.addClass('hidden');
+			}
+		},
+
+		/**
 		 * Adds all the click handlers to buttons the first time they appear in the interface
 		 *
 		 * @private
@@ -376,6 +416,7 @@
 			$('#sort-name-button').click(Gallery.sorter);
 			$('#sort-date-button').click(Gallery.sorter);
 			$('.save-form').submit(Gallery.saveForm);
+			this._renderDownloadSelectedButton();
 			this._renderNewButton();
 			// Trigger cancelling of file upload
 			$('#uploadprogresswrapper .stop').on('click', function () {
@@ -562,7 +603,7 @@
 		 */
 		_renderNewButton: function () {
 			// if no actions container exist, skip
-			var $actionsContainer = $('.actions');
+			var $actionsContainer = $('.actions.creatable');
 			if (!$actionsContainer.length) {
 				return;
 			}
@@ -609,7 +650,165 @@
 				$('.menuitem[data-action="hideAlbum"]').parent().hide();
 			}
 			return false;
-		}
+		},
+
+		/**
+		 * Creates the download individual files button
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_renderDownloadSelectedButton: function () {
+			if (!this._downloadButtonTemplate) {
+				this._downloadButtonTemplate = Handlebars.compile(TEMPLATE_DOWNLOADBUTTON);
+			}
+			var $downloadButton = $(this._downloadButtonTemplate({
+				addText: t('gallery', 'Download'),
+				iconUrl: OC.imagePath('core', 'actions/download')
+			}));
+
+			$('#filelist-button').before($downloadButton);
+			$downloadButton.tooltip({'placement': 'bottom'});
+
+			$downloadButton.click(_.bind(this._onClickDownloadSelected, this));
+		},
+
+		/**
+		 * Event handler for when clicking on "Download" for the selected files
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_onClickDownloadSelected: function(event) {
+			var files;
+			var dir = Gallery.currentAlbum;
+			if (dir === '') {
+				dir = '/';
+			}
+			files = _.pluck(this.getSelectedFiles(), 'path');
+			files.forEach(function(file, index, files) {
+				files[index] = OC.basename(file);
+			});
+
+			var downloadFileActionIcon = $('#download-selected-button .icon');
+
+			// don't allow a second click on the download action
+			if (downloadFileActionIcon.hasClass('icon-loading-small')) {
+				event.preventDefault();
+				return;
+			}
+
+			var disableLoadingState = function() {
+				downloadFileActionIcon.removeClass('icon-loading-small');
+				downloadFileActionIcon.addClass('icon-download');
+			};
+			downloadFileActionIcon.removeClass('icon-download');
+			downloadFileActionIcon.addClass('icon-loading-small');
+
+			if(this.getSelectedFiles().length > 1) {
+				OCA.Files.Files.handleDownload(Gallery.getSelectionDownloadUrl(files, dir), disableLoadingState);
+			}
+			else {
+				var first = OC.basename(this.getSelectedFiles()[0].path);
+				OCA.Files.Files.handleDownload(Gallery.getSelectionDownloadUrl(first, dir), disableLoadingState);
+			}
+			return false;
+	},
+
+		/**
+		 * Returns the file info of the selected files
+		 *
+		 * @return array of file names
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		getSelectedFiles: function() {
+			return _.values(this._selectedFiles);
+		},
+
+		/**
+		 * Returns the file data from a given file element.
+		 * @param $el file tr element
+		 * @return file data
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		elementToFile: function($el){
+			$el = $($el);
+			var data = {
+				id: parseInt($el.attr('data-id'), 10),
+			};
+			var path = $el.attr('data-path');
+			if (path) {
+				data.path = path;
+			}
+			return data;
+		},
+
+		/**
+		 * Selected/deselects the given file element and updated
+		 * the internal selection cache.
+		 *
+		 * @param {Object} $element single image
+		 * @param {bool} state true to select, false to deselect
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_selectFileEl: function($element, state) {
+			var $checkbox = $element.find('row-element>.image-label>.selectCheckBox');
+			var oldData = !!this._selectedFiles[$element.data('id')];
+			var data;
+			$checkbox.prop('checked', state);
+			$element.toggleClass('selected', state);
+			// already selected ?
+			if (state === oldData) {
+				return;
+			}
+			data = this.elementToFile($element);
+			if (state) {
+				this._selectedFiles[$element.data('id')] = data;
+				this._selectionSummary.add(data);
+			}
+			else {
+				delete this._selectedFiles[$element.data('id')];
+				this._selectionSummary.remove(data);
+			}
+		},
+
+		/**
+		 * Event handler for when clicking on a element's checkbox
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		_onClickFileCheckbox: function(event) {
+			var $image = $(event.target).closest('.' + GalleryImage.cssClass);
+			var state = !$image.hasClass('selected');
+			this._selectFileEl($image, state);
+			this._lastChecked = $image;
+			this.updateSelectionSummary();
+		},
+
+		/**
+		 * Update UI based on the current selection
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 * @private
+		 */
+		updateSelectionSummary: function() {
+			var summary = this._selectionSummary.summary;
+
+			if (summary.totalFiles === 0 && summary.totalDirs === 0) {
+				$('#download-selected-button').addClass('hidden');
+			}
+			else {
+				$('#download-selected-button').removeClass('hidden');
+			}
+		},
+
 	};
 
 	Gallery.View = View;

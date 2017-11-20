@@ -14,13 +14,15 @@
 	"use strict";
 
 	var TEMPLATE =
-		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
-		'href="" data-path="{{path}}">' +
+		'<a class="{{cssClass}}" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
+		'href="" data-path="{{path}}" data-id={{fileId}}>' +
 		'	<div class="image-loader loading"></div>' +
-		'	<span class="image-label">' +
-		'		<span class="title">{{label}}</span>' +
-		'	</span>' +
 		'	<div class="image container"></div>' +
+		'	<div class="image-label">' +
+		'		<input id="select-files-{{fileId}}" type="checkbox" class="selectCheckBox checkbox"/>' +
+		'		<label for="select-files-{{fileId}}"></label>' +
+		'		<span class="title">{{label}}</span>' +
+		'	</div>' +
 		'</a>';
 
 	/**
@@ -55,6 +57,7 @@
 		this.spinner = null;
 	};
 
+	GalleryImage.cssClass = 'row-element';
 	GalleryImage.prototype = {
 		/**
 		 * Returns the Thumbnail ID
@@ -117,6 +120,8 @@
 			if (this.domDef === null) {
 				var template = Handlebars.compile(TEMPLATE);
 				var imageElement = template({
+					cssClass: GalleryImage.cssClass,
+					fileId: this.fileId,
 					targetHeight: targetHeight,
 					targetWidth: targetHeight,
 					label: OC.basename(this.path),
@@ -126,6 +131,7 @@
 				this._addLabel();
 				this.spinner = this.domDef.children('.image-loader');
 			}
+			this._resetSelectionUI();
 			return this.domDef;
 		},
 
@@ -164,11 +170,32 @@
 		 */
 		_addLabel: function () {
 			var imageLabel = this.domDef.children('.image-label');
-			this.domDef.hover(function () {
+			var toggleLabel = function() {
+				if ($(this).hasClass('selected')) {
+					imageLabel.show();
+					return;
+				}
 				imageLabel.slideToggle(OC.menuSpeed);
-			}, function () {
-				imageLabel.slideToggle(OC.menuSpeed);
-			});
+			};
+			this.domDef.hover(toggleLabel, toggleLabel);
+		},
+
+		/**
+		 * Resets selection UI
+		 * Make sure checkbox is not checked, in case of user navigating between
+		 * albums back and forth, thus reusing domDef in its last state
+		 *
+		 * @private
+		 */
+		_resetSelectionUI: function() {
+			if (this.domDef.hasClass('selected')) {
+				this.domDef.removeClass('selected');
+				var selectCheckbox = this.domDef.find('.selectCheckBox').get(0);
+				if (selectCheckbox && selectCheckbox.checked) {
+					selectCheckbox.checked = false;
+				  this.domDef.children('.image-label').hide();
+				}
+			}
 		},
 
 		/**
@@ -201,7 +228,6 @@
 		 * @private
 		 */
 		_openImage: function (event) {
-			event.stopPropagation();
 			// click function for future use.
 		}
 	};

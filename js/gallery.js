@@ -230,6 +230,17 @@
 		},
 
 		/**
+		 * Returns the download URL of the given file(s)
+		 * @param {string} files string or array of file names to download
+		 * @param {string} [dir] optional directory in which the file name is, defaults to the current directory
+		 *
+		 * @see core/apps/files/js/filelist.js
+		 */
+		getSelectionDownloadUrl: function(files, dir) {
+			return OCA.Files.Files.getDownloadUrl(files, dir || Gallery.currentAlbum || '/', true);
+		},
+
+		/**
 		 * Shows an information box to the user
 		 *
 		 * @param event
