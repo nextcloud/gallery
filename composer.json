@@ -29,7 +29,7 @@
   "require-dev": {
     "guzzlehttp/guzzle": "^6.2",
     "phpunit/phpunit": "^5.7|^6.0",
-    "codeception/codeception": "2.2.*",
+    "codeception/codeception": "2.3.*",
     "codeception/phpbuiltinserver": "*",
     "composer-plugin-api": "^1.0",
     "codeception/c3": "2.*",
