@@ -9,6 +9,7 @@ addons:
     packages:
       - graphviz
       - gdb
+      - dbus-x11
 env:
   global:
     - CORE_BRANCH=master
