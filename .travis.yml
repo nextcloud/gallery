@@ -133,6 +133,7 @@ after_success:
 
 after_failure:
   - cat tests/_output/phpbuiltinserver.errors.txt
+  - cat tests/_output/phpbuiltinserver.access_log.txt
   - bash build/after_failure.sh
 
 matrix:
