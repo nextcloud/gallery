@@ -39,7 +39,7 @@
  * @constructor
 	 */
 	var GalleryImage = function (src, path, fileId, mimeType, mTime, etag, size, sharedWithUser,
-								 owner, permissions) {
+								 owner, permissions, exif) {
 		this.src = src;
 		this.path = path;
 		this.fileId = fileId;
@@ -50,6 +50,7 @@
 		this.sharedWithUser = sharedWithUser;
 		this.owner = owner;
 		this.permissions = permissions;
+		this.exif = exif || {};
 		this.thumbnail = null;
 		this.domDef = null;
 		this.spinner = null;

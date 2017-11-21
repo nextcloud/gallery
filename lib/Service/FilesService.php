@@ -110,12 +110,39 @@ abstract class FilesService extends Service {
 		$sharedWithUser = $node->isShared();
 		$ownerData = $this->getOwnerData($node);
 		$permissions = $node->getPermissions();
+		$exif = $this->getEXIF('data'.$node->getPath());
 
 		//$this->logger->debug("Image path : {var1}", ['var1' => $imagePath]);
 
 		return $this->formatNodeData(
-			$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions
+			$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions, $exif
 		);
+	}
+
+	/**
+	 * Returns specific EXIF data for given path (null if directory)
+	 *
+	 * @param string $path
+	 *
+	 * @return null|array<string,int|string>
+	 */
+	protected function getEXIF($path) {
+		if (is_dir($path)) {
+			return null;
+		}
+		$taken = null;
+		$data = @exif_read_data($path, 'EXIF');
+		if ($data) {
+			$value = @$data['DateTimeOriginal'];    // -> 'date taken' field
+			if ($value) {
+				$date = date_parse_from_format('Y:m:d H:i:s', $value);
+				$taken = mktime(
+					$date['hour'],  $date['minute'], $date['second'],
+					$date['month'], $date['day'],    $date['year']
+				);
+			}
+		}
+		return ['taken_date' => ($taken ? $taken : 0)];
 	}
 
 	/**
@@ -295,7 +322,7 @@ abstract class FilesService extends Service {
 	 * @return array
 	 */
 	private function formatNodeData(
-		$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions
+		$imagePath, $nodeId, $mTime, $etag, $size, $sharedWithUser, $ownerData, $permissions, $exif
 	) {
 		return [
 			'path'           => $imagePath,
@@ -305,7 +332,8 @@ abstract class FilesService extends Service {
 			'size'           => $size,
 			'sharedwithuser' => $sharedWithUser,
 			'owner'          => $ownerData,
-			'permissions'    => $permissions
+			'permissions'    => $permissions,
+			'exif'           => $exif
 		];
 	}
 

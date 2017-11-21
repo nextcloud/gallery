@@ -334,6 +334,7 @@ class SearchMediaServiceTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 			'sharedwithuser' => false,
 			'owner'          => [],
 			'permissions'    => 31,
+			'exif'           => [ 'taken_date' => 0 ],
 			'freespace'      => 7777777,
 		];
 		$topFolder2Data = $topFolder1Data;
@@ -346,6 +347,7 @@ class SearchMediaServiceTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 			'sharedwithuser' => false,
 			'owner'          => [],
 			'permissions'    => 31,
+			'exif'           => [ 'taken_date' => 0 ],
 			'mimetype'       => 'image/jpeg',
 		];
 		$file1 = $this->mockJpgFile(
@@ -374,6 +376,7 @@ class SearchMediaServiceTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 				'displayname' => $ownerName
 			],
 			'permissions'    => 31,
+			'exif'           => [ 'taken_date' => 0 ],
 			'mimetype'       => 'image/jpeg',
 		];
 		$file2 = $this->mockJpgFile(
@@ -391,6 +394,7 @@ class SearchMediaServiceTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 			'sharedwithuser' => false,
 			'owner'          => [],
 			'permissions'    => 11,
+			'exif'           => [ 'taken_date' => 0 ],
 			'freespace'      => 576576576576,
 		];
 		$album1 = $this->mockFolder(

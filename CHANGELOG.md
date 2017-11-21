@@ -1,3 +1,6 @@
+gallery (15.0.1)
+* Sort files by EXIF 'taken' date (@denim2x)
+
 gallery (15.0.0)
 * Drag and drop files and folders owncloud/gallery#405 (@oparoz)
 * Upload straight from the app owncloud/gallery#25 (@oparoz)
