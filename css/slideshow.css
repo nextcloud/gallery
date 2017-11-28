@@ -56,15 +56,6 @@
 	transition: opacity 3s;
 }
 
-#slideshow input.icon-view-toggle-background {
-	background-image: url("../img/toggle.svg");
-}
-
-#slideshow input.icon-view-delete {
-	background-image: url("../img/view-delete.svg");
-	background-size: 28px 28px;
-}
-
 #slideshow > * {
 	-webkit-transition: opacity 300ms;
 	-moz-transition: opacity 300ms;
@@ -76,7 +67,7 @@
 #slideshow > .slideshow-menu input:hover,
 #slideshow #slideshow-shared-button:hover,
 #slideshow.inactive > .name:hover {
-	opacity: .75;
+	opacity: 1;
 }
 
 #slideshow > .next, #slideshow > .previous {

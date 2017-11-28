@@ -1,29 +1,27 @@
 <div id="slideshow">
 	<div class="icon-loading-dark"></div>
-	<input type="button" class="svg next icon-view-next"/>
-	<input type="button" class="svg play icon-view-play"/>
-	<input type="button" class="svg pause icon-view-pause hidden"/>
-	<input type="button" class="svg previous icon-view-previous"/>
-	<input type="button" class="svg exit icon-view-close"/>
+	<input type="button" class="svg next icon-view-next icon-shadow icon-white icon-32"/>
+	<input type="button" class="svg play icon-play icon-shadow icon-white icon-32"/>
+	<input type="button" class="svg pause icon-pause icon-shadow icon-white icon-32 hidden"/>
+	<input type="button" class="svg previous icon-view-previous icon-shadow icon-white icon-32"/>
+	<input type="button" class="menuItem svg exit icon-close icon-shadow icon-white icon-32"/>
 	<div class="notification"></div>
 	<div class="slideshow-menu">
 		<input type="button"
-			   class="menuItem svg downloadImage icon-view-download hidden"/>
+			   class="menuItem svg downloadImage icon-download icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
-			   class="menuItem svg changeBackground icon-view-toggle-background hidden"/>
+			   class="menuItem svg changeBackground icon-toggle-background icon-32 icon-shadow icon-white hidden"/>
 		<input type="button"
-			   class="menuItem svg deleteImage icon-view-delete hidden">
-		<div id="slideshow-shared-button" class="menuItem button">
-			<img class="svg" src="<?php print_unescaped(
-				image_path('gallery', 'share-white.svg')
-			); ?>" alt="<?php p($l->t("Share")); ?>"/>
+			   class="menuItem svg deleteImage icon-delete icon-shadow icon-white icon-32 hidden">
+		<div id="slideshow-shared-button"
+			 class="menuItem svg button icon-share icon-shadow icon-white icon-32">
 		</div>
 		<a class="share" data-item-type="folder" data-item=""
 		   title="<?php p($l->t("Share")); ?>"
 		   data-possible-permissions="31">
 		</a>
 	</div>
-	<div class="progress icon-view-pause"/>
+	<div class="progress icon-pause icon-shadow icon-white icon-32"/>
 	<div class="name">
 		<div class="title"></div>
 	</div>
