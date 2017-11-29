@@ -76,7 +76,7 @@ style(
 		<!-- sharing button -->
 		<div id="shared-button" class="button">
 			<img class="svg" src="<?php print_unescaped(
-				image_path('core', 'actions/shared.svg')
+				image_path('core', 'actions/share.svg')
 			); ?>" alt="<?php p($l->t("Share")); ?>"/>
 		</div>
 		<a class="share" data-item-type="folder" data-item=""
