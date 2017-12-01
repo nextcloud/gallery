@@ -9,7 +9,6 @@ addons:
     packages:
       - graphviz
       - gdb
-      - dbus-x11
   firefox: "latest"
 env:
   global:
