@@ -6,8 +6,8 @@ body:after {
 	content: url("../img/nameasc.svg") url("../img/namedes.svg") url("../img/dateasc.svg") url("../img/datedes.svg");
 }
 
-#breadcrumbs {
-	float: left;
+#controls {
+	width: 100%;
 }
 
 .breadcrumbs-droppable {
@@ -29,8 +29,12 @@ div.crumb.last a {
 	width: 40px;
 }
 
-#controls > .right {
-	float: right;
+#controls .button:not(:last-child) {
+	margin-right: 3px;
+}
+
+#controls .actions > .right {
+	margin-left: auto;
 }
 
 #album-info-button {

@@ -1,15 +1,10 @@
 /* Gallery buttons design  */
-#controls .left {
-	float: left;
-}
-
 #controls .button.view-switcher {
 	padding: 6px 11px;
 	margin-left: auto;
 }
 
 #controls .button.view-switcher.gallery {
-	float: none;
 	margin-right: 4px;
 	padding: 9px 11px;
 }
@@ -27,15 +22,12 @@
 
 #controls .button.left-switch-button,
 #controls .button.left-switch-button:hover {
-	float: right;
 	display: inline;
 	border-radius: 3px 0 0 3px;
-	margin-left: 3px;
 	margin-right: 0;
 }
 
 #controls .button.right-switch-button {
-	float: right;
 	display: inline;
 	border-radius: 0 3px 3px 0;
 	margin-left: -1px;
