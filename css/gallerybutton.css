@@ -4,9 +4,8 @@
 }
 
 #controls .button.view-switcher {
-	float: right;
-	margin-top: 5px;
 	padding: 6px 11px;
+	margin-left: auto;
 }
 
 #controls .button.view-switcher.gallery {
