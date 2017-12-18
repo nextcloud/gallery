@@ -166,7 +166,7 @@ abstract class FilesService extends Service {
 	protected function isRootFolder($folder, $level) {
 		$isRootFolder = false;
 		$rootFolder = $this->environment->getVirtualRootFolder();
-		if ($folder->getPath() === $rootFolder->getPath()) {
+		if (rtrim($folder->getPath(), '/') === rtrim($rootFolder->getPath(), '/')) {
 			$isRootFolder = true;
 		}
 		$virtualRootFolder = $this->environment->getPathFromVirtualRoot($folder);
