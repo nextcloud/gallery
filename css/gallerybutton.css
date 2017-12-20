@@ -59,11 +59,6 @@
 	border: 1px solid rgba(240, 240, 240, .9);
 }
 
-#controls .button.view-switcher:hover {
-	color: #111;
-	border: 1px solid rgba(240, 240, 240, .9);
-}
-
 /* Original Flip CSS by David Walsh
 http://davidwalsh.name/css-flip*/
 
