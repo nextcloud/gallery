@@ -12,6 +12,10 @@
 	margin-top: 5px;
 }
 
+.actions {
+	padding: 5px;
+}
+
 .actions input, .actions button, .actions .button {
 	margin: 0;
 	float: left;

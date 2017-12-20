@@ -8,10 +8,7 @@ body:after {
 
 #controls {
 	width: 100%;
-}
-
-.breadcrumbs-droppable {
-
+	top: 45px;
 }
 
 .breadcrumbs-droppable-hover {
@@ -20,16 +17,19 @@ body:after {
 	transition: transform .1s ease-in;
 }
 
+/* Two ugly hacks to fix breadcrumbs in Gallery */
+div.crumb:not(:first-child),
+div.crumb.last {
+	position: relative;
+	top: -3px;
+	margin-right: 10px;
+}
+
 div.crumb.last a {
 	cursor: default;
 }
 
-#controls {
-	margin-top: 45px;
-}
-
 #controls .button {
-	margin-top: 5px;
 	width: 40px;
 }
 
@@ -78,12 +78,12 @@ div.crumb.last a {
 }
 
 #content-wrapper {
+	position: relative;
+	padding: 0;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transition: background-color 1s linear;
 	transition: background-color 1s linear;
-	margin-top: -45px;
-	height: calc(100% - 45px);
 }
 
 #gallery.hascontrols {
