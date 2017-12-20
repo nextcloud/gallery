@@ -24,6 +24,10 @@ div.crumb.last a {
 	cursor: default;
 }
 
+#controls {
+	margin-top: 45px;
+}
+
 #controls .button {
 	margin-top: 5px;
 	width: 40px;
@@ -78,16 +82,16 @@ div.crumb.last a {
 	-webkit-overflow-scrolling: touch;
 	-webkit-transition: background-color 1s linear;
 	transition: background-color 1s linear;
+	margin-top: -45px;
+	height: calc(100% - 45px);
 }
 
 #gallery.hascontrols {
 	position: relative;
 	overflow: hidden;
 	text-align: justify;
-	top: 45px;
 	padding-bottom: 10px;
 	margin-bottom: 45px;
-	margin-top: 0;
 }
 
 #gallery .row {
