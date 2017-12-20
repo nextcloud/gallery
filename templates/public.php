@@ -74,17 +74,7 @@ style(
 			<div id="controls">
 				<div id="breadcrumbs"></div>
 				<!-- sorting buttons -->
-				<div class="left">
-					<div id="sort-date-button" class="button sorting right-switch-button">
-						<div class="flipper">
-							<img class="svg asc front" src="<?php print_unescaped(
-								image_path($_['appName'], 'dateasc.svg')
-							); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
-							<img class="svg des back" src="<?php print_unescaped(
-								image_path($_['appName'], 'datedes.svg')
-							); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
-						</div>
-					</div>
+				<div class="buttons">
 					<div id="sort-name-button" class="button sorting left-switch-button">
 						<div class="flipper">
 							<img class="svg asc front" src="<?php print_unescaped(
@@ -95,8 +85,16 @@ style(
 							); ?>" alt="<?php p($l->t('Sort by name')); ?>"/>
 						</div>
 					</div>
-				</div>
-				<span class="right">
+					<div id="sort-date-button" class="button sorting right-switch-button">
+						<div class="flipper">
+							<img class="svg asc front" src="<?php print_unescaped(
+								image_path($_['appName'], 'dateasc.svg')
+							); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+							<img class="svg des back" src="<?php print_unescaped(
+								image_path($_['appName'], 'datedes.svg')
+							); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
+						</div>
+					</div>
 					<div id="album-info-button" class="button">
 						<span class="ribbon black"></span>
 						<img class="svg" src="<?php print_unescaped(
@@ -114,7 +112,7 @@ style(
 							image_path('core', 'actions/toggle-filelist.svg')
 						); ?>" alt="<?php p($l->t('Picture view')); ?>"/>
 					</div>
-				</span>
+				</div>
 			</div>
 			<div id="gallery" class="hascontrols"
 				 data-requesttoken="<?php p($_['requesttoken']) ?>"
