@@ -18,10 +18,12 @@ body:after {
 }
 
 /* Two ugly hacks to fix breadcrumbs in Gallery */
-div.crumb:not(:first-child),
-div.crumb.last {
+div.crumb:not(:first-child) {
 	position: relative;
 	top: -3px;
+}
+
+div.crumb.last {
 	margin-right: 10px;
 }
 
