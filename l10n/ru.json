@@ -100,7 +100,7 @@
     "the encryption key is missing" : "отсутствует ключ шифрования",
     "Here is the error message returned by the server: " : "Вот сообщение об ошибке, возвращенное сервером:",
     "For more information, please contact your friendly Nextcloud administrator." : "Для получения более подробной информации, пожалуйста, обратитесь к администратору вашего Nextcloud.",
-    "Sorry, but the server could not fulfill your request." : "К сожалению, сервер не смог выполнить Ваш запрос.",
+    "Sorry, but the server could not fulfill your request." : "К сожалению, сервер не смог выполнить ваш запрос.",
     "Possible reasons for the problem:" : "Возможные причины проблемы:",
     "a conflicting app was installed" : "было установлено конфликтующее приложение",
     "a required component is missing or was disconnected" : "необходимый компонент отсутствует или был отключен",
