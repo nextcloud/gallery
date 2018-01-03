@@ -6,12 +6,9 @@ body:after {
 	content: url("../img/nameasc.svg") url("../img/namedes.svg") url("../img/dateasc.svg") url("../img/datedes.svg");
 }
 
-#breadcrumbs {
-	float: left;
-}
-
-.breadcrumbs-droppable {
-
+#controls {
+	width: 100%;
+	top: 45px;
 }
 
 .breadcrumbs-droppable-hover {
@@ -20,17 +17,30 @@ body:after {
 	transition: transform .1s ease-in;
 }
 
+/* Two ugly hacks to fix breadcrumbs in Gallery */
+div.crumb:not(:first-child) {
+	position: relative;
+	top: -3px;
+}
+
+div.crumb.last {
+	margin-right: 10px;
+}
+
 div.crumb.last a {
 	cursor: default;
 }
 
 #controls .button {
-	margin-top: 5px;
 	width: 40px;
 }
 
-#controls > .right {
-	float: right;
+#controls .button:not(:last-child) {
+	margin-right: 3px;
+}
+
+#controls .actions > .right {
+	margin-left: auto;
 }
 
 #album-info-button {
@@ -70,6 +80,8 @@ div.crumb.last a {
 }
 
 #content-wrapper {
+	position: relative;
+	padding: 0;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transition: background-color 1s linear;
@@ -80,10 +92,8 @@ div.crumb.last a {
 	position: relative;
 	overflow: hidden;
 	text-align: justify;
-	top: 45px;
 	padding-bottom: 10px;
 	margin-bottom: 45px;
-	margin-top: 0;
 }
 
 #gallery .row {

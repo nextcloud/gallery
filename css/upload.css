@@ -13,7 +13,7 @@
 }
 
 .actions {
-	float: left;
+	padding: 5px;
 }
 
 .actions input, .actions button, .actions .button {
@@ -34,6 +34,8 @@
 .actions.creatable {
 	position: relative;
 	z-index: -30;
+	display: flex;
+	flex: 1 1;
 }
 
 .newFileMenu {
