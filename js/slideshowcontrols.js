@@ -233,9 +233,6 @@
 					.data('item-source', image.file)
 					.data('possible-permissions', image.permissions)
 					.click();
-				if (!$('#linkCheckbox').is(':checked')) {
-					$('#linkText').hide();
-				}
 			}
 		},
 
