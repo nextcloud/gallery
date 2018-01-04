@@ -210,9 +210,6 @@
 					.data('item-source', currentAlbum.fileId)
 					.data('possible-permissions', currentAlbum.permissions)
 					.click();
-				if (!$('#linkCheckbox').is(':checked')) {
-					$('#linkText').hide();
-				}
 			}
 		},
 
