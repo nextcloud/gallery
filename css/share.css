@@ -129,7 +129,9 @@ a.unshare {
 	margin-right: 0;
 }
 
-#linkText,#linkTextMore,#linkPass,#expiration {
+#linkText,#linkTextMore,#linkPass,#expiration,
+/* Override "display: inline-block" rule for controls in server */
+#controls #linkText,#controls #linkTextMore {
 	display:none;
 }
 
