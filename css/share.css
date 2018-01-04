@@ -129,7 +129,7 @@ a.unshare {
 	margin-right: 0;
 }
 
-#linkText,#linkPass,#expiration {
+#linkText,#linkTextMore,#linkPass,#expiration {
 	display:none;
 }
 
