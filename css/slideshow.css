@@ -200,3 +200,10 @@
 	/** above slideshow buttons */
 	z-index: 100001;
 }
+
+#slideshow ~ .ui-datepicker {
+	/* Larger than the slideshow share dropdown z-index, and important
+	   to override both the important z-index from the server and the
+	   value set in the element by jQuery UI Datepicker Widget */
+	z-index: 100010 !important;
+}
