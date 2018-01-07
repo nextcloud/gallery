@@ -12,7 +12,7 @@
 		<input type="button"
 			   class="menuItem svg changeBackground icon-toggle-background icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
-			   class="menuItem svg deleteImage icon-delete icon-shadow icon-white icon-32 hidden">
+			   class="menuItem svg deleteImage icon-delete icon-shadow icon-white icon-32 hidden"/>
 		<div id="slideshow-shared-button"
 			 class="menuItem svg button icon-share icon-shadow icon-white icon-32">
 		</div>
