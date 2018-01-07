@@ -520,6 +520,11 @@
 								el: '.deleteImage',
 								trans: t('gallery', 'Delete'),
 								toolTip: true
+							},
+							{
+								el: '.shareImage',
+								trans: t('gallery', 'Share'),
+								toolTip: true
 							}
 						];
 						for (var i = 0; i < buttonsArray.length; i++) {
