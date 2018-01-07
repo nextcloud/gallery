@@ -10,7 +10,7 @@
 		<input type="button"
 			   class="menuItem svg downloadImage icon-download icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
-			   class="menuItem svg changeBackground icon-toggle-background icon-32 icon-shadow icon-white hidden"/>
+			   class="menuItem svg changeBackground icon-toggle-background icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
 			   class="menuItem svg deleteImage icon-delete icon-shadow icon-white icon-32 hidden">
 		<div id="slideshow-shared-button"
