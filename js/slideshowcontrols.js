@@ -396,6 +396,9 @@
 		 * @private
 		 */
 		_exit: function () {
+			if (Gallery.Share){
+				Gallery.Share.hideDropDown();
+			}
 
 			// Only modern browsers can manipulate history
 			if (history && history.replaceState) {
