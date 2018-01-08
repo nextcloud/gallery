@@ -492,11 +492,13 @@
 							},
 							{
 								el: '.play',
-								trans: t('gallery', 'Play')
+								trans: t('gallery', 'Play'),
+								toolTip: true
 							},
 							{
 								el: '.pause',
-								trans: t('gallery', 'Pause')
+								trans: t('gallery', 'Pause'),
+								toolTip: true
 							},
 							{
 								el: '.previous',
@@ -504,7 +506,8 @@
 							},
 							{
 								el: '.exit',
-								trans: t('gallery', 'Close')
+								trans: t('gallery', 'Close'),
+								toolTip: true
 							},
 							{
 								el: '.downloadImage',
