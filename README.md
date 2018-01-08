@@ -69,7 +69,6 @@ First, make sure you have installed ImageMagick and its imagick PECL extension.
 Next add a few new entries to your **config/config.php** configuration file.
 
 ```
-  'preview_max_scale_factor' => 1,
   'enabledPreviewProviders' =>
   array (
     0 => 'OC\\Preview\\PNG',
