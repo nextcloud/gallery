@@ -26,7 +26,8 @@ class ImageResponseTest extends \Test\TestCase {
 
 	public function testRenderWithOcImageInstance() {
 		$resource = file_get_contents(\OC::$SERVERROOT . '/tests/data/testimage.jpg');
-		$preview = new \OC_Image($resource);
+		$preview = new \OC_Image();
+		$preview->loadFromData($resource);
 
 		$data = [
 			'name'     => 'testimage.jpg',
