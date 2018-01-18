@@ -6,7 +6,7 @@ body {
 
 #content {
 	height: initial;
-	min-height: calc( 100vh - 120px );
+	min-height: calc(100vh - 103px); /* 45px(#controls) + 58px(footer) = 103px */
 	overflow: hidden;
 }
 
