@@ -227,4 +227,9 @@ $(document).ready(function () {
 		window.galleryFileAction.buildFeaturesList(config.features);
 		window.galleryFileAction.register(config.mediatypes);
 	});
+
+	// create public share links as from the files app
+	if (!Gallery.appName) {
+		Gallery.appName = 'files';
+	}
 });
