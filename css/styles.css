@@ -81,6 +81,7 @@ div.crumb.last a {
 
 #content-wrapper {
 	position: relative;
+	height: calc(100vh - 45px); /* 45px for #controls element */
 	padding: 0;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
