@@ -10,12 +10,11 @@
 		<input type="button"
 			   class="menuItem svg downloadImage icon-download icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
-			   class="menuItem svg changeBackground icon-toggle-background icon-32 icon-shadow icon-white hidden"/>
+			   class="menuItem svg changeBackground icon-toggle-background icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
-			   class="menuItem svg deleteImage icon-delete icon-shadow icon-white icon-32 hidden">
-		<div id="slideshow-shared-button"
-			 class="menuItem svg button icon-share icon-shadow icon-white icon-32">
-		</div>
+			   class="menuItem svg deleteImage icon-delete icon-shadow icon-white icon-32 hidden"/>
+		<input type="button"
+			   class="menuItem svg shareImage icon-share icon-shadow icon-white icon-32 hidden"/>
 		<a class="share" data-item-type="folder" data-item=""
 		   title="<?php p($l->t("Share")); ?>"
 		   data-possible-permissions="31">
