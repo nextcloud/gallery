@@ -30,9 +30,10 @@
 	padding-left: 10px;
 }
 #dropdown.shareDropDown .shareWithLoading {
-	position: relative;
-	right: 70px;
-	top: 2px;
+	position: absolute;
+	padding: 11px;
+	right: 17px;
+	top: 18px;
 }
 #dropdown.shareDropDown .icon-loading-small.hidden {
 	display: none !important;
