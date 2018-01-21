@@ -341,7 +341,9 @@
 					delay: 750,
 					source: function (search, response) {
 						var $loading = $('#dropdown .shareWithLoading');
+						var $remoteInfo = $('#dropdown .shareWithRemoteInfo');
 						$loading.removeClass('hidden');
+						$remoteInfo.addClass('hidden');
 						$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
 							format: 'json',
 							search: search.term.trim(),
@@ -349,6 +351,7 @@
 							itemType: itemType
 						}, function (result) {
 							$loading.addClass('hidden');
+							$remoteInfo.removeClass('hidden');
 							if (result.ocs.meta.statuscode === 100) {
 								var users = result.ocs.data.exact.users.concat(result.ocs.data.users);
 								var groups = result.ocs.data.exact.groups.concat(result.ocs.data.groups);
@@ -419,6 +422,7 @@
 							}
 						}).fail(function () {
 							$('#dropdown').find('.shareWithLoading').addClass('hidden');
+							$('#dropdown').find('.shareWithRemoteInfo').removeClass('hidden');
 							OC.Notification.show(t('gallery', 'An error occured. Please try again'));
 							window.setTimeout(OC.Notification.hide, 5000);
 						});
@@ -461,7 +465,9 @@
 
 						var $input = $(this);
 						var $loading = $dropDown.find('.shareWithLoading');
+						var $remoteInfo = $dropDown.find('.shareWithRemoteInfo');
 						$loading.removeClass('hidden');
+						$remoteInfo.addClass('hidden');
 						$input.val(t('gallery', 'Adding user...'));
 						$input.prop('disabled', true);
 						Gallery.Share.share(
@@ -482,6 +488,7 @@
 							});
 						$input.prop('disabled', false);
 						$loading.addClass('hidden');
+						$remoteInfo.removeClass('hidden');
 						$('#shareWith').val('');
 						return false;
 					}
