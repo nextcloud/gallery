@@ -867,7 +867,7 @@
 			}
 			html += '</div>';
 			html += '</li>';
-			html = $(html).appendTo('#shareWithList');
+			html = $(html).appendTo('#dropdown #shareWithList');
 			if (oc_config.enable_avatars === true) {
 				if (shareType === this.SHARE_TYPE_USER) {
 					html.find('.avatar').avatar(escapeHTML(shareWith), 32);
