@@ -253,6 +253,10 @@
 		 */
 		_keyCodeSetup: function (makeCallBack) {
 			$(document).keyup(function (evt) {
+				if (evt.target.tagName.toLowerCase() === 'input') {
+					return;
+				}
+
 				var escKey = 27;
 				var leftKey = 37;
 				var rightKey = 39;
