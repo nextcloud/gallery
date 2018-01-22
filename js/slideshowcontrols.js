@@ -143,7 +143,7 @@
 				this.showButton('.deleteImage');
 			}
 			if (!isPublic && canShare) {
-				this.showButton('#slideshow-shared-button');
+				this.showButton('.shareImage');
 			}
 		},
 
@@ -154,7 +154,7 @@
 			this.hideButton('.changeBackground');
 			this.hideButton('.downloadImage');
 			this.hideButton('.deleteImage');
-			this.hideButton('#slideshow-shared-button');
+			this.hideButton('.shareImage');
 		},
 
 		/**
@@ -210,7 +210,7 @@
 		_specialButtonSetup: function (makeCallBack) {
 			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
 			this.container.find('.deleteImage').click(makeCallBack(this._deleteImage));
-			this.container.find('#slideshow-shared-button').click(makeCallBack(this.share));
+			this.container.find('.shareImage').click(makeCallBack(this.share));
 			this.container.find('.slideshow-menu').width = 52;
 			if (this.backgroundToggle) {
 				this.container.find('.changeBackground').click(
