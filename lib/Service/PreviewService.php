@@ -104,7 +104,8 @@ class PreviewService extends Service {
 	) {
 		try {
 			$preview = $this->previewManager->getPreview($file, $maxX, $maxY, !$keepAspect);
-			$img = new Image($preview->getContent());
+			$img = new Image();
+			$img->loadFromData($preview->getContent());
 			$mimeType = $img->mimeType();
 			if ($img && $base64Encode) {
 				$img = $this->encode($img);
@@ -115,6 +116,7 @@ class PreviewService extends Service {
 				'mimetype' => $mimeType
 			];
 		} catch (\Exception $exception) {
+			$this->logger->logException($exception, ['app' => 'gallery']);
 			throw new InternalServerErrorServiceException('Preview generation has failed');
 		}
 	}
