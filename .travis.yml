@@ -8,6 +8,7 @@ addons:
     packages:
       - graphviz
       - gdb
+      - ghostscript
 env:
   global:
     - CORE_BRANCH=stable11
