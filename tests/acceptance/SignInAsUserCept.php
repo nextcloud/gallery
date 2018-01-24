@@ -24,6 +24,6 @@ $loginPage->confirmLogin();
 
 
 $I->click('.menutoggle');
-$I->click('Gallery', '#navigation');
+$I->click('//li[*[normalize-space(text()) = "Gallery"]]/a', '#appmenu');
 $I->seeCurrentUrlEquals(GalleryPage::$URL);
 $I->seeElement(['css' => GalleryPage::$contentDiv]);
