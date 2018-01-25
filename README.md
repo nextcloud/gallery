@@ -8,7 +8,7 @@ Media gallery for Nextcloud which includes previews for all media types supporte
 
 Provides a dedicated view of all images in a grid, adds image viewing capabilities to the files app and adds a gallery view to public links.
 
-**This version is for Nextcloud 11. If you need the same app for older versions of Nextcloud. Use [Gallery+](https://github.com/oparoz/galleryplus) from the app stores.**
+**This version is for Nextcloud 14.**
 
 ![Screenshot](https://raw.githubusercontent.com/nextcloud/gallery/master/build/screenshots/Gallery.jpg)
 ## Featuring
@@ -18,7 +18,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 * Sort images by name or date added
 * Per album design, description and copyright statement
 * A la carte features (external shares, browser svg rendering, etc.)
-* Image download straight from the slideshow or the gallery
+* Image download and sharing straight from the slideshow or the gallery
 * Switch to Gallery from any folder in files and vice-versa
 * Ignore folders containing a ".nomedia" file
 * Browser rendering of SVG images (disabled by default)
@@ -90,7 +90,7 @@ That's it. You should be able to see more media types in your slideshows and gal
 
 Using Redis for files locking improves performance **by a factor of 10** when loading an album.
 
-Read about it in the [Nextcloud](https://docs.nextcloud.org/server/11/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
+Read about it in the [Nextcloud](https://docs.nextcloud.org/server/13/admin_manual/configuration_files/files_locking_transactional.html) Administration Manual
 
 ## Installation
 
