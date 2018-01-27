@@ -28,7 +28,7 @@
   },
   "require-dev": {
     "guzzlehttp/guzzle": "^6.2",
-    "phpunit/phpunit": "^5.7|^6.0",
+    "phpunit/phpunit": "^6.5",
     "codeception/codeception": "2.3.*",
     "codeception/phpbuiltinserver": "*",
     "composer-plugin-api": "^1.0",
