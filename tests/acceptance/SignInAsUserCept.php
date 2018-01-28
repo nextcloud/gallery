@@ -23,6 +23,7 @@ $loginPage = new Login($I);
 $loginPage->login('admin', 'admin');
 $loginPage->confirmLogin();
 
+$I->waitForElementVisible('//*[@id = "appmenu"]//li[*[normalize-space(text()) = "Gallery"]]/a', 30);
 $I->click('//li[*[normalize-space(text()) = "Gallery"]]/a', '#appmenu');
 $I->seeCurrentUrlEquals(GalleryPage::$URL);
 $I->seeElement(['css' => GalleryPage::$contentDiv]);
