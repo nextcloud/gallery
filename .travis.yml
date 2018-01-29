@@ -9,6 +9,7 @@ addons:
     packages:
       - graphviz
       - gdb
+      - ghostscript
   firefox: "latest"
 env:
   global:
