@@ -7,3 +7,6 @@ modules:
         - REST:
             url: http://localhost:8000
             depends: PhpBrowser
+        - PhpBrowser:
+            url: http://localhost:8000
+            timeout: 60
