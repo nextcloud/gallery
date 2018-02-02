@@ -11,6 +11,7 @@ addons:
       - gdb
       - ghostscript
   firefox: "latest"
+  mariadb: '10.2'
 env:
   global:
     - CORE_BRANCH=master
@@ -22,6 +23,7 @@ env:
   matrix:
     - DB=sqlite
     - DB=mysql
+    - DB=mariadb
 
 branches:
   only:
