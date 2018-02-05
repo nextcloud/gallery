@@ -57,7 +57,9 @@ class Login {
 	public function confirmLogin() {
 		$I = $this->acceptanceTester;
 
+		// 30 is the default timeout used in the WebDriver extension for
+		// requests, so it is used here too for consistency
+		$I->waitForElement(['css' => FilesPage::$contentDiv], 30);
 		$I->seeInCurrentUrl(FilesPage::$URL);
-		$I->seeElement(['css' => FilesPage::$contentDiv]);
 	}
 }
