@@ -5,7 +5,7 @@ lang_map = bg_BG: bg, cs_CZ: cs, fi_FI: fi, hu_HU: hu, nb_NO: nb, sk_SK: sk, th_
 
 [nextcloud.gallery]
 file_filter = <lang>/gallery.po
-source_file = templates/gallery.pot
+source_file = translationfiles/templates/gallery.pot
 source_lang = en
 type = PO
 
