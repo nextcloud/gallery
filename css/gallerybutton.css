@@ -4,6 +4,11 @@
 	margin-left: auto;
 }
 
+#controls .button.view-switcher:not(.gallery) {
+	margin-top: 5px;
+	margin-right: 5px;
+}
+
 #controls .button.view-switcher.gallery {
 	margin-right: 4px;
 	padding: 9px 11px;
