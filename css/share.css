@@ -154,8 +154,12 @@ a.unshare {
 	padding: 17px;
 }
 
+#controls #linkSocial {
+	right: -3px;
+}
+
 #slideshow #linkSocial {
-	right: -5px;
+	right: -6px;
 }
 
 #linkSocial .icon {

@@ -950,7 +950,7 @@ $(document).ready(function () {
 		if ($(this).data('item-type') !== undefined && $(this).data('path') !== undefined) {
 			var itemType = $(this).data('item-type');
 			var path = $(this).data('path');
-			var appendTo = $(this).parent().parent();
+			var appendTo = $(this).parents('#controls, #slideshow')[0];
 			var link = false;
 			var possiblePermissions = $(this).data('possible-permissions');
 			if ($(this).data('link') !== undefined && $(this).data('link') == true) {
