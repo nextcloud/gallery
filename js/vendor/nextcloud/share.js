@@ -1288,7 +1288,7 @@ $(document).ready(function () {
 		}
 		if (email != '') {
 			$('#email').prop('disabled', true);
-			$('#email').val(t('gallery', 'Sending ...'));
+			$('#email').val(t('gallery', 'Sending…'));
 			$('#emailButton').prop('disabled', true);
 
 			$.post(OC.filePath('core', 'ajax', 'share.php'), {
