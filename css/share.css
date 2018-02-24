@@ -69,7 +69,7 @@ a.showCruds {
 	opacity:.5;
 }
 
-a.unshare {
+.shareWithList > li > a.unshare {
 	display:inline;
 	float:right;
 	opacity:.5;
