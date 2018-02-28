@@ -51,7 +51,7 @@ before_install:
   - mkdir geckodriver
   - tar -xzf geckodriver-v0.19.1-linux64.tar.gz -C geckodriver
   - export PATH=$PATH:$PWD/geckodriver
-  - sh -c "wget -O ${TRAVIS_BUILD_DIR}/travis/lib-cache/selenium.jar https://selenium-release.storage.googleapis.com/3.7/selenium-server-standalone-3.7.1.jar;"
+  - sh -c "wget -O ${TRAVIS_BUILD_DIR}/travis/lib-cache/selenium.jar https://selenium-release.storage.googleapis.com/3.8/selenium-server-standalone-3.8.1.jar;"
   - java -jar ${TRAVIS_BUILD_DIR}/travis/lib-cache/selenium.jar -port 4444 -enablePassThrough false >/dev/null 2>&1 & # WARNING - Takes a long time to start up. Keep here
 
   # Ghostdriver does not work on Travis - Download the latest PhantomJS
