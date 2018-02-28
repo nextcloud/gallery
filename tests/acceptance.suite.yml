@@ -12,6 +12,6 @@ modules:
          - WebDriver:
              url: 'http://localhost:8000'
              browser: phantomjs
-             window_size: 960x1080
+             window_size: 1366x1080
              capabilities:
                  unexpectedAlertBehaviour: 'accept'
