@@ -81,7 +81,7 @@ $(document).ready(function () {
 				window.location.href = GalleryButton.url;
 			});
 
-			$('#controls .actions').append(GalleryButton.button);
+			$('#controls').append(GalleryButton.button);
 		}
 	}
 );
