@@ -23,6 +23,7 @@ if (extension_loaded('xdebug') && file_exists($c3)) {
 	include_once $c3;
 }
 
+use OCP\App\IAppManager;
 use OCP\IContainer;
 
 use OCP\AppFramework\App;
@@ -361,7 +362,8 @@ class Application extends App {
 					$c->query('OCP\IConfig'),
 					$c->query('OCP\AppFramework\Utility\IControllerMethodReflector'),
 					$c->query('OCP\IURLGenerator'),
-					$c->query('Logger')
+					$c->query('Logger'),
+					$c->query(IAppManager::class)
 				);
 			}
 		);

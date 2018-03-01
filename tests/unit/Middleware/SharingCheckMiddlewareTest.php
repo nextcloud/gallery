@@ -18,6 +18,7 @@ namespace OCA\Gallery\Tests\Middleware;
 
 use OC\AppFramework\Utility\ControllerMethodReflector;
 
+use OCP\App\IAppManager;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\ILogger;
@@ -52,6 +53,8 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 	private $urlGenerator;
 	/** @var ILogger */
 	protected $logger;
+	/** @var IAppManager */
+	protected $appManager;
 	/** @var Controller */
 	private $controller;
 	/** @var SharingCheckMiddleware */
@@ -77,6 +80,9 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 		$this->logger = $this->getMockBuilder('\OCP\ILogger')
 							 ->disableOriginalConstructor()
 							 ->getMock();
+		$this->appManager = $this->getMockBuilder(IAppManager::class)
+								 ->disableOriginalConstructor()
+								 ->getMock();
 		$this->controller = $this->getMockBuilder('OCP\AppFramework\Controller')
 								 ->disableOriginalConstructor()
 								 ->getMock();
@@ -87,7 +93,8 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 			$this->config,
 			$this->reflector,
 			$this->urlGenerator,
-			$this->logger
+			$this->logger,
+			$this->appManager
 		);
 	}
 
@@ -99,6 +106,16 @@ class SharingCheckMiddlewareTest extends \Test\TestCase {
 
 	public function testIsSharingEnabledWithSharingDisabled() {
 		$this->mockSharingConfigTo('no');
+
+		$this->assertFalse(self::invokePrivate($this->middleware, 'isSharingEnabled'));
+	}
+
+	public function testIsSharingEnabledWithSharingAppDisabled() {
+		$this->appManager->expects($this->once())
+			->method('isEnabledForUser')
+			->with(['files_sharing'])
+			->willReturn(false);
+		$this->mockSharingConfigTo('yes');
 
 		$this->assertFalse(self::invokePrivate($this->middleware, 'isSharingEnabled'));
 	}

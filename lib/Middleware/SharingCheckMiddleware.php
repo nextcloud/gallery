@@ -14,6 +14,7 @@
 
 namespace OCA\Gallery\Middleware;
 
+use OCP\App\IAppManager;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\ILogger;
@@ -33,6 +34,8 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	private $config;
 	/** @var IControllerMethodReflector */
 	protected $reflector;
+	/** @var IAppManager */
+	protected $appManager;
 
 	/***
 	 * Constructor
@@ -43,6 +46,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	 * @param IControllerMethodReflector $reflector
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
+	 * @param IAppManager $appManager
 	 */
 	public function __construct(
 		$appName,
@@ -50,7 +54,8 @@ class SharingCheckMiddleware extends CheckMiddleware {
 		IConfig $appConfig,
 		IControllerMethodReflector $reflector,
 		IURLGenerator $urlGenerator,
-		ILogger $logger
+		ILogger $logger,
+		IAppManager $appManager
 	) {
 		parent::__construct(
 			$appName,
@@ -61,6 +66,7 @@ class SharingCheckMiddleware extends CheckMiddleware {
 
 		$this->config = $appConfig;
 		$this->reflector = $reflector;
+		$this->appManager = $appManager;
 	}
 
 	/**
@@ -94,11 +100,11 @@ class SharingCheckMiddleware extends CheckMiddleware {
 	private function isSharingEnabled() {
 		$shareApiAllowLinks = $this->config->getAppValue('core', 'shareapi_allow_links', 'yes');
 
-		if ($shareApiAllowLinks !== 'yes') {
-			return false;
+		if ($shareApiAllowLinks === 'yes' && $this->appManager->isEnabledForUser('files_sharing')) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 }
