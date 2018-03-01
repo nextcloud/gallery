@@ -21,52 +21,9 @@ style(
 		'gallerybutton'
 	]
 );
+style('files_sharing', 'public');
 
 ?>
-<div id="notification-container">
-	<div id="notification" style="display: none;"></div>
-</div>
-<header>
-	<div id="header">
-		<a href="<?php print_unescaped(link_to('', 'index.php')); ?>"
-		   title="" id="nextcloud">
-			<div class="logo logo-icon svg">
-			</div>
-		</a>
-
-		<div class="header-appname-container">
-			<h1 class="header-appname">
-				<?php print_unescaped($theme->getHTMLName()); ?>
-			</h1>
-		</div>
-
-		<div class="header-right">
-			<span id="details">
-				<?php
-				if ($_['server2ServerSharing']) {
-					?>
-					<span id="save" data-protected="<?php p($_['protected']) ?>"
-						  data-owner="<?php p($_['displayName']) ?>"
-						  data-name="<?php p($_['filename']) ?>">
-									<button id="save-button"><?php p(
-											$l->t('Add to your Nextcloud')
-										) ?></button>
-									<form class="save-form hidden" action="#">
-										<input type="text" id="remote_address"
-											   placeholder="user@yourNextcloud.org"/>
-										<button id="save-button-confirm"
-												class="icon-confirm svg" disabled></button>
-									</form>
-								</span>
-				<?php } ?>
-				<a id="download" class="button">
-					<span class="icon-download"></span>
-					<span id="download-text"><?php p($l->t('Download')) ?></span>
-				</a>
-			</span>
-		</div>
-	</div>
-</header>
 <div id="content-wrapper">
 	<div id="content" class="app-<?php p($_['appName']) ?>"
 		 data-albumname="<?php p($_['albumName']) ?>">

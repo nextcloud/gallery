@@ -18,46 +18,6 @@ html.ie #content {
 	height: auto;
 }
 
-/* within #save */
-#save .save-form {
-	position: relative;
-}
-
-#remote_address {
-	margin: 0;
-	width: 130px;
-	height: 14px;
-	padding: 6px;
-	padding-right: 24px;
-}
-
-#save #save-button,
-#save #save-button-confirm {
-	margin: 0 5px;
-	height: 28px;
-	padding-bottom: 4px;
-	line-height: 14px;
-}
-
-#save-button-confirm {
-	position: absolute;
-	background-color: transparent;
-	border: none;
-	margin: 2px 4px !important;
-	right: 0;
-	opacity: .5;
-}
-
-#save-button-confirm:disabled, #save-button-confirm:disabled:hover, #save-button-confirm:disabled:focus {
-    opacity: .2;
-    cursor: default;
-}
-
-#save-button-confirm:hover,
-#save-button-confirm:focus {
-	opacity: 1;
-}
-
 #gallery.hascontrols {
 	padding-bottom: 0;
 }
