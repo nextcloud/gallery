@@ -8,7 +8,6 @@ body:after {
 
 #controls {
 	width: 100%;
-	top: 45px;
 }
 
 .breadcrumbs-droppable-hover {
@@ -82,11 +81,20 @@ div.crumb.last a {
 #content-wrapper {
 	position: relative;
 	height: calc(100vh - 45px); /* 45px for #controls element */
+	top: 45px;
 	padding: 0;
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transition: background-color 1s linear;
 	transition: background-color 1s linear;
+}
+
+#app {
+	/* #app is the parent of #controls and #gallery, and #controls uses a sticky
+	 * position, so the #app height must contain the full gallery for the
+	 * controls to be stuck while scrolling. The server sets "height: 100%" for
+	 * the app, so that value has to be overriden. */
+	height: auto;
 }
 
 #gallery.hascontrols {
