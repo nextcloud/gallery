@@ -51,7 +51,6 @@ OC.L10N.register(
     "Password protected" : "محمي بكلمة السر",
     "Error unsetting expiration date" : "حصل خطأ عند عملية إزالة تاريخ إنتهاء الصلاحية",
     "Error setting expiration date" : "حصل خطأ عند عملية تعيين تاريخ إنتهاء الصلاحية",
-    "Sending ..." : "جاري الارسال ...",
     "Email sent" : "تم ارسال البريد الالكتروني",
     "Warning" : "تحذير",
     "This share is password-protected" : "هذه المشاركة محمية بكلمة مرور",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Reasons might be:" : "الأسباب الممكنة :",
     "the item was removed" : "تم حذف العنصر المطلوب",
     "sharing is disabled" : "المشاركة غير مفعلة",
-    "Picture view" : "عرض الصورة"
+    "Picture view" : "عرض الصورة",
+    "Sending ..." : "جاري الارسال ..."
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

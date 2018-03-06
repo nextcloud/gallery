@@ -65,7 +65,6 @@ OC.L10N.register(
     "Password protected" : "Protejare cu parolă",
     "Error unsetting expiration date" : "Eroare la anularea datei de expirare",
     "Error setting expiration date" : "Eroare la specificarea datei de expirare",
-    "Sending ..." : "Se expediază...",
     "Email sent" : "Mesajul a fost expediat",
     "Warning" : "Atenție",
     "This share is password-protected" : "Această partajare este protejată cu parolă",
@@ -91,6 +90,7 @@ OC.L10N.register(
     "the link has expired" : "această legătură a expirat",
     "sharing is disabled" : "partajarea este oprită",
     "For more information, please ask the person who has sent you this link." : "Pentru mai multe informații, ia legătura cu persoana care ți-a trimis acest link.",
-    "Picture view" : "Vizualizare imagine"
+    "Picture view" : "Vizualizare imagine",
+    "Sending ..." : "Se expediază..."
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

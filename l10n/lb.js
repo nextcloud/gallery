@@ -51,10 +51,10 @@ OC.L10N.register(
     "Password protected" : "Passwuertgeschützt",
     "Error unsetting expiration date" : "Feeler beim Läsche vum Verfallsdatum",
     "Error setting expiration date" : "Feeler beim Setze vum Verfallsdatum",
-    "Sending ..." : "Gëtt geschéckt...",
     "Email sent" : "Email geschéckt",
     "Warning" : "Warnung",
     "The password is wrong. Try again." : "Den Passwuert ass incorrect. Probeier ed nach eng keier.",
-    "Cancel upload" : "Eroplueden ofbriechen"
+    "Cancel upload" : "Eroplueden ofbriechen",
+    "Sending ..." : "Gëtt geschéckt..."
 },
 "nplurals=2; plural=(n != 1);");

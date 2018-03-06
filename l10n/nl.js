@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Wachtwoord beveiligd",
     "Error unsetting expiration date" : "Fout tijdens het verwijderen van de vervaldatum",
     "Error setting expiration date" : "Fout tijdens het instellen van de vervaldatum",
-    "Sending ..." : "Versturen ...",
     "Email sent" : "E-mail verzonden",
     "Warning" : "Waarschuwing",
     "This share is password-protected" : "Deze share is met een wachtwoord beveiligd",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die je deze link heeft gestuurd.",
     "Add to your Nextcloud" : "Toevoegen aan je Nextcloud",
     "Picture view" : "Afbeeldingenoverzicht",
-    "Gallery view" : "Album"
+    "Gallery view" : "Album",
+    "Sending ..." : "Versturen ..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -76,7 +76,6 @@ OC.L10N.register(
     "Password protected" : "מוגן בססמה",
     "Error unsetting expiration date" : "אירעה שגיאה בביטול תאריך התפוגה",
     "Error setting expiration date" : "אירעה שגיאה בעת הגדרת תאריך התפוגה",
-    "Sending ..." : "מתבצעת שליחה ...",
     "Email sent" : "הודעת הדוא״ל נשלחה",
     "Warning" : "אזהרה",
     "This share is password-protected" : "שיתוף זה מוגן סיסמא",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
     "Picture view" : "תצוגת תמונה",
-    "Gallery view" : "תצוגת גלריה"
+    "Gallery view" : "תצוגת גלריה",
+    "Sending ..." : "מתבצעת שליחה ..."
 },
 "nplurals=2; plural=(n != 1);");

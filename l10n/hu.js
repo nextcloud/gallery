@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Jelszóval védett",
     "Error unsetting expiration date" : "Nem sikerült a lejárati időt törölni",
     "Error setting expiration date" : "Nem sikerült a lejárati időt beállítani",
-    "Sending ..." : "Küldés ...",
     "Email sent" : "Az e-mail elküldve!",
     "Warning" : "Figyelmeztetés",
     "This share is password-protected" : "Ez egy jelszóval védett megosztás",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
     "Picture view" : "Képnézet",
-    "Gallery view" : "Galéria nézet"
+    "Gallery view" : "Galéria nézet",
+    "Sending ..." : "Küldés ..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Parola korumalı",
     "Error unsetting expiration date" : "Son kullanma tarihi kaldırılırken sorun çıktı",
     "Error setting expiration date" : "Son kullanma tarihi ayarlanırken sorun çıktı",
-    "Sending ..." : "Gönderiliyor...",
     "Email sent" : "E-posta gönderildi",
     "Warning" : "Uyarı",
     "This share is password-protected" : "Bu paylaşım parola korumalı",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Add to your Nextcloud" : "Nextcloud hesabınıza ekleyin",
     "Picture view" : "Görsel görünümü",
-    "Gallery view" : "Galeri görünümü"
+    "Gallery view" : "Galeri görünümü",
+    "Sending ..." : "Gönderiliyor..."
 },
 "nplurals=2; plural=(n > 1);");

@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Passordbeskyttet",
     "Error unsetting expiration date" : "Feil ved nullstilling av utløpsdato",
     "Error setting expiration date" : "Kan ikke sette utløpsdato",
-    "Sending ..." : "Sender…",
     "Email sent" : "E-post sendt",
     "Warning" : "Advarsel",
     "This share is password-protected" : "Denne delingen er passordbeskyttet",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
     "Add to your Nextcloud" : "Legg til i din Nextcloud",
     "Picture view" : "Bildevisning",
-    "Gallery view" : "Gallerivisning"
+    "Gallery view" : "Gallerivisning",
+    "Sending ..." : "Sender…"
 },
 "nplurals=2; plural=(n != 1);");

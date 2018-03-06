@@ -46,13 +46,13 @@ OC.L10N.register(
     "Password protected" : "Passordverna",
     "Error unsetting expiration date" : "Klarte ikkje fjerna utløpsdato",
     "Error setting expiration date" : "Klarte ikkje setja utløpsdato",
-    "Sending ..." : "Sender …",
     "Email sent" : "E-post sendt",
     "Warning" : "Åtvaring",
     "The password is wrong. Try again." : "Passordet er gale. Prøv igjen.",
     "Cancel upload" : "Avbryt opplasting",
     "Reasons might be:" : "Moglege grunnar:",
     "the item was removed" : "fila/mappa er fjerna",
-    "sharing is disabled" : "deling er slått av"
+    "sharing is disabled" : "deling er slått av",
+    "Sending ..." : "Sender …"
 },
 "nplurals=2; plural=(n != 1);");

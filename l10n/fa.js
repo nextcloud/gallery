@@ -53,7 +53,6 @@ OC.L10N.register(
     "Password protected" : "نگهداری از رمز عبور",
     "Error unsetting expiration date" : "خطا در تنظیم نکردن تاریخ انقضا ",
     "Error setting expiration date" : "خطا در تنظیم تاریخ انقضا",
-    "Sending ..." : "درحال ارسال ...",
     "Email sent" : "ایمیل ارسال شد",
     "Warning" : "اخطار",
     "This share is password-protected" : "این اشتراک توسط رمز عبور محافظت می شود",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "the link has expired" : "لینک منقضی شده است",
     "sharing is disabled" : "قابلیت اشتراک گذاری غیرفعال است",
     "Picture view" : "نمایش تصویر",
-    "Gallery view" : "نمایش گالری"
+    "Gallery view" : "نمایش گالری",
+    "Sending ..." : "درحال ارسال ..."
 },
 "nplurals=1; plural=0;");

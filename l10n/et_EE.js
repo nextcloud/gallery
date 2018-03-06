@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Parooliga kaitstud",
     "Error unsetting expiration date" : "Viga aegumise kuupäeva eemaldamisel",
     "Error setting expiration date" : "Viga aegumise kuupäeva määramisel",
-    "Sending ..." : "Saatmine ...",
     "Email sent" : "E-kiri on saadetud",
     "Warning" : "Hoiatus",
     "This share is password-protected" : "See jagamine on parooliga kaitstud",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
     "Add to your Nextcloud" : "Lisa oma Nextcloudi",
     "Picture view" : "Pildi vaade",
-    "Gallery view" : "Galeriivaade"
+    "Gallery view" : "Galeriivaade",
+    "Sending ..." : "Saatmine ..."
 },
 "nplurals=2; plural=(n != 1);");

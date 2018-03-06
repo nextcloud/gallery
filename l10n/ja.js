@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "パスワード保護",
     "Error unsetting expiration date" : "有効期限の未設定エラー",
     "Error setting expiration date" : "有効期限の設定でエラー発生",
-    "Sending ..." : "送信中...",
     "Email sent" : "メールを送信しました",
     "Warning" : "警告",
     "This share is password-protected" : "この共有はパスワードで保護されています",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
     "Picture view" : "ピクチャービュー",
-    "Gallery view" : "ギャラリー表示"
+    "Gallery view" : "ギャラリー表示",
+    "Sending ..." : "送信中..."
 },
 "nplurals=1; plural=0;");

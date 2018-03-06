@@ -76,7 +76,6 @@ OC.L10N.register(
     "Password protected" : "ใส่รหัสผ่านไว้",
     "Error unsetting expiration date" : "เกิดข้อผิดพลาดขณะยกเลิกการตั้งค่าวันที่หมดอายุ",
     "Error setting expiration date" : "เกิดข้อผิดพลาดในการตั้งค่าวันที่หมดอายุ",
-    "Sending ..." : "กำลังส่ง...",
     "Email sent" : "ส่งอีเมลแล้ว",
     "Warning" : "คำเตือน",
     "This share is password-protected" : "นี้แชร์การป้องกันด้วยรหัสผ่าน",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
     "Picture view" : "ดูรูปภาพ",
-    "Gallery view" : "ดูแกลอรี่"
+    "Gallery view" : "ดูแกลอรี่",
+    "Sending ..." : "กำลังส่ง..."
 },
 "nplurals=1; plural=0;");

@@ -70,7 +70,6 @@ OC.L10N.register(
     "Password protected" : "Protegit per senhal",
     "Error unsetting expiration date" : "Error al moment de la supression de la data d'expiracion",
     "Error setting expiration date" : "Error al moment de l'especificacion de la data d'expiracion",
-    "Sending ..." : "Mandadís…",
     "Email sent" : "Corrièl mandat",
     "Warning" : "Atencion",
     "This share is password-protected" : "Aqueste partiment es protegit per un senhal",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
     "Picture view" : "Visualizacion de l'imatge",
-    "Gallery view" : "Vista en galariá"
+    "Gallery view" : "Vista en galariá",
+    "Sending ..." : "Mandadís…"
 },
 "nplurals=2; plural=(n > 1);");

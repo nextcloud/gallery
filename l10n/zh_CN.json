@@ -82,7 +82,6 @@
     "Password protected" : "密码已受保护",
     "Error unsetting expiration date" : "取消设置过期日期时出错",
     "Error setting expiration date" : "设置过期日期时出错",
-    "Sending ..." : "正在发送...",
     "Email sent" : "邮件已发送",
     "Warning" : "警告",
     "This share is password-protected" : "这是一个密码保护的共享",
@@ -112,6 +111,7 @@
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系共享链接给你的人。",
     "Add to your Nextcloud" : "添加到您的Nextcloud",
     "Picture view" : "查看图片",
-    "Gallery view" : "查看相册"
+    "Gallery view" : "查看相册",
+    "Sending ..." : "正在发送..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

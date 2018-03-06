@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Mbrojtur me fjalëkalim",
     "Error unsetting expiration date" : "Gabim në heqjen e datës së skadimit",
     "Error setting expiration date" : "Gabim në caktimin e datës së skadimit",
-    "Sending ..." : "Po dërgohet …",
     "Email sent" : "Email-i u dërgua",
     "Warning" : "Kujdes",
     "This share is password-protected" : "Kjo pjesë është e mbrojtur me fjalëkalim",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
     "Picture view" : "Pamje Foto",
-    "Gallery view" : "Pamje Galeri"
+    "Gallery view" : "Pamje Galeri",
+    "Sending ..." : "Po dërgohet …"
 },
 "nplurals=2; plural=(n != 1);");
