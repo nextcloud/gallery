@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Pasahitzarekin babestuta",
     "Error unsetting expiration date" : "Errorea izan da muga data kentzean",
     "Error setting expiration date" : "Errore bat egon da muga data ezartzean",
-    "Sending ..." : "Bidaltzen ...",
     "Email sent" : "Eposta bidalia",
     "Warning" : "Abisua",
     "This share is password-protected" : "Elkarbanatutako hau pasahitzarekin babestuta dago",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Informazio gehiagorako, eskatu lotura hau bidali dizun pertsonari",
     "Add to your Nextcloud" : "Gehitu zure Nextcloud-era",
     "Picture view" : "Irudi bistaratzea",
-    "Gallery view" : "Galeria ikuspegia"
+    "Gallery view" : "Galeria ikuspegia",
+    "Sending ..." : "Bidaltzen ..."
 },
 "nplurals=2; plural=(n != 1);");

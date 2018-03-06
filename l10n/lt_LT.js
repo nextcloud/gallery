@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Apsaugota slaptažodžiu",
     "Error unsetting expiration date" : "Klaida nuimant galiojimo laiką",
     "Error setting expiration date" : "Klaida nustatant galiojimo laiką",
-    "Sending ..." : "Siunčiama...",
     "Email sent" : "Laiškas išsiųstas",
     "Warning" : "Įspėjimas",
     "This share is password-protected" : "Turinys apsaugotas slaptažodžiu",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
     "Picture view" : "Paveikslo rodymas",
-    "Gallery view" : "Galerijos rodinys"
+    "Gallery view" : "Galerijos rodinys",
+    "Sending ..." : "Siunčiama..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");

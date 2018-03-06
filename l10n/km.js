@@ -33,7 +33,6 @@ OC.L10N.register(
     "create" : "បង្កើត",
     "delete" : "លុប",
     "Password protected" : "បាន​ការ​ពារ​ដោយ​ពាក្យ​សម្ងាត់",
-    "Sending ..." : "កំពុង​ផ្ញើ ...",
     "Email sent" : "បាន​ផ្ញើ​អ៊ីមែល",
     "Warning" : "បម្រាម",
     "This share is password-protected" : "ការ​ចែករំលែក​នេះ​ត្រូវ​បាន​ការពារ​ដោយ​ពាក្យ​សម្ងាត់",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Reasons might be:" : "មូលហេតុ​អាច​ជា៖",
     "the item was removed" : "របស់​ត្រូវ​បាន​ដក​ចេញ",
     "sharing is disabled" : "មិន​អនុញ្ញាត​ការ​ចែករំលែក",
-    "Picture view" : "ទិដ្ឋភាពរូបភាព"
+    "Picture view" : "ទិដ្ឋភាពរូបភាព",
+    "Sending ..." : "កំពុង​ផ្ញើ ..."
 },
 "nplurals=1; plural=0;");

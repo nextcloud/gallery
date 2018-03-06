@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Chránené heslom",
     "Error unsetting expiration date" : "Chyba pri odstraňovaní dátumu expirácie",
     "Error setting expiration date" : "Chyba pri nastavení dátumu expirácie",
-    "Sending ..." : "Odosielam ...",
     "Email sent" : "Email odoslaný",
     "Warning" : "Upozornenie",
     "This share is password-protected" : "Táto položka je chránená heslom",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
     "Picture view" : "Zobrazenie obrázka",
-    "Gallery view" : "Pohľad galérie"
+    "Gallery view" : "Pohľad galérie",
+    "Sending ..." : "Odosielam ..."
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

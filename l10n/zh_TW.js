@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "受密碼保護",
     "Error unsetting expiration date" : "取消到期日設定失敗",
     "Error setting expiration date" : "設定到期日發生錯誤",
-    "Sending ..." : "正在傳送…",
     "Email sent" : "Email 已寄出",
     "Warning" : "警告",
     "This share is password-protected" : "這個分享有密碼保護",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
     "Add to your Nextcloud" : "加入到您的 Nextcloud",
     "Picture view" : "檢視圖片",
-    "Gallery view" : "瀏覽相簿"
+    "Gallery view" : "瀏覽相簿",
+    "Sending ..." : "正在傳送…"
 },
 "nplurals=1; plural=0;");

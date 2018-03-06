@@ -43,7 +43,6 @@ OC.L10N.register(
     "Password protected" : "Mật khẩu bảo vệ",
     "Error unsetting expiration date" : "Lỗi không thiết lập ngày kết thúc",
     "Error setting expiration date" : "Lỗi cấu hình ngày kết thúc",
-    "Sending ..." : "Đang gởi ...",
     "Email sent" : "Email đã được gửi",
     "Warning" : "Cảnh báo",
     "The password is wrong. Try again." : "Mật khẩu sai. Xin hãy thử lại.",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Reasons might be:" : "Lý do có thể là:",
     "the item was removed" : "đối tượng đã bị xóa",
     "sharing is disabled" : "việc chia sẻ bị cấm",
-    "Picture view" : "Xem h"
+    "Picture view" : "Xem h",
+    "Sending ..." : "Đang gởi ..."
 },
 "nplurals=1; plural=0;");

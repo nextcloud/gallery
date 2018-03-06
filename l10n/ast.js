@@ -83,7 +83,6 @@ OC.L10N.register(
     "Password protected" : "Contraseña protexida",
     "Error unsetting expiration date" : "Fallu desafitando la data de caducidá",
     "Error setting expiration date" : "Fallu afitando la fecha de caducidá",
-    "Sending ..." : "Unviando ...",
     "Email sent" : "Corréu unviáu",
     "Warning" : "Avisu",
     "This share is password-protected" : "Esta compartición tien contraseña protexida",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "sharing is disabled" : "la compartición ta deshabilitada",
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
     "Picture view" : "Vista d'imáxenes",
-    "Gallery view" : "Vista de galería"
+    "Gallery view" : "Vista de galería",
+    "Sending ..." : "Unviando ..."
 },
 "nplurals=2; plural=(n != 1);");

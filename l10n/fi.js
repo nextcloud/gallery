@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Salasanasuojattu",
     "Error unsetting expiration date" : "Virhe purettaessa vanhenemispäivää",
     "Error setting expiration date" : "Virhe vanhenemispäivää asettaessa",
-    "Sending ..." : "Lähetetään...",
     "Email sent" : "Sähköposti lähetetty",
     "Warning" : "Varoitus",
     "This share is password-protected" : "Tämä jako on suojattu salasanalla",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
     "Add to your Nextcloud" : "Lisää Nextcloudiisi",
     "Picture view" : "Kuvanäkymä",
-    "Gallery view" : "Gallerianäkymä"
+    "Gallery view" : "Gallerianäkymä",
+    "Sending ..." : "Lähetetään..."
 },
 "nplurals=2; plural=(n != 1);");

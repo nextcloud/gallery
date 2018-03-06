@@ -34,9 +34,9 @@ OC.L10N.register(
     "Password protected" : "Diogelwyd â chyfrinair",
     "Error unsetting expiration date" : "Gwall wrth ddad-osod dyddiad dod i ben",
     "Error setting expiration date" : "Gwall wrth osod dyddiad dod i ben",
-    "Sending ..." : "Yn anfon ...",
     "Email sent" : "Anfonwyd yr e-bost",
     "Warning" : "Rhybudd",
-    "Cancel upload" : "Diddymu llwytho i fyny"
+    "Cancel upload" : "Diddymu llwytho i fyny",
+    "Sending ..." : "Yn anfon ..."
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

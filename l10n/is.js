@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Verja með lykilorði",
     "Error unsetting expiration date" : "Villa við að aftengja gildistíma",
     "Error setting expiration date" : "Villa við að setja gildistíma",
-    "Sending ..." : "Sendi ...",
     "Email sent" : "Tölvupóstur sendur",
     "Warning" : "Aðvörun",
     "This share is password-protected" : "Þessi sameign er varin með lykilorði",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Til að vita meira skaltu hafa samband við þann sem sendi þér þennan tengil.",
     "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
     "Picture view" : "Myndasýn",
-    "Gallery view" : "Myndasafnssýn"
+    "Gallery view" : "Myndasafnssýn",
+    "Sending ..." : "Sendi ..."
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

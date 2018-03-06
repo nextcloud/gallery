@@ -78,7 +78,6 @@ OC.L10N.register(
     "Password protected" : "Προστασία με συνθηματικό",
     "Error unsetting expiration date" : "Σφάλμα κατά την διαγραφή της ημ. λήξης",
     "Error setting expiration date" : "Σφάλμα κατά τον ορισμό ημ. λήξης",
-    "Sending ..." : "Αποστολή...",
     "Email sent" : "Το Email απεστάλη ",
     "Warning" : "Προειδοποίηση",
     "This share is password-protected" : "Αυτός ο κοινόχρηστος φάκελος προστατεύεται με κωδικό",
@@ -108,6 +107,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
     "Picture view" : "Προβολή εικονιδίων",
-    "Gallery view" : "Προβολή Συλλογής"
+    "Gallery view" : "Προβολή Συλλογής",
+    "Sending ..." : "Αποστολή..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Lösenordsskyddad",
     "Error unsetting expiration date" : "Fel vid borttagning av utgångsdatum",
     "Error setting expiration date" : "Fel vid val av utgångsdatum",
-    "Sending ..." : "Skickar ...",
     "Email sent" : "E-post skickat",
     "Warning" : "Varning",
     "This share is password-protected" : "Den här delningen är lösenordsskyddad",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
     "Picture view" : "Bildvy",
-    "Gallery view" : "Bildgallerivy"
+    "Gallery view" : "Bildgallerivy",
+    "Sending ..." : "Skickar ..."
 },
 "nplurals=2; plural=(n != 1);");

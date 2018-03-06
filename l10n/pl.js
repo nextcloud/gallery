@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Zabezpieczone hasłem",
     "Error unsetting expiration date" : "Błąd podczas usuwania daty wygaśnięcia",
     "Error setting expiration date" : "Błąd podczas ustawiania daty wygaśnięcia",
-    "Sending ..." : "Wysyłanie...",
     "Email sent" : "E-mail wysłany",
     "Warning" : "Ostrzeżenie",
     "This share is password-protected" : "Udostępniony folder chroniony jest hasłem",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Po więcej informacji, proszę skontaktuj się z osobą, która wysłała Tobie ten link.",
     "Add to your Nextcloud" : "Dodaj do swojego Nextcloud",
     "Picture view" : "Widok zdjęć",
-    "Gallery view" : "Widok galerii"
+    "Gallery view" : "Widok galerii",
+    "Sending ..." : "Wysyłanie..."
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
