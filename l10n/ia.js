@@ -72,7 +72,6 @@ OC.L10N.register(
     "change" : "modifica",
     "delete" : "deler",
     "Password protected" : "Protegite per contrasigno",
-    "Sending ..." : "Inviante ...",
     "Email sent" : "Message de e-posta inviate",
     "Warning" : "Advertimento",
     "This share is password-protected" : "Iste compartimento es protegite per contrasigno",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Pro obtener plus informationes, per favor demanda le persona qui ha te inviate iste ligamine.",
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
     "Picture view" : "Visualisation de Imagine",
-    "Gallery view" : "Visualisation de Galeria"
+    "Gallery view" : "Visualisation de Galeria",
+    "Sending ..." : "Inviante ..."
 },
 "nplurals=2; plural=(n != 1);");

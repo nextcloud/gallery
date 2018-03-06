@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Protégé par mot de passe",
     "Error unsetting expiration date" : "Erreur lors de la suppression de la date d'expiration",
     "Error setting expiration date" : "Erreur lors de la spécification de la date d'expiration",
-    "Sending ..." : "Envoi…",
     "Email sent" : "E-mail envoyé",
     "Warning" : "Attention",
     "This share is password-protected" : "Ce partage est protégé par un mot de passe",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Pour plus d'informations, veuillez contacter la personne qui vous a envoyé ce lien.",
     "Add to your Nextcloud" : "Ajouter à votre Nextcloud",
     "Picture view" : "Visualisation de l'image",
-    "Gallery view" : "Vue galerie"
+    "Gallery view" : "Vue galerie",
+    "Sending ..." : "Envoi…"
 },
 "nplurals=2; plural=(n > 1);");

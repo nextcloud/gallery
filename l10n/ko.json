@@ -82,7 +82,6 @@
     "Password protected" : "암호로 보호됨",
     "Error unsetting expiration date" : "만료 날짜 해제 오류",
     "Error setting expiration date" : "만료 날짜 설정 오류",
-    "Sending ..." : "전송 중...",
     "Email sent" : "이메일 발송됨",
     "Warning" : "경고",
     "This share is password-protected" : "이 공유는 암호로 보호되어 있습니다",
@@ -112,6 +111,7 @@
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Add to your Nextcloud" : "Nextcloud에 추가",
     "Picture view" : "사진 보기",
-    "Gallery view" : "갤러리 보기"
+    "Gallery view" : "갤러리 보기",
+    "Sending ..." : "전송 중..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -72,7 +72,6 @@
     "Password protected" : "Aizsargāts ar paroli",
     "Error unsetting expiration date" : "Kļūda, noņemot termiņa datumu",
     "Error setting expiration date" : "Kļūda, iestatot termiņa datumu",
-    "Sending ..." : "Sūta...",
     "Email sent" : "Vēstule nosūtīta",
     "Warning" : "Brīdinājums",
     "This share is password-protected" : "Šī koplietotne ir aizsargāta ar paroli",
@@ -96,6 +95,7 @@
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
     "Add to your Nextcloud" : "Pievienot savam Nextcloud",
     "Picture view" : "Attēla skats",
-    "Gallery view" : "Galerijas skats"
+    "Gallery view" : "Galerijas skats",
+    "Sending ..." : "Sūta..."
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

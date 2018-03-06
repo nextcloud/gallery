@@ -42,9 +42,9 @@ OC.L10N.register(
     "Password protected" : "ಗುಪ್ತಪದದಿಂದ ರಕ್ಷಿಸಲಾಗಿದೆ",
     "Error unsetting expiration date" : "ಮುಕ್ತಾಯ ದಿನಾಂಕವನ್ನು ಹಿಂಪಡೆಯುವಲಿ್ಲ ದೋಷ",
     "Error setting expiration date" : "ಮುಕ್ತಾಯ ದಿನಾಂಕವನ್ನು ನಿರ್ದರಿಸುವಲ್ಲಿ ದೋಷ",
-    "Sending ..." : "﻿ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ ...",
     "Email sent" : "ಇ-ಅಂಚೆ ಕಳುಹಿಸಲಾಗಿದೆ",
     "Warning" : "﻿ಎಚ್ಚರಿಕೆ",
-    "Cancel upload" : "﻿ವರ್ಗಾವಣೆ ರದ್ದು ಮಾಡಿ"
+    "Cancel upload" : "﻿ವರ್ಗಾವಣೆ ರದ್ದು ಮಾಡಿ",
+    "Sending ..." : "﻿ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ ..."
 },
 "nplurals=1; plural=0;");

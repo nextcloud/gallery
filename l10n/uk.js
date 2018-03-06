@@ -54,7 +54,6 @@ OC.L10N.register(
     "Password protected" : "Захищено паролем",
     "Error unsetting expiration date" : "Помилка при відміні терміну дії",
     "Error setting expiration date" : "Помилка при встановленні терміну дії",
-    "Sending ..." : "Надсилання...",
     "Email sent" : "Лист надіслано",
     "Warning" : "Попередження",
     "This share is password-protected" : "Цей ресурс обміну захищений паролем",
@@ -73,6 +72,7 @@ OC.L10N.register(
     "the item was removed" : "цей пункт був вилучений",
     "the link has expired" : "посилання застаріло",
     "sharing is disabled" : "обмін заборонений",
-    "Picture view" : "Перегляд Зображення"
+    "Picture view" : "Перегляд Зображення",
+    "Sending ..." : "Надсилання..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

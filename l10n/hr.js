@@ -50,7 +50,6 @@ OC.L10N.register(
     "Password protected" : "Lozinka zaštićena",
     "Error unsetting expiration date" : "Pogrešno uklanjanje postavke datuma isteka",
     "Error setting expiration date" : "Pogrešno učitavanje postavke datuma isteka",
-    "Sending ..." : "Slanje...",
     "Email sent" : "E-pošta je poslana",
     "Warning" : "Upozorenje",
     "This share is password-protected" : "Ovaj zajednički resurs je zaštićen lozinkom",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Reasons might be:" : "Mogući razlozi su:",
     "the item was removed" : "stavka je uklonjena",
     "sharing is disabled" : "dijeljenje je onemogućeno",
-    "Picture view" : "Prikaz slika"
+    "Picture view" : "Prikaz slika",
+    "Sending ..." : "Slanje..."
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

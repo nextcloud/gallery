@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "Beskyttet med adgangskode",
     "Error unsetting expiration date" : "Fejl ved fjernelse af udløbsdato",
     "Error setting expiration date" : "Fejl under sætning af udløbsdato",
-    "Sending ..." : "Sender ...",
     "Email sent" : "E-mail afsendt",
     "Warning" : "Advarsel",
     "This share is password-protected" : "Delingen er beskyttet af kodeord",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "For mere information, så spørg personen som sendte dig dette link.",
     "Add to your Nextcloud" : "Tilføj til din Nextcloud",
     "Picture view" : "Billedvisning",
-    "Gallery view" : "Galleri visning"
+    "Gallery view" : "Galleri visning",
+    "Sending ..." : "Sender ..."
 },
 "nplurals=2; plural=(n != 1);");

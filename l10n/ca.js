@@ -69,7 +69,6 @@ OC.L10N.register(
     "Password protected" : "Protegeix amb contrasenya",
     "Error unsetting expiration date" : "Error en eliminar la data de venciment",
     "Error setting expiration date" : "Error en establir la data de venciment",
-    "Sending ..." : "Enviant...",
     "Email sent" : "El correu electrónic s'ha enviat",
     "Warning" : "Avís",
     "This share is password-protected" : "Aquest compartit està protegit amb contrasenya",
@@ -90,6 +89,7 @@ OC.L10N.register(
     "sharing is disabled" : "s'ha desactivat la compartició",
     "Add to your Nextcloud" : "Afegir al teu Nextcloud",
     "Picture view" : "Mostra fotos",
-    "Gallery view" : "Vista de galeria"
+    "Gallery view" : "Vista de galeria",
+    "Sending ..." : "Enviant..."
 },
 "nplurals=2; plural=(n != 1);");

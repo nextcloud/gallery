@@ -38,7 +38,6 @@ OC.L10N.register(
     "Password protected" : "কূটশব্দদ্বারা সুরক্ষিত",
     "Error unsetting expiration date" : "মেয়াদোত্তীর্ণ হওয়ার তারিখ নির্ধারণ বাতিল করতে সমস্যা দেখা দিয়েছে",
     "Error setting expiration date" : "মেয়াদোত্তীর্ণ হওয়ার তারিখ নির্ধারণ করতে সমস্যা দেখা দিয়েছে",
-    "Sending ..." : "পাঠানো হচ্ছে......",
     "Email sent" : "ই-মেইল পাঠানো হয়েছে",
     "Warning" : "সতর্কবাণী",
     "This share is password-protected" : "এই শেয়ারটি কূটশব্দদ্বারা সুরক্ষিত",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "Reasons might be:" : "কারণসমূহ হতে পারে:",
     "the item was removed" : "আইটেমটি অপসারণ করা হয়েছিল",
     "sharing is disabled" : "ভাগাভাগি অকার্যকর",
-    "Picture view" : "চিত্র দর্শন"
+    "Picture view" : "চিত্র দর্শন",
+    "Sending ..." : "পাঠানো হচ্ছে......"
 },
 "nplurals=2; plural=(n != 1);");

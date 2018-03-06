@@ -79,7 +79,6 @@ OC.L10N.register(
     "Password protected" : "Kata sandi dilindungi",
     "Error unsetting expiration date" : "Kesalahan saat menghapus tanggal kedaluwarsa",
     "Error setting expiration date" : "Kesalahan saat mengatur tanggal kedaluwarsa",
-    "Sending ..." : "Mengirim ...",
     "Email sent" : "Email terkirim",
     "Warning" : "Peringatan",
     "This share is password-protected" : "Berbagi ini dilindungi kata sandi",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
     "Picture view" : "Tampilan gambar",
-    "Gallery view" : "Tampilan galeri"
+    "Gallery view" : "Tampilan galeri",
+    "Sending ..." : "Mengirim ..."
 },
 "nplurals=1; plural=0;");

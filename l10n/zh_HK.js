@@ -33,10 +33,10 @@ OC.L10N.register(
     "create" : "新增",
     "delete" : "刪除",
     "Password protected" : "密碼保護",
-    "Sending ..." : "發送中...",
     "Email sent" : "郵件已傳",
     "Warning" : "警告",
     "Cancel upload" : "取消上戴",
-    "Picture view" : "預覽圖片"
+    "Picture view" : "預覽圖片",
+    "Sending ..." : "發送中..."
 },
 "nplurals=1; plural=0;");

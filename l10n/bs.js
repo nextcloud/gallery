@@ -47,11 +47,11 @@ OC.L10N.register(
     "Password protected" : "Zaštićeno lozinkom",
     "Error unsetting expiration date" : "Pogrešno uklanjanje postavke datuma isteka",
     "Error setting expiration date" : "Pogrešno postavljanje datuma isteka",
-    "Sending ..." : "Slanje...",
     "Email sent" : "E-pošta je poslana",
     "Warning" : "Upozorenje",
     "Cancel upload" : "Prekini učitavanje",
     "File list" : "Popis datoteka",
-    "Picture view" : "Prikaz slika"
+    "Picture view" : "Prikaz slika",
+    "Sending ..." : "Slanje..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

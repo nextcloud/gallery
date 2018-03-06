@@ -84,7 +84,6 @@ OC.L10N.register(
     "Password protected" : "პაროლით დაცული",
     "Error unsetting expiration date" : "შეცდომა ვადის გასვლის მოხსნის დროს",
     "Error setting expiration date" : "შეცდომა ვადის გასვლის მითითების დროს",
-    "Sending ..." : "გაგზავნა …",
     "Email sent" : "ელ-წერილი გაიგზავნა",
     "Warning" : "გაფრთხილება",
     "This share is password-protected" : "ეს გაზიარება დაცულია პაროლით",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "მეტი ინფრმაციისთვის, გთხოვთ ჰკითხოთ ადამიანს ვინც გამოგიგზავნათ ეს ბმული.",
     "Add to your Nextcloud" : "თქვენს Nextcloud-ში დამატება",
     "Picture view" : "სურათის ხედი",
-    "Gallery view" : "გალერეის ხედი"
+    "Gallery view" : "გალერეის ხედი",
+    "Sending ..." : "გაგზავნა …"
 },
 "nplurals=1; plural=0;");

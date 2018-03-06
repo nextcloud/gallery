@@ -57,7 +57,6 @@ OC.L10N.register(
     "Password protected" : "Protektita per pasvorto",
     "Error unsetting expiration date" : "Eraro dum malagordado de limdato",
     "Error setting expiration date" : "Eraro dum agordado de limdato",
-    "Sending ..." : "Sendante...",
     "Email sent" : "La retpoŝtaĵo sendiĝis",
     "Warning" : "Averto",
     "This share is password-protected" : "Ĉi tiu kunhavigo estas protektata per pasvorto",
@@ -68,6 +67,7 @@ OC.L10N.register(
     "the item was removed" : "la ero foriĝis",
     "sharing is disabled" : "kunhavigo malkapablas",
     "Picture view" : "Bilda vido",
-    "Gallery view" : "Galeria vido"
+    "Gallery view" : "Galeria vido",
+    "Sending ..." : "Sendante..."
 },
 "nplurals=2; plural=(n != 1);");

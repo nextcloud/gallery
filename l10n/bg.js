@@ -66,7 +66,6 @@ OC.L10N.register(
     "Password protected" : "Защитено с парола",
     "Error unsetting expiration date" : "Грешка при премахване на дата на изтичане",
     "Error setting expiration date" : "Грешка при настройване на датата за изтичане",
-    "Sending ..." : "Изпращане ...",
     "Email sent" : "Електронната поща е изпратена",
     "Warning" : "Предупреждение",
     "This share is password-protected" : "Тази зона е защитена с парола.",
@@ -95,6 +94,7 @@ OC.L10N.register(
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
     "Add to your Nextcloud" : "Добавете към вашия Nextcloud",
-    "Picture view" : "Албум със снимки"
+    "Picture view" : "Албум със снимки",
+    "Sending ..." : "Изпращане ..."
 },
 "nplurals=2; plural=(n != 1);");

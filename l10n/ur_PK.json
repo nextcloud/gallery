@@ -30,10 +30,10 @@
     "Password protected" : "پاسورڈ سے محفوظ کیا گیا ہے",
     "Error unsetting expiration date" : "خرابی غیر تصحیح تاریخ معیاد",
     "Error setting expiration date" : "خرابی  تصحیح تاریخ معیاد",
-    "Sending ..." : "ارسال ہو رہا ھے",
     "Email sent" : "ارسال شدہ ای میل ",
     "Warning" : "انتباہ",
     "File list" : "فہرست فائل",
-    "Picture view" : "منظر تصویر"
+    "Picture view" : "منظر تصویر",
+    "Sending ..." : "ارسال ہو رہا ھے"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

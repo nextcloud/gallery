@@ -49,7 +49,6 @@ OC.L10N.register(
     "Password protected" : "Заштитено со лозинка",
     "Error unsetting expiration date" : "Грешка при тргање на рокот на траење",
     "Error setting expiration date" : "Грешка при поставување на рок на траење",
-    "Sending ..." : "Праќање...",
     "Email sent" : "Е-порака пратена",
     "Warning" : "Предупредување",
     "This share is password-protected" : "Ова споделување е заштитено со лозинка",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "Cancel upload" : "Откажи прикачување",
     "Reasons might be:" : "Причината може да биде:",
     "the item was removed" : "предметот беше одстранет",
-    "sharing is disabled" : "споделувањето не е дозволено"
+    "sharing is disabled" : "споделувањето не е дозволено",
+    "Sending ..." : "Праќање..."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
