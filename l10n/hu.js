@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Jelszóval védett",
     "Error unsetting expiration date" : "Nem sikerült a lejárati időt törölni",
     "Error setting expiration date" : "Nem sikerült a lejárati időt beállítani",
+    "Sending…" : "Küldés...",
     "Email sent" : "Az e-mail elküldve!",
     "Warning" : "Figyelmeztetés",
     "This share is password-protected" : "Ez egy jelszóval védett megosztás",
