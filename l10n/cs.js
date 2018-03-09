@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Chráněno heslem",
     "Error unsetting expiration date" : "Chyba při odstraňování data vypršení platnosti",
     "Error setting expiration date" : "Chyba při nastavení data vypršení platnosti",
+    "Sending…" : "Odesílání…",
     "Email sent" : "E-mail odeslán",
     "Warning" : "Varování",
     "This share is password-protected" : "Toto sdílení je chráněno heslem",
