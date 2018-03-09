@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Protegido con contraseña",
     "Error unsetting expiration date" : "Error al destablecer la fecha de caducidad",
     "Error setting expiration date" : "Error estableciendo fecha de caducidad",
+    "Sending…" : "Enviando...",
     "Email sent" : "Correo electrónico enviado",
     "Warning" : "Precaución",
     "This share is password-protected" : "Este elemento compartido está protegido por contraseña",

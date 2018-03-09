@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Wachtwoord beveiligd",
     "Error unsetting expiration date" : "Fout tijdens het verwijderen van de vervaldatum",
     "Error setting expiration date" : "Fout tijdens het instellen van de vervaldatum",
+    "Sending…" : "Zenden...",
     "Email sent" : "E-mail verzonden",
     "Warning" : "Waarschuwing",
     "This share is password-protected" : "Deze share is met een wachtwoord beveiligd",

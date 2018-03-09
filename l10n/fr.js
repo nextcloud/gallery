@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Protégé par mot de passe",
     "Error unsetting expiration date" : "Erreur lors de la suppression de la date d'expiration",
     "Error setting expiration date" : "Erreur lors de la spécification de la date d'expiration",
+    "Sending…" : "Envoi en cours...",
     "Email sent" : "E-mail envoyé",
     "Warning" : "Attention",
     "This share is password-protected" : "Ce partage est protégé par un mot de passe",
