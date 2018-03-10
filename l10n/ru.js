@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Защищено паролем",
     "Error unsetting expiration date" : "Ошибка при отмене срока доступа",
     "Error setting expiration date" : "Ошибка при установке срока доступа",
+    "Sending…" : "Отправка…",
     "Email sent" : "Письмо отправлено",
     "Warning" : "Предупреждение",
     "This share is password-protected" : "Общий ресурс защищен паролем",
