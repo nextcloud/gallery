@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Verja með lykilorði",
     "Error unsetting expiration date" : "Villa við að aftengja gildistíma",
     "Error setting expiration date" : "Villa við að setja gildistíma",
+    "Sending…" : "Sendi …",
     "Email sent" : "Tölvupóstur sendur",
     "Warning" : "Aðvörun",
     "This share is password-protected" : "Þessi sameign er varin með lykilorði",
