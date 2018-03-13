@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Password protected",
     "Error unsetting expiration date" : "Error unsetting expiration date",
     "Error setting expiration date" : "Error setting expiration date",
+    "Sending…" : "Sending…",
     "Email sent" : "Email sent",
     "Warning" : "Warning",
     "This share is password-protected" : "This share is password-protected",
