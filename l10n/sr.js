@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Заштићено лозинком",
     "Error unsetting expiration date" : "Грешка при поништавању датума истека",
     "Error setting expiration date" : "Грешка при постављању датума истека",
+    "Sending…" : "Шаљем…",
     "Email sent" : "Порука је послата",
     "Warning" : "Упозорење",
     "This share is password-protected" : "Дељење је заштићено лозинком",
