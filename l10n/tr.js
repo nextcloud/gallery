@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Parola korumalı",
     "Error unsetting expiration date" : "Son kullanma tarihi kaldırılırken sorun çıktı",
     "Error setting expiration date" : "Son kullanma tarihi ayarlanırken sorun çıktı",
+    "Sending…" : "Gönderiliyor…",
     "Email sent" : "E-posta gönderildi",
     "Warning" : "Uyarı",
     "This share is password-protected" : "Bu paylaşım parola korumalı",
