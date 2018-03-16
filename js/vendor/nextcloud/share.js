@@ -423,7 +423,7 @@
 						}).fail(function () {
 							$('#dropdown').find('.shareWithLoading').addClass('hidden');
 							$('#dropdown').find('.shareWithRemoteInfo').removeClass('hidden');
-							OC.Notification.show(t('gallery', 'An error occured. Please try again'));
+							OC.Notification.show(t('gallery', 'An error occurred. Please try again'));
 							window.setTimeout(OC.Notification.hide, 5000);
 						});
 					},
