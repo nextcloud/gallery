@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Ова листа је можда скраћена - претражите опет користећи мало специфичније изразе да бисте добили још резултата.",
     "No users or groups found for {search}" : "Није нађен ниједан корисник ни група за претрагу {search}",
     "No users found for {search}" : "Није нађен ниједан корисник за претрагу {search}",
-    "An error occured. Please try again" : "Дошло је до грешке. Покушајте поново",
     "Adding user..." : "Додајем корисника...",
     "group" : "група",
     "remote" : "удаљени",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Додај у свој облак",
     "Picture view" : "Приказ слике",
     "Gallery view" : "Приказ галерије",
+    "An error occured. Please try again" : "Дошло је до грешке. Покушајте поново",
     "Sending ..." : "Шаљем ..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

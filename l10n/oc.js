@@ -54,7 +54,6 @@ OC.L10N.register(
     "Set expiration date" : "Especificar una data d'expiracion",
     "Expiration" : "Expiration",
     "Expiration date" : "Data d'expiracion",
-    "An error occured. Please try again" : "Una error s'es produsida. Mercé d'ensajar tornamai",
     "Adding user..." : "Apondon de l'utilizaire...",
     "group" : "grop",
     "remote" : "distant",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
     "Picture view" : "Visualizacion de l'imatge",
     "Gallery view" : "Vista en galariá",
+    "An error occured. Please try again" : "Una error s'es produsida. Mercé d'ensajar tornamai",
     "Sending ..." : "Mandadís…"
 },
 "nplurals=2; plural=(n > 1);");

@@ -57,7 +57,6 @@
     "Set expiration date" : "הגדרת תאריך תפוגה",
     "Expiration" : "תפוגה",
     "Expiration date" : "תאריך התפוגה",
-    "An error occured. Please try again" : "אירעה שגיאה. יש לנסות בבקשה שוב",
     "Adding user..." : "הוספת משתמש...",
     "group" : "קבוצה",
     "remote" : "נשלט מרחוק",
@@ -102,6 +101,7 @@
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
     "Picture view" : "תצוגת תמונה",
     "Gallery view" : "תצוגת גלריה",
+    "An error occured. Please try again" : "אירעה שגיאה. יש לנסות בבקשה שוב",
     "Sending ..." : "מתבצעת שליחה ..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

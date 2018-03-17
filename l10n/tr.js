@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Bu liste budanmış olabilir. Lütfen daha fazla sonuç görmek için arama ifadenizi daraltın.",
     "No users or groups found for {search}" : "{search} araması sonucunda uygun bir kullanıcı ya da grup bulunamadı",
     "No users found for {search}" : "{search} araması sonucunda uygun bir kullanıcı bulunamadı",
-    "An error occured. Please try again" : "Bir sorun çıktı. Lütfen yeniden deneyin",
     "Adding user..." : "Kullanıcı ekleniyor...",
     "group" : "grup",
     "remote" : "uzak",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Nextcloud hesabınıza ekleyin",
     "Picture view" : "Görsel görünümü",
     "Gallery view" : "Galeri görünümü",
+    "An error occured. Please try again" : "Bir sorun çıktı. Lütfen yeniden deneyin",
     "Sending ..." : "Gönderiliyor..."
 },
 "nplurals=2; plural=(n > 1);");

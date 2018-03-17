@@ -66,7 +66,6 @@ OC.L10N.register(
     "Expiration date" : "Data de caducidá",
     "No users or groups found for {search}" : "Nun s'alcontraron usuarios o grupos pa {search}",
     "No users found for {search}" : "Nun s'alcontraron usuarios pa {search}",
-    "An error occured. Please try again" : "Hebo un fallu. Por favor, inténtalo dempués. ",
     "Adding user..." : "Amestando usuariu...",
     "group" : "grupu",
     "remote" : "remotu",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
     "Picture view" : "Vista d'imáxenes",
     "Gallery view" : "Vista de galería",
+    "An error occured. Please try again" : "Hebo un fallu. Por favor, inténtalo dempués. ",
     "Sending ..." : "Unviando ..."
 },
 "nplurals=2; plural=(n != 1);");

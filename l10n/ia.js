@@ -58,7 +58,6 @@ OC.L10N.register(
     "Set expiration date" : "Assignar data de expiration",
     "Expiration" : "Expiration",
     "Expiration date" : "Data de expiration",
-    "An error occured. Please try again" : "Un error occurreva. Per favor, tenta de novo.",
     "Adding user..." : "Addente usator...",
     "group" : "gruppo",
     "remote" : "remote",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
     "Picture view" : "Visualisation de Imagine",
     "Gallery view" : "Visualisation de Galeria",
+    "An error occured. Please try again" : "Un error occurreva. Per favor, tenta de novo.",
     "Sending ..." : "Inviante ..."
 },
 "nplurals=2; plural=(n != 1);");

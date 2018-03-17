@@ -33,7 +33,6 @@ OC.L10N.register(
     "Set expiration date" : "Постави рок на траење",
     "Expiration" : "Истекување",
     "Expiration date" : "Рок на траење",
-    "An error occured. Please try again" : "Се случи грешка. Обиди се повторно",
     "Adding user..." : "Додади корисник...",
     "group" : "група",
     "remote" : "далечински",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "Reasons might be:" : "Причината може да биде:",
     "the item was removed" : "предметот беше одстранет",
     "sharing is disabled" : "споделувањето не е дозволено",
+    "An error occured. Please try again" : "Се случи грешка. Обиди се повторно",
     "Sending ..." : "Праќање..."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

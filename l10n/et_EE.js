@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "See nimekiri võib olla kärbitud - palun täpsusta oma otsingut, et näha rohkem tulemusi.",
     "No users or groups found for {search}" : "Otsing {search} ei leidnud kasutajaid või gruppe",
     "No users found for {search}" : "Otsing {search} ei leidnud kasutajaid",
-    "An error occured. Please try again" : "Tekkis tõrge. Palun proovi uuesti",
     "Adding user..." : "Kasutaja lisamine...",
     "group" : "grupp",
     "remote" : "kaug",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Lisa oma Nextcloudi",
     "Picture view" : "Pildi vaade",
     "Gallery view" : "Galeriivaade",
+    "An error occured. Please try again" : "Tekkis tõrge. Palun proovi uuesti",
     "Sending ..." : "Saatmine ..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -60,7 +60,6 @@
     "Set expiration date" : "Atur tanggal kedaluwarsa",
     "Expiration" : "Kedaluwarsa",
     "Expiration date" : "Tanggal kedaluwarsa",
-    "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
     "Adding user..." : "Menambahkan pengguna...",
     "group" : "grup",
     "remote" : "remote",
@@ -107,6 +106,7 @@
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
     "Picture view" : "Tampilan gambar",
     "Gallery view" : "Tampilan galeri",
+    "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
     "Sending ..." : "Mengirim ..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

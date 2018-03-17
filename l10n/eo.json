@@ -39,7 +39,6 @@
     "Set expiration date" : "Agordi limdaton",
     "Expiration" : "Eksvalidiĝo",
     "Expiration date" : "Limdato",
-    "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
     "Adding user..." : "Aldonante uzanton...",
     "group" : "grupo",
     "remote" : "fora",
@@ -66,6 +65,7 @@
     "sharing is disabled" : "kunhavigo malkapablas",
     "Picture view" : "Bilda vido",
     "Gallery view" : "Galeria vido",
+    "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
     "Sending ..." : "Sendante..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

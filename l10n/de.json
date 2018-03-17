@@ -65,7 +65,6 @@
     "This list is maybe truncated - please refine your search term to see more results." : "Die Liste ist unter Umständen gekürzt - Bitte verfeinere Deine Suche um mehr Ergebnisse zu erhalten. ",
     "No users or groups found for {search}" : "Keine Benutzer oder Gruppen gefunden für {search}",
     "No users found for {search}" : "Keine Benutzer für {search} gefunden",
-    "An error occured. Please try again" : "Es ist ein Fehler aufgetreten. Bitte versuche es noch einmal",
     "Adding user..." : "Benutzer wird hinzugefügt…",
     "group" : "Gruppe",
     "remote" : "Externe Freigabe",
@@ -113,6 +112,7 @@
     "Add to your Nextcloud" : "Zu Deiner Nextcloud hinzufügen",
     "Picture view" : "Bildansicht",
     "Gallery view" : "Galerieansicht",
+    "An error occured. Please try again" : "Es ist ein Fehler aufgetreten. Bitte versuche es noch einmal",
     "Sending ..." : "Senden…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "ეს სია შეიძლება იყოს წაკვეთილი - მეტი შედეგისთვის, გთხოვთ გაწმინდოთ თქვენი საძიებო სიტყვა.",
     "No users or groups found for {search}" : "მომხმარებლები და ჯგუფები {search}-ისთვის ვერ ნაპოვნი",
     "No users found for {search}" : "მომხმარებლები {search}-ისთვის ვერ იქნა ნაპოვნი",
-    "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
     "Adding user..." : "ემატება მომხმარებელი...",
     "group" : "ჯგუფი",
     "remote" : "დისტანციური",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "თქვენს Nextcloud-ში დამატება",
     "Picture view" : "სურათის ხედი",
     "Gallery view" : "გალერეის ხედი",
+    "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
     "Sending ..." : "გაგზავნა …"
 },
 "nplurals=1; plural=0;");

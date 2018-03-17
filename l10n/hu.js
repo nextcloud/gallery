@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Ez a lista lehet, hogy le van vágva - kérem pontosítsa a keresését, hogy több eredményt lásson.",
     "No users or groups found for {search}" : "{search} keresésre nem található felhasználó vagy csoport ",
     "No users found for {search}" : "{search} keresésre nem található felhasználó ",
-    "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",
     "Adding user..." : "Felhasználó hozzáadása...",
     "group" : "csoport",
     "remote" : "távoli",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
     "Picture view" : "Képnézet",
     "Gallery view" : "Galéria nézet",
+    "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",
     "Sending ..." : "Küldés ..."
 },
 "nplurals=2; plural=(n != 1);");

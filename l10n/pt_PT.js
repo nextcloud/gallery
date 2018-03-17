@@ -57,7 +57,6 @@ OC.L10N.register(
     "Set expiration date" : "Definir a data de expiração",
     "Expiration" : "Expira em",
     "Expiration date" : "Data de expiração",
-    "An error occured. Please try again" : "Ocorreu um erro. Por favor, tente de novo",
     "Adding user..." : "A adicionar o utilizador ...",
     "group" : "grupo",
     "remote" : "remoto",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Para mais informação, por favor, pergunte à pessoa que lhe enviou esta hiperligação.",
     "Picture view" : "Visualização da Imagem",
     "Gallery view" : "Visualização da galeria",
+    "An error occured. Please try again" : "Ocorreu um erro. Por favor, tente de novo",
     "Sending ..." : "A enviar..."
 },
 "nplurals=2; plural=(n != 1);");

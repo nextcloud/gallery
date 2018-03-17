@@ -62,7 +62,6 @@ OC.L10N.register(
     "Set expiration date" : "Atur tanggal kedaluwarsa",
     "Expiration" : "Kedaluwarsa",
     "Expiration date" : "Tanggal kedaluwarsa",
-    "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
     "Adding user..." : "Menambahkan pengguna...",
     "group" : "grup",
     "remote" : "remote",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
     "Picture view" : "Tampilan gambar",
     "Gallery view" : "Tampilan galeri",
+    "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
     "Sending ..." : "Mengirim ..."
 },
 "nplurals=1; plural=0;");

@@ -35,7 +35,6 @@ OC.L10N.register(
     "Set expiration date" : "Verfallsdatum setzen",
     "Expiration" : "Leeft of",
     "Expiration date" : "Verfallsdatum",
-    "An error occured. Please try again" : "Et ass e Fehler opgetrueden. W.e.g. probéier nach emol",
     "Adding user..." : "Benotzer derbäi fügen",
     "group" : "Grupp",
     "remote" : "Op Distanz",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "Warning" : "Warnung",
     "The password is wrong. Try again." : "Den Passwuert ass incorrect. Probeier ed nach eng keier.",
     "Cancel upload" : "Eroplueden ofbriechen",
+    "An error occured. Please try again" : "Et ass e Fehler opgetrueden. W.e.g. probéier nach emol",
     "Sending ..." : "Gëtt geschéckt..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Kjo listë ndoshta është e prerë - ju lutemi të përmirësoni termat e kërkimit tuaj për të parë më shumë rezultate.",
     "No users or groups found for {search}" : "S’u gjetën përdorues ose grupe për {Kërkim}",
     "No users found for {search}" : "Jo përdorues të gjetur nga {kërkimi}",
-    "An error occured. Please try again" : "Ndodhi një gabim. Ju lutemi, riprovoni",
     "Adding user..." : "Po shtohet përdorues…",
     "group" : "grup",
     "remote" : "i largët",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
     "Picture view" : "Pamje Foto",
     "Gallery view" : "Pamje Galeri",
+    "An error occured. Please try again" : "Ndodhi një gabim. Ju lutemi, riprovoni",
     "Sending ..." : "Po dërgohet …"
 },
 "nplurals=2; plural=(n != 1);");
