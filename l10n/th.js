@@ -59,7 +59,6 @@ OC.L10N.register(
     "Set expiration date" : "กำหนดวันที่หมดอายุ",
     "Expiration" : "การหมดอายุ",
     "Expiration date" : "วันที่หมดอายุ",
-    "An error occured. Please try again" : "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
     "Adding user..." : "กำลังเพิ่มผู้ใช้ ...",
     "group" : "กลุ่มผู้ใช้งาน",
     "remote" : "รีโมท",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
     "Picture view" : "ดูรูปภาพ",
     "Gallery view" : "ดูแกลอรี่",
+    "An error occured. Please try again" : "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
     "Sending ..." : "กำลังส่ง..."
 },
 "nplurals=1; plural=0;");

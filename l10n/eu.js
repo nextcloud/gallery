@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Zerrenda hau apurtuta egon daiteke - zure bilaketa birfindu emaitza gehiago eduki ahal izateko",
     "No users or groups found for {search}" : "Ez da erabiltzaile edo talderik topatu {search}-erako",
     "No users found for {search}" : "Ez da erabiltzailerik topatu {search}-erako",
-    "An error occured. Please try again" : "Errore bat gertatu da. Saiatu berriro.",
     "Adding user..." : "Erabiltzailea gehitzen...",
     "group" : "taldea",
     "remote" : "urrunekoa",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Gehitu zure Nextcloud-era",
     "Picture view" : "Irudi bistaratzea",
     "Gallery view" : "Galeria ikuspegia",
+    "An error occured. Please try again" : "Errore bat gertatu da. Saiatu berriro.",
     "Sending ..." : "Bidaltzen ..."
 },
 "nplurals=2; plural=(n != 1);");

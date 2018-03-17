@@ -61,7 +61,6 @@ OC.L10N.register(
     "Expiration date" : "Ημερομηνία λήξης",
     "No users or groups found for {search}" : "Δεν βρέθηκαν χρήστες ή ομάδες για {search}",
     "No users found for {search}" : "Δεν βρέθηκαν χρήστες για {search}",
-    "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Adding user..." : "Προσθήκη χρήστη ...",
     "group" : "ομάδα",
     "remote" : "απομακρυσμένα",
@@ -108,6 +107,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
     "Picture view" : "Προβολή εικονιδίων",
     "Gallery view" : "Προβολή Συλλογής",
+    "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Sending ..." : "Αποστολή..."
 },
 "nplurals=2; plural=(n != 1);");

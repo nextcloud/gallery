@@ -46,7 +46,6 @@
     "Set expiration date" : "Specifică data expirării",
     "Expiration" : "Expiră",
     "Expiration date" : "Data expirării",
-    "An error occured. Please try again" : "A apărut o eroare. Te rugăm să încerci din nou",
     "Adding user..." : "Se adaugă utilizatorul...",
     "group" : "grup",
     "remote" : "de la distanță",
@@ -89,6 +88,7 @@
     "sharing is disabled" : "partajarea este oprită",
     "For more information, please ask the person who has sent you this link." : "Pentru mai multe informații, ia legătura cu persoana care ți-a trimis acest link.",
     "Picture view" : "Vizualizare imagine",
+    "An error occured. Please try again" : "A apărut o eroare. Te rugăm să încerci din nou",
     "Sending ..." : "Se expediază..."
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }

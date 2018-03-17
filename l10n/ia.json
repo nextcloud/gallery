@@ -56,7 +56,6 @@
     "Set expiration date" : "Assignar data de expiration",
     "Expiration" : "Expiration",
     "Expiration date" : "Data de expiration",
-    "An error occured. Please try again" : "Un error occurreva. Per favor, tenta de novo.",
     "Adding user..." : "Addente usator...",
     "group" : "gruppo",
     "remote" : "remote",
@@ -100,6 +99,7 @@
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
     "Picture view" : "Visualisation de Imagine",
     "Gallery view" : "Visualisation de Galeria",
+    "An error occured. Please try again" : "Un error occurreva. Per favor, tenta de novo.",
     "Sending ..." : "Inviante ..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

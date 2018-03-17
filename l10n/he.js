@@ -59,7 +59,6 @@ OC.L10N.register(
     "Set expiration date" : "הגדרת תאריך תפוגה",
     "Expiration" : "תפוגה",
     "Expiration date" : "תאריך התפוגה",
-    "An error occured. Please try again" : "אירעה שגיאה. יש לנסות בבקשה שוב",
     "Adding user..." : "הוספת משתמש...",
     "group" : "קבוצה",
     "remote" : "נשלט מרחוק",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
     "Picture view" : "תצוגת תמונה",
     "Gallery view" : "תצוגת גלריה",
+    "An error occured. Please try again" : "אירעה שגיאה. יש לנסות בבקשה שוב",
     "Sending ..." : "מתבצעת שליחה ..."
 },
 "nplurals=2; plural=(n != 1);");

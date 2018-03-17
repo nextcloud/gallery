@@ -66,7 +66,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Esta lista puede estar trucnada - favor de refinar su búsqueda para poder ver más resultados. ",
     "No users or groups found for {search}" : "No se encontraron usuarios o grupos para {search}",
     "No users found for {search}" : "No se encontraron usuarios para {search}",
-    "An error occured. Please try again" : "Se presentó un error. Favor de intentar de nuevo",
     "Adding user..." : "Agregando usuario ...",
     "group" : "grupo",
     "remote" : "remoto",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Agregar a su Nextcloud",
     "Picture view" : "Vista de imágenes",
     "Gallery view" : "Ver galería",
+    "An error occured. Please try again" : "Se presentó un error. Favor de intentar de nuevo",
     "Sending ..." : "Enviando..."
 },
 "nplurals=2; plural=(n != 1);");

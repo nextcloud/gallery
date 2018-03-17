@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Listen er kanskje avkortet - forbedre søkeord for å få flere resultater.",
     "No users or groups found for {search}" : "Fant ingen brukere for {search}",
     "No users found for {search}" : "Ingen brukre funnet for {search}",
-    "An error occured. Please try again" : "Det oppstod en feil. Prøv igjen",
     "Adding user..." : "Legger til bruker…",
     "group" : "gruppe",
     "remote" : "ekstern",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Legg til i din Nextcloud",
     "Picture view" : "Bildevisning",
     "Gallery view" : "Gallerivisning",
+    "An error occured. Please try again" : "Det oppstod en feil. Prøv igjen",
     "Sending ..." : "Sender…"
 },
 "nplurals=2; plural=(n != 1);");

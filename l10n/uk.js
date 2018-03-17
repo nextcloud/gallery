@@ -38,7 +38,6 @@ OC.L10N.register(
     "Set expiration date" : "Встановити термін дії",
     "Expiration" : "Закінчення",
     "Expiration date" : "Термін дії",
-    "An error occured. Please try again" : "Виникла помилка. Будь ласка, спробуйте ще раз",
     "Adding user..." : "Додавання користувача...",
     "group" : "група",
     "remote" : "Віддалений",
@@ -73,6 +72,7 @@ OC.L10N.register(
     "the link has expired" : "посилання застаріло",
     "sharing is disabled" : "обмін заборонений",
     "Picture view" : "Перегляд Зображення",
+    "An error occured. Please try again" : "Виникла помилка. Будь ласка, спробуйте ще раз",
     "Sending ..." : "Надсилання..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
