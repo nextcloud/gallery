@@ -61,7 +61,6 @@ OC.L10N.register(
     "Set expiration date" : "Nastavi datum preteka",
     "Expiration" : "Datum preteka",
     "Expiration date" : "Datum preteka",
-    "An error occured. Please try again" : "Prišlo je do napake. Poskusite znova.",
     "Adding user..." : "Dodajanje uporabnika ...",
     "group" : "skupina",
     "remote" : "oddaljeno",
@@ -107,6 +106,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Dodaj v svoj Nextcloud",
     "Picture view" : "Slikovni pogled",
     "Gallery view" : "Galerijski pogled",
+    "An error occured. Please try again" : "Prišlo je do napake. Poskusite znova.",
     "Sending ..." : "Pošiljanje ..."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

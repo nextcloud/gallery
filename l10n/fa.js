@@ -37,7 +37,6 @@ OC.L10N.register(
     "Set expiration date" : "تنظیم تاریخ انقضا",
     "Expiration" : "تاریخ انقضا",
     "Expiration date" : "تاریخ انقضا",
-    "An error occured. Please try again" : "یک خطا رخ داده است، لطفا مجددا تلاش کنید",
     "Adding user..." : "افزودن کاربر...",
     "group" : "گروه",
     "remote" : "از راه دور",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "sharing is disabled" : "قابلیت اشتراک گذاری غیرفعال است",
     "Picture view" : "نمایش تصویر",
     "Gallery view" : "نمایش گالری",
+    "An error occured. Please try again" : "یک خطا رخ داده است، لطفا مجددا تلاش کنید",
     "Sending ..." : "درحال ارسال ..."
 },
 "nplurals=1; plural=0;");

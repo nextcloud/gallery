@@ -41,7 +41,6 @@ OC.L10N.register(
     "Set expiration date" : "Agordi limdaton",
     "Expiration" : "Eksvalidiĝo",
     "Expiration date" : "Limdato",
-    "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
     "Adding user..." : "Aldonante uzanton...",
     "group" : "grupo",
     "remote" : "fora",
@@ -68,6 +67,7 @@ OC.L10N.register(
     "sharing is disabled" : "kunhavigo malkapablas",
     "Picture view" : "Bilda vido",
     "Gallery view" : "Galeria vido",
+    "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
     "Sending ..." : "Sendante..."
 },
 "nplurals=2; plural=(n != 1);");

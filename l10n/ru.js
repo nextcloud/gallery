@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Этот список может быть показан не полностью - уточните запрос что бы просмотреть больше результатов.",
     "No users or groups found for {search}" : "Не найдено пользователей или групп по запросу {search}",
     "No users found for {search}" : "Не найдено пользователей по запросу {search}",
-    "An error occured. Please try again" : "Произошла ошибка. Попробуйте ещё раз",
     "Adding user..." : "Добавляем пользователя...",
     "group" : "группа",
     "remote" : "на другом сервере",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Добавить в свой Nextcloud",
     "Picture view" : "Просмотр изображения",
     "Gallery view" : "Галерея",
+    "An error occured. Please try again" : "Произошла ошибка. Попробуйте ещё раз",
     "Sending ..." : "Отправляется ..."
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Šis sąrašas gali būti sugadintas. Patikslinkite ieškomą frazę, jei norite pamatyti daugiau rezultatų.",
     "No users or groups found for {search}" : "Nerasti vartotojai ar grupės pagal raktinį žodį: {search}",
     "No users found for {search}" : "Nerasti naudotojai pagal raktinį žodį: {search}",
-    "An error occured. Please try again" : "Klaida, prašau bandyti dar kartą.",
     "Adding user..." : "Pridedamas naudotojas..",
     "group" : "grupė",
     "remote" : "nutolęs",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
     "Picture view" : "Paveikslo rodymas",
     "Gallery view" : "Galerijos rodinys",
+    "An error occured. Please try again" : "Klaida, prašau bandyti dar kartą.",
     "Sending ..." : "Siunčiama..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");

@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "このリストは切り捨てられている可能性があります - 検索語句を絞り込んで検索結果を表示してください。",
     "No users or groups found for {search}" : "{search} のユーザー、グループは見つかりません",
     "No users found for {search}" : "{search} のユーザーは見つかりません",
-    "An error occured. Please try again" : "エラーが発生しました。もう一度トライしてください。",
     "Adding user..." : "ユーザーを追加しています...",
     "group" : "グループ",
     "remote" : "リモート",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
     "Picture view" : "ピクチャービュー",
     "Gallery view" : "ギャラリー表示",
+    "An error occured. Please try again" : "エラーが発生しました。もう一度トライしてください。",
     "Sending ..." : "送信中..."
 },
 "nplurals=1; plural=0;");

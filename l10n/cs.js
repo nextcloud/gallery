@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Tento seznam je možná zkrácený - prosím upřesněte vyhledávací výraz pro více výsledků.",
     "No users or groups found for {search}" : "Nebyli nalezeni žádní členové ani skupiny pro {search}",
     "No users found for {search}" : "Nebyli nalezeni žádní uživatelé pro {search}",
-    "An error occured. Please try again" : "Nastala chyba. Prosím zkuste to znovu",
     "Adding user..." : "Přidávám uživatele...",
     "group" : "skupina",
     "remote" : "vzdálený",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Přidat do Nextcloud",
     "Picture view" : "Zobrazení obrázku",
     "Gallery view" : "Náhled galerie",
+    "An error occured. Please try again" : "Nastala chyba. Prosím zkuste to znovu",
     "Sending ..." : "Odesílám ..."
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

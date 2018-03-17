@@ -58,7 +58,6 @@ OC.L10N.register(
     "Set expiration date" : "Iestaties termiņa datumu",
     "Expiration" : "Termiņš",
     "Expiration date" : "Termiņa datums",
-    "An error occured. Please try again" : "Notika kļūda. Mēģini vēlreiz.",
     "Adding user..." : "Lietotāja pievienošana...",
     "group" : "grupa",
     "remote" : "attālināti",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Pievienot savam Nextcloud",
     "Picture view" : "Attēla skats",
     "Gallery view" : "Galerijas skats",
+    "An error occured. Please try again" : "Notika kļūda. Mēģini vēlreiz.",
     "Sending ..." : "Sūta..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

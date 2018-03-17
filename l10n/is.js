@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Þessi listi gæti verið stytt útgáfa - þrengdu leitarskilyrðin til að sjá fleiri niðurstöður.",
     "No users or groups found for {search}" : "Engir notendur eða hópar fundust í {search}",
     "No users found for {search}" : "Engir notendur fundust fyrir {search}",
-    "An error occured. Please try again" : "Villa kom upp. Endilega reyndu aftur",
     "Adding user..." : "Bæta við notanda...",
     "group" : "hópur",
     "remote" : "fjartengt",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
     "Picture view" : "Myndasýn",
     "Gallery view" : "Myndasafnssýn",
+    "An error occured. Please try again" : "Villa kom upp. Endilega reyndu aftur",
     "Sending ..." : "Sendi ..."
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

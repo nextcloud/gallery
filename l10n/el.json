@@ -59,7 +59,6 @@
     "Expiration date" : "Ημερομηνία λήξης",
     "No users or groups found for {search}" : "Δεν βρέθηκαν χρήστες ή ομάδες για {search}",
     "No users found for {search}" : "Δεν βρέθηκαν χρήστες για {search}",
-    "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Adding user..." : "Προσθήκη χρήστη ...",
     "group" : "ομάδα",
     "remote" : "απομακρυσμένα",
@@ -106,6 +105,7 @@
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
     "Picture view" : "Προβολή εικονιδίων",
     "Gallery view" : "Προβολή Συλλογής",
+    "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Sending ..." : "Αποστολή..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

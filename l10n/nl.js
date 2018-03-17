@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Deze lijst is misschien afgekapt - verfijn de zoekterm om meer resultaten te zien.",
     "No users or groups found for {search}" : "Geen gebruikers of groepen gevonden voor {search}",
     "No users found for {search}" : "Geen gebruikers gevonden voor {search}",
-    "An error occured. Please try again" : "Er trad een fout op. Probeer het opnieuw",
     "Adding user..." : "Gebruiker toevoegen...",
     "group" : "groep",
     "remote" : "extern",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Toevoegen aan je Nextcloud",
     "Picture view" : "Afbeeldingenoverzicht",
     "Gallery view" : "Album",
+    "An error occured. Please try again" : "Er trad een fout op. Probeer het opnieuw",
     "Sending ..." : "Versturen ..."
 },
 "nplurals=2; plural=(n != 1);");

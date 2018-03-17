@@ -67,7 +67,6 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "此列表可能会被删减 - 请细化您的搜索字词以查看更多结果。",
     "No users or groups found for {search}" : "没有找到 {search} 用户或组",
     "No users found for {search}" : "没有找到 {search} 用户",
-    "An error occured. Please try again" : "发生了一个错误请重新尝试",
     "Adding user..." : "添加用户中...",
     "group" : "群组",
     "remote" : "远程",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "添加到您的Nextcloud",
     "Picture view" : "查看图片",
     "Gallery view" : "查看相册",
+    "An error occured. Please try again" : "发生了一个错误请重新尝试",
     "Sending ..." : "正在发送..."
 },
 "nplurals=1; plural=0;");
