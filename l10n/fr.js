@@ -67,6 +67,7 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Des résultats peuvent avoir été omis. Affinez votre recherche pour en voir plus.",
     "No users or groups found for {search}" : "Aucun utilisateur ou groupe trouvé pour {search}",
     "No users found for {search}" : "Aucun utilisateur trouvé pour {search}",
+    "An error occurred. Please try again" : "Une erreur est survenue. Veuillez réessayer",
     "Adding user..." : "Ajout de l'utilisateur...",
     "group" : "groupe",
     "remote" : "distant",
