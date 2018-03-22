@@ -514,6 +514,12 @@
 						.appendTo(ul);
 				};
 
+				$('#shareWith').on('input', function () {
+					if ($(this).val().length < 2) {
+						$(this).removeClass('error').tooltip('hide');
+					}
+				});
+
 				if (link && linksAllowed && $('#email').length != 0) {
 					$('#email').autocomplete({
 						minLength: 1,
