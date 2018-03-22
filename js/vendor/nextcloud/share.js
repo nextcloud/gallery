@@ -132,6 +132,63 @@
 		},
 		/**
 		 *
+		 * @param {String} searchTerm
+		 * @param {String} itemType
+		 */
+		_getSuggestions: function (searchTerm, itemType) {
+			var deferred = $.Deferred();
+
+			$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
+				format: 'json',
+				search: searchTerm,
+				perPage: 200,
+				itemType: itemType
+			}, function (result) {
+				if (result.ocs.meta.statuscode === 100) {
+					var users = result.ocs.data.exact.users.concat(result.ocs.data.users);
+					var groups = result.ocs.data.exact.groups.concat(result.ocs.data.groups);
+					var remotes = result.ocs.data.exact.remotes.concat(result.ocs.data.remotes);
+					var lookup = result.ocs.data.lookup;
+					var emails = [],
+						circles = [];
+					if (typeof(result.ocs.data.emails) !== 'undefined') {
+						emails = result.ocs.data.exact.emails.concat(result.ocs.data.emails);
+					}
+					if (typeof(result.ocs.data.circles) !== 'undefined') {
+						circles = result.ocs.data.exact.circles.concat(result.ocs.data.circles);
+					}
+
+					var usersLength;
+					var groupsLength;
+					var remotesLength;
+					var emailsLength;
+					var circlesLength;
+
+					var i, j;
+
+					//Filter out the current user
+					usersLength = users.length;
+					for (i = 0; i < usersLength; i++) {
+						if (users[i].value.shareWith === OC.currentUser) {
+							users.splice(i, 1);
+							break;
+						}
+					}
+
+					var suggestions = users.concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
+
+					deferred.resolve(suggestions);
+				} else {
+					deferred.resolve(null);
+				}
+			}).fail(function () {
+				deferred.reject();
+			});
+
+			return deferred.promise();
+		},
+		/**
+		 *
 		 * @param {String} itemType
 		 * @param {String} path
 		 * @param {String} appendTo
@@ -337,79 +394,44 @@
 						$shareWithField.removeClass('error')
 							.tooltip('hide');
 
-						$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
-							format: 'json',
-							search: search.term.trim(),
-							perPage: 200,
-							itemType: itemType
-						}, function (result) {
+						self._getSuggestions(
+							search.term.trim(),
+							itemType
+						).done(function(suggestions) {
 							$loading.addClass('hidden');
 							$confirm.removeClass('hidden');
-							if (result.ocs.meta.statuscode === 100) {
-								var users = result.ocs.data.exact.users.concat(result.ocs.data.users);
-								var groups = result.ocs.data.exact.groups.concat(result.ocs.data.groups);
-								var remotes = result.ocs.data.exact.remotes.concat(result.ocs.data.remotes);
-								var lookup = result.ocs.data.lookup;
-								var emails = [],
-									circles = [];
-								if (typeof(result.ocs.data.emails) !== 'undefined') {
-									emails = result.ocs.data.exact.emails.concat(result.ocs.data.emails);
-								}
-								if (typeof(result.ocs.data.circles) !== 'undefined') {
-									circles = result.ocs.data.exact.circles.concat(result.ocs.data.circles);
-								}
 
-								var usersLength;
-								var groupsLength;
-								var remotesLength;
-								var emailsLength;
-								var circlesLength;
+							if (suggestions && suggestions.length > 0) {
+								$('#shareWith')
+									.autocomplete("option", "autoFocus", true);
 
-								var i, j;
+								response(suggestions);
 
-								//Filter out the current user
-								usersLength = users.length;
-								for (i = 0; i < usersLength; i++) {
-									if (users[i].value.shareWith === OC.currentUser) {
-										users.splice(i, 1);
-										break;
-									}
+								// show a notice that the list is truncated
+								// this is the case if one of the search results is at least as long as the max result config option
+								if (oc_config['sharing.maxAutocompleteResults'] > 0 &&
+									Math.min(perPage, oc_config['sharing.maxAutocompleteResults'])
+									<= Math.max(users.length, groups.length, remotes.length, emails.length, lookup.length)) {
+
+									var message = t('gallery', 'This list is maybe truncated - please refine your search term to see more results.');
+									$('.ui-autocomplete').append('<li class="autocomplete-note">' + message + '</li>');
 								}
 
-								var suggestions = users.concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
-
-								if (suggestions.length > 0) {
-									$('#shareWith')
-										.autocomplete("option", "autoFocus", true);
-
-									response(suggestions);
-
-									// show a notice that the list is truncated
-									// this is the case if one of the search results is at least as long as the max result config option
-									if (oc_config['sharing.maxAutocompleteResults'] > 0 &&
-										Math.min(perPage, oc_config['sharing.maxAutocompleteResults'])
-										<= Math.max(users.length, groups.length, remotes.length, emails.length, lookup.length)) {
-
-										var message = t('gallery', 'This list is maybe truncated - please refine your search term to see more results.');
-										$('.ui-autocomplete').append('<li class="autocomplete-note">' + message + '</li>');
-									}
-
-								} else {
-									var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
-									if (!oc_appconfig.core.allowGroupSharing) {
-										title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
-									}
-									$('#shareWith').addClass('error')
-										.attr('data-original-title', title)
-										.tooltip('hide')
-										.tooltip({
-											placement: 'bottom',
-											trigger: 'manual'
-										})
-										.tooltip('fixTitle')
-										.tooltip('show');
-									response();
+							} else if (suggestions) {
+								var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
+								if (!oc_appconfig.core.allowGroupSharing) {
+									title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
 								}
+								$('#shareWith').addClass('error')
+									.attr('data-original-title', title)
+									.tooltip('hide')
+									.tooltip({
+										placement: 'bottom',
+										trigger: 'manual'
+									})
+									.tooltip('fixTitle')
+									.tooltip('show');
+								response();
 							} else {
 								response();
 							}
