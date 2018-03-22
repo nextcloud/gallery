@@ -438,8 +438,7 @@
 						}).fail(function () {
 							$('#dropdown').find('.shareWithLoading').addClass('hidden');
 							$('#dropdown').find('.shareWithConfirm').removeClass('hidden');
-							OC.Notification.show(t('gallery', 'An error occurred. Please try again'));
-							window.setTimeout(OC.Notification.hide, 5000);
+							OC.Notification.showTemporary(t('gallery', 'An error occurred. Please try again'));
 						});
 					},
 					focus: function (event) {
