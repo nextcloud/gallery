@@ -82,6 +82,9 @@ http://davidwalsh.name/css-flip*/
 	transition: 0.3s;
 
 	position: relative;
+
+	width: 25px;
+	height: 18px;
 }
 
 #controls .button.sorting .front,
@@ -121,13 +124,6 @@ http://davidwalsh.name/css-flip*/
 	transform: rotateX(180deg);
 }
 
-#button-loading {
-	position: absolute;
-	width: 24px;
-	height: 24px;
-	margin-left: -4px;
-	margin-top: -5px;
-}
 
 #controls .button.sorting.active.hover .front {
 	-webkit-transform: rotateX(180deg);
