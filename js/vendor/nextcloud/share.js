@@ -179,7 +179,7 @@
 
 					deferred.resolve(suggestions);
 				} else {
-					deferred.resolve(null);
+					deferred.reject(result.ocs.meta.message);
 				}
 			}).fail(function () {
 				deferred.reject();
@@ -401,7 +401,7 @@
 							$loading.addClass('hidden');
 							$confirm.removeClass('hidden');
 
-							if (suggestions && suggestions.length > 0) {
+							if (suggestions.length > 0) {
 								$('#shareWith')
 									.autocomplete("option", "autoFocus", true);
 
@@ -417,7 +417,7 @@
 									$('.ui-autocomplete').append('<li class="autocomplete-note">' + message + '</li>');
 								}
 
-							} else if (suggestions) {
+							} else {
 								var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
 								if (!oc_appconfig.core.allowGroupSharing) {
 									title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
@@ -432,13 +432,16 @@
 									.tooltip('fixTitle')
 									.tooltip('show');
 								response();
-							} else {
-								response();
 							}
-						}).fail(function () {
+						}).fail(function (message) {
 							$('#dropdown').find('.shareWithLoading').addClass('hidden');
 							$('#dropdown').find('.shareWithConfirm').removeClass('hidden');
-							OC.Notification.showTemporary(t('gallery', 'An error occurred. Please try again'));
+
+							if (message) {
+								OC.Notification.showTemporary(t('gallery', 'An error occurred ("{message}"). Please try again', { message: message }));
+							} else {
+								OC.Notification.showTemporary(t('gallery', 'An error occurred. Please try again'));
+							}
 						});
 					},
 					focus: function (event) {
