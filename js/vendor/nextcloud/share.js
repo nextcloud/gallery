@@ -403,7 +403,7 @@
 
 								} else {
 									var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
-									if (!view.configModel.get('allowGroupSharing')) {
+									if (!oc_appconfig.core.allowGroupSharing) {
 										title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
 									}
 									$('#shareWith').addClass('error')
