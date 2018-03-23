@@ -403,7 +403,7 @@
 
 								} else {
 									var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
-									if (!view.configModel.get('allowGroupSharing')) {
+									if (!oc_appconfig.core.allowGroupSharing) {
 										title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
 									}
 									$('#shareWith').addClass('error')
@@ -528,6 +528,12 @@
 						.append(insert)
 						.appendTo(ul);
 				};
+
+				$('#shareWith').on('input', function () {
+					if ($(this).val().length < 2) {
+						$(this).removeClass('error').tooltip('hide');
+					}
+				});
 
 				if (link && linksAllowed && $('#email').length != 0) {
 					$('#email').autocomplete({
