@@ -145,19 +145,6 @@
 				itemType: itemType
 			}, function (result) {
 				if (result.ocs.meta.statuscode === 100) {
-					var users = result.ocs.data.exact.users.concat(result.ocs.data.users);
-					var groups = result.ocs.data.exact.groups.concat(result.ocs.data.groups);
-					var remotes = result.ocs.data.exact.remotes.concat(result.ocs.data.remotes);
-					var lookup = result.ocs.data.lookup;
-					var emails = [],
-						circles = [];
-					if (typeof(result.ocs.data.emails) !== 'undefined') {
-						emails = result.ocs.data.exact.emails.concat(result.ocs.data.emails);
-					}
-					if (typeof(result.ocs.data.circles) !== 'undefined') {
-						circles = result.ocs.data.exact.circles.concat(result.ocs.data.circles);
-					}
-
 					var filter = function(users) {
 						var usersLength;
 
@@ -173,11 +160,40 @@
 						}
 					}
 
-					filter(users);
+					filter(result.ocs.data.exact.users);
 
-					var suggestions = users.concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
+					var exactUsers = result.ocs.data.exact.users;
+					var exactGroups = result.ocs.data.exact.groups;
+					var exactRemotes = result.ocs.data.exact.remotes;
+					var exactEmails = [];
+					if (typeof(result.ocs.data.emails) !== 'undefined') {
+						exactEmails = result.ocs.data.exact.emails;
+					}
+					var exactCircles = [];
+					if (typeof(result.ocs.data.circles) !== 'undefined') {
+						exactCircles = result.ocs.data.exact.circles;
+					}
 
-					deferred.resolve(suggestions);
+					var exactMatches = exactUsers.concat(exactGroups).concat(exactRemotes).concat(exactEmails).concat(exactCircles);
+
+					filter(result.ocs.data.users);
+
+					var users = result.ocs.data.users;
+					var groups = result.ocs.data.groups;
+					var remotes = result.ocs.data.remotes;
+					var lookup = result.ocs.data.lookup;
+					var emails = [];
+					if (typeof(result.ocs.data.emails) !== 'undefined') {
+						emails = result.ocs.data.emails;
+					}
+					var circles = [];
+					if (typeof(result.ocs.data.circles) !== 'undefined') {
+						circles = result.ocs.data.circles;
+					}
+
+					var suggestions = exactMatches.concat(users).concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
+
+					deferred.resolve(suggestions, exactMatches);
 				} else {
 					deferred.reject(result.ocs.meta.message);
 				}
