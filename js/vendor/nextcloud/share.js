@@ -578,6 +578,11 @@
 					}
 				});
 
+				/* trigger search after the field was re-selected */
+				$('#shareWith').on('focus', function() {
+					$(this).autocomplete('search');
+				});
+
 				if (link && linksAllowed && $('#email').length != 0) {
 					$('#email').autocomplete({
 						minLength: 1,
