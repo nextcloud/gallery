@@ -158,22 +158,22 @@
 						circles = result.ocs.data.exact.circles.concat(result.ocs.data.circles);
 					}
 
-					var usersLength;
-					var groupsLength;
-					var remotesLength;
-					var emailsLength;
-					var circlesLength;
+					var filter = function(users) {
+						var usersLength;
 
-					var i, j;
+						var i;
 
-					//Filter out the current user
-					usersLength = users.length;
-					for (i = 0; i < usersLength; i++) {
-						if (users[i].value.shareWith === OC.currentUser) {
-							users.splice(i, 1);
-							break;
+						//Filter out the current user
+						usersLength = users.length;
+						for (i = 0; i < usersLength; i++) {
+							if (users[i].value.shareWith === OC.currentUser) {
+								users.splice(i, 1);
+								break;
+							}
 						}
 					}
+
+					filter(users);
 
 					var suggestions = users.concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
 
