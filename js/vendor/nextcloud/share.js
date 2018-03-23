@@ -583,6 +583,10 @@
 					$(this).autocomplete('search');
 				});
 
+				$('.shareWithConfirm').on('click', function () {
+					self._confirmShare(itemType, possiblePermissions);
+				});
+
 				if (link && linksAllowed && $('#email').length != 0) {
 					$('#email').autocomplete({
 						minLength: 1,
@@ -625,6 +629,110 @@
 				$('#dropdown input[placeholder]').placeholder();
 			}
 			$('#shareWith').focus();
+		},
+		_confirmShare: function (itemType, possiblePermissions) {
+			var self = this;
+			var $shareWithField = $('#dropdown #shareWith');
+			var $loading = $('#dropdown .shareWithLoading');
+			var $confirm = $('#dropdown .shareWithConfirm');
+
+			$loading.removeClass('hidden');
+			$confirm.addClass('hidden');
+
+			$shareWithField.prop('disabled', true);
+
+			var itemSource = $('#dropdown').data('item-source');
+			var expirationDate = '';
+			if ($('#expirationCheckbox').is(':checked') === true) {
+				expirationDate = $("#expirationDate").val();
+			}
+
+			this._getSuggestions(
+				$shareWithField.val(),
+				itemType
+			).done(function(suggestions, exactMatches) {
+				if (suggestions.length === 0) {
+					$loading.addClass('hidden');
+					$confirm.removeClass('hidden');
+
+					$shareWithField.prop('disabled', false);
+					$shareWithField.focus();
+
+					// There is no need to show an error message here; it will
+					// be automatically shown when the autocomplete is activated
+					// again (due to the focus on the field) and it finds no
+					// matches.
+
+					return;
+				}
+
+				if (exactMatches.length !== 1) {
+					$loading.addClass('hidden');
+					$confirm.removeClass('hidden');
+
+					$shareWithField.prop('disabled', false);
+					$shareWithField.focus();
+
+					return;
+				}
+
+				var shareType = exactMatches[0].value.shareType;
+				var shareWith = exactMatches[0].value.shareWith;
+				var permissions = self._getPermissions(shareType, possiblePermissions);
+
+				var actionSuccess = function(data) {
+					var updatedPossiblePermissions = possiblePermissions;
+					if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
+						updatedPossiblePermissions = permissions;
+					}
+					Gallery.Share._addShareWith(data.id, shareType, shareWith,
+						exactMatches[0].label,
+						permissions, updatedPossiblePermissions);
+
+					$loading.addClass('hidden');
+					$confirm.removeClass('hidden');
+
+					$shareWithField.val('');
+					$shareWithField.prop('disabled', false);
+					$shareWithField.focus();
+				};
+
+				var actionError = function(result) {
+					$loading.addClass('hidden');
+					$confirm.removeClass('hidden');
+
+					$shareWithField.prop('disabled', false);
+					$shareWithField.focus();
+
+					var message = t('gallery', 'Error');
+					if (result && result.ocs && result.ocs.meta && result.ocs.meta.message) {
+						message = result.ocs.meta.message;
+					}
+					OC.Notification.showTemporary(message);
+				};
+
+				Gallery.Share.share(
+					itemSource,
+					shareType,
+					shareWith,
+					0,
+					null,
+					permissions,
+					actionSuccess,
+					actionError
+				);
+			}).fail(function (message) {
+				$loading.addClass('hidden');
+				$confirm.removeClass('hidden');
+
+				$shareWithField.prop('disabled', false);
+				$shareWithField.focus();
+
+				// There is no need to show an error message here; it will be
+				// automatically shown when the autocomplete is activated again
+				// (due to the focus on the field) and getting the suggestions
+				// fail.
+			});
 		},
 		/**
 		 *
