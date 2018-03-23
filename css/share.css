@@ -35,6 +35,13 @@
 	right: 17px;
 	top: 18px;
 }
+#app #dropdown.shareDropDown .shareWithLoading {
+	/* The "box-sizing" of "#app" descendants is set to "border-box" in the
+	 * server. To have the same size the padding here has to be set to the
+	 * min-width/min-height plus the padding set for the icon in the default
+	 * "content-box" sizing. */
+	padding: 19px;
+}
 #dropdown.shareDropDown .icon-loading-small.hidden {
 	display: none !important;
 }
@@ -43,6 +50,14 @@
 	padding: 11px;
 	right: 17px;
 	top: 18px;
+}
+
+#app #dropdown .shareWithRemoteInfo {
+	/* The "box-sizing" of "#app" descendants is set to "border-box" in the
+	 * server. To have the same size the padding here has to be set to the
+	 * min-width/min-height plus the padding set for the icon in the default
+	 * "content-box" sizing. */
+	padding: 19px;
 }
 
 #dropdown .avatar {
