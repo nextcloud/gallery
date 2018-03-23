@@ -67,6 +67,7 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Ова листа је можда скраћена - претражите опет користећи мало специфичније изразе да бисте добили још резултата.",
     "No users or groups found for {search}" : "Није нађен ниједан корисник ни група за претрагу {search}",
     "No users found for {search}" : "Није нађен ниједан корисник за претрагу {search}",
+    "An error occurred. Please try again" : "Десила се грешка. Покушајте поново",
     "Adding user..." : "Додајем корисника...",
     "group" : "група",
     "remote" : "удаљени",
