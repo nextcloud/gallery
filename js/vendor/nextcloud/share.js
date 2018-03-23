@@ -485,11 +485,26 @@
 								Gallery.Share._addShareWith(data.id, shareType, shareWith,
 									selected.item.label,
 									permissions, posPermissions);
+
+								$input.val('');
+								$input.prop('disabled', false);
+
+								$loading.addClass('hidden');
+								$remoteInfo.removeClass('hidden');
+							},
+							function (result) {
+								var message = t('gallery', 'Error');
+								if (result && result.ocs && result.ocs.meta && result.ocs.meta.message) {
+									message = result.ocs.meta.message;
+								}
+								OC.Notification.showTemporary(message);
+
+								$input.val(shareWith);
+								$input.prop('disabled', false);
+
+								$loading.addClass('hidden');
+								$remoteInfo.removeClass('hidden');
 							});
-						$input.prop('disabled', false);
-						$loading.addClass('hidden');
-						$remoteInfo.removeClass('hidden');
-						$('#shareWith').val('');
 						return false;
 					}
 				}).data("ui-autocomplete")._renderItem = function (ul, item) {
