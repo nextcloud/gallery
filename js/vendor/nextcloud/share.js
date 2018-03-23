@@ -205,6 +205,36 @@
 		},
 		/**
 		 *
+		 * @param {int} shareType
+		 * @param {int} possiblePermissions
+		 */
+		_getPermissions: function (shareType, possiblePermissions) {
+			// Default permissions are Edit (CRUD) and Share
+			// Check if these permissions are possible
+			var permissions = OC.PERMISSION_READ;
+			if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
+				permissions =
+					OC.PERMISSION_CREATE | OC.PERMISSION_UPDATE | OC.PERMISSION_READ;
+			} else {
+				if (possiblePermissions & OC.PERMISSION_UPDATE) {
+					permissions = permissions | OC.PERMISSION_UPDATE;
+				}
+				if (possiblePermissions & OC.PERMISSION_CREATE) {
+					permissions = permissions | OC.PERMISSION_CREATE;
+				}
+				if (possiblePermissions & OC.PERMISSION_DELETE) {
+					permissions = permissions | OC.PERMISSION_DELETE;
+				}
+				if (oc_appconfig.core.resharingAllowed &&
+					(possiblePermissions & OC.PERMISSION_SHARE)) {
+					permissions = permissions | OC.PERMISSION_SHARE;
+				}
+			}
+
+			return permissions;
+		},
+		/**
+		 *
 		 * @param {String} itemType
 		 * @param {String} path
 		 * @param {String} appendTo
@@ -474,27 +504,7 @@
 						var shareType = selected.item.value.shareType;
 						var shareWith = selected.item.value.shareWith;
 						$(this).val(shareWith);
-						// Default permissions are Edit (CRUD) and Share
-						// Check if these permissions are possible
-						var permissions = OC.PERMISSION_READ;
-						if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
-							permissions =
-								OC.PERMISSION_CREATE | OC.PERMISSION_UPDATE | OC.PERMISSION_READ;
-						} else {
-							if (possiblePermissions & OC.PERMISSION_UPDATE) {
-								permissions = permissions | OC.PERMISSION_UPDATE;
-							}
-							if (possiblePermissions & OC.PERMISSION_CREATE) {
-								permissions = permissions | OC.PERMISSION_CREATE;
-							}
-							if (possiblePermissions & OC.PERMISSION_DELETE) {
-								permissions = permissions | OC.PERMISSION_DELETE;
-							}
-							if (oc_appconfig.core.resharingAllowed &&
-								(possiblePermissions & OC.PERMISSION_SHARE)) {
-								permissions = permissions | OC.PERMISSION_SHARE;
-							}
-						}
+						var permissions = self._getPermissions(shareType, possiblePermissions);
 
 						var $input = $(this);
 						var $loading = $dropDown.find('.shareWithLoading');
