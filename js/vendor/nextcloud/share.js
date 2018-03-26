@@ -689,16 +689,20 @@
 				expirationDate = $("#expirationDate").val();
 			}
 
+			var restoreUI = function() {
+				$loading.addClass('hidden');
+				$confirm.removeClass('hidden');
+
+				$shareWithField.prop('disabled', false);
+				$shareWithField.focus();
+			};
+
 			this._getSuggestions(
 				$shareWithField.val(),
 				itemType
 			).done(function(suggestions, exactMatches) {
 				if (suggestions.length === 0) {
-					$loading.addClass('hidden');
-					$confirm.removeClass('hidden');
-
-					$shareWithField.prop('disabled', false);
-					$shareWithField.focus();
+					restoreUI();
 
 					$shareWithField.autocomplete('enable');
 
@@ -711,11 +715,7 @@
 				}
 
 				if (exactMatches.length !== 1) {
-					$loading.addClass('hidden');
-					$confirm.removeClass('hidden');
-
-					$shareWithField.prop('disabled', false);
-					$shareWithField.focus();
+					restoreUI();
 
 					$shareWithField.autocomplete('enable');
 
@@ -735,25 +735,18 @@
 						exactMatches[0].label,
 						permissions, updatedPossiblePermissions);
 
-					$loading.addClass('hidden');
-					$confirm.removeClass('hidden');
-
 					// Adding a share changes the suggestions.
 					self._lastSuggestions = undefined;
 
 					$shareWithField.val('');
-					$shareWithField.prop('disabled', false);
-					$shareWithField.focus();
+
+					restoreUI();
 
 					$shareWithField.autocomplete('enable');
 				};
 
 				var actionError = function(result) {
-					$loading.addClass('hidden');
-					$confirm.removeClass('hidden');
-
-					$shareWithField.prop('disabled', false);
-					$shareWithField.focus();
+					restoreUI();
 
 					$shareWithField.autocomplete('enable');
 
@@ -775,11 +768,7 @@
 					actionError
 				);
 			}).fail(function (message) {
-				$loading.addClass('hidden');
-				$confirm.removeClass('hidden');
-
-				$shareWithField.prop('disabled', false);
-				$shareWithField.focus();
+				restoreUI();
 
 				$shareWithField.autocomplete('enable');
 
