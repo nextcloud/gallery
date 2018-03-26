@@ -494,7 +494,10 @@
 						event.preventDefault();
 					},
 					select: function (event, selected) {
-						event.stopPropagation();
+						// Ensure that the keydown handler for the input field
+						// is not called; otherwise it would try to add the
+						// recipient again, which would fail.
+						event.stopImmediatePropagation();
 						var $dropDown = $('#dropdown');
 						var itemSource = $dropDown.data('item-source');
 						var expirationDate = '';
@@ -572,6 +575,18 @@
 						.appendTo(ul);
 				};
 
+				var shareFieldKeydownHandler = function(event) {
+					if (event.keyCode !== 13) {
+						return true;
+					}
+
+					self._confirmShare(itemType, possiblePermissions);
+
+					return false;
+				};
+
+				$('#shareWith').on('keydown', shareFieldKeydownHandler);
+
 				$('#shareWith').on('input', function () {
 					if ($(this).val().length < 2) {
 						$(this).removeClass('error').tooltip('hide');
@@ -641,6 +656,15 @@
 
 			$shareWithField.prop('disabled', true);
 
+			// Disabling the autocompletion does not clear its search timeout;
+			// removing the focus from the input field does, but only if the
+			// autocompletion is not disabled when the field loses the focus.
+			// Thus, the field has to be disabled before disabling the
+			// autocompletion to prevent an old pending search result from
+			// being processed once the field is enabled again.
+			$shareWithField.autocomplete('close');
+			$shareWithField.autocomplete('disable');
+
 			var itemSource = $('#dropdown').data('item-source');
 			var expirationDate = '';
 			if ($('#expirationCheckbox').is(':checked') === true) {
@@ -658,6 +682,8 @@
 					$shareWithField.prop('disabled', false);
 					$shareWithField.focus();
 
+					$shareWithField.autocomplete('enable');
+
 					// There is no need to show an error message here; it will
 					// be automatically shown when the autocomplete is activated
 					// again (due to the focus on the field) and it finds no
@@ -672,6 +698,8 @@
 
 					$shareWithField.prop('disabled', false);
 					$shareWithField.focus();
+
+					$shareWithField.autocomplete('enable');
 
 					return;
 				}
@@ -695,6 +723,8 @@
 					$shareWithField.val('');
 					$shareWithField.prop('disabled', false);
 					$shareWithField.focus();
+
+					$shareWithField.autocomplete('enable');
 				};
 
 				var actionError = function(result) {
@@ -703,6 +733,8 @@
 
 					$shareWithField.prop('disabled', false);
 					$shareWithField.focus();
+
+					$shareWithField.autocomplete('enable');
 
 					var message = t('gallery', 'Error');
 					if (result && result.ocs && result.ocs.meta && result.ocs.meta.message) {
@@ -727,6 +759,8 @@
 
 				$shareWithField.prop('disabled', false);
 				$shareWithField.focus();
+
+				$shareWithField.autocomplete('enable');
 
 				// There is no need to show an error message here; it will be
 				// automatically shown when the autocomplete is activated again
