@@ -539,6 +539,9 @@
 							null,
 							permissions,
 							function (data) {
+								// Adding a share changes the suggestions.
+								self._lastSuggestions = undefined;
+
 								var posPermissions = possiblePermissions;
 								if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
 									posPermissions = permissions;
@@ -734,6 +737,9 @@
 
 					$loading.addClass('hidden');
 					$confirm.removeClass('hidden');
+
+					// Adding a share changes the suggestions.
+					self._lastSuggestions = undefined;
 
 					$shareWithField.val('');
 					$shareWithField.prop('disabled', false);
