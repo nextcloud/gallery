@@ -48,6 +48,9 @@
 		 */
 		droppedDown: false,
 
+		/** @type {object} **/
+		_lastSuggestions: undefined,
+
 		/**
 		 *
 		 * @param path {String} path to the file/folder which should be shared
@@ -136,6 +139,12 @@
 		 * @param {String} itemType
 		 */
 		_getSuggestions: function (searchTerm, itemType) {
+			if (this._lastSuggestions &&
+				this._lastSuggestions.searchTerm === searchTerm &&
+				this._lastSuggestions.itemType === itemType) {
+				return this._lastSuggestions.promise;
+			}
+
 			var deferred = $.Deferred();
 
 			$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
@@ -201,7 +210,13 @@
 				deferred.reject();
 			});
 
-			return deferred.promise();
+			this._lastSuggestions = {
+				searchTerm: searchTerm,
+				itemType: itemType,
+				promise: deferred.promise()
+			};
+
+			return this._lastSuggestions.promise;
 		},
 		/**
 		 *
