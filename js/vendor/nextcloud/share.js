@@ -51,6 +51,9 @@
 		/** @type {object} **/
 		_lastSuggestions: undefined,
 
+		/** @type {int} **/
+		_pendingOperationsCount: 0,
+
 		/**
 		 *
 		 * @param path {String} path to the file/folder which should be shared
@@ -451,6 +454,7 @@
 						var $confirm = $('#dropdown .shareWithConfirm');
 						$loading.removeClass('hidden');
 						$confirm.addClass('hidden');
+						self._pendingOperationsCount++;
 
 						$shareWithField.removeClass('error')
 							.tooltip('hide');
@@ -459,8 +463,11 @@
 							search.term.trim(),
 							itemType
 						).done(function(suggestions) {
-							$loading.addClass('hidden');
-							$confirm.removeClass('hidden');
+							self._pendingOperationsCount--;
+							if (self._pendingOperationsCount === 0) {
+								$loading.addClass('hidden');
+								$confirm.removeClass('hidden');
+							}
 
 							if (suggestions.length > 0) {
 								$('#shareWith')
@@ -495,8 +502,11 @@
 								response();
 							}
 						}).fail(function (message) {
-							$('#dropdown').find('.shareWithLoading').addClass('hidden');
-							$('#dropdown').find('.shareWithConfirm').removeClass('hidden');
+							self._pendingOperationsCount--;
+							if (self._pendingOperationsCount === 0) {
+								$('#dropdown').find('.shareWithLoading').addClass('hidden');
+								$('#dropdown').find('.shareWithConfirm').removeClass('hidden');
+							}
 
 							if (message) {
 								OC.Notification.showTemporary(t('gallery', 'An error occurred ("{message}"). Please try again', { message: message }));
@@ -531,6 +541,7 @@
 						$confirm.addClass('hidden');
 						$input.val(t('gallery', 'Adding user...'));
 						$input.prop('disabled', true);
+						self._pendingOperationsCount++;
 						Gallery.Share.share(
 							itemSource,
 							shareType,
@@ -553,8 +564,11 @@
 								$input.val('');
 								$input.prop('disabled', false);
 
-								$loading.addClass('hidden');
-								$confirm.removeClass('hidden');
+								self._pendingOperationsCount--;
+								if (self._pendingOperationsCount === 0) {
+									$loading.addClass('hidden');
+									$confirm.removeClass('hidden');
+								}
 							},
 							function (result) {
 								var message = t('gallery', 'Error');
@@ -566,8 +580,11 @@
 								$input.val(shareWith);
 								$input.prop('disabled', false);
 
-								$loading.addClass('hidden');
-								$confirm.removeClass('hidden');
+								self._pendingOperationsCount--;
+								if (self._pendingOperationsCount === 0) {
+									$loading.addClass('hidden');
+									$confirm.removeClass('hidden');
+								}
 							});
 						return false;
 					}
@@ -671,6 +688,7 @@
 
 			$loading.removeClass('hidden');
 			$confirm.addClass('hidden');
+			this._pendingOperationsCount++;
 
 			$shareWithField.prop('disabled', true);
 
@@ -690,8 +708,11 @@
 			}
 
 			var restoreUI = function() {
-				$loading.addClass('hidden');
-				$confirm.removeClass('hidden');
+				self._pendingOperationsCount--;
+				if (self._pendingOperationsCount === 0) {
+					$loading.addClass('hidden');
+					$confirm.removeClass('hidden');
+				}
 
 				$shareWithField.prop('disabled', false);
 				$shareWithField.focus();
