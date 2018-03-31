@@ -67,6 +67,7 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Tento zoznam môže byť skrátený - upresnite hľadaný výraz, aby ste získali viac výsledkov.",
     "No users or groups found for {search}" : "Výrazu {search} nezodpovedá žiadny používateľ ani skupina",
     "No users found for {search}" : "Výrazu {search} nezodpovedá žiadny používateľ",
+    "An error occurred. Please try again" : "Nastala chyba. Skúste to prosím znovu",
     "Adding user..." : "Pridávam používateľa...",
     "group" : "skupina",
     "remote" : "vzdialený",
