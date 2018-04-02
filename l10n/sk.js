@@ -84,6 +84,7 @@ OC.L10N.register(
     "Password protected" : "Chránené heslom",
     "Error unsetting expiration date" : "Chyba pri odstraňovaní dátumu expirácie",
     "Error setting expiration date" : "Chyba pri nastavení dátumu expirácie",
+    "Sending…" : "Odosielam...",
     "Email sent" : "Email odoslaný",
     "Warning" : "Upozornenie",
     "This share is password-protected" : "Táto položka je chránená heslom",
