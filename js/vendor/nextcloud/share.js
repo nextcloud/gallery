@@ -340,10 +340,15 @@
 					minLength: 2,
 					delay: 750,
 					source: function (search, response) {
+						var $shareWithField = $('#dropdown #shareWith');
 						var $loading = $('#dropdown .shareWithLoading');
 						var $remoteInfo = $('#dropdown .shareWithRemoteInfo');
 						$loading.removeClass('hidden');
 						$remoteInfo.addClass('hidden');
+
+						$shareWithField.removeClass('error')
+							.tooltip('hide');
+
 						$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
 							format: 'json',
 							search: search.term.trim(),
