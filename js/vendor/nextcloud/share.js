@@ -48,6 +48,12 @@
 		 */
 		droppedDown: false,
 
+		/** @type {object} **/
+		_lastSuggestions: undefined,
+
+		/** @type {int} **/
+		_pendingOperationsCount: 0,
+
 		/**
 		 *
 		 * @param path {String} path to the file/folder which should be shared
@@ -132,6 +138,121 @@
 		},
 		/**
 		 *
+		 * @param {String} searchTerm
+		 * @param {String} itemType
+		 */
+		_getSuggestions: function (searchTerm, itemType) {
+			if (this._lastSuggestions &&
+				this._lastSuggestions.searchTerm === searchTerm &&
+				this._lastSuggestions.itemType === itemType) {
+				return this._lastSuggestions.promise;
+			}
+
+			var deferred = $.Deferred();
+
+			$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
+				format: 'json',
+				search: searchTerm,
+				perPage: 200,
+				itemType: itemType
+			}, function (result) {
+				if (result.ocs.meta.statuscode === 100) {
+					var filter = function(users) {
+						var usersLength;
+
+						var i;
+
+						//Filter out the current user
+						usersLength = users.length;
+						for (i = 0; i < usersLength; i++) {
+							if (users[i].value.shareWith === OC.currentUser) {
+								users.splice(i, 1);
+								break;
+							}
+						}
+					}
+
+					filter(result.ocs.data.exact.users);
+
+					var exactUsers = result.ocs.data.exact.users;
+					var exactGroups = result.ocs.data.exact.groups;
+					var exactRemotes = result.ocs.data.exact.remotes;
+					var exactEmails = [];
+					if (typeof(result.ocs.data.emails) !== 'undefined') {
+						exactEmails = result.ocs.data.exact.emails;
+					}
+					var exactCircles = [];
+					if (typeof(result.ocs.data.circles) !== 'undefined') {
+						exactCircles = result.ocs.data.exact.circles;
+					}
+
+					var exactMatches = exactUsers.concat(exactGroups).concat(exactRemotes).concat(exactEmails).concat(exactCircles);
+
+					filter(result.ocs.data.users);
+
+					var users = result.ocs.data.users;
+					var groups = result.ocs.data.groups;
+					var remotes = result.ocs.data.remotes;
+					var lookup = result.ocs.data.lookup;
+					var emails = [];
+					if (typeof(result.ocs.data.emails) !== 'undefined') {
+						emails = result.ocs.data.emails;
+					}
+					var circles = [];
+					if (typeof(result.ocs.data.circles) !== 'undefined') {
+						circles = result.ocs.data.circles;
+					}
+
+					var suggestions = exactMatches.concat(users).concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
+
+					deferred.resolve(suggestions, exactMatches);
+				} else {
+					deferred.reject(result.ocs.meta.message);
+				}
+			}).fail(function () {
+				deferred.reject();
+			});
+
+			this._lastSuggestions = {
+				searchTerm: searchTerm,
+				itemType: itemType,
+				promise: deferred.promise()
+			};
+
+			return this._lastSuggestions.promise;
+		},
+		/**
+		 *
+		 * @param {int} shareType
+		 * @param {int} possiblePermissions
+		 */
+		_getPermissions: function (shareType, possiblePermissions) {
+			// Default permissions are Edit (CRUD) and Share
+			// Check if these permissions are possible
+			var permissions = OC.PERMISSION_READ;
+			if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
+				permissions =
+					OC.PERMISSION_CREATE | OC.PERMISSION_UPDATE | OC.PERMISSION_READ;
+			} else {
+				if (possiblePermissions & OC.PERMISSION_UPDATE) {
+					permissions = permissions | OC.PERMISSION_UPDATE;
+				}
+				if (possiblePermissions & OC.PERMISSION_CREATE) {
+					permissions = permissions | OC.PERMISSION_CREATE;
+				}
+				if (possiblePermissions & OC.PERMISSION_DELETE) {
+					permissions = permissions | OC.PERMISSION_DELETE;
+				}
+				if (oc_appconfig.core.resharingAllowed &&
+					(possiblePermissions & OC.PERMISSION_SHARE)) {
+					permissions = permissions | OC.PERMISSION_SHARE;
+				}
+			}
+
+			return permissions;
+		},
+		/**
+		 *
 		 * @param {String} itemType
 		 * @param {String} path
 		 * @param {String} appendTo
@@ -196,14 +317,7 @@
 					'</label>';
 				html +=
 					'<input id="shareWith" type="text" placeholder="' + sharePlaceholder + '" />';
-				if (oc_appconfig.core.remoteShareAllowed) {
-					var federatedCloudSharingDoc =
-						'<span class="icon-info svg shareWithRemoteInfo hasTooltip" ' +
-						'title="' + t('gallery',
-							'Share with people on other servers using their Federated Cloud ID username@example.com/cloud') +
-						'"></span>';
-					html += federatedCloudSharingDoc;
-				}
+				html += '<span class="shareWithConfirm icon-confirm svg"></span>';
 				html += '<span class="shareWithLoading icon-loading-small hidden"></span>';
 				html += '<ul id="shareWithList">';
 				html += '</ul>';
@@ -287,11 +401,6 @@
 				dropDownEl = $(html);
 				dropDownEl = dropDownEl.appendTo(appendTo);
 
-				// trigger remote share info tooltip
-				if (oc_appconfig.core.remoteShareAllowed) {
-					$('.shareWithRemoteInfo').tooltip({placement: 'bottom'});
-				}
-
 				//Get owner avatars
 				if (oc_config.enable_avatars === true && data !== false && data[0] !== false &&
 					!_.isUndefined(data[0]) && !_.isUndefined(data[0].uid_file_owner)) {
@@ -342,101 +451,78 @@
 					source: function (search, response) {
 						var $shareWithField = $('#dropdown #shareWith');
 						var $loading = $('#dropdown .shareWithLoading');
-						var $remoteInfo = $('#dropdown .shareWithRemoteInfo');
+						var $confirm = $('#dropdown .shareWithConfirm');
 						$loading.removeClass('hidden');
-						$remoteInfo.addClass('hidden');
+						$confirm.addClass('hidden');
+						self._pendingOperationsCount++;
 
 						$shareWithField.removeClass('error')
 							.tooltip('hide');
 
-						$.get(OC.linkToOCS('apps/files_sharing/api/v1') + 'sharees', {
-							format: 'json',
-							search: search.term.trim(),
-							perPage: 200,
-							itemType: itemType
-						}, function (result) {
-							$loading.addClass('hidden');
-							$remoteInfo.removeClass('hidden');
-							if (result.ocs.meta.statuscode === 100) {
-								var users = result.ocs.data.exact.users.concat(result.ocs.data.users);
-								var groups = result.ocs.data.exact.groups.concat(result.ocs.data.groups);
-								var remotes = result.ocs.data.exact.remotes.concat(result.ocs.data.remotes);
-								var lookup = result.ocs.data.lookup;
-								var emails = [],
-									circles = [];
-								if (typeof(result.ocs.data.emails) !== 'undefined') {
-									emails = result.ocs.data.exact.emails.concat(result.ocs.data.emails);
-								}
-								if (typeof(result.ocs.data.circles) !== 'undefined') {
-									circles = result.ocs.data.exact.circles.concat(result.ocs.data.circles);
-								}
+						self._getSuggestions(
+							search.term.trim(),
+							itemType
+						).done(function(suggestions) {
+							self._pendingOperationsCount--;
+							if (self._pendingOperationsCount === 0) {
+								$loading.addClass('hidden');
+								$confirm.removeClass('hidden');
+							}
 
-								var usersLength;
-								var groupsLength;
-								var remotesLength;
-								var emailsLength;
-								var circlesLength;
+							if (suggestions.length > 0) {
+								$('#shareWith')
+									.autocomplete("option", "autoFocus", true);
 
-								var i, j;
+								response(suggestions);
 
-								//Filter out the current user
-								usersLength = users.length;
-								for (i = 0; i < usersLength; i++) {
-									if (users[i].value.shareWith === OC.currentUser) {
-										users.splice(i, 1);
-										break;
-									}
+								// show a notice that the list is truncated
+								// this is the case if one of the search results is at least as long as the max result config option
+								if (oc_config['sharing.maxAutocompleteResults'] > 0 &&
+									Math.min(perPage, oc_config['sharing.maxAutocompleteResults'])
+									<= Math.max(users.length, groups.length, remotes.length, emails.length, lookup.length)) {
+
+									var message = t('gallery', 'This list is maybe truncated - please refine your search term to see more results.');
+									$('.ui-autocomplete').append('<li class="autocomplete-note">' + message + '</li>');
 								}
 
-								var suggestions = users.concat(groups).concat(remotes).concat(emails).concat(circles).concat(lookup);
-
-								if (suggestions.length > 0) {
-									$('#shareWith')
-										.autocomplete("option", "autoFocus", true);
-
-									response(suggestions);
-
-									// show a notice that the list is truncated
-									// this is the case if one of the search results is at least as long as the max result config option
-									if (oc_config['sharing.maxAutocompleteResults'] > 0 &&
-										Math.min(perPage, oc_config['sharing.maxAutocompleteResults'])
-										<= Math.max(users.length, groups.length, remotes.length, emails.length, lookup.length)) {
-
-										var message = t('gallery', 'This list is maybe truncated - please refine your search term to see more results.');
-										$('.ui-autocomplete').append('<li class="autocomplete-note">' + message + '</li>');
-									}
-
-								} else {
-									var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
-									if (!oc_appconfig.core.allowGroupSharing) {
-										title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
-									}
-									$('#shareWith').addClass('error')
-										.attr('data-original-title', title)
-										.tooltip('hide')
-										.tooltip({
-											placement: 'bottom',
-											trigger: 'manual'
-										})
-										.tooltip('fixTitle')
-										.tooltip('show');
-									response();
-								}
 							} else {
+								var title = t('gallery', 'No users or groups found for {search}', {search: $('#shareWith').val()});
+								if (!oc_appconfig.core.allowGroupSharing) {
+									title = t('gallery', 'No users found for {search}', {search: $('#shareWith').val()});
+								}
+								$('#shareWith').addClass('error')
+									.attr('data-original-title', title)
+									.tooltip('hide')
+									.tooltip({
+										placement: 'bottom',
+										trigger: 'manual'
+									})
+									.tooltip('fixTitle')
+									.tooltip('show');
 								response();
 							}
-						}).fail(function () {
-							$('#dropdown').find('.shareWithLoading').addClass('hidden');
-							$('#dropdown').find('.shareWithRemoteInfo').removeClass('hidden');
-							OC.Notification.show(t('gallery', 'An error occurred. Please try again'));
-							window.setTimeout(OC.Notification.hide, 5000);
+						}).fail(function (message) {
+							self._pendingOperationsCount--;
+							if (self._pendingOperationsCount === 0) {
+								$('#dropdown').find('.shareWithLoading').addClass('hidden');
+								$('#dropdown').find('.shareWithConfirm').removeClass('hidden');
+							}
+
+							if (message) {
+								OC.Notification.showTemporary(t('gallery', 'An error occurred ("{message}"). Please try again', { message: message }));
+							} else {
+								OC.Notification.showTemporary(t('gallery', 'An error occurred. Please try again'));
+							}
 						});
 					},
 					focus: function (event) {
 						event.preventDefault();
 					},
 					select: function (event, selected) {
-						event.stopPropagation();
+						// Ensure that the keydown handler for the input field
+						// is not called; otherwise it would try to add the
+						// recipient again, which would fail.
+						event.stopImmediatePropagation();
 						var $dropDown = $('#dropdown');
 						var itemSource = $dropDown.data('item-source');
 						var expirationDate = '';
@@ -446,35 +532,16 @@
 						var shareType = selected.item.value.shareType;
 						var shareWith = selected.item.value.shareWith;
 						$(this).val(shareWith);
-						// Default permissions are Edit (CRUD) and Share
-						// Check if these permissions are possible
-						var permissions = OC.PERMISSION_READ;
-						if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
-							permissions =
-								OC.PERMISSION_CREATE | OC.PERMISSION_UPDATE | OC.PERMISSION_READ;
-						} else {
-							if (possiblePermissions & OC.PERMISSION_UPDATE) {
-								permissions = permissions | OC.PERMISSION_UPDATE;
-							}
-							if (possiblePermissions & OC.PERMISSION_CREATE) {
-								permissions = permissions | OC.PERMISSION_CREATE;
-							}
-							if (possiblePermissions & OC.PERMISSION_DELETE) {
-								permissions = permissions | OC.PERMISSION_DELETE;
-							}
-							if (oc_appconfig.core.resharingAllowed &&
-								(possiblePermissions & OC.PERMISSION_SHARE)) {
-								permissions = permissions | OC.PERMISSION_SHARE;
-							}
-						}
+						var permissions = self._getPermissions(shareType, possiblePermissions);
 
 						var $input = $(this);
 						var $loading = $dropDown.find('.shareWithLoading');
-						var $remoteInfo = $dropDown.find('.shareWithRemoteInfo');
+						var $confirm = $dropDown.find('.shareWithConfirm');
 						$loading.removeClass('hidden');
-						$remoteInfo.addClass('hidden');
+						$confirm.addClass('hidden');
 						$input.val(t('gallery', 'Adding user...'));
 						$input.prop('disabled', true);
+						self._pendingOperationsCount++;
 						Gallery.Share.share(
 							itemSource,
 							shareType,
@@ -483,6 +550,9 @@
 							null,
 							permissions,
 							function (data) {
+								// Adding a share changes the suggestions.
+								self._lastSuggestions = undefined;
+
 								var posPermissions = possiblePermissions;
 								if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
 									posPermissions = permissions;
@@ -494,8 +564,11 @@
 								$input.val('');
 								$input.prop('disabled', false);
 
-								$loading.addClass('hidden');
-								$remoteInfo.removeClass('hidden');
+								self._pendingOperationsCount--;
+								if (self._pendingOperationsCount === 0) {
+									$loading.addClass('hidden');
+									$confirm.removeClass('hidden');
+								}
 							},
 							function (result) {
 								var message = t('gallery', 'Error');
@@ -507,8 +580,11 @@
 								$input.val(shareWith);
 								$input.prop('disabled', false);
 
-								$loading.addClass('hidden');
-								$remoteInfo.removeClass('hidden');
+								self._pendingOperationsCount--;
+								if (self._pendingOperationsCount === 0) {
+									$loading.addClass('hidden');
+									$confirm.removeClass('hidden');
+								}
 							});
 						return false;
 					}
@@ -534,10 +610,31 @@
 						.appendTo(ul);
 				};
 
+				var shareFieldKeydownHandler = function(event) {
+					if (event.keyCode !== 13) {
+						return true;
+					}
+
+					self._confirmShare(itemType, possiblePermissions);
+
+					return false;
+				};
+
+				$('#shareWith').on('keydown', shareFieldKeydownHandler);
+
 				$('#shareWith').on('input', function () {
 					if ($(this).val().length < 2) {
 						$(this).removeClass('error').tooltip('hide');
 					}
+				});
+
+				/* trigger search after the field was re-selected */
+				$('#shareWith').on('focus', function() {
+					$(this).autocomplete('search');
+				});
+
+				$('.shareWithConfirm').on('click', function () {
+					self._confirmShare(itemType, possiblePermissions);
 				});
 
 				if (link && linksAllowed && $('#email').length != 0) {
@@ -582,6 +679,125 @@
 				$('#dropdown input[placeholder]').placeholder();
 			}
 			$('#shareWith').focus();
+		},
+		_confirmShare: function (itemType, possiblePermissions) {
+			var self = this;
+			var $shareWithField = $('#dropdown #shareWith');
+			var $loading = $('#dropdown .shareWithLoading');
+			var $confirm = $('#dropdown .shareWithConfirm');
+
+			$loading.removeClass('hidden');
+			$confirm.addClass('hidden');
+			this._pendingOperationsCount++;
+
+			$shareWithField.prop('disabled', true);
+
+			// Disabling the autocompletion does not clear its search timeout;
+			// removing the focus from the input field does, but only if the
+			// autocompletion is not disabled when the field loses the focus.
+			// Thus, the field has to be disabled before disabling the
+			// autocompletion to prevent an old pending search result from
+			// being processed once the field is enabled again.
+			$shareWithField.autocomplete('close');
+			$shareWithField.autocomplete('disable');
+
+			var itemSource = $('#dropdown').data('item-source');
+			var expirationDate = '';
+			if ($('#expirationCheckbox').is(':checked') === true) {
+				expirationDate = $("#expirationDate").val();
+			}
+
+			var restoreUI = function() {
+				self._pendingOperationsCount--;
+				if (self._pendingOperationsCount === 0) {
+					$loading.addClass('hidden');
+					$confirm.removeClass('hidden');
+				}
+
+				$shareWithField.prop('disabled', false);
+				$shareWithField.focus();
+			};
+
+			this._getSuggestions(
+				$shareWithField.val(),
+				itemType
+			).done(function(suggestions, exactMatches) {
+				if (suggestions.length === 0) {
+					restoreUI();
+
+					$shareWithField.autocomplete('enable');
+
+					// There is no need to show an error message here; it will
+					// be automatically shown when the autocomplete is activated
+					// again (due to the focus on the field) and it finds no
+					// matches.
+
+					return;
+				}
+
+				if (exactMatches.length !== 1) {
+					restoreUI();
+
+					$shareWithField.autocomplete('enable');
+
+					return;
+				}
+
+				var shareType = exactMatches[0].value.shareType;
+				var shareWith = exactMatches[0].value.shareWith;
+				var permissions = self._getPermissions(shareType, possiblePermissions);
+
+				var actionSuccess = function(data) {
+					var updatedPossiblePermissions = possiblePermissions;
+					if (shareType === Gallery.Share.SHARE_TYPE_REMOTE) {
+						updatedPossiblePermissions = permissions;
+					}
+					Gallery.Share._addShareWith(data.id, shareType, shareWith,
+						exactMatches[0].label,
+						permissions, updatedPossiblePermissions);
+
+					// Adding a share changes the suggestions.
+					self._lastSuggestions = undefined;
+
+					$shareWithField.val('');
+
+					restoreUI();
+
+					$shareWithField.autocomplete('enable');
+				};
+
+				var actionError = function(result) {
+					restoreUI();
+
+					$shareWithField.autocomplete('enable');
+
+					var message = t('gallery', 'Error');
+					if (result && result.ocs && result.ocs.meta && result.ocs.meta.message) {
+						message = result.ocs.meta.message;
+					}
+					OC.Notification.showTemporary(message);
+				};
+
+				Gallery.Share.share(
+					itemSource,
+					shareType,
+					shareWith,
+					0,
+					null,
+					permissions,
+					actionSuccess,
+					actionError
+				);
+			}).fail(function (message) {
+				restoreUI();
+
+				$shareWithField.autocomplete('enable');
+
+				// There is no need to show an error message here; it will be
+				// automatically shown when the autocomplete is activated again
+				// (due to the focus on the field) and getting the suggestions
+				// fail.
+			});
 		},
 		/**
 		 *
