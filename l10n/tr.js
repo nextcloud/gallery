@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "{owner} tarafından sizinle paylaşıldı",
     "Share with users or groups …" : "Kullanıcı ya da gruplarla paylaş...",
     "Share with users, groups or remote users …" : "Kullanıcılar, gruplar ya da uzak kullanıcılarla paylaş...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Birleşmiş Bulut Kodu ile diğer sunucular üzerindeki kişiler ile paylaş username@example.com/cloud",
     "Share link" : "Paylaşım bağlantısı",
     "The public link will expire no later than {days} days after it is created" : "Herkese açık bağlantı, oluşturulduktan {days} gün sonra kullanımdan kaldırılacak",
     "Link" : "Bağlantı",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Nextcloud hesabınıza ekleyin",
     "Picture view" : "Görsel görünümü",
     "Gallery view" : "Galeri görünümü",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Birleşmiş Bulut Kodu ile diğer sunucular üzerindeki kişiler ile paylaş username@example.com/cloud",
     "An error occured. Please try again" : "Bir sorun çıktı. Lütfen yeniden deneyin",
     "Sending ..." : "Gönderiliyor..."
 },

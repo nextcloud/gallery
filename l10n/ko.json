@@ -49,7 +49,6 @@
     "Shared with you by {owner}" : "{owner} 님이 공유 중",
     "Share with users or groups …" : "사용자 및 그룹과 공유...",
     "Share with users, groups or remote users …" : "사용자, 그룹 및 원격 사용자와 공유...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "연합 클라우드 ID를 통하여 다른 서버의 사람과 공유 username@example.com/cloud",
     "Share link" : "링크 공유",
     "The public link will expire no later than {days} days after it is created" : "공개 링크를 만든 후 최대 {days}일까지 유지됩니다",
     "Link" : "링크",
@@ -111,6 +110,7 @@
     "Add to your Nextcloud" : "Nextcloud에 추가",
     "Picture view" : "사진 보기",
     "Gallery view" : "갤러리 보기",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "연합 클라우드 ID를 통하여 다른 서버의 사람과 공유 username@example.com/cloud",
     "An error occured. Please try again" : "오류가 발생했습니다. 다시 시도하십시오.",
     "Sending ..." : "전송 중..."
 },"pluralForm" :"nplurals=1; plural=0;"

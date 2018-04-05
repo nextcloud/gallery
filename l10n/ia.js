@@ -46,7 +46,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Compartite con te per {owner} ",
     "Share with users or groups …" : "Compartir con usatores o gruppos ...",
     "Share with users, groups or remote users …" : "Compartir con usatores, gruppos o usatores remote ...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Compartir con personas qui usa altere servitores per medio de lor ID de Nube Federate:\nusername@example.com/cloud",
     "Share link" : "Compartir ligamine",
     "Link" : "Ligamine",
     "Password protect" : "Proteger per contrasigno",
@@ -101,6 +100,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Adder a tu Nextcloud",
     "Picture view" : "Visualisation de Imagine",
     "Gallery view" : "Visualisation de Galeria",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Compartir con personas qui usa altere servitores per medio de lor ID de Nube Federate:\nusername@example.com/cloud",
     "An error occured. Please try again" : "Un error occurreva. Per favor, tenta de novo.",
     "Sending ..." : "Inviante ..."
 },

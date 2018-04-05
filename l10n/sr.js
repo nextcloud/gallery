@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "{owner} дели са Вама",
     "Share with users or groups …" : "Дели са корисницима или групама …",
     "Share with users, groups or remote users …" : "Дели са корисницима, групама или удаљеним корисницима …",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Поделите са људима у другим облацима користећи ID њиховог здруженог облика, као username@example.com/cloud",
     "Share link" : "Веза дељења",
     "The public link will expire no later than {days} days after it is created" : "Јавна веза ће престати да важи {days} дана након стварања",
     "Link" : "Веза",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Додај у свој облак",
     "Picture view" : "Приказ слике",
     "Gallery view" : "Приказ галерије",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Поделите са људима у другим облацима користећи ID њиховог здруженог облика, као username@example.com/cloud",
     "An error occured. Please try again" : "Дошло је до грешке. Покушајте поново",
     "Sending ..." : "Шаљем ..."
 },
