@@ -14,8 +14,8 @@
 
 namespace OCA\Gallery\Controller;
 
-use OCA\Files_Sharing\Template\ExternalShareMenuAction;
-use OCA\Files_Sharing\Template\LinkMenuAction;
+use OCP\AppFramework\Http\Template\ExternalShareMenuAction;
+use OCP\AppFramework\Http\Template\LinkMenuAction;
 use OCP\AppFramework\Http\Template\PublicTemplateResponse;
 use OCP\AppFramework\Http\Template\SimpleMenuAction;
 use OCP\IL10N;
