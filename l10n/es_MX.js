@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Compartido contigo por {owner}",
     "Share with users or groups …" : "Compartir con otros usuarios o grupos ...",
     "Share with users, groups or remote users …" : "Compartir con otros usuarios, grupos o usuarios remotos...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparte con personas en otros servidores usando tu ID username@example.com/cloud",
     "Share link" : "Compartir liga",
     "The public link will expire no later than {days} days after it is created" : "La liga pública expirará a los {days} días de haber sido creada",
     "Link" : "Liga",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Agregar a tu Nextcloud",
     "Picture view" : "Vista de imágenes",
     "Gallery view" : "Vista de galería",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparte con personas en otros servidores usando tu ID username@example.com/cloud",
     "An error occured. Please try again" : "Se presentó un error. Por favor intenta de nuevo",
     "Sending ..." : "Enviando..."
 },

@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "გაზიარდა თქვენთვის {owner} მომხმარებლის მიერ",
     "Share with users or groups …" : "გაზიარება მომხმარებლებთან ან ჯგუფებთან …",
     "Share with users, groups or remote users …" : "გაზიარება მოხმარებლებთან, ჯგუფებთან ან დისტანციურ მოხმარებლებთან …",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "გაზიარება ადამიანებთან სხვა სერვერებზე მათი ფედერალური ქლაუდ ID-ების username@example.com/cloud მეშვეობით",
     "Share link" : "ბმულის გაზიარება",
     "The public link will expire no later than {days} days after it is created" : "ეს საზოგადო ბმული გაუქმედაბა მისი შექმნიდან არა უგვიანეს {days} დღისა",
     "Link" : "ბმული",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "თქვენს Nextcloud-ში დამატება",
     "Picture view" : "სურათის ხედი",
     "Gallery view" : "გალერეის ხედი",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "გაზიარება ადამიანებთან სხვა სერვერებზე მათი ფედერალური ქლაუდ ID-ების username@example.com/cloud მეშვეობით",
     "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
     "Sending ..." : "გაგზავნა …"
 },

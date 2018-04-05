@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Megosztotta veled: {owner}",
     "Share with users or groups …" : "Megosztás felhasználókkal vagy csoportokkal ...",
     "Share with users, groups or remote users …" : "Megosztás felhasználókkal, csoportokkal vagy távoli felhasználókkal ...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Megosztás más szervert használó emberekkel, az Egyesített Felhő Azonosítóval: username@example.com/cloud",
     "Share link" : "Megosztás hivatkozással",
     "The public link will expire no later than {days} days after it is created" : "A nyilvános hivatkozás érvényessége legkorábban {days} nappal a létrehozása után jár csak le",
     "Link" : "Hivatkozás",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Add hozzá a saját Nexcloudodhoz",
     "Picture view" : "Képnézet",
     "Gallery view" : "Galéria nézet",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Megosztás más szervert használó emberekkel, az Egyesített Felhő Azonosítóval: username@example.com/cloud",
     "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",
     "Sending ..." : "Küldés ..."
 },

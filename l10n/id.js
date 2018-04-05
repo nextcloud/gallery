@@ -49,7 +49,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Dibagikan dengan anda oleh {owner}",
     "Share with users or groups …" : "Bagikan dengan pengguna atau grup ...",
     "Share with users, groups or remote users …" : "Bagikan dengan pengguna, grup atau pengguna remote ...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Bagikan dengan orang diserver lainnya dengan menggunakan Federated Cloud ID orang tersebut username@example.com/cloud",
     "Share link" : "Bagikan tautan",
     "The public link will expire no later than {days} days after it is created" : "Tautan publik akan kadaluarsa tidak lebih dari {days} hari setelah ini dibuat",
     "Link" : "Tautan",
@@ -108,6 +107,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Tambahkan ke Nextcloud Anda",
     "Picture view" : "Tampilan gambar",
     "Gallery view" : "Tampilan galeri",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Bagikan dengan orang diserver lainnya dengan menggunakan Federated Cloud ID orang tersebut username@example.com/cloud",
     "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
     "Sending ..." : "Mengirim ..."
 },

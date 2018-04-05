@@ -49,7 +49,6 @@
     "Shared with you by {owner}" : "Delad med dig av {owner}",
     "Share with users or groups …" : "Dela med användare eller grupper ...",
     "Share with users, groups or remote users …" : "Dela med användare, grupper eller externanvändare ...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Dela med personer på andra servrar genom att använda deras Federerade Moln-ID användarnamn@exempel.se/cloud",
     "Share link" : "Dela länk",
     "The public link will expire no later than {days} days after it is created" : "Den offentliga länken kommer sluta att gälla {days} dagar efter att den skapades",
     "Link" : "Länk",
@@ -111,6 +110,7 @@
     "Add to your Nextcloud" : "Lägg till till din Nextcloud",
     "Picture view" : "Bildvy",
     "Gallery view" : "Bildgallerivy",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Dela med personer på andra servrar genom att använda deras Federerade Moln-ID användarnamn@exempel.se/cloud",
     "An error occured. Please try again" : "Ett fel uppstod. Var god försök igen",
     "Sending ..." : "Skickar ..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

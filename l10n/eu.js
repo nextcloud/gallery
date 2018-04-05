@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "{owner}-k zurekin elkarbanatuta",
     "Share with users or groups …" : "Partekatu taldeen erabiltzaileekin...",
     "Share with users, groups or remote users …" : "Partekatu erabiltzaileekin, taldeekin edo urrutiko erabiltzaileekin...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Beste zerbitzarietako jendearekin partekatu ahal duzu Hodei Federatuaren ID erabiliz, adibidez erabiltzaile@adibide.com/cloud",
     "Share link" : "Elkarbanatu lotura",
     "The public link will expire no later than {days} days after it is created" : "Esteka publikoak iraungi egingo du, askoz jota, sortu eta  {days} egunetara.",
     "Link" : "Esteka",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Gehitu zure Nextcloud-era",
     "Picture view" : "Irudi bistaratzea",
     "Gallery view" : "Galeria ikuspegia",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Beste zerbitzarietako jendearekin partekatu ahal duzu Hodei Federatuaren ID erabiliz, adibidez erabiltzaile@adibide.com/cloud",
     "An error occured. Please try again" : "Errore bat gertatu da. Saiatu berriro.",
     "Sending ..." : "Bidaltzen ..."
 },

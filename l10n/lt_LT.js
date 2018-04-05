@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "{owner} bendrina su jumis",
     "Share with users or groups …" : "Bendrinti su naudotojais ar grupėmis …",
     "Share with users, groups or remote users …" : "Bendrinti su naudotojais, grupėmis ar naudotojais kituose serveriuose…",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Pasidalinti su naudotojais kituose serveriuose naudojantis Centralizuoto Serverio ID, pavyzdžiui: username@example.com/cloud",
     "Share link" : "Bendrinimo nuoroda",
     "The public link will expire no later than {days} days after it is created" : "Vieša nuoroda galios ne mažiau kaip {days} dienas nuo sukūrimo",
     "Link" : "Nuoroda",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
     "Picture view" : "Paveikslo rodymas",
     "Gallery view" : "Galerijos rodinys",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Pasidalinti su naudotojais kituose serveriuose naudojantis Centralizuoto Serverio ID, pavyzdžiui: username@example.com/cloud",
     "An error occured. Please try again" : "Klaida, prašau bandyti dar kartą.",
     "Sending ..." : "Siunčiama..."
 },
