@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Jaettu kanssasi käyttäjän {owner} toimesta",
     "Share with users or groups …" : "Jaa käyttäjien tai ryhmien kanssa…",
     "Share with users, groups or remote users …" : "Jaa käyttäjien, ryhmien tai etäkäyttäjien kanssa…",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Jaa toisia järjestelmiä käyttäville Federated Cloud ID -tunnuksella muodossa käyttäjätunnus@example.com/nextcloud",
     "Share link" : "Jaa linkki",
     "The public link will expire no later than {days} days after it is created" : "Julkinen linkki vanhenee {days} päivän jälkeen sen luomisesta",
     "Link" : "Linkki",
@@ -115,6 +114,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Lisää Nextcloudiisi",
     "Picture view" : "Kuvanäkymä",
     "Gallery view" : "Gallerianäkymä",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Jaa toisia järjestelmiä käyttäville Federated Cloud ID -tunnuksella muodossa käyttäjätunnus@example.com/nextcloud",
     "An error occured. Please try again" : "Tapahtui virhe. Yritä myöhemmin uudestaan",
     "Sending ..." : "Lähetetään..."
 },

@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Ndarë me ju nga {owner}",
     "Share with users or groups …" : "Ndajeni me përdorues ose grupe …",
     "Share with users, groups or remote users …" : "Ndajeni me përdorues, grupe ose përdorues të largët …",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Ndani me njerëz në servera të tjerë duke përdorut ID-në e Federated Cloud username@example.com/cloud",
     "Share link" : "Ndani lidhjen",
     "The public link will expire no later than {days} days after it is created" : "Lidhja publike do të skadojë jo më vonë se {days} ditë pas krijimit",
     "Link" : "Lidhje",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Shtoni Nextcloudin tuaj",
     "Picture view" : "Pamje Foto",
     "Gallery view" : "Pamje Galeri",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Ndani me njerëz në servera të tjerë duke përdorut ID-në e Federated Cloud username@example.com/cloud",
     "An error occured. Please try again" : "Ndodhi një gabim. Ju lutemi, riprovoni",
     "Sending ..." : "Po dërgohet …"
 },

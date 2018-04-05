@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Delt med dig af {owner}",
     "Share with users or groups …" : "Del med brugere eller grupper",
     "Share with users, groups or remote users …" : "Del med brugere, grupper eller eksterne brugere...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Del med andre på en anden server ved hjælp af deres Federated Cloud id username@example.com/cloud ",
     "Share link" : "Del link",
     "The public link will expire no later than {days} days after it is created" : "Det offentlige link udløber senest {days} dage efter det blev oprettet",
     "Link" : "Link",
@@ -113,6 +112,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Tilføj til din Nextcloud",
     "Picture view" : "Billedvisning",
     "Gallery view" : "Galleri visning",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Del med andre på en anden server ved hjælp af deres Federated Cloud id username@example.com/cloud ",
     "An error occured. Please try again" : "Der skete en fejl. Prøv venligst igen",
     "Sending ..." : "Sender ..."
 },

@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Compartíu contigo por {owner}",
     "Share with users or groups …" : "Compartir con usuarios o grupos",
     "Share with users, groups or remote users …" : "Compartir con usuarios, grupos o usuarios remotos",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparti con xente d'otros sirvidores usando la ID de ñube federada nome_usuariu@exemplu.com/cloud",
     "Share link" : "Compartir enllaz",
     "The public link will expire no later than {days} days after it is created" : "L'enllaz públicu va caducar enantes de {days} díes dende la so creación",
     "Link" : "Enllaz",
@@ -111,6 +110,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
     "Picture view" : "Vista d'imáxenes",
     "Gallery view" : "Vista de galería",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparti con xente d'otros sirvidores usando la ID de ñube federada nome_usuariu@exemplu.com/cloud",
     "An error occured. Please try again" : "Hebo un fallu. Por favor, inténtalo dempués. ",
     "Sending ..." : "Unviando ..."
 },

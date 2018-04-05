@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "Deilt með þér af {owner}",
     "Share with users or groups …" : "Deila með notendum eða hópum ...",
     "Share with users, groups or remote users …" : "Deila með notendum, hópa eða ytri notendum ...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Deila með fólki í öðrum skýjum með auðkenninu notandanafn@dæmi.is/nextcloud",
     "Share link" : "Deila tengli",
     "The public link will expire no later than {days} days after it is created" : "Almenningstengillinn rennur út eigi síðar en {days} dögum eftir að hann er útbúinn",
     "Link" : "Tengill",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
     "Picture view" : "Myndasýn",
     "Gallery view" : "Myndasafnssýn",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Deila með fólki í öðrum skýjum með auðkenninu notandanafn@dæmi.is/nextcloud",
     "An error occured. Please try again" : "Villa kom upp. Endilega reyndu aftur",
     "Sending ..." : "Sendi ..."
 },

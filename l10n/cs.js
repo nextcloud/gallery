@@ -51,7 +51,6 @@ OC.L10N.register(
     "Shared with you by {owner}" : "S Vámi sdílí {owner}",
     "Share with users or groups …" : "Sdílet s uživateli nebo skupinami",
     "Share with users, groups or remote users …" : "Sdílet s uživateli, skupinami nebo vzdálenými uživateli",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sdílet s uživateli na jiných serverech za použití jejich sdílených cloud ID username@example.com/cloud",
     "Share link" : "Sdílet odkaz",
     "The public link will expire no later than {days} days after it is created" : "Veřejný odkaz vyprší nejpozději {days} dní od svého vytvoření",
     "Link" : "Odkaz",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add to your Nextcloud" : "Přidat do Nextcloud",
     "Picture view" : "Zobrazení obrázku",
     "Gallery view" : "Náhled galerie",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sdílet s uživateli na jiných serverech za použití jejich sdílených cloud ID username@example.com/cloud",
     "An error occured. Please try again" : "Nastala chyba. Prosím zkuste to znovu",
     "Sending ..." : "Odesílám ..."
 },

@@ -49,7 +49,6 @@
     "Shared with you by {owner}" : "Met je gedeeld door {owner}",
     "Share with users or groups …" : "Delen met gebruikers of groepen ...",
     "Share with users, groups or remote users …" : "Delen met gebruikers, groepen of externe gebruikers ...",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Delen met mensen bij andere servers via hun gefedereerde Cloud ID gebruikersnaam@voorbeeld.nl/nextcloud",
     "Share link" : "Deel link",
     "The public link will expire no later than {days} days after it is created" : "De openbare link vervalt niet eerder dan {days} dagen na het aanmaken",
     "Link" : "Link",
@@ -113,6 +112,7 @@
     "Add to your Nextcloud" : "Toevoegen aan je Nextcloud",
     "Picture view" : "Afbeeldingenoverzicht",
     "Gallery view" : "Album",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Delen met mensen bij andere servers via hun gefedereerde Cloud ID gebruikersnaam@voorbeeld.nl/nextcloud",
     "An error occured. Please try again" : "Er trad een fout op. Probeer het opnieuw",
     "Sending ..." : "Versturen ..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
