@@ -222,7 +222,7 @@
 		download: function (event) {
 			event.preventDefault();
 
-			var path = $('#content').data('albumname');
+			var path = $('#app').data('albumname');
 			var files = Gallery.currentAlbum;
 			var downloadUrl = Gallery.utility.buildFilesUrl(path, files);
 
