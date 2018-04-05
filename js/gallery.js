@@ -240,15 +240,6 @@
 		},
 
 		/**
-		 * Lets the user add the shared files to his cloud
-		 */
-		showSaveForm: function () {
-			$(this).hide();
-			$('.save-form').css('display', 'inline');
-			$('#remote_address').focus();
-		},
-
-		/**
 		 * Sends the shared files to the viewer's cloud
 		 *
 		 * @param event
@@ -256,7 +247,7 @@
 		saveForm: function (event) {
 			event.preventDefault();
 
-			var saveElement = $('#save');
+			var saveElement = $('#save-external-share');
 			var remote = $(this).find('input[type="text"]').val();
 			var owner = saveElement.data('owner');
 			var name = saveElement.data('name');
