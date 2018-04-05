@@ -118,7 +118,7 @@ class PageController extends Controller {
 	 * @param string $token
 	 * @param null|string $filename
 	 *
-	 * @return TemplateResponse|ImageResponse|RedirectResponse
+	 * @return PublicTemplateResponse|ImageResponse|RedirectResponse
 	 */
 	public function publicIndex($token, $filename) {
 		$node = $this->environment->getSharedNode();
