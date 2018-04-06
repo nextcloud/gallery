@@ -14,6 +14,11 @@
 
 namespace OCA\Gallery\Controller;
 
+use OCP\AppFramework\Http\Template\ExternalShareMenuAction;
+use OCP\AppFramework\Http\Template\LinkMenuAction;
+use OCP\AppFramework\Http\Template\PublicTemplateResponse;
+use OCP\AppFramework\Http\Template\SimpleMenuAction;
+use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IRequest;
 use OCP\IConfig;
@@ -43,6 +48,8 @@ class PageController extends Controller {
 	private $appConfig;
 	/** @var EventDispatcherInterface */
 	private $dispatcher;
+	/** @var IL10N */
+	private $l10n;
 
 	/**
 	 * Constructor
@@ -53,6 +60,7 @@ class PageController extends Controller {
 	 * @param IURLGenerator $urlGenerator
 	 * @param IConfig $appConfig
 	 * @param EventDispatcherInterface $dispatcher
+	 * @param IL10N $l10n
 	 */
 	public function __construct(
 		$appName,
@@ -60,7 +68,8 @@ class PageController extends Controller {
 		Environment $environment,
 		IURLGenerator $urlGenerator,
 		IConfig $appConfig,
-		EventDispatcherInterface $dispatcher
+		EventDispatcherInterface $dispatcher,
+		IL10N $l10n
 	) {
 		parent::__construct($appName, $request);
 
@@ -68,6 +77,7 @@ class PageController extends Controller {
 		$this->urlGenerator = $urlGenerator;
 		$this->appConfig = $appConfig;
 		$this->dispatcher = $dispatcher;
+		$this->l10n = $l10n;
 	}
 
 	/**
@@ -108,7 +118,7 @@ class PageController extends Controller {
 	 * @param string $token
 	 * @param null|string $filename
 	 *
-	 * @return TemplateResponse|ImageResponse|RedirectResponse
+	 * @return PublicTemplateResponse|ImageResponse|RedirectResponse
 	 */
 	public function publicIndex($token, $filename) {
 		$node = $this->environment->getSharedNode();
@@ -219,6 +229,7 @@ class PageController extends Controller {
 	private function showPublicPage($token) {
 		$albumName = $this->environment->getSharedFolderName();
 		list($server2ServerSharing, $protected) = $this->getServer2ServerProperties();
+		$downloadUrl = $this->urlGenerator->linkToRouteAbsolute('files_sharing.sharecontroller.downloadShare', ['token' => $token]);
 
 		// Parameters sent to the template
 		$params = [
@@ -232,7 +243,15 @@ class PageController extends Controller {
 		];
 
 		// Will render the page using the template found in templates/public.php
-		$response = new TemplateResponse($this->appName, 'public', $params, 'public');
+		$response = new PublicTemplateResponse($this->appName, 'public', $params);
+		$response->setHeaderTitle($params['albumName']);
+		$response->setHeaderDetails($this->l10n->t('shared by %s', [$params['displayName']]));
+		$response->setHeaderActions([
+			new SimpleMenuAction('download', $this->l10n->t('Download'), 'icon-download-white', $downloadUrl, 0),
+			new SimpleMenuAction('download', $this->l10n->t('Download'), 'icon-download', $downloadUrl, 10),
+			new LinkMenuAction($this->l10n->t('Direct link'), 'icon-public', $downloadUrl),
+			new ExternalShareMenuAction($this->l10n->t('Add to your Nextcloud'), 'icon-external', $this->environment->getUserId(), $params['displayName'], $params['albumName'])
+		]);
 		$this->addContentSecurityToResponse($response);
 
 		return $response;

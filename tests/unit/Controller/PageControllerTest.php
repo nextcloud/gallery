@@ -13,7 +13,11 @@
 
 namespace OCA\Gallery\Tests\Controller;
 
+use OCP\AppFramework\Http\Template\ExternalShareMenuAction;
+use OCP\AppFramework\Http\Template\LinkMenuAction;
+use OCP\AppFramework\Http\Template\SimpleMenuAction;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 
@@ -44,6 +48,8 @@ class PageControllerTest extends \Test\TestCase {
 	protected $controller;
 	/** @var EventDispatcherInterface */
 	protected $dispatcher;
+	/** @var IL10N */
+	private $l10n;
 
 	/**
 	 * Test set up
@@ -51,18 +57,11 @@ class PageControllerTest extends \Test\TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->request = $this->getMockBuilder('\OCP\IRequest')
-							  ->disableOriginalConstructor()
-							  ->getMock();
-		$this->environment = $this->getMockBuilder('\OCA\Gallery\Environment\Environment')
-								  ->disableOriginalConstructor()
-								  ->getMock();
-		$this->urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
-								   ->disableOriginalConstructor()
-								   ->getMock();
-		$this->appConfig = $this->getMockBuilder('\OCP\IConfig')
-								->disableOriginalConstructor()
-								->getMock();
+		$this->request = $this->createMock(IRequest::class);
+		$this->environment = $this->createMock(Environment::class);
+		$this->urlGenerator = $this->createMock(IURLGenerator::class);
+		$this->appConfig = $this->createMock(IConfig::class);
+		$this->l10n = $this->createMock(IL10N::class);
 		$this->dispatcher = $this->createMock(EventDispatcherInterface::class);
 		$this->controller = new PageController(
 			$this->appName,
@@ -70,7 +69,8 @@ class PageControllerTest extends \Test\TestCase {
 			$this->environment,
 			$this->urlGenerator,
 			$this->appConfig,
-			$this->dispatcher
+			$this->dispatcher,
+			$this->l10n
 		);
 	}
 
@@ -154,15 +154,28 @@ class PageControllerTest extends \Test\TestCase {
 		$this->mockGetDisplayName($displayName);
 		$this->mockGetSharePassword($password);
 		$this->mockGetAppValue($server2ServerSharingEnabled);
+		$this->mockGetUserId('user1');
+		$this->mockL10N();
 
-		$template = new TemplateResponse($this->appName, 'public', $params, 'public');
+		$template = new Http\Template\PublicTemplateResponse($this->appName, 'public', $params);
 
-		$response = $this->controller->publicIndex($token, null);
+		$response = $this->controller->publicIndex($token, 'filename.txt');
 
 		$this->assertEquals($params, $response->getParams());
 		$this->assertEquals('public', $response->getTemplateName());
-		$this->assertTrue($response instanceof TemplateResponse);
+		$this->assertTrue($response instanceof Http\Template\PublicTemplateResponse);
 		$this->assertEquals($template->getStatus(), $response->getStatus());
+		$this->assertEquals($albumName, $response->getHeaderTitle());
+		$this->assertEquals('shared by ' . $displayName, $response->getHeaderDetails());
+
+		$actions = [
+			new SimpleMenuAction('download', $this->l10n->t('Download'), 'icon-download-white', '', 0),
+			new SimpleMenuAction('download', $this->l10n->t('Download'), 'icon-download', '', 10),
+			new LinkMenuAction($this->l10n->t('Direct link'), 'icon-public', ''),
+			new ExternalShareMenuAction($this->l10n->t('Add to your Nextcloud'), 'icon-external', 'user1', $displayName, $albumName)
+		];
+		$this->assertEquals($actions[0], $response->getPrimaryAction());
+		$this->assertEquals(array_slice($actions, 1), $response->getOtherActions());
 	}
 
 	public function testPublicIndexWithFileToken() {
@@ -238,6 +251,12 @@ class PageControllerTest extends \Test\TestCase {
 						->willReturn($status);
 	}
 
+	private function mockGetUserId($userId) {
+		$this->environment->expects($this->once())
+			->method('getUserId')
+			->willReturn($userId);
+	}
+
 	private function mockUrlToDownloadPage($token, $fileId, $filename, $url) {
 		$this->urlGenerator->expects($this->once())
 						   ->method('linkToRoute')
@@ -285,5 +304,13 @@ class PageControllerTest extends \Test\TestCase {
 						   ->method('linkTo')
 						   ->with('files', 'ajax/upload.php')
 						   ->willReturn($url);
+	}
+
+	private function mockL10N() {
+		$this->l10n->expects($this->any())
+			->method('t')
+			->will($this->returnCallback(function($text, $params) {
+				return vsprintf($text, $params);
+			}));
 	}
 }

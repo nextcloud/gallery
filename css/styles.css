@@ -78,17 +78,6 @@ div.crumb.last a {
 	list-style: initial;
 }
 
-#content-wrapper {
-	position: relative;
-	height: calc(100vh - 45px); /* 45px for #controls element */
-	top: 45px;
-	padding: 0;
-	overflow-x: auto;
-	-webkit-overflow-scrolling: touch;
-	-webkit-transition: background-color 1s linear;
-	transition: background-color 1s linear;
-}
-
 #app {
 	/* #app is the parent of #controls and #gallery, and #controls uses a sticky
 	 * position, so the #app height must contain the full gallery for the

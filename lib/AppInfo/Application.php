@@ -51,6 +51,7 @@ use OCA\Gallery\Middleware\EnvCheckMiddleware;
 use OCA\Gallery\Utility\EventSource;
 
 use OCA\OcUtility\AppInfo\Application as OcUtility;
+use OCP\IL10N;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -81,7 +82,8 @@ class Application extends App {
 				$c->query('Environment'),
 				$c->query('OCP\IURLGenerator'),
 				$c->query('OCP\IConfig'),
-				$c->query(EventDispatcherInterface::class)
+				$c->query(EventDispatcherInterface::class),
+				$c->query(IL10N::class)
 			);
 		}
 		);

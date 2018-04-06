@@ -375,7 +375,6 @@
 			$('#album-info-button').click(Gallery.showInfo);
 			$('#sort-name-button').click(Gallery.sorter);
 			$('#sort-date-button').click(Gallery.sorter);
-			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
 			this._renderNewButton();
 			// Trigger cancelling of file upload
