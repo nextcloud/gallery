@@ -64,6 +64,7 @@
     "This list is maybe truncated - please refine your search term to see more results." : "Lista on ehkä vajaa - uudelleen määritä hakutermisi nähdäksesi lisää tuloksia.",
     "No users or groups found for {search}" : "Haulla {search} ei löytynyt käyttäjiä tai ryhmiä",
     "No users found for {search}" : "Haulla {search} ei löytynyt käyttäjiä",
+    "An error occurred (\"{message}\"). Please try again" : "Tapahtui virhe (\"{message}\"). Yritä uudelleen",
     "An error occurred. Please try again" : "Tapahtui virhe. Yritä uudelleen",
     "Adding user..." : "Lisätään käyttäjä...",
     "group" : "ryhmä",
