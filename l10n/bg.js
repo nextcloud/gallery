@@ -67,6 +67,7 @@ OC.L10N.register(
     "Error setting expiration date" : "Грешка при настройване на датата за изтичане",
     "Email sent" : "Електронната поща е изпратена",
     "Warning" : "Предупреждение",
+    "Add to your Nextcloud" : "Добавете към вашия Nextcloud",
     "This share is password-protected" : "Тази зона е защитена с парола.",
     "The password is wrong. Try again." : "Грешна парола. Опитайте отново.",
     "Sort by name" : "Сортирай по име",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "the link has expired" : "тази връзка е изтекла",
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За повече информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
-    "Add to your Nextcloud" : "Добавете към вашия Nextcloud",
     "Picture view" : "Албум със снимки",
     "An error occured. Please try again" : "Възникна грешка. Опитайте отново.",
     "Sending ..." : "Изпращане ..."
