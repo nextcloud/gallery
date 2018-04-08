@@ -54,7 +54,7 @@ trait Files {
          * @return array
          */
         public function exif($fileId){
-	    $file = $this->downloadService->getResourceFromId($fileId);
+	    $file = $this->downloadService->getFile($fileId);
 	    $path=$file->getInternalPath();
 	    $storage=$file->getStorage();
 	    $filename=$storage->getLocalFile($path);
