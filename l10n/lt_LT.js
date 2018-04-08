@@ -87,6 +87,8 @@ OC.L10N.register(
     "Sending…" : "Siunčiama…",
     "Email sent" : "Laiškas išsiųstas",
     "Warning" : "Įspėjimas",
+    "shared by %s" : "pasidalino %s",
+    "Direct link" : "Tiesioginė nuoroda",
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
     "This share is password-protected" : "Turinys apsaugotas slaptažodžiu",
     "The password is wrong. Try again." : "Slaptažodis neteisingas. Bandykite dar kartą.",
