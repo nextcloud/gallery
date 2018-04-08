@@ -30,7 +30,7 @@ class FilesPublicController extends FilesController {
          * @param string $location a path picture
          * @return array
          */
-        public function exif($fileId){
+        public function exif($fileId) {
 		return parent::exif($fileId);
         }
 

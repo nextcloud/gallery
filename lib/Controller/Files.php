@@ -53,7 +53,7 @@ trait Files {
          * @param string $location a path picture
          * @return array
          */
-        public function exif($fileId){
+        public function exif($fileId) {
 	    $file = $this->downloadService->getFile($fileId);
 	    $path=$file->getInternalPath();
 	    $storage=$file->getStorage();
@@ -64,8 +64,8 @@ trait Files {
 		$exif=@exif_read_data($filename);
 	    }
 	    getimagesize($filename,$blocks);
-	    if (is_array($blocks)){
-		foreach($blocks as $key => $block){
+	    if (is_array($blocks)) {
+		foreach($blocks as $key => $block) {
 		    $iptc[$key]=iptcparse($block);
 		}
 	    }

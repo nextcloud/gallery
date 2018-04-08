@@ -113,37 +113,37 @@
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
-				    if (this.images[index].mimeType === 'image/jpeg' || this.images[index].mimeType === 'image/tiff'){
+				    if (this.images[index].mimeType === 'image/jpeg' || this.images[index].mimeType === 'image/tiff') {
                                         // check if not in cache
-                                        if (this.images[index].desc===undefined){
-					    if (window.galleryFileAction){
+                                        if (this.images[index].desc===undefined) {
+					    if (window.galleryFileAction) {
 						var url = window.galleryFileAction.buildGalleryUrl('files', '/exif/'+this.images[index].fileId,{});
-					    }else{
+					    } else {
 						var url = window.Gallery.utility.buildGalleryUrl('files', '/exif/'+this.images[index].fileId,{});
 					    }
-                                            $.getJSON(url).then(function(data){
+                                            $.getJSON(url).then(function(data) {
                                                 var desc;
-                                                if (data){
+                                                if (data) {
                                                     // IPTC:Description (Picasa, Photoshop, Lightroom)
-                                                    if (data['iptc']&&data['iptc']['APP13']&&data['iptc']['APP13']['2#120']){
+                                                    if (data['iptc']&&data['iptc']['APP13']&&data['iptc']['APP13']['2#120']) {
                                                         desc=data['iptc']['APP13']['2#120'][0];
                                                     }
                                                     // EXIF:Description (old camera model)
-                                                    if (!desc){
+                                                    if (!desc) {
                                                         if (data['exif']&&data['exif']['ImageDescription'])
                                                         desc=data['exif']['ImageDescription'];
                                                     }
-                                                    if (desc){
+                                                    if (desc) {
                                                         this.images[index].desc=desc;
                                                         this.controls.show(currentImageId);
                                                         this._initControlsAutoFader();
                                                         this.container.removeClass('inactive');
-                                                    }else{
+                                                    } else {
                                                         this.images[index].desc='';
                                                     }
                                                 }
                                             }.bind(this));
-                                        }else if (this.images[index].desc){
+                                        } else if (this.images[index].desc) {
                                                     this.controls.show(currentImageId);
                                                     this._initControlsAutoFader();
                                                     this.container.removeClass('inactive');

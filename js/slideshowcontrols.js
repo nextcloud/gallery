@@ -98,9 +98,9 @@
 				this._setTimeout();
 			}
 			// check exif descr
-                        if (currentImage.desc){
+                        if (currentImage.desc) {
                             this._setName(currentImage.desc);
-                        }else{
+                        } else {
                             this._setName(currentImage.name);
                         }
 		},
