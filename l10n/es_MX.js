@@ -86,6 +86,8 @@ OC.L10N.register(
     "Sending…" : "Enviando...",
     "Email sent" : "Correo electrónico enviado",
     "Warning" : "Advertencia",
+    "shared by %s" : "compartido por %s",
+    "Direct link" : "Liga directa",
     "Add to your Nextcloud" : "Agregar a tu Nextcloud",
     "This share is password-protected" : "Este elemento compartido está protegido con una contraseña",
     "The password is wrong. Try again." : "Error en la contraseña. Inténtalo de nuevo.",
