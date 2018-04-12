@@ -1359,6 +1359,7 @@ $(document).ready(function () {
 					$loading.addClass('hidden');
 					$button.removeClass('hidden');
 					$button.prop('disabled', false);
+					$('#linkCheckbox').data('id', undefined);
 					Gallery.Share.itemShares[Gallery.Share.SHARE_TYPE_LINK] = false;
 				});
 			}
