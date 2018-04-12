@@ -610,7 +610,7 @@
 			var $linkCheckbox = $('#linkCheckbox');
 			this.itemShares[this.SHARE_TYPE_LINK] = true;
 			$linkCheckbox.attr('checked', true);
-			$linkCheckbox.attr('data-id', id);
+			$linkCheckbox.data('id', id);
 			var $linkText = $('#linkText');
 
 			if (Gallery.appName === 'files') {
@@ -1022,7 +1022,7 @@ $(document).ready(function () {
 		var $li = $(this).closest('li');
 		var shareType = $li.data('share-type');
 		var shareWith = $li.attr('data-share-with');
-		var shareId = $li.attr('data-id');
+		var shareId = $li.data('id');
 		var $button = $(this);
 
 		if (!$button.is('a')) {
@@ -1074,7 +1074,7 @@ $(document).ready(function () {
 				permissions |= $(checkbox).data('permissions');
 			});
 
-		Gallery.Share.setPermissions($li.attr('data-id'), permissions);
+		Gallery.Share.setPermissions($li.data('id'), permissions);
 	});
 
 	$(document).on('change', '#dropdown #linkCheckbox', function () {
@@ -1143,6 +1143,7 @@ $(document).ready(function () {
 					$loading.addClass('hidden');
 					$button.removeClass('hidden');
 					$button.prop('disabled', false);
+					$('#linkCheckbox').data('id', undefined);
 					Gallery.Share.itemShares[Gallery.Share.SHARE_TYPE_LINK] = false;
 				});
 			}
