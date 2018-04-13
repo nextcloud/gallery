@@ -86,6 +86,7 @@ OC.L10N.register(
     "Sending…" : "Odosielam...",
     "Email sent" : "Email odoslaný",
     "Warning" : "Upozornenie",
+    "Direct link" : "Priamy odkaz",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
     "This share is password-protected" : "Táto položka je chránená heslom",
     "The password is wrong. Try again." : "Heslo je chybné. Skúste to znova.",
