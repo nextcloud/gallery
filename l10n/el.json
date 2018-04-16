@@ -75,6 +75,7 @@
     "Password protected" : "Προστασία με συνθηματικό",
     "Error unsetting expiration date" : "Σφάλμα κατά την διαγραφή της ημ. λήξης",
     "Error setting expiration date" : "Σφάλμα κατά τον ορισμό ημ. λήξης",
+    "Sending…" : "Γίντεται αποστολή…",
     "Email sent" : "Το Email απεστάλη ",
     "Warning" : "Προειδοποίηση",
     "Add to your Nextcloud" : "Προσθήκη στο Nextcloud",
