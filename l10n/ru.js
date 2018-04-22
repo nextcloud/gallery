@@ -49,8 +49,8 @@ OC.L10N.register(
     "Error while changing permissions" : "При изменении прав доступа произошла ошибка",
     "Shared with you and the group {group} by {owner}" : "{owner} поделился с вами и группой {group} ",
     "Shared with you by {owner}" : "С вами поделился {owner} ",
-    "Share with users or groups …" : "Поделиться с пользователями или группами ...",
-    "Share with users, groups or remote users …" : "Поделиться с пользователями, группами или удаленными пользователями ...",
+    "Share with users or groups …" : "Поделиться с пользователями или группами…",
+    "Share with users, groups or remote users …" : "Поделиться с пользователями, группами или удаленными пользователями…",
     "Share link" : "Поделиться ссылкой",
     "The public link will expire no later than {days} days after it is created" : "Срок действия публичной ссылки истекает не позже чем через {days} дней после её создания",
     "Link" : "Ссылка",
@@ -68,7 +68,7 @@ OC.L10N.register(
     "No users found for {search}" : "Не найдено пользователей по запросу {search}",
     "An error occurred (\"{message}\"). Please try again" : "Произошла ошибка («{message}»). Попробуйте ещё раз",
     "An error occurred. Please try again" : "Произошла ошибка. Попробуйте ещё раз",
-    "Adding user..." : "Добавляем пользователя...",
+    "Adding user..." : "Добавляем пользователя…",
     "group" : "группа",
     "remote" : "на другом сервере",
     "Resharing is not allowed" : "Повторное открытие доступа запрещено",
@@ -119,6 +119,6 @@ OC.L10N.register(
     "Gallery view" : "Галерея",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Предоставить доступ людям на других серверах, используя их идентификатор в федерации облачных хранилищ username@example.com/cloud",
     "An error occured. Please try again" : "Произошла ошибка. Попробуйте ещё раз",
-    "Sending ..." : "Отправляется ..."
+    "Sending ..." : "Отправляется…"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
