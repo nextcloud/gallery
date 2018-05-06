@@ -87,6 +87,8 @@ OC.L10N.register(
     "Sending…" : "Lähetetään…",
     "Email sent" : "Sähköposti lähetetty",
     "Warning" : "Varoitus",
+    "shared by %s" : "jakanut %s",
+    "Direct link" : "Suora linkki",
     "Add to your Nextcloud" : "Lisää Nextcloudiisi",
     "This share is password-protected" : "Tämä jako on suojattu salasanalla",
     "The password is wrong. Try again." : "Väärä salasana. Yritä uudelleen.",
