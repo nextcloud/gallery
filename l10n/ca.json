@@ -1,5 +1,7 @@
 { "translations": {
     "Gallery" : "Galeria",
+    "There was a problem reading files from this album" : "Hi ha hagut un problema llegint els fitxers d'aquest àlbum",
+    "Aborting preview. Could not find the file" : "Cancel·lant vista prèvia. No es troba el fitxer",
     "Could not move \"{file}\", target exists" : "No s'ha pugut moure \"{file}\", el destí ja existeix",
     "Could not move \"{file}\"" : "No s'ha pogut moure \"{file}\"",
     "Invalid server url" : "URL del servidor invàlida",
@@ -15,6 +17,7 @@
     "please install one of the following alternatives" : "per favor instal·lar una de les següents alternatives",
     "Album cannot be shown" : "L'album no es pot mostrar",
     "No media files found" : "No s\\'han trobat fitxers multimèdia",
+    "Upload new files via drag and drop or by using the [+] button above" : "Afegeix fitxers arrossegant-los o utilizant el botó de [+]",
     "Configuration error" : "Error de configuració",
     "New" : "Nou",
     "Hide Album" : "Amaga album",
