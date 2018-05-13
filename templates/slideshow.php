@@ -25,4 +25,5 @@
 		<div class="title"></div>
 	</div>
 	<div class="bigshotContainer"></div>
+	<div class="livePhotoContainer"></div>
 </div>

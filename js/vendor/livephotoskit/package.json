@@ -1,0 +1,107 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "livephotoskit",
+        "scope": null,
+        "escapedName": "livephotoskit",
+        "name": "livephotoskit",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/fefe"
+    ]
+  ],
+  "_from": "livephotoskit@latest",
+  "_id": "livephotoskit@1.5.4",
+  "_inCache": true,
+  "_location": "/livephotoskit",
+  "_nodeVersion": "6.11.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/livephotoskit_1.5.4_1522348009850_0.36032340106104677"
+  },
+  "_npmUser": {
+    "name": "maxwellc_shay",
+    "email": "maxwellc_shay@apple.com"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "livephotoskit",
+    "scope": null,
+    "escapedName": "livephotoskit",
+    "name": "livephotoskit",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/livephotoskit/-/livephotoskit-1.5.4.tgz",
+  "_shasum": "00c7f41c9c305d2d727ccc218a735f94fd17f83a",
+  "_shrinkwrap": null,
+  "_spec": "livephotoskit",
+  "_where": "/home/fefe",
+  "author": {
+    "name": "Apple Inc.",
+    "email": "npmjs@apple.com"
+  },
+  "dependencies": {},
+  "description": "Play Live Photos on the web",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "00c7f41c9c305d2d727ccc218a735f94fd17f83a",
+    "tarball": "https://registry.npmjs.org/livephotoskit/-/livephotoskit-1.5.4.tgz",
+    "fileCount": 7,
+    "unpackedSize": 178965
+  },
+  "files": [
+    "acknowledgements.txt",
+    "CHANGELOG.md",
+    "index.d.ts",
+    "LICENSE.md",
+    "livephotoskit.js"
+  ],
+  "homepage": "https://developer.apple.com/live-photos",
+  "keywords": [
+    "apple",
+    "image",
+    "kit",
+    "live",
+    "live photo",
+    "live photos",
+    "live photos kit",
+    "livephotoskit",
+    "livephotoskit js",
+    "livephotoskitjs",
+    "photo",
+    "picture",
+    "video"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "livephotoskit.js",
+  "maintainers": [
+    {
+      "name": "apple",
+      "email": "npmjs@apple.com"
+    },
+    {
+      "name": "maxwellc_shay",
+      "email": "maxwellc_shay@apple.com"
+    }
+  ],
+  "name": "livephotoskit",
+  "optionalDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "readme": "# LivePhotosKit JS\n\nUse the LivePhotosKit JS library to play Live Photos on your web pages.\n\n## Overview\n\nThe JavaScript API presents the player in the form of a DOM element, much\nlike an `image` or `video` tag, which can be configured with photo and video\nresources and other options, and have its playback controlled either\nprogrammatically by the consuming developer, or via pre-provided controls\nby the browsing end-user.\n\n## Documentation\n\nFor more detailed documentation, see\nhttps://developer.apple.com/reference/livephotoskitjs\n\nFor information about Live Photos for developers, see https://developer.apple.com/live-photos\n\n## Installation\n\n### Using npm\n\nInstall and save LivePhotosKit JS:\n```bash\nnpm install --save livephotoskit\n```\n\nImport LivePhotosKit JS (ES6/TypeScript):\n\n```javascript\nimport * as LivePhotosKit from 'livephotoskit';\n```\n\nA [TypeScript](https://www.typescriptlang.org) type definition file is included in the \ndistribution and will automatically be picked up by the TypeScript compiler.\n\n### Using the Apple CDN\n\n```html\n<script src=\"https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js\"></script>\n```\n\nA [TypeScript](https://www.typescriptlang.org) type definition file is available at\n```html\nhttps://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.d.ts\n```\n\n> Note\n> \n> The LivePhotosKit JS version number is in the URL. For example, 1 specifies LivePhotosKit JS 1.x.x.\n\nYou will then be able to access LivePhotosKit JS via `window.LivePhotosKit`.\n\n\n## Browser Compatibility\n\nThe LivePhotosKit JS player supports the following browsers:\n\n- On macOS: Safari, Chrome, Firefox\n- On iOS: Safari, Chrome\n- On Windows: Chrome, Firefox, Edge, Internet Explorer 11\n- On Android: Chrome (Performance depends on device)\n",
+  "readmeFilename": "README.md",
+  "scripts": {},
+  "types": "index.d.ts",
+  "version": "1.5.4"
+}

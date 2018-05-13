@@ -174,6 +174,7 @@ class PageController extends Controller {
 	private function addContentSecurityToResponse($response) {
 		$csp = new Http\ContentSecurityPolicy();
 		$csp->addAllowedFontDomain("data:");
+		$csp->addAllowedMediaDomain("blob:");
 		$response->setContentSecurityPolicy($csp);
 	}
 

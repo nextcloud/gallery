@@ -55,6 +55,7 @@
 				this.container = $('#slideshow');
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
+				this.livePhotoPreview = new SlideShow.LivePreview(this.container);
 				this.controls =
 					new SlideShow.Controls(
 						this,
@@ -103,6 +104,8 @@
 		show: function (index) {
 			this.hideErrorNotification();
 			this.active = true;
+			// Clean any live photo container
+			this.livePhotoPreview.reset();
 			this.container.show();
 			this.container.css('background-position', 'center');
 			this._hideImage();
@@ -113,21 +116,24 @@
 
 				// check if we moved along while we were loading
 				if (currentImageId === index) {
+					this.zoomablePreviewContainer.css('display', 'none');
 					var image = this.images[index];
 					var transparent = this._isTransparent(image.mimeType);
 					this.controls.showActionButtons(transparent, Gallery.token, image.permissions);
 					this.errorLoadingImage = false;
 					this.currentImage = img;
 					img.setAttribute('alt', image.name);
-					$(img).css('position', 'absolute');
-					$(img).css('background-color', image.backgroundColour);
-					if (transparent && this.backgroundToggle === true) {
-						var $border = 30 / window.devicePixelRatio;
-						$(img).css('outline', $border + 'px solid ' + image.backgroundColour);
-					}
+					$.when(this.livePhotoPreview.startLivePreview(image, this.currentImage)).fail(function() {
+						this.zoomablePreviewContainer.css('display', 'block');
+						$(img).css('position', 'absolute');
+						$(img).css('background-color', image.backgroundColour);
+						if (transparent && this.backgroundToggle === true) {
+							var $border = 30 / window.devicePixelRatio;
+							$(img).css('outline', $border + 'px solid ' + image.backgroundColour);
+						}
 
-					this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
-
+						this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
+					}.bind(this));
 					this._setUrl(image.path);
 					this.controls.show(currentImageId);
 					this.container.find('.icon-loading-dark').hide();
