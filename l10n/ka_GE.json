@@ -113,5 +113,5 @@
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "გაზიარება ადამიანებთან სხვა სერვერებზე მათი ფედერალური ქლაუდ ID-ების username@example.com/cloud მეშვეობით",
     "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
     "Sending ..." : "გაგზავნა …"
-},"pluralForm" :"nplurals=1; plural=0;"
+},"pluralForm" :"nplurals=2; plural=(n==1);"
 }
