@@ -83,6 +83,7 @@
     "Sending…" : "Odesílání…",
     "Email sent" : "E-mail odeslán",
     "Warning" : "Varování",
+    "Direct link" : "Přímý odkaz",
     "Add to your Nextcloud" : "Přidat do Nextcloud",
     "This share is password-protected" : "Toto sdílení je chráněno heslem",
     "The password is wrong. Try again." : "Heslo není správné. Zkuste to znovu.",
@@ -114,5 +115,5 @@
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sdílet s uživateli na jiných serverech za použití jejich sdílených cloud ID username@example.com/cloud",
     "An error occured. Please try again" : "Nastala chyba. Prosím zkuste to znovu",
     "Sending ..." : "Odesílám ..."
-},"pluralForm" :"nplurals=4; plural=(n < 10 && n % 1 == 0) ? 1 : (n < 9999 && n >= 10 && n % 1 == 0) ? 3 : (n % 1 != 0) : 4;"
+},"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

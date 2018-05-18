@@ -68,5 +68,5 @@
     "Gallery view" : "نمایش گالری",
     "An error occured. Please try again" : "یک خطا رخ داده است، لطفا مجددا تلاش کنید",
     "Sending ..." : "درحال ارسال ..."
-},"pluralForm" :"nplurals=2; plural=((n<=1 && n>= 0) ? 1);"
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

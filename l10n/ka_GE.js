@@ -116,4 +116,4 @@ OC.L10N.register(
     "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
     "Sending ..." : "გაგზავნა …"
 },
-"nplurals=2; plural=(n==1);");
+"nplurals=2; plural=(n!=1);");
