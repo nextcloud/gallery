@@ -85,6 +85,7 @@ OC.L10N.register(
     "Sending…" : "Odesílání…",
     "Email sent" : "E-mail odeslán",
     "Warning" : "Varování",
+    "Direct link" : "Přímý odkaz",
     "Add to your Nextcloud" : "Přidat do Nextcloud",
     "This share is password-protected" : "Toto sdílení je chráněno heslem",
     "The password is wrong. Try again." : "Heslo není správné. Zkuste to znovu.",
@@ -117,4 +118,4 @@ OC.L10N.register(
     "An error occured. Please try again" : "Nastala chyba. Prosím zkuste to znovu",
     "Sending ..." : "Odesílám ..."
 },
-"nplurals=4; plural=(n < 10 && n % 1 == 0) ? 1 : (n < 9999 && n >= 10 && n % 1 == 0) ? 3 : (n % 1 != 0) : 4;");
+"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

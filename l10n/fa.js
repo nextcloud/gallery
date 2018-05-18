@@ -71,4 +71,4 @@ OC.L10N.register(
     "An error occured. Please try again" : "یک خطا رخ داده است، لطفا مجددا تلاش کنید",
     "Sending ..." : "درحال ارسال ..."
 },
-"nplurals=2; plural=((n<=1 && n>= 0) ? 1);");
+"nplurals=2; plural=(n > 1);");
