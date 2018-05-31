@@ -115,7 +115,7 @@ OC.L10N.register(
     "the item was removed" : "öge kaldırılmış",
     "the link has expired" : "bağlantının kullanma süresi dolmuş",
     "sharing is disabled" : "paylaşım devre dışı",
-    "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
+    "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Picture view" : "Görsel görünümü",
     "Gallery view" : "Galeri görünümü",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Birleşmiş Bulut Kodu ile diğer sunucular üzerindeki kişiler ile paylaş username@example.com/cloud",
