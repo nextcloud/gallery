@@ -84,7 +84,7 @@ OC.L10N.register(
     "Password protected" : "Passordbeskyttet",
     "Error unsetting expiration date" : "Feil ved nullstilling av utløpsdato",
     "Error setting expiration date" : "Kan ikke sette utløpsdato",
-    "Sending…" : "Sender...",
+    "Sending…" : "Sender …",
     "Email sent" : "E-post sendt",
     "Warning" : "Advarsel",
     "shared by %s" : "delt av %s",
