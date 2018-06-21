@@ -42,9 +42,9 @@
     "\"{name}\" is not an allowed filetype" : "\"{name}\" は無効なファイル形式です",
     "Upload" : "アップロード",
     "Error" : "エラー",
-    "Error while sharing" : "共有でエラー発生",
-    "Error while unsharing" : "共有解除でエラー発生",
-    "Error while changing permissions" : "権限変更でエラー発生",
+    "Error while sharing" : "共有でエラーが発生しました",
+    "Error while unsharing" : "共有の解除でエラーが発生しました",
+    "Error while changing permissions" : "権限の変更でエラーが発生しました",
     "Shared with you and the group {group} by {owner}" : "あなたと {owner} のグループ {group} で共有中",
     "Shared with you by {owner}" : "{owner} と共有中",
     "Share with users or groups …" : "ユーザーまたはグループと共有 ...",
@@ -56,7 +56,6 @@
     "Password" : "パスワード",
     "Choose a password for the public link" : "URLによる共有のパスワードを入力",
     "Allow editing" : "編集を許可",
-    "Email link to person" : "メールリンク",
     "Send" : "送信",
     "Set expiration date" : "有効期限を設定",
     "Expiration" : "期限切れ",
@@ -68,7 +67,7 @@
     "group" : "グループ",
     "remote" : "リモート",
     "Resharing is not allowed" : "再共有は許可されていません",
-    "Error while retrieving shares" : "共有の取得中にエラーが発生",
+    "Error while retrieving shares" : "共有の取得中にエラーが発生しました",
     "Unshare" : "共有解除",
     "notify by email" : "メールで通知",
     "can share" : "共有可",
@@ -111,7 +110,7 @@
     "Picture view" : "ピクチャービュー",
     "Gallery view" : "ギャラリー表示",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Federated Cloud ID （ username@example.com/cloud ）を使用して他のサーバー上のユーザーと共有する",
-    "An error occured. Please try again" : "エラーが発生しました。もう一度トライしてください。",
+    "An error occured. Please try again" : "エラーが発生しました。もう一度試してください。",
     "Sending ..." : "送信中..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }
