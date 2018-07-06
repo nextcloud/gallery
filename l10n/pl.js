@@ -50,7 +50,7 @@ OC.L10N.register(
     "Shared with you and the group {group} by {owner}" : "Udostępnione tobie i grupie {group} przez {owner}",
     "Shared with you by {owner}" : "Udostępnione tobie przez {owner}",
     "Share with users or groups …" : "Współdziel z użytkownikami lub grupami",
-    "Share with users, groups or remote users …" : "Współdziel z użytkownikami, grupami lub użytkownikami zdalnymi ...",
+    "Share with users, groups or remote users …" : "Współdziel z użytkownikami, grupami lub użytkownikami zdalnymi…",
     "Share link" : "Udostępnij link",
     "The public link will expire no later than {days} days after it is created" : "Link publiczny wygaśnie nie później niż po {days} dniach od utworzenia",
     "Link" : "Link",
@@ -68,7 +68,7 @@ OC.L10N.register(
     "No users found for {search}" : "Nie znaleziono użytkownika {search}",
     "An error occurred (\"{message}\"). Please try again" : "Wystąpił błąd (\"{message}\"). Spróbuj ponownie",
     "An error occurred. Please try again" : "Wystąpił błąd. Spróbuj ponownie",
-    "Adding user..." : "Dodawanie użytkownika...",
+    "Adding user..." : "Dodawanie użytkownika…",
     "group" : "grupa",
     "remote" : "zdalny",
     "Resharing is not allowed" : "Współdzielenie nie jest możliwe",
@@ -84,7 +84,7 @@ OC.L10N.register(
     "Password protected" : "Zabezpieczone hasłem",
     "Error unsetting expiration date" : "Błąd podczas usuwania daty wygaśnięcia",
     "Error setting expiration date" : "Błąd podczas ustawiania daty wygaśnięcia",
-    "Sending…" : "Wysyłam...",
+    "Sending…" : "Wysyłam…",
     "Email sent" : "E-mail wysłany",
     "Warning" : "Ostrzeżenie",
     "shared by %s" : "udostępnione przez %s",
@@ -119,6 +119,6 @@ OC.L10N.register(
     "Gallery view" : "Widok galerii",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Współdziel z użytkownikami z innych serwerów, używając ich ID Stowarzyszonej Chmury username@example.com/cloud",
     "An error occured. Please try again" : "Wystąpił błąd. Proszę spróbować ponownie.",
-    "Sending ..." : "Wysyłanie..."
+    "Sending ..." : "Wysyłanie…"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
