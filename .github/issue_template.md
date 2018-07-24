@@ -44,9 +44,7 @@ You can use the Issue Template application to prefill most of the required infor
 
 **PHP version:**
 
-**cloud server:** Nextcloud or ownCloud
-
-**cloud version:** (see admin page or version.php)
+**Nextcloud version:** (see admin page or version.php)
 
 **Updated from an older installation or fresh install:**
 
@@ -106,14 +104,14 @@ Insert your webserver log here
 
 #### Cloud log
 <!--
-The log has the name owncloud.log or nextcloud.log and is found in the data folder
+The log has the name nextcloud.log and is found in the data folder
 -->
 
 <details>
-<summary>Cloud log</summary>
+<summary>Nextcloud log</summary>
 
 ```
-Insert your cloud log here
+Insert your Nextcloud log here
 ```
 </details>
 
