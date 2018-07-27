@@ -64,6 +64,7 @@
     "This list is maybe truncated - please refine your search term to see more results." : "Tento seznam je možná zkrácený - prosím upřesněte vyhledávací výraz pro více výsledků.",
     "No users or groups found for {search}" : "Nebyli nalezeni žádní členové ani skupiny pro {search}",
     "No users found for {search}" : "Nebyli nalezeni žádní uživatelé pro {search}",
+    "An error occurred (\"{message}\"). Please try again" : "Došlo k chybě (\"{message}\"). Prosím, zkuste to znovu",
     "An error occurred. Please try again" : "Došlo k chybě. Zkuste to znovu",
     "Adding user..." : "Přidávám uživatele...",
     "group" : "skupina",
