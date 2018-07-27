@@ -114,6 +114,7 @@ class PreviewController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
 	 *
 	 * Sends either a large preview of the requested file or the original file itself
 	 *

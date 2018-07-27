@@ -162,16 +162,10 @@ window.Gallery = window.Gallery || {};
 
 			/* jshint camelcase: false */
 			var params = {
-				fileId: fileId,
 				width: longEdge,
 				height: longEdge,
-				a: 1
 			};
-			if (Gallery.token) {
-				// TODO: return link for public pages
-				return this.buildGalleryUrl('preview', '/' + fileId, params);
-			}
-			return OC.generateUrl('core/preview?fileId={fileId}&x={width}&y={width}&a={a}', params);
+			return this.buildGalleryUrl('preview', '/' + fileId, params);
 		},
 
 		/**
