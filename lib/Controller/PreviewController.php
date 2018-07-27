@@ -137,7 +137,10 @@ class PreviewController extends Controller {
 		}
 		$preview['name'] = $file->getName();
 
-		return new ImageResponse($preview, $status);
+		$response = new ImageResponse($preview, $status);
+		$response->setETag($file->getEtag());
+		$response->cacheFor(3600 * 24);
+		return $response;
 	}
 
 }
