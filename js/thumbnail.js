@@ -129,7 +129,11 @@ function Thumbnail (fileId, square) {
 						thumb.loadingDeferred.resolve(null);
 					};
 					var width = square ? 200 : 400;
-					thumb.image.src = Gallery.utility.buildGalleryUrl('preview', '/' + id, {width: width, height: 200}) + '&requesttoken=' + encodeURIComponent(oc_requesttoken);
+					if (Gallery.token) {
+						thumb.image.src = Gallery.utility.buildGalleryUrl('preview', '/' + id, {width: width, height: 200});
+					} else {
+						thumb.image.src = OC.generateUrl('core/preview?fileId={fileId}&x={width}&y={width}&a={a}', {fileId: id, width: width, a: 1});
+					}
 				});
 			}
 
