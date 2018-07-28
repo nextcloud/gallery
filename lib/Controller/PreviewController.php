@@ -12,6 +12,7 @@
 
 namespace OCA\Gallery\Controller;
 
+use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\ILogger;
@@ -122,10 +123,14 @@ class PreviewController extends Controller {
 	 * @param int $width
 	 * @param int $height
 	 *
-	 * @return ImageResponse|Http\JSONResponse
+	 * @return DataResponse|ImageResponse|JSONResponse
 	 */
 	public function getPreview($fileId, $width, $height) {
 		/** @type File $file */
+		list($file, $status) = $this->getFile($fileId);
+		if ($this->request->getHeader('If-None-Match') === $file->getEtag()) {
+			return new DataResponse([], Http::STATUS_NOT_MODIFIED);
+		}
 		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
 
 		if (!$preview) {
@@ -140,7 +145,10 @@ class PreviewController extends Controller {
 
 		$response = new ImageResponse($preview, $status);
 		$response->setETag($file->getEtag());
-		$response->cacheFor(3600 * 24);
+		$lastModified = new \DateTime();
+		$lastModified->setTimestamp($file->getMTime());
+		$response->setLastModified($lastModified);
+		$response->cacheFor(3600*24);
 		return $response;
 	}
 
