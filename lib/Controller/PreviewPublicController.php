@@ -44,6 +44,7 @@ class PreviewPublicController extends PreviewController {
 	/**
 	 * @PublicPage
 	 * @UseSession
+	 * @NoCSRFRequired
 	 *
 	 * Shows a large preview of a file
 	 *
