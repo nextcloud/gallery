@@ -22,7 +22,7 @@ OC.L10N.register(
     "Configuration error" : "Erro de configuração",
     "New" : "Novo",
     "Error loading slideshow template" : "Ocorreu um erro a carregar o modelo de diapositivos",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Erro!</strong> Não foi possível gerar uma pré-visualização deste ficheiro.<br>Por favor siga para o próximo diapositivo enquanto removemos esta imagem da apresentação",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Erro!</strong> Não foi possível gerar uma pré-visualização deste ficheiro.<br>Por favor, vá para o próximo diapositivo enquanto nós removemos esta imagem do diaporama",
     "Next" : "Seguinte",
     "Play" : "Reproduzir",
     "Pause" : "Pausar",
