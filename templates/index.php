@@ -4,7 +4,7 @@
  */
 ?>
 
-<div id="app">
+<div id="app-content">
 	<?php
 	if (isset($_['code'])) {
 		if ($_['code'] === 404) {

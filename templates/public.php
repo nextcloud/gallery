@@ -24,7 +24,7 @@ style(
 style('files_sharing', 'public');
 
 ?>
-<div id="app" data-albumname="<?php p($_['albumName']) ?>">
+<div id="app-content" data-albumname="<?php p($_['albumName']) ?>">
 	<div id="controls">
 		<div id="breadcrumbs"></div>
 		<!-- sorting buttons -->

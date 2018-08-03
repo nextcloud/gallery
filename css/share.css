@@ -35,9 +35,9 @@
 	right: 17px;
 	top: 18px;
 }
-#app #dropdown.shareDropDown .shareWithLoading {
-	/* The "box-sizing" of "#app" descendants is set to "border-box" in the
-	 * server. To have the same size the padding here has to be set to the
+#app-content #dropdown.shareDropDown .shareWithLoading {
+	/* The "box-sizing" of "#app-content" descendants is set to "border-box" in
+	 * the server. To have the same size the padding here has to be set to the
 	 * min-width/min-height plus the padding set for the icon in the default
 	 * "content-box" sizing. */
 	padding: 19px;
@@ -52,9 +52,9 @@
 	top: 18px;
 }
 
-#app #dropdown .shareWithConfirm {
-	/* The "box-sizing" of "#app" descendants is set to "border-box" in the
-	 * server. To have the same size the padding here has to be set to the
+#app-content #dropdown .shareWithConfirm {
+	/* The "box-sizing" of "#app-content" descendants is set to "border-box" in
+	 * the server. To have the same size the padding here has to be set to the
 	 * min-width/min-height plus the padding set for the icon in the default
 	 * "content-box" sizing. */
 	padding: 19px;

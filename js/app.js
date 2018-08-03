@@ -12,7 +12,6 @@
 /* global OC, $, _, Gallery, SlideShow */
 $(document).ready(function () {
 	"use strict";
-	$('#controls').prependTo($('#app'));
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
 	Gallery.token = Gallery.utility.getPublicToken();

@@ -133,7 +133,7 @@
 		 */
 		_build: function () {
 			var i, crumbs, name, path, currentAlbum;
-			var albumName = $('#app').data('albumname');
+			var albumName = $('#app-content').data('albumname');
 			if (!albumName) {
 				albumName = t('gallery', 'Gallery');
 			}
