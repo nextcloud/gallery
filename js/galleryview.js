@@ -490,7 +490,7 @@
 		 * @private
 		 */
 		_setBackgroundColour: function () {
-			var wrapper = $('#content-wrapper');
+			var wrapper = $('#app-content');
 			var albumDesign = Gallery.config.albumDesign;
 			if (!$.isEmptyObject(albumDesign) && albumDesign.background) {
 				wrapper.css('background-color', albumDesign.background);
