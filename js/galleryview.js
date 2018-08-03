@@ -170,7 +170,7 @@
 			 * At this stage, there is no loading taking place, so we can look for new rows
 			 */
 
-			var scroll = $('#content-wrapper').scrollTop() + $(window).scrollTop();
+			var scroll = $(window).scrollTop() + $(window).scrollTop();
 			// 2 windows worth of rows is the limit from which we need to start loading new rows.
 			// As we scroll down, it grows
 			var targetHeight = ($(window).height() * 2) + scroll;
