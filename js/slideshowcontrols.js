@@ -20,9 +20,10 @@
 	 * @param {Object} zoomablePreview
 	 * @param {number} interval
 	 * @param {Array} features
+	 * @param {Function} restoreContentCallback
 	 * @constructor
 	 */
-	var Controls = function (slideshow, container, zoomablePreview, interval, features) {
+	var Controls = function (slideshow, container, zoomablePreview, interval, features, restoreContentCallback) {
 		this.slideshow = slideshow;
 		this.container = container;
 		this.zoomablePreview = zoomablePreview;
@@ -31,6 +32,7 @@
 		if (features.indexOf('background_colour_toggle') > -1) {
 			this.backgroundToggle = true;
 		}
+		this.restoreContentCallback = restoreContentCallback;
 	};
 
 	Controls.prototype = {
@@ -110,6 +112,7 @@
 			this.zoomablePreview.stop();
 
 			this._clearTimeout();
+			this.restoreContentCallback();
 			this.container.hide();
 			this.active = false;
 		},
