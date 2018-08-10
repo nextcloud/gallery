@@ -84,6 +84,7 @@ div.crumb.last a {
 	 * controls to be stuck while scrolling. The server sets "height: 100%" for
 	 * the app, so that value has to be overriden. */
 	height: auto;
+	width: 100%;
 }
 
 #gallery.hascontrols {
