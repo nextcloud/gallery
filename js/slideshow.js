@@ -36,6 +36,14 @@
 		// We need 6 hexas for comparison reasons
 		darkBackgroundColour: '#000000',
 		lightBackgroundColour: '#ffffff',
+		LivePreview: {
+			reset: function() {},
+			startLivePreview: function() {
+				var defer = $.Deferred();
+				defer.reject();
+				return defer.promise();
+			}
+		}
 
 		/**
 		 * Initialises the slideshow
@@ -55,7 +63,7 @@
 				this.container = $('#slideshow');
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
-				this.livePhotoPreview = new SlideShow.LivePreview(this.container);
+				this.livePhotoPreview = SlideShow.LivePreview ? new SlideShow.LivePreview(this.container) : fakeLivePreview;
 				this.controls =
 					new SlideShow.Controls(
 						this,
