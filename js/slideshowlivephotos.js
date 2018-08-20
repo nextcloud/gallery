@@ -46,6 +46,10 @@
 		mimeType: null,
 		smallImageDimension: 200 / window.devicePixelRatio,
 		smallImageScale: 2,
+		matchingExt: {
+			".jpg": ".mov",
+			".JPG": ".MOV"
+		}
 
 		/**
 		 * Launches the Bigshot zoomable preview
@@ -56,10 +60,9 @@
 		 */
 		startLivePreview: function (image, currentImage) {
 			var defer = $.Deferred();
-			if (image.mimeType === "image/jpeg" && image.name.substr(-5).toLowerCase().indexOf('.jpg') !== -1) {
-				var videoExt = '.mov';
-				if (image.name.substr(-4) === '.JPG')
-					videoExt = '.MOV';
+			var imageExt = image.name.substr(-5);
+			if (image.mimeType === "image/jpeg" && this.matchingExt[imageExt] !== undefined) {
+				var videoExt = this.matchingExt[imageExt];
 				var videoUrl = OC.generateUrl(['../remote.php/webdav/', encodeURI(image.path.substr(0, image.path.length - 4) + videoExt)].join(''));
 				$.ajax({
 					url: videoUrl,
