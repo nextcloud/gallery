@@ -28,7 +28,7 @@ OC.L10N.register(
     "Pause" : "Pausar",
     "Previous" : "Anterior",
     "Close" : "Fechar",
-    "Download" : "Descarregar",
+    "Download" : "Transferir",
     "Toggle background" : "Alternar fundo",
     "Delete" : "Eliminar ",
     "Share" : "Partilhar",
