@@ -58,7 +58,7 @@ $(document).ready(function () {
 		});
 
 		// This block loads new rows
-		$('html, #content-wrapper').scroll(function () {
+		$(window).scroll(function () {
 			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum]);
 		});
 
