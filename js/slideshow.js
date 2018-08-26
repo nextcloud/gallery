@@ -36,6 +36,7 @@
 		// We need 6 hexas for comparison reasons
 		darkBackgroundColour: '#000000',
 		lightBackgroundColour: '#ffffff',
+		// Fake livepreview to keep slideshow functional outside gallery
 		LivePreview: {
 			reset: function() {},
 			startLivePreview: function() {
@@ -63,7 +64,7 @@
 				this.container = $('#slideshow');
 				this.zoomablePreviewContainer = this.container.find('.bigshotContainer');
 				this.zoomablePreview = new SlideShow.ZoomablePreview(this.container);
-				this.livePhotoPreview = SlideShow.LivePreview ? new SlideShow.LivePreview(this.container) : fakeLivePreview;
+				this.livePhotoPreview = new SlideShow.LivePreview(this.container);
 				this.controls =
 					new SlideShow.Controls(
 						this,

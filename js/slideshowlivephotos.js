@@ -7,13 +7,13 @@
  *
  * @author François Sylvestre <francoissylv@gmail.com>
  *
- * @copyright François Sylvestre 2017
+ * @copyright François Sylvestre 2018
  */
-/* global SlideShow, bigshot*/
+/* global SlideShow, LivePhotosKit*/
 (function ($, SlideShow, LivePhotosKit, OC) {
 	"use strict";
 	/**
-	 * Creates a zoomable preview
+	 * Creates a  preview
 	 *
 	 * @param {*} container
 	 * @constructor
@@ -26,7 +26,6 @@
 		this.player = LivePhotosKit.createPlayer();
 
 		this.livePhotoContainer.append(this.player);
-		// this.livePhotoContainer.css('display', 'none');
 
 		this._detectFullscreen();
 		this._setupControls();
