@@ -170,7 +170,7 @@
 			 * At this stage, there is no loading taking place, so we can look for new rows
 			 */
 
-			var scroll = $('#content-wrapper').scrollTop() + $(window).scrollTop();
+			var scroll = $(window).scrollTop() + $(window).scrollTop();
 			// 2 windows worth of rows is the limit from which we need to start loading new rows.
 			// As we scroll down, it grows
 			var targetHeight = ($(window).height() * 2) + scroll;
@@ -490,7 +490,7 @@
 		 * @private
 		 */
 		_setBackgroundColour: function () {
-			var wrapper = $('#content-wrapper');
+			var wrapper = $('#app-content');
 			var albumDesign = Gallery.config.albumDesign;
 			if (!$.isEmptyObject(albumDesign) && albumDesign.background) {
 				wrapper.css('background-color', albumDesign.background);

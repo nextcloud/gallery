@@ -78,15 +78,6 @@ div.crumb.last a {
 	list-style: initial;
 }
 
-#app {
-	/* #app is the parent of #controls and #gallery, and #controls uses a sticky
-	 * position, so the #app height must contain the full gallery for the
-	 * controls to be stuck while scrolling. The server sets "height: 100%" for
-	 * the app, so that value has to be overriden. */
-	height: auto;
-	width: 100%;
-}
-
 #gallery.hascontrols {
 	position: relative;
 	overflow: hidden;
