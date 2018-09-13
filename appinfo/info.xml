@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
-<info>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>gallery</id>
 	<name>Gallery</name>
+	<summary>Media gallery for Nextcloud</summary>
 	<description>Media gallery for Nextcloud with the following features:
 
 		- Support for large selection of media types (depending on server setup)
@@ -32,24 +34,25 @@
 		files app and adds a gallery view to public links.
 		Compatible with Firefox, Chrome and Internet Explorer 11
 	</description>
-	<licence>AGPL</licence>
-	<author>Olivier Paroz, Robin Appelman</author>
 	<version>18.1.0</version>
+	<licence>agpl</licence>
+	<author>Olivier Paroz, Robin Appelman</author>
 	<namespace>Gallery</namespace>
-	<category>Multimedia</category>
+	<default_enable />
+	<category>multimedia</category>
+
+	<website>https://github.com/nextcloud/gallery</website>
+	<bugs>https://github.com/nextcloud/gallery/issues</bugs>
+	<repository>https://github.com/nextcloud/gallery.git</repository>
+
+	<dependencies>
+		<php max-version="7"/>
+		<nextcloud min-version="14" max-version="14"/>
+	</dependencies>
+
 	<documentation>
 		<user>https://github.com/nextcloud/gallery/blob/master/README.md</user>
 		<admin>https://github.com/nextcloud/gallery/blob/master/README.md</admin>
 		<developer>https://github.com/nextcloud/gallery/wiki</developer>
 	</documentation>
-	<category>Multimedia</category>
-	<website>https://github.com/nextcloud/gallery</website>
-	<bugs>https://github.com/nextcloud/gallery/issues</bugs>
-	<repository type="git">https://github.com/nextcloud/gallery.git</repository>
-	<dependencies>
-		<php min-version="5.6" max-version="7"/>
-		<nextcloud min-version="14" max-version="14"/>
-	</dependencies>
-	<default_enable />
-	<shipped>true</shipped>
 </info>
