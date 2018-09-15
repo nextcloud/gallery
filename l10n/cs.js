@@ -90,6 +90,7 @@ OC.L10N.register(
     "shared by %s" : "sdíleno %s",
     "Direct link" : "Přímý odkaz",
     "Add to your Nextcloud" : "Přidat do Nextcloud",
+    "Media gallery for Nextcloud" : "Galerie médií pro Nextcloud",
     "This share is password-protected" : "Toto sdílení je chráněno heslem",
     "The password is wrong. Try again." : "Heslo není správné. Zkuste to znovu.",
     "Sort by name" : "Řadit podle názvu",
