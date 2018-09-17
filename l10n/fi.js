@@ -90,6 +90,7 @@ OC.L10N.register(
     "shared by %s" : "jakanut %s",
     "Direct link" : "Suora linkki",
     "Add to your Nextcloud" : "Lisää Nextcloudiisi",
+    "Media gallery for Nextcloud" : "Mediagalleria Nextcloudille",
     "This share is password-protected" : "Tämä jako on suojattu salasanalla",
     "The password is wrong. Try again." : "Väärä salasana. Yritä uudelleen.",
     "Sort by name" : "Järjestä nimen mukaan",
