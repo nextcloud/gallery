@@ -103,7 +103,7 @@ OC.L10N.register(
     "the item was removed" : "predmet je odstranjen",
     "the link has expired" : "povezava je potekla",
     "sharing is disabled" : "souporaba je onemogočena.",
-    "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je poslala to povezavo.",
+    "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je to povezavo poslala .",
     "Picture view" : "Slikovni pogled",
     "Gallery view" : "Galerijski pogled",
     "An error occured. Please try again" : "Prišlo je do napake. Poskusite znova.",
