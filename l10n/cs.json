@@ -2,7 +2,7 @@
     "Gallery" : "Galerie",
     "There was a problem reading files from this album" : "Nastal problém při čtení souborů z tohoto alba",
     "Aborting preview. Could not find the file" : "Načítání náhledu přerušeno. Soubor se nedaří nalézt",
-    "Could not move \"{file}\", target exists" : "Nelze přesunout „{file}“, cíl existuje",
+    "Could not move \"{file}\", target exists" : "„{file}“ nelze přesunout, cíl existuje",
     "Could not move \"{file}\"" : "Nelze přesunout „{file}“",
     "No compatible server found at {remote}" : "Na {remote} nebyl nalezen kompatibilní server",
     "Invalid server url" : "Neplatné URL serveru",
