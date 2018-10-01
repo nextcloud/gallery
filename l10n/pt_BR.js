@@ -120,7 +120,7 @@ OC.L10N.register(
     "Picture view" : "Visualização de imagem",
     "Gallery view" : "Vista da  galeria",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Compartilhe com pessoas em outros servidores usando o ID federado username@example.com/cloud",
-    "An error occured. Please try again" : "Ocorreu um erro. Por favor tente novamente",
+    "An error occured. Please try again" : "Ocorreu um erro. Tente novamente",
     "Sending ..." : "Enviando..."
 },
 "nplurals=2; plural=(n > 1);");
