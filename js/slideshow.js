@@ -377,7 +377,7 @@
 			if ($.isEmptyObject(message)) {
 				message = t('gallery',
 					'<strong>Error!</strong> Could not generate a preview of this file.<br>' +
-					'Please go to the next slide while we remove this image from the slideshow');
+					'The image will be removed when you go to the next one');
 			}
 			this.container.find('.notification').html(message);
 			this.container.find('.notification').show();
