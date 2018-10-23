@@ -34,7 +34,7 @@ OC.L10N.register(
     "Previous" : "Önceki",
     "Close" : "Kapat",
     "Download" : "İndir",
-    "Toggle background" : "Art alanı değiştir",
+    "Toggle background" : "Arka planı değiştir",
     "Delete" : "Sil",
     "Share" : "Paylaş",
     "Could not create file \"{file}\" because it already exists" : "\"{file}\" dosyası zaten var olduğundan oluşturulamadı",
