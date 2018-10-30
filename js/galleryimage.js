@@ -13,16 +13,6 @@
 (function ($, Gallery, oc_requesttoken) {
 	"use strict";
 
-	var TEMPLATE =
-		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
-		'href="" data-path="{{path}}">' +
-		'	<div class="image-loader loading"></div>' +
-		'	<span class="image-label">' +
-		'		<span class="title">{{label}}</span>' +
-		'	</span>' +
-		'	<div class="image container"></div>' +
-		'</a>';
-
 	/**
 	 * Creates a new image object to store information about a media file
 	 *
@@ -115,8 +105,7 @@
 		 */
 		getDom: function (targetHeight) {
 			if (this.domDef === null) {
-				var template = Handlebars.compile(TEMPLATE);
-				var imageElement = template({
+				var imageElement = Gallery.Templates.galleryimage({
 					targetHeight: targetHeight,
 					targetWidth: targetHeight,
 					label: OC.basename(this.path),

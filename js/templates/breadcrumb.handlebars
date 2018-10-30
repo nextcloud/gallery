@@ -1,0 +1,17 @@
+{{#each crumbs}}
+	<div class="crumb {{cssClass}}" data-dir="{{dir}}">
+		{{#if link}}
+			<a href="{{link}}">
+				{{#if img}}
+					{{#with img}}
+						<img title="{{title}}" src="{{imageSrc}}">
+					{{/with}}
+				{{else}}
+					{{name}}
+				{{/if}}
+			</a>
+		{{else}}
+			<span>{{name}}</span>
+		{{/if}}
+	</div>
+{{/each}}
