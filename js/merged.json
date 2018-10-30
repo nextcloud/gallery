@@ -3,6 +3,7 @@
   "vendor/jquery-touch-events/src/1.0.8/jquery.mobile-events.min.js",
   "vendor/jquery.ui.touch-punch-custom.js",
   "gallery.js",
+  "templates.js",
   "galleryutility.js",
   "galleryconfig.js",
   "galleryinfobox.js",

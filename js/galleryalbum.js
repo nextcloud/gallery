@@ -13,20 +13,6 @@
 (function ($, Gallery) {
 	"use strict";
 
-	var TEMPLATE =
-		'<a class="row-element" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" ' +
-		'data-width="{{targetWidth}}" data-height="{{targetHeight}}"' +
-		'href="{{targetPath}}" data-dir="{{dir}}" data-path="{{path}}"' +
-		'data-permissions="{{permissions}}" data-freespace="{{freeSpace}}"' +
-		'>' +
-		'	<div class="album-loader loading"></div>' +
-		'	<span class="album-label">' +
-		'		<span class="title">{{label}}</span>' +
-		'	</span>' +
-		'	<div class="album container" style="width: {{targetWidth}}px; height: {{targetHeight}}px;" >' +
-		'	</div>' +
-		'</a>';
-
 	/**
 	 * Creates a new album object to store information about an album
 	 *
@@ -120,8 +106,7 @@
 		 */
 		getDom: function (targetHeight) {
 			if (this.domDef === null) {
-				var template = Handlebars.compile(TEMPLATE);
-				var albumElement = template({
+				var albumElement = Gallery.Templates.galleryalbum({
 					targetHeight: targetHeight,
 					targetWidth: targetHeight,
 					dir: this.path,

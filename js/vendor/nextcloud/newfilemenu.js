@@ -11,17 +11,6 @@
 /* global Handlebars, Gallery */
 (function ($, Gallery) {
 	"use strict";
-	var TEMPLATE_MENU =
-		'<ul>' +
-		'<li>' +
-		'<label for="file_upload_start" class="menuitem" data-action="upload" title="{{uploadMaxHumanFilesize}}"><span class="svg icon icon-upload"></span><span class="displayname">{{uploadLabel}}</span></label>' +
-		'</li>' +
-		'{{#each items}}' +
-		'<li>' +
-		'<a href="#" class="menuitem" data-action="{{id}}"><span class="icon {{iconClass}} svg"></span><span class="displayname">{{displayName}}</span></a>' +
-		'</li>' +
-		'{{/each}}' +
-		'</ul>';
 
 	/**
 	 * Construct a new NewFileMenu instance
@@ -53,10 +42,7 @@
 		},
 
 		template: function (data) {
-			if (!Gallery.NewFileMenu._TEMPLATE) {
-				Gallery.NewFileMenu._TEMPLATE = Handlebars.compile(TEMPLATE_MENU);
-			}
-			return Gallery.NewFileMenu._TEMPLATE(data);
+			return Gallery.Templates.newfilemenu(data);
 		},
 
 		/**

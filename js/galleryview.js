@@ -566,13 +566,8 @@
 			if (!$actionsContainer.length) {
 				return;
 			}
-			if (!this._addButtonTemplate) {
-				this._addButtonTemplate = Handlebars.compile(TEMPLATE_ADDBUTTON);
-			}
-			var $newButton = $(this._addButtonTemplate({
-				addText: t('gallery', 'New'),
-				iconUrl: OC.imagePath('core', 'actions/add')
-			}));
+
+			var $newButton = $(TEMPLATE_ADDBUTTON);
 
 			$actionsContainer.prepend($newButton);
 			$newButton.tooltip({'placement': 'bottom'});
