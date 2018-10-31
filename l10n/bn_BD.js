@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "নতুন",
     "Error loading slideshow template" : "স্লাইডশো টেমপ্লেট লোড করতে সমস্যা হচ্ছে",
     "Next" : "পরবর্তী",
     "Play" : "বাজাও",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "the item was removed" : "আইটেমটি অপসারণ করা হয়েছিল",
     "sharing is disabled" : "ভাগাভাগি অকার্যকর",
     "Picture view" : "চিত্র দর্শন",
+    "New" : "নতুন",
     "Sending ..." : "পাঠানো হচ্ছে......"
 },
 "nplurals=2; plural=(n != 1);");

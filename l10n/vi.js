@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Could not move \"{file}\", target exists" : "Không thể di chuyển \"{file}\", trùng đích đến",
     "Could not move \"{file}\"" : "Không thể di chuyển \"{file}\"",
-    "New" : "Tạo mới",
     "Error loading slideshow template" : "Lỗi khi tải mẫu Slidesh",
     "Next" : "Kế tiếp",
     "Play" : "Play",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "the item was removed" : "đối tượng đã bị xóa",
     "sharing is disabled" : "việc chia sẻ bị cấm",
     "Picture view" : "Xem h",
+    "New" : "Tạo mới",
     "Sending ..." : "Đang gởi ..."
 },
 "nplurals=1; plural=0;");

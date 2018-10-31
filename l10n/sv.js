@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Ladda upp bilder i appen Filer för att visa dom här",
     "Upload new files via drag and drop or by using the [+] button above" : "Ladda upp nya filer genom att dra och släppa eller genom att använda [+] knappen ovan",
     "Configuration error" : "Konfigurationsfel",
-    "New" : "Ny",
     "Hide Album" : "Dölj Album",
     "Could not hide album" : "Kunde inte dölja album",
     "Error loading slideshow template" : "Fel vid laddning av mallen för bildspelet",
@@ -118,6 +117,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Picture view" : "Bildvy",
     "Gallery view" : "Bildgallerivy",
+    "New" : "Ny",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Dela med personer på andra servrar genom att använda deras Federerade Moln-ID användarnamn@exempel.se/cloud",
     "An error occured. Please try again" : "Ett fel uppstod. Var god försök igen",
     "Sending ..." : "Skickar ..."

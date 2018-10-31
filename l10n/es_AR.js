@@ -22,7 +22,6 @@ OC.L10N.register(
     "No media files found" : "No se encontraron archivos de medios",
     "Upload new files via drag and drop or by using the [+] button above" : "Cargue archivos nuevos ya sea arrastrándolos o bien usando el botón [+] de arriba",
     "Configuration error" : "Error de configuración",
-    "New" : "Nuevo",
     "Hide Album" : "Ocultar álbum",
     "Could not hide album" : "No fue posible ocultar el álbum",
     "Error loading slideshow template" : "Se presentó un error al cargar la plantilla de presentación",
@@ -111,6 +110,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Para mayor información, favor de consultar a la persona que le envió este link.",
     "Picture view" : "Vista de imágenes",
     "Gallery view" : "Ver galería",
+    "New" : "Nuevo",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Compartir con personas en otros servidores usando su ID de nube federada username@example.com/cloud",
     "An error occured. Please try again" : "Se presentó un error. Favor de intentar de nuevo",
     "Sending ..." : "Enviando..."

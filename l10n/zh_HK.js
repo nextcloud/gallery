@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "新增",
     "Next" : "下一首",
     "Play" : "播放",
     "Pause" : "暫停",
@@ -37,6 +36,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "Cancel upload" : "取消上戴",
     "Picture view" : "預覽圖片",
+    "New" : "新增",
     "Sending ..." : "發送中..."
 },
 "nplurals=1; plural=0;");

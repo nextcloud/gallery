@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Nahrajte obrázky v aplikácii Súbory pre zobrazenie na tomto mieste",
     "Upload new files via drag and drop or by using the [+] button above" : "Nahrajte nové súbory pretiahnutím alebo pomocou tlačidla [+] vyššie",
     "Configuration error" : "Chyba nastavenia",
-    "New" : "Nový",
     "Hide Album" : "Skryť album",
     "Could not hide album" : "Nemožno skryť album",
     "Error loading slideshow template" : "Chyba pri načítaní šablóny prezentácie",
@@ -118,6 +117,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Picture view" : "Zobrazenie obrázka",
     "Gallery view" : "Pohľad galérie",
+    "New" : "Nový",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sprístupniť ľuďom na iných serveroch pomocou identifikátora Federated Cloud ID username@example.com/cloud",
     "An error occured. Please try again" : "Nastala chyba. Skúste to znovu",
     "Sending ..." : "Odosielam ..."

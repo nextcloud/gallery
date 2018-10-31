@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Configuration error" : "Konfiguratiouns Feeler",
-    "New" : "Nei",
     "Error loading slideshow template" : "Feeler beim Luede vun der Virlag fir d'Diashow",
     "Next" : "Weider",
     "Play" : "Ofspillen",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Warning" : "Warnung",
     "The password is wrong. Try again." : "Den Passwuert ass incorrect. Probeier ed nach eng keier.",
     "Cancel upload" : "Eroplueden ofbriechen",
+    "New" : "Nei",
     "An error occured. Please try again" : "Et ass e Fehler opgetrueden. W.e.g. probéier nach emol",
     "Sending ..." : "Gëtt geschéckt..."
 },

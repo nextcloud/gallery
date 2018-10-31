@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Upload afbeeldingen in de bestandsapp, om ze hier te tonen",
     "Upload new files via drag and drop or by using the [+] button above" : "Upload nieuwe bestanden via drag 'n drop of door gebruik van de  [+] knop hierboven",
     "Configuration error" : "Configuratiefout",
-    "New" : "Nieuw",
     "Hide Album" : "Verberg album",
     "Could not hide album" : "Kon album niet verbergen",
     "Error loading slideshow template" : "Fout bij laden diashow sjabloon",
@@ -119,6 +118,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die je deze link heeft gestuurd.",
     "Picture view" : "Afbeeldingenoverzicht",
     "Gallery view" : "Album",
+    "New" : "Nieuw",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Delen met mensen bij andere servers via hun gefedereerde Cloud ID gebruikersnaam@voorbeeld.nl/nextcloud",
     "An error occured. Please try again" : "Er trad een fout op. Probeer het opnieuw",
     "Sending ..." : "Versturen ..."
