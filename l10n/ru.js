@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Загрузите изображения в приложении «Файлы» для их просмотра",
     "Upload new files via drag and drop or by using the [+] button above" : "Перетащите файлы или используйте кнопку [ + ] выше",
     "Configuration error" : "Ошибка конфигурации",
-    "New" : "Новый",
     "Hide Album" : "Скрыть альбом",
     "Could not hide album" : "Не удалось скрыть альбом",
     "Error loading slideshow template" : "Ошибка при загрузке шаблона слайд-шоу",
@@ -119,6 +118,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Для получения дополнительной информации, свяжитесь с тем, кто отправил вам эту ссылку.",
     "Picture view" : "Просмотр изображения",
     "Gallery view" : "Галерея",
+    "New" : "Новый",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Предоставить доступ людям на других серверах, используя их идентификатор в федерации облачных хранилищ username@example.com/cloud",
     "An error occured. Please try again" : "Произошла ошибка. Попробуйте ещё раз",
     "Sending ..." : "Отправляется…"

@@ -13,7 +13,6 @@ OC.L10N.register(
     "Album cannot be shown" : "Albumul nu poate fi afișat",
     "No media files found" : "Nu s-au găsit fișiere media",
     "Configuration error" : "Eroare de configurare",
-    "New" : "Nou",
     "Error loading slideshow template" : "eroare la incarcarea modelului ",
     "Next" : "Următor",
     "Play" : "Redă",
@@ -90,6 +89,7 @@ OC.L10N.register(
     "sharing is disabled" : "partajarea este oprită",
     "For more information, please ask the person who has sent you this link." : "Pentru mai multe informații, ia legătura cu persoana care ți-a trimis acest link.",
     "Picture view" : "Vizualizare imagine",
+    "New" : "Nou",
     "An error occured. Please try again" : "A apărut o eroare. Te rugăm să încerci din nou",
     "Sending ..." : "Se expediază..."
 },

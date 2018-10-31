@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Dosyalar uygulaması ile yükleyeceğiniz görseller burada görüntülenir",
     "Upload new files via drag and drop or by using the [+] button above" : "Yeni dosyaları sürükleyip bırakarak ya da yukarıdaki [+] düğmesine tıklayarak yükleyin",
     "Configuration error" : "Yapılandırma sorunu",
-    "New" : "Yeni",
     "Hide Album" : "Albümü Gizle",
     "Could not hide album" : "Albüm gizlenemedi",
     "Error loading slideshow template" : "Saydam sunumu kalıbı yüklenirken sorun çıktı",
@@ -119,6 +118,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Picture view" : "Görsel görünümü",
     "Gallery view" : "Galeri görünümü",
+    "New" : "Yeni",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Birleşmiş Bulut Kodu ile diğer sunucular üzerindeki kişiler ile paylaş username@example.com/cloud",
     "An error occured. Please try again" : "Bir sorun çıktı. Lütfen yeniden deneyin",
     "Sending ..." : "Gönderiliyor..."

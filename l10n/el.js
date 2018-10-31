@@ -21,7 +21,6 @@ OC.L10N.register(
     "Album cannot be shown" : "Το άλμπουμ δεν μπορεί να προβληθεί",
     "No media files found" : "Δεν βρέθηκαν πολυμέσα",
     "Configuration error" : "Σφάλμα ρυθμίσεων",
-    "New" : "Νέο",
     "Hide Album" : "Απόκρυψη άλμπουμ",
     "Could not hide album" : "Αδυναμία απόκρυψης άλμπουμ",
     "Error loading slideshow template" : "Σφάλμα φόρτωσης προτύπου προβολής διαφανειών",
@@ -108,6 +107,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Picture view" : "Προβολή εικονιδίων",
     "Gallery view" : "Προβολή Συλλογής",
+    "New" : "Νέο",
     "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Sending ..." : "Αποστολή..."
 },

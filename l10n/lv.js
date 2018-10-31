@@ -21,7 +21,6 @@ OC.L10N.register(
     "Album cannot be shown" : "Albumu nevar parādīt",
     "No media files found" : "Nav atrasta neviena multivides datne",
     "Configuration error" : "Konfigurācijas kļūda",
-    "New" : "Jauna",
     "Hide Album" : "Slēpt Albūmu",
     "Could not hide album" : "Nevarēja paslēpt albumu",
     "Error loading slideshow template" : "Kļūda ielādējot slīdrādes veidolu",
@@ -103,6 +102,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
     "Picture view" : "Attēla skats",
     "Gallery view" : "Galerijas skats",
+    "New" : "Jauna",
     "An error occured. Please try again" : "Notika kļūda. Mēģini vēlreiz.",
     "Sending ..." : "Sūta..."
 },

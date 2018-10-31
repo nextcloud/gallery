@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Last opp bilder i Filer-programmet for å vise dem her",
     "Upload new files via drag and drop or by using the [+] button above" : "Last opp nye filer med dra og slipp eller med [+]-knappen ovenfor",
     "Configuration error" : "Oppsettsfeil",
-    "New" : "Ny",
     "Hide Album" : "Skjul album",
     "Could not hide album" : "Kunne ikke skjule album",
     "Error loading slideshow template" : "Feil ved lasting av mal for lysbildevisning",
@@ -118,6 +117,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
     "Picture view" : "Bildevisning",
     "Gallery view" : "Gallerivisning",
+    "New" : "Ny",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Del med folk på andre tjenere ved å bruke deres sammenknyttede sky-ID brukernavn@eksempel.no/sky",
     "An error occured. Please try again" : "Det oppstod en feil. Prøv igjen",
     "Sending ..." : "Sender…"

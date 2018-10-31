@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "Novo",
     "Error loading slideshow template" : "Greška pri učitavanju šablona animiranog preglednika",
     "Next" : "Sljedeće",
     "Play" : "Play",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Cancel upload" : "Prekini učitavanje",
     "File list" : "Popis datoteka",
     "Picture view" : "Prikaz slika",
+    "New" : "Novo",
     "Sending ..." : "Slanje..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

@@ -21,7 +21,6 @@
     "Upload pictures in the Files app to display them here" : "Sendu inn myndir í skráaappinu svo að þær birtist hér",
     "Upload new files via drag and drop or by using the [+] button above" : "Sendu inn nýjar skrár með því að draga/sleppa eða með [+] hnappnum hér fyrir ofan",
     "Configuration error" : "Villa í stillingum",
-    "New" : "Nýtt",
     "Hide Album" : "Fela albúm",
     "Could not hide album" : "Gat ekki falið albúm",
     "Error loading slideshow template" : "Villa við að hlaða inn sniðmáti fyrir skyggnusýningu",
@@ -117,6 +116,7 @@
     "For more information, please ask the person who has sent you this link." : "Til að vita meira skaltu hafa samband við þann sem sendi þér þennan tengil.",
     "Picture view" : "Myndasýn",
     "Gallery view" : "Myndasafnssýn",
+    "New" : "Nýtt",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Deila með fólki í öðrum skýjum með auðkenninu notandanafn@dæmi.is/nextcloud",
     "An error occured. Please try again" : "Villa kom upp. Endilega reyndu aftur",
     "Sending ..." : "Sendi ..."
