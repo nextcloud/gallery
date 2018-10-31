@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "ថ្មី",
     "Error loading slideshow template" : "មាន​កំហុស​ផ្ទុក​ពុម្ព​បញ្ចាំងស្លាយ",
     "Next" : "បន្ទាប់",
     "Play" : "លេង",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "the item was removed" : "របស់​ត្រូវ​បាន​ដក​ចេញ",
     "sharing is disabled" : "មិន​អនុញ្ញាត​ការ​ចែករំលែក",
     "Picture view" : "ទិដ្ឋភាពរូបភាព",
+    "New" : "ថ្មី",
     "Sending ..." : "កំពុង​ផ្ញើ ..."
 },
 "nplurals=1; plural=0;");

@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Filesアプリに画像をアップロードして表示する",
     "Upload new files via drag and drop or by using the [+] button above" : "ドラッグ＆ドロップや [+]ボタンを使って新しいファイルをアップロードしてください。",
     "Configuration error" : "設定エラー",
-    "New" : "新規作成",
     "Hide Album" : "アルバムを隠す",
     "Could not hide album" : "アルバムを隠すことができませんでした",
     "Error loading slideshow template" : "スライドショーのテンプレートの読み込みエラー",
@@ -111,6 +110,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "詳細については、このリンクを提供者に確認をお願いします。",
     "Picture view" : "ピクチャービュー",
     "Gallery view" : "ギャラリー表示",
+    "New" : "新規作成",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Federated Cloud ID （ username@example.com/cloud ）を使用して他のサーバー上のユーザーと共有する",
     "An error occured. Please try again" : "エラーが発生しました。もう一度試してください。",
     "Sending ..." : "送信中..."

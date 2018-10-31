@@ -5,7 +5,6 @@ OC.L10N.register(
     "Your browser is not supported!" : "Ваш браузер не підтримується!",
     "No media files found" : "Відсутні мультимедійні файли.",
     "Configuration error" : "Помилка конфігурації",
-    "New" : "Створити",
     "Error loading slideshow template" : "Помилка завантаження шаблона слайд-шоу",
     "Next" : "Наступний",
     "Play" : "Грати",
@@ -72,6 +71,7 @@ OC.L10N.register(
     "the link has expired" : "посилання застаріло",
     "sharing is disabled" : "обмін заборонений",
     "Picture view" : "Перегляд Зображення",
+    "New" : "Створити",
     "An error occured. Please try again" : "Виникла помилка. Будь ласка, спробуйте ще раз",
     "Sending ..." : "Надсилання..."
 },

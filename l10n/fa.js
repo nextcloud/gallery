@@ -4,7 +4,6 @@ OC.L10N.register(
     "Gallery" : "گالری",
     "Could not load the description: " : "امکان بارگذاری توضیحات وجود ندارد:",
     "Copyright" : "کپی‌رایت",
-    "New" : "جدید",
     "Error loading slideshow template" : "خطا در بارگذاری قالب نمایش به صورت اسلاید",
     "Next" : "بعدی",
     "Play" : "پخش کردن",
@@ -68,6 +67,7 @@ OC.L10N.register(
     "sharing is disabled" : "قابلیت اشتراک گذاری غیرفعال است",
     "Picture view" : "نمایش تصویر",
     "Gallery view" : "نمایش گالری",
+    "New" : "جدید",
     "An error occured. Please try again" : "یک خطا رخ داده است، لطفا مجددا تلاش کنید",
     "Sending ..." : "درحال ارسال ..."
 },

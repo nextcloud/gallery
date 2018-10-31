@@ -22,7 +22,6 @@ OC.L10N.register(
     "No media files found" : "Ni najdenih predstavnih datotek",
     "Upload new files via drag and drop or by using the [+] button above" : "Datoteke je mogoče poslati v oblak z gumbom [+] ali z miško s povleci in spusti v okno mape.",
     "Configuration error" : "Napaka nastavitve",
-    "New" : "Novo",
     "Hide Album" : "Skrij album",
     "Could not hide album" : "Albuma ni mogoče skriti",
     "Error loading slideshow template" : "Napaka nalaganja predloge za slikovno predstavitev",
@@ -106,6 +105,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je to povezavo poslala .",
     "Picture view" : "Slikovni pogled",
     "Gallery view" : "Galerijski pogled",
+    "New" : "Novo",
     "An error occured. Please try again" : "Prišlo je do napake. Poskusite znova.",
     "Sending ..." : "Pošiljanje ..."
 },
