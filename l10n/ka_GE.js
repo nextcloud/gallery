@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "აქ ჩვენებისათვის ატვირთეთ სურათები ფაილების აპლიკაციაში",
     "Upload new files via drag and drop or by using the [+] button above" : "ატვირთეთ ახალი ფაილები გადატანითა და გაშვებით ან ზემოთ მყოფი [+] ღილაკის საშუალებით",
     "Configuration error" : "კონფიგურაციის შეცდომა",
-    "New" : "ახალი",
     "Hide Album" : "ალბომის დამალვა",
     "Could not hide album" : "ალბომის დამალვა ვერ მოხერხდა",
     "Error loading slideshow template" : "სლაიდშოუს შაბლონის ჩატვირთვისას წარმოიშვა შეცდომა",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "მეტი ინფრმაციისთვის, გთხოვთ ჰკითხოთ ადამიანს ვინც გამოგიგზავნათ ეს ბმული.",
     "Picture view" : "სურათის ხედი",
     "Gallery view" : "გალერეის ხედი",
+    "New" : "ახალი",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "გაზიარება ადამიანებთან სხვა სერვერებზე მათი ფედერალური ქლაუდ ID-ების username@example.com/cloud მეშვეობით",
     "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
     "Sending ..." : "გაგზავნა …"

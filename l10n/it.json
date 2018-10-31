@@ -21,7 +21,6 @@
     "Upload pictures in the Files app to display them here" : "Carica le immagini nell'applicazione dei file per visualizzarle qui",
     "Upload new files via drag and drop or by using the [+] button above" : "Carica nuovi file trascinandoli e rilasciandoli o utilizzando il pulsante [+] in alto",
     "Configuration error" : "Errore di configurazione",
-    "New" : "Nuovo",
     "Hide Album" : "Nascondi album",
     "Could not hide album" : "Impossibile nascondere l'album",
     "Error loading slideshow template" : "Errore durante il caricamento del modello di presentazione",
@@ -117,6 +116,7 @@
     "For more information, please ask the person who has sent you this link." : "Per ulteriori informazioni, chiedi alla persona che ti ha inviato il collegamento.",
     "Picture view" : "Vista immagini",
     "Gallery view" : "Galleria",
+    "New" : "Nuovo",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Condividi con persone su altri server utilizzando il loro ID di cloud federata nomeutente@esempio.com/nextcloud",
     "An error occured. Please try again" : "Si è verificato un errore. Prova ancora",
     "Sending ..." : "Invio in corso..."

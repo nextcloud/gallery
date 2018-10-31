@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "Yeni",
     "Error loading slideshow template" : "Slideshow şablonun yüklənməsində səhv baş verdi",
     "Next" : "Növbəti",
     "Play" : "Oxu",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Reasons might be:" : "Səbəblər ola bilər:",
     "the item was removed" : "bölüm silinmişdir",
     "sharing is disabled" : "paylaşım dayandırılmışdır",
-    "Picture view" : "Şəkilə baxış"
+    "Picture view" : "Şəkilə baxış",
+    "New" : "Yeni"
 },
 "nplurals=2; plural=(n != 1);");

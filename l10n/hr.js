@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "Novo",
     "Error loading slideshow template" : "Pogrešan unos predloška za projekciju",
     "Next" : "Sljedeća",
     "Play" : "Reprodukcija",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "the item was removed" : "stavka je uklonjena",
     "sharing is disabled" : "dijeljenje je onemogućeno",
     "Picture view" : "Prikaz slika",
+    "New" : "Novo",
     "An error occured. Please try again" : "Dogodila se pogreška. Molimo Vas, pokušajte ponovno. ",
     "Sending ..." : "Slanje..."
 },

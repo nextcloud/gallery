@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Töltsön fel képeket a Fájlok alkalmazással, hogy itt megjelenjenek",
     "Upload new files via drag and drop or by using the [+] button above" : "Töltsön fel új fájlokat ráhúzással, vagy használja a [+] gombot",
     "Configuration error" : "Konfigurációs hiba",
-    "New" : "Új",
     "Hide Album" : "Album elrejtése",
     "Could not hide album" : "Az album nem rejthető el",
     "Error loading slideshow template" : "Hiba történt a diasor sablonjának betöltésekor",
@@ -118,6 +117,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Picture view" : "Képnézet",
     "Gallery view" : "Galéria nézet",
+    "New" : "Új",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Megosztás más szervert használó emberekkel, az Egyesített Felhő Azonosítóval: username@example.com/cloud",
     "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",
     "Sending ..." : "Küldés ..."

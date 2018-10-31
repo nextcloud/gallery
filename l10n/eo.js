@@ -8,7 +8,6 @@ OC.L10N.register(
     "Could not load the description" : "Ne ŝargeblis la priskribo",
     "Could not load the description: " : "Ne ŝargeblis la priskribo:",
     "Copyright" : "Kopirajto",
-    "New" : "Nova",
     "Error loading slideshow template" : "Eraro dum ŝargado de ŝablono pri lumbilda prezento",
     "Next" : "Sekva",
     "Play" : "Ludi",
@@ -79,6 +78,7 @@ OC.L10N.register(
     "sharing is disabled" : "kunhavigo malkapablas",
     "Picture view" : "Bilda vido",
     "Gallery view" : "Galeria vido",
+    "New" : "Nova",
     "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
     "Sending ..." : "Sendante..."
 },

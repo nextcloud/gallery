@@ -20,7 +20,6 @@ OC.L10N.register(
     "No media files found" : "ไม่พบไฟล์สื่อ",
     "Upload new files via drag and drop or by using the [+] button above" : "อัพโหลดไฟล์ใหม่ผ่านการลากและวางหรือโดยการใช้ปุ่ม [+] ดังกล่าวข้างต้น",
     "Configuration error" : "กำหนดค่าผิดพลาด",
-    "New" : "ใหม่",
     "Hide Album" : "ซ่อนอัลบั้ม",
     "Could not hide album" : "ไม่สามารถซ่อนอัลบั้ม",
     "Error loading slideshow template" : "เกิดข้อผิดพลาดในการโหลดเทมเพลตสไลด์โชว์",
@@ -103,6 +102,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
     "Picture view" : "ดูรูปภาพ",
     "Gallery view" : "ดูแกลอรี่",
+    "New" : "ใหม่",
     "An error occured. Please try again" : "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
     "Sending ..." : "กำลังส่ง..."
 },

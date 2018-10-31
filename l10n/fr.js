@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Ajoutez des images dans l'application Fichiers et elles apparaîtront ici",
     "Upload new files via drag and drop or by using the [+] button above" : "Téléversez de nouveaux fichiers en utilisant le glisser-déposer ou le bouton [+] ci-dessus",
     "Configuration error" : "Erreur de configuration",
-    "New" : "Nouveau",
     "Hide Album" : "Masquer l'album",
     "Could not hide album" : "Impossible de masquer l'album",
     "Error loading slideshow template" : "Erreur lors du téléchargement du modèle de diaporama ",
@@ -119,6 +118,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Pour plus d'informations, veuillez contacter la personne qui vous a envoyé ce lien.",
     "Picture view" : "Visualisation de l'image",
     "Gallery view" : "Vue galerie",
+    "New" : "Nouveau",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Partager avec des personnes sur d'autres serveurs en utilisant leur identifiant du Cloud Fédéré utilisateur@exemple.com/cloud",
     "An error occured. Please try again" : "Une erreur est survenue. Merci de réessayer",
     "Sending ..." : "Envoi…"

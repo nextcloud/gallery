@@ -21,7 +21,6 @@
     "Upload pictures in the Files app to display them here" : "将图片上传至",
     "Upload new files via drag and drop or by using the [+] button above" : "通过拖放或使用上面的 [+] 按钮上传新文件",
     "Configuration error" : "配置错误",
-    "New" : "新建",
     "Hide Album" : "隐藏专辑",
     "Could not hide album" : "不能隐藏专辑",
     "Error loading slideshow template" : "加载幻灯片模板错误",
@@ -115,6 +114,7 @@
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系共享链接给你的人。",
     "Picture view" : "查看图片",
     "Gallery view" : "查看相册",
+    "New" : "新建",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "使用 username@example.com/cloud 格式，其他服务器上联盟云的用户共享",
     "An error occured. Please try again" : "发生了一个错误请重新尝试",
     "Sending ..." : "正在发送..."

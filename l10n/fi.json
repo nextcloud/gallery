@@ -21,7 +21,6 @@
     "Upload pictures in the Files app to display them here" : "Lähetä kuvia tiedostohallinnan sovellukseen nähdäksesi ne täällä",
     "Upload new files via drag and drop or by using the [+] button above" : "Lähetä uusia tiedostoja vetämällä ne tänne tai käyttämällä yllä olevaa [+]-painiketta",
     "Configuration error" : "Asetusvirhe",
-    "New" : "Uusi",
     "Hide Album" : "Piilota albumi",
     "Could not hide album" : "Albumin piilottaminen ei onnistunut",
     "Error loading slideshow template" : "Virhe ladatessa diaesityksen mallipohjaa",
@@ -116,6 +115,7 @@
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
     "Picture view" : "Kuvanäkymä",
     "Gallery view" : "Gallerianäkymä",
+    "New" : "Uusi",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Jaa toisia järjestelmiä käyttäville Federated Cloud ID -tunnuksella muodossa käyttäjätunnus@example.com/nextcloud",
     "An error occured. Please try again" : "Tapahtui virhe. Yritä myöhemmin uudestaan",
     "Sending ..." : "Lähetetään..."

@@ -18,7 +18,6 @@ OC.L10N.register(
     "Album cannot be shown" : "Impossible d'afichar l'album",
     "No media files found" : "Cap de fichièr mèdia pas trobat",
     "Configuration error" : "Error de configuracion",
-    "New" : "Novèl",
     "Error loading slideshow template" : "Error al moment del telecargament del modèl de diaporama ",
     "Next" : "Seguent",
     "Play" : "Aviar",
@@ -97,6 +96,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
     "Picture view" : "Visualizacion de l'imatge",
     "Gallery view" : "Vista en galariá",
+    "New" : "Novèl",
     "An error occured. Please try again" : "Una error s'es produsida. Mercé d'ensajar tornamai",
     "Sending ..." : "Mandadís…"
 },

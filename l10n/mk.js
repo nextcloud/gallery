@@ -2,7 +2,6 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Галерија",
-    "New" : "Ново",
     "Error loading slideshow template" : "Грешка при вчитувањето на шаблонот за прикажување на слајдови",
     "Next" : "Следно",
     "Play" : "Пушти",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Reasons might be:" : "Причината може да биде:",
     "the item was removed" : "предметот беше одстранет",
     "sharing is disabled" : "споделувањето не е дозволено",
+    "New" : "Ново",
     "An error occured. Please try again" : "Се случи грешка. Обиди се повторно",
     "Sending ..." : "Праќање..."
 },

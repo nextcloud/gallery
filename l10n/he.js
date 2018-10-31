@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "ניתן להעלות תמונות ביישומון הקבצים כדי להציג אותם כאן",
     "Upload new files via drag and drop or by using the [+] button above" : "העלאת קבצים חדשים באמצעות גרירה ושחרור או באמצעות כפתור ה- [+] מעלה",
     "Configuration error" : "שגיאת הגדרה",
-    "New" : "חדש",
     "Hide Album" : "הסתרת אלבום",
     "Could not hide album" : "לא ניתן היה להסתיר את האלבום",
     "Error loading slideshow template" : "שגיאה בטעינת תבנית המצגת",
@@ -117,6 +116,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
     "Picture view" : "תצוגת תמונה",
     "Gallery view" : "תצוגת גלריה",
+    "New" : "חדש",
     "An error occured. Please try again" : "אירעה שגיאה. יש לנסות בבקשה שוב",
     "Sending ..." : "מתבצעת שליחה ..."
 },

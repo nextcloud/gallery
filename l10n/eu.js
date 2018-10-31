@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Fitxategiak app-an irudiak igo hemen ager daitezen",
     "Upload new files via drag and drop or by using the [+] button above" : "Fitxategi berriak gehitu arratatu eta askatuz edo [+] botoia erabiliz",
     "Configuration error" : "Konfigurazio errorea",
-    "New" : "Berria",
     "Hide Album" : "Ezkutatu albuma",
     "Could not hide album" : "Ezin da ezkutatu albuma",
     "Error loading slideshow template" : "Errorea aurkezpen txantiloia kargatzean",
@@ -112,6 +111,7 @@ OC.L10N.register(
     "For more information, please ask the person who has sent you this link." : "Informazio gehiagorako, eskatu lotura hau bidali dizun pertsonari",
     "Picture view" : "Irudi bistaratzea",
     "Gallery view" : "Galeria ikuspegia",
+    "New" : "Berria",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Beste zerbitzarietako jendearekin partekatu ahal duzu Hodei Federatuaren ID erabiliz, adibidez erabiltzaile@adibide.com/cloud",
     "An error occured. Please try again" : "Errore bat gertatu da. Saiatu berriro.",
     "Sending ..." : "Bidaltzen ..."
