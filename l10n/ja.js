@@ -80,6 +80,7 @@ OC.L10N.register(
     "Password protected" : "パスワード保護",
     "Error unsetting expiration date" : "有効期限の未設定エラー",
     "Error setting expiration date" : "有効期限の設定でエラー発生",
+    "Sending…" : "送信中…",
     "Email sent" : "メールを送信しました",
     "Warning" : "警告",
     "Add to your Nextcloud" : "あなたのNextcloud に追加",
