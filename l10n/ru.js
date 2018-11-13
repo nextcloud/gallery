@@ -61,7 +61,7 @@ OC.L10N.register(
     "Send" : "Отправить",
     "Set expiration date" : "Установить срок действия",
     "Expiration" : "Срок действия",
-    "Expiration date" : "Дата окончания",
+    "Expiration date" : "Срок действия",
     "This list is maybe truncated - please refine your search term to see more results." : "Этот список может быть показан не полностью - уточните запрос что бы просмотреть больше результатов.",
     "No users or groups found for {search}" : "Не найдено пользователей или групп по запросу {search}",
     "No users found for {search}" : "Не найдено пользователей по запросу {search}",
