@@ -139,7 +139,10 @@
 			if (transparent) {
 				this._showBackgroundToggle();
 			}
-			this.showButton('.downloadImage');
+			var hideDownload = $('#hideDownload').val();
+			if (hideDownload !== 'true') {
+				this.showButton('.downloadImage');
+			}
 			var canDelete = ((permissions & OC.PERMISSION_DELETE) !== 0);
 			var canShare = ((permissions & OC.PERMISSION_SHARE) !== 0);
 			if (!isPublic && canDelete) {
