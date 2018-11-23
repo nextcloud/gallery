@@ -44,7 +44,6 @@ OC.L10N.register(
     "change" : "Өөрчлөх",
     "delete" : "устгах",
     "Password protected" : "Нууц үгээх хамгаалагдсан",
-    "Gallery view" : "Зургийн цомог харах",
     "New" : "Шинэ"
 },
 "nplurals=2; plural=(n != 1);");

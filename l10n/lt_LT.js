@@ -116,7 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "dalinimasis yra išjungtas",
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
     "Picture view" : "Paveikslo rodymas",
-    "Gallery view" : "Galerijos rodinys",
     "New" : "Naujas",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Pasidalinti su naudotojais kituose serveriuose naudojantis Centralizuoto Serverio ID, pavyzdžiui: username@example.com/cloud",
     "An error occured. Please try again" : "Klaida, prašau bandyti dar kartą.",

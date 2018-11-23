@@ -115,7 +115,6 @@ OC.L10N.register(
     "sharing is disabled" : "השיתוף נוטרל",
     "For more information, please ask the person who has sent you this link." : "למידע נוסף, יש לפנות לשולח קישור זה.",
     "Picture view" : "תצוגת תמונה",
-    "Gallery view" : "תצוגת גלריה",
     "New" : "חדש",
     "An error occured. Please try again" : "אירעה שגיאה. יש לנסות בבקשה שוב",
     "Sending ..." : "מתבצעת שליחה ..."
