@@ -106,7 +106,6 @@ OC.L10N.register(
     "sharing is disabled" : "ο διαμοιρασμός απενεργοποιήθηκε",
     "For more information, please ask the person who has sent you this link." : "Για περισσότερες πληροφορίες, παρακαλώ ρωτήστε το άτομο που σας έστειλε αυτόν τον σύνδεσμο.",
     "Picture view" : "Προβολή εικονιδίων",
-    "Gallery view" : "Προβολή Συλλογής",
     "New" : "Νέο",
     "An error occured. Please try again" : "Ένα σφάλμα προέκυψε. Παρακαλώ προσπαθήστε ξανά",
     "Sending ..." : "Αποστολή..."

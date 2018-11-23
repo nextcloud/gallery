@@ -117,7 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "дељење је искључено",
     "For more information, please ask the person who has sent you this link." : "За више информација, питајте особу која вам је послала везу.",
     "Picture view" : "Приказ слике",
-    "Gallery view" : "Приказ галерије",
     "New" : "Ново",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Поделите са људима у другим облацима користећи ID њиховог здруженог облика, као username@example.com/cloud",
     "An error occured. Please try again" : "Дошло је до грешке. Покушајте поново",
