@@ -108,7 +108,6 @@ OC.L10N.register(
     "sharing is disabled" : "la compartición ta deshabilitada",
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
     "Picture view" : "Vista d'imáxenes",
-    "Gallery view" : "Vista de galería",
     "New" : "Nuevu",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparti con xente d'otros sirvidores usando la ID de ñube federada nome_usuariu@exemplu.com/cloud",
     "An error occured. Please try again" : "Hebo un fallu. Por favor, inténtalo dempués. ",

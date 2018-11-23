@@ -117,7 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "le partage est désactivé",
     "For more information, please ask the person who has sent you this link." : "Pour plus d'informations, veuillez contacter la personne qui vous a envoyé ce lien.",
     "Picture view" : "Visualisation de l'image",
-    "Gallery view" : "Vue galerie",
     "New" : "Nouveau",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Partager avec des personnes sur d'autres serveurs en utilisant leur identifiant du Cloud Fédéré utilisateur@exemple.com/cloud",
     "An error occured. Please try again" : "Une erreur est survenue. Merci de réessayer",

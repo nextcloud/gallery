@@ -110,7 +110,6 @@ OC.L10N.register(
     "sharing is disabled" : "გაზიარება არაა მოქმედი",
     "For more information, please ask the person who has sent you this link." : "მეტი ინფრმაციისთვის, გთხოვთ ჰკითხოთ ადამიანს ვინც გამოგიგზავნათ ეს ბმული.",
     "Picture view" : "სურათის ხედი",
-    "Gallery view" : "გალერეის ხედი",
     "New" : "ახალი",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "გაზიარება ადამიანებთან სხვა სერვერებზე მათი ფედერალური ქლაუდ ID-ების username@example.com/cloud მეშვეობით",
     "An error occured. Please try again" : "წარმოიშვა შეცდომა. გთხოვთ სცადოთ ახლიდან.",
