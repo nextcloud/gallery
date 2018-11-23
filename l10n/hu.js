@@ -117,7 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "letiltásra került a megosztás",
     "For more information, please ask the person who has sent you this link." : "Bővebb információért, kérjük keresse fel azt az embert, aki küldte ezt a hivatkozást.",
     "Picture view" : "Képnézet",
-    "Gallery view" : "Galéria nézet",
     "New" : "Új",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Megosztás más szervert használó emberekkel, az Egyesített Felhő Azonosítóval: username@example.com/cloud",
     "An error occured. Please try again" : "Hiba történt. Kérjük, próbálja újra!",

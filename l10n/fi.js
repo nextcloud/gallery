@@ -116,7 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "jakaminen on poistettu käytöstä",
     "For more information, please ask the person who has sent you this link." : "Kysy lisätietoja linkin lähettäneeltä taholta.",
     "Picture view" : "Kuvanäkymä",
-    "Gallery view" : "Gallerianäkymä",
     "New" : "Uusi",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Jaa toisia järjestelmiä käyttäville Federated Cloud ID -tunnuksella muodossa käyttäjätunnus@example.com/nextcloud",
     "An error occured. Please try again" : "Tapahtui virhe. Yritä myöhemmin uudestaan",

@@ -101,7 +101,6 @@ OC.L10N.register(
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
     "Picture view" : "ดูรูปภาพ",
-    "Gallery view" : "ดูแกลอรี่",
     "New" : "ใหม่",
     "An error occured. Please try again" : "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
     "Sending ..." : "กำลังส่ง..."

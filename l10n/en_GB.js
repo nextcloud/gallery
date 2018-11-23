@@ -116,7 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "sharing is disabled",
     "For more information, please ask the person who has sent you this link." : "For more information, please ask the person who has sent you this link.",
     "Picture view" : "Picture view",
-    "Gallery view" : "Gallery view",
     "New" : "New",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Share with people on other servers using their Federated Cloud ID username@example.com/cloud",
     "An error occured. Please try again" : "An error occured. Please try again",

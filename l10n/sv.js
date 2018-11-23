@@ -116,7 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "delning är inaktiverat",
     "For more information, please ask the person who has sent you this link." : "För mer information, var god fråga den person som skickat dig länken",
     "Picture view" : "Bildvy",
-    "Gallery view" : "Bildgallerivy",
     "New" : "Ny",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Dela med personer på andra servrar genom att använda deras Federerade Moln-ID användarnamn@exempel.se/cloud",
     "An error occured. Please try again" : "Ett fel uppstod. Var god försök igen",

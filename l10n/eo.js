@@ -77,7 +77,6 @@ OC.L10N.register(
     "the link has expired" : "la ligilo eksvalidiĝis",
     "sharing is disabled" : "kunhavigo malkapablas",
     "Picture view" : "Bilda vido",
-    "Gallery view" : "Galeria vido",
     "New" : "Nova",
     "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
     "Sending ..." : "Sendante..."
