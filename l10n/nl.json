@@ -24,7 +24,7 @@
     "Hide Album" : "Verberg album",
     "Could not hide album" : "Kon album niet verbergen",
     "Error loading slideshow template" : "Fout bij laden diashow sjabloon",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fout!</strong> Kon geen voorbeeld van die bestand genereren.<br>Ga naar de volgende dia, terwijl we deze afbeelding uit de diashow verwijderen",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Fout!</strong> Kon geen voorbeeld van dit bestand genereren.<br>Ga naar de volgende dia, terwijl we deze afbeelding uit de diashow verwijderen",
     "Next" : "Volgende",
     "Play" : "Afspelen",
     "Pause" : "Pauze",
