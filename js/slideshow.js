@@ -36,6 +36,7 @@
 		// We need 6 hexas for comparison reasons
 		darkBackgroundColour: '#000000',
 		lightBackgroundColour: '#ffffff',
+		currentRotation: 0,
 
 		/**
 		 * Initialises the slideshow
@@ -162,6 +163,8 @@
 					}
 
 					this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
+					this.currentRotation = 0;
+					this.zoomablePreview.setRotation(0);
 
 					this._setUrl(image.path);
 					this.controls.show(currentImageId);
@@ -178,6 +181,11 @@
 					this.controls.updateControls(this.images, this.errorLoadingImage);
 				}
 			}.bind(this));
+		},
+
+		rotate: function(direction) {
+			this.currentRotation = (this.currentRotation + direction + 4) % 4;
+			this.zoomablePreview.setRotation(this.currentRotation);
 		},
 
 		/**

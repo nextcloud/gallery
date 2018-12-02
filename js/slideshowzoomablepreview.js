@@ -223,13 +223,30 @@
 				this.mimeType === 'image/svg+xml') {
 				// The image is larger than the window, or we are fullScreen,
 				// or this is an SVG. Set minimum zoom and call zoomToFit.
-				this.zoomable.setMinZoom(this.zoomable.getZoomToFitValue());
-				this.zoomable.zoomToFit();
+				var width = this.zoomable.width;
+				var height = this.zoomable.height;
+				// Image is rotated left or right
+				if (this.rotation % 2 == 1) {
+					width = this.zoomable.height;
+					height = this.zoomable.width;
+				}
+				var zoomValue = Math.min (
+					this.zoomable.fitZoom (width, this.zoomable.container.clientWidth),
+					this.zoomable.fitZoom (height, this.zoomable.container.clientHeight));
+				this.zoomable.setMinZoom(zoomValue);
+				this.zoomable.moveTo(null, null, zoomValue);
 			} else {
 				// Zoom to the image size.
 				this.zoomable.setMinZoom(0);
 				this.zoomable.setZoom(0, true);
 			}
+		},
+
+		rotation: 0,
+		setRotation: function(rotation) {
+			this.rotation = rotation;
+			this.container.find('.bigshotContainer').find('img').css('transform', 'rotate('+(this.rotation*90)+'deg)');
+			this._resetZoom();
 		},
 
 		/**

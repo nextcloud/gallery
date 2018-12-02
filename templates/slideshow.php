@@ -8,6 +8,10 @@
 	<div class="notification"></div>
 	<div class="slideshow-menu">
 		<input type="button"
+			   class="menuItem svg rotateRight icon-history icon-shadow icon-white icon-32 hidden" style="transform: scaleX(-1);"/>
+		<input type="button"
+			   class="menuItem svg rotateLeft icon-history icon-shadow icon-white icon-32 hidden"/>
+		<input type="button"
 			   class="menuItem svg downloadImage icon-download icon-shadow icon-white icon-32 hidden"/>
 		<input type="button"
 			   class="menuItem svg changeBackground icon-toggle-background icon-shadow icon-white icon-32 hidden"/>

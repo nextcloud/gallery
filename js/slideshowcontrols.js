@@ -151,6 +151,8 @@
 			if (!isPublic && canShare) {
 				this.showButton('.shareImage');
 			}
+			this.showButton('.rotateLeft');
+			this.showButton('.rotateRight');
 		},
 
 		/**
@@ -161,6 +163,8 @@
 			this.hideButton('.downloadImage');
 			this.hideButton('.deleteImage');
 			this.hideButton('.shareImage');
+			this.hideButton('.rotateLeft');
+			this.hideButton('.rotateRight');
 		},
 
 		/**
@@ -214,6 +218,8 @@
 		 * @private
 		 */
 		_specialButtonSetup: function (makeCallBack) {
+			this.container.find('.rotateLeft').click(makeCallBack(this._rotateLeft));
+			this.container.find('.rotateRight').click(makeCallBack(this._rotateRight));
 			this.container.find('.downloadImage').click(makeCallBack(this._getImageDownload));
 			this.container.find('.deleteImage').click(makeCallBack(this._deleteImage));
 			this.container.find('.shareImage').click(makeCallBack(this.share));
@@ -259,13 +265,11 @@
 		 */
 		_keyCodeSetup: function (makeCallBack) {
 			$(document).keyup(function (evt) {
-				if (evt.target.tagName.toLowerCase() === 'input') {
-					return;
-				}
-
 				var escKey = 27;
 				var leftKey = 37;
 				var rightKey = 39;
+				var lKey = 76;
+				var rKey = 82;
 				var spaceKey = 32;
 				var fKey = 70;
 				var zoomOutKeys = [48, 96, 79, 40]; // zeros, o or down key
@@ -276,6 +280,10 @@
 					makeCallBack(this._previous)(evt);
 				} else if (evt.keyCode === rightKey) {
 					makeCallBack(this._next)(evt);
+				} else if (evt.keyCode === rKey) {
+					makeCallBack(this._rotateRight)(evt);
+				} else if (evt.keyCode === lKey) {
+					makeCallBack(this._rotateLeft)(evt);
 				} else if (evt.keyCode === spaceKey) {
 					makeCallBack(this._playPauseToggle)(evt);
 				} else if (evt.keyCode === fKey) {
@@ -476,6 +484,14 @@
 		_setName: function (imageName) {
 			var nameElement = this.container.find('.title');
 			nameElement.text(imageName);
+		},
+
+		_rotateLeft: function () {
+			this.slideshow.rotate(-1);
+		},
+
+		_rotateRight: function () {
+			this.slideshow.rotate(1);
 		},
 
 		/**
