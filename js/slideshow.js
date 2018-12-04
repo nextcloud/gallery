@@ -26,6 +26,7 @@
 		zoomablePreviewContainer: null,
 		controls: null,
 		imageCache: {},
+		imageModificationsCache: {},
 		/** {Image} */
 		currentImage: null,
 		errorLoadingImage: false,
@@ -136,6 +137,7 @@
 		 * @returns {*}
 		 */
 		show: function (index) {
+			this.currentImageIndex = index;
 			this.hideErrorNotification();
 			this.active = true;
 			this.container.show();
@@ -144,7 +146,9 @@
 			this._hideImage();
 			this.container.find('.icon-loading-dark').show();
 			var currentImageId = index;
-			return this.loadImage(this.images[index]).then(function (img) {
+			return this.loadImage(this.images[index]).then(function (results) {
+				var img = results[0];
+				var params = results[1];
 				this.container.css('background-position', '-10000px 0');
 
 				// check if we moved along while we were loading
@@ -164,7 +168,12 @@
 
 					this.zoomablePreview.startBigshot(img, this.currentImage, image.mimeType);
 					this.currentRotation = 0;
-					this.zoomablePreview.setRotation(0);
+					for (var i=0;i<params.length;i++) {
+						if (params[i].operation === 'rotate') {
+							this.currentRotation = params[i].value;
+						}
+					}
+					this.zoomablePreview.setRotation(this.currentRotation);
 
 					this._setUrl(image.path);
 					this.controls.show(currentImageId);
@@ -186,6 +195,14 @@
 		rotate: function(direction) {
 			this.currentRotation = (this.currentRotation + direction + 4) % 4;
 			this.zoomablePreview.setRotation(this.currentRotation);
+			$.ajax({
+				type: 'POST',
+				url: OC.generateUrl('apps/gallery/preview/modifications/' + this.images[this.currentImageIndex].fileId),
+				data: JSON.stringify([{operation: 'rotate', value: this.currentRotation}]),
+				success: function () {
+					this.imageModificationsCache[this.images[this.currentImageIndex].url] = null;
+				}.bind(this)
+			});
 		},
 
 		/**
@@ -220,7 +237,17 @@
 					image.src = url;
 				}
 			}
-			return this.imageCache[url];
+			if (!this.imageModificationsCache[url]) {
+				this.imageModificationsCache[url] = new $.Deferred();
+				$.ajax({
+					type: 'GET',
+					url: OC.generateUrl('apps/gallery/preview/modifications/' + preview.fileId),
+					success: function (response) {
+						this.imageModificationsCache[url].resolve(response);
+					}.bind(this)
+				});
+			}
+			return Promise.all([this.imageCache[url], this.imageModificationsCache[url]]);
 		},
 
 		/**

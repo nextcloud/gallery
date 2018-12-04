@@ -34,7 +34,7 @@
 		files app and adds a gallery view to public links.
 		Compatible with Firefox, Chrome and Internet Explorer 11
 	</description>
-	<version>18.3.0</version>
+	<version>18.3.1</version>
 	<licence>agpl</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
 	<namespace>Gallery</namespace>

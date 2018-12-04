@@ -39,6 +39,7 @@ use OCA\Gallery\Controller\FilesApiController;
 use OCA\Gallery\Controller\PreviewController;
 use OCA\Gallery\Controller\PreviewPublicController;
 use OCA\Gallery\Controller\PreviewApiController;
+use OCA\Gallery\Db\FilePropertiesMapper;
 use OCA\Gallery\Environment\Environment;
 use OCA\Gallery\Service\SearchFolderService;
 use OCA\Gallery\Service\ConfigService;
@@ -46,6 +47,7 @@ use OCA\Gallery\Service\SearchMediaService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
+use OCA\Gallery\Service\FilePropertiesService;
 use OCA\Gallery\Middleware\SharingCheckMiddleware;
 use OCA\Gallery\Middleware\EnvCheckMiddleware;
 use OCA\Gallery\Utility\EventSource;
@@ -74,6 +76,23 @@ class Application extends App {
 		/**
 		 * Controllers
 		 */
+		$container->registerService(
+			'FilePropertiesService', function (IContainer $c) {
+			return new FilePropertiesService(
+				$c->query('AppName'),
+				$c->query('Environment'),
+				$c->query('Logger'),
+				$c->query('FilePropertiesMapper')
+			);
+		}
+		);
+		$container->registerService(
+			'FilePropertiesMapper', function (IContainer $c) {
+			return new FilePropertiesMapper(
+				$c->query('ServerContainer')->getDatabaseConnection()
+			);
+		}
+		);
 		$container->registerService(
 			'PageController', function (IContainer $c) {
 			return new PageController(
@@ -169,6 +188,7 @@ class Application extends App {
 				$c->query('ThumbnailService'),
 				$c->query('PreviewService'),
 				$c->query('DownloadService'),
+				$c->query('FilePropertiesService'),
 				$c->query('EventSource'),
 				$c->query('Logger')
 			);

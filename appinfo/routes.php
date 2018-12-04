@@ -96,6 +96,16 @@ return [
 			'url'  => '/preview/{fileId}',
 			'verb' => 'GET'
 		],
+		[
+			'name' => 'preview#get_modifications',
+			'url'  => '/preview/modifications/{fileId}',
+			'verb' => 'GET'
+		],
+		[
+			'name' => 'preview#set_modifications',
+			'url'  => '/preview/modifications/{fileId}',
+			'verb' => 'POST'
+		],
 		/**
 		 * Public services
 		 */

@@ -27,6 +27,7 @@ use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
+use OCA\Gallery\Service\FilePropertiesService;
 use OCA\Gallery\Utility\EventSource;
 
 /**
@@ -62,6 +63,7 @@ class PreviewController extends Controller {
 		ThumbnailService $thumbnailService,
 		PreviewService $previewService,
 		DownloadService $downloadService,
+		FilePropertiesService $filePropertiesService,
 		EventSource $eventSource,
 		ILogger $logger
 	) {
@@ -72,6 +74,7 @@ class PreviewController extends Controller {
 		$this->thumbnailService = $thumbnailService;
 		$this->previewService = $previewService;
 		$this->downloadService = $downloadService;
+		$this->filePropertiesService = $filePropertiesService;
 		$this->eventSource = $eventSource;
 		$this->logger = $logger;
 	}
@@ -150,6 +153,15 @@ class PreviewController extends Controller {
 		$response->setLastModified($lastModified);
 		$response->cacheFor(3600*24);
 		return $response;
+	}
+
+	public function setModifications($fileId) {
+		$requestBody = file_get_contents('php://input');
+		$this->filePropertiesService->setModifications($fileId, $requestBody);
+	}
+
+	public function getModifications($fileId) {
+		return new DataResponse(json_decode($this->filePropertiesService->getModifications($fileId)), 200);
 	}
 
 }
