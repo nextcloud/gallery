@@ -123,7 +123,7 @@ class PreviewApiController extends ApiController {
 	 */
 	public function getPreview($fileId, $width, $height, $nativesvg = false) {
 		/** @type File $file */
-		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
+		list($file, $preview, $status) = $this->getData($fileId, null, $width, $height);
 
 		if (!$preview) {
 			return new JSONResponse(

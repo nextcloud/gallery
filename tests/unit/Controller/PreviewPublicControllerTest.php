@@ -32,6 +32,7 @@ class PreviewPublicControllerTest extends PreviewControllerTest {
 			$this->thumbnailService,
 			$this->previewService,
 			$this->downloadService,
+			$this->filePropertiesService,
 			$this->eventSource,
 			$this->logger
 		);

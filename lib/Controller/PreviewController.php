@@ -130,13 +130,12 @@ class PreviewController extends Controller {
 	 */
 	public function getPreview($fileId, $width, $height) {
 		/** @type File $file */
-		list($file, $status) = $this->getFile($fileId);
-		if ($this->request->getHeader('If-None-Match') === $file->getEtag()) {
-			return new DataResponse([], Http::STATUS_NOT_MODIFIED);
-		}
-		list($file, $preview, $status) = $this->getData($fileId, $width, $height);
+		list($file, $preview, $status) = $this->getData($fileId, $this->request->getHeader('If-None-Match'), $width, $height);
 
 		if (!$preview) {
+			if ($status === Http::STATUS_NOT_MODIFIED) {
+				return new DataResponse([], Http::STATUS_NOT_MODIFIED);
+			}
 			return new JSONResponse(
 				[
 					'message' => "I'm truly sorry, but we were unable to generate a preview for this file",

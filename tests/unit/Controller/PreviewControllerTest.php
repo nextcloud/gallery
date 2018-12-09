@@ -29,6 +29,7 @@ use OCA\Gallery\Service\ConfigService;
 use OCA\Gallery\Service\ThumbnailService;
 use OCA\Gallery\Service\PreviewService;
 use OCA\Gallery\Service\DownloadService;
+use OCA\Gallery\Service\FilePropertiesService;
 use OCA\Gallery\Utility\EventSource;
 use OCA\Gallery\Service\NotFoundServiceException;
 use OCA\Gallery\Service\InternalServerErrorServiceException;
@@ -58,6 +59,8 @@ class PreviewControllerTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 	protected $previewService;
 	/** @var DownloadService */
 	protected $downloadService;
+	/** @var FilePropertiesService */
+	protected $filePropertiesService;
 	/** @var EventSource */
 	protected $eventSource;
 	/** @var ILogger */
@@ -92,6 +95,9 @@ class PreviewControllerTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 		$this->downloadService = $this->getMockBuilder('\OCA\Gallery\Service\DownloadService')
 									  ->disableOriginalConstructor()
 									  ->getMock();
+		$this->filePropertiesService = $this->getMockBuilder('\OCA\Gallery\Service\FilePropertiesService')
+									  ->disableOriginalConstructor()
+									  ->getMock();
 		$this->eventSource = $this->getMockBuilder('\OCA\Gallery\Utility\EventSource')
 								  ->disableOriginalConstructor()
 								  ->getMock();
@@ -106,6 +112,7 @@ class PreviewControllerTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 			$this->thumbnailService,
 			$this->previewService,
 			$this->downloadService,
+			$this->filePropertiesService,
 			$this->eventSource,
 			$this->logger
 		);

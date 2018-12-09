@@ -83,7 +83,7 @@ trait Preview {
 		/** @type File $file */
 		list($file, $preview, $status) =
 			$this->getData(
-				$fileId, $width, $height, $aspect, $animatedPreview, $base64Encode
+				$fileId, null, $width, $height, $aspect, $animatedPreview, $base64Encode
 			);
 		if ($preview === null) {
 			$preview = $this->prepareEmptyThumbnail($file, $status);
@@ -107,17 +107,19 @@ trait Preview {
 	 * @throws NotFoundServiceException
 	 */
 	private function getData(
-		$fileId, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
+		$fileId, $etag, $width, $height, $keepAspect = true, $animatedPreview = true, $base64Encode = false
 	) {
 		/** @type File $file */
 		list($file, $status) = $this->getFile($fileId);
 		try {
-			if (!is_null($file)) {
+			if (is_null($file)) {
+				$data = $this->getErrorData($status);
+			} else if (!is_null($etag) && $etag === $file->getEtag()) {
+				$data = [null,  Http::STATUS_NOT_MODIFIED];
+			} else {
 				$data = $this->getPreviewData(
 					$file, $animatedPreview, $width, $height, $keepAspect, $base64Encode
 				);
-			} else {
-				$data = $this->getErrorData($status);
 			}
 		} catch (ServiceException $exception) {
 			$data = $this->getExceptionData($exception);
