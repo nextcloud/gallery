@@ -11,7 +11,7 @@
     "Copyright" : "Авторско право",
     "Could not load the copyright notice: " : "Неможе да се зареди известието за авторско право:",
     "Copyright notice" : "Известие за авторско право ",
-    "Link to copyright document" : "Препратка към документа с авторските права",
+    "Link to copyright document" : "Връзка към документа с авторските права",
     "This application may not work properly on your browser." : "Приложението може да не работи правилно във вашият браузър.",
     "For an improved experience, please install one of the following alternatives" : "За подобрен опит, моля инсталирайте една от следните алтернативи",
     "Your browser is not supported!" : "Вашият браузър не се поддържа!",
@@ -115,7 +115,7 @@
     "For more information, please ask the person who has sent you this link." : "За допълнителна информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
     "Picture view" : "Албум със снимки",
     "New" : "Създай",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Споделете с хора на други сървъри чрез cloud ID username@example.com/cloud",
+    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Споделете с хора на други сървъри чрез Federated Cloud ID username@example.com/cloud",
     "An error occured. Please try again" : "Възникна грешка. Опитайте отново.",
     "Sending ..." : "Изпращане ..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
