@@ -7,7 +7,7 @@ OC.L10N.register(
     "Could not move \"{file}\", target exists" : "Файлът \"{file}\" не може да бъде преместен, дестинацията съществува",
     "Could not move \"{file}\"" : "Файл \"{file}\" не можа да бъде преместен",
     "No compatible server found at {remote}" : "Не беше намерен съвместим сървър на {remote}",
-    "Invalid server url" : "Невалиден сървърен URL",
+    "Invalid server url" : "URL адреса на сървъра не е валиден",
     "Could not load the description" : "Описанието не може да бъде заредено",
     "Could not load the description: " : "Описанието не може да бъде заредено:",
     "Copyright" : "Авторско право",
