@@ -26,7 +26,7 @@ OC.L10N.register(
     "Hide Album" : "隐藏专辑",
     "Could not hide album" : "不能隐藏专辑",
     "Error loading slideshow template" : "加载幻灯片模板错误",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>错误!</strong> 此文件无法生成预览。<br>请进入下一张幻灯片，我们将从幻灯片中删除此图像",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>错误！</strong> 此文件无法生成预览。<br>请进入下一张幻灯片，我们将从幻灯片中删除此图像",
     "Next" : "下一个",
     "Play" : "播放",
     "Pause" : "暂停",
@@ -65,7 +65,7 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "此列表可能会被删减 - 请细化您的搜索字词以查看更多结果。",
     "No users or groups found for {search}" : "没有找到 {search} 用户或组",
     "No users found for {search}" : "没有找到 {search} 用户",
-    "An error occurred (\"{message}\"). Please try again" : "发生错误 (\"{message}\")。请重试。",
+    "An error occurred (\"{message}\"). Please try again" : "发生错误（\"{message}\"）。请重试。",
     "An error occurred. Please try again" : "发生错误。请重试。",
     "Adding user..." : "添加用户中...",
     "group" : "群组",
@@ -117,7 +117,7 @@ OC.L10N.register(
     "Picture view" : "查看图片",
     "New" : "新建",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "使用 username@example.com/cloud 格式，其他服务器上联盟云的用户共享",
-    "An error occured. Please try again" : "发生了一个错误请重新尝试",
+    "An error occured. Please try again" : "发生错误。请重试",
     "Sending ..." : "正在发送..."
 },
 "nplurals=1; plural=0;");
