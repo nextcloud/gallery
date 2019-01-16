@@ -54,7 +54,7 @@ templates['galleryalbum'] = template({"compiler":[7,">= 4.0.0"],"main":function(
     + alias4(((helper = (helper = helpers.targetWidth || (depth0 != null ? depth0.targetWidth : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"targetWidth","hash":{},"data":data}) : helper)))
     + "px; height: "
     + alias4(((helper = (helper = helpers.targetHeight || (depth0 != null ? depth0.targetHeight : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"targetHeight","hash":{},"data":data}) : helper)))
-    + "px;\" 'data-width=\""
+    + "px;\" data-width=\""
     + alias4(((helper = (helper = helpers.targetWidth || (depth0 != null ? depth0.targetWidth : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"targetWidth","hash":{},"data":data}) : helper)))
     + "\" data-height=\""
     + alias4(((helper = (helper = helpers.targetHeight || (depth0 != null ? depth0.targetHeight : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"targetHeight","hash":{},"data":data}) : helper)))
