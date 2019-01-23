@@ -89,6 +89,7 @@ OC.L10N.register(
     "shared by %s" : "共享者 %s",
     "Direct link" : "直接链接",
     "Add to your Nextcloud" : "添加到您的Nextcloud",
+    "Media gallery for Nextcloud" : "Nextcloud的媒体相册",
     "This share is password-protected" : "这是一个密码保护的共享",
     "The password is wrong. Try again." : "用户名或密码错误！请重试",
     "Sort by name" : "按名称排序",
