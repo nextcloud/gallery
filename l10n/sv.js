@@ -20,7 +20,7 @@ OC.L10N.register(
     "please install one of the following alternatives" : "Var god installera ett av följande alternativ",
     "Album cannot be shown" : "Album kan ej visas",
     "No media files found" : "Inga media-filer kunde hittas",
-    "Upload pictures in the Files app to display them here" : "Ladda upp bilder i appen Filer för att visa dom här",
+    "Upload pictures in the Files app to display them here" : "Ladda upp bilder i appen Filer för att visa dem här",
     "Upload new files via drag and drop or by using the [+] button above" : "Ladda upp nya filer genom att dra och släppa eller genom att använda [+] knappen ovan",
     "Configuration error" : "Konfigurationsfel",
     "Hide Album" : "Dölj Album",
