@@ -89,6 +89,7 @@ OC.L10N.register(
     "shared by %s" : "udostępnione przez %s",
     "Direct link" : "Link bezpośredni",
     "Add to your Nextcloud" : "Dodaj do swojego Nextcloud",
+    "Media gallery for Nextcloud" : "Galeria mediów dla Nextcloud",
     "This share is password-protected" : "Udostępniony folder chroniony jest hasłem",
     "The password is wrong. Try again." : "To hasło jest niewłaściwe. Spróbuj ponownie.",
     "Sort by name" : "Sortuj według nazwy",
