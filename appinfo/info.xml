@@ -34,7 +34,7 @@
 		files app and adds a gallery view to public links.
 		Compatible with Firefox, Chrome and Internet Explorer 11
 	</description>
-	<version>18.2.0</version>
+	<version>18.3.0</version>
 	<licence>agpl</licence>
 	<author>Olivier Paroz, Robin Appelman</author>
 	<namespace>Gallery</namespace>
@@ -46,7 +46,7 @@
 	<repository>https://github.com/nextcloud/gallery.git</repository>
 
 	<dependencies>
-		<nextcloud min-version="15" max-version="15"/>
+		<nextcloud min-version="16" max-version="16"/>
 	</dependencies>
 
 	<documentation>
@@ -55,4 +55,3 @@
 		<developer>https://github.com/nextcloud/gallery/wiki</developer>
 	</documentation>
 </info>
-
