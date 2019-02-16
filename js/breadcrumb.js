@@ -13,25 +13,6 @@
 (function ($, OC, t, Gallery) {
 	"use strict";
 
-	var TEMPLATE =
-		'{{#each crumbs}}' +
-		'	<div class="crumb {{cssClass}}" data-dir="{{dir}}">' +
-		'	{{#if link}}' +
-		'		<a href="{{link}}">' +
-		'		{{#if img}}' +
-		'			{{#with img}}' +
-		'			<img title="{{title}}" src="{{imageSrc}}">' +
-		'			{{/with}}' +
-		'		{{else}}' +
-		'			{{name}}' +
-		'		{{/if}}' +
-		'		</a>' +
-		'	{{else}}' +
-		'		<span>{{name}}</span>' +
-		'	{{/if}}' +
-		'	</div>' +
-		'{{/each}}';
-
 	/**
 	 * Breadcrumbs that represent the path to the current album
 	 *
@@ -65,9 +46,6 @@
 			this.albumPath = albumPath;
 			this.availableWidth = availableWidth;
 			this.breadcrumbs = [];
-			if (!this._template) {
-				this._template = Handlebars.compile(TEMPLATE);
-			}
 			this._build();
 			this._resize(this.availableWidth);
 		},
@@ -133,7 +111,7 @@
 		 */
 		_build: function () {
 			var i, crumbs, name, path, currentAlbum;
-			var albumName = $('#app').data('albumname');
+			var albumName = $('#app-content').data('albumname');
 			if (!albumName) {
 				albumName = t('gallery', 'Gallery');
 			}
@@ -225,7 +203,7 @@
 		_render: function () {
 			this.breadcrumbsElement.children().remove();
 
-			var breadcrumbs = this._template({
+			var breadcrumbs = Gallery.Templates.breadcrumb({
 				crumbs: this.breadcrumbs
 			});
 

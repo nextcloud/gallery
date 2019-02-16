@@ -21,7 +21,6 @@ OC.L10N.register(
     "No media files found" : "No s\\'han trobat fitxers multimèdia",
     "Upload new files via drag and drop or by using the [+] button above" : "Afegeix fitxers arrossegant-los o utilizant el botó de [+]",
     "Configuration error" : "Error de configuració",
-    "New" : "Nou",
     "Hide Album" : "Amaga album",
     "Could not hide album" : "No es pot amagar l'album",
     "Error loading slideshow template" : "Error en carregar la plantilla de presentació amb diapositives",
@@ -91,7 +90,7 @@ OC.L10N.register(
     "the link has expired" : "l'enllaç ha expirat",
     "sharing is disabled" : "s'ha desactivat la compartició",
     "Picture view" : "Mostra fotos",
-    "Gallery view" : "Vista de galeria",
+    "New" : "Nou",
     "An error occured. Please try again" : "S'ha produït un error. Si us plau, intenta-ho de nou",
     "Sending ..." : "Enviant..."
 },

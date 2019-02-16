@@ -162,10 +162,8 @@ window.Gallery = window.Gallery || {};
 
 			/* jshint camelcase: false */
 			var params = {
-				c: etag,
 				width: longEdge,
 				height: longEdge,
-				requesttoken: oc_requesttoken
 			};
 			return this.buildGalleryUrl('preview', '/' + fileId, params);
 		},

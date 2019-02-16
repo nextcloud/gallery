@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Nahrajte obrázky v aplikácii Súbory pre zobrazenie na tomto mieste",
     "Upload new files via drag and drop or by using the [+] button above" : "Nahrajte nové súbory pretiahnutím alebo pomocou tlačidla [+] vyššie",
     "Configuration error" : "Chyba nastavenia",
-    "New" : "Nový",
     "Hide Album" : "Skryť album",
     "Could not hide album" : "Nemožno skryť album",
     "Error loading slideshow template" : "Chyba pri načítaní šablóny prezentácie",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Tento zoznam môže byť skrátený - upresnite hľadaný výraz, aby ste získali viac výsledkov.",
     "No users or groups found for {search}" : "Výrazu {search} nezodpovedá žiadny používateľ ani skupina",
     "No users found for {search}" : "Výrazu {search} nezodpovedá žiadny používateľ",
+    "An error occurred (\"{message}\"). Please try again" : "Nastala chyba (\"{message}\"). Prosím, skúste znova",
     "An error occurred. Please try again" : "Nastala chyba. Skúste to prosím znovu",
     "Adding user..." : "Pridávam používateľa...",
     "group" : "skupina",
@@ -86,8 +86,10 @@ OC.L10N.register(
     "Sending…" : "Odosielam...",
     "Email sent" : "Email odoslaný",
     "Warning" : "Upozornenie",
+    "shared by %s" : "sprístupnil %s",
     "Direct link" : "Priamy odkaz",
     "Add to your Nextcloud" : "Pridať do svojho Nextcloudu",
+    "Media gallery for Nextcloud" : "Galéria médií pre Nextcloud",
     "This share is password-protected" : "Táto položka je chránená heslom",
     "The password is wrong. Try again." : "Heslo je chybné. Skúste to znova.",
     "Sort by name" : "Podľa mena",
@@ -114,9 +116,9 @@ OC.L10N.register(
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Picture view" : "Zobrazenie obrázka",
-    "Gallery view" : "Pohľad galérie",
+    "New" : "Nový",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sprístupniť ľuďom na iných serveroch pomocou identifikátora Federated Cloud ID username@example.com/cloud",
     "An error occured. Please try again" : "Nastala chyba. Skúste to znovu",
     "Sending ..." : "Odosielam ..."
 },
-"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
+"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

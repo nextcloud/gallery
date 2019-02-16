@@ -108,60 +108,29 @@ function Thumbnail (fileId, square) {
 			var batch = {};
 			var i, idsLength = ids.length;
 			if (idsLength) {
-				for (i = 0; i < idsLength; i++) {
-					var thumb = new Thumbnail(ids[i], square);
+				_.each(ids, function(id) {
+					var thumb = new Thumbnail(id, square);
 					thumb.image = new Image();
-					map[ids[i]] = batch[ids[i]] = thumb;
+					map[id] = batch[id] = thumb;
 
-				}
-				var params = {
-					ids: ids.join(';'),
-					scale: window.devicePixelRatio,
-					square: (square) ? 1 : 0
-				};
-				var url = Gallery.utility.buildGalleryUrl('thumbnails', '', params);
-
-				var eventSource = new Gallery.EventSource(url);
-				eventSource.listen('preview',
-					function (/**{path, status, mimetype, preview}*/ preview) {
-						var id = preview.fileid;
-						var thumb = batch[id];
-						thumb.status = preview.status;
-						if (thumb.status === 404) {
-							thumb.valid = false;
-							thumb.loadingDeferred.resolve(null);
-						} else {
-							thumb.image.onload = function () {
-								// Fix for SVG files which can come in all sizes
-								if (square) {
-									thumb.image.width = 200;
-									thumb.image.height = 200;
-								}
-								thumb.ratio = thumb.image.width / thumb.image.height;
-								thumb.image.originalWidth = 200 * thumb.ratio;
-								thumb.loadingDeferred.resolve(thumb.image);
-							};
-							thumb.image.onerror = function () {
-								thumb.valid = false;
-								var icon = OC.MimeType.getIconUrl(preview.mimetype);
-								setTimeout(function () {
-									thumb.image.src = icon;
-								}, 0);
-							};
-
-							if (thumb.status === 200) {
-								var imageData = preview.preview;
-								if (preview.mimetype === 'image/svg+xml') {
-									imageData = Thumbnails._purifySvg(imageData);
-								}
-								thumb.image.src =
-									'data:' + preview.mimetype + ';base64,' + imageData;
-							} else {
-								thumb.valid = false;
-								thumb.image.src = OC.MimeType.getIconUrl(preview.mimetype);
-							}
+					thumb.image.onload = function () {
+						if (square) {
+							thumb.image.width = 200;
+							thumb.image.height = 200;
 						}
-					});
+						thumb.ratio = thumb.image.width / thumb.image.height;
+						thumb.image.originalWidth = 200 * thumb.ratio;
+						thumb.valid = true;
+						thumb.status = 200;
+						thumb.loadingDeferred.resolve(thumb.image);
+						console.log(thumb);
+					};
+					thumb.image.onerror = function (data) {
+						thumb.loadingDeferred.resolve(null);
+					};
+					var width = square ? 200 : 400;
+					thumb.image.src = Gallery.utility.buildGalleryUrl('preview', '/' + id, {width: width, height: 200});
+				});
 			}
 
 			return batch;

@@ -21,7 +21,6 @@
     "Upload pictures in the Files app to display them here" : "Cargar imágenes in la aplicación de Archivos para que se desplieguen aquí",
     "Upload new files via drag and drop or by using the [+] button above" : "Carga archivos nuevos ya sea arrastrándolos o bien usando el botón [+] de arriba",
     "Configuration error" : "Error de configuración",
-    "New" : "Nuevo",
     "Hide Album" : "Ocultar álbum",
     "Could not hide album" : "No fue posible ocultar el álbum",
     "Error loading slideshow template" : "Se presentó un error al cargar la plantilla de presentación",
@@ -109,7 +108,7 @@
     "sharing is disabled" : "compartir está deshabilitado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, por favor consulta a la persona que te envió esta liga.",
     "Picture view" : "Vista de imágenes",
-    "Gallery view" : "Vista de galería",
+    "New" : "Nuevo",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Comparte con personas en otros servidores usando tu ID username@example.com/cloud",
     "An error occured. Please try again" : "Se presentó un error. Por favor intenta de nuevo",
     "Sending ..." : "Enviando..."

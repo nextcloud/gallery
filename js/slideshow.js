@@ -20,6 +20,20 @@
 	var SlideShow = function () {
 	};
 
+	var LivePreview = function() {
+	};
+
+	LivePreview.prototype = {
+		reset: function() {},
+                startLivePreview: function() {
+                	var defer = $.Deferred();
+                        defer.reject();
+                        return defer.promise();
+                }
+	};
+
+	SlideShow.LivePreview = LivePreview;
+
 	SlideShow.prototype = {
 		slideshowTemplate: null,
 		container: null,
@@ -36,15 +50,6 @@
 		// We need 6 hexas for comparison reasons
 		darkBackgroundColour: '#000000',
 		lightBackgroundColour: '#ffffff',
-		// Fake livepreview to keep slideshow functional outside gallery
-		LivePreview: {
-			reset: function() {},
-			startLivePreview: function() {
-				var defer = $.Deferred();
-				defer.reject();
-				return defer.promise();
-			}
-		}
 
 		/**
 		 * Initialises the slideshow
@@ -71,7 +76,8 @@
 						this.container,
 						this.zoomablePreview,
 						interval,
-						features);
+						features,
+						this.restoreContent.bind(this));
 				this.controls.init();
 
 				this._initControlsAutoFader();
@@ -104,6 +110,39 @@
 		},
 
 		/**
+		 * Hides the content behind the slideshow
+		 *
+		 * This should be called when the slideshow is shown.
+		 *
+		 * It hides the content (and, in the public share page, also the footer)
+		 * to ensure that the body size is just the slideshow size and thus no
+		 * scroll bars are shown.
+		 */
+		hideContent: function () {
+			this._savedScrollPosition = $(window).scrollTop();
+
+			$('#content').hide();
+			$('footer').hide();
+		},
+
+		/**
+		 * Shows again the content behind the slideshow
+		 *
+		 * This should be called when the slideshow is hidden.
+		 *
+		 * It restores the content hidden when calling "hideContent", including
+		 * the vertical scrolling position.
+		 */
+		restoreContent: function () {
+			$('#content').show();
+			$('footer').show();
+
+			if (this._savedScrollPosition) {
+				$(window).scrollTop(this._savedScrollPosition);
+			}
+		},
+
+		/**
 		 * Launches the slideshow
 		 *
 		 * @param {number} index
@@ -116,6 +155,7 @@
 			// Clean any live photo container
 			this.livePhotoPreview.reset();
 			this.container.show();
+			this.hideContent();
 			this.container.css('background-position', 'center');
 			this._hideImage();
 			this.container.find('.icon-loading-dark').show();
@@ -131,9 +171,9 @@
 					this.controls.showActionButtons(transparent, Gallery.token, image.permissions);
 					this.errorLoadingImage = false;
 					this.currentImage = img;
-					img.setAttribute('alt', image.name);
 					$.when(this.livePhotoPreview.startLivePreview(image, this.currentImage)).fail(function() {
 						this.zoomablePreviewContainer.css('display', 'block');
+						img.setAttribute('alt', image.name);
 						$(img).css('position', 'absolute');
 						$(img).css('background-color', image.backgroundColour);
 						if (transparent && this.backgroundToggle === true) {

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "gallery",
     {
-    "New" : "﻿ಹೊಸ",
     "Next" : "ಮುಂದೆ",
     "Close" : "ಮುಚ್ಚು",
     "Download" : "ಪ್ರತಿಯನ್ನು ಸ್ಥಳೀಯವಾಗಿ ಉಳಿಸಿಕೊಳ್ಳಿ",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Email sent" : "ಇ-ಅಂಚೆ ಕಳುಹಿಸಲಾಗಿದೆ",
     "Warning" : "﻿ಎಚ್ಚರಿಕೆ",
     "Cancel upload" : "﻿ವರ್ಗಾವಣೆ ರದ್ದು ಮಾಡಿ",
+    "New" : "﻿ಹೊಸ",
     "Sending ..." : "﻿ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ ..."
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=(n > 1);");

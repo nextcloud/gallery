@@ -12,7 +12,6 @@
 /* global OC, $, _, Gallery, SlideShow */
 $(document).ready(function () {
 	"use strict";
-	$('#controls').prependTo($('#app'));
 	Gallery.utility = new Gallery.Utility();
 	Gallery.view = new Gallery.View();
 	Gallery.token = Gallery.utility.getPublicToken();
@@ -58,7 +57,7 @@ $(document).ready(function () {
 		});
 
 		// This block loads new rows
-		$('html, #content-wrapper').scroll(function () {
+		$(window).scroll(function () {
 			Gallery.view.loadVisibleRows(Gallery.albumMap[Gallery.currentAlbum]);
 		});
 

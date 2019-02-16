@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "Norėdami matyti paveikslus čia, įkelkite juos į Failų programėlę",
     "Upload new files via drag and drop or by using the [+] button above" : "Įkelkite naujus failus, vilkdami juos čia arba pasinaudoję viršuje esančiu mygtuku [+]",
     "Configuration error" : "Konfigūracijos klaida",
-    "New" : "Naujas",
     "Hide Album" : "Slėpti albumą",
     "Could not hide album" : "Nepavyko paslėpti albumo",
     "Error loading slideshow template" : "Klaida, įkeliant skaidrių rodymo šabloną",
@@ -90,6 +89,7 @@ OC.L10N.register(
     "shared by %s" : "pasidalino %s",
     "Direct link" : "Tiesioginė nuoroda",
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
+    "Media gallery for Nextcloud" : "Medijos galerija, skirta Nextcloud",
     "This share is password-protected" : "Turinys apsaugotas slaptažodžiu",
     "The password is wrong. Try again." : "Slaptažodis neteisingas. Bandykite dar kartą.",
     "Sort by name" : "Rikiuoti pagal pavadinimą",
@@ -116,9 +116,9 @@ OC.L10N.register(
     "sharing is disabled" : "dalinimasis yra išjungtas",
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
     "Picture view" : "Paveikslo rodymas",
-    "Gallery view" : "Galerijos rodinys",
+    "New" : "Naujas",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Pasidalinti su naudotojais kituose serveriuose naudojantis Centralizuoto Serverio ID, pavyzdžiui: username@example.com/cloud",
     "An error occured. Please try again" : "Klaida, prašau bandyti dar kartą.",
     "Sending ..." : "Siunčiama..."
 },
-"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");
+"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

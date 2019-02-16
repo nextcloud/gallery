@@ -1,7 +1,6 @@
 { "translations": {
     "Could not move \"{file}\", target exists" : "Không thể di chuyển \"{file}\", trùng đích đến",
     "Could not move \"{file}\"" : "Không thể di chuyển \"{file}\"",
-    "New" : "Tạo mới",
     "Error loading slideshow template" : "Lỗi khi tải mẫu Slidesh",
     "Next" : "Kế tiếp",
     "Play" : "Play",
@@ -50,6 +49,7 @@
     "the item was removed" : "đối tượng đã bị xóa",
     "sharing is disabled" : "việc chia sẻ bị cấm",
     "Picture view" : "Xem h",
+    "New" : "Tạo mới",
     "Sending ..." : "Đang gởi ..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

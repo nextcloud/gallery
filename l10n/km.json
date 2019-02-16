@@ -1,5 +1,4 @@
 { "translations": {
-    "New" : "ថ្មី",
     "Error loading slideshow template" : "មាន​កំហុស​ផ្ទុក​ពុម្ព​បញ្ចាំងស្លាយ",
     "Next" : "បន្ទាប់",
     "Play" : "លេង",
@@ -41,6 +40,7 @@
     "the item was removed" : "របស់​ត្រូវ​បាន​ដក​ចេញ",
     "sharing is disabled" : "មិន​អនុញ្ញាត​ការ​ចែករំលែក",
     "Picture view" : "ទិដ្ឋភាពរូបភាព",
+    "New" : "ថ្មី",
     "Sending ..." : "កំពុង​ផ្ញើ ..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

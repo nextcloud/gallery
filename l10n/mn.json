@@ -17,7 +17,6 @@
     "Album cannot be shown" : "Зургийн цомогийг харуулж чадахгүй",
     "No media files found" : "Медиа файлууд олдсонгүй",
     "Configuration error" : "Тохиргооны алдаа",
-    "New" : "Шинэ",
     "Hide Album" : "Зургийн цомогийг нуух",
     "Next" : "Даараах",
     "Play" : "Тоглуулах",
@@ -43,6 +42,6 @@
     "change" : "Өөрчлөх",
     "delete" : "устгах",
     "Password protected" : "Нууц үгээх хамгаалагдсан",
-    "Gallery view" : "Зургийн цомог харах"
+    "New" : "Шинэ"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

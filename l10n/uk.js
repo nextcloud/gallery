@@ -5,7 +5,6 @@ OC.L10N.register(
     "Your browser is not supported!" : "Ваш браузер не підтримується!",
     "No media files found" : "Відсутні мультимедійні файли.",
     "Configuration error" : "Помилка конфігурації",
-    "New" : "Створити",
     "Error loading slideshow template" : "Помилка завантаження шаблона слайд-шоу",
     "Next" : "Наступний",
     "Play" : "Грати",
@@ -72,7 +71,8 @@ OC.L10N.register(
     "the link has expired" : "посилання застаріло",
     "sharing is disabled" : "обмін заборонений",
     "Picture view" : "Перегляд Зображення",
+    "New" : "Створити",
     "An error occured. Please try again" : "Виникла помилка. Будь ласка, спробуйте ще раз",
     "Sending ..." : "Надсилання..."
 },
-"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
+"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

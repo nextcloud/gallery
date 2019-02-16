@@ -23,7 +23,6 @@ OC.L10N.register(
     "Upload pictures in the Files app to display them here" : "파일 앱에 사진을 업로드하면 여기에서 볼 수 있습니다",
     "Upload new files via drag and drop or by using the [+] button above" : "드래그 앤 드롭 또는 위의 [+] 단추를 사용하여 새 파일을 업로드 하십시오.",
     "Configuration error" : "설정 오류",
-    "New" : "새로 만들기",
     "Hide Album" : "앨범 숨기기",
     "Could not hide album" : "앨범을 숨길 수 없습니다.",
     "Error loading slideshow template" : "슬라이드 쇼 템플릿을 불러오는 중 오류 발생",
@@ -111,7 +110,7 @@ OC.L10N.register(
     "sharing is disabled" : "공유가 비활성화됨",
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Picture view" : "사진 보기",
-    "Gallery view" : "갤러리 보기",
+    "New" : "새로 만들기",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "연합 클라우드 ID를 통하여 다른 서버의 사람과 공유 username@example.com/cloud",
     "An error occured. Please try again" : "오류가 발생했습니다. 다시 시도하십시오.",
     "Sending ..." : "전송 중..."

@@ -19,7 +19,6 @@ OC.L10N.register(
     "Album cannot be shown" : "Зургийн цомогийг харуулж чадахгүй",
     "No media files found" : "Медиа файлууд олдсонгүй",
     "Configuration error" : "Тохиргооны алдаа",
-    "New" : "Шинэ",
     "Hide Album" : "Зургийн цомогийг нуух",
     "Next" : "Даараах",
     "Play" : "Тоглуулах",
@@ -45,6 +44,6 @@ OC.L10N.register(
     "change" : "Өөрчлөх",
     "delete" : "устгах",
     "Password protected" : "Нууц үгээх хамгаалагдсан",
-    "Gallery view" : "Зургийн цомог харах"
+    "New" : "Шинэ"
 },
 "nplurals=2; plural=(n != 1);");

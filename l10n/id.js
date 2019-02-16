@@ -22,7 +22,6 @@ OC.L10N.register(
     "No media files found" : "Tidak ditemukan berkas media",
     "Upload new files via drag and drop or by using the [+] button above" : "Unggah berkas baru melalui drag dan drop atau menggunakan tombol [+] diatas",
     "Configuration error" : "Kesalahan konfigurasi",
-    "New" : "Baru",
     "Hide Album" : "Sembunyikan Album",
     "Could not hide album" : "Tidka dapat menyembunyikan album",
     "Error loading slideshow template" : "Kesalahan saat memuat templat slideshow",
@@ -106,7 +105,7 @@ OC.L10N.register(
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
     "Picture view" : "Tampilan gambar",
-    "Gallery view" : "Tampilan galeri",
+    "New" : "Baru",
     "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Bagikan dengan orang diserver lainnya dengan menggunakan Federated Cloud ID orang tersebut username@example.com/cloud",
     "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
     "Sending ..." : "Mengirim ..."

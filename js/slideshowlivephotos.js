@@ -7,13 +7,13 @@
  *
  * @author François Sylvestre <francoissylv@gmail.com>
  *
- * @copyright François Sylvestre 2018
+ * @copyright François Sylvestre 2017
  */
-/* global SlideShow, LivePhotosKit*/
+/* global SlideShow, bigshot*/
 (function ($, SlideShow, LivePhotosKit, OC) {
 	"use strict";
 	/**
-	 * Creates a  preview
+	 * Creates a zoomable preview
 	 *
 	 * @param {*} container
 	 * @constructor
@@ -24,12 +24,13 @@
 		this.livePhotoContainer = container.find('.livePhotoContainer');
 		this.livePhotoContainer.css({display: 'block', width: '1px', height: '1px'});
 		this.player = LivePhotosKit.createPlayer();
-
+		
 		this.livePhotoContainer.append(this.player);
-
+		// this.livePhotoContainer.css('display', 'none');
+		
 		this._detectFullscreen();
 		this._setupControls();
-
+		
 		// Reset image position and size on orientation change
 		var self = this;
 		$(window).bind('orientationchange resize', function () {
@@ -45,10 +46,6 @@
 		mimeType: null,
 		smallImageDimension: 200 / window.devicePixelRatio,
 		smallImageScale: 2,
-		matchingExt: {
-			".jpg": ".mov",
-			".JPG": ".MOV"
-		}
 
 		/**
 		 * Launches the Bigshot zoomable preview
@@ -59,9 +56,10 @@
 		 */
 		startLivePreview: function (image, currentImage) {
 			var defer = $.Deferred();
-			var imageExt = image.name.substr(-5);
-			if (image.mimeType === "image/jpeg" && this.matchingExt[imageExt] !== undefined) {
-				var videoExt = this.matchingExt[imageExt];
+			if (image.mimeType === "image/jpeg" && image.name.toLowerCase().indexOf('.jpg') === image.name.length - 4) {
+				var videoExt = '.mov';
+				if (image.name.substr(-4) === '.JPG')
+					videoExt = '.MOV';
 				var videoUrl = OC.generateUrl(['../remote.php/webdav/', encodeURI(image.path.substr(0, image.path.length - 4) + videoExt)].join(''));
 				$.ajax({
 					url: videoUrl,
@@ -70,9 +68,9 @@
 						this.livePhotoContainer.css({display: 'block'});
 						this.currentImage = currentImage;
 						this.mimeType = image.mimeType;
-
+						
 						this._resetView();
-
+						
 						this.player.photoSrc = this.currentImage.src;
 						this.player.videoSrc = videoUrl;
 						defer.resolve();
@@ -147,7 +145,7 @@
 		_resetView: function () {
 			var imgWidth = this.currentImage.naturalWidth / window.devicePixelRatio;
 			var imgHeight = this.currentImage.naturalHeight / window.devicePixelRatio;
-
+			
 			var origSizeW = imgWidth;
 			var origSizeH = imgHeight;
 			var ratioVt=(origSizeW/origSizeH);
@@ -173,7 +171,7 @@
 			}
 			wantedLeft = Math.round((screenSizeW - wantedWidth) / 2);
 			wantedTop = Math.round((screenSizeH - wantedHeight) / 2);
-
+			
 			$(this.livePhotoContainer.children().get(0)).css({'width': wantedWidth + 'px', 'height': wantedHeight + 'px', 'top': wantedTop + 'px', 'left': wantedLeft + 'px'});
 		},
 
