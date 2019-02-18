@@ -9,7 +9,7 @@
  *
  * @copyright François Sylvestre 2017
  */
-/* global SlideShow, bigshot*/
+/* global SlideShow, LivePhotosKit*/
 (function ($, SlideShow, LivePhotosKit, OC) {
 	"use strict";
 	/**
@@ -58,9 +58,13 @@
 			var defer = $.Deferred();
 			if (image.mimeType === "image/jpeg" && image.name.toLowerCase().indexOf('.jpg') === image.name.length - 4) {
 				var videoExt = '.mov';
-				if (image.name.substr(-4) === '.JPG')
+				if (image.name.substr(-4) === '.JPG') {
 					videoExt = '.MOV';
-				var videoUrl = OC.generateUrl(['../remote.php/webdav/', encodeURI(image.path.substr(0, image.path.length - 4) + videoExt)].join(''));
+				}
+				var videoUrl = OC.generateUrl(['../remote.php/webdav/', 
+							       encodeURI(image.path.substr(0, image.path.length - 4) + videoExt)
+							      ].join('')
+							     );
 				$.ajax({
 					url: videoUrl,
 					type: 'HEAD',
@@ -172,7 +176,13 @@
 			wantedLeft = Math.round((screenSizeW - wantedWidth) / 2);
 			wantedTop = Math.round((screenSizeH - wantedHeight) / 2);
 			
-			$(this.livePhotoContainer.children().get(0)).css({'width': wantedWidth + 'px', 'height': wantedHeight + 'px', 'top': wantedTop + 'px', 'left': wantedLeft + 'px'});
+			$(this.livePhotoContainer.children().get(0))
+				.css({
+					'width': wantedWidth + 'px', 
+					'height': wantedHeight + 'px', 
+					'top': wantedTop + 'px', 
+					'left': wantedLeft + 'px'
+				});
 		},
 
 		/**
