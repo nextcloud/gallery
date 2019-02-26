@@ -15,6 +15,9 @@ script(
 		'upload',
 		'file-upload',
 		'jquery.fileupload',
+		'operationprogressbar',
+		'templates',
+		'semaphore'
 	]
 );
 style(
