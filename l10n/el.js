@@ -24,6 +24,7 @@ OC.L10N.register(
     "Hide Album" : "Απόκρυψη άλμπουμ",
     "Could not hide album" : "Αδυναμία απόκρυψης άλμπουμ",
     "Error loading slideshow template" : "Σφάλμα φόρτωσης προτύπου προβολής διαφανειών",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Σφάλμα!</strong> Αδυναμία δημιουργίας προβολής αυτού του αρχείου.<br>Παρακαλούμε μεταφερθείτε στην επόμενη διαφάνεια καθώς αφαιρούμε αυτήν την εικόνα απο την προβολή διαφανειών",
     "Next" : "Επόμενο",
     "Play" : "Αναπαραγωγή",
     "Pause" : "Παύση",
