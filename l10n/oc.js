@@ -95,8 +95,6 @@ OC.L10N.register(
     "sharing is disabled" : "lo partiment es desactivat",
     "For more information, please ask the person who has sent you this link." : "Per mai d'informacions, contactatz la persona que vos a mandat aqueste ligam.",
     "Picture view" : "Visualizacion de l'imatge",
-    "New" : "Novèl",
-    "An error occured. Please try again" : "Una error s'es produsida. Mercé d'ensajar tornamai",
-    "Sending ..." : "Mandadís…"
+    "New" : "Novèl"
 },
 "nplurals=2; plural=(n > 1);");

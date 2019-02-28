@@ -53,8 +53,6 @@ OC.L10N.register(
     "Warning" : "Warnung",
     "The password is wrong. Try again." : "Den Passwuert ass incorrect. Probeier ed nach eng keier.",
     "Cancel upload" : "Eroplueden ofbriechen",
-    "New" : "Nei",
-    "An error occured. Please try again" : "Et ass e Fehler opgetrueden. W.e.g. probéier nach emol",
-    "Sending ..." : "Gëtt geschéckt..."
+    "New" : "Nei"
 },
 "nplurals=2; plural=(n != 1);");

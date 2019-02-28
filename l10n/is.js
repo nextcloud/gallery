@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "slökkt er á skráadeilingu",
     "For more information, please ask the person who has sent you this link." : "Til að vita meira skaltu hafa samband við þann sem sendi þér þennan tengil.",
     "Picture view" : "Myndasýn",
-    "New" : "Nýtt",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Deila með fólki í öðrum skýjum með auðkenninu notandanafn@dæmi.is/nextcloud",
-    "An error occured. Please try again" : "Villa kom upp. Endilega reyndu aftur",
-    "Sending ..." : "Sendi ..."
+    "New" : "Nýtt"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

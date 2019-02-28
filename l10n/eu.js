@@ -116,9 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "elkarbanatzea ez dago gaituta",
     "For more information, please ask the person who has sent you this link." : "Informazio gehiagorako, eskatu lotura hau bidali dizun pertsonari",
     "Picture view" : "Irudi bistaratzea",
-    "New" : "Berria",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Beste zerbitzarietako jendearekin partekatu ahal duzu Hodei Federatuaren ID erabiliz, adibidez erabiltzaile@adibide.com/cloud",
-    "An error occured. Please try again" : "Errore bat gertatu da. Saiatu berriro.",
-    "Sending ..." : "Bidaltzen ..."
+    "New" : "Berria"
 },
 "nplurals=2; plural=(n != 1);");

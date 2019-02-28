@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "дељење је искључено",
     "For more information, please ask the person who has sent you this link." : "За више информација, питајте особу која вам је послала везу.",
     "Picture view" : "Приказ слике",
-    "New" : "Ново",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Поделите са људима у другим облацима користећи ID њиховог здруженог облика, као username@example.com/cloud",
-    "An error occured. Please try again" : "Дошло је до грешке. Покушајте поново",
-    "Sending ..." : "Шаљем ..."
+    "New" : "Ново"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

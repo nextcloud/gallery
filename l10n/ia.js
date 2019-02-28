@@ -98,9 +98,6 @@ OC.L10N.register(
     "sharing is disabled" : "le compartimento de files es disactivate",
     "For more information, please ask the person who has sent you this link." : "Pro obtener plus informationes, per favor demanda le persona qui ha te inviate iste ligamine.",
     "Picture view" : "Visualisation de Imagine",
-    "New" : "Nove",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Compartir con personas qui usa altere servitores per medio de lor ID de Nube Federate:\nusername@example.com/cloud",
-    "An error occured. Please try again" : "Un error occurreva. Per favor, tenta de novo.",
-    "Sending ..." : "Inviante ..."
+    "New" : "Nove"
 },
 "nplurals=2; plural=(n != 1);");

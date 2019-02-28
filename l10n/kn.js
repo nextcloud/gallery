@@ -44,7 +44,6 @@ OC.L10N.register(
     "Email sent" : "ಇ-ಅಂಚೆ ಕಳುಹಿಸಲಾಗಿದೆ",
     "Warning" : "﻿ಎಚ್ಚರಿಕೆ",
     "Cancel upload" : "﻿ವರ್ಗಾವಣೆ ರದ್ದು ಮಾಡಿ",
-    "New" : "﻿ಹೊಸ",
-    "Sending ..." : "﻿ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ ..."
+    "New" : "﻿ಹೊಸ"
 },
 "nplurals=2; plural=(n > 1);");

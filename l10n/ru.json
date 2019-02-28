@@ -115,9 +115,6 @@
     "sharing is disabled" : "закрыт общий доступ",
     "For more information, please ask the person who has sent you this link." : "Для получения дополнительной информации, свяжитесь с тем, кто отправил вам эту ссылку.",
     "Picture view" : "Просмотр изображения",
-    "New" : "Новый",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Предоставить доступ людям на других серверах, используя их идентификатор в федерации облачных хранилищ username@example.com/cloud",
-    "An error occured. Please try again" : "Произошла ошибка. Попробуйте ещё раз",
-    "Sending ..." : "Отправляется…"
+    "New" : "Новый"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

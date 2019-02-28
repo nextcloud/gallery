@@ -105,9 +105,6 @@ OC.L10N.register(
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
     "Picture view" : "Tampilan gambar",
-    "New" : "Baru",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Bagikan dengan orang diserver lainnya dengan menggunakan Federated Cloud ID orang tersebut username@example.com/cloud",
-    "An error occured. Please try again" : "Terjadi masalah. Mohon coba kembali",
-    "Sending ..." : "Mengirim ..."
+    "New" : "Baru"
 },
 "nplurals=1; plural=0;");

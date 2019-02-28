@@ -36,7 +36,6 @@ OC.L10N.register(
     "Email sent" : "Anfonwyd yr e-bost",
     "Warning" : "Rhybudd",
     "Cancel upload" : "Diddymu llwytho i fyny",
-    "New" : "Newydd",
-    "Sending ..." : "Yn anfon ..."
+    "New" : "Newydd"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

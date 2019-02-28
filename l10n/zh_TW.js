@@ -116,9 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "分享功能已停用",
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
     "Picture view" : "檢視圖片",
-    "New" : "新增",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "要與在其他伺服器上的人分享，請使用此格式 username@example.com/cloud",
-    "An error occured. Please try again" : "發生錯誤，請重試",
-    "Sending ..." : "正在傳送…"
+    "New" : "新增"
 },
 "nplurals=1; plural=0;");

@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "la condivisione è disabilitata",
     "For more information, please ask the person who has sent you this link." : "Per ulteriori informazioni, chiedi alla persona che ti ha inviato il collegamento.",
     "Picture view" : "Vista immagini",
-    "New" : "Nuovo",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Condividi con persone su altri server utilizzando il loro ID di cloud federata nomeutente@esempio.com/nextcloud",
-    "An error occured. Please try again" : "Si è verificato un errore. Prova ancora",
-    "Sending ..." : "Invio in corso..."
+    "New" : "Nuovo"
 },
 "nplurals=2; plural=(n != 1);");
