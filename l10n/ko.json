@@ -108,9 +108,6 @@
     "sharing is disabled" : "공유가 비활성화됨",
     "For more information, please ask the person who has sent you this link." : "더 많은 정보를 얻으려면 링크를 보낸 사람에게 물어 보십시오.",
     "Picture view" : "사진 보기",
-    "New" : "새로 만들기",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "연합 클라우드 ID를 통하여 다른 서버의 사람과 공유 username@example.com/cloud",
-    "An error occured. Please try again" : "오류가 발생했습니다. 다시 시도하십시오.",
-    "Sending ..." : "전송 중..."
+    "New" : "새로 만들기"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

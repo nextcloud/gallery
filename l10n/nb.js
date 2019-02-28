@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "deling er avskrudd",
     "For more information, please ask the person who has sent you this link." : "For mer informasjon, spør personen som har sendt deg lenken.",
     "Picture view" : "Bildevisning",
-    "New" : "Ny",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Del med folk på andre tjenere ved å bruke deres sammenknyttede sky-ID brukernavn@eksempel.no/sky",
-    "An error occured. Please try again" : "Det oppstod en feil. Prøv igjen",
-    "Sending ..." : "Sender…"
+    "New" : "Ny"
 },
 "nplurals=2; plural=(n != 1);");

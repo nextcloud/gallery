@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "paylaşım devre dışı",
     "For more information, please ask the person who has sent you this link." : "Ayrıntılı bilgi almak için bu bağlantıyı aldığınız kişi ile görüşün.",
     "Picture view" : "Görsel görünümü",
-    "New" : "Yeni",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Birleşmiş Bulut Kodu ile diğer sunucular üzerindeki kişiler ile paylaş username@example.com/cloud",
-    "An error occured. Please try again" : "Bir sorun çıktı. Lütfen yeniden deneyin",
-    "Sending ..." : "Gönderiliyor..."
+    "New" : "Yeni"
 },
 "nplurals=2; plural=(n > 1);");

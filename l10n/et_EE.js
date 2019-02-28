@@ -115,9 +115,6 @@ OC.L10N.register(
     "sharing is disabled" : "jagamine on peatatud",
     "For more information, please ask the person who has sent you this link." : "Küsi lisainfot inimeselt, kes sulle selle lingi saatis.",
     "Picture view" : "Pildi vaade",
-    "New" : "Uus",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Jaga inimestega teistes serverites kasutades nende liitpilve ID-d username@example.com/cloud",
-    "An error occured. Please try again" : "Tekkis tõrge. Palun proovi uuesti",
-    "Sending ..." : "Saatmine ..."
+    "New" : "Uus"
 },
 "nplurals=2; plural=(n != 1);");

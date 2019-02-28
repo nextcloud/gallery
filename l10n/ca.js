@@ -90,8 +90,6 @@ OC.L10N.register(
     "the link has expired" : "l'enllaç ha expirat",
     "sharing is disabled" : "s'ha desactivat la compartició",
     "Picture view" : "Mostra fotos",
-    "New" : "Nou",
-    "An error occured. Please try again" : "S'ha produït un error. Si us plau, intenta-ho de nou",
-    "Sending ..." : "Enviant..."
+    "New" : "Nou"
 },
 "nplurals=2; plural=(n != 1);");

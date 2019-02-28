@@ -99,8 +99,6 @@ OC.L10N.register(
     "sharing is disabled" : "a partilha está desativada",
     "For more information, please ask the person who has sent you this link." : "Para mais informação, por favor, pergunte à pessoa que lhe enviou esta hiperligação.",
     "Picture view" : "Visualização da Imagem",
-    "New" : "Novo",
-    "An error occured. Please try again" : "Ocorreu um erro. Por favor, tente de novo",
-    "Sending ..." : "A enviar..."
+    "New" : "Novo"
 },
 "nplurals=2; plural=(n != 1);");

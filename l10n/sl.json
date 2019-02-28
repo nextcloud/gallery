@@ -102,8 +102,6 @@
     "sharing is disabled" : "souporaba je onemogočena.",
     "For more information, please ask the person who has sent you this link." : "Za več podrobnosti stopite v stik z osebo, ki je to povezavo poslala .",
     "Picture view" : "Slikovni pogled",
-    "New" : "Novo",
-    "An error occured. Please try again" : "Prišlo je do napake. Poskusite znova.",
-    "Sending ..." : "Poteka pošiljanje ..."
+    "New" : "Novo"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

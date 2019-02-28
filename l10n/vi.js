@@ -51,7 +51,6 @@ OC.L10N.register(
     "the item was removed" : "đối tượng đã bị xóa",
     "sharing is disabled" : "việc chia sẻ bị cấm",
     "Picture view" : "Xem h",
-    "New" : "Tạo mới",
-    "Sending ..." : "Đang gởi ..."
+    "New" : "Tạo mới"
 },
 "nplurals=1; plural=0;");

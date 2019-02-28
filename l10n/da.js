@@ -116,9 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "deling er deaktiveret",
     "For more information, please ask the person who has sent you this link." : "For mere information, så spørg personen som sendte dig dette link.",
     "Picture view" : "Billedvisning",
-    "New" : "Ny",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Del med andre på en anden server ved hjælp af deres Federated Cloud id username@example.com/cloud ",
-    "An error occured. Please try again" : "Der skete en fejl. Prøv venligst igen",
-    "Sending ..." : "Sender ..."
+    "New" : "Ny"
 },
 "nplurals=2; plural=(n != 1);");
