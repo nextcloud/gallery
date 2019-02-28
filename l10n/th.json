@@ -109,9 +109,6 @@
     "sharing is disabled" : "การแชร์ถูกปิดใช้งาน",
     "For more information, please ask the person who has sent you this link." : "สำหรับข้อมูลเพิ่มเติม โปรดถามคนที่ส่งลิงค์นี้ให้คุณ",
     "Picture view" : "ดูรูปภาพ",
-    "New" : "ใหม่",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "แชร์กับผู้ใช้บนเซิร์ฟเวอร์อื่น ๆ โดยใช้ Federated Cloud ID ของพวกเขา username@example.com/cloud",
-    "An error occured. Please try again" : "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
-    "Sending ..." : "กำลังส่ง..."
+    "New" : "ใหม่"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

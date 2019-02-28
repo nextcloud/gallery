@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "delen is uitgeschakeld",
     "For more information, please ask the person who has sent you this link." : "Voor meer informatie, neem contact op met de persoon die je deze link heeft gestuurd.",
     "Picture view" : "Afbeeldingsweergave",
-    "New" : "Nieuw",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Delen met mensen bij andere servers via hun gefedereerde Cloud ID gebruikersnaam@voorbeeld.nl/nextcloud",
-    "An error occured. Please try again" : "Er trad een fout op. Probeer het opnieuw",
-    "Sending ..." : "Versturen ..."
+    "New" : "Nieuw"
 },
 "nplurals=2; plural=(n != 1);");

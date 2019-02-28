@@ -116,9 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "共享已禁用",
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系发给您该链接的人。",
     "Picture view" : "查看图片",
-    "New" : "新建",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "使用 username@example.com/cloud 格式，其他服务器上联盟云的用户共享",
-    "An error occured. Please try again" : "发生错误。请重试",
-    "Sending ..." : "正在发送..."
+    "New" : "新建"
 },
 "nplurals=1; plural=0;");

@@ -101,8 +101,6 @@ OC.L10N.register(
     "sharing is disabled" : "koplietošana nav ieslēgta",
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
     "Picture view" : "Attēla skats",
-    "New" : "Jauna",
-    "An error occured. Please try again" : "Notika kļūda. Mēģini vēlreiz.",
-    "Sending ..." : "Sūta..."
+    "New" : "Jauna"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

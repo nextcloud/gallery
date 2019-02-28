@@ -116,9 +116,6 @@ OC.L10N.register(
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
     "Picture view" : "Zobrazenie obrázka",
-    "New" : "Nový",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Sprístupniť ľuďom na iných serveroch pomocou identifikátora Federated Cloud ID username@example.com/cloud",
-    "An error occured. Please try again" : "Nastala chyba. Skúste to znovu",
-    "Sending ..." : "Odosielam ..."
+    "New" : "Nový"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

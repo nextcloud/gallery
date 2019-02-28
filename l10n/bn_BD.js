@@ -47,7 +47,6 @@ OC.L10N.register(
     "the item was removed" : "আইটেমটি অপসারণ করা হয়েছিল",
     "sharing is disabled" : "ভাগাভাগি অকার্যকর",
     "Picture view" : "চিত্র দর্শন",
-    "New" : "নতুন",
-    "Sending ..." : "পাঠানো হচ্ছে......"
+    "New" : "নতুন"
 },
 "nplurals=2; plural=(n != 1);");

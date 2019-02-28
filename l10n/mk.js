@@ -55,8 +55,6 @@ OC.L10N.register(
     "Reasons might be:" : "Причината може да биде:",
     "the item was removed" : "предметот беше одстранет",
     "sharing is disabled" : "споделувањето не е дозволено",
-    "New" : "Ново",
-    "An error occured. Please try again" : "Се случи грешка. Обиди се повторно",
-    "Sending ..." : "Праќање..."
+    "New" : "Ново"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

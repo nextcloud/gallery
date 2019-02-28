@@ -66,8 +66,6 @@ OC.L10N.register(
     "the link has expired" : "لینک منقضی شده است",
     "sharing is disabled" : "قابلیت اشتراک گذاری غیرفعال است",
     "Picture view" : "نمایش تصویر",
-    "New" : "جدید",
-    "An error occured. Please try again" : "یک خطا رخ داده است، لطفا مجددا تلاش کنید",
-    "Sending ..." : "درحال ارسال ..."
+    "New" : "جدید"
 },
 "nplurals=2; plural=(n > 1);");

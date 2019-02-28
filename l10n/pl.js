@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "udostępnianie jest wyłączone",
     "For more information, please ask the person who has sent you this link." : "Po więcej informacji, proszę skontaktuj się z osobą, która wysłała Tobie ten link.",
     "Picture view" : "Widok zdjęć",
-    "New" : "Nowy",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Współdziel z użytkownikami z innych serwerów, używając ich ID Stowarzyszonej Chmury username@example.com/cloud",
-    "An error occured. Please try again" : "Wystąpił błąd. Proszę spróbować ponownie.",
-    "Sending ..." : "Wysyłanie…"
+    "New" : "Nowy"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

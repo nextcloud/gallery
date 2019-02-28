@@ -60,7 +60,6 @@ OC.L10N.register(
     "the item was removed" : "تم حذف العنصر المطلوب",
     "sharing is disabled" : "المشاركة غير مفعلة",
     "Picture view" : "عرض الصورة",
-    "New" : "جديد",
-    "Sending ..." : "جاري الارسال ..."
+    "New" : "جديد"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

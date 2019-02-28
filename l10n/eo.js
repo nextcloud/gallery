@@ -117,9 +117,6 @@ OC.L10N.register(
     "sharing is disabled" : "kunhavigo ne plu eblas",
     "For more information, please ask the person who has sent you this link." : "Por plia informo, bonvolu peti al la persono, kiu sendis al vi ĉi tiun ligilon.",
     "Picture view" : "Bilda vido",
-    "New" : "Nova",
-    "Share with people on other servers using their Federated Cloud ID username@example.com/cloud" : "Kunhavigu kun personoj en aliaj serviloj per ilia federnuba identigilo persono@example.com/nubo",
-    "An error occured. Please try again" : "Eraro okazis, Bonvolu provi ree.",
-    "Sending ..." : "Sendante..."
+    "New" : "Nova"
 },
 "nplurals=2; plural=(n != 1);");
