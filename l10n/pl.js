@@ -71,7 +71,7 @@ OC.L10N.register(
     "group" : "grupa",
     "remote" : "zdalny",
     "Resharing is not allowed" : "Współdzielenie nie jest możliwe",
-    "Error while retrieving shares" : "Błąd podczas zaczytywania obiektów współdzielonych",
+    "Error while retrieving shares" : "Błąd podczas pobierania udostępnienia",
     "Unshare" : "Zatrzymaj współdzielenie",
     "notify by email" : "powiadom przez emaila",
     "can share" : "może współdzielić",
