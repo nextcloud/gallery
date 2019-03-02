@@ -72,7 +72,7 @@ OC.L10N.register(
     "remote" : "ekstern",
     "Resharing is not allowed" : "Videre deling er ikke tillatt",
     "Error while retrieving shares" : "Feil under henting av delinger",
-    "Unshare" : "Fjern deling",
+    "Unshare" : "Opphev deling",
     "notify by email" : "Varsle på e-mail",
     "can share" : "kan dele",
     "can edit" : "kan redigere",
