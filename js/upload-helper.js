@@ -217,5 +217,5 @@ var Files = {
 	}
 };
 
-OCA.Files = Files;
-OCA.Files.App.fileList = FileList;
+OCA.Files = Object.assign({}, OCA.Files, Files);
+OCA.Files.App.fileList = Object.assign({}, OCA.Files.App.fileList, FileList);
