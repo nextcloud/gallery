@@ -7,7 +7,9 @@
  */
 script(
 	$_['appName'],
-	'merged'
+	[
+		'upload-helper',
+	]
 );
 script(
 	'files',
@@ -15,6 +17,15 @@ script(
 		'upload',
 		'file-upload',
 		'jquery.fileupload',
+		'operationprogressbar',
+		'templates',
+		'semaphore'
+	]
+);
+script(
+	$_['appName'],
+	[
+		'merged'
 	]
 );
 style(

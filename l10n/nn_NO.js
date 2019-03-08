@@ -52,7 +52,6 @@ OC.L10N.register(
     "Reasons might be:" : "Moglege grunnar:",
     "the item was removed" : "fila/mappa er fjerna",
     "sharing is disabled" : "deling er slått av",
-    "New" : "Ny",
-    "Sending ..." : "Sender …"
+    "New" : "Ny"
 },
 "nplurals=2; plural=(n != 1);");

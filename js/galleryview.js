@@ -311,9 +311,15 @@
 			if (!$uploadEl.exists()) {
 				return;
 			}
+
+			this._operationProgressBar = new OCA.Files.OperationProgressBar();
+			this._operationProgressBar.render();
+			$('#content').find('#uploadprogresswrapper').replaceWith(this._operationProgressBar.$el);
+
 			this._uploader = new OC.Uploader($uploadEl, {
 				fileList: FileList,
-				dropZone: $('#content')
+				dropZone: $('#content'),
+				progressBar: this._operationProgressBar
 			});
 			this._uploader.on('add', function (e, data) {
 				data.targetDir = '/' + Gallery.currentAlbum;

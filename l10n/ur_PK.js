@@ -35,7 +35,6 @@ OC.L10N.register(
     "Email sent" : "ارسال شدہ ای میل ",
     "Warning" : "انتباہ",
     "File list" : "فہرست فائل",
-    "Picture view" : "منظر تصویر",
-    "Sending ..." : "ارسال ہو رہا ھے"
+    "Picture view" : "منظر تصویر"
 },
 "nplurals=2; plural=(n != 1);");

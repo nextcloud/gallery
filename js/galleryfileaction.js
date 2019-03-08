@@ -46,6 +46,9 @@
 		 * @param {Array} mediaTypes
 		 */
 		register: function (mediaTypes) {
+			if (OCA.Viewer) {
+				return;
+			}
 			//console.log("enabledPreviewProviders: ", mediaTypes);
 			if (mediaTypes) {
 				// Remove SVG if the user is using an insecure browser (IE8-9)
