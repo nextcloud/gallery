@@ -29,7 +29,7 @@ OC.L10N.register(
     "Pause" : "Pausa",
     "Previous" : "Anterior",
     "Close" : "Tanca",
-    "Download" : "Descàrrega",
+    "Download" : "Baixa",
     "Delete" : "Esborra",
     "Share" : "Comparteix",
     "\"{name}\" is an invalid file name." : "\"{name}\" no es un fitxer vàlid.",
