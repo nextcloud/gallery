@@ -73,7 +73,7 @@ OC.L10N.register(
     "Resharing is not allowed" : "Współdzielenie nie jest możliwe",
     "Error while retrieving shares" : "Błąd podczas pobierania udostępnienia",
     "Unshare" : "Zatrzymaj współdzielenie",
-    "notify by email" : "powiadom przez emaila",
+    "notify by email" : "powiadomić e-mailem",
     "can share" : "może współdzielić",
     "can edit" : "może edytować",
     "access control" : "kontrola dostępu",
