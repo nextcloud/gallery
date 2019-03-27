@@ -41,7 +41,7 @@ OC.L10N.register(
     "\"{name}\" is an invalid file name." : "«{name}» — недопустимое имя файла.",
     "File name cannot be empty." : "Имя файла не может быть пустым.",
     "\"{name}\" is not an allowed filetype" : "«{name}» - недопустимый тип файла.",
-    "Upload" : "Передать на сервер",
+    "Upload" : "Загрузить",
     "Error" : "Ошибка",
     "Error while sharing" : "При открытии общего доступа произошла ошибка",
     "Error while unsharing" : "При закрытии доступа произошла ошибка",
