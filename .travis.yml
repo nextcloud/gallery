@@ -1,7 +1,6 @@
 sudo: false
 language: php
 php:
-  - 7.0
   - 7.1
   - 7.2
   - 7.3
@@ -89,10 +88,10 @@ before_script:
   - sh -c "pecl config-set preferred_state beta; echo yes | printf "\n" | pecl install imagick;"
 
   # Disable xdebug when we don't need coverage to speed up testing
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7.0' ]; then phpenv config-rm xdebug.ini; fi;"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' != 'mysql' ]; then phpenv config-rm xdebug.ini; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7.1' ]; then phpenv config-rm xdebug.ini; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' != 'mysql' ]; then phpenv config-rm xdebug.ini; fi;"
   # Always install the latest version of the xdebug PHP extension
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}/../${SERVER_FOLDER}/apps/$APP_NAME; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}/../${SERVER_FOLDER}/apps/$APP_NAME; fi"
 
   # Sets up the PHP composer cache
   - sh -c "if [ ! -d ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum` ]; then mkdir -p ${TRAVIS_BUILD_DIR}/travis/php-cache/`php-config --vernum`; fi;"
@@ -112,26 +111,26 @@ script:
   # Acceptance tests, using Firefox, without code coverage
   - php vendor/bin/codecept run acceptance --env firefox
   # Unit, integration and api tests, without code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7.0' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' != 'mysql' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '7.1' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' != 'mysql' ]; then php vendor/bin/codecept run unit,integration,api; fi;"
 
-  # PHP 7.0 ONLY: Unit, integration and api tests with code coverage
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
+  # PHP 7.1 ONLY: Unit, integration and api tests with code coverage
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
   # We can't use phpdbg only as it doesn't work with the webdriver and we can't use it for some tests only as we can't merge html reports
-  # - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then phpenv config-rm xdebug.ini; phpdbg -qrr vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
+  # - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then phpenv config-rm xdebug.ini; phpdbg -qrr vendor/bin/codecept run unit,integration,api --coverage --coverage-xml --coverage-html; fi;"
 
 after_success:
   # Send coverage report to Codecov
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then wget https://codecov.io/bash -O codecov.sh; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ] && [ '$TRAVIS_PULL_REQUEST' ]; then bash codecov.sh -B $TRAVIS_BRANCH -C $TRAVIS_COMMIT -P $TRAVIS_PULL_REQUEST -t 739120c2-700d-47c4-845c-c0d0c9c3707d -f tests/_output/coverage.xml; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then bash codecov.sh -B $TRAVIS_BRANCH -C $TRAVIS_COMMIT -t 739120c2-700d-47c4-845c-c0d0c9c3707d -f tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then wget https://codecov.io/bash -O codecov.sh; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ] && [ '$TRAVIS_PULL_REQUEST' ]; then bash codecov.sh -B $TRAVIS_BRANCH -C $TRAVIS_COMMIT -P $TRAVIS_PULL_REQUEST -t 739120c2-700d-47c4-845c-c0d0c9c3707d -f tests/_output/coverage.xml; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then bash codecov.sh -B $TRAVIS_BRANCH -C $TRAVIS_COMMIT -t 739120c2-700d-47c4-845c-c0d0c9c3707d -f tests/_output/coverage.xml; fi"
 
   # Generate API documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then php vendor/bin/phpdoc run; fi"
   # Generate Wiki documentation
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then git submodule update --init; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then git submodule update --init; fi"
   # Send documentation to Github Pages
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.1' ] && [ '$DB' = 'mysql' ]; then cd build/documentation; bash ./docpublisher.sh; fi"
 
 after_failure:
   - cat tests/_output/phpbuiltinserver.errors.txt
