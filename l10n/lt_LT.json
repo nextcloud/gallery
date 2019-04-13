@@ -18,7 +18,7 @@
     "please install one of the following alternatives" : "prašome įdiegti vieną iš šių alternatyvų",
     "Album cannot be shown" : "Albumas negali būti parodytas",
     "No media files found" : "Nerasta duomenų peržiūrai",
-    "Upload pictures in the Files app to display them here" : "Norėdami matyti paveikslus čia, įkelkite juos į Failų programėlę",
+    "Upload pictures in the Files app to display them here" : "Norėdami čia matyti paveikslėlius, įkelkite juos į Failų programėlę",
     "Upload new files via drag and drop or by using the [+] button above" : "Įkelkite naujus failus, vilkdami juos čia arba pasinaudoję viršuje esančiu mygtuku [+]",
     "Configuration error" : "Konfigūracijos klaida",
     "Hide Album" : "Slėpti albumą",
@@ -113,7 +113,7 @@
     "the link has expired" : "baigėsi nuorodos galiojimo laikas",
     "sharing is disabled" : "dalinimasis yra išjungtas",
     "For more information, please ask the person who has sent you this link." : "Dėl tikslesnės informacijos susisiekite su asmeniu atsiuntusiu nuorodą.",
-    "Picture view" : "Paveikslėlio rodymas",
+    "Picture view" : "Paveikslėlių rodinys",
     "New" : "Naujas"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }
