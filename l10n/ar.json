@@ -1,5 +1,6 @@
 { "translations": {
     "Gallery" : "معرض صور",
+    "Hide Album" : "إخفاء الألبوم",
     "Error loading slideshow template" : "خطأ في تحميل قالب عرض الشرائح.",
     "Next" : "التالي",
     "Play" : "تشغيل",
@@ -48,8 +49,10 @@
     "Password protected" : "محمي بكلمة السر",
     "Error unsetting expiration date" : "حصل خطأ عند عملية إزالة تاريخ إنتهاء الصلاحية",
     "Error setting expiration date" : "حصل خطأ عند عملية تعيين تاريخ إنتهاء الصلاحية",
+    "Sending…" : "جارٍ الإرسال…",
     "Email sent" : "تم ارسال البريد الالكتروني",
     "Warning" : "تحذير",
+    "Direct link" : "رابط مباشر",
     "This share is password-protected" : "هذه المشاركة محمية بكلمة مرور",
     "The password is wrong. Try again." : "كلمة المرور خاطئة. حاول مرة أخرى",
     "Cancel upload" : "إلغاء الرفع",
