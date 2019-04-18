@@ -2,6 +2,8 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "معرض صور",
+    "Copyright" : "حقوق التأليف",
+    "No media files found" : "لا توجد هناك أية وسائط",
     "Hide Album" : "إخفاء الألبوم",
     "Error loading slideshow template" : "خطأ في تحميل قالب عرض الشرائح.",
     "Next" : "التالي",
@@ -58,6 +60,7 @@ OC.L10N.register(
     "This share is password-protected" : "هذه المشاركة محمية بكلمة مرور",
     "The password is wrong. Try again." : "كلمة المرور خاطئة. حاول مرة أخرى",
     "Cancel upload" : "إلغاء الرفع",
+    "Album information" : "معلومات عن الألبوم",
     "File list" : "قائمة الملفات",
     "Reasons might be:" : "الأسباب الممكنة :",
     "the item was removed" : "تم حذف العنصر المطلوب",
