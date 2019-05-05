@@ -56,6 +56,7 @@ OC.L10N.register(
     "Sending…" : "جارٍ الإرسال…",
     "Email sent" : "تم ارسال البريد الالكتروني",
     "Warning" : "تحذير",
+    "shared by %s" : "تمت مشاركته مِن طرف %s",
     "Direct link" : "رابط مباشر",
     "This share is password-protected" : "هذه المشاركة محمية بكلمة مرور",
     "The password is wrong. Try again." : "كلمة المرور خاطئة. حاول مرة أخرى",
