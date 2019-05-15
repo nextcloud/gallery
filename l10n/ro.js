@@ -14,7 +14,7 @@ OC.L10N.register(
     "No media files found" : "Nu s-au găsit fișiere media",
     "Configuration error" : "Eroare de configurare",
     "Error loading slideshow template" : "eroare la incarcarea modelului ",
-    "Next" : "Următor",
+    "Next" : "Următorul",
     "Play" : "Redă",
     "Pause" : "Pauză",
     "Previous" : "Anterior",
