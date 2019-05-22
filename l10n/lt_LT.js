@@ -90,7 +90,7 @@ OC.L10N.register(
     "Direct link" : "Tiesioginė nuoroda",
     "Add to your Nextcloud" : "Pridėti į savo Nextcloud",
     "Media gallery for Nextcloud" : "Medijos galerija, skirta Nextcloud",
-    "This share is password-protected" : "Turinys apsaugotas slaptažodžiu",
+    "This share is password-protected" : "Šis viešinys yra apsaugotas slaptažodžiu",
     "The password is wrong. Try again." : "Slaptažodis neteisingas. Bandykite dar kartą.",
     "Sort by name" : "Rikiuoti pagal pavadinimą",
     "Sort by date" : "Rikiuoti pagal datą",
