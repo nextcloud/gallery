@@ -22,7 +22,7 @@
 
 		- Switch to Gallery from any folder in files and vice-versa
 
-		- Ignore folders containing a ".nomedia" file
+		- Ignore folders containing a ".nomedia" or ".noimage" file
 
 		- Browser rendering of SVG images (disabled by default)
 
@@ -55,4 +55,3 @@
 		<developer>https://github.com/nextcloud/gallery/wiki</developer>
 	</documentation>
 </info>
-
