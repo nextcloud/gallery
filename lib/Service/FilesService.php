@@ -148,6 +148,7 @@ abstract class FilesService extends Service {
 				foreach ($this->ignoreAlbumStrings as $ignoreAlbum) {
 					if ($node->nodeExists($ignoreAlbum)) {
 						$ignored = true;
+						break;
 					}
 				}
 				if (!$ignored) {
