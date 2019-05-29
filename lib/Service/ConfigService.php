@@ -159,7 +159,7 @@ class ConfigService extends FilesService {
 	public function getConfig($folderNode, $features) {
 		$this->features = $features;
 		list ($albumConfig, $ignored) =
-			$this->collectConfig($folderNode, $this->ignoreAlbum, $this->configName);
+			$this->collectConfig($folderNode, $this->ignoreAlbumStrings, $this->configName);
 		if ($ignored) {
 			throw new ForbiddenServiceException(
 				'The owner has placed a restriction or the storage location is unavailable'
@@ -238,7 +238,7 @@ class ConfigService extends FilesService {
 	 * reached the root folder
 	 *
 	 * @param Folder $folder the current folder
-	 * @param string $ignoreAlbum name of the file which blacklists folders
+	 * @param array $ignoreAlbumStrings names of the files which blacklist folders
 	 * @param string $configName name of the configuration file
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 * @param array $configSoFar the configuration collected so far
@@ -246,18 +246,20 @@ class ConfigService extends FilesService {
 	 * @return array <null|array,bool>
 	 */
 	private function collectConfig(
-		$folder, $ignoreAlbum, $configName, $level = 0, $configSoFar = []
+		$folder, $ignoreAlbumStrings, $configName, $level = 0, $configSoFar = []
 	) {
-		if ($folder->nodeExists($ignoreAlbum)) {
-			// Cancel as soon as we find out that the folder is private or external
-			return [null, true];
+		foreach ($ignoreAlbumStrings as $ignoreAlbum) {
+			if ($folder->nodeExists($ignoreAlbum)) {
+				// Cancel as soon as we find out that the folder is private or external
+				return [null, true];
+			}
 		}
 		$isRootFolder = $this->isRootFolder($folder, $level);
 		if ($folder->nodeExists($configName)) {
 			$configSoFar = $this->buildFolderConfig($folder, $configName, $configSoFar, $level);
 		}
 		if (!$isRootFolder) {
-			return $this->getParentConfig($folder, $ignoreAlbum, $configName, $level, $configSoFar);
+			return $this->getParentConfig($folder, $ignoreAlbumStrings, $configName, $level, $configSoFar);
 		}
 		$configSoFar = $this->validatesInfoConfig($configSoFar);
 
@@ -345,7 +347,7 @@ class ConfigService extends FilesService {
 	 * We will look up to the virtual root of a shared folder, for privacy reasons
 	 *
 	 * @param Folder $folder the current folder
-	 * @param string $privacyChecker name of the file which blacklists folders
+	 * @param string $privacyChecker names of the files which blacklist folders
 	 * @param string $configName name of the configuration file
 	 * @param int $level the starting level is 0 and we add 1 each time we visit a parent folder
 	 * @param array $collectedConfig the configuration collected so far
