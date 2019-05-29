@@ -1,4 +1,4 @@
-# Gallery 
+# Gallery
 [![Build Status](https://travis-ci.org/nextcloud/gallery.svg?branch=master)](https://travis-ci.org/nextcloud/gallery)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
 [![Code Coverage](https://codecov.io/gh/nextcloud/gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/nextcloud/gallery)
@@ -20,7 +20,7 @@ Provides a dedicated view of all images in a grid, adds image viewing capabiliti
 * A la carte features (external shares, browser svg rendering, etc.)
 * Image download and sharing straight from the slideshow or the gallery
 * Switch to Gallery from any folder in files and vice-versa
-* Ignore folders containing a ".nomedia" file
+* Ignore folders containing a ".nomedia" or ".noimage" file
 * Browser rendering of SVG images (disabled by default)
 * Mobile support
 
