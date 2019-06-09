@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Gallery" : "Galeri",
     "There was a problem reading files from this album" : "Bu albümdeki dosyalar okunurken bir sorun çıktı",
-    "Aborting preview. Could not find the file" : "Önizleme iptal ediliyor. Dosya bulunamadı",
+    "Aborting preview. Could not find the file" : "Ön izleme iptal ediliyor. Dosya bulunamadı",
     "Could not move \"{file}\", target exists" : "\"{file}\" taşınamadı. Hedef zaten var",
     "Could not move \"{file}\"" : "\"{file}\" taşınamadı",
     "No compatible server found at {remote}" : "{remote} konumunda uyumlu bir sunucu bulunamadı",
@@ -26,7 +26,7 @@ OC.L10N.register(
     "Hide Album" : "Albümü Gizle",
     "Could not hide album" : "Albüm gizlenemedi",
     "Error loading slideshow template" : "Saydam sunumu kalıbı yüklenirken sorun çıktı",
-    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Hata!</strong> Dosya önizlemesi oluşturulamadı.<br>Lütfen bu görsel saydam sunumundan kaldırılırken sonraki saydama geçin",
+    "<strong>Error!</strong> Could not generate a preview of this file.<br>Please go to the next slide while we remove this image from the slideshow" : "<strong>Hata!</strong> Dosya ön izlemesi oluşturulamadı.<br>Lütfen bu görsel saydam sunumundan kaldırılırken sonraki saydama geçin",
     "Next" : "Sonraki",
     "Play" : "Oynat",
     "Pause" : "Duraklat",
