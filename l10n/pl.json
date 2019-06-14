@@ -2,7 +2,7 @@
     "Gallery" : "Galeria",
     "There was a problem reading files from this album" : "Wystąpił problem podczas odczytywania pliku z tego albumu",
     "Aborting preview. Could not find the file" : "Przerywanie podglądu. Nie można odnaleźć pliku",
-    "Could not move \"{file}\", target exists" : "Nie można było przenieść „{file}” – plik o takiej nazwie już istnieje",
+    "Could not move \"{file}\", target exists" : "Nie można było przenieść \"{file}\" – plik o takiej nazwie już istnieje",
     "Could not move \"{file}\"" : "Nie można przenieść \"{file}\"",
     "No compatible server found at {remote}" : "Nie znaleziono kompatybilnego serwera na {remote}",
     "Invalid server url" : "Błędny adres serwera",
