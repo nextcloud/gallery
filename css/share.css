@@ -47,9 +47,10 @@
 }
 
 #dropdown .shareWithConfirm {
-	padding: 11px;
-	right: 17px;
-	top: 18px;
+	padding: 5px;
+	right: 14px;
+	top: 14px;
+	background-color: transparent !important;
 }
 
 #app-content #dropdown .shareWithConfirm {
