@@ -54,6 +54,7 @@ class ConfigService extends FilesService {
 		'image/x-dcraw',
 		'image/heic',
 		'image/heif',
+		'image/webp',
 		'application/x-photoshop',
 		'application/illustrator',
 		'application/postscript',
