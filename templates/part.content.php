@@ -51,6 +51,16 @@ style(
 	<div id='breadcrumbs'></div>
 	<div class="actions creatable">
 		<div class="left">
+		</div>
+		<div id="uploadprogresswrapper">
+			<div id="uploadprogressbar"></div>
+			<button class="stop icon-close" style="display:none">
+			<span class="hidden-visually">
+				<?php p($l->t('Cancel upload')) ?>
+			</span>
+			</button>
+		</div>
+		<div class="right">
 			<!-- sorting buttons -->
 			<div id="sort-name-button" class="button sorting left-switch-button">
 				<div class="flipper">
@@ -72,16 +82,6 @@ style(
 					); ?>" alt="<?php p($l->t('Sort by date')); ?>"/>
 				</div>
 			</div>
-		</div>
-		<div id="uploadprogresswrapper">
-			<div id="uploadprogressbar"></div>
-			<button class="stop icon-close" style="display:none">
-			<span class="hidden-visually">
-				<?php p($l->t('Cancel upload')) ?>
-			</span>
-			</button>
-		</div>
-		<div class="right">
 			<!-- sharing button -->
 			<div id="shared-button" class="button">
 				<img class="svg" src="<?php print_unescaped(
