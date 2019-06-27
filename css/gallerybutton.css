@@ -10,8 +10,7 @@
 }
 
 #controls .button.view-switcher.gallery {
-	margin-right: 4px;
-	padding: 9px 11px;
+	display: none;
 }
 
 .icon-toggle-pictures.hidden {
