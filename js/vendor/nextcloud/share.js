@@ -1437,6 +1437,7 @@ $(document).ready(function () {
 			var shareId = $('#linkCheckbox').data('id');
 
 			$loading.removeClass('hidden');
+			linkPassText.removeClass('warning');
 			$.ajax({
 				url: OC.linkToOCS('apps/files_sharing/api/v1', 2) + 'shares/' + shareId +
 				'?format=json',
@@ -1456,7 +1457,8 @@ $(document).ready(function () {
 				var result = xhr.responseJSON;
 				$loading.addClass('hidden');
 				linkPassText.val('');
-				linkPassText.attr('placeholder', result.data.message);
+				linkPassText.addClass('warning');
+				linkPassText.attr('placeholder', result.ocs.meta.message);
 			});
 		}
 	});
