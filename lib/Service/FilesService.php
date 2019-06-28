@@ -29,7 +29,7 @@ abstract class FilesService extends Service {
 	/** @var string[] */
 	protected $features;
 	/** @var string[] */
-	protected $ignoreAlbumStrings = array('.nomedia', '.noimage');
+	protected $ignoreAlbumStrings = ['.nomedia', '.noimage'];
 
 	/**
 	 * Retrieves all files and sub-folders contained in a folder
@@ -141,19 +141,15 @@ abstract class FilesService extends Service {
 	 * @return array|Folder
 	 */
 	protected function getAllowedSubFolder($node, $nodeType) {
-		$ignored = false;
 		if ($nodeType === 'dir') {
 			/** @var Folder $node */
 			try {
 				foreach ($this->ignoreAlbumStrings as $ignoreAlbum) {
 					if ($node->nodeExists($ignoreAlbum)) {
-						$ignored = true;
-						break;
+						return [];
 					}
 				}
-				if (!$ignored) {
-					return [$node];
-				}
+				return [$node];
 			} catch (StorageNotAvailableException $e) {
 				return [];
 			}
