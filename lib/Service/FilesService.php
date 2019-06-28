@@ -28,8 +28,8 @@ abstract class FilesService extends Service {
 	protected $virtualRootLevel = null;
 	/** @var string[] */
 	protected $features;
-	/** @var string */
-	protected $ignoreAlbum = '.nomedia';
+	/** @var string[] */
+	protected $ignoreAlbumStrings = ['.nomedia', '.noimage'];
 
 	/**
 	 * Retrieves all files and sub-folders contained in a folder
@@ -144,9 +144,12 @@ abstract class FilesService extends Service {
 		if ($nodeType === 'dir') {
 			/** @var Folder $node */
 			try {
-				if (!$node->nodeExists($this->ignoreAlbum)) {
-					return [$node];
+				foreach ($this->ignoreAlbumStrings as $ignoreAlbum) {
+					if ($node->nodeExists($ignoreAlbum)) {
+						return [];
+					}
 				}
+				return [$node];
 			} catch (StorageNotAvailableException $e) {
 				return [];
 			}
