@@ -2,9 +2,10 @@ OC.L10N.register(
     "gallery",
     {
     "Gallery" : "Галерија",
+    "Copyright" : "Авторско право",
     "Error loading slideshow template" : "Грешка при вчитувањето на шаблонот за прикажување на слајдови",
     "Next" : "Следно",
-    "Play" : "Пушти",
+    "Play" : "Слајдшоу",
     "Pause" : "Пауза",
     "Previous" : "Претходно",
     "Close" : "Затвори",
