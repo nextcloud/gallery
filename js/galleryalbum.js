@@ -48,6 +48,7 @@
 		this.domDef = null;
 		this.loader = null;
 		this.preloadOffset = 0;
+		this.defaultRatio = 1;
 	};
 
 	Album.prototype = {
@@ -171,7 +172,7 @@
 					if (more && album.viewedItems < images.length) {
 						return addRowElements(album, row, images);
 					}
-					row.fit();
+					album.defaultRatio = row.fit(album.defaultRatio);
 					def.resolve(row);
 				});
 			};

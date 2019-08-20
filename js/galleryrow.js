@@ -123,8 +123,8 @@
 		/**
 		 * Resizes the row once it's full
 		 */
-		fit: function () {
-			var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width : 1;
+		fit: function (defaultRatio) {
+			var scaleRatio = (this.width > this.targetWidth) ? this.targetWidth / this.width: defaultRatio;
 
 			// This animates the elements when the window is resized
 			var targetHeight = 4 + (this.targetHeight * scaleRatio);
@@ -149,6 +149,8 @@
 			// Restore the rows to their normal opacity. This happens immediately with rows
 			// containing albums only
 			this.domDef.css('opacity', 1);
+
+			return scaleRatio;
 		},
 
 		/**
