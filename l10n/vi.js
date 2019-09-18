@@ -50,7 +50,6 @@ OC.L10N.register(
     "Reasons might be:" : "Lý do có thể là:",
     "the item was removed" : "đối tượng đã bị xóa",
     "sharing is disabled" : "việc chia sẻ bị cấm",
-    "Picture view" : "Xem h",
-    "New" : "Tạo mới"
+    "Picture view" : "Xem h"
 },
 "nplurals=1; plural=0;");

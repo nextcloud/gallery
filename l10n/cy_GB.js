@@ -35,7 +35,6 @@ OC.L10N.register(
     "Error setting expiration date" : "Gwall wrth osod dyddiad dod i ben",
     "Email sent" : "Anfonwyd yr e-bost",
     "Warning" : "Rhybudd",
-    "Cancel upload" : "Diddymu llwytho i fyny",
-    "New" : "Newydd"
+    "Cancel upload" : "Diddymu llwytho i fyny"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

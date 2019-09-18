@@ -14,7 +14,7 @@ OC.L10N.register(
     "Could not load the copyright notice: " : "Nevarēja ielādēt autortiesību paziņojumu:",
     "Copyright notice" : "Autortiesību paziņojums",
     "Link to copyright document" : "Saite uz autortiesību dokumentiem",
-    "This application may not work properly on your browser." : "Iespējams, šī lietojumprogramma nedarbojas pareizi, jūsu pārlūkprogrammā.",
+    "This application may not work properly on your browser." : "Šī lietotne jūsu pārlūkprogrammā var nedarboties pareizi.",
     "For an improved experience, please install one of the following alternatives" : "Lai uzlabotu pieredzi, lūdzu, instalējiet vienu no šādām alternatīvām",
     "Your browser is not supported!" : "Jūsu pārlūkprogramma netiek atbalstīta!",
     "please install one of the following alternatives" : "lūdzu, instalējiet kādu no peejamām alternatīvām",
@@ -87,8 +87,8 @@ OC.L10N.register(
     "Sort by name" : "Kārtot pēc nosaukuma",
     "Sort by date" : "Kārtot pēc datuma",
     "Album information" : "Albūma informācija",
-    "File list" : "Failu saraksts",
-    "Sorry, this file could not be found." : "Atvainojiet, šo failu nevar atrast.",
+    "File list" : "Datņu saraksts",
+    "Sorry, this file could not be found." : "Atvainojiet, šo datni nevar atrast.",
     "Reasons might be:" : "Iespējamie iemesli:",
     "the wrong file ID was provided" : "Iedots nepareizs datnes ID",
     "the file was removed" : "šī datne tika noņemta",
@@ -104,7 +104,6 @@ OC.L10N.register(
     "the link has expired" : "saites derīgums ir beidzies",
     "sharing is disabled" : "koplietošana nav ieslēgta",
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
-    "Picture view" : "Attēla skats",
-    "New" : "Jauna"
+    "Picture view" : "Attēla skats"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

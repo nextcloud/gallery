@@ -22,7 +22,6 @@
     "create" : "ստեղծել",
     "change" : "փոխել",
     "delete" : "ջնջել",
-    "Warning" : "Զգուշացում",
-    "New" : "Նոր"
+    "Warning" : "Զգուշացում"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

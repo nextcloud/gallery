@@ -52,7 +52,6 @@ OC.L10N.register(
     "Email sent" : "Email geschéckt",
     "Warning" : "Warnung",
     "The password is wrong. Try again." : "Den Passwuert ass incorrect. Probeier ed nach eng keier.",
-    "Cancel upload" : "Eroplueden ofbriechen",
-    "New" : "Nei"
+    "Cancel upload" : "Eroplueden ofbriechen"
 },
 "nplurals=2; plural=(n != 1);");

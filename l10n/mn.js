@@ -43,7 +43,6 @@ OC.L10N.register(
     "create" : "үүсгэх",
     "change" : "Өөрчлөх",
     "delete" : "устгах",
-    "Password protected" : "Нууц үгээх хамгаалагдсан",
-    "New" : "Шинэ"
+    "Password protected" : "Нууц үгээх хамгаалагдсан"
 },
 "nplurals=2; plural=(n != 1);");

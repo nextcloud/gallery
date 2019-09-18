@@ -115,7 +115,6 @@ OC.L10N.register(
     "the link has expired" : "lotura iraungi da",
     "sharing is disabled" : "elkarbanatzea ez dago gaituta",
     "For more information, please ask the person who has sent you this link." : "Informazio gehiagorako, eskatu lotura hau bidali dizun pertsonari",
-    "Picture view" : "Irudi bistaratzea",
-    "New" : "Berria"
+    "Picture view" : "Irudi bistaratzea"
 },
 "nplurals=2; plural=(n != 1);");

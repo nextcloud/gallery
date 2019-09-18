@@ -35,7 +35,6 @@ OC.L10N.register(
     "Email sent" : "郵件已傳",
     "Warning" : "警告",
     "Cancel upload" : "取消上戴",
-    "Picture view" : "預覽圖片",
-    "New" : "新增"
+    "Picture view" : "預覽圖片"
 },
 "nplurals=1; plural=0;");

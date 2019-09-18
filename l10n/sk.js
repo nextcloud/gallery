@@ -115,7 +115,6 @@ OC.L10N.register(
     "the link has expired" : "linka vypršala",
     "sharing is disabled" : "sprístupňovanie je zakázané",
     "For more information, please ask the person who has sent you this link." : "Viac informácií vám poskytne osoba, ktorá vám tento link poslala.",
-    "Picture view" : "Zobrazenie obrázka",
-    "New" : "Nový"
+    "Picture view" : "Zobrazenie obrázka"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

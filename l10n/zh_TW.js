@@ -115,7 +115,6 @@ OC.L10N.register(
     "the link has expired" : "連結過期",
     "sharing is disabled" : "分享功能已停用",
     "For more information, please ask the person who has sent you this link." : "請詢問告訴您此連結的人以瞭解更多",
-    "Picture view" : "檢視圖片",
-    "New" : "新增"
+    "Picture view" : "檢視圖片"
 },
 "nplurals=1; plural=0;");
