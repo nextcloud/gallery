@@ -43,7 +43,6 @@ OC.L10N.register(
     "Error setting expiration date" : "ಮುಕ್ತಾಯ ದಿನಾಂಕವನ್ನು ನಿರ್ದರಿಸುವಲ್ಲಿ ದೋಷ",
     "Email sent" : "ಇ-ಅಂಚೆ ಕಳುಹಿಸಲಾಗಿದೆ",
     "Warning" : "﻿ಎಚ್ಚರಿಕೆ",
-    "Cancel upload" : "﻿ವರ್ಗಾವಣೆ ರದ್ದು ಮಾಡಿ",
-    "New" : "﻿ಹೊಸ"
+    "Cancel upload" : "﻿ವರ್ಗಾವಣೆ ರದ್ದು ಮಾಡಿ"
 },
 "nplurals=2; plural=(n > 1);");

@@ -107,7 +107,6 @@ OC.L10N.register(
     "the link has expired" : "l'enllaz caducó",
     "sharing is disabled" : "la compartición ta deshabilitada",
     "For more information, please ask the person who has sent you this link." : "Pa más información, entrúga-y a la persona qu'unvió esti enllaz.",
-    "Picture view" : "Vista d'imáxenes",
-    "New" : "Nuevu"
+    "Picture view" : "Vista d'imáxenes"
 },
 "nplurals=2; plural=(n != 1);");

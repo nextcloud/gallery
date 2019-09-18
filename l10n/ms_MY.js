@@ -19,7 +19,6 @@ OC.L10N.register(
     "can share" : "boleh berkongsi",
     "can edit" : "boleh mengubah",
     "Warning" : "Amaran",
-    "Cancel upload" : "Batal muat naik",
-    "New" : "Baru"
+    "Cancel upload" : "Batal muat naik"
 },
 "nplurals=1; plural=0;");
