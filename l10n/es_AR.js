@@ -108,7 +108,6 @@ OC.L10N.register(
     "the link has expired" : "El link ha expirado",
     "sharing is disabled" : "compartir está deshabilitado",
     "For more information, please ask the person who has sent you this link." : "Para mayor información, favor de consultar a la persona que le envió este link.",
-    "Picture view" : "Vista de imágenes",
-    "New" : "Nuevo"
+    "Picture view" : "Vista de imágenes"
 },
 "nplurals=2; plural=(n != 1);");

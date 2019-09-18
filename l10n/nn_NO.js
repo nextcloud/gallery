@@ -51,7 +51,6 @@ OC.L10N.register(
     "Cancel upload" : "Avbryt opplasting",
     "Reasons might be:" : "Moglege grunnar:",
     "the item was removed" : "fila/mappa er fjerna",
-    "sharing is disabled" : "deling er slått av",
-    "New" : "Ny"
+    "sharing is disabled" : "deling er slått av"
 },
 "nplurals=2; plural=(n != 1);");

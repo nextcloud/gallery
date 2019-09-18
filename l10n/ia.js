@@ -97,7 +97,6 @@ OC.L10N.register(
     "the link has expired" : "le ligamine ha expirate",
     "sharing is disabled" : "le compartimento de files es disactivate",
     "For more information, please ask the person who has sent you this link." : "Pro obtener plus informationes, per favor demanda le persona qui ha te inviate iste ligamine.",
-    "Picture view" : "Visualisation de Imagine",
-    "New" : "Nove"
+    "Picture view" : "Visualisation de Imagine"
 },
 "nplurals=2; plural=(n != 1);");

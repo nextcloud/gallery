@@ -109,7 +109,6 @@ OC.L10N.register(
     "the link has expired" : "lidhja ka skaduar",
     "sharing is disabled" : "ndarjet janë çaktivizuar",
     "For more information, please ask the person who has sent you this link." : "Për më tepër informacion, ju lutemi, pyetni personin që ju dërgoi këtë lidhje.",
-    "Picture view" : "Pamje Foto",
-    "New" : "E re"
+    "Picture view" : "Pamje Foto"
 },
 "nplurals=2; plural=(n != 1);");

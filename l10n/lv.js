@@ -104,7 +104,6 @@ OC.L10N.register(
     "the link has expired" : "saites derīgums ir beidzies",
     "sharing is disabled" : "koplietošana nav ieslēgta",
     "For more information, please ask the person who has sent you this link." : "Vairāk informācijas vaicā personai, kas nosūtīja šo saiti.",
-    "Picture view" : "Attēla skats",
-    "New" : "Jauna"
+    "Picture view" : "Attēla skats"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

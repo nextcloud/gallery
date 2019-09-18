@@ -17,7 +17,6 @@ OC.L10N.register(
     "Unshare" : "ھەمبەھىرلىمە",
     "delete" : "ئۆچۈر",
     "Warning" : "ئاگاھلاندۇرۇش",
-    "Cancel upload" : "يۈكلەشتىن ۋاز كەچ",
-    "New" : "يېڭى"
+    "Cancel upload" : "يۈكلەشتىن ۋاز كەچ"
 },
 "nplurals=1; plural=0;");

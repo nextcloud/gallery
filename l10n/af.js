@@ -15,7 +15,6 @@ OC.L10N.register(
     "delete" : "skrap",
     "shared by %s" : "gedeel deur %s",
     "Direct link" : "Direkte skakel",
-    "File list" : "Lêerlys",
-    "New" : "Nuut"
+    "File list" : "Lêerlys"
 },
 "nplurals=2; plural=(n != 1);");

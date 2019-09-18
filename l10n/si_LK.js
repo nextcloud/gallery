@@ -25,7 +25,6 @@ OC.L10N.register(
     "Error unsetting expiration date" : "කල් ඉකුත් දිනය ඉවත් කිරීමේ දෝෂයක්",
     "Error setting expiration date" : "කල් ඉකුත් දිනය ස්ථාපනය කිරීමේ දෝෂයක්",
     "Warning" : "අවවාදය",
-    "Cancel upload" : "උඩුගත කිරීම අත් හරින්න",
-    "New" : "නව"
+    "Cancel upload" : "උඩුගත කිරීම අත් හරින්න"
 },
 "nplurals=2; plural=(n != 1);");

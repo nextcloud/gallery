@@ -31,7 +31,6 @@ OC.L10N.register(
     "Error unsetting expiration date" : "காலாவதியாகும் திகதியை குறிப்பிடாமைக்கான வழு",
     "Error setting expiration date" : "காலாவதியாகும் திகதியை குறிப்பிடுவதில் வழு",
     "Warning" : "எச்சரிக்கை",
-    "Cancel upload" : "பதிவேற்றலை இரத்து செய்க",
-    "New" : "புதிய"
+    "Cancel upload" : "பதிவேற்றலை இரத்து செய்க"
 },
 "nplurals=2; plural=(n != 1);");
