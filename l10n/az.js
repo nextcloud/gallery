@@ -32,7 +32,6 @@ OC.L10N.register(
     "Reasons might be:" : "Səbəblər ola bilər:",
     "the item was removed" : "bölüm silinmişdir",
     "sharing is disabled" : "paylaşım dayandırılmışdır",
-    "Picture view" : "Şəkilə baxış",
-    "New" : "Yeni"
+    "Picture view" : "Şəkilə baxış"
 },
 "nplurals=2; plural=(n != 1);");

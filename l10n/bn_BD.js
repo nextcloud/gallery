@@ -46,7 +46,6 @@ OC.L10N.register(
     "Reasons might be:" : "কারণসমূহ হতে পারে:",
     "the item was removed" : "আইটেমটি অপসারণ করা হয়েছিল",
     "sharing is disabled" : "ভাগাভাগি অকার্যকর",
-    "Picture view" : "চিত্র দর্শন",
-    "New" : "নতুন"
+    "Picture view" : "চিত্র দর্শন"
 },
 "nplurals=2; plural=(n != 1);");

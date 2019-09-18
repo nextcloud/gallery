@@ -24,7 +24,6 @@ OC.L10N.register(
     "create" : "ստեղծել",
     "change" : "փոխել",
     "delete" : "ջնջել",
-    "Warning" : "Զգուշացում",
-    "New" : "Նոր"
+    "Warning" : "Զգուշացում"
 },
 "nplurals=2; plural=(n != 1);");

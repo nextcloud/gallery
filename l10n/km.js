@@ -41,7 +41,6 @@ OC.L10N.register(
     "Reasons might be:" : "មូលហេតុ​អាច​ជា៖",
     "the item was removed" : "របស់​ត្រូវ​បាន​ដក​ចេញ",
     "sharing is disabled" : "មិន​អនុញ្ញាត​ការ​ចែករំលែក",
-    "Picture view" : "ទិដ្ឋភាពរូបភាព",
-    "New" : "ថ្មី"
+    "Picture view" : "ទិដ្ឋភាពរូបភាព"
 },
 "nplurals=1; plural=0;");

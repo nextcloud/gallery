@@ -109,7 +109,6 @@ OC.L10N.register(
     "the link has expired" : "ბმულს ვადა გაუვიდა",
     "sharing is disabled" : "გაზიარება არაა მოქმედი",
     "For more information, please ask the person who has sent you this link." : "მეტი ინფრმაციისთვის, გთხოვთ ჰკითხოთ ადამიანს ვინც გამოგიგზავნათ ეს ბმული.",
-    "Picture view" : "სურათის ხედი",
-    "New" : "ახალი"
+    "Picture view" : "სურათის ხედი"
 },
 "nplurals=2; plural=(n!=1);");

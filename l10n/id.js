@@ -104,7 +104,6 @@ OC.L10N.register(
     "the link has expired" : "tautan telah kadaluarsa",
     "sharing is disabled" : "berbagi dinonaktifkan",
     "For more information, please ask the person who has sent you this link." : "Untuk informasi lebih lanjut, silakan tanyakan pada orang yang telah mengirimkan Anda tautan ini.",
-    "Picture view" : "Tampilan gambar",
-    "New" : "Baru"
+    "Picture view" : "Tampilan gambar"
 },
 "nplurals=1; plural=0;");

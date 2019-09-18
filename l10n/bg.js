@@ -115,7 +115,6 @@ OC.L10N.register(
     "the link has expired" : "тази връзка е изтекла",
     "sharing is disabled" : "споделянето е изключено",
     "For more information, please ask the person who has sent you this link." : "За допълнителна информация, моля обърнете се към човека, който ви е изпратил тази връзка.",
-    "Picture view" : "Албум със снимки",
-    "New" : "Създай"
+    "Picture view" : "Албум със снимки"
 },
 "nplurals=2; plural=(n != 1);");
