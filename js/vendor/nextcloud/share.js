@@ -495,7 +495,8 @@
 									.tooltip('hide')
 									.tooltip({
 										placement: 'bottom',
-										trigger: 'manual'
+										trigger: 'manual',
+										trackTooltip: true
 									})
 									.tooltip('fixTitle')
 									.tooltip('show');
@@ -805,6 +806,7 @@
 		 */
 		hideDropDown: function (callback) {
 			this.currentShares = null;
+			$('[data-original-title]').tooltip('hide');
 			$('#dropdown').slideUp(OC.menuSpeed, function () {
 				Gallery.Share.droppedDown = false;
 				$('#dropdown').remove();
