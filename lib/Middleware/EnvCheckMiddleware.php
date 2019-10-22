@@ -16,6 +16,7 @@
 
 namespace OCA\Gallery\Middleware;
 
+use OCP\Constants;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\ISession;
@@ -130,6 +131,13 @@ class EnvCheckMiddleware extends CheckMiddleware {
 			);
 		} else {
 			$share = $this->getShare($token);
+
+			if (($share->getPermissions() & Constants::PERMISSION_READ) === 0) {
+				throw new CheckException(
+					"Can't access a public resource that is upload only", Http::STATUS_NOT_FOUND
+				);
+			}
+
 			$password = $this->request->getParam('password');
 			// Let's see if the user needs to provide a password
 			$this->checkAuthorisation($share, $password);
