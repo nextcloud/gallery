@@ -1,5 +1,3 @@
-<?php
-declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -14,23 +12,18 @@ declare(strict_types=1);
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-namespace OCA\Gallery\AppInfo;
+import { createClient } from 'webdav'
+import { generateRemoteUrl } from '@nextcloud/router'
+import { getCurrentUser, getRequestToken } from '@nextcloud/auth'
 
-use OCP\AppFramework\App;
-
-class Application extends App {
-
-	const appID = 'gallery';
-
-	public function __construct() {
-		parent::__construct(self::appID);
-	}
-}
+export default createClient(generateRemoteUrl(`dav/files/${getCurrentUser().uid}`), {
+	token: { token_type: 'Bearer', access_token: getRequestToken() }
+})

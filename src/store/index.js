@@ -1,5 +1,3 @@
-<?php
-declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -14,23 +12,26 @@ declare(strict_types=1);
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-namespace OCA\Gallery\AppInfo;
+import Vue from 'vue'
+import Vuex, { Store } from 'vuex'
 
-use OCP\AppFramework\App;
+import files from './files'
+import folders from './folders'
 
-class Application extends App {
+Vue.use(Vuex)
+export default new Store({
+	modules: {
+		files,
+		folders
+	},
 
-	const appID = 'gallery';
-
-	public function __construct() {
-		parent::__construct(self::appID);
-	}
-}
+	strict: process.env.NODE_ENV !== 'production'
+})

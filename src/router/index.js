@@ -1,4 +1,3 @@
-<?php
 /**
  * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -21,9 +20,35 @@
  *
  */
 
-return [
-    'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#index', 'url' => '/{path}', 'verb' => 'GET', 'postfix' => 'folder', 'requirements' => ['path' => '.+']],
-    ]
-];
+import Vue from 'vue'
+import Router from 'vue-router'
+import { generateUrl } from '@nextcloud/router'
+import Grid from '../views/Grid'
+
+Vue.use(Router)
+
+export default new Router({
+	mode: 'history',
+	// if index.php is in the url AND we got this far, then it's working:
+	// let's keep using index.php in the url
+	base: generateUrl('/apps/gallery', ''),
+	linkActiveClass: 'active',
+	routes: [
+		{
+			path: '/',
+			component: Grid,
+			props: route => ({
+				// always lead current path with a slash
+				path: `/${route.params.path ? route.params.path : ''}`
+			}),
+			name: 'root',
+			children: [
+				{
+					path: ':path*',
+					name: 'path',
+					component: Grid
+				}
+			]
+		}
+	]
+})

@@ -1,275 +1,63 @@
 <?php
+declare(strict_types=1);
 /**
- * Nextcloud - Gallery
+ * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
- * This file is licensed under the Affero General Public License version 3 or
- * later. See the COPYING file.
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
- * @author Robin Appelman <robin@icewind.nl>
- * @author Olivier Paroz <galleryapps@oparoz.com>
+ * @license GNU AGPL version 3 or any later version
  *
- * @copyright Robin Appelman 2017
- * @copyright Olivier Paroz 2017
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 namespace OCA\Gallery\Controller;
 
-use OCP\AppFramework\Http\Template\ExternalShareMenuAction;
-use OCP\AppFramework\Http\Template\LinkMenuAction;
-use OCP\AppFramework\Http\Template\PublicTemplateResponse;
-use OCP\AppFramework\Http\Template\SimpleMenuAction;
-use OCP\IL10N;
-use OCP\IURLGenerator;
-use OCP\IRequest;
-use OCP\IConfig;
-
+use OCA\Files\Event\LoadSidebar;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Http\RedirectResponse;
+use OCP\EventDispatcher\IEventDispatcher;
+use OCP\IRequest;
 
-use OCA\Gallery\Environment\Environment;
-use OCA\Gallery\Http\ImageResponse;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-/**
- * Generates templates for the landing page from within ownCloud, the public
- * gallery and error pages
- *
- * @package OCA\Gallery\Controller
- */
 class PageController extends Controller {
 
-	/** @var Environment */
-	private $environment;
-	/** @var IURLGenerator */
-	private $urlGenerator;
-	/** @var IConfig */
-	private $appConfig;
-	/** @var EventDispatcherInterface */
-	private $dispatcher;
-	/** @var IL10N */
-	private $l10n;
+	protected $appName;
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param Environment $environment
-	 * @param IURLGenerator $urlGenerator
-	 * @param IConfig $appConfig
-	 * @param EventDispatcherInterface $dispatcher
-	 * @param IL10N $l10n
-	 */
-	public function __construct(
-		$appName,
-		IRequest $request,
-		Environment $environment,
-		IURLGenerator $urlGenerator,
-		IConfig $appConfig,
-		EventDispatcherInterface $dispatcher,
-		IL10N $l10n
-	) {
+	/** @var IEventDispatcher */
+	private $eventDispatcher;
+
+	public function __construct($appName,
+								IRequest $request,
+								IEventDispatcher $eventDispatcher) {
 		parent::__construct($appName, $request);
 
-		$this->environment = $environment;
-		$this->urlGenerator = $urlGenerator;
-		$this->appConfig = $appConfig;
-		$this->dispatcher = $dispatcher;
-		$this->l10n = $l10n;
+		$this->appName = $appName;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 *
-	 * Shows the albums and pictures at the root folder or a message if
-	 * there are no pictures.
-	 *
-	 * This is the entry page for logged-in users accessing the app from
-	 * within ownCloud.
-	 * A TemplateResponse response uses a template from the templates folder
-	 * and parameters provided here to build the page users will see
+	 * Render default index template
 	 *
 	 * @return TemplateResponse
 	 */
-	public function index() {
-		$appName = $this->appName;
+	public function index(): TemplateResponse {
+		$this->eventDispatcher->dispatch(LoadSidebar::class, new LoadSidebar());
 
-		// Parameters sent to the template
-		$params = $this->getIndexParameters($appName);
-
-		$this->dispatcher->dispatch('OCP\Share::loadSocial');
-
-		// Will render the page using the template found in templates/index.php
-		$response = new TemplateResponse($appName, 'index', $params);
-		$this->addContentSecurityToResponse($response);
-
+		$response = new TemplateResponse($this->appName, 'main');
 		return $response;
 	}
 
-	/**
-	 * @PublicPage
-	 * @NoCSRFRequired
-	 *
-	 * Shows the albums and pictures or redirects to the download location the token gives access to
-	 *
-	 * @param string $token
-	 * @param null|string $filename
-	 *
-	 * @return PublicTemplateResponse|ImageResponse|RedirectResponse
-	 */
-	public function publicIndex($token, $filename) {
-		$node = $this->environment->getSharedNode();
-		if ($node->getType() === 'dir') {
-			return $this->showPublicPage($token);
-		} else {
-			$url = $this->urlGenerator->linkToRoute(
-				$this->appName . '.files_public.download',
-				[
-					'token'    => $token,
-					'fileId'   => $node->getId(),
-					'filename' => $filename
-				]
-			);
-
-			return new RedirectResponse($url);
-		}
-	}
-
-	/**
-	 * @PublicPage
-	 * @NoCSRFRequired
-	 * @Guest
-	 *
-	 * Generates an error page based on the error code
-	 *
-	 * @param int $code
-	 *
-	 * @return TemplateResponse
-	 */
-	public function errorPage($code) {
-		$appName = $this->appName;
-		$message = $this->request->getCookie('galleryErrorMessage');
-		$params = [
-			'appName' => $appName,
-			'message' => $message,
-			'code'    => $code,
-		];
-
-		$errorTemplate = new TemplateResponse($appName, 'index', $params, 'guest');
-		$errorTemplate->setStatus($code);
-		$errorTemplate->invalidateCookie('galleryErrorMessage');
-
-		return $errorTemplate;
-	}
-
-	/**
-	 * Adds the domain "data:" to the allowed image domains
-	 * this function is called by reference
-	 *
-	 * @param TemplateResponse $response
-	 */
-	private function addContentSecurityToResponse($response) {
-		$csp = new Http\ContentSecurityPolicy();
-		$csp->addAllowedFontDomain("data:");
-		$response->setContentSecurityPolicy($csp);
-	}
-
-	/**
-	 * @PublicPage
-	 * @NoCSRFRequired
-	 * @Guest
-	 *
-	 * Returns the slideshow template
-	 *
-	 * @return TemplateResponse
-	 */
-	public function slideshow() {
-		return new TemplateResponse($this->appName, 'slideshow', [], 'blank');
-	}
-
-	/**
-	 * Returns the parameters to be used in the index function
-	 *
-	 * @param $appName
-	 *
-	 * @return array<string,string>
-	 */
-	private function getIndexParameters($appName) {
-
-		// Parameters sent to the index function
-		$params = [
-			'appName' => $appName,
-			'uploadUrl' => $this->urlGenerator->linkTo(
-				'files', 'ajax/upload.php'
-			),
-			'publicUploadEnabled' => $this->appConfig->getAppValue(
-				'core', 'shareapi_allow_public_upload', 'yes'
-			),
-			'mailNotificationEnabled' => $this->appConfig->getAppValue(
-				'core', 'shareapi_allow_mail_notification', 'no'
-			),
-			'mailPublicNotificationEnabled' => $this->appConfig->getAppValue(
-				'core', 'shareapi_allow_public_notification', 'no'
-			)
-		];
-
-		return $params;
-	}
-
-	/**
-	 * Shows the albums and pictures the token gives access to
-	 *
-	 * @param $token
-	 *
-	 * @return TemplateResponse
-	 */
-	private function showPublicPage($token) {
-		$albumName = $this->environment->getSharedFolderName();
-		list($server2ServerSharing, $protected) = $this->getServer2ServerProperties();
-		$downloadUrl = $this->urlGenerator->linkToRouteAbsolute('files_sharing.sharecontroller.downloadShare', ['token' => $token]);
-
-		// Parameters sent to the template
-		$params = [
-			'appName'              => $this->appName,
-			'token'                => $token,
-			'displayName'          => $this->environment->getDisplayName(),
-			'albumName'            => $albumName,
-			'server2ServerSharing' => $server2ServerSharing,
-			'protected'            => $protected,
-			'filename'             => $albumName
-		];
-
-		// Will render the page using the template found in templates/public.php
-		$response = new PublicTemplateResponse($this->appName, 'public', $params);
-		$response->setHeaderTitle($params['albumName']);
-		$response->setHeaderDetails($this->l10n->t('shared by %s', [$params['displayName']]));
-		$response->setHeaderActions([
-			new SimpleMenuAction('download', $this->l10n->t('Download'), 'icon-download-white', $downloadUrl, 0),
-			new SimpleMenuAction('download', $this->l10n->t('Download'), 'icon-download', $downloadUrl, 10),
-			new LinkMenuAction($this->l10n->t('Direct link'), 'icon-public', $downloadUrl),
-			new ExternalShareMenuAction($this->l10n->t('Add to your Nextcloud'), 'icon-external', $this->environment->getUserId(), $params['displayName'], $params['albumName'])
-		]);
-		$this->addContentSecurityToResponse($response);
-
-		return $response;
-	}
-
-	/**
-	 * Determines if we can add external shared to this instance
-	 *
-	 * @return array<bool,string>
-	 */
-	private function getServer2ServerProperties() {
-		$server2ServerSharing = $this->appConfig->getAppValue(
-			'files_sharing', 'outgoing_server2server_share_enabled', 'yes'
-		);
-		$server2ServerSharing = ($server2ServerSharing === 'yes') ? true : false;
-		$password = $this->environment->getSharePassword();
-		$passwordProtected = ($password) ? 'true' : 'false';
-
-		return [$server2ServerSharing, $passwordProtected];
-	}
 }

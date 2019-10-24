@@ -1,5 +1,0 @@
-# `firefox` environment config goes here
-modules:
-    config:
-      WebDriver:
-        browser: firefox
