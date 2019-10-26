@@ -29,7 +29,8 @@ const state = {
 const mutations = {
 	updateFolders(state, { path, files, folders }) {
 		// copy old list
-		const oldList = state.folders[path].slice(0)
+		const oldList = path in state.folders
+			&& state.folders[path].slice(0)
 
 		if (!oldList) {
 			state.folders[path] = []

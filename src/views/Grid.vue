@@ -33,7 +33,7 @@
 	</EmptyContent>
 
 	<!-- Folder content -->
-	<div v-else id="gallery-grid">
+	<div v-else id="gallery-grid" role="grid">
 		<File v-for="file in files" :key="file.id" v-bind="file" />
 	</div>
 </template>
@@ -107,6 +107,7 @@ export default {
 				} else {
 					this.error = error
 				}
+				console.error(error)
 			} finally {
 				// done loading even with errors
 				this.$emit('update:loading', false)
@@ -120,8 +121,8 @@ export default {
 <style lang="scss">
 #gallery-grid {
 	display: grid;
+	// TODO: media queries based on our config
 	grid-template-columns: repeat(8, 1fr);
-	grid-auto-rows: minmax(100px, auto);
 	justify-content: center;
 	align-items: center;
 	gap: 8px;

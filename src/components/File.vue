@@ -26,6 +26,7 @@
 		:aria-label="ariaLabel"
 		@click.prevent="openViewer">
 		<img :srcset="previewUrls"
+			:sizes="previewSizes"
 			:src="davPath"
 			:alt="basename"
 			:aria-describedby="ariaUuid">
@@ -36,7 +37,6 @@
 
 <script>
 import { generateRemoteUrl, generateUrl } from '@nextcloud/router'
-
 import { getCurrentUser } from '@nextcloud/auth'
 
 const sizes = [64, 256, 1024, 4096]
@@ -62,7 +62,15 @@ export default {
 
 	computed: {
 		previewUrls() {
-			return sizes.map((size, index) => generateUrl(`/core/preview?fileId=${this.id}&x=${size}&y=${size}`) + ` ${size}w`)
+			return sizes.map((size, index) => generateUrl(`/core/preview?fileId=${this.id}&x=${size}&y=${size}&a=true`) + ` ${size}w`)
+		},
+		// TODO: automatically build based on our config
+		previewSizes() {
+			return [
+				'(max-width: 320px) 280px',
+				'(max-width: 480px) 440px',
+				'1000px'
+			]
 		},
 		davPath() {
 			return generateRemoteUrl(`dav/files/${getCurrentUser().uid}`) + this.filename
@@ -71,7 +79,7 @@ export default {
 			return `image-${this.id}`
 		},
 		ariaLabel() {
-			return t('gallery', 'Open the full size {name} image', { name: this.basename })
+			return t('gallery', 'Open the full size "{name}" image', { name: this.basename })
 		}
 	},
 
@@ -92,15 +100,23 @@ export default {
 	justify-content: center;
 
 	img {
+		position: absolute;
 		width: 100%;
+		height: 100%;
+
+		object-fit: cover;
 	}
 
 	.cover {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 0;
-		height: 0;
+		/**
+		 * We want nice squares despite anything that is in it.
+		 * The .cover is what makes the exact square size of the grid.
+		 * We use padding-bottom because padding with percentage
+		 * always refers to the width. And we only want to fit
+		 * the css grid's width.
+		 */
+		width: 100%;
+		padding-bottom: 100%;
 		transition: opacity var(--animation-quick) ease-in-out;
 		opacity: 0;
 		background-color: var(--color-main-text);
@@ -111,9 +127,6 @@ export default {
 	&:hover,
 	&:focus {
 		.cover {
-			display: block;
-			width: 100%;
-			height: 100%;
 			opacity: .2;
 		}
 	}
