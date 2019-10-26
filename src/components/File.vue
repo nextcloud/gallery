@@ -21,10 +21,16 @@
  -->
 
 <template>
-	<a class="file" :href="davPath" @click="openViewer">
+	<a class="file"
+		:href="davPath"
+		:aria-label="ariaLabel"
+		@click.prevent="openViewer">
 		<img :srcset="previewUrls"
 			:src="davPath"
-			alt="Elva habillée en fée">
+			:alt="basename"
+			:aria-describedby="ariaUuid">
+		<p :id="ariaUuid" class="hidden-visually">{{ basename }}</p>
+		<div class="cover" role="none" />
 	</a>
 </template>
 
@@ -60,12 +66,18 @@ export default {
 		},
 		davPath() {
 			return generateRemoteUrl(`dav/files/${getCurrentUser().uid}`) + this.filename
+		},
+		ariaUuid() {
+			return `image-${this.id}`
+		},
+		ariaLabel() {
+			return t('gallery', 'Open the full size {name} image', { name: this.basename })
 		}
 	},
 
 	methods: {
 		openViewer() {
-			
+			OCA.Viewer.file = this.filename
 		}
 	}
 
@@ -74,11 +86,37 @@ export default {
 
 <style lang="scss">
 .file {
+	position: relative;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
+
 	img {
 		width: 100%;
 	}
+
+	.cover {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+		transition: opacity var(--animation-quick) ease-in-out;
+		opacity: 0;
+		background-color: var(--color-main-text);
+	}
+
+	&.active,
+	&:active,
+	&:hover,
+	&:focus {
+		.cover {
+			display: block;
+			width: 100%;
+			height: 100%;
+			opacity: .2;
+		}
+	}
 }
+
 </style>

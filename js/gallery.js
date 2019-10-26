@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "-" + "e264bdeb5afc10a8e453" + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "-" + "e6de2dc9356eb9b7357e" + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -317,6 +317,48 @@ function getCurrentUser() {
   };
 }
 //# sourceMappingURL=user.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/axios/dist/client.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@nextcloud/axios/dist/client.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.object.assign */ "./node_modules/core-js/modules/es.object.assign.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+
+var _auth = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var client = _axios.default.create({
+  headers: {
+    requesttoken: (0, _auth.getRequestToken)()
+  }
+});
+
+var cancelableClient = Object.assign(client, {
+  CancelToken: _axios.default.CancelToken,
+  isCancel: _axios.default.isCancel
+});
+(0, _auth.onRequestTokenUpdate)(function (token) {
+  return client.defaults.headers.requesttoken = token;
+});
+var _default = cancelableClient;
+exports.default = _default;
+//# sourceMappingURL=client.js.map
 
 /***/ }),
 
@@ -6630,6 +6672,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 var sizes = [64, 256, 1024, 4096];
@@ -6660,10 +6708,20 @@ var sizes = [64, 256, 1024, 4096];
     },
     davPath: function davPath() {
       return Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateRemoteUrl"])("dav/files/".concat(Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_1__["getCurrentUser"])().uid)) + this.filename;
+    },
+    ariaUuid: function ariaUuid() {
+      return "image-".concat(this.id);
+    },
+    ariaLabel: function ariaLabel() {
+      return t('gallery', 'Open the full size {name} image', {
+        name: this.basename
+      });
     }
   },
   methods: {
-    openViewer: function openViewer() {}
+    openViewer: function openViewer() {
+      OCA.Viewer.file = this.filename;
+    }
   }
 });
 
@@ -16581,6 +16639,59 @@ module.exports = typeof WeakMap === 'function' && /native code/.test(nativeFunct
 
 /***/ }),
 
+/***/ "./node_modules/core-js/internals/object-assign.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/object-assign.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js");
+var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "./node_modules/core-js/internals/object-get-own-property-symbols.js");
+var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "./node_modules/core-js/internals/object-property-is-enumerable.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+
+var nativeAssign = Object.assign;
+
+// `Object.assign` method
+// https://tc39.github.io/ecma262/#sec-object.assign
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = !nativeAssign || fails(function () {
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line no-undef
+  var symbol = Symbol();
+  var alphabet = 'abcdefghijklmnopqrst';
+  A[symbol] = 7;
+  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
+  return nativeAssign({}, A)[symbol] != 7 || objectKeys(nativeAssign({}, B)).join('') != alphabet;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
+  var T = toObject(target);
+  var argumentsLength = arguments.length;
+  var index = 1;
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  var propertyIsEnumerable = propertyIsEnumerableModule.f;
+  while (argumentsLength > index) {
+    var S = IndexedObject(arguments[index++]);
+    var keys = getOwnPropertySymbols ? objectKeys(S).concat(getOwnPropertySymbols(S)) : objectKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || propertyIsEnumerable.call(S, key)) T[key] = S[key];
+    }
+  } return T;
+} : nativeAssign;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/internals/object-create.js":
 /*!*********************************************************!*\
   !*** ./node_modules/core-js/internals/object-create.js ***!
@@ -17583,6 +17694,25 @@ module.exports = collection('Map', function (get) {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/es.object.assign.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.assign.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var assign = __webpack_require__(/*! ../internals/object-assign */ "./node_modules/core-js/internals/object-assign.js");
+
+// `Object.assign` method
+// https://tc39.github.io/ecma262/#sec-object.assign
+$({ target: 'Object', stat: true, forced: Object.assign !== assign }, {
+  assign: assign
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/es.object.to-string.js":
 /*!*************************************************************!*\
   !*** ./node_modules/core-js/modules/es.object.to-string.js ***!
@@ -18276,7 +18406,7 @@ exports.constants = {
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".file {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.file img {\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, ".file {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.file img {\n    width: 100%;\n}\n.file .cover {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 0;\n    height: 0;\n    transition: opacity var(--animation-quick) ease-in-out;\n    opacity: 0;\n    background-color: var(--color-main-text);\n}\n.file.active .cover, .file:active .cover, .file:hover .cover, .file:focus .cover {\n    display: block;\n    width: 100%;\n    height: 100%;\n    opacity: .2;\n}\n", ""]);
 
 
 /***/ }),
@@ -41674,17 +41804,29 @@ var render = function() {
     "a",
     {
       staticClass: "file",
-      attrs: { href: _vm.davPath },
-      on: { click: _vm.openViewer }
+      attrs: { href: _vm.davPath, "aria-label": _vm.ariaLabel },
+      on: {
+        click: function($event) {
+          $event.preventDefault()
+          return _vm.openViewer($event)
+        }
+      }
     },
     [
       _c("img", {
         attrs: {
           srcset: _vm.previewUrls,
           src: _vm.davPath,
-          alt: "Elva habillée en fée"
+          alt: _vm.basename,
+          "aria-describedby": _vm.ariaUuid
         }
-      })
+      }),
+      _vm._v(" "),
+      _c("p", { staticClass: "hidden-visually", attrs: { id: _vm.ariaUuid } }, [
+        _vm._v(_vm._s(_vm.basename))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "cover", attrs: { role: "none" } })
     ]
   )
 }
@@ -56305,6 +56447,8 @@ function encodePath(path) {
 
 
 function prepareRequestOptions(requestOptions, methodOptions) {
+  console.debug(requestOptions, methodOptions);
+
   if (methodOptions.httpAgent) {
     requestOptions.httpAgent = methodOptions.httpAgent;
   }
@@ -56340,6 +56484,8 @@ function prepareRequestOptions(requestOptions, methodOptions) {
       return status >= 200 && status < 300 || status == 401;
     };
   }
+
+  console.debug(requestOptions);
 }
 /**
  * @typedef {Object} RequestOptions
@@ -62039,10 +62185,12 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var webdav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! webdav */ "./node_modules/webdav/dist/index.js");
 /* harmony import */ var webdav__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(webdav__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
-/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
-/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nextcloud/axios */ "./node_modules/@nextcloud/axios/dist/client.js");
+/* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
+/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
+/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_3__);
 /**
  * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -62067,12 +62215,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(webdav__WEBPACK_IMPORTED_MODULE_0__["createClient"])(Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_1__["generateRemoteUrl"])("dav/files/".concat(Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_2__["getCurrentUser"])().uid)), {
-  token: {
-    token_type: 'Bearer',
-    access_token: Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_2__["getRequestToken"])()
-  }
-}));
+ // force our axios
+
+var patcher = webdav__WEBPACK_IMPORTED_MODULE_0___default.a.getPatcher();
+patcher.patch('request', _nextcloud_axios__WEBPACK_IMPORTED_MODULE_1___default.a); // init webdav client
+
+var client = webdav__WEBPACK_IMPORTED_MODULE_0___default.a.createClient(Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_2__["generateRemoteUrl"])("dav/files/".concat(Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_3__["getCurrentUser"])().uid)));
+/* harmony default export */ __webpack_exports__["default"] = (client);
 
 /***/ }),
 

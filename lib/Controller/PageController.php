@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace OCA\Gallery\Controller;
 
 use OCA\Files\Event\LoadSidebar;
+use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -55,6 +56,7 @@ class PageController extends Controller {
 	 */
 	public function index(): TemplateResponse {
 		$this->eventDispatcher->dispatch(LoadSidebar::class, new LoadSidebar());
+		$this->eventDispatcher->dispatch(LoadViewer::class, new LoadViewer());
 
 		$response = new TemplateResponse($this->appName, 'main');
 		return $response;
