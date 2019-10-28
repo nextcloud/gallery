@@ -76,7 +76,7 @@ export default {
 
 	methods: {
 		openViewer() {
-			OCA.Viewer.file = this.filename
+			OCA.Viewer.open(this.filename)
 		}
 	}
 

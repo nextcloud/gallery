@@ -25,11 +25,15 @@
 		:href="davPath"
 		:aria-label="ariaLabel"
 		@click.prevent="openViewer">
-		<img :srcset="previewUrls"
-			:sizes="previewSizes"
-			:src="davPath"
-			:alt="basename"
-			:aria-describedby="ariaUuid">
+		<transition name="fade">
+			<img v-show="loaded"
+				:srcset="previewUrls"
+				:sizes="previewSizes"
+				:src="davPath"
+				:alt="basename"
+				:aria-describedby="ariaUuid"
+				@load="loaded = true">
+		</transition>
 		<p :id="ariaUuid" class="hidden-visually">{{ basename }}</p>
 		<div class="cover" role="none" />
 	</a>
@@ -60,6 +64,12 @@ export default {
 		}
 	},
 
+	data() {
+		return {
+			loaded: false
+		}
+	},
+
 	computed: {
 		previewUrls() {
 			return sizes.map((size, index) => generateUrl(`/core/preview?fileId=${this.id}&x=${size}&y=${size}&a=true`) + ` ${size}w`)
@@ -85,7 +95,7 @@ export default {
 
 	methods: {
 		openViewer() {
-			OCA.Viewer.file = this.filename
+			OCA.Viewer.open(this.filename)
 		}
 	}
 
@@ -108,13 +118,11 @@ export default {
 	}
 
 	.cover {
-		/**
-		 * We want nice squares despite anything that is in it.
-		 * The .cover is what makes the exact square size of the grid.
-		 * We use padding-bottom because padding with percentage
-		 * always refers to the width. And we only want to fit
-		 * the css grid's width.
-		 */
+		// We want nice squares despite anything that is in it.
+		// The .cover is what makes the exact square size of the grid.
+		// We use padding-bottom because padding with percentage
+		// always refers to the width. And we only want to fit
+		// the css grid's width.
 		width: 100%;
 		padding-bottom: 100%;
 		transition: opacity var(--animation-quick) ease-in-out;
@@ -132,4 +140,11 @@ export default {
 	}
 }
 
+.fade-enter-active, .fade-leave-active {
+	transition: opacity var(--animation-quick) ease-in-out;
+}
+
+.fade-enter, .fade-leave-to {
+	opacity: 0;
+}
 </style>

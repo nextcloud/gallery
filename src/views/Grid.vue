@@ -33,9 +33,13 @@
 	</EmptyContent>
 
 	<!-- Folder content -->
-	<div v-else id="gallery-grid" role="grid">
-		<File v-for="file in files" :key="file.id" v-bind="file" />
-	</div>
+	<transition-group v-else
+		id="gallery-grid"
+		role="grid"
+		name="list"
+		tag="div">
+		<File v-for="file in fileList" :key="file.id" v-bind="file" />
+	</transition-group>
 </template>
 
 <script>
@@ -76,6 +80,8 @@ export default {
 		},
 		fileList() {
 			return this.folders[this.path]
+				.map(id => this.files[id])
+				.filter(file => !!file)
 		},
 		isEmpty() {
 			return !this.fileList || this.fileList.length === 0
@@ -121,11 +127,16 @@ export default {
 <style lang="scss">
 #gallery-grid {
 	display: grid;
+	align-items: center;
+	justify-content: center;
+	margin: 8px;
+
 	// TODO: media queries based on our config
 	grid-template-columns: repeat(8, 1fr);
-	justify-content: center;
-	align-items: center;
 	gap: 8px;
-	margin: 8px;
+}
+
+.list-move {
+	transition: transform var(--animation-quick);
 }
 </style>

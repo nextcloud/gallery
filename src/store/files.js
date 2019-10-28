@@ -19,6 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+import Vue from 'vue'
 
 const state = {
 	files: {}
@@ -33,7 +34,7 @@ const mutations = {
 	 */
 	updateFiles(state, files) {
 		files.forEach(file => {
-			state.files[file.id] = file
+			Vue.set(state.files, file.id, file)
 		})
 	}
 }

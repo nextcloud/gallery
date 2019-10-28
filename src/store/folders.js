@@ -22,7 +22,7 @@
 
 const state = {
 	folders: {
-		'/Photos': [1546]
+		'/Photos': [6860]
 	}
 }
 
@@ -32,12 +32,17 @@ const mutations = {
 		const oldList = path in state.folders
 			&& state.folders[path].slice(0)
 
-		if (!oldList) {
-			state.folders[path] = []
-		}
+		// reset list
+		state.folders[path] = []
 
 		if (files.length > 0) {
-			state.folders[path].push(...files.map(file => file.id))
+			// sort by last modified
+			const list = files.sort((a, b) => {
+				return new Date(b.lastmod).getTime() - new Date(a.lastmod).getTime()
+			})
+
+			// append ids
+			state.folders[path].push(...list.map(file => file.id))
 		}
 
 		if (oldList) {
@@ -62,7 +67,7 @@ const actions = {
 	 * @param {Array} data.folders list of folders
 	 */
 	updateFolders(context, { path, files, folders }) {
-		context.commit('updateFolders', { path, files, folders })
+		setTimeout(() => context.commit('updateFolders', { path, files, folders }), 3000)
 
 	}
 }
