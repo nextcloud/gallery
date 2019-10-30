@@ -38,8 +38,8 @@
 		role="grid"
 		name="list"
 		tag="div">
-		<Navigation key="navigation" :path="path" />
-		<Folder v-for="folder in folderList" :key="folder.id" :folder="folder" />
+		<Navigation v-if="folder" key="navigation" v-bind="folder" />
+		<Folder v-for="dir in folderList" :key="dir.id" :folder="dir" />
 		<File v-for="file in fileList" :key="file.id" v-bind="file" />
 	</transition-group>
 </template>
@@ -94,6 +94,9 @@ export default {
 		},
 
 		// files list of the current folder
+		folder() {
+			return this.files[this.folderId]
+		},
 		folderContent() {
 			return this.folders[this.folderId]
 		},
@@ -183,20 +186,21 @@ export default {
 	justify-content: center;
 	gap: 8px;
 	grid-template-columns: repeat(10, 1fr);
+	position: relative;
 }
 
 .list-move {
 	transition: transform var(--animation-quick);
 }
 
-$previous: 0px;
+$previous: 0;
 @each $size, $config in get('sizes') {
 	$count: map-get($config, 'count');
 	$marginTop: map-get($config, 'marginTop');
 	$marginW: map-get($config, 'marginW');
-	@media (min-width: $previous) and (max-width: $size) {
+	@media (min-width: #{$previous}px) and (max-width: #{$size}px) {
 		#gallery-grid {
-			margin: $marginTop $marginW $marginW $marginW;
+			padding: #{$marginTop}px #{$marginW}px #{$marginW}px #{$marginW}px;
 			grid-template-columns: repeat($count, 1fr);
 		}
 	}

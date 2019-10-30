@@ -2,10 +2,7 @@ const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
-// sass plugin to implement js configs into scss
-const sass = require('node-sass')
-const sassUtils = require('node-sass-utils')(sass)
-const sassVars = require('./src/assets/grid-sizes')
+const SassGetGridConfig = require('./src/utils/SassGetGridConfig')
 
 const packageJson = require('./package.json')
 const appName = packageJson.name
@@ -34,16 +31,7 @@ module.exports = {
 						loader: 'sass-loader',
 						options: {
 							functions: {
-								'get($keys)': function(keys) {
-									keys = keys.getValue().split('.');
-									let result = sassVars
-									for (let i = 0; i < keys.length; i++) {
-										result = result[keys[i]]
-									}
-									result = sassUtils.castToSass(result)
-									console.log(result)
-									return result
-								}
+								'get($keys)': SassGetGridConfig
 							}
 						}
 					}

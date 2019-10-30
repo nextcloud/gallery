@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "-" + "0f864d07e9e61393b378" + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "-" + "e36d64638f660d85ad08" + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -7133,6 +7133,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7141,20 +7144,37 @@ __webpack_require__.r(__webpack_exports__);
     ActionButton: _nextcloud_vue_dist_Components_ActionButton__WEBPACK_IMPORTED_MODULE_1___default.a,
     Actions: _nextcloud_vue_dist_Components_Actions__WEBPACK_IMPORTED_MODULE_0___default.a
   },
+  inheritAttrs: false,
   props: {
-    path: {
+    basename: {
       type: String,
+      required: true
+    },
+    filename: {
+      type: String,
+      required: true
+    },
+    id: {
+      type: Number,
       required: true
     }
   },
   computed: {
     isRoot: function isRoot() {
-      return this.path === '/';
+      return this.filename === '/';
+    },
+    name: function name() {
+      if (this.isRoot) {
+        return t('gallery', 'Gallery');
+      }
+
+      return this.basename;
     },
     parentPath: function parentPath() {
-      var path = this.path.split('/');
+      var path = this.filename.split('/');
       path.pop();
-      return path === '/' ? path : path.join('/');
+      var parent = path.join('/');
+      return this.isRoot || parent.trim() === '' ? '/' : path.join('/');
     }
   },
   methods: {
@@ -7429,6 +7449,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters.folderId(this.path);
     },
     // files list of the current folder
+    folder: function folder() {
+      return this.files[this.folderId];
+    },
     folderContent: function folderContent() {
       return this.folders[this.folderId];
     },
@@ -18950,7 +18973,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".icon-confirm[data-v-81440b78] {\n  transform: rotate(180deg);\n}\n", ""]);
+exports.push([module.i, ".icon-confirm[data-v-81440b78] {\n  transform: rotate(180deg);\n}\n.gallery-navigation[data-v-81440b78] {\n  display: flex;\n  position: absolute;\n  height: 44px;\n  align-items: center;\n}\n.gallery-navigation__title[data-v-81440b78] {\n    margin: 0;\n}\n@media (min-width: 0px) and (max-width: 400px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 0px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 8px;\n}\n}\n@media (min-width: 400px) and (max-width: 1024px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 14.66667px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 0px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 44px;\n}\n}\n@media (min-width: 1024px) and (max-width: 1800px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 11px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 66px;\n}\n}\n@media (min-width: 1800px) and (max-width: 2600px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 22px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 88px;\n}\n}\n", ""]);
 
 
 /***/ }),
@@ -18978,7 +19001,7 @@ exports.push([module.i, ".illustration {\n  min-width: 200px;\n  max-width: 15%;
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "#gallery-grid {\n  display: grid;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  grid-template-columns: repeat(10, 1fr);\n}\n.list-move {\n  transition: transform var(--animation-quick);\n}\n@media (min-width: 0px) and (max-width: 400px) {\n#gallery-grid {\n    margin: 8px 8px 8px 8px;\n    grid-template-columns: repeat(3, 1fr);\n}\n}\n@media (min-width: 400px) and (max-width: 1024px) {\n#gallery-grid {\n    margin: 66px 44px 44px 44px;\n    grid-template-columns: repeat(5, 1fr);\n}\n}\n@media (min-width: 1024px) and (max-width: 1800px) {\n#gallery-grid {\n    margin: 88px 66px 66px 66px;\n    grid-template-columns: repeat(7, 1fr);\n}\n}\n@media (min-width: 1800px) and (max-width: 2600px) {\n#gallery-grid {\n    margin: 88px 88px 88px 88px;\n    grid-template-columns: repeat(9, 1fr);\n}\n}\n", ""]);
+exports.push([module.i, "#gallery-grid {\n  display: grid;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  grid-template-columns: repeat(10, 1fr);\n  position: relative;\n}\n.list-move {\n  transition: transform var(--animation-quick);\n}\n@media (min-width: 0px) and (max-width: 400px) {\n#gallery-grid {\n    padding: 44px 8px 8px 8px;\n    grid-template-columns: repeat(3, 1fr);\n}\n}\n@media (min-width: 400px) and (max-width: 1024px) {\n#gallery-grid {\n    padding: 66px 44px 44px 44px;\n    grid-template-columns: repeat(5, 1fr);\n}\n}\n@media (min-width: 1024px) and (max-width: 1800px) {\n#gallery-grid {\n    padding: 88px 66px 66px 66px;\n    grid-template-columns: repeat(7, 1fr);\n}\n}\n@media (min-width: 1800px) and (max-width: 2600px) {\n#gallery-grid {\n    padding: 88px 88px 88px 88px;\n    grid-template-columns: repeat(9, 1fr);\n}\n}\n", ""]);
 
 
 /***/ }),
@@ -42477,13 +42500,18 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "gallery-navigation", attrs: { role: "toolbar" } },
+    {
+      staticClass: "gallery-navigation",
+      class: { "gallery-navigation--root": _vm.isRoot },
+      attrs: { role: "toolbar" }
+    },
     [
-      _c(
-        "Actions",
-        [
-          !_vm.isRoot
-            ? _c(
+      !_vm.isRoot
+        ? _c(
+            "Actions",
+            { staticClass: "gallery-navigation__back" },
+            [
+              _c(
                 "ActionButton",
                 {
                   attrs: { icon: "icon-confirm" },
@@ -42495,10 +42523,14 @@ var render = function() {
                   )
                 ]
               )
-            : _vm._e()
-        ],
-        1
-      )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("h2", { staticClass: "gallery-navigation__title" }, [
+        _vm._v("\n\t\t" + _vm._s(_vm.name) + "\n\t")
+      ])
     ],
     1
   )
@@ -42586,10 +42618,15 @@ var render = function() {
           attrs: { id: "gallery-grid", role: "grid", name: "list", tag: "div" }
         },
         [
-          _c("Navigation", { key: "navigation", attrs: { path: _vm.path } }),
+          _vm.folder
+            ? _c(
+                "Navigation",
+                _vm._b({ key: "navigation" }, "Navigation", _vm.folder, false)
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _vm._l(_vm.folderList, function(folder) {
-            return _c("Folder", { key: folder.id, attrs: { folder: folder } })
+          _vm._l(_vm.folderList, function(dir) {
+            return _c("Folder", { key: dir.id, attrs: { folder: dir } })
           }),
           _vm._v(" "),
           _vm._l(_vm.fileList, function(file) {

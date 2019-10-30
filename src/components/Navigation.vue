@@ -21,14 +21,17 @@
  -->
 
 <template>
-	<div class="gallery-navigation" role="toolbar">
-		<Actions>
-			<ActionButton v-if="!isRoot"
+	<div :class="{'gallery-navigation--root': isRoot}" class="gallery-navigation" role="toolbar">
+		<Actions v-if="!isRoot" class="gallery-navigation__back">
+			<ActionButton
 				icon="icon-confirm"
 				@click="folderUp">
 				{{ t('gallery', 'Back') }}
 			</ActionButton>
 		</Actions>
+		<h2 class="gallery-navigation__title">
+			{{ name }}
+		</h2>
 	</div>
 </template>
 
@@ -42,23 +45,39 @@ export default {
 		ActionButton,
 		Actions
 	},
+	inheritAttrs: false,
 
 	props: {
-		path: {
+		basename: {
 			type: String,
+			required: true
+		},
+		filename: {
+			type: String,
+			required: true
+		},
+		id: {
+			type: Number,
 			required: true
 		}
 	},
 
 	computed: {
 		isRoot() {
-			return this.path === '/'
+			return this.filename === '/'
+		},
+		name() {
+			if (this.isRoot) {
+				return t('gallery', 'Gallery')
+			}
+			return this.basename
 		},
 		parentPath() {
-			const path = this.path.split('/')
+			const path = this.filename.split('/')
 			path.pop()
-			return path === '/'
-				? path
+			const parent = path.join('/')
+			return this.isRoot || parent.trim() === ''
+				? '/'
 				: path.join('/')
 		}
 	},
@@ -74,5 +93,40 @@ export default {
 <style lang="scss" scoped>
 .icon-confirm {
 	transform: rotate(180deg)
+}
+
+.gallery-navigation {
+	display: flex;
+	position: absolute;
+	height: 44px;
+	align-items: center;
+	&__back {
+	}
+	&__title {
+		margin: 0;
+	}
+}
+
+// generate variants based on grid sizes
+$previous: 0;
+@each $size, $config in get('sizes') {
+	$marginTop: map-get($config, 'marginTop');
+	$marginW: map-get($config, 'marginW');
+	@media (min-width: #{$previous}px) and (max-width: #{$size}px) {
+		.gallery-navigation {
+			// we space this with 2/3 margin top, 1/3 margin bottom
+			top: ($marginTop - 44px) * 2 / 3;
+			// padding-left: $marginW;
+			@if $marginW >= 44px {
+				&__back {
+					margin: 0 (($marginW - 44px) / 2);
+				}
+			}
+			&--root &__title {
+				padding-left: #{$marginW}px;
+			}
+		}
+	}
+	$previous: $size;
 }
 </style>

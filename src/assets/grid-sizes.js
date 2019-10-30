@@ -23,24 +23,24 @@
 // compatible with webpack config, no export
 module.exports = {
 	sizes: {
-		'400px': {
-			marginTop: '8px', // same as grid-gap
-			marginW: '8px', // same as grid-gap
+		400: {
+			marginTop: 44, // same as grid-gap
+			marginW: 8, // same as grid-gap
 			count: 3
 		},
-		'1024px': {
-			marginTop: '66px',
-			marginW: '44px',
+		1024: {
+			marginTop: 66,
+			marginW: 44,
 			count: 5
 		},
-		'1800px': {
-			marginTop: '88px',
-			marginW: '66px',
+		1800: {
+			marginTop: 88,
+			marginW: 66,
 			count: 7
 		},
-		'2600px': {
-			marginTop: '88px',
-			marginW: '88px',
+		2600: {
+			marginTop: 88,
+			marginW: 88,
 			count: 9
 		}
 	}
