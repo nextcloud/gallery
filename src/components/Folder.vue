@@ -21,99 +21,173 @@
  -->
 
 <template>
-	<a class="file"
-		:href="davPath"
-		:aria-label="ariaLabel"
-		@click.prevent="openViewer">
-		<img :srcset="previewUrls"
-			:src="davPath"
-			:alt="basename"
-			:aria-describedby="ariaUuid">
-		<p :id="ariaUuid" class="hidden-visually">{{ basename }}</p>
+	<router-link class="folder"
+		:to="folder.filename"
+		:aria-label="ariaLabel">
+		<div :class="`folder-content--grid-${fileList.length}`" class="folder-content" role="none">
+			<img v-for="file in fileList"
+				:key="file.id"
+				:src="generateImgSrc(file.id)"
+				alt="">
+		</div>
+		<div class="folder-name">
+			<span class="folder-name__icon  icon-folder-white" role="img" />
+			<p :id="ariaUuid" class="folder-name__name">
+				{{ folder.basename }}
+			</p>
+		</div>
 		<div class="cover" role="none" />
-	</a>
+	</router-link>
 </template>
 
 <script>
-import { generateRemoteUrl, generateUrl } from '@nextcloud/router'
-import { getCurrentUser } from '@nextcloud/auth'
+import { generateUrl } from '@nextcloud/router'
 
-const sizes = [64, 256]
+import getPictures from '../services/FileList'
+import cancelableRequest from '../services/CancelableRequest'
 
 export default {
 	name: 'Folder',
 	inheritAttrs: false,
 
 	props: {
-		basename: {
-			type: String,
+		folder: {
+			type: Object,
 			required: true
-		},
-		filename: {
-			type: String,
-			required: true
-		},
-		id: {
-			type: Number,
-			required: true
+		}
+	},
+
+	data() {
+		return {
+			loaded: false,
+			cancelRequest: () => {}
 		}
 	},
 
 	computed: {
-		previewUrls() {
-			return sizes.map((size, index) => generateUrl(`/core/preview?fileId=${this.id}&x=${size}&y=${size}`) + ` ${size}w`)
-		},
-		davPath() {
-			return generateRemoteUrl(`dav/files/${getCurrentUser().uid}`) + this.filename
-		},
 		ariaUuid() {
-			return `image-${this.id}`
+			return `folder-${this.folder.id}`
 		},
 		ariaLabel() {
-			return t('gallery', 'Open the full size {name} image', { name: this.basename })
+			return t('gallery', 'Open the "{name}" sub-directory', { name: this.folder.basename })
+		},
+
+		// global lists
+		files() {
+			return this.$store.getters.files
+		},
+		folders() {
+			return this.$store.getters.folders
+		},
+
+		// files list of the current folder
+		folderContent() {
+			return this.folders[this.folder.id]
+		},
+		fileList() {
+			return this.folderContent
+				? this.folderContent
+					.slice(0, 4) // only get the 4 first images
+					.map(id => this.files[id])
+					.filter(file => !!file)
+				: []
 		}
 	},
 
+	async created() {
+		// init cancellable request
+		const { request, cancel } = cancelableRequest(getPictures)
+		this.cancelRequest = cancel
+
+		// get data
+		const { files, folders } = await request(this.folder.filename)
+		// this.cancelRequest('Stop!')
+		this.$store.dispatch('updateFolders', { id: this.folder.id, files, folders })
+		this.$store.dispatch('updateFiles', { folder: this.folder, files, folders })
+	},
+
+	beforeDestroy() {
+		this.cancelRequest()
+	},
+
 	methods: {
-		openViewer() {
-			OCA.Viewer.open(this.filename)
+		generateImgSrc(id) {
+			return generateUrl(`/core/preview?fileId=${id}&x=${256}&y=${256}&a=true`) + ` ${256}w`
+		},
+
+		fetch() {
 		}
 	}
 
 }
 </script>
 
-<style lang="scss">
-.file {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+<style lang="scss" scoped>
+@import '../mixins/FileFolder.scss';
 
+.folder-content {
+	position: absolute;
+	display: grid;
+	width: 100%;
+	height: 100%;
+	// folder layout if less than 4 pictures
+	&--grid-1 {
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+	}
+	&--grid-2 {
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1fr;
+	}
+	&--grid-3 {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		img:first-child {
+			grid-column: span 2;
+		}
+	}
+	&--grid-4 {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+	}
 	img {
 		width: 100%;
-	}
+		height: 100%;
 
-	.cover {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 0;
-		height: 0;
-		transition: opacity var(--animation-quick) ease-in-out;
-		opacity: 0;
-		background-color: var(--color-main-text);
+		object-fit: cover;
 	}
+}
 
+.folder-name {
+	position: absolute;
+	z-index: 3;
+	display: flex;
+	overflow: hidden;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	transition: opacity var(--animation-quick) ease-in-out;
+	opacity: 0;
+	&__icon {
+		height: 40%;
+		margin-top: 30%;
+		background-size: 40%;
+	}
+	&__name {
+		text-align: center;
+		color: var(--color-main-background);
+		text-shadow: 0 0 8px var(--color-main-text);
+		font-size: 18px;
+	}
+}
+
+.folder {
 	&.active,
 	&:active,
 	&:hover,
 	&:focus {
-		.cover {
-			display: block;
-			width: 100%;
-			height: 100%;
-			opacity: .2;
+		.folder-name {
+			opacity: 1;
 		}
 	}
 }

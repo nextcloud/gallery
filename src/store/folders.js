@@ -19,41 +19,51 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+import Vue from 'vue'
 
 const state = {
-	folders: {
-		'/Photos': [6860]
-	}
+	paths: {},
+	folders: {}
 }
 
 const mutations = {
-	updateFolders(state, { path, files, folders }) {
-		// copy old list
-		const oldList = path in state.folders
-			&& state.folders[path].slice(0)
-
-		// reset list
-		state.folders[path] = []
-
+	/**
+	 * Index folders paths and ids
+	 *
+	 * @param {Object} state vuex state
+	 * @param {Object} data destructuring object
+	 * @param {number} data.id current folder id
+	 * @param {Array} data.files list of files
+	 */
+	updateFolders(state, { id, files }) {
 		if (files.length > 0) {
 			// sort by last modified
 			const list = files.sort((a, b) => {
 				return new Date(b.lastmod).getTime() - new Date(a.lastmod).getTime()
 			})
 
-			// append ids
-			state.folders[path].push(...list.map(file => file.id))
+			// Set folder list
+			Vue.set(state.folders, id, list.map(file => file.id))
 		}
+	},
 
-		if (oldList) {
-			const removedFiles = oldList.filter(id => !files.includes(id))
-			console.info('removedFiles', removedFiles)
-		}
+	/**
+	 * Index folders paths and ids
+	 *
+	 * @param {Object} state vuex state
+	 * @param {Object} data destructuring object
+	 * @param {string} data.path path of this folder
+	 * @param {number} data.id id of this folder
+	 */
+	addPath(state, { path, id }) {
+		Vue.set(state.paths, path, id)
 	}
 }
 
 const getters = {
-	folders: state => state.folders
+	folders: state => state.folders,
+	folder: state => id => state.folders[id],
+	folderId: state => path => state.paths[path]
 }
 
 const actions = {
@@ -62,13 +72,27 @@ const actions = {
 	 *
 	 * @param {Object} context vuex context
 	 * @param {Object} data destructuring object
-	 * @param {string} data.path current path
+	 * @param {number} data.id current folder id
 	 * @param {Array} data.files list of files
 	 * @param {Array} data.folders list of folders
 	 */
-	updateFolders(context, { path, files, folders }) {
-		setTimeout(() => context.commit('updateFolders', { path, files, folders }), 3000)
+	updateFolders(context, { id, files, folders }) {
+		context.commit('updateFolders', { id, files })
 
+		// then add each folders path indexes
+		folders.forEach(folder => context.commit('addPath', { path: folder.filename, id: folder.id }))
+	},
+
+	/**
+	 * Index folders paths and ids
+	 *
+	 * @param {Object} context vuex context
+	 * @param {Object} data destructuring object
+	 * @param {string} data.path path of this folder
+	 * @param {number} data.id id of this folder
+	 */
+	addPath(context, { path, id }) {
+		context.commit('addPath', { path, id })
 	}
 }
 

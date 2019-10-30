@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
+ * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
  * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -20,28 +20,19 @@
  *
  */
 
-// compatible with webpack config, no export
-module.exports = {
-	sizes: {
-		'400px': {
-			marginTop: '8px', // same as grid-gap
-			marginW: '8px', // same as grid-gap
-			count: 3
-		},
-		'1024px': {
-			marginTop: '66px',
-			marginW: '44px',
-			count: 5
-		},
-		'1800px': {
-			marginTop: '88px',
-			marginW: '66px',
-			count: 7
-		},
-		'2600px': {
-			marginTop: '88px',
-			marginW: '88px',
-			count: 9
-		}
-	}
-}
+export default `<?xml version="1.0"?>
+			<d:propfind xmlns:d="DAV:"
+				xmlns:oc="http://owncloud.org/ns"
+				xmlns:nc="http://nextcloud.org/ns"
+				xmlns:ocs="http://open-collaboration-services.org/ns">
+				<d:prop>
+					<d:getlastmodified />
+					<d:getetag />
+					<d:getcontenttype />
+					<oc:fileid />
+					<d:getcontentlength />
+					<nc:has-preview />
+					<oc:favorite />
+					<d:resourcetype />
+				</d:prop>
+			</d:propfind>`

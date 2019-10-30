@@ -36,6 +36,20 @@ const mutations = {
 		files.forEach(file => {
 			Vue.set(state.files, file.id, file)
 		})
+	},
+
+	/**
+	 * Set a folder subfolders
+	 *
+	 * @param {Object} state the store mutations
+	 * @param {Object} data destructuring object
+	 * @param {number} data.id current folder id
+	 * @param {Array} data.folders list of folders
+	 */
+	setSubFolders(state, { id, folders }) {
+		if (state.files[id]) {
+			Vue.set(state.files[id], 'folders', [...folders.map(folder => folder.id)])
+		}
 	}
 }
 
@@ -48,10 +62,15 @@ const actions = {
 	 * Increment the number of contacts accepted
 	 *
 	 * @param {Object} context the store mutations
-	 * @param {Array} files the store mutations
+	 * @param {Object} data destructuring object
+	 * @param {Object} data.folder current folder fileinfo
+	 * @param {Array} data.files list of files
+	 * @param {Array} data.folders list of folders within current folder
 	 */
-	updateFiles(context, files) {
-		context.commit('updateFiles', files)
+	updateFiles(context, { folder, files, folders }) {
+		// we want all the FileInfo! Folders included!
+		context.commit('updateFiles', [folder, ...files, ...folders])
+		context.commit('setSubFolders', { id: folder.id, folders })
 	}
 }
 

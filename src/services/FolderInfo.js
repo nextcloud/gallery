@@ -21,57 +21,29 @@
  */
 
 import client from './DavClient'
+import request from './DavRequest'
 
 /**
  * List files from a folder and filter out unwanted mimes
  *
  * @param {String} path the path relative to the user root
- * @param {Object} [options] optional options for axios
  * @returns {Array} the file list
  */
-export default async function(path, options) {
+export default async function(path) {
 	// getDirectoryContents doesn't accept / for root
 	const fixedPath = path === '/' ? '' : path
 
 	// fetch listing
-	const response = await client.getDirectoryContents(fixedPath, Object.assign({
-		data: `<?xml version="1.0"?>
-			<d:propfind xmlns:d="DAV:"
-				xmlns:oc="http://owncloud.org/ns"
-				xmlns:nc="http://nextcloud.org/ns"
-				xmlns:ocs="http://open-collaboration-services.org/ns">
-				<d:prop>
-					<d:getlastmodified />
-					<d:getetag />
-					<d:getcontenttype />
-					<oc:fileid />
-					<d:getcontentlength />
-					<nc:has-preview />
-					<oc:favorite />
-					<d:resourcetype />
-				</d:prop>
-			</d:propfind>`,
+	const response = await client.stat(fixedPath, {
+		data: request,
 		details: true
-	}, options))
+	})
 
-	const list = response.data
-		.map(entry => {
-			return Object.assign({
-				id: parseInt(entry.props.fileid),
-				isFavorite: entry.props.favorite !== '0',
-				hasPreview: entry.props['has-preview'] !== 'false'
-			}, entry)
-		})
+	const entry = response.data
+	return Object.assign({
+		id: parseInt(entry.props.fileid),
+		isFavorite: entry.props.favorite !== '0',
+		hasPreview: entry.props['has-preview'] !== 'false'
+	}, entry)
 
-	const folders = []
-	const files = []
-	for (let entry of list) {
-		if (entry.type === 'directory') {
-			folders.push(entry)
-		} else if (entry.mime === 'image/jpeg') {
-			files.push(entry)
-		}
-	}
-
-	return { folders, files }
 }

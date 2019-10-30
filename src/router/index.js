@@ -39,7 +39,7 @@ export default new Router({
 			component: Grid,
 			props: route => ({
 				// always lead current path with a slash
-				path: `/${route.params.path ? route.params.path : ''}`
+				path: `/${route.params.path ? route.params.path : ''}`.replace(/^\/\//, '/')
 			}),
 			name: 'root',
 			children: [
@@ -49,6 +49,7 @@ export default new Router({
 					component: Grid
 				}
 			]
-		}
+		},
+		{ path: '*', redirect: { name: 'root' } }
 	]
 })

@@ -109,6 +109,7 @@ export default {
 
 <style lang="scss">
 .illustration {
+	min-width: 200px;
 	max-width: 15%;
 	width: 300px;
 	margin: auto;

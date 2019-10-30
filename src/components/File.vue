@@ -102,49 +102,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.file {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+<style lang="scss" scoped>
+@import '../mixins/FileFolder.scss';
 
-	img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
+img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
 
-		object-fit: cover;
-	}
-
-	.cover {
-		// We want nice squares despite anything that is in it.
-		// The .cover is what makes the exact square size of the grid.
-		// We use padding-bottom because padding with percentage
-		// always refers to the width. And we only want to fit
-		// the css grid's width.
-		width: 100%;
-		padding-bottom: 100%;
-		transition: opacity var(--animation-quick) ease-in-out;
-		opacity: 0;
-		background-color: var(--color-main-text);
-	}
-
-	&.active,
-	&:active,
-	&:hover,
-	&:focus {
-		.cover {
-			opacity: .2;
-		}
-	}
-}
-
-.fade-enter-active, .fade-leave-active {
-	transition: opacity var(--animation-quick) ease-in-out;
-}
-
-.fade-enter, .fade-leave-to {
-	opacity: 0;
+	object-fit: cover;
 }
 </style>

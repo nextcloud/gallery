@@ -29,7 +29,7 @@
 		{{ t('gallery', 'An error occurred') }}
 	</EmptyContent>
 	<EmptyContent v-else-if="!loading && isEmpty" illustration-name="empty">
-		{{ t('gallery', 'This folder is empty') }}
+		{{ t('gallery', 'This folder does not contain pictures') }}
 	</EmptyContent>
 
 	<!-- Folder content -->
@@ -38,21 +38,29 @@
 		role="grid"
 		name="list"
 		tag="div">
+		<Navigation key="navigation" :path="path" />
+		<Folder v-for="folder in folderList" :key="folder.id" :folder="folder" />
 		<File v-for="file in fileList" :key="file.id" v-bind="file" />
 	</transition-group>
 </template>
 
 <script>
+import getFolder from '../services/FolderInfo'
 import getPictures from '../services/FileList'
+// import searchPhotos from '../services/PhotoSearch'
 
 import EmptyContent from './EmptyContent'
+import Folder from '../components/Folder'
 import File from '../components/File'
+import Navigation from '../components/Navigation'
 
 export default {
 	name: 'Grid',
 	components: {
 		EmptyContent,
-		File
+		File,
+		Folder,
+		Navigation
 	},
 	props: {
 		path: {
@@ -72,19 +80,52 @@ export default {
 	},
 
 	computed: {
-		folders() {
-			return this.$store.getters.folders
-		},
+		// global lists
 		files() {
 			return this.$store.getters.files
 		},
-		fileList() {
-			return this.folders[this.path]
-				.map(id => this.files[id])
-				.filter(file => !!file)
+		folders() {
+			return this.$store.getters.folders
 		},
+
+		// current folder id from current path
+		folderId() {
+			return this.$store.getters.folderId(this.path)
+		},
+
+		// files list of the current folder
+		folderContent() {
+			return this.folders[this.folderId]
+		},
+		fileList() {
+			return this.folderContent
+				&& this.folderContent
+					.map(id => this.files[id])
+					.filter(file => !!file)
+		},
+
+		// subfolders of the current folder
+		subFolders() {
+			return this.folderId
+				&& this.files[this.folderId]
+				&& this.files[this.folderId].folders
+		},
+		folderList() {
+			return this.subFolders
+				&& this.subFolders
+					.map(id => this.files[id])
+					.filter(file => !!file)
+		},
+
+		// is current folder empty?
 		isEmpty() {
-			return !this.fileList || this.fileList.length === 0
+			return !this.haveFiles && !this.haveFolders
+		},
+		haveFiles() {
+			return !!this.fileList && this.fileList.length !== 0
+		},
+		haveFolders() {
+			return !!this.folderList && this.folderList.length !== 0
 		}
 	},
 
@@ -95,21 +136,32 @@ export default {
 	},
 
 	beforeMount() {
-		this.fetchFolderContent(this.path)
+		this.fetchFolderContent()
 	},
 
 	methods: {
 		async fetchFolderContent() {
-			this.$emit('update:loading', true)
+			// if we don't already have some cached data let's show a loader
+			if (!this.files[this.folderId]) {
+				this.$emit('update:loading', true)
+			}
 			this.error = null
 
 			try {
+				// get current folder
+				const folder = await getFolder(this.path)
+				this.$store.dispatch('addPath', { path: this.path, id: folder.id })
+
+				// get content
 				const { files, folders } = await getPictures(this.path)
-				this.$store.dispatch('updateFolders', { path: this.path, files, folders })
-				this.$store.dispatch('updateFiles', files)
+				this.$store.dispatch('updateFolders', { id: folder.id, files, folders })
+				this.$store.dispatch('updateFiles', { folder, files, folders })
 			} catch (error) {
 				if (error.response && error.response.status === 404) {
 					this.error = 404
+					setTimeout(() => {
+						this.$router.push({ name: 'root' })
+					}, 3000)
 				} else {
 					this.error = error
 				}
@@ -129,14 +181,25 @@ export default {
 	display: grid;
 	align-items: center;
 	justify-content: center;
-	margin: 8px;
-
-	// TODO: media queries based on our config
-	grid-template-columns: repeat(8, 1fr);
 	gap: 8px;
+	grid-template-columns: repeat(10, 1fr);
 }
 
 .list-move {
 	transition: transform var(--animation-quick);
+}
+
+$previous: 0px;
+@each $size, $config in get('sizes') {
+	$count: map-get($config, 'count');
+	$marginTop: map-get($config, 'marginTop');
+	$marginW: map-get($config, 'marginW');
+	@media (min-width: $previous) and (max-width: $size) {
+		#gallery-grid {
+			margin: $marginTop $marginW $marginW $marginW;
+			grid-template-columns: repeat($count, 1fr);
+		}
+	}
+	$previous: $size;
 }
 </style>
