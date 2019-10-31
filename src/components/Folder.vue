@@ -24,14 +24,23 @@
 	<router-link class="folder"
 		:to="folder.filename"
 		:aria-label="ariaLabel">
-		<div :class="`folder-content--grid-${fileList.length}`" class="folder-content" role="none">
-			<img v-for="file in fileList"
-				:key="file.id"
-				:src="generateImgSrc(file.id)"
-				alt="">
-		</div>
-		<div class="folder-name">
-			<span class="folder-name__icon  icon-folder-white" role="img" />
+		<transition name="fade">
+			<div v-show="loaded"
+				:class="`folder-content--grid-${fileList.length}`"
+				class="folder-content"
+				role="none">
+				<img v-for="file in fileList"
+					:key="file.id"
+					:src="generateImgSrc(file)"
+					alt=""
+					@load="loaded = true">
+			</div>
+		</transition>
+		<div :class="{'folder-name--empty': isEmpty}"
+			class="folder-name">
+			<span :class="{'icon-white': !isEmpty}"
+				class="folder-name__icon  icon-folder"
+				role="img" />
 			<p :id="ariaUuid" class="folder-name__name">
 				{{ folder.basename }}
 			</p>
@@ -44,7 +53,7 @@
 import { generateUrl } from '@nextcloud/router'
 
 import getPictures from '../services/FileList'
-import cancelableRequest from '../services/CancelableRequest'
+import cancelableRequest from '../utils/CancelableRequest'
 
 export default {
 	name: 'Folder',
@@ -91,6 +100,11 @@ export default {
 					.map(id => this.files[id])
 					.filter(file => !!file)
 				: []
+		},
+
+		// folder is empty
+		isEmpty() {
+			return this.fileList.length === 0
 		}
 	},
 
@@ -99,11 +113,18 @@ export default {
 		const { request, cancel } = cancelableRequest(getPictures)
 		this.cancelRequest = cancel
 
-		// get data
-		const { files, folders } = await request(this.folder.filename)
-		// this.cancelRequest('Stop!')
-		this.$store.dispatch('updateFolders', { id: this.folder.id, files, folders })
-		this.$store.dispatch('updateFiles', { folder: this.folder, files, folders })
+		try {
+			// get data
+			const { files, folders } = await request(this.folder.filename)
+			// this.cancelRequest('Stop!')
+			this.$store.dispatch('updateFolders', { id: this.folder.id, files, folders })
+			this.$store.dispatch('updateFiles', { folder: this.folder, files, folders })
+		} catch (error) {
+			if (error.response && error.response.status) {
+				console.error('Failed to get folder content', this.folder, error.response)
+			}
+			// else we just cancelled the request
+		}
 	},
 
 	beforeDestroy() {
@@ -111,8 +132,9 @@ export default {
 	},
 
 	methods: {
-		generateImgSrc(id) {
-			return generateUrl(`/core/preview?fileId=${id}&x=${256}&y=${256}&a=true`) + ` ${256}w`
+		generateImgSrc({ id, etag }) {
+			// use etag to force cache reload if file changed
+			return generateUrl(`/core/preview?fileId=${id}&x=${256}&y=${256}&a=true&v=${etag}`)
 		},
 
 		fetch() {
@@ -178,6 +200,13 @@ export default {
 		color: var(--color-main-background);
 		text-shadow: 0 0 8px var(--color-main-text);
 		font-size: 18px;
+	}
+	&--empty {
+		opacity: 1;
+		.folder-name__name {
+			color: var(--color-main-text);
+			text-shadow: 0 0 8px var(--color-main-background);
+		}
 	}
 }
 

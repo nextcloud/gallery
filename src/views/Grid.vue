@@ -54,6 +54,8 @@ import Folder from '../components/Folder'
 import File from '../components/File'
 import Navigation from '../components/Navigation'
 
+import cancelableRequest from '../utils/CancelableRequest'
+
 export default {
 	name: 'Grid',
 	components: {
@@ -75,7 +77,9 @@ export default {
 
 	data() {
 		return {
-			error: null
+			error: null,
+			cancelRequestFolder: () => {},
+			cancelRequestPictures: () => {}
 		}
 	},
 
@@ -101,10 +105,14 @@ export default {
 			return this.folders[this.folderId]
 		},
 		fileList() {
-			return this.folderContent
+			const t0 = performance.now()
+			const list = this.folderContent
 				&& this.folderContent
 					.map(id => this.files[id])
 					.filter(file => !!file)
+			const t1 = performance.now()
+			console.debug('perf: fileList', `${t1 - t0}ms`)
+			return list
 		},
 
 		// subfolders of the current folder
@@ -114,10 +122,14 @@ export default {
 				&& this.files[this.folderId].folders
 		},
 		folderList() {
-			return this.subFolders
+			const t0 = performance.now()
+			const list = this.subFolders
 				&& this.subFolders
 					.map(id => this.files[id])
 					.filter(file => !!file)
+			const t1 = performance.now()
+			console.debug('perf: folderList', `${t1 - t0}ms`)
+			return list
 		},
 
 		// is current folder empty?
@@ -133,42 +145,63 @@ export default {
 	},
 
 	watch: {
-		path() {
+		path(path) {
+			console.debug('changed:', path)
 			this.fetchFolderContent()
 		}
 	},
 
-	beforeMount() {
+	async beforeMount() {
+		console.debug('beforemount: GRID')
 		this.fetchFolderContent()
 	},
 
 	methods: {
 		async fetchFolderContent() {
+			console.debug('start: fetchFolderContent', this.path)
+			// cancel any pending requests
+			this.cancelRequestFolder()
+			this.cancelRequestPictures()
+
+			// close any potential opened viewer
+			OCA.Viewer.close()
+
 			// if we don't already have some cached data let's show a loader
 			if (!this.files[this.folderId]) {
 				this.$emit('update:loading', true)
 			}
 			this.error = null
 
+			// init cancellable request
+			const { request: folderRequest, cancel: cancelRequestFolder } = cancelableRequest(getFolder)
+			const { request: picturesRequest, cancel: cancelRequestPictures } = cancelableRequest(getPictures)
+			this.cancelRequestFolder = cancelRequestFolder
+			this.cancelRequestPictures = cancelRequestPictures
+
 			try {
 				// get current folder
-				const folder = await getFolder(this.path)
+				const folder = await folderRequest(this.path)
 				this.$store.dispatch('addPath', { path: this.path, id: folder.id })
 
 				// get content
-				const { files, folders } = await getPictures(this.path)
+				const { files, folders } = await picturesRequest(this.path)
 				this.$store.dispatch('updateFolders', { id: folder.id, files, folders })
 				this.$store.dispatch('updateFiles', { folder, files, folders })
+				console.debug('end: fetchFolderContent', this.path)
 			} catch (error) {
-				if (error.response && error.response.status === 404) {
-					this.error = 404
-					setTimeout(() => {
-						this.$router.push({ name: 'root' })
-					}, 3000)
-				} else {
-					this.error = error
+				if (error.response && error.response.status) {
+					if (error.response.status === 404) {
+						this.error = 404
+						setTimeout(() => {
+							this.$router.push({ name: 'root' })
+						}, 3000)
+					} else {
+						this.error = error
+					}
 				}
+				// cancelled request, moving on...
 				console.error(error)
+				console.debug('cancelled: fetchFolderContent', this.path)
 			} finally {
 				// done loading even with errors
 				this.$emit('update:loading', false)
