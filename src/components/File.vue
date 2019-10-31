@@ -25,6 +25,7 @@
 		:href="davPath"
 		:aria-label="ariaLabel"
 		@click.prevent="openViewer">
+		<!-- image and loading placeholder -->
 		<transition name="fade">
 			<img v-show="loaded"
 				:src="src"
@@ -32,6 +33,11 @@
 				:aria-describedby="ariaUuid"
 				@load="loaded = true">
 		</transition>
+		<svg v-if="!loaded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+			<path fill="#dedede" d="M8.36 10a1.12 1.12 0 00-.86 1.1v27.81c0 .58.53 1.09 1.1 1.09h32.81c.57 0 1.09-.53 1.09-1.09V11.53c0-.84-.66-1.53-1.29-1.53zM10 12.5h30V25l-2.5-2.5-7.5 10-7.5-7.5-10 10H10zm6.25 2.5a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" />
+		</svg>
+
+		<!-- image name and cover -->
 		<p :id="ariaUuid" class="hidden-visually">{{ basename }}</p>
 		<div class="cover" role="none" />
 	</a>
@@ -120,5 +126,10 @@ img {
 	height: 100%;
 
 	object-fit: cover;
+}
+svg {
+	position: absolute;
+	width: 70%;
+	height: 70%;
 }
 </style>

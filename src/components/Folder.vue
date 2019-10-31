@@ -189,7 +189,7 @@ export default {
 	width: 100%;
 	height: 100%;
 	transition: opacity var(--animation-quick) ease-in-out;
-	opacity: 0;
+	opacity: 1;
 	&__icon {
 		height: 40%;
 		margin-top: 30%;
@@ -201,8 +201,9 @@ export default {
 		text-shadow: 0 0 8px var(--color-main-text);
 		font-size: 18px;
 	}
+
+	// if no img, let's display the folder icon as default black
 	&--empty {
-		opacity: 1;
 		.folder-name__name {
 			color: var(--color-main-text);
 			text-shadow: 0 0 8px var(--color-main-background);
@@ -210,13 +211,22 @@ export default {
 	}
 }
 
+// Cover management if not empty
 .folder {
+	.folder-name:not(.folder-name--empty) {
+		+ .cover {
+			opacity: .3;
+		}
+	}
+
 	&.active,
 	&:active,
 	&:hover,
 	&:focus {
-		.folder-name {
-			opacity: 1;
+		.folder-name:not(.folder-name--empty) {
+			&, & + .cover {
+				opacity: 0;
+			}
 		}
 	}
 }
