@@ -219,12 +219,20 @@ export default {
 	transition: transform var(--animation-quick);
 }
 
+// TODO: use mixins/GridSizes as soon as node-sass supports it
 $previous: 0;
 @each $size, $config in get('sizes') {
 	$count: map-get($config, 'count');
 	$marginTop: map-get($config, 'marginTop');
 	$marginW: map-get($config, 'marginW');
-	@media (min-width: #{$previous}px) and (max-width: #{$size}px) {
+
+	// if this is the last entry, only use min-width
+	$rule: '(min-width: #{$previous}px) and (max-width: #{$size}px)';
+	@if $size == 'max' {
+		$rule: '(min-width: #{$previous}px)';
+	}
+
+	@media #{$rule} {
 		#gallery-grid {
 			padding: #{$marginTop}px #{$marginW}px #{$marginW}px #{$marginW}px;
 			grid-template-columns: repeat($count, 1fr);

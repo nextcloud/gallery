@@ -30,7 +30,7 @@ module.exports = {
 		},
 		600: {
 			marginTop: 66,
-			marginW: 8,
+			marginW: 8, // same as grid-gap
 			count: 4
 		},
 		1024: {
@@ -57,6 +57,12 @@ module.exports = {
 			marginTop: 88,
 			marginW: 88,
 			count: 9
+		},
+		// excessive value on purpose
+		max: {
+			marginTop: 88,
+			marginW: 88,
+			count: 10
 		}
 	}
 }

@@ -108,11 +108,19 @@ export default {
 }
 
 // generate variants based on grid sizes
+// TODO: use mixins/GridSizes as soon as node-sass supports it
 $previous: 0;
 @each $size, $config in get('sizes') {
 	$marginTop: map-get($config, 'marginTop');
 	$marginW: map-get($config, 'marginW');
-	@media (min-width: #{$previous}px) and (max-width: #{$size}px) {
+
+	// if this is the last entry, only use min-width
+	$rule: '(min-width: #{$previous}px) and (max-width: #{$size}px)';
+	@if $size == 'max' {
+		$rule: '(min-width: #{$previous}px)';
+	}
+
+	@media #{$rule} {
 		.gallery-navigation {
 			// we space this with 2/3 margin top, 1/3 margin bottom
 			top: ($marginTop - 44px) * 2 / 3;
