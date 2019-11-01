@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "-" + "e36d64638f660d85ad08" + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "-" + "afb1383cfd060a5e8050" + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -6819,6 +6819,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
 /* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_1__);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
 //
 //
 //
@@ -6862,7 +6870,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-var sizes = [64, 256, 1024, 4096];
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'File',
   inheritAttrs: false,
@@ -6875,6 +6882,10 @@ var sizes = [64, 256, 1024, 4096];
       type: String,
       required: true
     },
+    etag: {
+      type: String,
+      required: true
+    },
     id: {
       type: Number,
       required: true
@@ -6882,21 +6893,12 @@ var sizes = [64, 256, 1024, 4096];
   },
   data: function data() {
     return {
-      loaded: false
+      loaded: false,
+      img: new Image(),
+      src: ''
     };
   },
   computed: {
-    previewUrls: function previewUrls() {
-      var _this = this;
-
-      return sizes.map(function (size, index) {
-        return Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateUrl"])("/core/preview?fileId=".concat(_this.id, "&x=").concat(size, "&y=").concat(size, "&a=true")) + " ".concat(size, "w");
-      });
-    },
-    // TODO: automatically build based on our config
-    previewSizes: function previewSizes() {
-      return ['(max-width: 320px) 280px', '(max-width: 480px) 440px', '1000px'];
-    },
     davPath: function davPath() {
       return Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateRemoteUrl"])("dav/files/".concat(Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_1__["getCurrentUser"])().uid)) + this.filename;
     },
@@ -6909,10 +6911,46 @@ var sizes = [64, 256, 1024, 4096];
       });
     }
   },
+  created: function created() {
+    var _this = this;
+
+    // Allow us to cancel the img loading on destroy
+    // use etag to force cache reload if file changed
+    this.img.src = Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateUrl"])("/core/preview?fileId=".concat(this.id, "&x=", 1024, "&y=", 1024, "&a=true&v=").concat(this.etag));
+    this.img.addEventListener('load', function () {
+      _this.src = _this.img.src;
+    });
+  },
+  beforeDestroy: function beforeDestroy() {
+    // cancel any pending load
+    this.img.src = '';
+    this.src = '';
+  },
   methods: {
     openViewer: function openViewer() {
       OCA.Viewer.open(this.filename);
-    }
+    },
+    getImage: function () {
+      var _getImage = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getImage() {
+        return _getImage.apply(this, arguments);
+      }
+
+      return getImage;
+    }()
   }
 });
 
@@ -6930,11 +6968,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
 /* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_FileList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/FileList */ "./src/services/FileList.js");
-/* harmony import */ var _services_CancelableRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/CancelableRequest */ "./src/services/CancelableRequest.js");
+/* harmony import */ var _utils_CancelableRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/CancelableRequest */ "./src/utils/CancelableRequest.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7024,6 +7071,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }).filter(function (file) {
         return !!file;
       }) : [];
+    },
+    // folder is empty
+    isEmpty: function isEmpty() {
+      return this.fileList.length === 0;
     }
   },
   created: function () {
@@ -7037,13 +7088,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               // init cancellable request
-              _cancelableRequest = Object(_services_CancelableRequest__WEBPACK_IMPORTED_MODULE_2__["default"])(_services_FileList__WEBPACK_IMPORTED_MODULE_1__["default"]), request = _cancelableRequest.request, cancel = _cancelableRequest.cancel;
-              this.cancelRequest = cancel; // get data
-
-              _context.next = 4;
+              _cancelableRequest = Object(_utils_CancelableRequest__WEBPACK_IMPORTED_MODULE_2__["default"])(_services_FileList__WEBPACK_IMPORTED_MODULE_1__["default"]), request = _cancelableRequest.request, cancel = _cancelableRequest.cancel;
+              this.cancelRequest = cancel;
+              _context.prev = 2;
+              _context.next = 5;
               return request(this.folder.filename);
 
-            case 4:
+            case 5:
               _ref = _context.sent;
               files = _ref.files;
               folders = _ref.folders;
@@ -7058,13 +7109,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 files: files,
                 folders: folders
               });
+              _context.next = 15;
+              break;
 
-            case 9:
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](2);
+
+              if (_context.t0.response && _context.t0.response.status) {
+                console.error('Failed to get folder content', this.folder, _context.t0.response);
+              } // else we just cancelled the request
+
+
+            case 15:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this);
+      }, _callee, this, [[2, 12]]);
     }));
 
     function created() {
@@ -7077,8 +7139,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.cancelRequest();
   },
   methods: {
-    generateImgSrc: function generateImgSrc(id) {
-      return Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateUrl"])("/core/preview?fileId=".concat(id, "&x=", 256, "&y=", 256, "&a=true")) + " ".concat(256, "w");
+    generateImgSrc: function generateImgSrc(_ref2) {
+      var id = _ref2.id,
+          etag = _ref2.etag;
+      // use etag to force cache reload if file changed
+      return Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateUrl"])("/core/preview?fileId=".concat(id, "&x=", 256, "&y=", 256, "&a=true&v=").concat(etag));
     },
     fetch: function fetch() {}
   }
@@ -7350,12 +7415,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services_FolderInfo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/FolderInfo */ "./src/services/FolderInfo.js");
-/* harmony import */ var _services_FileList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/FileList */ "./src/services/FileList.js");
-/* harmony import */ var _EmptyContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EmptyContent */ "./src/views/EmptyContent.vue");
-/* harmony import */ var _components_Folder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Folder */ "./src/components/Folder.vue");
-/* harmony import */ var _components_File__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/File */ "./src/components/File.vue");
-/* harmony import */ var _components_Navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Navigation */ "./src/components/Navigation.vue");
+/* harmony import */ var _services_FileList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/FileList */ "./src/services/FileList.js");
+/* harmony import */ var _EmptyContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmptyContent */ "./src/views/EmptyContent.vue");
+/* harmony import */ var _components_Folder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Folder */ "./src/components/Folder.vue");
+/* harmony import */ var _components_File__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/File */ "./src/components/File.vue");
+/* harmony import */ var _components_Navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Navigation */ "./src/components/Navigation.vue");
+/* harmony import */ var _utils_CancelableRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/CancelableRequest */ "./src/utils/CancelableRequest.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -7406,8 +7471,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+// import getFolder from '../services/FolderInfo'
  // import searchPhotos from '../services/PhotoSearch'
+
 
 
 
@@ -7416,10 +7482,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Grid',
   components: {
-    EmptyContent: _EmptyContent__WEBPACK_IMPORTED_MODULE_2__["default"],
-    File: _components_File__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Folder: _components_Folder__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Navigation: _components_Navigation__WEBPACK_IMPORTED_MODULE_5__["default"]
+    EmptyContent: _EmptyContent__WEBPACK_IMPORTED_MODULE_1__["default"],
+    File: _components_File__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Folder: _components_Folder__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Navigation: _components_Navigation__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
     path: {
@@ -7433,7 +7499,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      error: null
+      error: null,
+      cancelRequest: function cancelRequest() {}
     };
   },
   computed: {
@@ -7458,11 +7525,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     fileList: function fileList() {
       var _this = this;
 
-      return this.folderContent && this.folderContent.map(function (id) {
+      var t0 = performance.now();
+      var list = this.folderContent && this.folderContent.map(function (id) {
         return _this.files[id];
       }).filter(function (file) {
         return !!file;
       });
+      var t1 = performance.now();
+      console.debug('perf: fileList', "".concat(t1 - t0, "ms"));
+      return list;
     },
     // subfolders of the current folder
     subFolders: function subFolders() {
@@ -7471,11 +7542,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     folderList: function folderList() {
       var _this2 = this;
 
-      return this.subFolders && this.subFolders.map(function (id) {
+      var t0 = performance.now();
+      var list = this.subFolders && this.subFolders.map(function (id) {
         return _this2.files[id];
       }).filter(function (file) {
         return !!file;
       });
+      var t1 = performance.now();
+      console.debug('perf: folderList', "".concat(t1 - t0, "ms"));
+      return list;
     },
     // is current folder empty?
     isEmpty: function isEmpty() {
@@ -7489,50 +7564,76 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   watch: {
-    path: function path() {
+    path: function path(_path) {
+      console.debug('changed:', _path);
       this.fetchFolderContent();
     }
   },
-  beforeMount: function beforeMount() {
-    this.fetchFolderContent();
-  },
+  beforeMount: function () {
+    var _beforeMount = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              console.debug('beforemount: GRID');
+              this.fetchFolderContent();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function beforeMount() {
+      return _beforeMount.apply(this, arguments);
+    }
+
+    return beforeMount;
+  }(),
   methods: {
     fetchFolderContent: function () {
       var _fetchFolderContent = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
+      regeneratorRuntime.mark(function _callee2() {
         var _this3 = this;
 
-        var folder, _ref, files, folders;
+        var _cancelableRequest, request, cancel, _ref, folder, folders, files;
 
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                // if we don't already have some cached data let's show a loader
+                console.debug('start: fetchFolderContent', this.path); // cancel any pending requests
+
+                this.cancelRequest(); // close any potential opened viewer
+
+                OCA.Viewer.close(); // if we don't already have some cached data let's show a loader
+
                 if (!this.files[this.folderId]) {
                   this.$emit('update:loading', true);
                 }
 
-                this.error = null;
-                _context.prev = 2;
-                _context.next = 5;
-                return Object(_services_FolderInfo__WEBPACK_IMPORTED_MODULE_0__["default"])(this.path);
+                this.error = null; // init cancellable request
 
-              case 5:
-                folder = _context.sent;
+                _cancelableRequest = Object(_utils_CancelableRequest__WEBPACK_IMPORTED_MODULE_5__["default"])(_services_FileList__WEBPACK_IMPORTED_MODULE_0__["default"]), request = _cancelableRequest.request, cancel = _cancelableRequest.cancel;
+                this.cancelRequest = cancel;
+                _context2.prev = 7;
+                _context2.next = 10;
+                return request(this.path);
+
+              case 10:
+                _ref = _context2.sent;
+                folder = _ref.folder;
+                folders = _ref.folders;
+                files = _ref.files;
                 this.$store.dispatch('addPath', {
                   path: this.path,
                   id: folder.id
-                }); // get content
-
-                _context.next = 9;
-                return Object(_services_FileList__WEBPACK_IMPORTED_MODULE_1__["default"])(this.path);
-
-              case 9:
-                _ref = _context.sent;
-                files = _ref.files;
-                folders = _ref.folders;
+                });
                 this.$store.dispatch('updateFolders', {
                   id: folder.id,
                   files: files,
@@ -7543,38 +7644,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   files: files,
                   folders: folders
                 });
-                _context.next = 20;
+                console.debug('end: fetchFolderContent', this.path);
+                _context2.next = 25;
                 break;
 
-              case 16:
-                _context.prev = 16;
-                _context.t0 = _context["catch"](2);
-
-                if (_context.t0.response && _context.t0.response.status === 404) {
-                  this.error = 404;
-                  setTimeout(function () {
-                    _this3.$router.push({
-                      name: 'root'
-                    });
-                  }, 3000);
-                } else {
-                  this.error = _context.t0;
-                }
-
-                console.error(_context.t0);
-
               case 20:
-                _context.prev = 20;
+                _context2.prev = 20;
+                _context2.t0 = _context2["catch"](7);
+
+                if (_context2.t0.response && _context2.t0.response.status) {
+                  if (_context2.t0.response.status === 404) {
+                    this.error = 404;
+                    setTimeout(function () {
+                      _this3.$router.push({
+                        name: 'root'
+                      });
+                    }, 3000);
+                  } else {
+                    this.error = _context2.t0;
+                  }
+                } // cancelled request, moving on...
+
+
+                console.error(_context2.t0);
+                console.debug('cancelled: fetchFolderContent', this.path);
+
+              case 25:
+                _context2.prev = 25;
                 // done loading even with errors
                 this.$emit('update:loading', false);
-                return _context.finish(20);
+                return _context2.finish(25);
 
-              case 23:
+              case 28:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[2, 16, 20, 23]]);
+        }, _callee2, this, [[7, 20, 25, 28]]);
       }));
 
       function fetchFolderContent() {
@@ -8048,7 +8154,7 @@ function fromByteArray (uint8) {
 
   var Buffer;
   try {
-    Buffer = __webpack_require__(/*! buffer */ 2).Buffer;
+    Buffer = __webpack_require__(/*! buffer */ 3).Buffer;
   } catch (e) {
   }
 
@@ -11702,7 +11808,7 @@ if (typeof self === 'object') {
 } else {
   // Node.js or Web worker with no crypto support
   try {
-    var crypto = __webpack_require__(/*! crypto */ 3);
+    var crypto = __webpack_require__(/*! crypto */ 4);
     if (typeof crypto.randomBytes !== 'function')
       throw new Error('Not supported');
 
@@ -18945,7 +19051,7 @@ exports.constants = {
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @author John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @license GNU AGPL version 3 or any later version\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with this program. If not, see <http://www.gnu.org/licenses/>.\n *\n */\n.file[data-v-ab80f8a8],\n.folder[data-v-ab80f8a8] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.file .cover[data-v-ab80f8a8],\n  .folder .cover[data-v-ab80f8a8] {\n    z-index: 2;\n    width: 100%;\n    padding-bottom: 100%;\n    transition: opacity var(--animation-quick) ease-in-out;\n    opacity: 0;\n    background-color: var(--color-main-text);\n}\n.file.active .cover[data-v-ab80f8a8], .file:active .cover[data-v-ab80f8a8], .file:hover .cover[data-v-ab80f8a8], .file:focus .cover[data-v-ab80f8a8],\n  .folder.active .cover[data-v-ab80f8a8],\n  .folder:active .cover[data-v-ab80f8a8],\n  .folder:hover .cover[data-v-ab80f8a8],\n  .folder:focus .cover[data-v-ab80f8a8] {\n    opacity: .3;\n}\n.fade-enter-active[data-v-ab80f8a8], .fade-leave-active[data-v-ab80f8a8] {\n  transition: opacity var(--animation-quick) ease-in-out;\n}\n.fade-enter[data-v-ab80f8a8], .fade-leave-to[data-v-ab80f8a8] {\n  opacity: 0;\n}\nimg[data-v-ab80f8a8] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @author John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @license GNU AGPL version 3 or any later version\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with this program. If not, see <http://www.gnu.org/licenses/>.\n *\n */\n.file[data-v-ab80f8a8],\n.folder[data-v-ab80f8a8] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.file .cover[data-v-ab80f8a8],\n  .folder .cover[data-v-ab80f8a8] {\n    z-index: 2;\n    width: 100%;\n    padding-bottom: 100%;\n    transition: opacity var(--animation-quick) ease-in-out;\n    opacity: 0;\n    background-color: var(--color-main-text);\n}\n.file.active .cover[data-v-ab80f8a8], .file:active .cover[data-v-ab80f8a8], .file:hover .cover[data-v-ab80f8a8], .file:focus .cover[data-v-ab80f8a8],\n  .folder.active .cover[data-v-ab80f8a8],\n  .folder:active .cover[data-v-ab80f8a8],\n  .folder:hover .cover[data-v-ab80f8a8],\n  .folder:focus .cover[data-v-ab80f8a8] {\n    opacity: .3;\n}\n.fade-enter-active[data-v-ab80f8a8], .fade-leave-active[data-v-ab80f8a8] {\n  transition: opacity var(--animation-quick) ease-in-out;\n}\n.fade-enter[data-v-ab80f8a8], .fade-leave-to[data-v-ab80f8a8] {\n  opacity: 0;\n}\nimg[data-v-ab80f8a8] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\nsvg[data-v-ab80f8a8] {\n  position: absolute;\n  width: 70%;\n  height: 70%;\n}\n", ""]);
 
 
 /***/ }),
@@ -18959,7 +19065,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @author John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @license GNU AGPL version 3 or any later version\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with this program. If not, see <http://www.gnu.org/licenses/>.\n *\n */\n.file[data-v-8ab848c4],\n.folder[data-v-8ab848c4] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.file .cover[data-v-8ab848c4],\n  .folder .cover[data-v-8ab848c4] {\n    z-index: 2;\n    width: 100%;\n    padding-bottom: 100%;\n    transition: opacity var(--animation-quick) ease-in-out;\n    opacity: 0;\n    background-color: var(--color-main-text);\n}\n.file.active .cover[data-v-8ab848c4], .file:active .cover[data-v-8ab848c4], .file:hover .cover[data-v-8ab848c4], .file:focus .cover[data-v-8ab848c4],\n  .folder.active .cover[data-v-8ab848c4],\n  .folder:active .cover[data-v-8ab848c4],\n  .folder:hover .cover[data-v-8ab848c4],\n  .folder:focus .cover[data-v-8ab848c4] {\n    opacity: .3;\n}\n.fade-enter-active[data-v-8ab848c4], .fade-leave-active[data-v-8ab848c4] {\n  transition: opacity var(--animation-quick) ease-in-out;\n}\n.fade-enter[data-v-8ab848c4], .fade-leave-to[data-v-8ab848c4] {\n  opacity: 0;\n}\n.folder-content[data-v-8ab848c4] {\n  position: absolute;\n  display: grid;\n  width: 100%;\n  height: 100%;\n}\n.folder-content--grid-1[data-v-8ab848c4] {\n    grid-template-columns: 1fr;\n    grid-template-rows: 1fr;\n}\n.folder-content--grid-2[data-v-8ab848c4] {\n    grid-template-columns: 1fr;\n    grid-template-rows: 1fr 1fr;\n}\n.folder-content--grid-3[data-v-8ab848c4] {\n    grid-template-columns: 1fr 1fr;\n    grid-template-rows: 1fr 1fr;\n}\n.folder-content--grid-3 img[data-v-8ab848c4]:first-child {\n      grid-column: span 2;\n}\n.folder-content--grid-4[data-v-8ab848c4] {\n    grid-template-columns: 1fr 1fr;\n    grid-template-rows: 1fr 1fr;\n}\n.folder-content img[data-v-8ab848c4] {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.folder-name[data-v-8ab848c4] {\n  position: absolute;\n  z-index: 3;\n  display: flex;\n  overflow: hidden;\n  flex-direction: column;\n  width: 100%;\n  height: 100%;\n  transition: opacity var(--animation-quick) ease-in-out;\n  opacity: 0;\n}\n.folder-name__icon[data-v-8ab848c4] {\n    height: 40%;\n    margin-top: 30%;\n    background-size: 40%;\n}\n.folder-name__name[data-v-8ab848c4] {\n    text-align: center;\n    color: var(--color-main-background);\n    text-shadow: 0 0 8px var(--color-main-text);\n    font-size: 18px;\n}\n.folder.active .folder-name[data-v-8ab848c4], .folder:active .folder-name[data-v-8ab848c4], .folder:hover .folder-name[data-v-8ab848c4], .folder:focus .folder-name[data-v-8ab848c4] {\n  opacity: 1;\n}\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @author John Molakvoæ <skjnldsv@protonmail.com>\n *\n * @license GNU AGPL version 3 or any later version\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with this program. If not, see <http://www.gnu.org/licenses/>.\n *\n */\n.file[data-v-8ab848c4],\n.folder[data-v-8ab848c4] {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.file .cover[data-v-8ab848c4],\n  .folder .cover[data-v-8ab848c4] {\n    z-index: 2;\n    width: 100%;\n    padding-bottom: 100%;\n    transition: opacity var(--animation-quick) ease-in-out;\n    opacity: 0;\n    background-color: var(--color-main-text);\n}\n.file.active .cover[data-v-8ab848c4], .file:active .cover[data-v-8ab848c4], .file:hover .cover[data-v-8ab848c4], .file:focus .cover[data-v-8ab848c4],\n  .folder.active .cover[data-v-8ab848c4],\n  .folder:active .cover[data-v-8ab848c4],\n  .folder:hover .cover[data-v-8ab848c4],\n  .folder:focus .cover[data-v-8ab848c4] {\n    opacity: .3;\n}\n.fade-enter-active[data-v-8ab848c4], .fade-leave-active[data-v-8ab848c4] {\n  transition: opacity var(--animation-quick) ease-in-out;\n}\n.fade-enter[data-v-8ab848c4], .fade-leave-to[data-v-8ab848c4] {\n  opacity: 0;\n}\n.folder-content[data-v-8ab848c4] {\n  position: absolute;\n  display: grid;\n  width: 100%;\n  height: 100%;\n}\n.folder-content--grid-1[data-v-8ab848c4] {\n    grid-template-columns: 1fr;\n    grid-template-rows: 1fr;\n}\n.folder-content--grid-2[data-v-8ab848c4] {\n    grid-template-columns: 1fr;\n    grid-template-rows: 1fr 1fr;\n}\n.folder-content--grid-3[data-v-8ab848c4] {\n    grid-template-columns: 1fr 1fr;\n    grid-template-rows: 1fr 1fr;\n}\n.folder-content--grid-3 img[data-v-8ab848c4]:first-child {\n      grid-column: span 2;\n}\n.folder-content--grid-4[data-v-8ab848c4] {\n    grid-template-columns: 1fr 1fr;\n    grid-template-rows: 1fr 1fr;\n}\n.folder-content img[data-v-8ab848c4] {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.folder-name[data-v-8ab848c4] {\n  position: absolute;\n  z-index: 3;\n  display: flex;\n  overflow: hidden;\n  flex-direction: column;\n  width: 100%;\n  height: 100%;\n  transition: opacity var(--animation-quick) ease-in-out;\n  opacity: 1;\n}\n.folder-name__icon[data-v-8ab848c4] {\n    height: 40%;\n    margin-top: 30%;\n    background-size: 40%;\n}\n.folder-name__name[data-v-8ab848c4] {\n    text-align: center;\n    color: var(--color-main-background);\n    text-shadow: 0 0 8px var(--color-main-text);\n    font-size: 18px;\n}\n.folder-name--empty .folder-name__name[data-v-8ab848c4] {\n    color: var(--color-main-text);\n    text-shadow: 0 0 8px var(--color-main-background);\n}\n.folder-name--empty + .cover[data-v-8ab848c4] {\n    background-color: var(--color-text-lighter);\n}\n.folder .folder-name:not(.folder-name--empty) + .cover[data-v-8ab848c4] {\n  opacity: .3;\n}\n.folder.active .folder-name[data-v-8ab848c4]:not(.folder-name--empty), .folder.active .folder-name:not(.folder-name--empty) + .cover[data-v-8ab848c4], .folder:active .folder-name[data-v-8ab848c4]:not(.folder-name--empty), .folder:active .folder-name:not(.folder-name--empty) + .cover[data-v-8ab848c4], .folder:hover .folder-name[data-v-8ab848c4]:not(.folder-name--empty), .folder:hover .folder-name:not(.folder-name--empty) + .cover[data-v-8ab848c4], .folder:focus .folder-name[data-v-8ab848c4]:not(.folder-name--empty), .folder:focus .folder-name:not(.folder-name--empty) + .cover[data-v-8ab848c4] {\n  opacity: 0;\n}\n", ""]);
 
 
 /***/ }),
@@ -18973,7 +19079,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\n * @copyright Copyright (c) 2
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".icon-confirm[data-v-81440b78] {\n  transform: rotate(180deg);\n}\n.gallery-navigation[data-v-81440b78] {\n  display: flex;\n  position: absolute;\n  height: 44px;\n  align-items: center;\n}\n.gallery-navigation__title[data-v-81440b78] {\n    margin: 0;\n}\n@media (min-width: 0px) and (max-width: 400px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 0px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 8px;\n}\n}\n@media (min-width: 400px) and (max-width: 1024px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 14.66667px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 0px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 44px;\n}\n}\n@media (min-width: 1024px) and (max-width: 1800px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 11px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 66px;\n}\n}\n@media (min-width: 1800px) and (max-width: 2600px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 22px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 88px;\n}\n}\n", ""]);
+exports.push([module.i, ".icon-confirm[data-v-81440b78] {\n  transform: rotate(180deg);\n}\n.gallery-navigation[data-v-81440b78] {\n  display: flex;\n  position: absolute;\n  height: 44px;\n  align-items: center;\n}\n.gallery-navigation__title[data-v-81440b78] {\n    margin: 0;\n}\n@media (min-width: 0px) and (max-width: 400px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 14.66667px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 8px;\n}\n}\n@media (min-width: 400px) and (max-width: 600px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 14.66667px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 8px;\n}\n}\n@media (min-width: 600px) and (max-width: 1024px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 14.66667px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 0px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 44px;\n}\n}\n@media (min-width: 1024px) and (max-width: 1400px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 14.66667px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 0px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 44px;\n}\n}\n@media (min-width: 1400px) and (max-width: 1800px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 11px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 66px;\n}\n}\n@media (min-width: 1800px) and (max-width: 2200px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 11px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 66px;\n}\n}\n@media (min-width: 2200px) and (max-width: 2600px) {\n.gallery-navigation[data-v-81440b78] {\n    top: 29.33333px;\n}\n.gallery-navigation__back[data-v-81440b78] {\n      margin: 0 22px;\n}\n.gallery-navigation--root .gallery-navigation__title[data-v-81440b78] {\n      padding-left: 88px;\n}\n}\n", ""]);
 
 
 /***/ }),
@@ -19001,7 +19107,7 @@ exports.push([module.i, ".illustration {\n  min-width: 200px;\n  max-width: 15%;
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "#gallery-grid {\n  display: grid;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  grid-template-columns: repeat(10, 1fr);\n  position: relative;\n}\n.list-move {\n  transition: transform var(--animation-quick);\n}\n@media (min-width: 0px) and (max-width: 400px) {\n#gallery-grid {\n    padding: 44px 8px 8px 8px;\n    grid-template-columns: repeat(3, 1fr);\n}\n}\n@media (min-width: 400px) and (max-width: 1024px) {\n#gallery-grid {\n    padding: 66px 44px 44px 44px;\n    grid-template-columns: repeat(5, 1fr);\n}\n}\n@media (min-width: 1024px) and (max-width: 1800px) {\n#gallery-grid {\n    padding: 88px 66px 66px 66px;\n    grid-template-columns: repeat(7, 1fr);\n}\n}\n@media (min-width: 1800px) and (max-width: 2600px) {\n#gallery-grid {\n    padding: 88px 88px 88px 88px;\n    grid-template-columns: repeat(9, 1fr);\n}\n}\n", ""]);
+exports.push([module.i, "#gallery-grid {\n  display: grid;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  grid-template-columns: repeat(10, 1fr);\n  position: relative;\n}\n.list-move {\n  transition: transform var(--animation-quick);\n}\n@media (min-width: 0px) and (max-width: 400px) {\n#gallery-grid {\n    padding: 66px 8px 8px 8px;\n    grid-template-columns: repeat(3, 1fr);\n}\n}\n@media (min-width: 400px) and (max-width: 600px) {\n#gallery-grid {\n    padding: 66px 8px 8px 8px;\n    grid-template-columns: repeat(4, 1fr);\n}\n}\n@media (min-width: 600px) and (max-width: 1024px) {\n#gallery-grid {\n    padding: 66px 44px 44px 44px;\n    grid-template-columns: repeat(5, 1fr);\n}\n}\n@media (min-width: 1024px) and (max-width: 1400px) {\n#gallery-grid {\n    padding: 66px 44px 44px 44px;\n    grid-template-columns: repeat(6, 1fr);\n}\n}\n@media (min-width: 1400px) and (max-width: 1800px) {\n#gallery-grid {\n    padding: 88px 66px 66px 66px;\n    grid-template-columns: repeat(7, 1fr);\n}\n}\n@media (min-width: 1800px) and (max-width: 2200px) {\n#gallery-grid {\n    padding: 88px 66px 66px 66px;\n    grid-template-columns: repeat(8, 1fr);\n}\n}\n@media (min-width: 2200px) and (max-width: 2600px) {\n#gallery-grid {\n    padding: 88px 88px 88px 88px;\n    grid-template-columns: repeat(9, 1fr);\n}\n}\n", ""]);
 
 
 /***/ }),
@@ -31906,7 +32012,7 @@ var booleanValueOf = Boolean.prototype.valueOf;
 var objectToString = Object.prototype.toString;
 var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
 
-var inspectCustom = __webpack_require__(/*! ./util.inspect */ 4).custom;
+var inspectCustom = __webpack_require__(/*! ./util.inspect */ 2).custom;
 var inspectSymbol = (inspectCustom && isSymbol(inspectCustom)) ? inspectCustom : null;
 
 module.exports = function inspect_ (obj, opts, depth, seen) {
@@ -42391,9 +42497,7 @@ var render = function() {
             }
           ],
           attrs: {
-            srcset: _vm.previewUrls,
-            sizes: _vm.previewSizes,
-            src: _vm.davPath,
+            src: _vm.src,
             alt: _vm.basename,
             "aria-describedby": _vm.ariaUuid
           },
@@ -42404,6 +42508,27 @@ var render = function() {
           }
         })
       ]),
+      _vm._v(" "),
+      !_vm.loaded
+        ? _c(
+            "svg",
+            {
+              attrs: {
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 50 50"
+              }
+            },
+            [
+              _c("path", {
+                attrs: {
+                  fill: "#dedede",
+                  d:
+                    "M8.36 10a1.12 1.12 0 00-.86 1.1v27.81c0 .58.53 1.09 1.1 1.09h32.81c.57 0 1.09-.53 1.09-1.09V11.53c0-.84-.66-1.53-1.29-1.53zM10 12.5h30V25l-2.5-2.5-7.5 10-7.5-7.5-10 10H10zm6.25 2.5a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z"
+                }
+              })
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c("p", { staticClass: "hidden-visually", attrs: { id: _vm.ariaUuid } }, [
         _vm._v(_vm._s(_vm.basename))
@@ -42443,37 +42568,61 @@ var render = function() {
       attrs: { to: _vm.folder.filename, "aria-label": _vm.ariaLabel }
     },
     [
-      _c(
-        "div",
-        {
-          staticClass: "folder-content",
-          class: "folder-content--grid-" + _vm.fileList.length,
-          attrs: { role: "none" }
-        },
-        _vm._l(_vm.fileList, function(file) {
-          return _c("img", {
-            key: file.id,
-            attrs: { src: _vm.generateImgSrc(file.id), alt: "" }
-          })
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "folder-name" }, [
-        _c("span", {
-          staticClass: "folder-name__icon  icon-folder-white",
-          attrs: { role: "img" }
-        }),
-        _vm._v(" "),
+      _c("transition", { attrs: { name: "fade" } }, [
         _c(
-          "p",
-          { staticClass: "folder-name__name", attrs: { id: _vm.ariaUuid } },
-          [_vm._v("\n\t\t\t" + _vm._s(_vm.folder.basename) + "\n\t\t")]
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.loaded,
+                expression: "loaded"
+              }
+            ],
+            staticClass: "folder-content",
+            class: "folder-content--grid-" + _vm.fileList.length,
+            attrs: { role: "none" }
+          },
+          _vm._l(_vm.fileList, function(file) {
+            return _c("img", {
+              key: file.id,
+              attrs: { src: _vm.generateImgSrc(file), alt: "" },
+              on: {
+                load: function($event) {
+                  _vm.loaded = true
+                }
+              }
+            })
+          }),
+          0
         )
       ]),
       _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "folder-name",
+          class: { "folder-name--empty": _vm.isEmpty }
+        },
+        [
+          _c("span", {
+            staticClass: "folder-name__icon  icon-folder",
+            class: { "icon-white": !_vm.isEmpty },
+            attrs: { role: "img" }
+          }),
+          _vm._v(" "),
+          _c(
+            "p",
+            { staticClass: "folder-name__name", attrs: { id: _vm.ariaUuid } },
+            [_vm._v("\n\t\t\t" + _vm._s(_vm.folder.basename) + "\n\t\t")]
+          )
+        ]
+      ),
+      _vm._v(" "),
       _c("div", { staticClass: "cover", attrs: { role: "none" } })
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -63057,11 +63206,13 @@ vue__WEBPACK_IMPORTED_MODULE_4__["default"].prototype.n = _nextcloud_l10n__WEBPA
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm.js");
+/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
+/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
-/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _views_Grid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../views/Grid */ "./src/views/Grid.vue");
+/* harmony import */ var url_join__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! url-join */ "./node_modules/url-join/lib/url-join.js");
+/* harmony import */ var url_join__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(url_join__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm.js");
+/* harmony import */ var _views_Grid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../views/Grid */ "./src/views/Grid.vue");
 /**
  * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -63087,27 +63238,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   // if index.php is in the url AND we got this far, then it's working:
   // let's keep using index.php in the url
-  base: Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_2__["generateUrl"])('/apps/gallery', ''),
+  base: Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_0__["generateUrl"])('/apps/gallery', ''),
   linkActiveClass: 'active',
   routes: [{
     path: '/',
-    component: _views_Grid__WEBPACK_IMPORTED_MODULE_3__["default"],
+    component: _views_Grid__WEBPACK_IMPORTED_MODULE_4__["default"],
     props: function props(route) {
       return {
         // always lead current path with a slash
-        path: "/".concat(route.params.path ? route.params.path : '').replace(/^\/\//, '/')
+        path: url_join__WEBPACK_IMPORTED_MODULE_2___default()('/', route.params.path)
       };
     },
     name: 'root',
     children: [{
       path: ':path*',
       name: 'path',
-      component: _views_Grid__WEBPACK_IMPORTED_MODULE_3__["default"]
+      component: _views_Grid__WEBPACK_IMPORTED_MODULE_4__["default"]
     }]
   }, {
     path: '*',
@@ -63119,120 +63271,26 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 
 /***/ }),
 
-/***/ "./src/services/CancelableRequest.js":
-/*!*******************************************!*\
-  !*** ./src/services/CancelableRequest.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @nextcloud/axios */ "./node_modules/@nextcloud/axios/dist/client.js");
-/* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_axios__WEBPACK_IMPORTED_MODULE_0__);
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/**
- * @copyright Copyright (c) 2019 Marco Ambrosini <marcoambrosini@pm.me>
- *
- * @author Marco Ambrosini <marcoambrosini@pm.me>
- * @author John Molakvoæ <skjnldsv@protonmail.com>
- *
- * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
-/**
- * Creates a cancelable axios 'request object'.
- *
- * @param {function} request the axios promise request
- * @returns {Object}
- */
-
-var CancelableRequest = function CancelableRequest(request) {
-  /**
-   * Generate an axios cancel token
-   */
-  var CancelToken = _nextcloud_axios__WEBPACK_IMPORTED_MODULE_0___default.a.CancelToken;
-  var source = CancelToken.source();
-  /**
-   * Execute the request
-   *
-   * @param {string} url the url to send the request to
-   * @param {Object} [options] optional config for the request
-   */
-
-  var fetch =
-  /*#__PURE__*/
-  function () {
-    var _ref = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee(url, options) {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              return _context.abrupt("return", request(url, Object.assign({
-                cancelToken: source.token
-              }, {
-                options: options
-              })));
-
-            case 1:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function fetch(_x, _x2) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  return {
-    request: fetch,
-    cancel: source.cancel
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (CancelableRequest);
-
-/***/ }),
-
 /***/ "./src/services/DavClient.js":
 /*!***********************************!*\
   !*** ./src/services/DavClient.js ***!
   \***********************************/
-/*! exports provided: default */
+/*! exports provided: remotePath, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "remotePath", function() { return remotePath; });
 /* harmony import */ var webdav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! webdav */ "./node_modules/webdav/dist/index.js");
 /* harmony import */ var webdav__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(webdav__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nextcloud/axios */ "./node_modules/@nextcloud/axios/dist/client.js");
 /* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
-/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
-/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var url_parse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! url-parse */ "./node_modules/url-parse/index.js");
+/* harmony import */ var url_parse__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(url_parse__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
+/* harmony import */ var _nextcloud_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_router__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
+/* harmony import */ var _nextcloud_auth__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_4__);
 /**
  * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -63257,12 +63315,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // force our axios
 
 var patcher = webdav__WEBPACK_IMPORTED_MODULE_0___default.a.getPatcher();
 patcher.patch('request', _nextcloud_axios__WEBPACK_IMPORTED_MODULE_1___default.a); // init webdav client
 
-var client = webdav__WEBPACK_IMPORTED_MODULE_0___default.a.createClient(Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_2__["generateRemoteUrl"])("dav/files/".concat(Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_3__["getCurrentUser"])().uid)));
+var remote = Object(_nextcloud_router__WEBPACK_IMPORTED_MODULE_3__["generateRemoteUrl"])("dav/files/".concat(Object(_nextcloud_auth__WEBPACK_IMPORTED_MODULE_4__["getCurrentUser"])().uid));
+var client = webdav__WEBPACK_IMPORTED_MODULE_0___default.a.createClient(remote);
+var remotePath = url_parse__WEBPACK_IMPORTED_MODULE_2___default()(remote).pathname;
 /* harmony default export */ __webpack_exports__["default"] = (client);
 
 /***/ }),
@@ -63310,7 +63371,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DavClient__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DavClient */ "./src/services/DavClient.js");
+/* harmony import */ var webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! webdav/dist/interface/dav */ "./node_modules/webdav/dist/interface/dav.js");
+/* harmony import */ var webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var webdav_dist_response__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! webdav/dist/response */ "./node_modules/webdav/dist/response.js");
+/* harmony import */ var webdav_dist_response__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(webdav_dist_response__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var webdav_dist_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! webdav/dist/url */ "./node_modules/webdav/dist/url.js");
+/* harmony import */ var webdav_dist_url__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(webdav_dist_url__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _DavClient__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DavClient */ "./src/services/DavClient.js");
+/* harmony import */ var path_posix__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! path-posix */ "./node_modules/path-posix/index.js");
+/* harmony import */ var path_posix__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(path_posix__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _DavRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DavRequest */ "./src/services/DavRequest.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -63336,6 +63406,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+
+
+
+
 
 /**
  * List files from a folder and filter out unwanted mimes
@@ -63353,182 +63428,143 @@ function _ref() {
   _ref = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee(path, options) {
-    var fixedPath, response, list, folders, files, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, entry;
+    var fixedPath, response, _ref2, data, list, folder, folders, files, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, entry;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             // getDirectoryContents doesn't accept / for root
-            fixedPath = path === '/' ? '' : path; // fetch listing
-
-            _context.next = 3;
-            return _DavClient__WEBPACK_IMPORTED_MODULE_0__["default"].getDirectoryContents(fixedPath, Object.assign({
-              data: "<?xml version=\"1.0\"?>\n\t\t\t<d:propfind xmlns:d=\"DAV:\"\n\t\t\t\txmlns:oc=\"http://owncloud.org/ns\"\n\t\t\t\txmlns:nc=\"http://nextcloud.org/ns\"\n\t\t\t\txmlns:ocs=\"http://open-collaboration-services.org/ns\">\n\t\t\t\t<d:prop>\n\t\t\t\t\t<d:getlastmodified />\n\t\t\t\t\t<d:getetag />\n\t\t\t\t\t<d:getcontenttype />\n\t\t\t\t\t<oc:fileid />\n\t\t\t\t\t<d:getcontentlength />\n\t\t\t\t\t<nc:has-preview />\n\t\t\t\t\t<oc:favorite />\n\t\t\t\t\t<d:resourcetype />\n\t\t\t\t</d:prop>\n\t\t\t</d:propfind>",
+            fixedPath = path === '/' ? '' : path;
+            options = Object.assign({
+              method: 'PROPFIND',
+              headers: {
+                Accept: 'text/plain',
+                Depth: options.deep ? 'infinity' : 1
+              },
+              responseType: 'text',
+              data: _DavRequest__WEBPACK_IMPORTED_MODULE_5__["default"],
               details: true
-            }, options));
+            }, options);
+            /**
+             * Fetch listing
+             *
+             * we use a custom request because getDirectoryContents filter out the current directory,
+             * but we want this as well to save us an extra request
+             * see https://github.com/perry-mitchell/webdav-client/blob/baf858a4856d44ae19ac12cb10c469b3e6c41ae4/source/interface/directoryContents.js#L11
+             */
 
-          case 3:
-            response = _context.sent;
-            list = response.data.map(function (entry) {
+            response = null;
+            _context.next = 5;
+            return _DavClient__WEBPACK_IMPORTED_MODULE_3__["default"].customRequest(fixedPath, options).then(webdav_dist_response__WEBPACK_IMPORTED_MODULE_1__["handleResponseCode"]).then(function (res) {
+              response = res;
+              return res.data;
+            }).then(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["parseXML"]).then(function (result) {
+              return getDirectoryFiles(result, _DavClient__WEBPACK_IMPORTED_MODULE_3__["remotePath"], options.details);
+            }).then(function (files) {
+              return Object(webdav_dist_response__WEBPACK_IMPORTED_MODULE_1__["processResponsePayload"])(response, files, options.details);
+            });
+
+          case 5:
+            _ref2 = _context.sent;
+            data = _ref2.data;
+            list = data.map(function (entry) {
               return Object.assign({
                 id: parseInt(entry.props.fileid),
                 isFavorite: entry.props.favorite !== '0',
                 hasPreview: entry.props['has-preview'] !== 'false'
               }, entry);
-            });
+            }); // filter all the files and folders
+
+            folder = {};
             folders = [];
             files = [];
             _iteratorNormalCompletion = true;
             _didIteratorError = false;
             _iteratorError = undefined;
-            _context.prev = 10;
+            _context.prev = 14;
 
             for (_iterator = list[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               entry = _step.value;
 
-              if (entry.type === 'directory') {
+              if (entry.filename === fixedPath) {
+                folder = entry;
+              } else if (entry.type === 'directory') {
                 folders.push(entry);
               } else if (entry.mime === 'image/jpeg') {
                 files.push(entry);
               }
-            }
+            } // return current folder, subfolders and files
 
-            _context.next = 18;
+
+            _context.next = 22;
             break;
-
-          case 14:
-            _context.prev = 14;
-            _context.t0 = _context["catch"](10);
-            _didIteratorError = true;
-            _iteratorError = _context.t0;
 
           case 18:
             _context.prev = 18;
-            _context.prev = 19;
+            _context.t0 = _context["catch"](14);
+            _didIteratorError = true;
+            _iteratorError = _context.t0;
+
+          case 22:
+            _context.prev = 22;
+            _context.prev = 23;
 
             if (!_iteratorNormalCompletion && _iterator.return != null) {
               _iterator.return();
             }
 
-          case 21:
-            _context.prev = 21;
+          case 25:
+            _context.prev = 25;
 
             if (!_didIteratorError) {
-              _context.next = 24;
+              _context.next = 28;
               break;
             }
 
             throw _iteratorError;
 
-          case 24:
-            return _context.finish(21);
+          case 28:
+            return _context.finish(25);
 
-          case 25:
-            return _context.finish(18);
+          case 29:
+            return _context.finish(22);
 
-          case 26:
+          case 30:
             return _context.abrupt("return", {
+              folder: folder,
               folders: folders,
               files: files
             });
 
-          case 27:
+          case 31:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[10, 14, 18, 26], [19,, 21, 25]]);
+    }, _callee, null, [[14, 18, 22, 30], [23,, 25, 29]]);
   }));
   return _ref.apply(this, arguments);
 }
 
-/***/ }),
+function getDirectoryFiles(result, serverBasePath) {
+  var isDetailed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var serverBase = path_posix__WEBPACK_IMPORTED_MODULE_4___default.a.join(serverBasePath, '/'); // Extract the response items (directory contents)
 
-/***/ "./src/services/FolderInfo.js":
-/*!************************************!*\
-  !*** ./src/services/FolderInfo.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+  var multiStatus = Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getValueForKey"])('multistatus', result);
+  var responseItems = Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getValueForKey"])('response', multiStatus);
+  return responseItems // Map all items to a consistent output structure (results)
+  .map(function (item) {
+    // HREF is the file path (in full)
+    var href = Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getSingleValue"])(Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getValueForKey"])('href', item));
+    href = Object(webdav_dist_url__WEBPACK_IMPORTED_MODULE_2__["normaliseHREF"])(href); // Each item should contain a stat object
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DavClient__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DavClient */ "./src/services/DavClient.js");
-/* harmony import */ var _DavRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DavRequest */ "./src/services/DavRequest.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+    var propStat = Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getSingleValue"])(Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getValueForKey"])('propstat', item));
+    var props = Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getSingleValue"])(Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["getValueForKey"])('prop', propStat)); // Process the true full filename (minus the base server path)
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/**
- * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
- *
- * @author John Molakvoæ <skjnldsv@protonmail.com>
- *
- * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
-
-/**
- * List files from a folder and filter out unwanted mimes
- *
- * @param {String} path the path relative to the user root
- * @returns {Array} the file list
- */
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_x) {
-  return _ref.apply(this, arguments);
-});
-
-function _ref() {
-  _ref = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee(path) {
-    var fixedPath, response, entry;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            // getDirectoryContents doesn't accept / for root
-            fixedPath = path === '/' ? '' : path; // fetch listing
-
-            _context.next = 3;
-            return _DavClient__WEBPACK_IMPORTED_MODULE_0__["default"].stat(fixedPath, {
-              data: _DavRequest__WEBPACK_IMPORTED_MODULE_1__["default"],
-              details: true
-            });
-
-          case 3:
-            response = _context.sent;
-            entry = response.data;
-            return _context.abrupt("return", Object.assign({
-              id: parseInt(entry.props.fileid),
-              isFavorite: entry.props.favorite !== '0',
-              hasPreview: entry.props['has-preview'] !== 'false'
-            }, entry));
-
-          case 6:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _ref.apply(this, arguments);
+    var filename = serverBase === '/' ? Object(webdav_dist_url__WEBPACK_IMPORTED_MODULE_2__["normalisePath"])(href) : Object(webdav_dist_url__WEBPACK_IMPORTED_MODULE_2__["normalisePath"])(path_posix__WEBPACK_IMPORTED_MODULE_4___default.a.relative(serverBase, href));
+    return Object(webdav_dist_interface_dav__WEBPACK_IMPORTED_MODULE_0__["propsToStat"])(props, filename, isDetailed);
+  });
 }
 
 /***/ }),
@@ -63627,12 +63663,15 @@ var actions = {
     var folder = _ref2.folder,
         files = _ref2.files,
         folders = _ref2.folders;
-    // we want all the FileInfo! Folders included!
+    var t0 = performance.now(); // we want all the FileInfo! Folders included!
+
     context.commit('updateFiles', [folder].concat(_toConsumableArray(files), _toConsumableArray(folders)));
     context.commit('setSubFolders', {
       id: folder.id,
       folders: folders
     });
+    var t1 = performance.now();
+    console.debug('perf: updateFiles', "".concat(t1 - t0, "ms"));
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63694,7 +63733,8 @@ var mutations = {
         files = _ref.files;
 
     if (files.length > 0) {
-      // sort by last modified
+      var t0 = performance.now(); // sort by last modified
+
       var list = files.sort(function (a, b) {
         return new Date(b.lastmod).getTime() - new Date(a.lastmod).getTime();
       }); // Set folder list
@@ -63702,6 +63742,8 @@ var mutations = {
       vue__WEBPACK_IMPORTED_MODULE_0__["default"].set(state.folders, id, list.map(function (file) {
         return file.id;
       }));
+      var t1 = performance.now();
+      console.debug('perf: updateFolders', "".concat(t1 - t0, "ms"));
     }
   },
 
@@ -63833,6 +63875,103 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1_
   },
   strict: "development" !== 'production'
 }));
+
+/***/ }),
+
+/***/ "./src/utils/CancelableRequest.js":
+/*!****************************************!*\
+  !*** ./src/utils/CancelableRequest.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @nextcloud/axios */ "./node_modules/@nextcloud/axios/dist/client.js");
+/* harmony import */ var _nextcloud_axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nextcloud_axios__WEBPACK_IMPORTED_MODULE_0__);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/**
+ * @copyright Copyright (c) 2019 Marco Ambrosini <marcoambrosini@pm.me>
+ *
+ * @author Marco Ambrosini <marcoambrosini@pm.me>
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/**
+ * Creates a cancelable axios 'request object'.
+ *
+ * @param {function} request the axios promise request
+ * @returns {Object}
+ */
+
+var CancelableRequest = function CancelableRequest(request) {
+  /**
+   * Generate an axios cancel token
+   */
+  var CancelToken = _nextcloud_axios__WEBPACK_IMPORTED_MODULE_0___default.a.CancelToken;
+  var source = CancelToken.source();
+  /**
+   * Execute the request
+   *
+   * @param {string} url the url to send the request to
+   * @param {Object} [options] optional config for the request
+   */
+
+  var fetch =
+  /*#__PURE__*/
+  function () {
+    var _ref = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(url, options) {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              return _context.abrupt("return", request(url, Object.assign({
+                cancelToken: source.token
+              }, {
+                options: options
+              })));
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function fetch(_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  return {
+    request: fetch,
+    cancel: source.cancel
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CancelableRequest);
 
 /***/ }),
 
@@ -64033,6 +64172,17 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 2:
+/*!********************************!*\
+  !*** ./util.inspect (ignored) ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 3:
 /*!************************!*\
   !*** buffer (ignored) ***!
   \************************/
@@ -64043,21 +64193,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!************************!*\
   !*** crypto (ignored) ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 4:
-/*!********************************!*\
-  !*** ./util.inspect (ignored) ***!
-  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 

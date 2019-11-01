@@ -20,7 +20,12 @@
  *
  */
 
-import client from './DavClient'
+import { getSingleValue, getValueForKey, parseXML, propsToStat } from 'webdav/dist/interface/dav'
+import { handleResponseCode, processResponsePayload } from 'webdav/dist/response'
+import { normaliseHREF, normalisePath } from 'webdav/dist/url'
+import client, { remotePath } from './DavClient'
+import pathPosix from 'path-posix'
+import request from './DavRequest'
 
 /**
  * List files from a folder and filter out unwanted mimes
@@ -33,28 +38,36 @@ export default async function(path, options) {
 	// getDirectoryContents doesn't accept / for root
 	const fixedPath = path === '/' ? '' : path
 
-	// fetch listing
-	const response = await client.getDirectoryContents(fixedPath, Object.assign({
-		data: `<?xml version="1.0"?>
-			<d:propfind xmlns:d="DAV:"
-				xmlns:oc="http://owncloud.org/ns"
-				xmlns:nc="http://nextcloud.org/ns"
-				xmlns:ocs="http://open-collaboration-services.org/ns">
-				<d:prop>
-					<d:getlastmodified />
-					<d:getetag />
-					<d:getcontenttype />
-					<oc:fileid />
-					<d:getcontentlength />
-					<nc:has-preview />
-					<oc:favorite />
-					<d:resourcetype />
-				</d:prop>
-			</d:propfind>`,
+	options = Object.assign({
+		method: 'PROPFIND',
+		headers: {
+			Accept: 'text/plain',
+			Depth: options.deep ? 'infinity' : 1
+		},
+		responseType: 'text',
+		data: request,
 		details: true
-	}, options))
+	}, options)
 
-	const list = response.data
+	/**
+	 * Fetch listing
+	 *
+	 * we use a custom request because getDirectoryContents filter out the current directory,
+	 * but we want this as well to save us an extra request
+	 * see https://github.com/perry-mitchell/webdav-client/blob/baf858a4856d44ae19ac12cb10c469b3e6c41ae4/source/interface/directoryContents.js#L11
+	 */
+	let response = null
+	const { data } = await client.customRequest(fixedPath, options)
+		.then(handleResponseCode)
+		.then(res => {
+			response = res
+			return res.data
+		})
+		.then(parseXML)
+		.then(result => getDirectoryFiles(result, remotePath, options.details))
+		.then(files => processResponsePayload(response, files, options.details))
+
+	const list = data
 		.map(entry => {
 			return Object.assign({
 				id: parseInt(entry.props.fileid),
@@ -63,15 +76,43 @@ export default async function(path, options) {
 			}, entry)
 		})
 
+	// filter all the files and folders
+	let folder = {}
 	const folders = []
 	const files = []
 	for (let entry of list) {
-		if (entry.type === 'directory') {
+		if (entry.filename === fixedPath) {
+			folder = entry
+		} else if (entry.type === 'directory') {
 			folders.push(entry)
 		} else if (entry.mime === 'image/jpeg') {
 			files.push(entry)
 		}
 	}
 
-	return { folders, files }
+	// return current folder, subfolders and files
+	return { folder, folders, files }
+}
+
+function getDirectoryFiles(result, serverBasePath, isDetailed = false) {
+	const serverBase = pathPosix.join(serverBasePath, '/')
+	// Extract the response items (directory contents)
+	const multiStatus = getValueForKey('multistatus', result)
+	const responseItems = getValueForKey('response', multiStatus)
+	return (
+		responseItems
+		// Map all items to a consistent output structure (results)
+			.map(item => {
+				// HREF is the file path (in full)
+				let href = getSingleValue(getValueForKey('href', item))
+				href = normaliseHREF(href)
+				// Each item should contain a stat object
+				const propStat = getSingleValue(getValueForKey('propstat', item))
+				const props = getSingleValue(getValueForKey('prop', propStat))
+				// Process the true full filename (minus the base server path)
+				const filename
+                    = serverBase === '/' ? normalisePath(href) : normalisePath(pathPosix.relative(serverBase, href))
+				return propsToStat(props, filename, isDetailed)
+			})
+	)
 }

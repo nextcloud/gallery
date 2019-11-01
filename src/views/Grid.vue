@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import getFolder from '../services/FolderInfo'
+// import getFolder from '../services/FolderInfo'
 import getPictures from '../services/FileList'
 // import searchPhotos from '../services/PhotoSearch'
 
@@ -78,8 +78,7 @@ export default {
 	data() {
 		return {
 			error: null,
-			cancelRequestFolder: () => {},
-			cancelRequestPictures: () => {}
+			cancelRequest: () => {}
 		}
 	},
 
@@ -160,8 +159,7 @@ export default {
 		async fetchFolderContent() {
 			console.debug('start: fetchFolderContent', this.path)
 			// cancel any pending requests
-			this.cancelRequestFolder()
-			this.cancelRequestPictures()
+			this.cancelRequest()
 
 			// close any potential opened viewer
 			OCA.Viewer.close()
@@ -173,18 +171,13 @@ export default {
 			this.error = null
 
 			// init cancellable request
-			const { request: folderRequest, cancel: cancelRequestFolder } = cancelableRequest(getFolder)
-			const { request: picturesRequest, cancel: cancelRequestPictures } = cancelableRequest(getPictures)
-			this.cancelRequestFolder = cancelRequestFolder
-			this.cancelRequestPictures = cancelRequestPictures
+			const { request, cancel } = cancelableRequest(getPictures)
+			this.cancelRequest = cancel
 
 			try {
-				// get current folder
-				const folder = await folderRequest(this.path)
+				// get content and current folder info
+				const { folder, folders, files } = await request(this.path)
 				this.$store.dispatch('addPath', { path: this.path, id: folder.id })
-
-				// get content
-				const { files, folders } = await picturesRequest(this.path)
 				this.$store.dispatch('updateFolders', { id: folder.id, files, folders })
 				this.$store.dispatch('updateFiles', { folder, files, folders })
 				console.debug('end: fetchFolderContent', this.path)
