@@ -199,12 +199,16 @@ $name-height: 22px;
 		background-size: 40%;
 	}
 	&__name {
+		overflow: hidden;
+		height: $name-height;
+		padding: 0 10px;
 		text-align: center;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 		color: var(--color-main-background);
 		text-shadow: 0 0 8px var(--color-main-text);
 		font-size: 18px;
 		line-height: $name-height;
-		height: $name-height;
 	}
 }
 
@@ -233,7 +237,7 @@ $name-height: 22px;
 		&:hover,
 		&:focus {
 			.folder-name,
-			.cover  {
+			.cover {
 				opacity: 0;
 			}
 		}
