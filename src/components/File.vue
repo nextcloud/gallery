@@ -127,6 +127,7 @@ img {
 
 	object-fit: cover;
 }
+
 svg {
 	position: absolute;
 	width: 70%;

@@ -208,6 +208,10 @@ export default {
 			color: var(--color-main-text);
 			text-shadow: 0 0 8px var(--color-main-background);
 		}
+		+ .cover {
+			// less invasive, let's lower the bg a bit
+			background-color: var(--color-text-lighter);
+		}
 	}
 }
 
