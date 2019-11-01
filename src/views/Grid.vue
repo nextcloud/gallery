@@ -220,6 +220,8 @@ export default {
 }
 
 // TODO: use mixins/GridSizes as soon as node-sass supports it
+// needs node-sass 5.0 (with libsass 3.6)
+// https://github.com/sass/node-sass/pull/2312
 $previous: 0;
 @each $size, $config in get('sizes') {
 	$count: map-get($config, 'count');

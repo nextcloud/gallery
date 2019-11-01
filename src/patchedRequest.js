@@ -20,24 +20,22 @@
  *
  */
 
-// needs node-sass 5.0 (with libsass 3.6)
-// https://github.com/sass/node-sass/pull/2312
-@mixin grid-sizes() {
-	$previous: 0;
+const request = require('webdav/dist/request')
+const merge = require('webdav/dist/merge')
 
-	@each $size, $config in get('sizes') {
-		$count: map-get($config, 'count');
-		$marginTop: map-get($config, 'marginTop');
-		$marginW: map-get($config, 'marginW');
-		@if $size == 'max' {
-			@media (min-width: #{$previous}px) {
-				@content;
-			}
-		} @else {
-			@media (min-width: #{$previous}px) and (max-width: #{$size}px) {
-				@content;
-			}
-		}
-		$previous: $size;
+const oldPrepareRequestOptions = request.prepareRequestOptions
+
+// While we wait for official cancellable webdav requests
+// https://github.com/perry-mitchell/webdav-client/issues/179
+// let's properly forward our axios options through webdav to axios
+
+request.prepareRequestOptions = function(requestOptions, methodOptions) {
+	// add our cancelToken support
+	if (methodOptions.cancelToken && typeof methodOptions.cancelToken === 'object') {
+		requestOptions.cancelToken = merge(requestOptions.cancelToken || {}, methodOptions.cancelToken)
 	}
+	// exploit old method
+	oldPrepareRequestOptions(requestOptions, methodOptions)
 }
+
+module.exports = request

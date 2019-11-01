@@ -100,8 +100,6 @@ export default {
 	position: absolute;
 	height: 44px;
 	align-items: center;
-	&__back {
-	}
 	&__title {
 		margin: 0;
 	}
@@ -109,6 +107,8 @@ export default {
 
 // generate variants based on grid sizes
 // TODO: use mixins/GridSizes as soon as node-sass supports it
+// needs node-sass 5.0 (with libsass 3.6)
+// https://github.com/sass/node-sass/pull/2312
 $previous: 0;
 @each $size, $config in get('sizes') {
 	$marginTop: map-get($config, 'marginTop');

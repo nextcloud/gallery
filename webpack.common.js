@@ -3,6 +3,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 const SassGetGridConfig = require('./src/utils/SassGetGridConfig')
+const ModuleReplaceWebpackPlugin = require('module-replace-webpack-plugin');
 
 const packageJson = require('./package.json')
 const appName = packageJson.name
@@ -60,7 +61,17 @@ module.exports = {
 			}
 		]
 	},
-	plugins: [new VueLoaderPlugin(), new StyleLintPlugin()],
+	plugins: [
+		new VueLoaderPlugin(),
+		new StyleLintPlugin(),
+		// patch webdav/dist/request.js
+		new ModuleReplaceWebpackPlugin({
+			modules: [{
+				test: /request.js/,
+				replace: './src/patchedRequest.js'
+			}]
+		})
+	],
 	resolve: {
 		extensions: ['*', '.js', '.vue'],
 		symlinks: false
