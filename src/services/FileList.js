@@ -35,9 +35,6 @@ import request from './DavRequest'
  * @returns {Array} the file list
  */
 export default async function(path, options) {
-	// getDirectoryContents doesn't accept / for root
-	const fixedPath = path === '/' ? '' : path
-
 	options = Object.assign({
 		method: 'PROPFIND',
 		headers: {
@@ -57,7 +54,7 @@ export default async function(path, options) {
 	 * see https://github.com/perry-mitchell/webdav-client/blob/baf858a4856d44ae19ac12cb10c469b3e6c41ae4/source/interface/directoryContents.js#L11
 	 */
 	let response = null
-	const { data } = await client.customRequest(fixedPath, options)
+	const { data } = await client.customRequest(path, options)
 		.then(handleResponseCode)
 		.then(res => {
 			response = res
@@ -81,7 +78,7 @@ export default async function(path, options) {
 	const folders = []
 	const files = []
 	for (let entry of list) {
-		if (entry.filename === fixedPath) {
+		if (entry.filename === path) {
 			folder = entry
 		} else if (entry.type === 'directory') {
 			folders.push(entry)

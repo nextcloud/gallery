@@ -39,7 +39,6 @@
 		"cdav-library": "git+https://github.com/nextcloud/cdav-library.git",
 		"path-posix": "^1.0.0",
 		"qs": "^6.9.0",
-		"url-join": "^4.0.1",
 		"url-parse": "^1.4.7",
 		"vue": "^2.6.10",
 		"vue-router": "^3.1.3",

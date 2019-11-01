@@ -24,6 +24,9 @@
 	<Content app-name="gallery">
 		<AppContent :class="{ 'icon-loading': loading }">
 			<router-view v-show="!loading" :loading.sync="loading" />
+
+			<!-- svg img loading placeholder (linked to the File component) -->
+			<span v-html="svgplaceholder" />
 		</AppContent>
 	</Content>
 </template>
@@ -31,6 +34,7 @@
 <script>
 import Content from '@nextcloud/vue/dist/Components/Content'
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
+import svgplaceholder from './assets/img-placeholder.svg'
 
 export default {
 	name: 'Gallery',
@@ -40,7 +44,8 @@ export default {
 	},
 	data: function() {
 		return {
-			loading: true
+			loading: true,
+			svgplaceholder
 		}
 	}
 }

@@ -22,7 +22,6 @@
 
 import { generateUrl } from '@nextcloud/router'
 import Router from 'vue-router'
-import joinURL from 'url-join'
 import Vue from 'vue'
 
 import Grid from '../views/Grid'
@@ -41,7 +40,7 @@ export default new Router({
 			component: Grid,
 			props: route => ({
 				// always lead current path with a slash
-				path: joinURL('/', route.params.path)
+				path: `/${route.params.path ? route.params.path : ''}`
 			}),
 			name: 'root',
 			children: [

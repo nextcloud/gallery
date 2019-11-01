@@ -21,7 +21,8 @@
  -->
 
 <template>
-	<a class="file"
+	<a :class="{'file--clear': !loaded}"
+		class="file"
 		:href="davPath"
 		:aria-label="ariaLabel"
 		@click.prevent="openViewer">
@@ -33,8 +34,11 @@
 				:aria-describedby="ariaUuid"
 				@load="loaded = true">
 		</transition>
-		<svg v-if="!loaded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-			<path fill="#dedede" d="M8.36 10a1.12 1.12 0 00-.86 1.1v27.81c0 .58.53 1.09 1.1 1.09h32.81c.57 0 1.09-.53 1.09-1.09V11.53c0-.84-.66-1.53-1.29-1.53zM10 12.5h30V25l-2.5-2.5-7.5 10-7.5-7.5-10 10H10zm6.25 2.5a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" />
+		<svg v-if="!loaded"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 50 50"
+			fill="url(#img-placeholder__gradient)">
+			<use xlink:href="#img-placeholder" />
 		</svg>
 
 		<!-- image name and cover -->

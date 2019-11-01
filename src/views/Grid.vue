@@ -67,7 +67,7 @@ export default {
 	props: {
 		path: {
 			type: String,
-			default: ''
+			default: '/'
 		},
 		loading: {
 			type: Boolean,

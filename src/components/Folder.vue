@@ -21,7 +21,8 @@
  -->
 
 <template>
-	<router-link class="folder"
+	<router-link :class="{'folder--clear': isEmpty}"
+		class="folder"
 		:to="folder.filename"
 		:aria-label="ariaLabel">
 		<transition name="fade">
@@ -36,7 +37,7 @@
 					@load="loaded = true">
 			</div>
 		</transition>
-		<div :class="{'folder-name--empty': isEmpty}"
+		<div
 			class="folder-name">
 			<span :class="{'icon-white': !isEmpty}"
 				class="folder-name__icon  icon-folder"
@@ -180,6 +181,8 @@ export default {
 	}
 }
 
+$name-height: 22px;
+
 .folder-name {
 	position: absolute;
 	z-index: 3;
@@ -192,7 +195,7 @@ export default {
 	opacity: 1;
 	&__icon {
 		height: 40%;
-		margin-top: 30%;
+		margin-top: calc(30% - #{$name-height} / 2); // center name+icon
 		background-size: 40%;
 	}
 	&__name {
@@ -200,35 +203,37 @@ export default {
 		color: var(--color-main-background);
 		text-shadow: 0 0 8px var(--color-main-text);
 		font-size: 18px;
+		line-height: $name-height;
+		height: $name-height;
 	}
+}
 
+// Cover management empty/full
+.folder {
 	// if no img, let's display the folder icon as default black
-	&--empty {
+	&--clear {
 		.folder-name__name {
 			color: var(--color-main-text);
 			text-shadow: 0 0 8px var(--color-main-background);
 		}
-		+ .cover {
-			// less invasive, let's lower the bg a bit
-			background-color: var(--color-text-lighter);
-		}
 	}
-}
 
-// Cover management if not empty
-.folder {
-	.folder-name:not(.folder-name--empty) {
-		+ .cover {
+	// show the cover as background
+	// if  there are pictures in it
+	// so we can sho the folder+name above it
+	&:not(.folder--clear) {
+		.cover {
 			opacity: .3;
 		}
-	}
 
-	&.active,
-	&:active,
-	&:hover,
-	&:focus {
-		.folder-name:not(.folder-name--empty) {
-			&, & + .cover {
+		// hide everything but pictures
+		// on hover/active/focus
+		&.active,
+		&:active,
+		&:hover,
+		&:focus {
+			.folder-name,
+			.cover  {
 				opacity: 0;
 			}
 		}

@@ -49,6 +49,15 @@
 			opacity: .3;
 		}
 	}
+
+	&--clear.active,
+	&--clear:active,
+	&--clear:hover,
+	&--clear:focus {
+		.cover {
+			opacity: .1;
+		}
+	}
 }
 
 .fade-enter-active, .fade-leave-active {
