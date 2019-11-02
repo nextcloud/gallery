@@ -39,11 +39,11 @@ export default async function(path, options) {
 		method: 'PROPFIND',
 		headers: {
 			Accept: 'text/plain',
-			Depth: options.deep ? 'infinity' : 1
+			Depth: options.deep ? 'infinity' : 1,
 		},
 		responseType: 'text',
 		data: request,
-		details: true
+		details: true,
 	}, options)
 
 	/**
@@ -69,7 +69,7 @@ export default async function(path, options) {
 			return Object.assign({
 				id: parseInt(entry.props.fileid),
 				isFavorite: entry.props.favorite !== '0',
-				hasPreview: entry.props['has-preview'] !== 'false'
+				hasPreview: entry.props['has-preview'] !== 'false',
 			}, entry)
 		})
 
@@ -77,7 +77,7 @@ export default async function(path, options) {
 	let folder = {}
 	const folders = []
 	const files = []
-	for (let entry of list) {
+	for (const entry of list) {
 		if (entry.filename === path) {
 			folder = entry
 		} else if (entry.type === 'directory') {

@@ -30,8 +30,8 @@ Vue.use(Vuex)
 export default new Store({
 	modules: {
 		files,
-		folders
+		folders,
 	},
 
-	strict: process.env.NODE_ENV !== 'production'
+	strict: process.env.NODE_ENV !== 'production',
 })

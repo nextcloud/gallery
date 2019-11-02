@@ -49,7 +49,7 @@ const convertStringToSassDimension = function(result) {
 		'in',
 		'pt',
 		'pc',
-		'ch'
+		'ch',
 	]
 	const parts = result.match(/[a-zA-Z]+|[0-9]+/g)
 	const value = parts[0]
@@ -63,7 +63,7 @@ const convertStringToSassDimension = function(result) {
 
 module.exports = function(keys) {
 	keys = keys.getValue().split('.')
-	var result = sassVars
+	let result = sassVars
 
 	for (let i = 0; i < keys.length; i++) {
 		result = result[keys[i]]
@@ -73,7 +73,7 @@ module.exports = function(keys) {
 			result = convertStringToSassDimension(result)
 		} else if (typeof result === 'object') {
 			Object.keys(result).forEach(function(key) {
-				var value = result[key]
+				const value = result[key]
 				result[key] = convertStringToSassDimension(value)
 			})
 		}

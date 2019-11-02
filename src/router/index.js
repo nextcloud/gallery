@@ -40,17 +40,17 @@ export default new Router({
 			component: Grid,
 			props: route => ({
 				// always lead current path with a slash
-				path: `/${route.params.path ? route.params.path : ''}`
+				path: `/${route.params.path ? route.params.path : ''}`,
 			}),
 			name: 'root',
 			children: [
 				{
 					path: ':path*',
 					name: 'path',
-					component: Grid
-				}
-			]
+					component: Grid,
+				},
+			],
 		},
-		{ path: '*', redirect: { name: 'root' } }
-	]
+		{ path: '*', redirect: { name: 'root' } },
+	],
 })

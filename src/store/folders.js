@@ -23,7 +23,7 @@ import Vue from 'vue'
 
 const state = {
 	paths: {},
-	folders: {}
+	folders: {},
 }
 
 const mutations = {
@@ -60,13 +60,13 @@ const mutations = {
 	 */
 	addPath(state, { path, id }) {
 		Vue.set(state.paths, path, id)
-	}
+	},
 }
 
 const getters = {
 	folders: state => state.folders,
 	folder: state => id => state.folders[id],
-	folderId: state => path => state.paths[path]
+	folderId: state => path => state.paths[path],
 }
 
 const actions = {
@@ -96,7 +96,7 @@ const actions = {
 	 */
 	addPath(context, { path, id }) {
 		context.commit('addPath', { path, id })
-	}
+	},
 }
 
 export default { state, mutations, getters, actions }

@@ -34,17 +34,20 @@
 
 	<!-- Folder content -->
 	<transition-group v-else
-		id="gallery-grid"
+		class="gallery-grid"
 		role="grid"
 		name="list"
 		tag="div">
 		<Navigation v-if="folder" key="navigation" v-bind="folder" />
 		<Folder v-for="dir in folderList" :key="dir.id" :folder="dir" />
 		<File v-for="file in fileList" :key="file.id" v-bind="file" />
+		<div key="footer" role="none" class="gallery-grid__footer-spacer" />
 	</transition-group>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 // import getFolder from '../services/FolderInfo'
 import getPictures from '../services/FileList'
 // import searchPhotos from '../services/PhotoSearch'
@@ -62,34 +65,32 @@ export default {
 		EmptyContent,
 		File,
 		Folder,
-		Navigation
+		Navigation,
 	},
 	props: {
 		path: {
 			type: String,
-			default: '/'
+			default: '/',
 		},
 		loading: {
 			type: Boolean,
-			required: true
-		}
+			required: true,
+		},
 	},
 
 	data() {
 		return {
 			error: null,
-			cancelRequest: () => {}
+			cancelRequest: () => {},
 		}
 	},
 
 	computed: {
 		// global lists
-		files() {
-			return this.$store.getters.files
-		},
-		folders() {
-			return this.$store.getters.folders
-		},
+		...mapGetters([
+			'files',
+			'folders',
+		]),
 
 		// current folder id from current path
 		folderId() {
@@ -140,14 +141,14 @@ export default {
 		},
 		haveFolders() {
 			return !!this.folderList && this.folderList.length !== 0
-		}
+		},
 	},
 
 	watch: {
 		path(path) {
 			console.debug('changed:', path)
 			this.fetchFolderContent()
-		}
+		},
 	},
 
 	async beforeMount() {
@@ -199,20 +200,28 @@ export default {
 				// done loading even with errors
 				this.$emit('update:loading', false)
 			}
-		}
-	}
+		},
+	},
 
 }
 </script>
 
 <style lang="scss">
-#gallery-grid {
+.gallery-grid {
 	display: grid;
 	align-items: center;
 	justify-content: center;
 	gap: 8px;
 	grid-template-columns: repeat(10, 1fr);
 	position: relative;
+	// always put one more row of grid for the spacer
+	&__footer-spacer {
+		// always add one row, so placing it on the first
+		// column will always add one more
+		grid-column: 1;
+		// same height as the width
+		padding-bottom: 100%;
+	}
 }
 
 .list-move {
@@ -235,7 +244,7 @@ $previous: 0;
 	}
 
 	@media #{$rule} {
-		#gallery-grid {
+		.gallery-grid {
 			padding: #{$marginTop}px #{$marginW}px #{$marginW}px #{$marginW}px;
 			grid-template-columns: repeat($count, 1fr);
 		}

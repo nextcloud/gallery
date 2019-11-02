@@ -58,27 +58,27 @@ export default {
 	props: {
 		basename: {
 			type: String,
-			required: true
+			required: true,
 		},
 		filename: {
 			type: String,
-			required: true
+			required: true,
 		},
 		etag: {
 			type: String,
-			required: true
+			required: true,
 		},
 		id: {
 			type: Number,
-			required: true
-		}
+			required: true,
+		},
 	},
 
 	data() {
 		return {
 			loaded: false,
 			img: new Image(),
-			src: ''
+			src: '',
 		}
 	},
 
@@ -91,7 +91,7 @@ export default {
 		},
 		ariaLabel() {
 			return t('gallery', 'Open the full size "{name}" image', { name: this.basename })
-		}
+		},
 	},
 
 	created() {
@@ -115,8 +115,8 @@ export default {
 		},
 		async getImage() {
 
-		}
-	}
+		},
+	},
 
 }
 </script>

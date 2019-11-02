@@ -52,6 +52,7 @@
 
 <script>
 import { generateUrl } from '@nextcloud/router'
+import { mapGetters } from 'vuex'
 
 import getPictures from '../services/FileList'
 import cancelableRequest from '../utils/CancelableRequest'
@@ -63,32 +64,23 @@ export default {
 	props: {
 		folder: {
 			type: Object,
-			required: true
-		}
+			required: true,
+		},
 	},
 
 	data() {
 		return {
 			loaded: false,
-			cancelRequest: () => {}
+			cancelRequest: () => {},
 		}
 	},
 
 	computed: {
-		ariaUuid() {
-			return `folder-${this.folder.id}`
-		},
-		ariaLabel() {
-			return t('gallery', 'Open the "{name}" sub-directory', { name: this.folder.basename })
-		},
-
 		// global lists
-		files() {
-			return this.$store.getters.files
-		},
-		folders() {
-			return this.$store.getters.folders
-		},
+		...mapGetters([
+			'files',
+			'folders',
+		]),
 
 		// files list of the current folder
 		folderContent() {
@@ -106,7 +98,14 @@ export default {
 		// folder is empty
 		isEmpty() {
 			return this.fileList.length === 0
-		}
+		},
+
+		ariaUuid() {
+			return `folder-${this.folder.id}`
+		},
+		ariaLabel() {
+			return t('gallery', 'Open the "{name}" sub-directory', { name: this.folder.basename })
+		},
 	},
 
 	async created() {
@@ -139,8 +138,8 @@ export default {
 		},
 
 		fetch() {
-		}
-	}
+		},
+	},
 
 }
 </script>
@@ -181,7 +180,7 @@ export default {
 	}
 }
 
-$name-height: 22px;
+$name-height: 1.2rem;
 
 .folder-name {
 	position: absolute;
@@ -207,7 +206,7 @@ $name-height: 22px;
 		text-overflow: ellipsis;
 		color: var(--color-main-background);
 		text-shadow: 0 0 8px var(--color-main-text);
-		font-size: 18px;
+		font-size: $name-height;
 		line-height: $name-height;
 	}
 }

@@ -26,7 +26,7 @@
 			<ActionButton
 				icon="icon-confirm"
 				@click="folderUp">
-				{{ t('gallery', 'Back') }}
+				{{ backToText }}
 			</ActionButton>
 		</Actions>
 		<h2 class="gallery-navigation__title">
@@ -43,23 +43,23 @@ export default {
 
 	components: {
 		ActionButton,
-		Actions
+		Actions,
 	},
 	inheritAttrs: false,
 
 	props: {
 		basename: {
 			type: String,
-			required: true
+			required: true,
 		},
 		filename: {
 			type: String,
-			required: true
+			required: true,
 		},
 		id: {
 			type: Number,
-			required: true
-		}
+			required: true,
+		},
 	},
 
 	computed: {
@@ -79,14 +79,23 @@ export default {
 			return this.isRoot || parent.trim() === ''
 				? '/'
 				: path.join('/')
-		}
+		},
+		parentName() {
+			return this.parentPath && this.parentPath.split('/').pop()
+		},
+		backToText() {
+			if (this.parentPath === '/') {
+				return t('gallery', 'Back to home')
+			}
+			return t('gallery', 'Back to {folder}', { folder: this.parentName })
+		},
 	},
 
 	methods: {
 		folderUp() {
 			this.$router.push(this.parentPath)
-		}
-	}
+		},
+	},
 }
 </script>
 

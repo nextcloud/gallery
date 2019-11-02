@@ -52,5 +52,5 @@ export default new Vue({
 	name: 'GalleryRoot',
 	router,
 	store,
-	render: h => h(Gallery)
+	render: h => h(Gallery),
 })

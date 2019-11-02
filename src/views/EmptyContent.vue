@@ -34,12 +34,12 @@ export default {
 	props: {
 		illustrationName: {
 			type: String,
-			default: ''
-		}
+			default: '',
+		},
 	},
 	data() {
 		return {
-			illustration: ''
+			illustration: '',
 		}
 	},
 	computed: {
@@ -72,7 +72,7 @@ export default {
 		 */
 		isReady() {
 			return !this.haveIllustration || (this.haveIllustration && this.isLoaded)
-		}
+		},
 	},
 
 	/**
@@ -81,7 +81,7 @@ export default {
 	watch: {
 		illustrationName() {
 			this.getIllustration()
-		}
+		},
 	},
 	beforeMount() {
 		this.getIllustration()
@@ -101,8 +101,8 @@ export default {
 					console.error('Could not get the error illustration', error)
 				}
 			}
-		}
-	}
+		},
+	},
 
 }
 </script>

@@ -26,7 +26,7 @@
 			<router-view v-show="!loading" :loading.sync="loading" />
 
 			<!-- svg img loading placeholder (linked to the File component) -->
-			<span v-html="svgplaceholder" />
+			<span v-show="false" role="none" v-html="svgplaceholder" />
 		</AppContent>
 	</Content>
 </template>
@@ -40,13 +40,13 @@ export default {
 	name: 'Gallery',
 	components: {
 		Content,
-		AppContent
+		AppContent,
 	},
 	data: function() {
 		return {
 			loading: true,
-			svgplaceholder
+			svgplaceholder,
 		}
-	}
+	},
 }
 </script>

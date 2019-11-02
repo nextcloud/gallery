@@ -36,14 +36,14 @@ export default async function(path) {
 	// fetch listing
 	const response = await client.stat(fixedPath, {
 		data: request,
-		details: true
+		details: true,
 	})
 
 	const entry = response.data
 	return Object.assign({
 		id: parseInt(entry.props.fileid),
 		isFavorite: entry.props.favorite !== '0',
-		hasPreview: entry.props['has-preview'] !== 'false'
+		hasPreview: entry.props['has-preview'] !== 'false',
 	}, entry)
 
 }

@@ -22,7 +22,7 @@
 import Vue from 'vue'
 
 const state = {
-	files: {}
+	files: {},
 }
 
 const mutations = {
@@ -50,11 +50,11 @@ const mutations = {
 		if (state.files[id]) {
 			Vue.set(state.files[id], 'folders', [...folders.map(folder => folder.id)])
 		}
-	}
+	},
 }
 
 const getters = {
-	files: state => state.files
+	files: state => state.files,
 }
 
 const actions = {
@@ -74,7 +74,7 @@ const actions = {
 		context.commit('setSubFolders', { id: folder.id, folders })
 		const t1 = performance.now()
 		console.debug('perf: updateFiles', `${t1 - t0}ms`)
-	}
+	},
 }
 
 export default { state, mutations, getters, actions }

@@ -26,43 +26,43 @@ module.exports = {
 		400: {
 			marginTop: 66, // same as grid-gap
 			marginW: 8, // same as grid-gap
-			count: 3
+			count: 3,
 		},
 		600: {
 			marginTop: 66,
 			marginW: 8, // same as grid-gap
-			count: 4
+			count: 4,
 		},
 		1024: {
 			marginTop: 66,
 			marginW: 44,
-			count: 5
+			count: 5,
 		},
 		1400: {
 			marginTop: 66,
 			marginW: 44,
-			count: 6
+			count: 6,
 		},
 		1800: {
 			marginTop: 88,
 			marginW: 66,
-			count: 7
+			count: 7,
 		},
 		2200: {
 			marginTop: 88,
 			marginW: 66,
-			count: 8
+			count: 8,
 		},
 		2600: {
 			marginTop: 88,
 			marginW: 88,
-			count: 9
+			count: 9,
 		},
 		// excessive value on purpose
 		max: {
 			marginTop: 88,
 			marginW: 88,
-			count: 10
-		}
-	}
+			count: 10,
+		},
+	},
 }

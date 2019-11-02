@@ -33,7 +33,7 @@ export default async function() {
 	const response = await client.customRequest('', {
 		method: 'SEARCH',
 		headers: {
-			'content-Type': 'text/xml'
+			'content-Type': 'text/xml',
 		},
 		url: '/remote.php/dav/',
 		data: `<?xml version="1.0" encoding="UTF-8"?>

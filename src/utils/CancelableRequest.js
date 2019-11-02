@@ -50,7 +50,7 @@ const CancelableRequest = function(request) {
 	}
 	return {
 		request: fetch,
-		cancel: source.cancel
+		cancel: source.cancel,
 	}
 }
 
