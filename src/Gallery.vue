@@ -26,7 +26,7 @@
 			<router-view v-show="!loading" :loading.sync="loading" />
 
 			<!-- svg img loading placeholder (linked to the File component) -->
-			<span v-show="false" role="none" v-html="svgplaceholder" />
+			<span class="hidden-visually" role="none" v-html="svgplaceholder" />
 		</AppContent>
 	</Content>
 </template>
