@@ -41,7 +41,7 @@
     "\"{name}\" is not an allowed filetype" : "\"{name}\" yra neleistinas failo tipas",
     "Upload" : "Įkelti",
     "Error" : "Klaida",
-    "Error while sharing" : "Klaida bandant pasidalinti",
+    "Error while sharing" : "Klaida bendrinant",
     "Error while unsharing" : "Klaida bandant nustoti dalintis",
     "Error while changing permissions" : "Klaida keičiant peržiūros leidimus",
     "Shared with you and the group {group} by {owner}" : "{owner} bendrina su jumis ir grupe {group}",
