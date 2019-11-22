@@ -70,7 +70,7 @@ OC.L10N.register(
     "Adding user..." : "Přidávání uživatele…",
     "group" : "skupina",
     "remote" : "vzdálený",
-    "Resharing is not allowed" : "Sdílení už sdílené položky není umožněno",
+    "Resharing is not allowed" : "Příjemcům tohoto sdílení není umožněno ho nasdílet dále dalším",
     "Error while retrieving shares" : "Chyba při otevírání sdílení",
     "Unshare" : "Zrušit sdílení",
     "notify by email" : "upozornit e-mailem",
