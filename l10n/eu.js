@@ -103,7 +103,7 @@ OC.L10N.register(
     "the wrong file ID was provided" : "Fitxategiaren ID ezegokia eman da",
     "the file was removed" : "fitxategia ezabatua izan da",
     "the file is corrupt" : "fitxategia apurtua dago",
-    "the encryption key is missing" : "enkriptazio gakoa falta da",
+    "the encryption key is missing" : "zifratze-gakoa falta da",
     "Here is the error message returned by the server: " : "Hona hemen zerbitzariak itzulitako errore mezua: ",
     "For more information, please contact your friendly Nextcloud administrator." : "Informazio gehiagorako, zure lagun Nextcloud administratzailearekin kontaktuan jar zaitez",
     "Sorry, but the server could not fulfill your request." : "Barkatu, baina zerbitzariak ezin du zure eskaera bete",
