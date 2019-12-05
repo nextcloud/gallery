@@ -66,7 +66,7 @@ class PreviewControllerTest extends \OCA\Gallery\Tests\GalleryUnitTest {
 	/**
 	 * Test set up
 	 */
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$app = new Application;

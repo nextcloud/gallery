@@ -22,7 +22,7 @@ use OCA\Gallery\Controller\ConfigApiController;
  */
 class ConfigApiControllerTest extends ConfigControllerTest {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->controller = new ConfigApiController(
 			$this->appName,

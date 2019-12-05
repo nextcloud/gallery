@@ -37,7 +37,7 @@ abstract class GalleryUnitTest extends \Test\TestCase {
 	/**
 	 * Test set up
 	 */
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->environment = $this->getMockBuilder('\OCA\Gallery\Environment\Environment')

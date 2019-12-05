@@ -30,7 +30,7 @@ class PreviewApiControllerTest extends PreviewControllerTest {
 	/** @var PreviewApiController */
 	protected $controller;
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->controller = new PreviewApiController(
 			$this->appName,

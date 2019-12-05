@@ -22,7 +22,7 @@ use OCA\Gallery\Controller\FilesPublicController;
  */
 class FilesPublicControllerTest extends FilesControllerTest {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->controller = new FilesPublicController(
 			$this->appName,

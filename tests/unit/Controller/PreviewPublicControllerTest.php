@@ -22,7 +22,7 @@ use OCA\Gallery\Controller\PreviewPublicController;
  */
 class PreviewPublicControllerTest extends PreviewControllerTest {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->controller = new PreviewPublicController(
 			$this->appName,

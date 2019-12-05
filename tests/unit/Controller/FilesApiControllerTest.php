@@ -26,7 +26,7 @@ use OCA\Gallery\Service\NotFoundServiceException;
  */
 class FilesApiControllerTest extends FilesControllerTest {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->controller = new FilesApiController(
 			$this->appName,

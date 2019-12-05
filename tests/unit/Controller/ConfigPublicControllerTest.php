@@ -22,7 +22,7 @@ use OCA\Gallery\Controller\ConfigPublicController;
  */
 class ConfigPublicControllerTest extends ConfigControllerTest {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->controller = new ConfigPublicController(
 			$this->appName,
