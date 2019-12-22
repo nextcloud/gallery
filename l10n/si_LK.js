@@ -11,6 +11,8 @@ OC.L10N.register(
     "Share" : "බෙදා හදා ගන්න",
     "Upload" : "උඩුගත කරන්න",
     "Error" : "දෝෂයක්",
+    "Share link" : "Share link",
+    "Link" : "Link",
     "Password protect" : "මුර පදයකින් ආරක්ශාකරන්න",
     "Password" : "මුර පදය",
     "Set expiration date" : "කල් ඉකුත් විමේ දිනය දමන්න",
@@ -25,6 +27,8 @@ OC.L10N.register(
     "Error unsetting expiration date" : "කල් ඉකුත් දිනය ඉවත් කිරීමේ දෝෂයක්",
     "Error setting expiration date" : "කල් ඉකුත් දිනය ස්ථාපනය කිරීමේ දෝෂයක්",
     "Warning" : "අවවාදය",
-    "Cancel upload" : "උඩුගත කිරීම අත් හරින්න"
+    "Cancel upload" : "උඩුගත කිරීම අත් හරින්න",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date"
 },
 "nplurals=2; plural=(n != 1);");

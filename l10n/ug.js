@@ -11,12 +11,16 @@ OC.L10N.register(
     "Share" : "ھەمبەھىر",
     "Upload" : "يۈكلە",
     "Error" : "خاتالىق",
+    "Share link" : "Share link",
+    "Link" : "Link",
     "Password" : "ئىم",
     "Send" : "يوللا",
     "group" : "گۇرۇپپا",
     "Unshare" : "ھەمبەھىرلىمە",
     "delete" : "ئۆچۈر",
     "Warning" : "ئاگاھلاندۇرۇش",
-    "Cancel upload" : "يۈكلەشتىن ۋاز كەچ"
+    "Cancel upload" : "يۈكلەشتىن ۋاز كەچ",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date"
 },
 "nplurals=1; plural=0;");

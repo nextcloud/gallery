@@ -1,0 +1,28 @@
+OC.L10N.register(
+    "gallery",
+    {
+    "Gallery" : "Galereya",
+    "Download" : "Yuklab oling",
+    "Delete" : "O'chir",
+    "Upload" : "Yuklash",
+    "Error" : "Xato",
+    "Error while sharing" : "Almashish paytida xatolik yuz berdi",
+    "Share link" : "Ulanishni ulashing",
+    "The public link will expire no later than {days} days after it is created" : "Jamoat havolasi tugaganidan keyin {days} kundan keyin tugaydi",
+    "Link" : "Ulanish",
+    "Password protect" : "Parol himoyalangan",
+    "Password" : "Parol",
+    "Choose a password for the public link" : "Umumiy havola uchun parolni tanlang",
+    "Allow editing" : "Tahrirlashga ruxsat bering",
+    "Email link to person" : "Shaxsga elektron pochta manzili",
+    "Send" : "Yuborish",
+    "Set expiration date" : "Muddati tugashini belgilash",
+    "Expiration" : "Muddati",
+    "An error occurred. Please try again" : "Xatolik yuz berdi. Iltimos, yana bir bor urinib ko'ring",
+    "group" : "guruh",
+    "remote" : "masofadan turib",
+    "Resharing is not allowed" : "Resharingga ruxsat berilmaydi",
+    "Unshare" : "Ajablanmaslik",
+    "Error setting expiration date" : "Muddati tugash sanasini belgilashda xato"
+},
+"nplurals=1; plural=0;");

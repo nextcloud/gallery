@@ -61,6 +61,8 @@ OC.L10N.register(
     "Set expiration date" : "Nastavi datum preteka",
     "Expiration" : "Datum preteka",
     "Expiration date" : "Datum preteka",
+    "No users or groups found for {search}" : "Ni najdenih uporabnikov ali skupin, skladnih z iskalnim nizom {search}",
+    "No users found for {search}" : "Ni najdenih uporabnikov, skladnih z iskalnim nizom {search}",
     "An error occurred. Please try again" : "Prišlo je do napake. Poskusite znova.",
     "Adding user..." : "Poteka dodajanje uporabnika ...",
     "group" : "skupina",
