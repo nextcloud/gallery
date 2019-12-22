@@ -49,6 +49,8 @@ OC.L10N.register(
     "Email sent" : "E-pošta je poslana",
     "Warning" : "Upozorenje",
     "Cancel upload" : "Prekini učitavanje",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date",
     "File list" : "Popis datoteka",
     "Picture view" : "Prikaz slika"
 },

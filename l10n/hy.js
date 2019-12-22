@@ -17,13 +17,20 @@ OC.L10N.register(
     "Allow editing" : "Թույլատրել խմբագրումը",
     "Email link to person" : "Ուղարկել հղումը ոմնին",
     "Send" : "Ուղարկել",
+    "Set expiration date" : "Սահմանել վավերականության ժամկետ",
+    "Expiration" : "Վավ. ժամկետ",
+    "Expiration date" : "Վավերականության ժամկետ",
     "group" : "խումբ",
     "remote" : "հեռակա",
+    "Unshare" : "Չկիսվել",
     "can share" : "կարող է տարածել",
     "can edit" : "կարող է խմբագրել",
     "create" : "ստեղծել",
     "change" : "փոխել",
     "delete" : "ջնջել",
-    "Warning" : "Զգուշացում"
+    "Email sent" : "Էլ. նամակը ուղարկվեց",
+    "Warning" : "Զգուշացում",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date"
 },
 "nplurals=2; plural=(n != 1);");

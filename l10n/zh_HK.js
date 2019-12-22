@@ -17,6 +17,7 @@ OC.L10N.register(
     "Shared with you and the group {group} by {owner}" : "{owner}與你及群組的分享",
     "Shared with you by {owner}" : "{owner}與你的分享",
     "Share link" : "分享連結",
+    "Link" : "Link",
     "Password protect" : "密碼保護",
     "Password" : "密碼",
     "Allow editing" : "容許編輯",
@@ -35,6 +36,8 @@ OC.L10N.register(
     "Email sent" : "郵件已傳",
     "Warning" : "警告",
     "Cancel upload" : "取消上戴",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date",
     "Picture view" : "預覽圖片"
 },
 "nplurals=1; plural=0;");
