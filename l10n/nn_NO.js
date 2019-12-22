@@ -31,6 +31,9 @@ OC.L10N.register(
     "Set expiration date" : "Set utløpsdato",
     "Expiration" : "Utløp",
     "Expiration date" : "Utløpsdato",
+    "No users or groups found for {search}" : "Ingen brukar eller gruppe funnen for {search}",
+    "No users found for {search}" : "Ingen brukar funnen for {search}",
+    "An error occurred. Please try again" : "Ein feil oppstod. Ver venleg prøv på ny",
     "group" : "gruppe",
     "remote" : "ekstern",
     "Resharing is not allowed" : "Vidaredeling er ikkje tillate",
@@ -49,6 +52,8 @@ OC.L10N.register(
     "Warning" : "Åtvaring",
     "The password is wrong. Try again." : "Passordet er gale. Prøv igjen.",
     "Cancel upload" : "Avbryt opplasting",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date",
     "Reasons might be:" : "Moglege grunnar:",
     "the item was removed" : "fila/mappa er fjerna",
     "sharing is disabled" : "deling er slått av"

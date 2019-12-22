@@ -14,6 +14,7 @@ OC.L10N.register(
     "Shared with you and the group {group} by {owner}" : "آپ اور گروہ سے مشترق شدہ {گروہ } سے {مالک}",
     "Shared with you by {owner}" : "اشتراک شدہ آپ سے{مالک}",
     "Share link" : "اشتراک لنک",
+    "Link" : "Link",
     "Password protect" : "محفوظ پاسورڈ",
     "Password" : "پاسورڈ",
     "Choose a password for the public link" : "عوامی لنک کے لئےپاس ورڈ منتخب کریں",
@@ -34,6 +35,8 @@ OC.L10N.register(
     "Error setting expiration date" : "خرابی  تصحیح تاریخ معیاد",
     "Email sent" : "ارسال شدہ ای میل ",
     "Warning" : "انتباہ",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date",
     "File list" : "فہرست فائل",
     "Picture view" : "منظر تصویر"
 },

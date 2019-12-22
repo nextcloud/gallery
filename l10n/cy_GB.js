@@ -17,6 +17,8 @@ OC.L10N.register(
     "Error while changing permissions" : "Gwall wrth newid caniatâd",
     "Shared with you and the group {group} by {owner}" : "Rhannwyd â chi a'r grŵp {group} gan {owner}",
     "Shared with you by {owner}" : "Rhannwyd â chi gan {owner}",
+    "Share link" : "Rhannu dolen",
+    "Link" : "Dolen",
     "Password protect" : "Diogelu cyfrinair",
     "Password" : "Cyfrinair",
     "Email link to person" : "E-bostio dolen at berson",
@@ -35,6 +37,8 @@ OC.L10N.register(
     "Error setting expiration date" : "Gwall wrth osod dyddiad dod i ben",
     "Email sent" : "Anfonwyd yr e-bost",
     "Warning" : "Rhybudd",
-    "Cancel upload" : "Diddymu llwytho i fyny"
+    "Cancel upload" : "Diddymu llwytho i fyny",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

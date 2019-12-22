@@ -1,6 +1,8 @@
 OC.L10N.register(
     "gallery",
     {
+    "Could not move \"{file}\", target exists" : "\"{file}\" konnt beweegt ginn. Et existéiert do schonn.",
+    "Could not move \"{file}\"" : "\"{file}\" konnt verreckelt ginn",
     "Configuration error" : "Konfiguratiouns Feeler",
     "Error loading slideshow template" : "Feeler beim Luede vun der Virlag fir d'Diashow",
     "Next" : "Weider",
@@ -11,8 +13,11 @@ OC.L10N.register(
     "Download" : "Eroflueden",
     "Delete" : "Läschen",
     "Share" : "Deelen",
+    "Could not create file \"{file}\" because it already exists" : "\"{file}\" konnt net erstallt ginn, well des schon existéiert",
+    "Could not create file \"{file}\"" : "\"{file}\" konnt net erstallt ginn",
     "\"{name}\" is an invalid file name." : "\"{Numm}\" ass een ongültegen Numm fir e Fichier.",
     "File name cannot be empty." : "Den Numm vum Fichier kann net eidel sinn.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" ass een ongültegen Typ vun Datei",
     "Upload" : "Eroplueden",
     "Error" : "Feeler",
     "Error while sharing" : "Feeler beim Deelen",
@@ -34,6 +39,9 @@ OC.L10N.register(
     "Set expiration date" : "Verfallsdatum setzen",
     "Expiration" : "Leeft of",
     "Expiration date" : "Verfallsdatum",
+    "No users or groups found for {search}" : "Keng Benotzer oder Gruppe fonnt fir {Sich}",
+    "No users found for {search}" : "Keng Benotzer fonnt fir {Sich}",
+    "An error occurred. Please try again" : "Et ass e Fehler opgetrueden. W.e.g. probéier nach emol",
     "Adding user..." : "Benotzer derbäi fügen",
     "group" : "Grupp",
     "remote" : "Op Distanz",
@@ -51,7 +59,10 @@ OC.L10N.register(
     "Error setting expiration date" : "Feeler beim Setze vum Verfallsdatum",
     "Email sent" : "Email geschéckt",
     "Warning" : "Warnung",
+    "Direct link" : "Direkte Link",
     "The password is wrong. Try again." : "Den Passwuert ass incorrect. Probeier ed nach eng keier.",
-    "Cancel upload" : "Eroplueden ofbriechen"
+    "Cancel upload" : "Eroplueden ofbriechen",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date"
 },
 "nplurals=2; plural=(n != 1);");
