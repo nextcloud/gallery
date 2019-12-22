@@ -13,12 +13,16 @@ OC.L10N.register(
     "Share" : "Kongsi",
     "Upload" : "Muat naik",
     "Error" : "Ralat",
+    "Share link" : "Share link",
+    "Link" : "Link",
     "Password" : "Kata laluan",
     "Send" : "Hantar",
     "group" : "kumpulan",
     "can share" : "boleh berkongsi",
     "can edit" : "boleh mengubah",
     "Warning" : "Amaran",
-    "Cancel upload" : "Batal muat naik"
+    "Cancel upload" : "Batal muat naik",
+    "Sort by name" : "Order by name",
+    "Sort by date" : "Order by date"
 },
 "nplurals=1; plural=0;");
