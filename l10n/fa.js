@@ -57,6 +57,7 @@ OC.L10N.register(
     "Password protected" : "نگهداری از رمز عبور",
     "Error unsetting expiration date" : "خطا در تنظیم نکردن تاریخ انقضا ",
     "Error setting expiration date" : "خطا در تنظیم تاریخ انقضا",
+    "Sending…" : "در حال ارسال",
     "Email sent" : "ایمیل ارسال شد",
     "Warning" : "اخطار",
     "shared by %s" : "اشتراک گذاری شده به میزان %s",
