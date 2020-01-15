@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Gallery" : "گالری",
     "Could not move \"{file}\"" : "فایل \"{file}\" منتقل نمی‌شود",
+    "No compatible server found at {remote}" : "هیچ سرور سازگار در {از راه دور} یافت نشد",
     "Could not load the description: " : "امکان بارگذاری توضیحات وجود ندارد:",
     "Copyright" : "کپی‌رایت",
     "Could not load the copyright notice: " : "بارگیری اعلامیه حق نشر انجام نشد",
