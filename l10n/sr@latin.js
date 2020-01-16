@@ -1,6 +1,8 @@
 OC.L10N.register(
     "gallery",
     {
+    "Close" : "Zatvori",
+    "Download" : "Preuzmi",
     "Delete" : "Delete",
     "Share" : "Deljenje",
     "\"{name}\" is an invalid file name." : "\"{name}\" nije ispravan naziv fajla.",
