@@ -1,8 +1,12 @@
-# Gallery
-[![Build Status](https://travis-ci.org/nextcloud/gallery.svg?branch=master)](https://travis-ci.org/nextcloud/gallery)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/gallery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/gallery/?branch=master)
-[![Code Coverage](https://codecov.io/gh/nextcloud/gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/nextcloud/gallery)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/nextcloud/gallery/badge.svg)](https://travis-ci.org/nextcloud/gallery)
+# 💀Gallery was replaced by :camera_flash: Photos
+
+
+💀The gallery app has been replaced by the beautiful new app:
+[:camera_flash: Nextcloud Photos - Your memories under your control](https://github.com/nextcloud/photos/)
+
+Before reporting an issue or opening a pull request, please checkout the new app and see if your request still needs to be handled there. In case it is, open your PR against the photos app.
+
+---
 
 Media gallery for Nextcloud which includes previews for all media types supported by your installation.
 
