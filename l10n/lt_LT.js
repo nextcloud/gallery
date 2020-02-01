@@ -51,7 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "Bendrinti su naudotojais ar grupėmis…",
     "Share with users, groups or remote users …" : "Bendrinti su naudotojais, grupėmis ar nuotoliniais naudotojais…",
     "Share link" : "Bendrinimo nuoroda",
-    "The public link will expire no later than {days} days after it is created" : "Vieša nuoroda galios ne mažiau kaip {days} dienas nuo sukūrimo",
+    "The public link will expire no later than {days} days after it is created" : "Viešoji nuoroda galios ne mažiau kaip {days} dienas nuo sukūrimo",
     "Link" : "Nuoroda",
     "Password protect" : "Apsaugoti slaptažodžiu",
     "Password" : "Slaptažodis",
