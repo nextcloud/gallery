@@ -7,7 +7,7 @@ OC.L10N.register(
     "Could not move \"{file}\", target exists" : "Αδυναμία μετακίνησης του \"{file}\", υπάρχει ήδη αρχείο με αυτό το όνομα",
     "Could not move \"{file}\"" : "Αδυναμία μετακίνησης του \"{file}\"",
     "No compatible server found at {remote}" : "Δεν βρέθηκε συμβατός διακομιστής σε {remote}",
-    "Invalid server url" : "Μη έγκυρη url δικομιστή",
+    "Invalid server url" : "Μη έγκυρη url διακομιστή",
     "Could not load the description" : "Αδυναμία φόρτωσης περιγραφής",
     "Could not load the description: " : "Αδυναμία φόρτωσης της περιγραφής:",
     "Copyright" : "Copyright",
