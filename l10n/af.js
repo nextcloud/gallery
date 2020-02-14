@@ -11,6 +11,8 @@ OC.L10N.register(
     "Download" : "Laai af",
     "Delete" : "Skrap",
     "Share" : "Deel",
+    "Could not create file \"{file}\" because it already exists" : "Kon nie lêer “{file}” skep nie omdat dit reeds bestaan",
+    "Could not create file \"{file}\"" : "Kan nie lêer “{file}” skep nie",
     "\"{name}\" is an invalid file name." : "\"{name}\" is nie 'n geldige lêer naam nie.",
     "File name cannot be empty." : "Lêernaam kan nie leeg wees nie.",
     "Upload" : "Laai op",
