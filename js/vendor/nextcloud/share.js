@@ -448,6 +448,7 @@
 				$('#shareWith').autocomplete({
 					minLength: 2,
 					delay: 750,
+					appendTo: '#dropdown',
 					source: function (search, response) {
 						var $shareWithField = $('#dropdown #shareWith');
 						var $loading = $('#dropdown .shareWithLoading');
