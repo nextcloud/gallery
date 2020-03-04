@@ -58,7 +58,7 @@ OC.L10N.register(
     "change" : "промени",
     "delete" : "избриши",
     "Password protected" : "Заштитено со лозинка",
-    "Error unsetting expiration date" : "Грешка при тргање на рокот на траење",
+    "Error unsetting expiration date" : "Грешка при отстранување на рокот на траење",
     "Error setting expiration date" : "Грешка при поставување на рок на траење",
     "Sending…" : "Испраќа…",
     "Email sent" : "Е-порака пратена",
