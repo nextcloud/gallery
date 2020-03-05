@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Gallery" : "Галерија",
     "There was a problem reading files from this album" : "Проблем приликом читања фајлова из овог албума",
-    "Aborting preview. Could not find the file" : "Прекидам преглед. Не могу пронаћи датотеку",
+    "Aborting preview. Could not find the file" : "Прекидам преглед. Не могу да нађем фајл",
     "Could not move \"{file}\", target exists" : "Не могу да померим \"{file}\", одредиште већ постоји",
     "Could not move \"{file}\"" : "Не могу да померим \"{file}\"",
     "No compatible server found at {remote}" : "Нема компатибилног сервера на {remote}",
