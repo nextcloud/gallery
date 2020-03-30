@@ -51,7 +51,7 @@ OC.L10N.register(
     "Share with users or groups …" : "Compartilhar com usuários ou grupos...",
     "Share with users, groups or remote users …" : "Compartilhar com usuários, grupos ou usuários remoto...",
     "Share link" : "Compartilhar link",
-    "The public link will expire no later than {days} days after it is created" : "O link público irá expirar não antes de {days} depois de ser criado",
+    "The public link will expire no later than {days} days after it is created" : "O link público irá expirar no prazo de {days} após a criação",
     "Link" : "Link",
     "Password protect" : "Proteger com senha",
     "Password" : "Senha",
