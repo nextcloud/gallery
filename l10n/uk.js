@@ -4,6 +4,7 @@ OC.L10N.register(
     "Gallery" : "Галерея",
     "Could not move \"{file}\", target exists" : "Не вдається перемістити файл \"{file}\", він вже існує в точці призначення",
     "Could not move \"{file}\"" : "Неможливо перемістити файл \"{file}\"",
+    "No compatible server found at {remote}" : "Відсутній сумісний сервер за адресою {remote}",
     "Your browser is not supported!" : "Ваш браузер не підтримується!",
     "No media files found" : "Відсутні мультимедійні файли.",
     "Configuration error" : "Помилка конфігурації",
