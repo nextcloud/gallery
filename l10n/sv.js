@@ -83,7 +83,7 @@ OC.L10N.register(
     "Password protected" : "Lösenordsskyddad",
     "Error unsetting expiration date" : "Fel vid borttagning av utgångsdatum",
     "Error setting expiration date" : "Fel vid val av utgångsdatum",
-    "Sending…" : "Sänder...",
+    "Sending…" : "Skickar...",
     "Email sent" : "E-post skickat",
     "Warning" : "Varning",
     "shared by %s" : "delad av %s",
