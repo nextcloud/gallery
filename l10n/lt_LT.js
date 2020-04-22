@@ -55,7 +55,7 @@ OC.L10N.register(
     "Link" : "Nuoroda",
     "Password protect" : "Apsaugoti slaptažodžiu",
     "Password" : "Slaptažodis",
-    "Choose a password for the public link" : "Pasirinkite viešos nuorodos slaptažodį",
+    "Choose a password for the public link" : "Pasirinkite viešosios nuorodos slaptažodį",
     "Allow editing" : "Leisti redaguoti",
     "Email link to person" : "Siųsti nuorodą el. paštu",
     "Send" : "Siųsti",
