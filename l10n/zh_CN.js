@@ -116,7 +116,6 @@ OC.L10N.register(
     "the link has expired" : "链接已过期",
     "sharing is disabled" : "共享已禁用",
     "For more information, please ask the person who has sent you this link." : "欲知详情，请联系发给您该链接的人。",
-    "Picture view" : "查看图片",
-    "Media gallery for Nextcloud with the following features:\n\n\t\t- Support for large selection of media types (depending on server setup)\n\n\t\t- Upload and organise images and albums straight from the app\n\n\t\t- Large, zoomable previews which can be shown in fullscreen mode\n\n\t\t- Sort images by name or date\n\n\t\t- Per album design, description and copyright statement\n\n\t\t- A la carte features (external shares, browser svg rendering, etc.)\n\n\t\t- Image download straight from the slideshow or the gallery\n\n\t\t- Switch to Gallery from any folder in files and vice-versa\n\n\t\t- Ignore folders containing a \".nomedia\" file\n\n\t\t- Browser rendering of SVG images (disabled by default)\n\n\t\t- Native SVG support\n\n\t\t- Mobile support\n\n\t\tProvides a dedicated view of all images in a grid, adds image viewing capabilities to the\n\t\tfiles app and adds a gallery view to public links.\n\t\tCompatible with Firefox, Chrome and Internet Explorer 11" : "Nextcloud 媒体影集包含以下功能:\n\n\t\t- 支持大量媒体格式(视服务器设置)\n\n\t\t- 从应用程序直接上传及整理图片及相册\n\n\t\t- 可全屏显示的大尺寸、可缩放预览图\n\n\t\t- 按名称或日期对图片排序 \n\t\t- 各相册有独立设计、描述文字以及版权声明\n\n\t\t- 预置套装功能 (外部共享、浏览器SVG渲染等)\n\n\t\t- 从幻灯模式或影集中直接下载图片\n\n\t\t- 从文件夹中文件切换到影集，或反之亦然\n\n\t\t- 忽略包含 \".nomedia\" 文件的文件夹\n\n\t\t- 浏览器渲染SVG图像 (默认已禁用)\n\n\t\t- 原生SVG支持\n\n\t\t- 移动应用支持\n\n\t\t提供以网格形式的图像视图，为文件应用添加图像查看功能\n\t\t并且为公开链接添加影集视图。.\n\t\t兼容 Firefox, Chrome 及 Internet Explorer 11"
+    "Picture view" : "查看图片"
 },
 "nplurals=1; plural=0;");

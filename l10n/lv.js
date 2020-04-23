@@ -38,6 +38,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Nevarēja izveidot datni \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" ir nepareizs datnes nosaukums.",
     "File name cannot be empty." : "Datnes nosaukums nevar būt tukšs.",
+    "\"{name}\" is not an allowed filetype" : "\"{name}\" nav atļauts faila tips",
     "Upload" : "Augšupielādēt",
     "Error" : "Kļūda",
     "Error while sharing" : "Kļūda, daloties",
