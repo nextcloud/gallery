@@ -45,6 +45,7 @@ OC.L10N.register(
     "Expiration date" : "Термін дії",
     "No users or groups found for {search}" : "Не знайдено груп або користувачів за пошуком {search}",
     "No users found for {search}" : "Не знайдено жодного користувача для {search}",
+    "An error occurred (\"{message}\"). Please try again" : "Сталася помилка (\"{message}\"). Спробуйте ще раз",
     "An error occurred. Please try again" : "Сталася помилка. Спробуйте ще раз",
     "Adding user..." : "Додавання користувача...",
     "group" : "група",
