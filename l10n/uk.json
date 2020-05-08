@@ -41,6 +41,7 @@
     "Set expiration date" : "Встановити термін дії",
     "Expiration" : "Закінчення",
     "Expiration date" : "Термін дії",
+    "This list is maybe truncated - please refine your search term to see more results." : "Можливо, що список обрізано - будь ласка, уточніть ваш пошуковий запит для отримання більше результатів.",
     "No users or groups found for {search}" : "Не знайдено груп або користувачів за пошуком {search}",
     "No users found for {search}" : "Не знайдено жодного користувача для {search}",
     "An error occurred (\"{message}\"). Please try again" : "Сталася помилка (\"{message}\"). Спробуйте ще раз",
