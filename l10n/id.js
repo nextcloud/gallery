@@ -39,6 +39,7 @@ OC.L10N.register(
     "Could not create file \"{file}\"" : "Tidak dapat membuat berkas \"{file}\"",
     "\"{name}\" is an invalid file name." : "\"{name}\" adalah nama berkas yang tidak sah.",
     "File name cannot be empty." : "Nama berkas tidak boleh kosong.",
+    "\"{name}\" is not an allowed filetype" : "Tipe berkas \"{name}\" tidak diizinkan",
     "Upload" : "Unggah",
     "Error" : "Kesalahan",
     "Error while sharing" : "Kesalahan saat membagikan",
