@@ -64,6 +64,7 @@ OC.L10N.register(
     "This list is maybe truncated - please refine your search term to see more results." : "Daftar ini mungkin terpotong - harap sari kata pencarian anda untuk melihat hasil yang lebih.",
     "No users or groups found for {search}" : "Tidak ada pengguna atau grup ditemukan untuk {search}",
     "No users found for {search}" : "Tidak ada pengguna ditemukan untuk {search}",
+    "An error occurred (\"{message}\"). Please try again" : "Terjadi galat (\"{message}\"). Silakan coba kembali",
     "An error occurred. Please try again" : "Terjadi kesalahan. Silakan coba lagi",
     "Adding user..." : "Menambahkan pengguna...",
     "group" : "grup",
