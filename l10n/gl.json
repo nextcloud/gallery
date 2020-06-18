@@ -107,7 +107,7 @@
     "Sorry, but the server could not fulfill your request." : "Sentímolo, o servidor non puido completar a súa solicitude",
     "Possible reasons for the problem:" : "Posíbeis causas deste problema:",
     "a conflicting app was installed" : "instalouse unha aplicación conflitiva",
-    "a required component is missing or was disconnected" : "non se atopou ou desconectouse un compoñente requirido",
+    "a required component is missing or was disconnected" : "non se atopou ou desconectouse un compoñente necesario",
     "the filesystem is not readable" : "o sistema de ficheiros non é lexíbel.",
     "Sorry, this link doesn't seem to work anymore." : "Sentímolo, semella que esta ligazón non funciona.",
     "the item was removed" : "o elemento foi retirado",
