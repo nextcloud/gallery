@@ -11,6 +11,8 @@
     "File name cannot be empty." : "N'hall ket anv ur restr bezañ goullo.",
     "\"{name}\" is not an allowed filetype" : "N'eo ket \"{name}\" un doare restr aotreet",
     "Error" : "Fazi",
+    "Error while sharing" : "Ur fazi oa e pad ar rannañ",
+    "Shared with you and the group {group} by {owner}" : "Rannet gant {owner} deoc'h hag ar strollad {group}",
     "Shared with you by {owner}" : "Rannet deoc'h gant {owner}",
     "Share link" : "Rannan liamm",
     "Link" : "Liamm",
@@ -21,7 +23,15 @@
     "Email link to person" : "Kas ar liamm d'unan bennak dre vail ?",
     "Send" : "Kas",
     "Expiration date" : "Deizad termen",
+    "No users or groups found for {search}" : "Implijour pe strollad ebet kavet evit {search}",
+    "No users found for {search}" : "Implijour ebet kavet evit {search}",
+    "An error occurred (\"{message}\"). Please try again" : "Ur fazi  zo bet (\"{message}\"). M'ar-plij, klaskit adare.",
+    "An error occurred. Please try again" : "Ur fazi a zo bet. M'ar-plij, klaskit adare.",
     "group" : "strollad",
-    "Unshare" : "Nag eskemm ken"
+    "remote" : "pell",
+    "Resharing is not allowed" : "N'eo ket aotreet an adrannan",
+    "Unshare" : "Nag eskemm ken",
+    "This share is password-protected" : "Al liamm a zo difennet gant ur ger-tremenn",
+    "The password is wrong. Try again." : "Faoz et ar ger-tremenn. Klaskit en dro."
 },"pluralForm" :"nplurals=5; plural=((n%10 == 1) && (n%100 != 11) && (n%100 !=71) && (n%100 !=91) ? 0 :(n%10 == 2) && (n%100 != 12) && (n%100 !=72) && (n%100 !=92) ? 1 :(n%10 ==3 || n%10==4 || n%10==9) && (n%100 < 10 || n% 100 > 19) && (n%100 < 70 || n%100 > 79) && (n%100 < 90 || n%100 > 99) ? 2 :(n != 0 && n % 1000000 == 0) ? 3 : 4);"
 }

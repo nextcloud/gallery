@@ -85,7 +85,7 @@ OC.L10N.register(
     "Error setting expiration date" : "Produciuse un erro ao definir a data de caducidade",
     "Sending…" : "Enviando…",
     "Email sent" : "Correo enviado",
-    "Warning" : "Aviso",
+    "Warning" : "Advertencia",
     "shared by %s" : "compartido por %s",
     "Direct link" : "Ligazón directa",
     "Add to your Nextcloud" : "Engadir ao seu Nextcloud",
