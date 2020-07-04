@@ -20,7 +20,7 @@ OC.L10N.register(
     "\"{name}\" is an invalid file name." : "\"{name}\" е невалидно име за датотека.",
     "File name cannot be empty." : "Името на датотеката не може да биде празно.",
     "\"{name}\" is not an allowed filetype" : "\"{name}\" не е дозволен вид на датотека",
-    "Upload" : "Префрли",
+    "Upload" : "Прикачи",
     "Error" : "Грешка",
     "Error while sharing" : "Грешка при споделување",
     "Error while unsharing" : "Грешка при прекин на споделување",
