@@ -6,6 +6,7 @@ OC.L10N.register(
     "Could not move \"{file}\"" : "Не може да се премести \"{file}\"",
     "No compatible server found at {remote}" : "{remote} не е компатибилен сервер",
     "Copyright" : "Авторско право",
+    "Configuration error" : "Грешка во конфигурацијата",
     "Error loading slideshow template" : "Грешка при вчитувањето на шаблонот за прикажување на слајдови",
     "Next" : "Следно",
     "Play" : "Слајдшоу",
