@@ -23,7 +23,7 @@ OC.L10N.register(
     "Password" : "Ger-tremen",
     "Choose a password for the public link" : "Choazit ur ger-tremen evit al liamm publik",
     "Allow editing" : "Cheñchamentoù aotreet",
-    "Email link to person" : "Kas ar liamm d'unan bennak dre vail ?",
+    "Email link to person" : "Kas ar liamm d'unan bennak dre postel ?",
     "Send" : "Kas",
     "Set expiration date" : "Lakaat un deizat termen",
     "Expiration" : "Termen",
@@ -39,7 +39,8 @@ OC.L10N.register(
     "Unshare" : "Nag eskemm ken",
     "can share" : "posupl eo ranañ",
     "can edit" : "posuple eo embann",
-    "Email sent" : "Email kaset",
+    "Sending…" : "O kas...",
+    "Email sent" : "Postel kaset",
     "Warning" : "Kemenadenn",
     "This share is password-protected" : "Al liamm a zo difennet gant ur ger-tremenn",
     "The password is wrong. Try again." : "Faoz et ar ger-tremenn. Klaskit en dro."
