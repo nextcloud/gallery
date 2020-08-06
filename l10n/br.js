@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Could not move \"{file}\", target exists" : "Dibosupl eo diblasañ \"{file}\", ar bukenn zo anezhi",
     "Could not move \"{file}\"" : "Dibosupl eo diblasañ \"{file}\"",
+    "Configuration error" : "Ur fazi arventenn",
     "Close" : "Serriñ",
     "Download" : "Pellgargañ",
     "Delete" : "Dilemel",
