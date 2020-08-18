@@ -18,6 +18,7 @@ OC.L10N.register(
     "Error while sharing" : "Ur fazi oa e pad ar rannañ",
     "Shared with you and the group {group} by {owner}" : "Rannet gant {owner} deoc'h hag ar strollad {group}",
     "Shared with you by {owner}" : "Rannet deoc'h gant {owner}",
+    "Share with users or groups …" : "Rannañ gant implijourienn pe strolladoù ...",
     "Share link" : "Rannan liamm",
     "Link" : "Liamm",
     "Password protect" : "Ger-tremen gwarezet",
