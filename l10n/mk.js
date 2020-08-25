@@ -74,7 +74,7 @@ OC.L10N.register(
     "Sort by date" : "Order by date",
     "Reasons might be:" : "Причината може да биде:",
     "the filesystem is not readable" : "неможат да се прочитаат податоците",
-    "the item was removed" : "предметот беше одстранет",
+    "the item was removed" : "предметот беше отстранет",
     "sharing is disabled" : "споделувањето не е дозволено"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
