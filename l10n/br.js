@@ -1,7 +1,7 @@
 OC.L10N.register(
     "gallery",
     {
-    "Gallery" : "Garidel",
+    "Gallery" : "Skeudennoù",
     "Could not move \"{file}\", target exists" : "Dibosupl eo diblasañ \"{file}\", ar bukenn zo anezhi",
     "Could not move \"{file}\"" : "Dibosupl eo diblasañ \"{file}\"",
     "Invalid server url" : "fall eo URL ar servijour",
