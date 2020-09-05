@@ -5,7 +5,7 @@
     "Could not move \"{file}\", target exists" : "Nie można było przenieść \"{file}\" – plik o takiej nazwie już istnieje",
     "Could not move \"{file}\"" : "Nie można przenieść \"{file}\"",
     "No compatible server found at {remote}" : "Nie znaleziono kompatybilnego serwera na {remote}",
-    "Invalid server url" : "Błędny adres serwera",
+    "Invalid server url" : "Nieprawidłowy adres URL serwera",
     "Could not load the description" : "Nie można załadować opisu",
     "Could not load the description: " : "Nie można załadować opisu:",
     "Copyright" : "Prawa autorskie",
