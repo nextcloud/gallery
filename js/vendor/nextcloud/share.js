@@ -540,7 +540,7 @@
 						var $confirm = $dropDown.find('.shareWithConfirm');
 						$loading.removeClass('hidden');
 						$confirm.addClass('hidden');
-						$input.val(t('gallery', 'Adding user...'));
+						$input.val(t('gallery', 'Adding user …'));
 						$input.prop('disabled', true);
 						self._pendingOperationsCount++;
 						Gallery.Share.share(
